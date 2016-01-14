@@ -24,7 +24,7 @@ gulp.task("clean", ["clean:css"]);
 
 /*less fiels to css*/
 gulp.task("less", function () {
-    gulp.src([paths.webroot + 'less/reset.less', paths.webroot + 'less/app.less'])
+    gulp.src([paths.webroot + 'less/bootstrap-reset.less', paths.webroot + 'less/app.less'])
         .pipe(concat('app.less'))
         .pipe(less())
         .pipe(gulp.dest(paths.webroot + 'css'))

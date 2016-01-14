@@ -194,5 +194,3 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
-/src/GE/wwwroot/css/app.min.css
-/src/GE/wwwroot/css/app.css

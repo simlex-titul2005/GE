@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GE.DBL")]
+[assembly: AssemblyTitle("GE.WebCoreExtantions")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GE.DBL")]
+[assembly: AssemblyProduct("GE.WebCoreExtantions")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1a1bd7e7-d5ca-4558-b1db-c0ef490a0f05")]
+[assembly: Guid("74266568-84be-4678-87ad-5e754ae01f39")]
 
 // Version information for an assembly consists of the following four values:
 //

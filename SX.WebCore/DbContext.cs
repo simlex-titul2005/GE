@@ -10,7 +10,7 @@ namespace SX.WebCore
 {
     public class DbContext : System.Data.Entity.DbContext
     {
-        public DbContext() : base("GEDB_MOCK") { }
+        public DbContext() : base("DbContext") { }
 
         public DbSet<SeoKeyWord> SeoKeyWords { get; set; }
 

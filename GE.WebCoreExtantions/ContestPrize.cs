@@ -1,16 +1,14 @@
-﻿using SX.WebCore.Abstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SX.WebCore
+namespace GE.WebCoreExtantions
 {
-    [Table("D_ARTICLE")]
-    public class Article : Material
+    [Table("D_CONTEST_PRIZE")]
+    public class ContestPrize
     {
-        
     }
 }

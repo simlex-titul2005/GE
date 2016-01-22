@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace SX.WebCore
 {
-    [Table("D_ARTICLE")]
-    public class Article : Material
+    [Table("D_NEWS")]
+    public class News : Material
     {
-        
+
     }
 }

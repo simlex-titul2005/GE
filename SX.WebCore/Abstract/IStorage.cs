@@ -8,6 +8,9 @@ namespace SX.WebCore.Abstract
 {
     public interface IStorage
     {
-        SeoInfo SeoInfo { get; set; }
+        /// <summary>
+        /// Статьи сайта
+        /// </summary>
+        Article[] Articles { get; }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore
 {
     [Table("D_ARTICLE")]
-    public class Article : Material
+    public class SxArticle : SxMaterial
     {
         
     }

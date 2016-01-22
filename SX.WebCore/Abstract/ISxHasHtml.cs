@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace SX.WebCore.Abstract
 {
-    public interface IStorage
+    public interface ISxHasHtml
     {
-        /// <summary>
-        /// Статьи сайта
-        /// </summary>
-        Article[] Articles { get; }
+        string Html { get; set; }
     }
 }

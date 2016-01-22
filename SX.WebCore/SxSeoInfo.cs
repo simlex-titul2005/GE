@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore
 {
     [Table("D_SEO_INFO")]
-    public class SeoInfo : DbUpdatedModel<int>
+    public class SxSeoInfo : DbUpdatedModel<int>
     {
         [Column("SEO_TITLE"), MaxLength(255), Required]
         public string SeoTitle { get; set; }
@@ -18,11 +18,11 @@ namespace SX.WebCore
         [Column("SEO_DESCRIPTION"), MaxLength(1000)]
         public string SeoDescription { get; set; }
 
-        public virtual ICollection<SeoKeyWord> SeoKeyWords { get; set; }
+        public virtual ICollection<SxSeoKeyWord> SeoKeyWords { get; set; }
 
-        public virtual Material Material { get; set; }
+        public SxMaterial Material { get; set; }
         [Column("MATERIAL_ID")]
-        public int MeterialId { get; set; }
+        public int MaterialId { get; set; }
 
         [Column("MATERIAL_CORE_TYPE")]
         public Enums.ModelType MaterialCoreType { get; set; }

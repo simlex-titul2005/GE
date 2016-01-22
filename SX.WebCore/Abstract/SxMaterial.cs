@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore.Abstract
 {
     [Table("DV_MATERIAL")]
-    public abstract class Material : DbUpdatedModel<int>
+    public abstract class SxMaterial : DbUpdatedModel<int>, ISxHasHtml
     {
         [Column("TITLE"), MaxLength(400), Required]
         public string Title { get; set; }

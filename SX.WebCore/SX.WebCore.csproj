@@ -48,17 +48,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\DbModel.cs" />
-    <Compile Include="Abstract\DbUpdatedModel.cs" />
-    <Compile Include="Abstract\IStorage.cs" />
-    <Compile Include="Abstract\Material.cs" />
-    <Compile Include="Article.cs" />
-    <Compile Include="DbContext.cs" />
+    <Compile Include="Abstract\ISxHasHtml.cs" />
+    <Compile Include="Abstract\SxDbModel.cs" />
+    <Compile Include="Abstract\SxDbUpdatedModel.cs" />
+    <Compile Include="Abstract\ISxStorage.cs" />
+    <Compile Include="Abstract\SxMaterial.cs" />
+    <Compile Include="SxArticle.cs" />
+    <Compile Include="SxDbContext.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="News.cs" />
+    <Compile Include="SXForumPart.cs" />
+    <Compile Include="SxMaterialTag.cs" />
+    <Compile Include="SxNews.cs" />
+    <Compile Include="SxPicture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SeoInfo.cs" />
-    <Compile Include="SeoKeyWord.cs" />
+    <Compile Include="SxSeoInfo.cs" />
+    <Compile Include="SxSeoKeyWord.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

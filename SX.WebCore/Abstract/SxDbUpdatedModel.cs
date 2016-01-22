@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 
 namespace SX.WebCore.Abstract
 {
-    public abstract class DBModel<TKey>
+    public abstract class DbUpdatedModel<TKey> : DBModel<TKey>
     {
-        [Column("ID"), Required, Key]
-        public TKey Id { get; set; }
-
-        [Column("DATE_CREATE")]
-        public DateTime DateCreate { get; set; }
+        [Column("DATE_UPDATE"), DataType(DataType.DateTime)]
+        public DateTime DateUpdate { get; set; }
     }
 }

@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 namespace GE.WebCoreExtantions
 {
     [Table("D_GAME")]
-    public class Game : SX.WebCore.Abstract.DbUpdatedModel<int>
+    public class Game : SX.WebCore.Abstract.SxDbUpdatedModel<int>
     {
         [Column("TITLE"), MaxLength(100), Required]
         public string Title { get; set; }
-
-
     }
 }

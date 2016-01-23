@@ -28,23 +28,23 @@ namespace SX.WebCore
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<SxMaterial>()
-                .HasKey(x => new { x.Id, x.CoreType });
+                .HasKey(x => new { x.Id, x.ModelCoreType });
 
             modelBuilder.Entity<SxMaterialTag>()
                .HasOptional(x => x.Material)
                .WithMany()
-               .HasForeignKey(x => new { x.MaterialId, x.MaterialCoreType });
+               .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
 
             modelBuilder.Entity<SxPicture>()
                             .HasKey(x => new { x.Id, x.MaterialId, x.Width })
                             .HasRequired(x => x.Material)
                             .WithMany()
-                            .HasForeignKey(x => new { x.MaterialId, x.MaterialCoreType });
+                            .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
 
             modelBuilder.Entity<SxSeoInfo>()
                 .HasRequired(x => x.Material)
                 .WithMany()
-                .HasForeignKey(x => new { x.Material, x.MaterialCoreType });
+                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
         }
     }
 }

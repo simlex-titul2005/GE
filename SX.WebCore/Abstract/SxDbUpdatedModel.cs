@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SX.WebCore.Abstract
 {
-    public abstract class DbUpdatedModel<TKey> : DBModel<TKey>
+    public abstract class SxDbUpdatedModel<TKey> : SxDbModel<TKey>
     {
         [Column("DATE_UPDATE"), DataType(DataType.DateTime)]
         public DateTime DateUpdate { get; set; }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore
 {
     [Table("D_FORUM_PART")]
-    public class SXForumPart : DbUpdatedModel<int>, ISxHasHtml
+    public class SXForumPart : SxDbUpdatedModel<int>, ISxHasHtml
     {
         [Column("TITLE"), MaxLength(255), Required]
         public string Title { get; set; }

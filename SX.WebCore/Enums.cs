@@ -8,7 +8,7 @@ namespace SX.WebCore
 {
     public static class Enums
     {
-        public enum ModelType : byte
+        public enum ModelCoreType : byte
         {
             Unknown = 0,
             Article = 1,

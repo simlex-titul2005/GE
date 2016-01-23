@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore
 {
     [Table("D_SEO_INFO")]
-    public class SxSeoInfo : DbUpdatedModel<int>
+    public class SxSeoInfo : SxDbUpdatedModel<int>
     {
         [Column("SEO_TITLE"), MaxLength(255), Required]
         public string SeoTitle { get; set; }
@@ -25,6 +25,6 @@ namespace SX.WebCore
         public int MaterialId { get; set; }
 
         [Column("MATERIAL_CORE_TYPE")]
-        public Enums.ModelType MaterialCoreType { get; set; }
+        public Enums.ModelCoreType ModelCoreType { get; set; }
     }
 }

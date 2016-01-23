@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore.Abstract
 {
     [Table("DV_MATERIAL")]
-    public abstract class SxMaterial : DbUpdatedModel<int>, ISxHasHtml
+    public abstract class SxMaterial : SxDbUpdatedModel<int>, ISxHasHtml
     {
         [Column("TITLE"), MaxLength(400), Required]
         public string Title { get; set; }
@@ -18,6 +18,6 @@ namespace SX.WebCore.Abstract
         public string Html { get; set; }
 
         [Column("CORE_TYPE")]
-        public Enums.ModelType CoreType { get; set; }
+        public Enums.ModelCoreType ModelCoreType { get; set; }
     }
 }

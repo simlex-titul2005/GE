@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace SX.WebCore.Abstract
 {
-    public abstract class DBModel<TKey>
+    public abstract class SxDbModel<TKey>
     {
-        [Column("ID"), Required, Key]
+        [Column("ID"), Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public TKey Id { get; set; }
 
         [Column("DATE_CREATE"), DataType(DataType.DateTime)]

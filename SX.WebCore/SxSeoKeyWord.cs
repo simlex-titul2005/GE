@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore
 {
     [Table("D_SEO_KEYWORD")]
-    public class SxSeoKeyWord : DbUpdatedModel<int>
+    public class SxSeoKeyWord : SxDbUpdatedModel<int>
     {
         [Column("VALUE"), MaxLength(50), Required]
         string Value { get; set; }

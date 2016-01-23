@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore
 {
     [Table("D_MATERIAL_TAG")]
-    public class SxMaterialTag : DbUpdatedModel<int>
+    public class SxMaterialTag : SxDbUpdatedModel<int>
     {
         [Column("VALUE"), MaxLength(100), Required]
         public string Value { get; set; }
@@ -20,6 +20,6 @@ namespace SX.WebCore
         public int? MaterialId { get; set; }
 
         [Column("MATERIAL_CORE_TYPE")]
-        public Enums.ModelType MaterialCoreType { get; set; }
+        public Enums.ModelCoreType ModelCoreType { get; set; }
     }
 }

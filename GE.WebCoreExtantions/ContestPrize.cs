@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace GE.WebCoreExtantions
 {
     [Table("D_CONTEST_PRIZE")]
-    public class ContestPrize : SX.WebCore.Abstract.DbUpdatedModel<int>
+    public class ContestPrize : SX.WebCore.Abstract.SxDbUpdatedModel<int>
     {
         [Column("TITLE"), MaxLength(100), Required]
         public string Title { get; set; }
@@ -19,6 +19,6 @@ namespace GE.WebCoreExtantions
         public int ContestId { get; set; }
 
         [Column("MATERIAL_CORE_TYPE")]
-        public SX.WebCore.Enums.ModelType MaterialCoreType { get; set; }
+        public SX.WebCore.Enums.ModelCoreType MaterialCoreType { get; set; }
     }
 }

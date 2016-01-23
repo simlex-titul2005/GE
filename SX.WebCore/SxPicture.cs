@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore
 {
     [Table("D_PICTURE")]
-    public class SxPicture : DbUpdatedModel<Guid>
+    public class SxPicture : SxDbUpdatedModel<Guid>
     {
         [Column("IMG_TYPE")]
         public Enums.ImgType ImgType { get; set; }
@@ -29,6 +29,6 @@ namespace SX.WebCore
         public int MaterialId { get; set; }
 
         [Column("MATERIAL_CORE_TYPE")]
-        public Enums.ModelType MaterialCoreType { get; set; }
+        public Enums.ModelCoreType ModelCoreType { get; set; }
     }
 }

@@ -231,6 +231,10 @@
     <Content Include="bower_components\opensans-condensed-notosans\bold\stylesheet.css" />
     <Content Include="bower_components\opensans-condensed-notosans\italic\stylesheet.css" />
     <Content Include="bower_components\opensans-condensed-notosans\regular\stylesheet.css" />
+    <Content Include="Content\css\site.css" />
+    <Content Include="Content\css\site.min.css">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
@@ -377,6 +381,9 @@
     <Content Include="fonts\OpenSans-CondLight-webfont.eot" />
     <Content Include="fonts\OpenSans-CondLight-webfont.ttf" />
     <Content Include="fonts\OpenSans-CondLight-webfont.woff" />
+    <Content Include="Content\css\site.css.map">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -385,7 +392,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\css\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

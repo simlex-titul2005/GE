@@ -8,17 +8,16 @@ using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 
-namespace SX.WebCore
+namespace SX.WebCore.Abstract
 {
-    public class SxDbRepository<TKey, TModel>
+    public abstract class SxDbRepository<TKey, TModel, TDbContext>
         where TModel : SxDbModel<TKey>
+        where TDbContext : SxDbContext
     {
         private SxDbContext _dbContext;
-        private DbSet _dbSet;
-        public SxDbRepository(SxDbContext dbContext)
+        public SxDbRepository()
         {
-            _dbContext = dbContext;
-            _dbSet = _dbContext.Set<TModel>();
+            _dbContext = Activator.CreateInstance<TDbContext>();
         }
 
         public virtual TModel Create(TModel model)
@@ -34,7 +33,7 @@ namespace SX.WebCore
             var keys = getEntityKeys(_dbContext, modelType, model);
             var oldModel = GetByKey(keys);
             if (oldModel == null) return null;
-            var oldModelType=oldModel.GetType();
+            var oldModelType = oldModel.GetType();
             var propsForChange = modelType.GetProperties()
                 .Where(x => propertiesForChange.Contains(x.Name))
                 .Select(x => new { Name = x.Name, Value = x.GetValue(model) });
@@ -49,6 +48,7 @@ namespace SX.WebCore
 
             _dbContext.Entry(oldModel).State = EntityState.Modified;
             _dbContext.SaveChanges();
+
             return oldModel;
         }
 
@@ -56,6 +56,7 @@ namespace SX.WebCore
         {
             var model = GetByKey(id);
             if (model == null) return;
+
             _dbContext.Entry(model).State = EntityState.Deleted;
             _dbContext.SaveChanges();
         }
@@ -70,8 +71,8 @@ namespace SX.WebCore
 
         public virtual TModel GetByKey(params object[] id)
         {
-            var model = _dbSet.Find(id);
-            return (TModel)model;
+            var dbSet = _dbContext.Set<TModel>();
+            return dbSet.Find(id);
         }
 
         private static object[] getEntityKeys(System.Data.Entity.DbContext dbContext, Type modelType, TModel model)

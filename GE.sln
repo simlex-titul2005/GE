@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.WebCoreExtantions", "GE.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.Tests", "GE.Tests\GE.Tests.csproj", "{52DED62D-BC30-4DBA-9C53-686F3FF78C1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.WebAdmin", "GE.WebAdmin\GE.WebAdmin.csproj", "{D29359E2-092C-4A22-8261-A8933E12B27B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{52DED62D-BC30-4DBA-9C53-686F3FF78C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52DED62D-BC30-4DBA-9C53-686F3FF78C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52DED62D-BC30-4DBA-9C53-686F3FF78C1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D29359E2-092C-4A22-8261-A8933E12B27B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29359E2-092C-4A22-8261-A8933E12B27B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29359E2-092C-4A22-8261-A8933E12B27B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29359E2-092C-4A22-8261-A8933E12B27B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

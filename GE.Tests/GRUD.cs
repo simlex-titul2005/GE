@@ -4,6 +4,7 @@ using SX.WebCore.Abstract;
 using GE.WebCoreExtantions;
 using SX.WebCore;
 using System.Linq;
+using GE.WebCoreExtantions.Repositories;
 
 namespace GE.Tests
 {
@@ -14,7 +15,7 @@ namespace GE.Tests
         public void CreateArticle()
         {
             var dbContext = new GE.WebCoreExtantions.DbContext();
-            var dbRepo = new SxDbRepository<int, Article>(dbContext);
+            var dbRepo = new RepoArticle();
             var date = DateTime.Now;
             var model = new Article {
                 ModelCoreType=Enums.ModelCoreType.Article,
@@ -31,7 +32,7 @@ namespace GE.Tests
         public void GetArticles()
         {
             var dbContext = new GE.WebCoreExtantions.DbContext();
-            var dbRepo = new SxDbRepository<int, Article>(dbContext);
+            var dbRepo = new RepoArticle();
             var list = dbRepo.All;
             Assert.IsTrue(list != null);
         }
@@ -40,7 +41,7 @@ namespace GE.Tests
         public void UpdateArticle()
         {
             var dbContext = new GE.WebCoreExtantions.DbContext();
-            var dbRepo = new SxDbRepository<int, Article>(dbContext);
+            var dbRepo = new RepoArticle();
             var model = new Article
             {
                 Id=4,
@@ -56,7 +57,7 @@ namespace GE.Tests
         public void DeleteArticle()
         {
             var dbContext = new GE.WebCoreExtantions.DbContext();
-            var dbRepo = new SxDbRepository<int, Article>(dbContext);
+            var dbRepo = new RepoArticle();
             var key = new object[] { 1, Enums.ModelCoreType.Article };
             var count = dbRepo.All.Count();
             dbRepo.Delete(key);

@@ -235,8 +235,7 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 /GE.WebUI/bower_components/bootstrap/dist/fonts
-/GE.WebUI/Content/css/*.css
-/GE.WebUI/Content/css/*.map
+/GE.WebUI/Content/css/*
 /GE.WebUI/Content/less/*.css
 /GE.WebUI/Content/less/*.map
 /GE.WebUI/fonts

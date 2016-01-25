@@ -4,6 +4,7 @@ var minifyCSS = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
 var del = require('del');
+var less = require('gulp-less');
 
 gulp.task('css:clean', function () {
     return del(['content/css/**/*.css', 'fonts/**/*']);
@@ -16,13 +17,12 @@ gulp.task('css', ['css:clean'], function () {
     ])
     .pipe(gulp.dest('fonts'))
 
-    gulp.src([
-        'content/less/**/*.css'
-    ])
+    gulp.src('content/less/**/*.less')
+        .pipe(less())
         .pipe(minifyCSS())
         .pipe(rename('site.min.css'))
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(gulp.dest('content/css'))
+        .pipe(gulp.dest('content/css'));
 
     gulp.watch('content/css', ['css']);
 });

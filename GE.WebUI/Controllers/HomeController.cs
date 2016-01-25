@@ -12,7 +12,7 @@ namespace GE.WebUI.Controllers
         public ViewResult Index(DbContext dbContext)
         {
             dbContext = new DbContext();
-            var dbRepo = new SX.WebCore.Abstract.SxDbRepository<int, Article>(dbContext);
+            var dbRepo = new SX.WebCore.SxDbRepository<int, Article>(dbContext);
             return View(dbRepo.All);
         }
     }

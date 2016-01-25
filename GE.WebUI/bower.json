@@ -1,0 +1,28 @@
+{
+  "name": "GE.WebUI",
+  "homepage": "https://github.com/simlex-titul2005/GE",
+  "authors": [
+    "simlex-titul2005 <simlex.dev.2014@gmail.com>"
+  ],
+  "description": "game-exe.com",
+  "main": "",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    ""
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "opensans-condensed-notosans": "webfont-opensans-condensed#~0.1.0"
+  }
+}

@@ -50,7 +50,7 @@
   <ItemGroup>
     <Compile Include="Abstract\ISxHasHtml.cs" />
     <Compile Include="Abstract\SxDbModel.cs" />
-    <Compile Include="Abstract\SxDbRepository.cs" />
+    <Compile Include="SxDbRepository.cs" />
     <Compile Include="Abstract\SxDbUpdatedModel.cs" />
     <Compile Include="Abstract\SxMaterial.cs" />
     <Compile Include="SxArticle.cs" />

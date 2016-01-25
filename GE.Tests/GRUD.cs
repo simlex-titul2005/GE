@@ -43,11 +43,11 @@ namespace GE.Tests
             var dbRepo = new SxDbRepository<int, Article>(dbContext);
             var model = new Article
             {
-                Id=1,
+                Id=4,
                 ModelCoreType=Enums.ModelCoreType.Article,
                 Html = "111"
             };
-            var updatedModel = dbRepo.Update(model, new object[] { model.Id, model.ModelCoreType }, new string[] { "Html" });
+            var updatedModel = dbRepo.Update(model, new string[] { "Html" });
             if (updatedModel == null) return;
             Assert.IsTrue(Equals(model.Html, updatedModel.Html));
         }

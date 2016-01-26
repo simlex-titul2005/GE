@@ -130,6 +130,8 @@
     <Content Include="bower_components\font-awesome\css\font-awesome.min.css" />
     <Content Include="bower_components\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="bower_components\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="bower_components\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.js" />
+    <Content Include="bower_components\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.min.js" />
     <Content Include="bower_components\jquery\dist\jquery.js" />
     <Content Include="bower_components\jquery\dist\jquery.min.js" />
     <Content Include="bower_components\jquery\MIT-LICENSE.txt" />
@@ -221,23 +223,20 @@
     <Content Include="bower_components\metisMenu\dist\metisMenu.min.css" />
     <Content Include="bower_components\metisMenu\dist\metisMenu.min.js" />
     <Content Include="bower_components\metisMenu\Gruntfile.js" />
-    <Content Include="Content\css\bootstrap.min.css" />
-    <Content Include="Content\css\font-awesome.min.css" />
-    <Content Include="Content\css\metisMenu.min.css" />
-    <Content Include="Content\css\site.min.css" />
-    <Content Include="Content\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\js\bootstrap.min.js" />
-    <Content Include="Content\js\jquery.min.js" />
-    <Content Include="Content\js\metisMenu.min.js" />
+    <Content Include="Content\dist\css\bootstrap.min.css" />
+    <Content Include="Content\dist\css\font-awesome.min.css" />
+    <Content Include="Content\dist\css\metisMenu.min.css" />
+    <Content Include="Content\dist\css\site.min.css" />
+    <Content Include="Content\dist\css\sx.min.css" />
+    <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\dist\js\bootstrap.min.js" />
+    <Content Include="Content\dist\js\jquery.min.js" />
+    <Content Include="Content\dist\js\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Content\dist\js\metisMenu.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="Content\less\sb-admin-2.less" />
-    <Content Include="Content\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -386,6 +385,15 @@
     <Content Include="bower_components\metisMenu\LICENSE" />
     <Content Include="bower_components\metisMenu\package.json" />
     <Content Include="bower_components\metisMenu\README.md" />
+    <Content Include="Content\sx\colors.less" />
+    <Content Include="Content\sx\sx-grid-view.less" />
+    <Content Include="bower_components\jquery-ajax-unobtrusive\.bower.json" />
+    <Content Include="bower_components\jquery-ajax-unobtrusive\bower.json" />
+    <Content Include="Content\dist\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\dist\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\dist\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\dist\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\dist\fonts\FontAwesome.otf" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -437,6 +445,7 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <Content Include="Views\Articles\Index.cshtml" />
+    <Content Include="Views\Articles\_GridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -61,7 +61,7 @@ namespace SX.WebCore.Abstract
             _dbContext.SaveChanges();
         }
 
-        public virtual IQueryable<TModel> All
+        public virtual IEnumerable<TModel> All
         {
             get
             {

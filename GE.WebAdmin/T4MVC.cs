@@ -59,70 +59,70 @@ internal partial class T4MVC_System_Web_Mvc_ViewResult : System.Web.Mvc.ViewResu
     public string Protocol { get; set; }
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
 
 
 
 namespace Links
 {
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public static class Scripts {
-        private const string URLPATH = "~/Scripts";
-        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class typings {
-            private const string URLPATH = "~/Scripts/typings";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-            public static class jquery {
-                private const string URLPATH = "~/Scripts/typings/jquery";
-                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string jquery_d_ts = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.d.min.js") ? Url("jquery.d.min.js") : Url("jquery.d.js");
-            }
-        
-        }
-    
-    }
-
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static class Content {
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class css {
-            private const string URLPATH = "~/Content/css";
+        public static class dist {
+            private const string URLPATH = "~/Content/dist";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
-            public static readonly string font_awesome_min_css = Url("font-awesome.min.css");
-            public static readonly string metisMenu_min_css = Url("metisMenu.min.css");
-            public static readonly string site_min_css = Url("site.min.css");
-        }
-    
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class fonts {
-            private const string URLPATH = "~/Content/fonts";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string fontawesome_webfont_eot = Url("fontawesome-webfont.eot");
-            public static readonly string fontawesome_webfont_svg = Url("fontawesome-webfont.svg");
-            public static readonly string fontawesome_webfont_ttf = Url("fontawesome-webfont.ttf");
-            public static readonly string fontawesome_webfont_woff = Url("fontawesome-webfont.woff");
-            public static readonly string fontawesome_webfont_woff2 = Url("fontawesome-webfont.woff2");
-            public static readonly string FontAwesome_otf = Url("FontAwesome.otf");
-        }
-    
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class js {
-            private const string URLPATH = "~/Content/js";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
-            public static readonly string jquery_min_js = Url("jquery.min.js");
-            public static readonly string metisMenu_min_js = Url("metisMenu.min.js");
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class css {
+                private const string URLPATH = "~/Content/dist/css";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
+                public static readonly string font_awesome_min_css = Url("font-awesome.min.css");
+                public static readonly string metisMenu_min_css = Url("metisMenu.min.css");
+                public static readonly string site_min_css = Url("site.min.css");
+                public static readonly string sx_min_css = Url("sx.min.css");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class fonts {
+                private const string URLPATH = "~/Content/dist/fonts";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string fontawesome_webfont_eot = Url("fontawesome-webfont.eot");
+                public static readonly string fontawesome_webfont_svg = Url("fontawesome-webfont.svg");
+                public static readonly string fontawesome_webfont_ttf = Url("fontawesome-webfont.ttf");
+                public static readonly string fontawesome_webfont_woff = Url("fontawesome-webfont.woff");
+                public static readonly string fontawesome_webfont_woff2 = Url("fontawesome-webfont.woff2");
+                public static readonly string FontAwesome_otf = Url("FontAwesome.otf");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class js {
+                private const string URLPATH = "~/Content/dist/js";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
+                public static readonly string jquery_min_js = Url("jquery.min.js");
+                public static readonly string jquery_unobtrusive_ajax_min_js = Url("jquery.unobtrusive-ajax.min.js");
+                public static readonly string metisMenu_min_js = Url("metisMenu.min.js");
+            }
+        
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -136,58 +136,63 @@ namespace Links
             public static readonly string site_less = Url("site.less");
         }
     
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class sx {
+            private const string URLPATH = "~/Content/sx";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string colors_less = Url("colors.less");
+            public static readonly string sx_grid_view_less = Url("sx-grid-view.less");
+        }
+    
     }
 
     
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static partial class Bundles
     {
-        public static partial class Scripts 
+        public static partial class Content 
         {
-            public static partial class typings 
+            public static partial class dist 
             {
-                public static partial class jquery 
+                public static partial class css 
                 {
                     public static class Assets
                     {
+                        public const string bootstrap_min_css = "~/Content/dist/css/bootstrap.min.css";
+                        public const string font_awesome_min_css = "~/Content/dist/css/font-awesome.min.css";
+                        public const string metisMenu_min_css = "~/Content/dist/css/metisMenu.min.css";
+                        public const string site_min_css = "~/Content/dist/css/site.min.css";
+                        public const string sx_min_css = "~/Content/dist/css/sx.min.css";
+                    }
+                }
+                public static partial class fonts 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class js 
+                {
+                    public static class Assets
+                    {
+                        public const string bootstrap_min_js = "~/Content/dist/js/bootstrap.min.js"; 
+                        public const string jquery_min_js = "~/Content/dist/js/jquery.min.js"; 
+                        public const string jquery_unobtrusive_ajax_min_js = "~/Content/dist/js/jquery.unobtrusive-ajax.min.js"; 
+                        public const string metisMenu_min_js = "~/Content/dist/js/metisMenu.min.js"; 
                     }
                 }
                 public static class Assets
                 {
                 }
             }
-            public static class Assets
-            {
-            }
-        }
-        public static partial class Content 
-        {
-            public static partial class css 
-            {
-                public static class Assets
-                {
-                    public const string bootstrap_min_css = "~/Content/css/bootstrap.min.css";
-                    public const string font_awesome_min_css = "~/Content/css/font-awesome.min.css";
-                    public const string metisMenu_min_css = "~/Content/css/metisMenu.min.css";
-                    public const string site_min_css = "~/Content/css/site.min.css";
-                }
-            }
-            public static partial class fonts 
-            {
-                public static class Assets
-                {
-                }
-            }
-            public static partial class js 
-            {
-                public static class Assets
-                {
-                    public const string bootstrap_min_js = "~/Content/js/bootstrap.min.js"; 
-                    public const string jquery_min_js = "~/Content/js/jquery.min.js"; 
-                    public const string metisMenu_min_js = "~/Content/js/metisMenu.min.js"; 
-                }
-            }
             public static partial class less 
+            {
+                public static class Assets
+                {
+                }
+            }
+            public static partial class sx 
             {
                 public static class Assets
                 {

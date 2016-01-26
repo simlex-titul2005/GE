@@ -1,0 +1,29 @@
+﻿@import (reference) "colors.less";
+
+.sx-grid-view th {
+    font-weight: normal;
+    border-bottom-width:1px !important;
+}
+
+.sx-grid-view .ordered-column {
+    cursor: pointer;
+}
+
+.sx-grid-view .ordered-column:active {
+    background-color: @color-gray;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.sx-grid-view .ordered-column > .sort-btn {
+    float: right;
+    line-height: unset;
+}
+
+.sx-grid-view input {
+    border: 1px solid @color-gray;
+    padding: 2px 2px 2px 10px;
+    width:100%;
+}

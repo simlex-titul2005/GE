@@ -59,12 +59,6 @@ namespace GE.WebAdmin.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Index()
-        {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ArticlesController Actions { get { return MVC.Articles; } }
@@ -97,7 +91,9 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Index
         {
-            public readonly string dbContext = "dbContext";
+            public readonly string page = "page";
+            public readonly string size = "size";
+            public readonly string filterArticle = "filterArticle";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -109,7 +105,11 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _GridView = "_GridView";
+                public readonly string Index = "Index";
             }
+            public readonly string _GridView = "~/Views/Articles/_GridView.cshtml";
+            public readonly string Index = "~/Views/Articles/Index.cshtml";
         }
     }
 
@@ -119,14 +119,29 @@ namespace GE.WebAdmin.Controllers
         public T4MVC_ArticlesController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, GE.WebCoreExtantions.DbContext dbContext);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page, int size);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Index(GE.WebCoreExtantions.DbContext dbContext)
+        public override System.Web.Mvc.ViewResult Index(int page, int size)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "dbContext", dbContext);
-            IndexOverride(callInfo, dbContext);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "size", size);
+            IndexOverride(callInfo, page, size);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMArticle filterArticle, int page, int size);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMArticle filterArticle, int page, int size)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterArticle", filterArticle);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "size", size);
+            IndexOverride(callInfo, filterArticle, page, size);
             return callInfo;
         }
 

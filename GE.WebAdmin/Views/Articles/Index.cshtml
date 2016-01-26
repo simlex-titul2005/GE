@@ -2,15 +2,10 @@
 @{
     ViewBag.Title = "Index";
 }
+<div id="list-articles">
+    @Html.Partial(MVC.Articles.Views._GridView, Model)
+</div>
 
-@Html.SxGridView(
-    Model,
-    new SX.WebCore.HtmlHelpers.Extantions.SxGridViewSettings
-    {
-        Columns = new string[] { "Id", "DateCreate", "Title", "Html" },
-        ShowRowMenu = true,
-        EnableSorting=true,
-        EnableEditing=true
-    },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
-    )
+@section scripts{
+    <script type="text/javascript" src="~/Content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
+}

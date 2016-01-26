@@ -1,0 +1,17 @@
+﻿@model VMArticle[]
+@{
+    var filter = ViewBag.Filter != null ? (VMArticle)ViewBag.Filter : null;
+}
+
+@Html.SxGridView(
+    Model,
+    new SX.WebCore.HtmlHelpers.Extantions.SxGridViewSettings<VMArticle>
+    {
+        Columns = new string[] { "DateCreate", "Title", "Html" },
+        ShowFilterRowMenu = true,
+        EnableSorting = true,
+        EnableEditing = true,
+        Filter = filter
+    },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

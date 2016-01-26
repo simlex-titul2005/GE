@@ -13,6 +13,7 @@ namespace GE.WebAdmin
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            AutoMapperConfig.Configure();
         }
     }
 }

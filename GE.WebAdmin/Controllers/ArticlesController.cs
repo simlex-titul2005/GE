@@ -1,4 +1,6 @@
-﻿using GE.WebCoreExtantions;
+﻿using AutoMapper;
+using GE.WebAdmin.Models;
+using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,8 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Index(DbContext dbContext)
         {
             var dbRepo = new RepoArticle();
-            return View(dbRepo.All);
+            var list = dbRepo.All.ToArray().Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
+            return View(list);
         }
     }
 }

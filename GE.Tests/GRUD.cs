@@ -14,7 +14,6 @@ namespace GE.Tests
         [TestMethod]
         public void CreateArticle()
         {
-            var dbContext = new GE.WebCoreExtantions.DbContext();
             var dbRepo = new RepoArticle();
             var date = DateTime.Now;
             var model = new Article {
@@ -24,6 +23,7 @@ namespace GE.Tests
                 Html="Html",
                 Title="Test article"
             };
+            
             var newModel = dbRepo.Create(model);
             Assert.IsNotNull(newModel);
         }
@@ -31,7 +31,6 @@ namespace GE.Tests
         [TestMethod]
         public void GetArticles()
         {
-            var dbContext = new GE.WebCoreExtantions.DbContext();
             var dbRepo = new RepoArticle();
             var list = dbRepo.All;
             Assert.IsTrue(list != null);
@@ -40,7 +39,6 @@ namespace GE.Tests
         [TestMethod]
         public void UpdateArticle()
         {
-            var dbContext = new GE.WebCoreExtantions.DbContext();
             var dbRepo = new RepoArticle();
             var model = new Article
             {
@@ -56,7 +54,6 @@ namespace GE.Tests
         [TestMethod]
         public void DeleteArticle()
         {
-            var dbContext = new GE.WebCoreExtantions.DbContext();
             var dbRepo = new RepoArticle();
             var key = new object[] { 1, Enums.ModelCoreType.Article };
             var count = dbRepo.All.Count();

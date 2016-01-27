@@ -12,30 +12,34 @@ namespace GE.WebAdmin.Controllers
 {
     public partial class ArticlesController : Controller
     {
+        private static int _pageSize = 20;
+
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Index(int page=1, int size=20)
+        public virtual ViewResult Index(int page = 1)
         {
             var dbRepo = new RepoArticle();
 
             var list = dbRepo.All
-                .Skip((page - 1) * size)
-                .Take(size).ToArray().Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
+                .Skip((page - 1) * _pageSize)
+                .Take(_pageSize).ToArray().Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
 
             ViewData["Page"] = page;
-            ViewData["PageSize"] = size;
+            ViewData["PageSize"] = _pageSize;
             ViewData["RowsCount"] = dbRepo.All.Count();
 
             return View(list);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(VMArticle filterArticle, int page = 1, int size = 20)
+        public virtual PartialViewResult Index(VMArticle filterArticle, IDictionary<string, SX.WebCore.HtmlHelpers.Extantions.SortDirection> order, int page = 1)
         {
             int id = filterArticle != null ? filterArticle.Id : 0;
             string title = filterArticle != null ? filterArticle.Title : null;
             string html = filterArticle != null ? filterArticle.Html : null;
             ViewBag.Filter = filterArticle;
-            
+            ViewBag.Order = order;
+
+            //select
             var dbRepo = new RepoArticle();
             var temp = dbRepo.All;
             if (id != 0)
@@ -45,14 +49,44 @@ namespace GE.WebAdmin.Controllers
             if (html != null)
                 temp = temp.Where(x => x.Html.Contains(html));
 
-            var list = temp.Skip((page - 1) * size)
-                .Take(size).ToArray().Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
+            //order
+            var orders = order.Where(x => x.Value != SX.WebCore.HtmlHelpers.Extantions.SortDirection.Unknown);
+            if (orders.Count() != 0)
+            {
+                foreach (var o in orders)
+                {
+                    if (o.Key == "Title")
+                    {
+                        if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Desc)
+                            temp = temp.OrderByDescending(x => x.Title);
+                        else if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Asc)
+                            temp = temp.OrderBy(x => x.Title);
+                    }
+                    if (o.Key == "Html")
+                    {
+                        if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Desc)
+                            temp = temp.OrderByDescending(x => x.Html);
+                        else if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Asc)
+                            temp = temp.OrderBy(x => x.Html);
+                    }
+                    if (o.Key == "DateCreate")
+                    {
+                        if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Desc)
+                            temp = temp.OrderByDescending(x => x.DateCreate);
+                        else if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Asc)
+                            temp = temp.OrderBy(x => x.DateCreate);
+                    }
+                }
+            }
+
+            var list = temp.Skip((page - 1) * _pageSize)
+                .Take(_pageSize).ToArray().Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
 
             ViewData["Page"] = page;
-            ViewData["PageSize"] = size;
-            ViewData["RowsCount"] = dbRepo.All.Count();
+            ViewData["PageSize"] = _pageSize;
+            ViewData["RowsCount"] = temp.Count();
 
-            return PartialView(MVC.Articles.Views._GridView, list);
+            return PartialView(MVC.Shared.Views._GridView, list);
         }
     }
 }

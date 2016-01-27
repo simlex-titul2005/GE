@@ -121,6 +121,7 @@ namespace Links
                 public static readonly string jquery_min_js = Url("jquery.min.js");
                 public static readonly string jquery_unobtrusive_ajax_min_js = Url("jquery.unobtrusive-ajax.min.js");
                 public static readonly string metisMenu_min_js = Url("metisMenu.min.js");
+                public static readonly string sx_min_js = Url("sx.min.js");
             }
         
         }
@@ -141,8 +142,25 @@ namespace Links
             private const string URLPATH = "~/Content/sx";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string colors_less = Url("colors.less");
-            public static readonly string sx_grid_view_less = Url("sx-grid-view.less");
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class js {
+                private const string URLPATH = "~/Content/sx/js";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string sx_grid_view_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/sx-grid-view.min.js") ? Url("sx-grid-view.min.js") : Url("sx-grid-view.js");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class less {
+                private const string URLPATH = "~/Content/sx/less";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string colors_less = Url("colors.less");
+                public static readonly string sx_grid_view_less = Url("sx-grid-view.less");
+                public static readonly string sx_pager_less = Url("sx-pager.less");
+                public static readonly string sx_less = Url("sx.less");
+            }
+        
         }
     
     }
@@ -180,6 +198,7 @@ namespace Links
                         public const string jquery_min_js = "~/Content/dist/js/jquery.min.js"; 
                         public const string jquery_unobtrusive_ajax_min_js = "~/Content/dist/js/jquery.unobtrusive-ajax.min.js"; 
                         public const string metisMenu_min_js = "~/Content/dist/js/metisMenu.min.js"; 
+                        public const string sx_min_js = "~/Content/dist/js/sx.min.js"; 
                     }
                 }
                 public static class Assets
@@ -194,6 +213,19 @@ namespace Links
             }
             public static partial class sx 
             {
+                public static partial class js 
+                {
+                    public static class Assets
+                    {
+                        public const string sx_grid_view_js = "~/Content/sx/js/sx-grid-view.js"; 
+                    }
+                }
+                public static partial class less 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
                 public static class Assets
                 {
                 }

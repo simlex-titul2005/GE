@@ -38,8 +38,12 @@ namespace T4MVC
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _GridView = "_GridView";
+                public readonly string _Index = "_Index";
                 public readonly string _Layout = "_Layout";
             }
+            public readonly string _GridView = "~/Views/Shared/_GridView.cshtml";
+            public readonly string _Index = "~/Views/Shared/_Index.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
         }
     }

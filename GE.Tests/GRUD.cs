@@ -16,16 +16,21 @@ namespace GE.Tests
         {
             var dbRepo = new RepoArticle();
             var date = DateTime.Now;
-            var model = new Article {
-                ModelCoreType=Enums.ModelCoreType.Article,
-                DateCreate=date,
-                DateUpdate=date,
-                Html="Html",
-                Title="Test article"
-            };
+            for (int i = 0; i < 1000; i++)
+            {
+                var index = i + 1;
+                var model = new Article
+                {
+                    ModelCoreType = Enums.ModelCoreType.Article,
+                    DateCreate = date.AddDays(-i),
+                    DateUpdate = date.AddDays(-i+1),
+                    Html = "Html - " + index,
+                    Title = "Test article - " + index
+                };
+                var newModel = dbRepo.Create(model);
+            }
             
-            var newModel = dbRepo.Create(model);
-            Assert.IsNotNull(newModel);
+            //Assert.IsNotNull(newModel);
         }
 
         [TestMethod]

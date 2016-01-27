@@ -233,6 +233,8 @@
     <Content Include="Content\dist\js\jquery.min.js" />
     <Content Include="Content\dist\js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Content\dist\js\metisMenu.min.js" />
+    <Content Include="Content\dist\js\sx.min.js" />
+    <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
@@ -385,8 +387,8 @@
     <Content Include="bower_components\metisMenu\LICENSE" />
     <Content Include="bower_components\metisMenu\package.json" />
     <Content Include="bower_components\metisMenu\README.md" />
-    <Content Include="Content\sx\colors.less" />
-    <Content Include="Content\sx\sx-grid-view.less" />
+    <Content Include="Content\sx\less\colors.less" />
+    <Content Include="Content\sx\less\sx-grid-view.less" />
     <Content Include="bower_components\jquery-ajax-unobtrusive\.bower.json" />
     <Content Include="bower_components\jquery-ajax-unobtrusive\bower.json" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.eot" />
@@ -394,6 +396,8 @@
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\dist\fonts\FontAwesome.otf" />
+    <Content Include="Content\sx\less\sx-pager.less" />
+    <Content Include="Content\sx\less\sx.less" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -445,7 +449,8 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <Content Include="Views\Articles\Index.cshtml" />
-    <Content Include="Views\Articles\_GridView.cshtml" />
+    <Content Include="Views\Shared\_GridView.cshtml" />
+    <Content Include="Views\Shared\_Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

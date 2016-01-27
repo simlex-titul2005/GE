@@ -84,6 +84,7 @@
     <Compile Include="Abstract\SxDbUpdatedModel.cs" />
     <Compile Include="Abstract\SxMaterial.cs" />
     <Compile Include="HtmlHelpers\SxGridView.cs" />
+    <Compile Include="HtmlHelpers\SxPager.cs" />
     <Compile Include="SxArticle.cs" />
     <Compile Include="SxDbContext.cs" />
     <Compile Include="Enums.cs" />

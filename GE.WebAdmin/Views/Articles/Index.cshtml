@@ -1,11 +1,10 @@
 ﻿@model VMArticle[]
 @{
-    ViewBag.Title = "Index";
+    Layout = MVC.Shared.Views._Index;
 }
-<div id="list-articles">
-    @Html.Partial(MVC.Articles.Views._GridView, Model)
-</div>
 
-@section scripts{
-    <script type="text/javascript" src="~/Content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
+@section list{
+    <div id="list-articles">
+        @Html.Partial(MVC.Shared.Views._GridView, Model)
+    </div>
 }

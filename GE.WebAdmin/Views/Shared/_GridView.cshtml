@@ -1,0 +1,22 @@
+﻿@model SX.WebCore.Abstract.ISxViewModel[]
+@{
+    var filter = ViewBag.Filter != null ? (SX.WebCore.Abstract.ISxViewModel)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SX.WebCore.HtmlHelpers.Extantions.SortDirection>)ViewBag.Order : null;
+    var collectionType = Model.GetType();
+    var modelType = collectionType.GetElementType();
+}
+
+@Html.SxGridView(
+    Model,
+            new SX.WebCore.HtmlHelpers.Extantions.SxGridViewSettings(modelType)
+    {
+        Columns = new string[] { "DateCreate", "Title", "Html" },
+        ShowFilterRowMenu = true,
+        EnableSorting = true,
+        EnableEditing = true,
+        Filter = filter,
+        PagerSize = 10,
+        SortDirections = sortDirections
+    },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

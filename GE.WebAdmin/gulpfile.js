@@ -5,6 +5,8 @@ var rename = require('gulp-rename');
 var del = require('del');
 var less = require('gulp-less');
 var watch = require('gulp-watch');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 
 function clear() {
     del([
@@ -42,12 +44,12 @@ function createCss() {
             .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
             .pipe(gulp.dest('content/dist/css'));
 
-    gulp.src('content/sx/**/*.less')
-            .pipe(less())
-            .pipe(minifyCSS())
-            .pipe(rename('sx.min.css'))
-            .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-            .pipe(gulp.dest('content/dist/css'));
+    gulp.src('content/sx/less/**/*.less')
+        .pipe(less())
+        .pipe(minifyCSS())
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
+        .pipe(rename('sx.min.css'))
+        .pipe(gulp.dest('content/dist/css'));
 }
 
 function createJs() {
@@ -59,10 +61,15 @@ function createJs() {
     ])
         .pipe(gulp.dest('content/dist/js'));
 
+    gulp.src('content/sx/js/**/*.js')
+        .pipe(concat('sx.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('content/dist/js'));
+
 }
 
 gulp.task('watch', function (cb) {
-    watch(['content/less/**/*.less', 'content/sx/**/*.less'], function () {
+    watch(['content/less/**/*.less', 'content/sx/less/**/*.less', 'content/sx/js/**/*.js'], function () {
         clear();
         createFonts();
         createCss();

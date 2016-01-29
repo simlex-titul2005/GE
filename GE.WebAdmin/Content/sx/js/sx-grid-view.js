@@ -61,7 +61,7 @@ function pressGridViewFilter(e) {
 
 function clickPager(e) {
     var guid = $(e).closest('table').attr('id');
-    var page = $(e).text();
+    var page = $(e).attr('data-page');
     fillGridViewForm(guid);
     var form = $('#grid-view-form-' + guid);
     form.find('input[name=\"page\"]').val(page);

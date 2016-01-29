@@ -2,6 +2,7 @@
 using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
+using SX.WebCore.HtmlHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(VMArticle filterArticle, IDictionary<string, SX.WebCore.HtmlHelpers.Extantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMArticle filterArticle, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
             int id = filterArticle != null ? filterArticle.Id : 0;
             string title = filterArticle != null ? filterArticle.Title : null;
@@ -50,30 +51,30 @@ namespace GE.WebAdmin.Controllers
                 temp = temp.Where(x => x.Html.Contains(html));
 
             //order
-            var orders = order.Where(x => x.Value != SX.WebCore.HtmlHelpers.Extantions.SortDirection.Unknown);
+            var orders = order.Where(x => x.Value != SxExtantions.SortDirection.Unknown);
             if (orders.Count() != 0)
             {
                 foreach (var o in orders)
                 {
                     if (o.Key == "Title")
                     {
-                        if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Desc)
+                        if (o.Value == SxExtantions.SortDirection.Desc)
                             temp = temp.OrderByDescending(x => x.Title);
-                        else if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Asc)
+                        else if (o.Value == SxExtantions.SortDirection.Asc)
                             temp = temp.OrderBy(x => x.Title);
                     }
                     if (o.Key == "Html")
                     {
-                        if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Desc)
+                        if (o.Value == SxExtantions.SortDirection.Desc)
                             temp = temp.OrderByDescending(x => x.Html);
-                        else if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Asc)
+                        else if (o.Value == SxExtantions.SortDirection.Asc)
                             temp = temp.OrderBy(x => x.Html);
                     }
                     if (o.Key == "DateCreate")
                     {
-                        if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Desc)
+                        if (o.Value == SxExtantions.SortDirection.Desc)
                             temp = temp.OrderByDescending(x => x.DateCreate);
-                        else if (o.Value == SX.WebCore.HtmlHelpers.Extantions.SortDirection.Asc)
+                        else if (o.Value == SxExtantions.SortDirection.Asc)
                             temp = temp.OrderBy(x => x.DateCreate);
                     }
                 }

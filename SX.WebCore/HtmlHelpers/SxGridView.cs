@@ -9,14 +9,23 @@ using System.Web.Mvc;
 
 namespace SX.WebCore.HtmlHelpers
 {
-    public static partial class Extantions
+    public static partial class SxExtantions
     {
-        public static MvcHtmlString SxGridView<TModel>(this HtmlHelper htmlHelper, TModel[] data, SxGridViewSettings settings = null, object htmlAttributes = null)
+        public static MvcHtmlString SxGridView<TModel>(this HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings = null, object htmlAttributes = null)
             where TModel : ISxViewModel
         {
             var guid = Guid.NewGuid().ToString().ToLower();
-            var collectionType = data.GetType();
-            var modelType = collectionType.GetElementType();
+
+            var page = htmlHelper.ViewData["Page"];
+            var pageSize = htmlHelper.ViewData["PageSize"];
+            var rowsCount = htmlHelper.ViewData["RowsCount"];
+            var pagerInfo = new SxPagerInfo
+            {
+                Page = (int)page,
+                PageSize = (int)pageSize,
+                TotalItems = (int)rowsCount
+            };
+            settings.PagerInfo = pagerInfo;
 
             if (settings != null && settings.ShowFilterRowMenu)
             {
@@ -40,7 +49,7 @@ namespace SX.WebCore.HtmlHelpers
             var showRowMenu = Convert.ToBoolean(settings.ShowFilterRowMenu);
             if (showRowMenu)
                 tbody.InnerHtml += getGridViewRowMenu<TModel>(settings);
-            tbody.InnerHtml += getGridViewRows(data, settings);
+            tbody.InnerHtml += getGridViewRows(settings.Data, settings);
             table.InnerHtml += tbody;
 
             //footer
@@ -49,49 +58,86 @@ namespace SX.WebCore.HtmlHelpers
             return MvcHtmlString.Create(table.ToString());
         }
 
-        public class SxGridViewSettings
+        public class SxGridViewSettings<TModel> where TModel : ISxViewModel
         {
-            private Type _modelType=null;
-            private static string[] _columns;
-
-            public SxGridViewSettings(Type modelType)
+            public TModel[] Data { get; set; }
+            public Type ModelType
             {
-                _modelType = modelType;
+                get
+                {
+                    var collectionType = Data.GetType();
+                    var modelType = collectionType.GetElementType();
+                    return modelType;
+                }
             }
 
-            public Type ModelType 
+            public SxGridViewColumn[] Columns { get; set; }
+
+            private bool _showFilterRowMenu = true;
+            public bool ShowFilterRowMenu 
             { 
                 get
                 {
-                    return _modelType;
-                }
-            }
-            public string[] Columns
-            {
-                get
-                {
-                    return _columns == null ? getModelColumns(_modelType) : _columns;
+                    return _showFilterRowMenu;
                 }
                 set
                 {
-                    _columns = value;
+                    _showFilterRowMenu = value;
                 }
             }
-            public bool ShowFilterRowMenu { get; set; }
-            public bool EnableSorting { get; set; }
+
+            private bool _enableSorting = true;
+            public bool EnableSorting 
+            { 
+                get
+                {
+                    return _enableSorting;
+                }
+                set
+                {
+                    _enableSorting=value;
+                }
+            }
+
             public IDictionary<string, SortDirection> SortDirections { get; set; }
-            public bool EnableEditing { get; set; }
+            private bool _enableEditing = true;
+            public bool EnableEditing 
+            { 
+                get
+                {
+                    return _enableEditing;
+                }
+                set
+                {
+                    _enableEditing = true;
+                }
+            }
+
             public dynamic Filter { get; set; }
-            public int Page { get; set; }
-            public int PageSize { get; set; }
-            public int RowsCount { get; set; }
-            public int? PagerSize { get; set; }
+            public SxPagerInfo PagerInfo { get; set; }
+        }
+        public class SxGridViewColumn
+        {
+            public string FieldName { get; set; }
+
+            private string _caption;
+            public string Caption 
+            { 
+                get
+                {
+                    return string.IsNullOrEmpty(_caption) ? FieldName : _caption;
+                }
+                set
+                {
+                    _caption = value;
+                }
+            }
         }
 
-        private static TagBuilder getForm(SxGridViewSettings settings, string guid)
+        private static TagBuilder getForm<TModel>(SxGridViewSettings<TModel> settings, string guid) where TModel : ISxViewModel
         {
             var form = new TagBuilder("form");
-            form.MergeAttributes(new Dictionary<string, object>{
+            form.MergeAttributes(new Dictionary<string, string>{
                     {"id", "grid-view-form-"+guid},
                     {"method", "post"},
                     {"data-ajax", "true"},
@@ -100,7 +146,7 @@ namespace SX.WebCore.HtmlHelpers
 
             //pager
             var pagerHidden = new TagBuilder("input");
-            pagerHidden.MergeAttributes(new Dictionary<string, object>{
+            pagerHidden.MergeAttributes(new Dictionary<string, string>{
                         {"name", "page"},
                         {"type", "hidden"}
                     });
@@ -112,16 +158,16 @@ namespace SX.WebCore.HtmlHelpers
                 //filter
                 var column = settings.Columns[i];
                 var hidden = new TagBuilder("input");
-                hidden.MergeAttributes(new Dictionary<string, object>{
-                        {"name", column},
+                hidden.MergeAttributes(new Dictionary<string, string>{
+                        {"name", column.FieldName},
                         {"type", "hidden"}
                     });
                 form.InnerHtml += hidden;
 
                 //order
                 hidden = new TagBuilder("input");
-                hidden.MergeAttributes(new Dictionary<string, object>{
-                        {"name", string.Format("order[{0}]", column)},
+                hidden.MergeAttributes(new Dictionary<string, string>{
+                        {"name", string.Format("order[{0}]", column.FieldName)},
                         {"type", "hidden"}
                     });
                 form.InnerHtml += hidden;
@@ -130,7 +176,7 @@ namespace SX.WebCore.HtmlHelpers
             return form;
         }
 
-        private static TagBuilder getGridViewHeader(SxGridViewSettings settings)
+        private static TagBuilder getGridViewHeader<TModel>(SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
         {
             var thead = new TagBuilder("thead");
             var tr = new TagBuilder("tr");
@@ -147,16 +193,16 @@ namespace SX.WebCore.HtmlHelpers
                 var column = settings.Columns[i];
 
                 var th = new TagBuilder("th");
-                th.InnerHtml += column;
+                th.InnerHtml += column.Caption;
 
                 if (settings.EnableSorting)
                 {
-                    var hasOrderDirection = settings.SortDirections != null && settings.SortDirections.ContainsKey(column);
-                    var direction = hasOrderDirection && settings.SortDirections[column] != SortDirection.Unknown ? settings.SortDirections[column] : SortDirection.Asc;
+                    var hasOrderDirection = settings.SortDirections != null && settings.SortDirections.ContainsKey(column.FieldName);
+                    var direction = hasOrderDirection && settings.SortDirections[column.FieldName] != SortDirection.Unknown ? settings.SortDirections[column.FieldName] : SortDirection.Asc;
                     th.MergeAttributes(new Dictionary<string, object>() {
                         {"onclick", "pressGridViewColumn(this)"},
                         { "class", "ordered-column" },
-                        { "data-column-name", column },
+                        { "data-column-name", column.FieldName },
                         { "data-sort-direction", direction}
                     });
 
@@ -174,7 +220,7 @@ namespace SX.WebCore.HtmlHelpers
             return thead;
         }
 
-        private static string getGridViewRows<TModel>(TModel[] data, SxGridViewSettings settings) where TModel : ISxViewModel
+        private static string getGridViewRows<TModel>(TModel[] data, SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
         {
             var sb = new StringBuilder();
             if (data != null && data.Any())
@@ -189,7 +235,7 @@ namespace SX.WebCore.HtmlHelpers
             return sb.ToString();
         }
 
-        private static TagBuilder getGridViewRowMenu<TModel>(SxGridViewSettings settings) where TModel : ISxViewModel
+        private static TagBuilder getGridViewRowMenu<TModel>(SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
         {
             var tr = new TagBuilder("tr");
             tr.AddCssClass("filter-row");
@@ -216,7 +262,7 @@ namespace SX.WebCore.HtmlHelpers
                 var column = settings.Columns[i];
                 var td = new TagBuilder("td");
 
-                var prop = settings.ModelType.GetProperties().FirstOrDefault(x=>x.Name==column);
+                var prop = settings.ModelType.GetProperties().FirstOrDefault(x=>x.Name==column.FieldName);
                 var editor = getColumnEditor(prop, settings);
                 td.InnerHtml += editor;
 
@@ -224,7 +270,7 @@ namespace SX.WebCore.HtmlHelpers
             }
             return tr;
         }
-        private static TagBuilder getColumnEditor(PropertyInfo propertyInfo, SxGridViewSettings settings)
+        private static TagBuilder getColumnEditor<TModel>(PropertyInfo propertyInfo, SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
         {
             var propertyType = propertyInfo.PropertyType;
 
@@ -263,11 +309,12 @@ namespace SX.WebCore.HtmlHelpers
 
             return editor;
         }
-        private static bool isNotEmptyFilter(SxGridViewSettings settings)
+        private static bool isNotEmptyFilter<TModel>(SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
         {
             if (settings.Filter == null) return false;
-
-            var props = ((PropertyInfo[])settings.Filter.GetType().GetProperties()).Where(x => settings.Columns.Contains(x.Name) && x.GetValue(settings.Filter) != null).ToArray();
+            var fields = settings.Columns.Select(c => c.FieldName);
+            var props = ((PropertyInfo[])settings.Filter.GetType().GetProperties())
+                .Where(x => fields.Contains(x.Name) && x.GetValue(settings.Filter) != null).ToArray();
             
             var count = 0;
             for (int i = 0; i < props.Length; i++)
@@ -281,46 +328,8 @@ namespace SX.WebCore.HtmlHelpers
             }
             return count > 0;
         }
-
-        private static TagBuilder getGridViewFooter(HtmlHelper htmlHelper, SxGridViewSettings settings)
-        {
-            var page = htmlHelper.ViewData["Page"];
-            var pageSize = htmlHelper.ViewData["PageSize"];
-            var rowsCount = htmlHelper.ViewData["RowsCount"];
-            var pagerInfo = new SxPagerInfo
-            {
-                Page = (int)page,
-                PageSize = (int)pageSize,
-                TotalItems = (int)rowsCount,
-                Size = settings.PagerSize.HasValue ? (int)settings.PagerSize : 10
-            };
-
-            var tfoot = new TagBuilder("tfoot");
-            var tr = new TagBuilder("tr");
-            var td = new TagBuilder("td");
-            if (settings.ShowFilterRowMenu)
-            {
-                tr.InnerHtml += td;
-            }
-
-            td = new TagBuilder("td");
-            td.MergeAttribute("colspan", settings.Columns.Length.ToString());
-            if (pagerInfo.TotalPages != 0)
-            {
-                if (pagerInfo.TotalPages > 1)
-                    td.InnerHtml += htmlHelper.SxPager(pagerInfo);
-            }
-            else
-            {
-                td.InnerHtml += "Отсутствуют данные для отображения";
-            }
-            tr.InnerHtml += td;
-
-            tfoot.InnerHtml += tr;
-            return tfoot;
-        }
-
-        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings settings) where TModel : ISxViewModel
+        
+        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
         {
             var tr = new TagBuilder("tr");
             if (settings.ShowFilterRowMenu || settings.EnableEditing)
@@ -334,10 +343,56 @@ namespace SX.WebCore.HtmlHelpers
             {
                 var column = settings.Columns[i];
                 var td = new TagBuilder("td");
-                var value = props.First(x => x.Name == column).GetValue(model);
+                var value = props.First(x => x.Name == column.FieldName).GetValue(model);
                 td.InnerHtml += value;
                 tr.InnerHtml += td;
             }
+            return tr;
+        }
+
+        private static TagBuilder getGridViewFooter<TModel>(HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        {
+            
+
+            var tfoot = new TagBuilder("tfoot");
+            var tr = new TagBuilder("tr");
+            var td = new TagBuilder("td");
+            if (settings.ShowFilterRowMenu)
+            {
+                tr.InnerHtml += td;
+            }
+
+            td = new TagBuilder("td");
+            td.MergeAttribute("colspan", settings.Columns.Length.ToString());
+            if (settings.PagerInfo.TotalPages != 0)
+            {
+                if (settings.PagerInfo.TotalPages > 1)
+                    td.InnerHtml += htmlHelper.SxPager(settings.PagerInfo);
+            }
+            else
+            {
+                td.InnerHtml += "<p class=\"text-danger\">Отсутствуют данные для отображения</p>";
+            }
+            tr.InnerHtml += td;
+
+            tfoot.InnerHtml += tr;
+            tfoot.InnerHtml += getGridViewPagerProgress(settings);
+            return tfoot;
+        }
+        private static TagBuilder getGridViewPagerProgress<TModel>(SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        {
+            var tr = new TagBuilder("tr");
+            var td = new TagBuilder("td");
+            var colspan = settings.EnableEditing || settings.ShowFilterRowMenu ? settings.Columns.Length + 1 : settings.Columns.Length;
+            td.MergeAttribute("colspan", colspan.ToString());
+            td.AddCssClass("sx-pager-progress");
+
+            var div = new TagBuilder("div");
+            var percent = 100 * settings.PagerInfo.Page / settings.PagerInfo.TotalPages;
+            div.MergeAttribute("style", string.Format("width:{0}%", percent));
+            td.InnerHtml += div;
+
+            tr.InnerHtml += td;
             return tr;
         }
 

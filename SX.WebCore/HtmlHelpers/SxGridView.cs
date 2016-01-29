@@ -184,6 +184,7 @@ namespace SX.WebCore.HtmlHelpers
             if (settings.ShowFilterRowMenu || settings.EnableEditing)
             {
                 var th = new TagBuilder("th");
+                th.AddCssClass("sx-add-column");
                 th.InnerHtml += "#";
                 tr.InnerHtml += th;
             }

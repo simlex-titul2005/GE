@@ -13,5 +13,11 @@ namespace GE.WebCoreExtantions
     {
         [Column("TITLE"), MaxLength(100), Required]
         public string Title { get; set; }
+
+        [Column("SHOW")]
+        public bool Show { get; set; }
+
+        [Column("DESCRIPTION"), MaxLength(255)]
+        public string Description { get; set; }
     }
 }

@@ -28,6 +28,8 @@ using T4MVC;
 public static partial class MVC
 {
     public static GE.WebAdmin.Controllers.ArticlesController Articles = new GE.WebAdmin.Controllers.T4MVC_ArticlesController();
+    public static GE.WebAdmin.Controllers.ArticleTypesController ArticleTypes = new GE.WebAdmin.Controllers.T4MVC_ArticleTypesController();
+    public static GE.WebAdmin.Controllers.GamesController Games = new GE.WebAdmin.Controllers.T4MVC_GamesController();
     public static GE.WebAdmin.Controllers.HomeController Home = new GE.WebAdmin.Controllers.T4MVC_HomeController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }

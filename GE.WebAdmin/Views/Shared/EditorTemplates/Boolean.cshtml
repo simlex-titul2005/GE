@@ -1,0 +1,5 @@
+﻿@model bool
+<select class="form-control">
+    <option value="1" @(Model?"selected=selected":null)>Да</option>
+    <option value="0" @(!Model ? "selected=selected" : null)>Нет</option>
+</select>

@@ -1,11 +1,13 @@
-﻿@model VMArticle[]
+﻿@model VMGame[]
 
 @section styles{
     <link href="~/Content/dist/css/sx.min.css" rel="stylesheet">
 }
 
-<div id="grid-articles">
-    @Html.Partial(MVC.Articles.Views._GridView, Model)
+<h2>Типы статей</h2>
+
+<div id="grid-games">
+    @Html.Partial(MVC.Games.Views._GridView, Model)
 </div>
 
 @section scripts{

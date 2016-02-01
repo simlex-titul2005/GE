@@ -2,7 +2,7 @@
 
 .sx-grid-view th {
     font-weight: normal;
-    border-bottom-width:1px !important;
+    border-bottom-width: 1px !important;
 }
 
 .sx-grid-view .ordered-column {
@@ -25,9 +25,35 @@
 .sx-grid-view input {
     border: 1px solid @color-gray;
     padding: 2px 2px 2px 10px;
-    width:100%;
+    width: 100%;
 }
 
-.sx-grid-view .sx-add-column{
-    width:40px;
+.sx-grid-view .sx-add-column {
+    width: 50px;
+    text-align:center;
+    color:@color-black;
+}
+
+.sx-grid-view .sx-add-column a{
+    color:inherit;
+}
+
+.sx-grid-view .sx-grid-view-edit-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    color: @color-black;
+}
+
+.sx-grid-view .sx-grid-view-edit-list > li{
+    float:left;
+    margin-right:10px;
+}
+
+.sx-grid-view .sx-grid-view-edit-list > li:last-child{
+    margin-right:0;
+}
+
+.sx-grid-view .sx-grid-view-edit-list > li > a {
+    color:inherit;
 }

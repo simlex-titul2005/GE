@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SX.WebCore.Abstract
+namespace GE.WebCoreExtantions.Repositories
 {
-    public interface ISxViewModel
+    public sealed class RepoGame : SX.WebCore.Abstract.SxDbRepository<int, Game, DbContext>
     {
-        int Id { get; set; }
     }
 }

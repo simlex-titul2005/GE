@@ -14,5 +14,9 @@ namespace GE.WebCoreExtantions
         public virtual Game Game { get; set; }
         [Column("GAME_ID")]
         public int? GameId { get; set; }
+
+        public virtual ArticleType ArticleType { get; set; }
+        [Column("ARTICLE_TYPE_ID")]
+        public byte? ArticleTypeId { get; set; }
     }
 }

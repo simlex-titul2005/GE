@@ -6,8 +6,9 @@ using System.Web;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMArticle : SX.WebCore.Abstract.SxMaterial, SX.WebCore.Abstract.ISxViewModel
+    public sealed class VMArticleType : SX.WebCore.Abstract.ISxViewModel
     {
-       
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -13,6 +13,16 @@ namespace GE.WebAdmin
         public static void Configure()
         {
             Mapper.CreateMap<Article, VMArticle>();
+            Mapper.CreateMap<Article, VMEditArticle>();
+            Mapper.CreateMap<VMEditArticle, Article>();
+
+            Mapper.CreateMap<ArticleType, VMArticleType>();
+            Mapper.CreateMap<ArticleType, VMEditArticleType>();
+            Mapper.CreateMap<VMEditArticleType, ArticleType>();
+
+            Mapper.CreateMap<Game, VMGame>();
+            Mapper.CreateMap<Game, VMEditGame>();
+            Mapper.CreateMap<VMEditGame, Game>();
         }
     }
 }

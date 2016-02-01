@@ -25,10 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebAdmin.Controllers
 {
-    public partial class ArticlesController
+    public partial class ArticleTypesController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ArticlesController(Dummy d) { }
+        protected ArticleTypesController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -64,13 +64,13 @@ namespace GE.WebAdmin.Controllers
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ArticlesController Actions { get { return MVC.Articles; } }
+        public ArticleTypesController Actions { get { return MVC.ArticleTypes; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Articles";
+        public readonly string Name = "ArticleTypes";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Articles";
+        public const string NameConst = "ArticleTypes";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -107,6 +107,7 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string id = "id";
+            public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -122,16 +123,16 @@ namespace GE.WebAdmin.Controllers
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
-            public readonly string _GridView = "~/Views/Articles/_GridView.cshtml";
-            public readonly string Edit = "~/Views/Articles/Edit.cshtml";
-            public readonly string Index = "~/Views/Articles/Index.cshtml";
+            public readonly string _GridView = "~/Views/ArticleTypes/_GridView.cshtml";
+            public readonly string Edit = "~/Views/ArticleTypes/Edit.cshtml";
+            public readonly string Index = "~/Views/ArticleTypes/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_ArticlesController : GE.WebAdmin.Controllers.ArticlesController
+    public partial class T4MVC_ArticleTypesController : GE.WebAdmin.Controllers.ArticleTypesController
     {
-        public T4MVC_ArticlesController() : base(Dummy.Instance) { }
+        public T4MVC_ArticleTypesController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
@@ -146,10 +147,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMArticle filter, System.Collections.Generic.IDictionary<string,SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMArticleType filter, System.Collections.Generic.IDictionary<string,SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMArticle filter, System.Collections.Generic.IDictionary<string,SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMArticleType filter, System.Collections.Generic.IDictionary<string,SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filter", filter);
@@ -168,6 +169,18 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             EditOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, GE.WebAdmin.Models.VMEditArticleType model);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult Edit(GE.WebAdmin.Models.VMEditArticleType model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EditOverride(callInfo, model);
             return callInfo;
         }
 

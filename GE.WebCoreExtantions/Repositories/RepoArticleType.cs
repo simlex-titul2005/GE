@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoArticle : SX.WebCore.Abstract.SxDbRepository<int, Article, DbContext>
+    public sealed class RepoArticleType : SX.WebCore.Abstract.SxDbRepository<byte, ArticleType, DbContext>
     {
-        
     }
 }

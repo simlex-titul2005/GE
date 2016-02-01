@@ -19,5 +19,8 @@ namespace SX.WebCore.Abstract
 
         [Column("CORE_TYPE")]
         public Enums.ModelCoreType ModelCoreType { get; set; }
+
+        [Column("SHOW")]
+        public bool Show { get; set; }
     }
 }

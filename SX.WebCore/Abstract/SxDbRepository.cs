@@ -22,6 +22,12 @@ namespace SX.WebCore.Abstract
 
         public virtual TModel Create(TModel model)
         {
+            if (model is SxDbUpdatedModel<TKey>)
+            {
+                var m = model as SxDbUpdatedModel<TKey>;
+                if (m.DateUpdate == DateTime.MinValue)
+                    m.DateUpdate = DateTime.Now;
+            }
             _dbContext.Entry(model).State = EntityState.Added;
             _dbContext.SaveChanges();
             return model;

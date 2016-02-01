@@ -410,15 +410,28 @@
     <Compile Include="ArticlesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArticleTypesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\ArticlesController.cs" />
+    <Compile Include="Controllers\GamesController.cs" />
+    <Compile Include="Controllers\ArticleTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="GamesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VMArticleType.cs" />
     <Compile Include="Models\VMArticle.cs" />
+    <Compile Include="Models\VMEditArticle.cs" />
+    <Compile Include="Models\VMEditArticleType.cs" />
+    <Compile Include="Models\VMEditGame.cs" />
+    <Compile Include="Models\VMGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Constants.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -449,8 +462,15 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <Content Include="Views\Articles\Index.cshtml" />
-    <Content Include="Views\Shared\_GridView.cshtml" />
-    <Content Include="Views\Shared\_Index.cshtml" />
+    <Content Include="Views\Articles\_GridView.cshtml" />
+    <Content Include="Views\Articles\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\ArticleTypes\_GridView.cshtml" />
+    <Content Include="Views\ArticleTypes\Index.cshtml" />
+    <Content Include="Views\ArticleTypes\Edit.cshtml" />
+    <Content Include="Views\Games\_GridView.cshtml" />
+    <Content Include="Views\Games\Edit.cshtml" />
+    <Content Include="Views\Games\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

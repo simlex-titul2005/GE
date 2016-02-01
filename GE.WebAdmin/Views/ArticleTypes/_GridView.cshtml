@@ -1,16 +1,18 @@
-﻿@model ISxViewModel[]
+﻿@model VMArticleType[]
 @{
+    Layout = null;
     var filter = ViewBag.Filter != null ? (ISxViewModel)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
+
 @Html.SxGridView(
-                    new SxExtantions.SxGridViewSettings<SX.WebCore.Abstract.ISxViewModel>
+    new SxExtantions.SxGridViewSettings<VMArticleType>
     {
+        UpdateTargetId = "grid-article-types",
         Data = Model,
         Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="DateCreate", Caption="Дата создания"},
-            new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Заголовок"},
+            new SxExtantions.SxGridViewColumn{FieldName="Name", Caption="Наименование"},
         },
         Filter = filter,
         SortDirections = sortDirections

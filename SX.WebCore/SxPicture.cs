@@ -23,12 +23,5 @@ namespace SX.WebCore
 
         [Column("HEIGHT")]
         public int Height { get; set; }
-
-        public SxMaterial Material { get; set; }
-        [Column("MATERIAL_ID")]
-        public int MaterialId { get; set; }
-
-        [Column("MATERIAL_CORE_TYPE")]
-        public Enums.ModelCoreType ModelCoreType { get; set; }
     }
 }

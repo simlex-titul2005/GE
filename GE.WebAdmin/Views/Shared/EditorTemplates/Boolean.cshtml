@@ -1,5 +1,5 @@
 ﻿@model bool
-<select class="form-control">
-    <option value="1" @(Model?"selected=selected":null)>Да</option>
-    <option value="0" @(!Model ? "selected=selected" : null)>Нет</option>
-</select>
+@Html.DropDownList("", new SelectListItem[] {
+    new SelectListItem() { Text = "Да", Value = "true", Selected = Model },
+    new SelectListItem() { Text = "Нет", Value = "false", Selected = !Model }
+}, new { @class="form-control"})

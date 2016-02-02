@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SX.WebCore.Abstract
 {
     [Table("DV_MATERIAL")]
-    public abstract class SxMaterial : SxDbUpdatedModel<int>, ISxHasHtml
+    public abstract class SxMaterial : SxDbUpdatedModel<int>, ISxHasHtml, ISxHasFrontPicture
     {
         [Column("TITLE"), MaxLength(400), Required]
         public string Title { get; set; }
@@ -22,5 +22,9 @@ namespace SX.WebCore.Abstract
 
         [Column("SHOW")]
         public bool Show { get; set; }
+
+        [Column("FRONT_PICTURE_ID")]
+        public Guid? FrontPictureId { get; set; }
+        public virtual SxPicture FrontPicture { get; set; }
     }
 }

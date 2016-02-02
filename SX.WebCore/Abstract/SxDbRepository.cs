@@ -42,7 +42,7 @@ namespace SX.WebCore.Abstract
             var oldModelType = oldModel.GetType();
             var propsForChange = modelType.GetProperties()
                 .Where(x => propertiesForChange.Contains(x.Name))
-                .Select(x => new { Name = x.Name, Value = x.GetValue(model) });
+                .Select(x => new { Name = x.Name, Value = x.GetValue(model) }).ToArray();
             foreach (var prop in propsForChange)
             {
                 var oldProp = oldModelType.GetProperty(prop.Name);

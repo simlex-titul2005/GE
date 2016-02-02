@@ -35,12 +35,6 @@ namespace SX.WebCore
                .WithMany()
                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
 
-            modelBuilder.Entity<SxPicture>()
-                            .HasKey(x => new { x.Id, x.MaterialId, x.Width })
-                            .HasRequired(x => x.Material)
-                            .WithMany()
-                            .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
-
             modelBuilder.Entity<SxSeoInfo>()
                 .HasRequired(x => x.Material)
                 .WithMany()

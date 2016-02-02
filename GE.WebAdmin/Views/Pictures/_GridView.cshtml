@@ -1,18 +1,18 @@
-﻿@model VMArticleType[]
+﻿@model VMPicture[]
 @{
     Layout = null;
-    var filter = ViewBag.Filter != null ? (VMArticleType)ViewBag.Filter : null;
+    var filter = ViewBag.Filter != null ? (VMPicture)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 
 @Html.SxGridView(
-    new SxExtantions.SxGridViewSettings<VMArticleType>
+        new SxExtantions.SxGridViewSettings<VMPicture>
     {
-        UpdateTargetId = "grid-article-types",
+        UpdateTargetId = "grid-pictures",
         Data = Model,
         Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="Name", Caption="Наименование"},
+            new SxExtantions.SxGridViewColumn{FieldName="Width", Caption="Ширина"},
         },
         Filter = filter,
         SortDirections = sortDirections

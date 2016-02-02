@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SX.WebCore.Abstract
 {
-    public interface ISxViewModel
+    public interface ISxViewModel<TKey>
     {
-        int Id { get; set; }
+        TKey Id { get; set; }
     }
 }

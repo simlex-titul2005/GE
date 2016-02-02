@@ -7,7 +7,7 @@ using System.Web;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMEditGame : ISxViewModel
+    public sealed class VMEditGame : ISxViewModel<int>
     {
         public int Id { get; set; }
         public DateTime DateCreate { get; set; }

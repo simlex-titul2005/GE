@@ -1,7 +1,7 @@
 ﻿@model VMGame[]
 @{
     Layout = null;
-    var filter = ViewBag.Filter != null ? (ISxViewModel)ViewBag.Filter : null;
+    var filter = ViewBag.Filter != null ? (VMGame)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 

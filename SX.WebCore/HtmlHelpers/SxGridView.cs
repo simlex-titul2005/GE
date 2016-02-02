@@ -13,7 +13,6 @@ namespace SX.WebCore.HtmlHelpers
     public static partial class SxExtantions
     {
         public static MvcHtmlString SxGridView<TModel>(this HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings = null, object htmlAttributes = null)
-            where TModel : ISxViewModel
         {
             var guid = Guid.NewGuid().ToString().ToLower();
 
@@ -59,7 +58,7 @@ namespace SX.WebCore.HtmlHelpers
             return MvcHtmlString.Create(table.ToString());
         }
 
-        public class SxGridViewSettings<TModel> where TModel : ISxViewModel
+        public class SxGridViewSettings<TModel>
         {
             public string UpdateTargetId { get; set; }
 
@@ -137,7 +136,7 @@ namespace SX.WebCore.HtmlHelpers
             }
         }
 
-        private static TagBuilder getForm<TModel>(SxGridViewSettings<TModel> settings, string guid) where TModel : ISxViewModel
+        private static TagBuilder getForm<TModel>(SxGridViewSettings<TModel> settings, string guid)
         {
             var form = new TagBuilder("form");
             form.MergeAttributes(new Dictionary<string, string>{
@@ -179,7 +178,7 @@ namespace SX.WebCore.HtmlHelpers
             return form;
         }
 
-        private static TagBuilder getGridViewHeader<TModel>(SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        private static TagBuilder getGridViewHeader<TModel>(SxGridViewSettings<TModel> settings)
         {
             var thead = new TagBuilder("thead");
             var tr = new TagBuilder("tr");
@@ -226,7 +225,7 @@ namespace SX.WebCore.HtmlHelpers
             return thead;
         }
 
-        private static string getGridViewRows<TModel>(TModel[] data, SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        private static string getGridViewRows<TModel>(TModel[] data, SxGridViewSettings<TModel> settings)
         {
             var sb = new StringBuilder();
             if (data != null && data.Any())
@@ -241,7 +240,7 @@ namespace SX.WebCore.HtmlHelpers
             return sb.ToString();
         }
 
-        private static TagBuilder getGridViewRowMenu<TModel>(SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        private static TagBuilder getGridViewRowMenu<TModel>(SxGridViewSettings<TModel> settings)
         {
             var tr = new TagBuilder("tr");
             tr.AddCssClass("filter-row");
@@ -276,7 +275,7 @@ namespace SX.WebCore.HtmlHelpers
             }
             return tr;
         }
-        private static TagBuilder getColumnEditor<TModel>(PropertyInfo propertyInfo, SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        private static TagBuilder getColumnEditor<TModel>(PropertyInfo propertyInfo, SxGridViewSettings<TModel> settings)
         {
             var propertyType = propertyInfo.PropertyType;
 
@@ -315,7 +314,7 @@ namespace SX.WebCore.HtmlHelpers
 
             return editor;
         }
-        private static bool isNotEmptyFilter<TModel>(SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        private static bool isNotEmptyFilter<TModel>(SxGridViewSettings<TModel> settings)
         {
             if (settings.Filter == null) return false;
             var fields = settings.Columns.Select(c => c.FieldName);
@@ -335,7 +334,7 @@ namespace SX.WebCore.HtmlHelpers
             return count > 0;
         }
 
-        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings)
         {
             var tr = new TagBuilder("tr");
             if (settings.ShowFilterRowMenu || settings.EnableEditing)
@@ -353,7 +352,7 @@ namespace SX.WebCore.HtmlHelpers
                     //edit link
                     var editLi = new TagBuilder("li");
                     var editA = new TagBuilder("a");
-                    editA.MergeAttribute("href", string.Format("{0}/edit?id={1}", controller, model.Id));
+                    editA.MergeAttribute("href", string.Format("{0}/edit?id={1}", controller, model.GetType().GetProperty("Id").GetValue(model)));
                     editA.InnerHtml += "<i class=\"fa fa-pencil\"></i>";
                     editLi.InnerHtml += editA;
                     ul.InnerHtml += editLi;
@@ -383,7 +382,7 @@ namespace SX.WebCore.HtmlHelpers
             return tr;
         }
 
-        private static TagBuilder getGridViewFooter<TModel>(HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        private static TagBuilder getGridViewFooter<TModel>(HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings)
         {
             
 
@@ -412,7 +411,7 @@ namespace SX.WebCore.HtmlHelpers
             //tfoot.InnerHtml += getGridViewPagerProgress(settings);
             return tfoot;
         }
-        //private static TagBuilder getGridViewPagerProgress<TModel>(SxGridViewSettings<TModel> settings) where TModel : ISxViewModel
+        //private static TagBuilder getGridViewPagerProgress<TModel>(SxGridViewSettings<TModel> settings)
         //{
         //    var tr = new TagBuilder("tr");
         //    var td = new TagBuilder("td");

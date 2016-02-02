@@ -414,6 +414,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ArticlesController.cs" />
+    <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\ArticleTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -432,6 +433,11 @@
     <Compile Include="Models\VMEditArticleType.cs" />
     <Compile Include="Models\VMEditGame.cs" />
     <Compile Include="Models\VMGame.cs" />
+    <Compile Include="Models\VMEditPicture.cs" />
+    <Compile Include="Models\VMPicture.cs" />
+    <Compile Include="PicturesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Constants.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -471,6 +477,9 @@
     <Content Include="Views\Games\_GridView.cshtml" />
     <Content Include="Views\Games\Edit.cshtml" />
     <Content Include="Views\Games\Index.cshtml" />
+    <Content Include="Views\Pictures\_GridView.cshtml" />
+    <Content Include="Views\Pictures\Edit.cshtml" />
+    <Content Include="Views\Pictures\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -69,11 +69,42 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class css {
-            private const string URLPATH = "~/Content/css";
+        public static class dist {
+            private const string URLPATH = "~/Content/dist";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string site_min_css = Url("site.min.css");
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class css {
+                private const string URLPATH = "~/Content/dist/css";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
+                public static readonly string font_awesome_min_css = Url("font-awesome.min.css");
+                public static readonly string site_min_css = Url("site.min.css");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class fonts {
+                private const string URLPATH = "~/Content/dist/fonts";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string fontawesome_webfont_eot = Url("fontawesome-webfont.eot");
+                public static readonly string fontawesome_webfont_svg = Url("fontawesome-webfont.svg");
+                public static readonly string fontawesome_webfont_ttf = Url("fontawesome-webfont.ttf");
+                public static readonly string fontawesome_webfont_woff = Url("fontawesome-webfont.woff");
+                public static readonly string fontawesome_webfont_woff2 = Url("fontawesome-webfont.woff2");
+                public static readonly string FontAwesome_otf = Url("FontAwesome.otf");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class js {
+                private const string URLPATH = "~/Content/dist/js";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
+                public static readonly string jquery_min_js = Url("jquery.min.js");
+            }
+        
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -93,11 +124,33 @@ namespace Links
     {
         public static partial class Content 
         {
-            public static partial class css 
+            public static partial class dist 
             {
+                public static partial class css 
+                {
+                    public static class Assets
+                    {
+                        public const string bootstrap_min_css = "~/Content/dist/css/bootstrap.min.css";
+                        public const string font_awesome_min_css = "~/Content/dist/css/font-awesome.min.css";
+                        public const string site_min_css = "~/Content/dist/css/site.min.css";
+                    }
+                }
+                public static partial class fonts 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class js 
+                {
+                    public static class Assets
+                    {
+                        public const string bootstrap_min_js = "~/Content/dist/js/bootstrap.min.js"; 
+                        public const string jquery_min_js = "~/Content/dist/js/jquery.min.js"; 
+                    }
+                }
                 public static class Assets
                 {
-                    public const string site_min_css = "~/Content/css/site.min.css";
                 }
             }
             public static partial class less 

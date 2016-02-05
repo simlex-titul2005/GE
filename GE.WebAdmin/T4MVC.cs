@@ -31,6 +31,8 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.ArticleTypesController ArticleTypes = new GE.WebAdmin.Controllers.T4MVC_ArticleTypesController();
     public static GE.WebAdmin.Controllers.GamesController Games = new GE.WebAdmin.Controllers.T4MVC_GamesController();
     public static GE.WebAdmin.Controllers.HomeController Home = new GE.WebAdmin.Controllers.T4MVC_HomeController();
+    public static GE.WebAdmin.Controllers.MenuesController Menues = new GE.WebAdmin.Controllers.T4MVC_MenuesController();
+    public static GE.WebAdmin.Controllers.MenuItemsController MenuItems = new GE.WebAdmin.Controllers.T4MVC_MenuItemsController();
     public static GE.WebAdmin.Controllers.PicturesController Pictures = new GE.WebAdmin.Controllers.T4MVC_PicturesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
@@ -75,6 +77,21 @@ internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.P
     public string Protocol { get; set; }
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_ActionResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+     
+    public override void ExecuteResult(System.Web.Mvc.ControllerContext context) { }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
 
 
 
@@ -95,11 +112,7 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/css";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
-                public static readonly string font_awesome_min_css = Url("font-awesome.min.css");
-                public static readonly string metisMenu_min_css = Url("metisMenu.min.css");
                 public static readonly string site_min_css = Url("site.min.css");
-                public static readonly string sx_min_css = Url("sx.min.css");
             }
         
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -120,11 +133,7 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/js";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
-                public static readonly string jquery_min_js = Url("jquery.min.js");
-                public static readonly string jquery_unobtrusive_ajax_min_js = Url("jquery.unobtrusive-ajax.min.js");
-                public static readonly string metisMenu_min_js = Url("metisMenu.min.js");
-                public static readonly string sx_min_js = Url("sx.min.js");
+                public static readonly string site_min_js = Url("site.min.js");
             }
         
         }
@@ -138,6 +147,7 @@ namespace Links
             public static readonly string colors_less = Url("colors.less");
             public static readonly string sb_admin_2_less = Url("sb-admin-2.less");
             public static readonly string site_less = Url("site.less");
+            public static readonly string validation_less = Url("validation.less");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -180,11 +190,7 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string bootstrap_min_css = "~/Content/dist/css/bootstrap.min.css";
-                        public const string font_awesome_min_css = "~/Content/dist/css/font-awesome.min.css";
-                        public const string metisMenu_min_css = "~/Content/dist/css/metisMenu.min.css";
                         public const string site_min_css = "~/Content/dist/css/site.min.css";
-                        public const string sx_min_css = "~/Content/dist/css/sx.min.css";
                     }
                 }
                 public static partial class fonts 
@@ -197,11 +203,7 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string bootstrap_min_js = "~/Content/dist/js/bootstrap.min.js"; 
-                        public const string jquery_min_js = "~/Content/dist/js/jquery.min.js"; 
-                        public const string jquery_unobtrusive_ajax_min_js = "~/Content/dist/js/jquery.unobtrusive-ajax.min.js"; 
-                        public const string metisMenu_min_js = "~/Content/dist/js/metisMenu.min.js"; 
-                        public const string sx_min_js = "~/Content/dist/js/sx.min.js"; 
+                        public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }
                 public static class Assets

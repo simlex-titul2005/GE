@@ -1,0 +1,14 @@
+﻿@model VMMenuItemList
+<ul class="list-group">
+    @foreach (var item in Model.Items)
+    {
+        <li class="list-group-item">
+            @item.Caption
+            <div class="pull-right">
+                <a class="btn btn-default btn-xs" href="/menuitems/edit?menuId=@Model.MenuId&id=@item.Id">Изменить</a>
+                <button type="button" data-menu-item-id="@item.Id" class="btn btn-danger btn-xs" onclick="deleteMenuItem(this)">Удалить</button>
+            </div>
+        </li>
+    }
+</ul>
+

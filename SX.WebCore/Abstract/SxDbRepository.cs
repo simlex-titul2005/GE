@@ -25,8 +25,11 @@ namespace SX.WebCore.Abstract
             if (model is SxDbUpdatedModel<TKey>)
             {
                 var m = model as SxDbUpdatedModel<TKey>;
+                var date=DateTime.Now;
                 if (m.DateUpdate == DateTime.MinValue)
-                    m.DateUpdate = DateTime.Now;
+                    m.DateUpdate = date;
+                if (m.DateCreate == DateTime.MinValue)
+                    m.DateCreate = date;
             }
             _dbContext.Entry(model).State = EntityState.Added;
             _dbContext.SaveChanges();
@@ -83,9 +86,9 @@ namespace SX.WebCore.Abstract
 
         private static object[] getEntityKeys(System.Data.Entity.DbContext dbContext, Type modelType, TModel model)
         {
-            ObjectContext objectContext = ((IObjectContextAdapter)dbContext).ObjectContext;
+            var objectContext = ((IObjectContextAdapter)dbContext).ObjectContext;
             var keyNames = ((IEnumerable<System.Data.Entity.Core.Metadata.Edm.EdmMember>)objectContext.MetadataWorkspace
-                .GetType(modelType.Name, modelType.Namespace, System.Data.Entity.Core.Metadata.Edm.DataSpace.CSpace)
+                .GetType(modelType.Name, modelType.Namespace, System.Data.Entity.Core.Metadata.Edm.DataSpace.OSpace)
                 .MetadataProperties
                 .Where(x => x.Name == "KeyMembers")
                 .First()

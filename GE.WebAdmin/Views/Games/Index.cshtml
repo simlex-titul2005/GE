@@ -1,16 +1,7 @@
 ﻿@model VMGame[]
 
-@section styles{
-    <link href="~/Content/dist/css/sx.min.css" rel="stylesheet">
-}
-
 <h2>Типы статей</h2>
 
 <div id="grid-games">
     @Html.Partial(MVC.Games.Views._GridView, Model)
 </div>
-
-@section scripts{
-    <script type="text/javascript" src="~/Content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/sx.min.js"></script>
-}

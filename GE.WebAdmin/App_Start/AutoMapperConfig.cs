@@ -28,6 +28,16 @@ namespace GE.WebAdmin
             Mapper.CreateMap<Game, VMEditGame>();
             Mapper.CreateMap<VMEditGame, Game>();
 
+            //menu
+            Mapper.CreateMap<SxMenu, VMMenu>();
+            Mapper.CreateMap<SxMenu, VMEditMenu>();
+            Mapper.CreateMap<VMEditMenu, SxMenu>();
+
+            //menu item
+            Mapper.CreateMap<SxMenuItem, VMMenuItem>();
+            Mapper.CreateMap<SxMenuItem, VMEditMenuItem>();
+            Mapper.CreateMap<VMEditMenuItem, SxMenuItem>();
+
             //picture
             Mapper.CreateMap<SxPicture, VMPicture>();
             Mapper.CreateMap<SxPicture, VMEditPicture>();

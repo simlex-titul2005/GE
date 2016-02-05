@@ -8,9 +8,6 @@
     <title>@Constants.AppName</title>
 
     <!-- Bootstrap -->
-    <link href="~/Content/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/dist/css/metisMenu.min.css" rel="stylesheet">
-    <link href="~/Content/dist/css/font-awesome.min.css" rel="stylesheet">
     <link href="~/Content/dist/css/site.min.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -269,6 +266,9 @@
                             <a href="index.html"><i class="fa fa-home fa-fw"></i> Главная</a>
                         </li>
                         <li>
+                            <a href="@Url.Action(MVC.Menues.Index())"><i class="fa fa-bars fa-fw"></i> Меню сайта</a>
+                        </li>
+                        <li>
                             <a href="#"><i class="fa fa-camera-retro fa-fw"></i> Мультимедиа<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -387,15 +387,11 @@
             </div>
         </div>
     </footer>
-    <script src="~/Content/dist/js/jquery.min.js"></script>
-    <script src="~/Content/dist/js/bootstrap.min.js"></script>
-    <script src="~/Content/dist/js/metisMenu.min.js"></script>
+    <script src="~/Content/dist/js/site.min.js"></script>
     @RenderSection("scripts", false)
     <script type="text/javascript">
         $(function () {
-
             $('#side-menu').metisMenu();
-
         });
 
         //Loads the correct sidebar on window load,
@@ -427,6 +423,10 @@
             if (element.is('li')) {
                 element.addClass('active');
             }
+
+            $(document).ajaxError(function (event, xhr, settings) {
+                alert(xhr.responseText);
+            });
         });
     </script>
 </body>

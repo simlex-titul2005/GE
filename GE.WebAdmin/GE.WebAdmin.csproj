@@ -132,6 +132,118 @@
     <Content Include="bower_components\font-awesome\HELP-US-OUT.txt" />
     <Content Include="bower_components\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.js" />
     <Content Include="bower_components\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="bower_components\jquery-validation\build\release.js" />
+    <Content Include="bower_components\jquery-validation\dist\additional-methods.js" />
+    <Content Include="bower_components\jquery-validation\dist\additional-methods.min.js" />
+    <Content Include="bower_components\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="bower_components\jquery-validation\dist\jquery.validate.min.js" />
+    <Content Include="bower_components\jquery-validation\Gruntfile.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\accept.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\additional.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\alphanumeric.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\bankaccountNL.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\bankorgiroaccountNL.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\bic.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\cifES.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\cpfBR.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\creditcardtypes.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\currency.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\dateFA.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\dateITA.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\dateNL.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\extension.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\giroaccountNL.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\iban.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\integer.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\ipv4.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\ipv6.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\lettersonly.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\letterswithbasicpunc.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\mobileNL.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\mobileUK.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\nieES.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\nifES.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\notEqualTo.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\nowhitespace.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\pattern.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\phoneNL.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\phonesUK.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\phoneUK.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\phoneUS.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\postalcodeBR.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\postalCodeCA.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\postalcodeIT.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\postalcodeNL.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\postcodeUK.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\require_from_group.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\skip_or_fill_minimum.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\statesUS.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\strippedminlength.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\time.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\time12h.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\url2.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\vinUS.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\zipcodeUS.js" />
+    <Content Include="bower_components\jquery-validation\src\additional\ziprange.js" />
+    <Content Include="bower_components\jquery-validation\src\ajax.js" />
+    <Content Include="bower_components\jquery-validation\src\core.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_ar.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_bg.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_bn_BD.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_ca.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_cs.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_da.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_de.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_el.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_es.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_es_AR.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_es_PE.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_et.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_eu.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_fa.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_fi.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_fr.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_ge.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_gl.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_he.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_hr.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_hu.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_hy_AM.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_id.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_is.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_it.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_ja.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_ka.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_kk.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_ko.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_lt.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_lv.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_my.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_nl.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_no.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_pl.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_pt_BR.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_pt_PT.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_ro.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_ru.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_si.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_sk.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_sl.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_sr.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_sr_lat.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_sv.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_th.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_tj.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_tr.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_uk.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_vi.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_zh.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\messages_zh_TW.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\methods_de.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\methods_es_CL.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\methods_fi.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\methods_nl.js" />
+    <Content Include="bower_components\jquery-validation\src\localization\methods_pt.js" />
     <Content Include="bower_components\jquery\dist\jquery.js" />
     <Content Include="bower_components\jquery\dist\jquery.min.js" />
     <Content Include="bower_components\jquery\MIT-LICENSE.txt" />
@@ -223,17 +335,9 @@
     <Content Include="bower_components\metisMenu\dist\metisMenu.min.css" />
     <Content Include="bower_components\metisMenu\dist\metisMenu.min.js" />
     <Content Include="bower_components\metisMenu\Gruntfile.js" />
-    <Content Include="Content\dist\css\bootstrap.min.css" />
-    <Content Include="Content\dist\css\font-awesome.min.css" />
-    <Content Include="Content\dist\css\metisMenu.min.css" />
     <Content Include="Content\dist\css\site.min.css" />
-    <Content Include="Content\dist\css\sx.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\dist\js\bootstrap.min.js" />
-    <Content Include="Content\dist\js\jquery.min.js" />
-    <Content Include="Content\dist\js\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Content\dist\js\metisMenu.min.js" />
-    <Content Include="Content\dist\js\sx.min.js" />
+    <Content Include="Content\dist\js\site.min.js" />
     <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -398,7 +502,17 @@
     <Content Include="Content\dist\fonts\FontAwesome.otf" />
     <Content Include="Content\sx\less\sx-pager.less" />
     <Content Include="Content\sx\less\sx.less" />
+    <Content Include="Content\less\validation.less" />
+    <Content Include="bower_components\jquery-validation\.bower.json" />
+    <Content Include="bower_components\jquery-validation\bower.json" />
+    <Content Include="bower_components\jquery-validation\changelog.md" />
+    <Content Include="bower_components\jquery-validation\CONTRIBUTING.md" />
+    <Content Include="bower_components\jquery-validation\LICENSE.md" />
+    <Content Include="bower_components\jquery-validation\package.json" />
+    <Content Include="bower_components\jquery-validation\README.md" />
+    <Content Include="bower_components\jquery-validation\validation.jquery.json" />
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Views\Menues\Edit.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -414,6 +528,8 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ArticlesController.cs" />
+    <Compile Include="Controllers\MenuesController.cs" />
+    <Compile Include="Controllers\MenuItemsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\ArticleTypesController.cs" />
@@ -427,13 +543,24 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="MenuesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MenuItemsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VMArticleType.cs" />
     <Compile Include="Models\VMArticle.cs" />
     <Compile Include="Models\VMEditArticle.cs" />
     <Compile Include="Models\VMEditArticleType.cs" />
     <Compile Include="Models\VMEditGame.cs" />
+    <Compile Include="Models\VMEditMenuItem.cs" />
+    <Compile Include="Models\VMEditMenu.cs" />
     <Compile Include="Models\VMGame.cs" />
     <Compile Include="Models\VMEditPicture.cs" />
+    <Compile Include="Models\VMMenuItem.cs" />
+    <Compile Include="Models\VMMenu.cs" />
+    <Compile Include="Models\VMMenuItemList.cs" />
     <Compile Include="Models\VMPicture.cs" />
     <Compile Include="PicturesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -480,6 +607,10 @@
     <Content Include="Views\Pictures\_GridView.cshtml" />
     <Content Include="Views\Pictures\Edit.cshtml" />
     <Content Include="Views\Pictures\Index.cshtml" />
+    <Content Include="Views\Menues\_GridView.cshtml" />
+    <Content Include="Views\Menues\Index.cshtml" />
+    <Content Include="Views\MenuItems\Edit.cshtml" />
+    <Content Include="Views\MenuItems\_MenuItems.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -487,7 +618,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

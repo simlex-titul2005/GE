@@ -39,7 +39,7 @@ namespace SX.WebCore.HtmlHelpers
                 var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
                 table.MergeAttributes(attributes, true);
             }
-            table.AddCssClass("sx-grid-view");
+            table.AddCssClass("sx-gv");
 
             //header
             table.InnerHtml += getGridViewHeader(settings);
@@ -49,7 +49,7 @@ namespace SX.WebCore.HtmlHelpers
             var showRowMenu = Convert.ToBoolean(settings.ShowFilterRowMenu);
             if (showRowMenu)
                 tbody.InnerHtml += getGridViewRowMenu<TModel>(settings);
-            tbody.InnerHtml += getGridViewRows(settings.Data, settings);
+            tbody.InnerHtml += getGridViewRows(settings.Data, settings, htmlHelper);
             table.InnerHtml += tbody;
 
             //footer
@@ -188,7 +188,7 @@ namespace SX.WebCore.HtmlHelpers
                 var values=HttpContext.Current.Request.RequestContext.RouteData.Values;
                 var controller=values["controller"].ToString().ToLower();
                 var th = new TagBuilder("th");
-                th.AddCssClass("sx-add-column");
+                th.AddCssClass("sx-gv-add-column");
                 th.InnerHtml += settings.EnableEditing ? string.Format("<a href=\"{0}/edit\"><i class=\"fa fa-plus-circle\"></i></a>", controller) : "#";
                 tr.InnerHtml += th;
             }
@@ -225,15 +225,19 @@ namespace SX.WebCore.HtmlHelpers
             return thead;
         }
 
-        private static string getGridViewRows<TModel>(TModel[] data, SxGridViewSettings<TModel> settings)
+        private static string getGridViewRows<TModel>(TModel[] data, SxGridViewSettings<TModel> settings, HtmlHelper htmlHelper)
         {
+            var queryString = htmlHelper.ViewContext.HttpContext.Request.QueryString;
+            var redactedIdString = queryString.Get("redactedId");
+            var redactedId = !string.IsNullOrEmpty(redactedIdString) ? int.Parse(redactedIdString) : (int?)null;
+
             var sb = new StringBuilder();
             if (data != null && data.Any())
             {
                 for (int i = 0; i < data.Length; i++)
                 {
                     var model = data[i];
-                    sb.Append(getGridViewRow(model, settings));
+                    sb.Append(getGridViewRow(model, settings, redactedId));
                 }
             }
 
@@ -268,6 +272,8 @@ namespace SX.WebCore.HtmlHelpers
                 var td = new TagBuilder("td");
 
                 var prop = settings.ModelType.GetProperties().FirstOrDefault(x=>x.Name==column.FieldName);
+                if (prop == null)
+                    throw new ArgumentException(string.Format("Модель должна содержать свойство \"{0}\"", column.FieldName));
                 var editor = getColumnEditor(prop, settings);
                 td.InnerHtml += editor;
 
@@ -334,37 +340,27 @@ namespace SX.WebCore.HtmlHelpers
             return count > 0;
         }
 
-        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings)
+        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings, int? redactedId=null)
         {
             var tr = new TagBuilder("tr");
+            if (redactedId.HasValue)
+                tr.AddCssClass("sx-gv-redacted-row");
             if (settings.ShowFilterRowMenu || settings.EnableEditing)
             {
                 var td = new TagBuilder("td");
+                td.AddCssClass("sx-gv-edit-column");
 
                 if(settings.EnableEditing)
                 {
                     var routes = HttpContext.Current.Request.RequestContext.RouteData.Values;
                     var controller = routes["controller"].ToString().ToLower();
 
-                    var ul = new TagBuilder("ul");
-                    ul.AddCssClass("sx-grid-view-edit-list");
-
                     //edit link
-                    var editLi = new TagBuilder("li");
-                    var editA = new TagBuilder("a");
-                    editA.MergeAttribute("href", string.Format("{0}/edit?id={1}", controller, model.GetType().GetProperty("Id").GetValue(model)));
-                    editA.InnerHtml += "<i class=\"fa fa-pencil\"></i>";
-                    editLi.InnerHtml += editA;
-                    ul.InnerHtml += editLi;
+                    var a = new TagBuilder("a");
+                    a.MergeAttribute("href", string.Format("{0}/edit?id={1}", controller, model.GetType().GetProperty("Id").GetValue(model)));
+                    a.InnerHtml += "<i class=\"fa fa-pencil\"></i>";
 
-                    //delete link
-                    var deleteLi = new TagBuilder("li");
-                    var deleteA = new TagBuilder("a");
-                    deleteA.InnerHtml += "<i class=\"fa fa-trash\"></i>";
-                    deleteLi.InnerHtml += deleteA;
-                    ul.InnerHtml += deleteLi;
-
-                    td.InnerHtml += ul;
+                    td.InnerHtml += a;
                 }
 
                 tr.InnerHtml += td;

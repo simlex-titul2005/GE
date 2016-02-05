@@ -1,16 +1,7 @@
 ﻿@model VMPicture[]
 
-@section styles{
-    <link href="~/Content/dist/css/sx.min.css" rel="stylesheet">
-}
-
 <h2>Фото-контент</h2>
 
 <div id="grid-pictures">
     @Html.Partial(MVC.Pictures.Views._GridView, Model)
 </div>
-
-@section scripts{
-    <script type="text/javascript" src="~/Content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/sx.min.js"></script>
-}

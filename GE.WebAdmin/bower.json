@@ -26,7 +26,6 @@
         "metisMenu": "2.2.0",
         "font-awesome": "4.5.0",
         "jquery-ajax-unobtrusive": "3.2.3",
-        "jquery-validation": "1.14.0",
-        "Jcrop": "2.0.4"
+        "jquery-validation": "1.14.0",        "cropper": "2.2.5"
     }
 }

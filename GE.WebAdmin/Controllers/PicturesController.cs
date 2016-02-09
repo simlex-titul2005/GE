@@ -84,6 +84,7 @@ namespace GE.WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public virtual ViewResult Edit(VMEditPicture model, HttpPostedFileBase image)
         {
+            var request = Request;
             var redactModel = Mapper.Map<VMEditPicture, SxPicture>(model);
             if (ModelState.IsValid)
             {

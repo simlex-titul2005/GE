@@ -1,31 +1,32 @@
 {
-  "name": "GE.WebAdmin",
-  "homepage": "https://github.com/simlex-titul2005/GE",
-  "authors": [
-    "simlex-titul2005 <simlex.dev.2014@gmail.com>"
-  ],
-  "description": "game-exe.com",
-  "main": "",
-  "moduleType": [
-    "node"
-  ],
-  "keywords": [
-    ""
-  ],
-  "license": "MIT",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "bootstrap": "~3.3.6",
-    "metisMenu": "2.2.0",
-    "font-awesome": "4.5.0",
-    "jquery-ajax-unobtrusive": "3.2.3",
-    "jquery-validation": "1.14.0"
-  }
+    "name": "GE.WebAdmin",
+    "homepage": "https://github.com/simlex-titul2005/GE",
+    "authors": [
+        "simlex-titul2005 <simlex.dev.2014@gmail.com>"
+    ],
+    "description": "game-exe.com",
+    "main": "",
+    "moduleType": [
+        "node"
+    ],
+    "keywords": [
+        ""
+    ],
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "bootstrap": "~3.3.6",
+        "metisMenu": "2.2.0",
+        "font-awesome": "4.5.0",
+        "jquery-ajax-unobtrusive": "3.2.3",
+        "jquery-validation": "1.14.0",
+        "Jcrop": "2.0.4"
+    }
 }

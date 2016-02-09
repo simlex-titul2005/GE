@@ -1,54 +1,58 @@
 ﻿@model VMEditMenu
 
+<h2>@(Model.Id != 0 ? "Редактирование меню" : "Добавление меню")</h2>
+
 <form method="post" action="edit" class="form">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
 
     <div class="row">
         <div class="col-md-12">
+            <!--name-->
             <div class="form-group">
-                @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+                @Html.LabelFor(x => x.Name, new { @class = "control-label" }) <span class="text-danger" data-toggle="tooltip" data-placement="right" data-container="body" title="Идентификатор меню">[ Marker=@Model.Id ]</span>
                 @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите наименование меню" } })
                 @Html.ValidationMessageFor(x => x.Name)
             </div>
-        </div>
-        <div class="col-md-12">
-            <!--menu items-->
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        Пункты меню <a class="btn btn-default btn-xs" href="/menuitems/edit?menuId=@Model.Id">Добавить</a> <span class="badge pull-right">@Model.Items.Length</span>
-                    </h4>
-                </div>
-                <div class="panel-body" id="menu-@Model.Id">
-                    @Html.Partial(MVC.MenuItems.Views._MenuItems, new VMMenuItemList { MenuId=Model.Id, Items=Model.Items})
-                </div>
+
+            <!--description-->
+            <div class="form-group">
+                @Html.LabelFor(x => x.Description, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание меню" } })
+                @Html.ValidationMessageFor(x => x.Description)
             </div>
-            <!--end menu items-->
         </div>
+
+        <div class="col-md-12">
+            @if (Model.Id != 0)
+            {
+                <!--menu items-->
+                <div id="menu-@Model.Id">
+                    @Html.Partial(MVC.MenuItems.Views._MenuItems, new VMMenuItemList { MenuId = Model.Id, Items = Model.Items })
+                </div>
+                <!--end menu items-->}
+            else
+            {
+                <p class="text-info">Редактирование пунктов меню доступно только только при наличии меню в базе данных.</p>
+            }
+        </div>
+
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-default">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
+        <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
         @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
-        <button type="button" class="btn btn-danger">Удалить</button>
+        <button type="button" class="btn btn-danger pull-right">Удалить</button>
     </div>
 </form>
 
+
+
 @section scripts{
+    <script type="text/javascript" src="~/Content/dist/js/menues.min.js"></script>
     <script type="text/javascript">
-    function deleteMenuItem(button)
-    {
-        var btn = $(button);
-        var menuItemId = btn.data('menu-item-id');
-        $.ajax({
-            method: 'post',
-            url: '/menuitems/delete',
-            data: {menuId:@Model.Id, menuItemId:menuItemId},
-                success:function(html){
-                    $('#menu-@Model.Id').html(html);
-                }
-            });
-       }
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
 }

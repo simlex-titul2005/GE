@@ -8,12 +8,11 @@ using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class HomeController : Controller
+    public partial class HomeController : BaseController
     {
-        public virtual ViewResult Index(DbContext dbContext)
+        public virtual ViewResult Index()
         {
-            var dbRepo = new RepoArticle();
-            return View(dbRepo.All);
+            return View();
         }
     }
 }

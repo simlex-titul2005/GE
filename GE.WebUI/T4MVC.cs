@@ -28,6 +28,7 @@ using T4MVC;
 public static partial class MVC
 {
     public static GE.WebUI.Controllers.HomeController Home = new GE.WebUI.Controllers.T4MVC_HomeController();
+    public static GE.WebUI.Controllers.MenuesController Menues = new GE.WebUI.Controllers.T4MVC_MenuesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -58,6 +59,19 @@ internal partial class T4MVC_System_Web_Mvc_ViewResult : System.Web.Mvc.ViewResu
     public string Protocol { get; set; }
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
 
 
 
@@ -78,8 +92,6 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/css";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
-                public static readonly string font_awesome_min_css = Url("font-awesome.min.css");
                 public static readonly string site_min_css = Url("site.min.css");
             }
         
@@ -101,8 +113,7 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/js";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
-                public static readonly string jquery_min_js = Url("jquery.min.js");
+                public static readonly string site_min_js = Url("site.min.js");
             }
         
         }
@@ -130,8 +141,6 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string bootstrap_min_css = "~/Content/dist/css/bootstrap.min.css";
-                        public const string font_awesome_min_css = "~/Content/dist/css/font-awesome.min.css";
                         public const string site_min_css = "~/Content/dist/css/site.min.css";
                     }
                 }
@@ -145,8 +154,7 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string bootstrap_min_js = "~/Content/dist/js/bootstrap.min.js"; 
-                        public const string jquery_min_js = "~/Content/dist/js/jquery.min.js"; 
+                        public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }
                 public static class Assets

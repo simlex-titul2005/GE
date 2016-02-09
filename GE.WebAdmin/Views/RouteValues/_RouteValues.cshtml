@@ -1,0 +1,23 @@
+﻿@model VMRouteValueList
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            Параметры маршрута <a class="btn btn-default btn-sm" href="@Url.Action(MVC.RouteValues.Edit(Model.RouteId))">Добавить</a> <span class="badge pull-right">@Model.Values.Length</span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            @foreach (var value in Model.Values)
+            {
+                <li class="list-group-item">
+                    <span>@value.Value</span>
+                    <div class="pull-right">
+                        <a class="btn btn-default btn-xs" href="@Url.Action(MVC.RouteValues.Edit(Model.RouteId, value.Id))">Изменить</a>
+                        <button type="button" data-route-value-id="@value.Id" class="btn btn-danger btn-xs" onclick="deleteRouteValue(this, '@Model.RouteId', '@value.Id', '@Url.Action(MVC.RouteValues.Delete())')">Удалить</button>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

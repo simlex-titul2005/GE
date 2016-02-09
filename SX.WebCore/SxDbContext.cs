@@ -20,6 +20,8 @@ namespace SX.WebCore
         public DbSet<SxNews> News { get; set; }
 
         public DbSet<SxPicture> Pictures { get; set; }
+        
+        public DbSet<SxRequest> Requestes { get; set; }
 
         public DbSet<SxSeoInfo> SeoInfo { get; set; }
 

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using GE.WebAdmin.Models;
+﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore.HtmlHelpers;
@@ -11,7 +10,7 @@ using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class ArticleTypesController : Controller
+    public partial class ArticleTypesController : BaseController
     {
         SX.WebCore.Abstract.SxDbRepository<byte, ArticleType, DbContext> _repo;
         public ArticleTypesController()

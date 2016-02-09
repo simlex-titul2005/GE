@@ -15,6 +15,9 @@ namespace SX.WebCore
         [Required, MaxLength(100), Column("NAME")]
         public string Name { get; set; }
 
+        [MaxLength(100), Column("DOMAIN")]
+        public string Domain { get; set; }
+
         [Required, MaxLength(100), Column("CONTROLLER")]
         public string Controller { get; set; }
 
@@ -22,5 +25,19 @@ namespace SX.WebCore
         public string Action { get; set; }
 
         public virtual ICollection<SxRouteValue> Values { get; set; }
+
+        [NotMapped]
+        public string Url
+        {
+            get
+            {
+                var url = string.Format("{0}{1}/{2}",
+                    !string.IsNullOrEmpty(Domain) ? Domain + "/" : null,
+                    !string.IsNullOrEmpty(Domain) ? Controller : "/" + Controller,
+                    Action
+                    );
+                return url;
+            }
+        }
     }
 }

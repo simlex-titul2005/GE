@@ -1,21 +1,38 @@
 ﻿@model VMEditPicture
 
+@section styles{
+    <link rel="stylesheet" href="~/bower_components/Jcrop/css/Jcrop.min.css" />
+    <style type="text/css">
+        #preview {
+            margin: 30px 0;
+        }
+    </style>
+}
+
 <h2>
     @(Model.Id == Guid.Empty ? "Добавить фото" : "Редактировать фото")
 </h2>
 
-@using (Html.BeginForm("Edit", "Pictures", FormMethod.Post, new { @class = "form" }))
-{
+<form method="post" action="edit" class="form" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(x => x.Id)
 
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Width)
-                @Html.EditorFor(x => x.Width, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.Width)
+            <div class="input-group" style="width:300px;">
+                <input type="text" name="fileName" class="form-control" placeholder="Выберите файл">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="$('#Image').click();">Выбрать</button>
+                </span>
+            </div>
+            @Html.HiddenFor(x => x.X)
+            @Html.HiddenFor(x => x.Y)
+            @Html.HiddenFor(x => x.Width)
+            @Html.HiddenFor(x => x.Height)
+            <input type="file" id="Image" class="hidden" />
+            <div id="preview">
+
             </div>
         </div>
     </div>
@@ -24,4 +41,50 @@
         <button type="submit" class="btn btn-default">Добавить</button>
         @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
     </div>
+</form>
+
+@section scripts{
+    <script type="text/javascript" src="~/bower_components/Jcrop/js/Jcrop.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#Image").change(function () {
+                readURL(this);
+            });
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var file = input.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    console.log(file);
+                    $('input[name="fileName"]').val(file.name);
+                    $('.jcrop-active').remove();
+                    $('<img id="target"></img>')
+                        .attr('src', e.target.result)
+                        .load(function () {
+                            $(this).Jcrop({
+                                onSelect: updateCoords
+                            }, addImageInfo(file));
+                        })
+                        .appendTo('#preview');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function addImageInfo(file) {
+            $('<p>' + file.type + '</p>').insertAfter('.jcrop-active');
+            $('<p>' + Math.round(file.size / 1024, 3) + 'Kb' + '</p>').insertAfter('.jcrop-active');
+        }
+
+        function updateCoords(c) {
+            // variables can be accessed here as
+            // c.x, c.y, c.x2, c.y2, c.w, c.h
+            $('#X').val(c.x);
+            $('#Y').val(c.y);
+            $('#Width').val(c.w);
+            $('#Height').val(c.h);
+        };
+    </script>
 }

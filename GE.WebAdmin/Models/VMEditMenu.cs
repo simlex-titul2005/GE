@@ -19,6 +19,9 @@ namespace GE.WebAdmin.Models
         [Required, MaxLength(100), Display(Name="Название меню")]
         public string Name { get; set; }
 
+        [MaxLength(500), Display(Name="Описание"), DataType(DataType.MultilineText)]
+        public string Description { get; set; }
+
         public VMMenuItem[] Items { get; set; }
     }
 }

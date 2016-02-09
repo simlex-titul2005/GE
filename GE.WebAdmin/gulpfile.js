@@ -65,10 +65,19 @@ function createJs() {
         .pipe(concat('site.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('content/dist/js'));
+
+    gulp.src([
+        'scripts/**/*.js'
+    ])
+        .pipe(uglify())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest('content/dist/js'));
 }
 
 gulp.task('watch', function (cb) {
-    watch(['content/less/**/*.less', 'content/sx/less/**/*.less', 'content/sx/js/**/*.js'], function () {
+    watch(['content/less/**/*.less', 'content/sx/less/**/*.less', 'content/sx/js/**/*.js', 'scripts/**/*.js'], function () {
         clear();
         createFonts();
         createCss();

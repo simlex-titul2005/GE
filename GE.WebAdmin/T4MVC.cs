@@ -34,6 +34,8 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.MenuesController Menues = new GE.WebAdmin.Controllers.T4MVC_MenuesController();
     public static GE.WebAdmin.Controllers.MenuItemsController MenuItems = new GE.WebAdmin.Controllers.T4MVC_MenuItemsController();
     public static GE.WebAdmin.Controllers.PicturesController Pictures = new GE.WebAdmin.Controllers.T4MVC_PicturesController();
+    public static GE.WebAdmin.Controllers.RoutesController Routes = new GE.WebAdmin.Controllers.T4MVC_RoutesController();
+    public static GE.WebAdmin.Controllers.RouteValuesController RouteValues = new GE.WebAdmin.Controllers.T4MVC_RouteValuesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -98,6 +100,15 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
 namespace Links
 {
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public static class Scripts {
+        private const string URLPATH = "~/Scripts";
+        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        public static readonly string menues_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/menues.min.js") ? Url("menues.min.js") : Url("menues.js");
+        public static readonly string routes_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/routes.min.js") ? Url("routes.min.js") : Url("routes.js");
+    }
+
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static class Content {
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -133,6 +144,8 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/js";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string menues_min_js = Url("menues.min.js");
+                public static readonly string routes_min_js = Url("routes.min.js");
                 public static readonly string site_min_js = Url("site.min.js");
             }
         
@@ -182,6 +195,14 @@ namespace Links
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static partial class Bundles
     {
+        public static partial class Scripts 
+        {
+            public static class Assets
+            {
+                public const string menues_js = "~/Scripts/menues.js"; 
+                public const string routes_js = "~/Scripts/routes.js"; 
+            }
+        }
         public static partial class Content 
         {
             public static partial class dist 
@@ -203,6 +224,8 @@ namespace Links
                 {
                     public static class Assets
                     {
+                        public const string menues_min_js = "~/Content/dist/js/menues.min.js"; 
+                        public const string routes_min_js = "~/Content/dist/js/routes.min.js"; 
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }

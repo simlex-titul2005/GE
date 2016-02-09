@@ -227,17 +227,13 @@ namespace SX.WebCore.HtmlHelpers
 
         private static string getGridViewRows<TModel>(TModel[] data, SxGridViewSettings<TModel> settings, HtmlHelper htmlHelper)
         {
-            var queryString = htmlHelper.ViewContext.HttpContext.Request.QueryString;
-            var redactedIdString = queryString.Get("redactedId");
-            var redactedId = !string.IsNullOrEmpty(redactedIdString) ? int.Parse(redactedIdString) : (int?)null;
-
             var sb = new StringBuilder();
             if (data != null && data.Any())
             {
                 for (int i = 0; i < data.Length; i++)
                 {
                     var model = data[i];
-                    sb.Append(getGridViewRow(model, settings, redactedId));
+                    sb.Append(getGridViewRow(model, settings));
                 }
             }
 
@@ -340,11 +336,9 @@ namespace SX.WebCore.HtmlHelpers
             return count > 0;
         }
 
-        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings, int? redactedId=null)
+        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings)
         {
             var tr = new TagBuilder("tr");
-            if (redactedId.HasValue)
-                tr.AddCssClass("sx-gv-redacted-row");
             if (settings.ShowFilterRowMenu || settings.EnableEditing)
             {
                 var td = new TagBuilder("td");

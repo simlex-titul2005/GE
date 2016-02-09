@@ -40,8 +40,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -70,7 +70,7 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\T4MVCExtensions.3.17.1\lib\net40\T4MVCExtensions.dll</HintPath>
+      <HintPath>..\packages\T4MVCExtensions.3.17.2\lib\net40\T4MVCExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -130,6 +130,61 @@
     <Content Include="bower_components\font-awesome\css\font-awesome.min.css" />
     <Content Include="bower_components\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="bower_components\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="bower_components\Jcrop\css\Jcrop.css" />
+    <Content Include="bower_components\Jcrop\css\Jcrop.gif" />
+    <Content Include="bower_components\Jcrop\css\Jcrop.min.css" />
+    <Content Include="bower_components\Jcrop\demos\basic.html" />
+    <Content Include="bower_components\Jcrop\demos\box-sizing.html" />
+    <Content Include="bower_components\Jcrop\demos\circle.html" />
+    <Content Include="bower_components\Jcrop\demos\coords.html" />
+    <Content Include="bower_components\Jcrop\demos\demo_files\demos.css" />
+    <Content Include="bower_components\Jcrop\demos\demo_files\main.css" />
+    <Content Include="bower_components\Jcrop\demos\demo_files\pool.jpg" />
+    <Content Include="bower_components\Jcrop\demos\demo_files\sago.jpg" />
+    <Content Include="bower_components\Jcrop\demos\demo_files\sagomod.jpg" />
+    <Content Include="bower_components\Jcrop\demos\demo_files\sagomod.png" />
+    <Content Include="bower_components\Jcrop\demos\index.html" />
+    <Content Include="bower_components\Jcrop\demos\non-image.html" />
+    <Content Include="bower_components\Jcrop\demos\panel.html" />
+    <Content Include="bower_components\Jcrop\demos\thumbnail.html" />
+    <Content Include="bower_components\Jcrop\Gruntfile.js" />
+    <Content Include="bower_components\Jcrop\index.html" />
+    <Content Include="bower_components\Jcrop\js\Jcrop.js" />
+    <Content Include="bower_components\Jcrop\js\Jcrop.min.js" />
+    <Content Include="bower_components\Jcrop\js\jquery.color.js" />
+    <Content Include="bower_components\Jcrop\js\jquery.min.js" />
+    <Content Include="bower_components\Jcrop\MIT-LICENSE.txt" />
+    <Content Include="bower_components\Jcrop\src\api.js" />
+    <Content Include="bower_components\Jcrop\src\component\CanvasAnimator.js" />
+    <Content Include="bower_components\Jcrop\src\component\CropAnimator.js" />
+    <Content Include="bower_components\Jcrop\src\component\DialDrag.js" />
+    <Content Include="bower_components\Jcrop\src\component\DragState.js" />
+    <Content Include="bower_components\Jcrop\src\component\EventManager.js" />
+    <Content Include="bower_components\Jcrop\src\component\ImageLoader.js" />
+    <Content Include="bower_components\Jcrop\src\component\JcropTouch.js" />
+    <Content Include="bower_components\Jcrop\src\component\KeyWatcher.js" />
+    <Content Include="bower_components\Jcrop\src\component\Selection.js" />
+    <Content Include="bower_components\Jcrop\src\component\StageDrag.js" />
+    <Content Include="bower_components\Jcrop\src\component\StageManager.js" />
+    <Content Include="bower_components\Jcrop\src\component\Thumbnailer.js" />
+    <Content Include="bower_components\Jcrop\src\constructor.js" />
+    <Content Include="bower_components\Jcrop\src\defaults.js" />
+    <Content Include="bower_components\Jcrop\src\filter\BackoffFilter.js" />
+    <Content Include="bower_components\Jcrop\src\filter\ConstrainFilter.js" />
+    <Content Include="bower_components\Jcrop\src\filter\ExtentFilter.js" />
+    <Content Include="bower_components\Jcrop\src\filter\GridFilter.js" />
+    <Content Include="bower_components\Jcrop\src\filter\RatioFilter.js" />
+    <Content Include="bower_components\Jcrop\src\filter\RoundFilter.js" />
+    <Content Include="bower_components\Jcrop\src\filter\ShadeFilter.js" />
+    <Content Include="bower_components\Jcrop\src\intro.js" />
+    <Content Include="bower_components\Jcrop\src\modernizr.js" />
+    <Content Include="bower_components\Jcrop\src\outro.js" />
+    <Content Include="bower_components\Jcrop\src\plugin.js" />
+    <Content Include="bower_components\Jcrop\src\stage\Abstract.js" />
+    <Content Include="bower_components\Jcrop\src\stage\Canvas.js" />
+    <Content Include="bower_components\Jcrop\src\stage\CssTransform.js" />
+    <Content Include="bower_components\Jcrop\src\stage\Image.js" />
+    <Content Include="bower_components\Jcrop\src\static.js" />
     <Content Include="bower_components\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.js" />
     <Content Include="bower_components\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.min.js" />
     <Content Include="bower_components\jquery-validation\build\release.js" />
@@ -337,6 +392,8 @@
     <Content Include="bower_components\metisMenu\Gruntfile.js" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\dist\js\menues.min.js" />
+    <Content Include="Content\dist\js\routes.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
     <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -511,7 +568,25 @@
     <Content Include="bower_components\jquery-validation\package.json" />
     <Content Include="bower_components\jquery-validation\README.md" />
     <Content Include="bower_components\jquery-validation\validation.jquery.json" />
+    <Content Include="bower_components\Jcrop\.bower.json" />
+    <Content Include="bower_components\Jcrop\bower.json" />
+    <Content Include="bower_components\Jcrop\demos\crop.php" />
+    <Content Include="bower_components\Jcrop\package.json" />
+    <Content Include="bower_components\Jcrop\README.md" />
+    <Content Include="bower_components\Jcrop\src\css\Jcrop.less" />
+    <Content Include="bower_components\Jcrop\src\css\README.md" />
+    <Content Include="bower_components\Jcrop\src\css\_bootstrap.less" />
+    <Content Include="bower_components\Jcrop\src\css\_reset.less" />
+    <Content Include="bower_components\Jcrop\src\css\_tapmodo.less" />
+    <Content Include="bower_components\Jcrop\src\README.md" />
+    <None Include="T4MVC.tt.hooks.t4" />
+    <None Include="T4MVC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>T4MVC.cs</LastGenOutput>
+    </None>
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Scripts\routes.js" />
+    <Content Include="Scripts\menues.js" />
     <Content Include="Views\Menues\Edit.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -528,12 +603,15 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ArticlesController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\RoutesController.cs" />
     <Compile Include="Controllers\MenuesController.cs" />
     <Compile Include="Controllers\MenuItemsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\ArticleTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RouteValuesController.cs" />
     <Compile Include="GamesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -556,12 +634,17 @@
     <Compile Include="Models\VMEditGame.cs" />
     <Compile Include="Models\VMEditMenuItem.cs" />
     <Compile Include="Models\VMEditMenu.cs" />
+    <Compile Include="Models\VMEditRoute.cs" />
+    <Compile Include="Models\VMEditRouteValue.cs" />
     <Compile Include="Models\VMGame.cs" />
     <Compile Include="Models\VMEditPicture.cs" />
     <Compile Include="Models\VMMenuItem.cs" />
     <Compile Include="Models\VMMenu.cs" />
     <Compile Include="Models\VMMenuItemList.cs" />
     <Compile Include="Models\VMPicture.cs" />
+    <Compile Include="Models\VMRoute.cs" />
+    <Compile Include="Models\VMRouteValue.cs" />
+    <Compile Include="Models\VMRouteValueList.cs" />
     <Compile Include="PicturesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -570,6 +653,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Constants.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RoutesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RouteValuesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -589,11 +678,6 @@
     <Content Include="Content\less\colors.less" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <None Include="T4MVC.tt.hooks.t4" />
-    <None Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
     <Content Include="Views\Articles\Index.cshtml" />
     <Content Include="Views\Articles\_GridView.cshtml" />
     <Content Include="Views\Articles\Edit.cshtml" />
@@ -611,6 +695,11 @@
     <Content Include="Views\Menues\Index.cshtml" />
     <Content Include="Views\MenuItems\Edit.cshtml" />
     <Content Include="Views\MenuItems\_MenuItems.cshtml" />
+    <Content Include="Views\Routes\_GridView.cshtml" />
+    <Content Include="Views\Routes\Edit.cshtml" />
+    <Content Include="Views\Routes\Index.cshtml" />
+    <Content Include="Views\RouteValues\_RouteValues.cshtml" />
+    <Content Include="Views\RouteValues\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

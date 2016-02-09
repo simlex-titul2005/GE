@@ -1,0 +1,23 @@
+﻿@model VMRoute[]
+@{
+    Layout = null;
+    var filter = ViewBag.Filter != null ? (VMRoute)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+}
+
+
+@Html.SxGridView(
+            new SxExtantions.SxGridViewSettings<VMRoute>
+    {
+        UpdateTargetId = "grid-routes",
+        Data = Model,
+        Columns = new SxExtantions.SxGridViewColumn[]{
+            new SxExtantions.SxGridViewColumn{FieldName="Name", Caption="Наименование маршрута"},
+            new SxExtantions.SxGridViewColumn{FieldName="Controller", Caption="Контроллер"},
+            new SxExtantions.SxGridViewColumn{FieldName="Action", Caption="Действие"},
+        },
+        Filter = filter,
+        SortDirections = sortDirections
+    },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

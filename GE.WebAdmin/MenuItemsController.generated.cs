@@ -77,7 +77,7 @@ namespace GE.WebAdmin.Controllers
         public readonly string Name = "MenuItems";
         [GeneratedCode("T4MVC", "2.0")]
         public const string NameConst = "MenuItems";
-
+        [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
@@ -112,8 +112,7 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Delete
         {
-            public readonly string menuId = "menuId";
-            public readonly string menuItemId = "menuItemId";
+            public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -164,15 +163,14 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int menuId, int menuItemId);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMMenuItem model);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Delete(int menuId, int menuItemId)
+        public override System.Web.Mvc.PartialViewResult Delete(GE.WebAdmin.Models.VMMenuItem model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Delete);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "menuId", menuId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "menuItemId", menuItemId);
-            DeleteOverride(callInfo, menuId, menuItemId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            DeleteOverride(callInfo, model);
             return callInfo;
         }
 

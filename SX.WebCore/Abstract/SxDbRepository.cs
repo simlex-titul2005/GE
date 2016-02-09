@@ -33,6 +33,7 @@ namespace SX.WebCore.Abstract
             }
             _dbContext.Entry(model).State = EntityState.Added;
             _dbContext.SaveChanges();
+            
             return model;
         }
 

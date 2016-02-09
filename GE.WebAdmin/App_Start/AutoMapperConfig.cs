@@ -11,37 +11,54 @@ namespace GE.WebAdmin
 {
     public class AutoMapperConfig
     {
-        public static void Configure()
+        public static MapperConfiguration MapperConfigurationInstance
         {
-            //article
-            Mapper.CreateMap<Article, VMArticle>();
-            Mapper.CreateMap<Article, VMEditArticle>();
-            Mapper.CreateMap<VMEditArticle, Article>();
+            get
+            {
+                return new MapperConfiguration(cfg =>
+                {
+                    //article
+                    cfg.CreateMap<Article, VMArticle>();
+                    cfg.CreateMap<Article, VMEditArticle>();
+                    cfg.CreateMap<VMEditArticle, Article>();
 
-            //article type
-            Mapper.CreateMap<ArticleType, VMArticleType>();
-            Mapper.CreateMap<ArticleType, VMEditArticleType>();
-            Mapper.CreateMap<VMEditArticleType, ArticleType>();
+                    //article type
+                    cfg.CreateMap<ArticleType, VMArticleType>();
+                    cfg.CreateMap<ArticleType, VMEditArticleType>();
+                    cfg.CreateMap<VMEditArticleType, ArticleType>();
 
-            //game
-            Mapper.CreateMap<Game, VMGame>();
-            Mapper.CreateMap<Game, VMEditGame>();
-            Mapper.CreateMap<VMEditGame, Game>();
+                    //game
+                    cfg.CreateMap<Game, VMGame>();
+                    cfg.CreateMap<Game, VMEditGame>();
+                    cfg.CreateMap<VMEditGame, Game>();
 
-            //menu
-            Mapper.CreateMap<SxMenu, VMMenu>();
-            Mapper.CreateMap<SxMenu, VMEditMenu>();
-            Mapper.CreateMap<VMEditMenu, SxMenu>();
+                    //menu
+                    cfg.CreateMap<SxMenu, VMMenu>();
+                    cfg.CreateMap<SxMenu, VMEditMenu>();
+                    cfg.CreateMap<VMEditMenu, SxMenu>();
 
-            //menu item
-            Mapper.CreateMap<SxMenuItem, VMMenuItem>();
-            Mapper.CreateMap<SxMenuItem, VMEditMenuItem>();
-            Mapper.CreateMap<VMEditMenuItem, SxMenuItem>();
+                    //menu item
+                    cfg.CreateMap<SxMenuItem, VMMenuItem>()
+                        .ForMember(d => d.Url, d => d.MapFrom(s => s.Route != null ? s.Route.Url : null));
+                    cfg.CreateMap<SxMenuItem, VMEditMenuItem>();
+                    cfg.CreateMap<VMEditMenuItem, SxMenuItem>();
 
-            //picture
-            Mapper.CreateMap<SxPicture, VMPicture>();
-            Mapper.CreateMap<SxPicture, VMEditPicture>();
-            Mapper.CreateMap<VMEditPicture, SxPicture>();
+                    //picture
+                    cfg.CreateMap<SxPicture, VMPicture>();
+                    cfg.CreateMap<SxPicture, VMEditPicture>();
+                    cfg.CreateMap<VMEditPicture, SxPicture>();
+
+                    //route
+                    cfg.CreateMap<SxRoute, VMRoute>();
+                    cfg.CreateMap<SxRoute, VMEditRoute>();
+                    cfg.CreateMap<VMEditRoute, SxRoute>();
+
+                    //route value
+                    cfg.CreateMap<SxRouteValue, VMRouteValue>();
+                    cfg.CreateMap<SxRouteValue, VMEditRouteValue>();
+                    cfg.CreateMap<VMEditRouteValue, SxRouteValue>();
+                });
+            }
         }
     }
 }

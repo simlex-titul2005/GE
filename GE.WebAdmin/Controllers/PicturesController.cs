@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using GE.WebAdmin.Models;
+﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
@@ -12,7 +11,7 @@ using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class PicturesController : Controller
+    public partial class PicturesController : BaseController
     {
         SX.WebCore.Abstract.SxDbRepository<Guid, SxPicture, DbContext> _repo;
         public PicturesController()
@@ -83,7 +82,7 @@ namespace GE.WebAdmin.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
-        public virtual ViewResult Edit(VMEditPicture model)
+        public virtual ViewResult Edit(VMEditPicture model, HttpPostedFileBase image)
         {
             var redactModel = Mapper.Map<VMEditPicture, SxPicture>(model);
             if (ModelState.IsValid)

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using GE.WebAdmin.Models;
+﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
@@ -12,19 +11,26 @@ using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class MenuItemsController : Controller
+    public partial class MenuItemsController : BaseController
     {
-        private SxDbRepository<int, SxMenuItem, DbContext> _repo;
+        private SxDbRepository<int, SxMenuItem, DbContext> _repoMenuItem;
+        private SxDbRepository<Guid, SxRoute, DbContext> _repoRoute;
         public MenuItemsController()
         {
-            _repo = new RepoMenuItem();
+            _repoMenuItem = new RepoMenuItem();
+            _repoRoute = new RepoRoute();
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Edit(int menuId, int? id)
+        public virtual ViewResult Edit(int menuId, int? id=null)
         {
-            var model = id.HasValue ? _repo.GetByKey(id) : new SxMenuItem { MenuId = menuId };
+            var model = id.HasValue ? _repoMenuItem.GetByKey(id) : new SxMenuItem { MenuId = menuId };
             var viewModel = Mapper.Map<SxMenuItem, VMEditMenuItem>(model);
+            
+            var routes = _repoRoute.All.Select(x => Mapper.Map<SxRoute, VMRoute>(x));
+            var routesList = new SelectList(routes, "Id", "Name");
+            ViewData["Routes"] = routesList;
+
             return View(viewModel);
         }
 
@@ -37,9 +43,9 @@ namespace GE.WebAdmin.Controllers
             {
                 SxMenuItem newModel = null;
                 if (model.Id == 0)
-                    newModel = _repo.Create(redactModel);
+                    newModel = _repoMenuItem.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, "Name");
+                    newModel = _repoMenuItem.Update(redactModel, "Caption", "RouteId");
                 return RedirectToAction("Edit", "Menues", new { @id = newModel.MenuId });
             }
             else
@@ -47,11 +53,11 @@ namespace GE.WebAdmin.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Delete(int menuId, int menuItemId)
+        public virtual PartialViewResult Delete(VMMenuItem model)
         {
-            _repo.Delete(menuItemId);
-            var viewModel = new VMMenuItemList();
-            viewModel.Items = _repo.All.Where(x => x.MenuId == menuId).Select(x => Mapper.Map<SxMenuItem, VMMenuItem>(x)).ToArray();
+            _repoMenuItem.Delete(model.Id);
+            var viewModel = new VMMenuItemList { MenuId = model.MenuId };
+            viewModel.Items = _repoMenuItem.All.Where(x => x.MenuId == model.MenuId).Select(x => Mapper.Map<SxMenuItem, VMMenuItem>(x)).ToArray();
             return PartialView(MVC.MenuItems.Views._MenuItems, viewModel);
         }
     }

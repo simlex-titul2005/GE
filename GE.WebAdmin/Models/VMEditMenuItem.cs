@@ -13,6 +13,9 @@ namespace GE.WebAdmin.Models
 
         public int MenuId { get; set; }
 
+        [Display(Name = "Маршрут")]
+        public Guid? RouteId { get; set; }
+
         [Required, MaxLength(100), Display(Name="Название пункта меню")]
         public string Caption { get; set; }
     }

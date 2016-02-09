@@ -15,6 +15,9 @@ namespace SX.WebCore
         [Required, MaxLength(100), Column("NAME")]
         public string Name { get; set; }
 
+        [MaxLength(500), Column("DESCRIPTION")]
+        public string Description { get; set; }
+
         public virtual ICollection<SxMenuItem> Items { get; set; }
     }
 }

@@ -71,7 +71,7 @@ namespace GE.WebAdmin.Controllers
         public readonly string Name = "Pictures";
         [GeneratedCode("T4MVC", "2.0")]
         public const string NameConst = "Pictures";
-
+        [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
@@ -108,6 +108,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string id = "id";
             public readonly string model = "model";
+            public readonly string image = "image";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -173,14 +174,15 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, GE.WebAdmin.Models.VMEditPicture model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, GE.WebAdmin.Models.VMEditPicture model, System.Web.HttpPostedFileBase image);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Edit(GE.WebAdmin.Models.VMEditPicture model)
+        public override System.Web.Mvc.ViewResult Edit(GE.WebAdmin.Models.VMEditPicture model, System.Web.HttpPostedFileBase image)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            EditOverride(callInfo, model);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "image", image);
+            EditOverride(callInfo, model, image);
             return callInfo;
         }
 

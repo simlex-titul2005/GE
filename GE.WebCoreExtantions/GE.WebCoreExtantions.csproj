@@ -60,6 +60,9 @@
     <Compile Include="DbContext.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\RepoRequest.cs" />
+    <Compile Include="Repositories\RepoRouteValue.cs" />
+    <Compile Include="Repositories\RepoRoute.cs" />
     <Compile Include="Repositories\RepoMenuItem.cs" />
     <Compile Include="Repositories\RepoMenu.cs" />
     <Compile Include="Repositories\RepoArticle.cs" />

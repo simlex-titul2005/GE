@@ -1,0 +1,19 @@
+﻿@model VMGame[]
+@{
+    var length = Math.Round((decimal)100 / Model.Length, 4).ToString();
+}
+<div id="game-list">
+    <div class="game-menu">
+        <div class="container">
+            <ul>
+                @for (int i = 0; i < Model.Length; i++)
+                {
+                    var item = Model[i];
+                    <li style="width:@(length + "%")">
+                        @item.Title
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

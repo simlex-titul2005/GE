@@ -1,7 +1,10 @@
 ﻿@model VMGame[]
+@{
+    ViewBag.Title = "Игры";
+}
 
-<h2>Типы статей</h2>
-
+<h2>Игры</h2>
+<br />
 <div id="grid-games">
     @Html.Partial(MVC.Games.Views._GridView, Model)
 </div>

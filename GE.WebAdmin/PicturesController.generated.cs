@@ -80,6 +80,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
+            public readonly string FindTable = "FindTable";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -87,6 +88,7 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
+            public const string FindTable = "FindTable";
         }
 
 
@@ -107,8 +109,16 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string id = "id";
-            public readonly string model = "model";
-            public readonly string image = "image";
+            public readonly string picture = "picture";
+            public readonly string file = "file";
+        }
+        static readonly ActionParamsClass_FindTable s_params_FindTable = new ActionParamsClass_FindTable();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_FindTable FindTableParams { get { return s_params_FindTable; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_FindTable
+        {
+            public readonly string page = "page";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -122,10 +132,12 @@ namespace GE.WebAdmin.Controllers
             {
                 public readonly string _GridView = "_GridView";
                 public readonly string Edit = "Edit";
+                public readonly string FindTable = "FindTable";
                 public readonly string Index = "Index";
             }
             public readonly string _GridView = "~/Views/Pictures/_GridView.cshtml";
             public readonly string Edit = "~/Views/Pictures/Edit.cshtml";
+            public readonly string FindTable = "~/Views/Pictures/FindTable.cshtml";
             public readonly string Index = "~/Views/Pictures/Index.cshtml";
         }
     }
@@ -174,15 +186,27 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, GE.WebAdmin.Models.VMEditPicture model, System.Web.HttpPostedFileBase image);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditPicture picture, System.Web.HttpPostedFileBase file);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Edit(GE.WebAdmin.Models.VMEditPicture model, System.Web.HttpPostedFileBase image)
+        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditPicture picture, System.Web.HttpPostedFileBase file)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "image", image);
-            EditOverride(callInfo, model, image);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "picture", picture);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "file", file);
+            EditOverride(callInfo, picture, file);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void FindTableOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult FindTable(int page)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.FindTable);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            FindTableOverride(callInfo, page);
             return callInfo;
         }
 

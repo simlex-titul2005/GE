@@ -75,7 +75,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Edit(int? id)
         {
-            var model = id.HasValue ? _repo.GetByKey(id) : new Game { DateCreate = DateTime.Now };
+            var model = id.HasValue ? _repo.GetByKey(id) : new Game();
             return View(Mapper.Map<Game, VMEditGame>(model));
         }
 
@@ -90,11 +90,11 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, "Title", "Description", "Show");
+                    newModel = _repo.Update(redactModel, "Title", "TitleAbbr", "Description", "Show", "FrontPictureId", "GoodPictureId", "BadPictureId");
                 return View(Mapper.Map<Game, VMEditGame>(redactModel));
             }
             else
-                return View(redactModel);
+                return View(model);
         }
     }
 }

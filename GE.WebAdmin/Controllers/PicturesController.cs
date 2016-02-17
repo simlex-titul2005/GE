@@ -5,6 +5,9 @@ using SX.WebCore;
 using SX.WebCore.HtmlHelpers;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -76,27 +79,39 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Edit(Guid? id)
         {
-            var model = id.HasValue ? _repo.GetByKey(id) : new SxPicture { DateCreate = DateTime.Now };
+            var model = id.HasValue ? _repo.GetByKey(id) : new SxPicture ();
             return View(Mapper.Map<SxPicture, VMEditPicture>(model));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
-        public virtual ViewResult Edit(VMEditPicture model, HttpPostedFileBase image)
+        public virtual ActionResult Edit(VMEditPicture picture, HttpPostedFileBase file)
         {
-            var request = Request;
-            var redactModel = Mapper.Map<VMEditPicture, SxPicture>(model);
-            if (ModelState.IsValid)
+            var redactModel=Mapper.Map<VMEditPicture, SxPicture>(picture);
+            if(picture.Id==Guid.Empty)
             {
-                SxPicture newModel = null;
-                if (model.Id == Guid.Empty)
-                    newModel = _repo.Create(redactModel);
-                else
-                    newModel = _repo.Update(redactModel, "Width");
-                return View(Mapper.Map<SxPicture, VMEditPicture>(redactModel));
+                var image = Image.FromStream(file.InputStream);
+                redactModel.OriginalContent = new byte[file.ContentLength];
+                file.InputStream.Read(redactModel.OriginalContent, 0, redactModel.OriginalContent.Length);
+                redactModel.Width = image.Width;
+                redactModel.Height = image.Height;
+                _repo.Create(redactModel);
             }
             else
-                return View(redactModel);
+            {
+                _repo.Update(redactModel, "Caption", "Description");
+            }
+
+            return RedirectToAction(MVC.Pictures.Index());
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public virtual ViewResult FindTable(int page = 1)
+        {
+            var list = _repo.All
+            .Skip((page - 1) * _pageSize)
+            .Take(_pageSize).ToArray().Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray();
+            return View(list);
         }
     }
 }

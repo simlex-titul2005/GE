@@ -16,13 +16,5 @@ namespace SX.WebCore
             SeoKeyWord = 3,
             SeoInfo = 4
         }
-
-        public enum ImgType : byte
-        {
-            Unknown = 0,
-            Jpeg = 1,
-            Png = 2,
-            Gif = 3
-        }
     }
 }

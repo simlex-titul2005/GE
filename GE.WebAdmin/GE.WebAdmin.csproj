@@ -356,7 +356,6 @@
     <Content Include="bower_components\metisMenu\dist\metisMenu.min.css" />
     <Content Include="bower_components\metisMenu\dist\metisMenu.min.js" />
     <Content Include="bower_components\metisMenu\Gruntfile.js" />
-    <Content Include="Content\13.jpg" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\dist\js\menues.min.js" />
@@ -667,6 +666,9 @@
     <Content Include="Views\Routes\Index.cshtml" />
     <Content Include="Views\RouteValues\_RouteValues.cshtml" />
     <Content Include="Views\RouteValues\Edit.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditImage.cshtml" />
+    <Content Include="Views\Pictures\FindTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

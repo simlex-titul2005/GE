@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers
 {
-    public abstract class BaseController : Controller
+    public abstract partial class BaseController : Controller
     {
         private IMapper _mapper;
         private SxDbRepository<Guid, SxRequest, DbContext> _repo;

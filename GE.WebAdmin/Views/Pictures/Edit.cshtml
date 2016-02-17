@@ -1,411 +1,83 @@
 ﻿@model VMEditPicture
-
-@section styles{
-    <link rel="stylesheet" href="~/bower_components/cropper/dist/cropper.min.css" />
-    <style type="text/css">
-        .img-container {
-            width: 100%;
-            min-height: 600px;
-        }
-
-            .img-container > img {
-                max-width: 50%;
-            }
-
-        .img-preview {
-            float: left;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            overflow: hidden;
-        }
-
-        .preview-lg {
-            width: 263px;
-            height: 148px;
-        }
-
-        .preview-md {
-            width: 139px;
-            height: 78px;
-        }
-
-        .preview-sm {
-            width: 69px;
-            height: 39px;
-        }
-
-        .preview-xs {
-            width: 35px;
-            height: 20px;
-            margin-right: 0;
-        }
-    </style>
+@{
+    var isNew = Model.Id == Guid.Empty;
 }
 
 <h2>
-    @(Model.Id == Guid.Empty ? "Добавить фото" : "Редактировать фото")
+    @(isNew ? "Добавить фото" : "Редактировать фото")
 </h2>
-
-<form method="post" action="edit" class="form" enctype="multipart/form-data">
+<br />
+<form method="post" action="edit" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
-
     @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ImgFormat)
 
-    <div id="openFileDialog" class="input-group pull-left" style="width:300px; margin-right:30px;">
-        <input type="text" name="fileName" class="form-control" placeholder="Выберите файл">
-        <input type="file" name="image" id="download" class="hidden" onchange="handleFiles(this.files)" />
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="button" onclick="$('input[type=file]').click()">Выбрать</button>
-        </span>
-    </div>
-    <div class="btn-group btn-group-justified" data-toggle="buttons" style="width:250px;">
-        <label class="btn btn-primary active">
-            <input class="sr-only" id="aspectRatio0" name="aspectRatio" value="1.7777777777777777" type="radio">
-            <span data-original-title="aspectRatio: 16 / 9" class="docs-tooltip" data-toggle="tooltip" title="">
-                16:9
-            </span>
-        </label>
-        <label class="btn btn-primary">
-            <input class="sr-only" id="aspectRatio1" name="aspectRatio" value="1.3333333333333333" type="radio">
-            <span data-original-title="aspectRatio: 4 / 3" class="docs-tooltip" data-toggle="tooltip" title="">
-                4:3
-            </span>
-        </label>
-        <label class="btn btn-primary">
-            <input class="sr-only" id="aspectRatio2" name="aspectRatio" value="1" type="radio">
-            <span data-original-title="aspectRatio: 1 / 1" class="docs-tooltip" data-toggle="tooltip" title="">
-                1:1
-            </span>
-        </label>
-        <label class="btn btn-primary">
-            <input class="sr-only" id="aspectRatio3" name="aspectRatio" value="0.6666666666666666" type="radio">
-            <span data-original-title="aspectRatio: 2 / 3" class="docs-tooltip" data-toggle="tooltip" title="">
-                2:3
-            </span>
-        </label>
-        <label class="btn btn-primary">
-            <input class="sr-only" id="aspectRatio4" name="aspectRatio" value="NaN" type="radio">
-            <span data-original-title="aspectRatio: NaN" class="docs-tooltip" data-toggle="tooltip" title="">
-                Free
-            </span>
-        </label>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Caption, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Caption, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Caption)
+        </div>
     </div>
     <br />
     <div class="row">
-        <div class="col-md-9">
-            <div class="img-container">
-                <img id="image" src="~/Content/13.jpg">
-            </div>
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Description, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Description)
         </div>
-        <div class="col-md-3">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="input-group input-group-sm">
-                        <label class="input-group-addon" for="dataX">X</label>
-                        <input class="form-control" id="dataX" placeholder="x" type="text">
-                        <span class="input-group-addon">px</span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="input-group input-group-sm">
-                        <label class="input-group-addon" for="dataY">Y</label>
-                        <input class="form-control" id="dataY" placeholder="y" type="text">
-                        <span class="input-group-addon">px</span>
-                    </div>
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="input-group input-group-sm">
-                        <label class="input-group-addon" for="dataWidth">Width</label>
-                        <input class="form-control" id="dataWidth" placeholder="width" type="text">
-                        <span class="input-group-addon">px</span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="input-group input-group-sm">
-                        <label class="input-group-addon" for="dataHeight">Height</label>
-                        <input class="form-control" id="dataHeight" placeholder="height" type="text">
-                        <span class="input-group-addon">px</span>
-                    </div>
-                </div>
-            </div>
-            <br />
-            <div class="docs-preview clearfix">
-                <div class="img-preview preview-lg">
-                    <img />
-                </div>
-                <div class="img-preview preview-md">
-                    <img />
-                </div>
-                <div class="img-preview preview-sm">
-                    <img />
-                </div>
-                <div class="img-preview preview-xs">
-                    <img />
-                </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <label class="control-label">Выбор фото</label>
+            <input type="file" name="file" class="hidden" />
+            <div class="input-group">
+                <input type="text" class="form-control select-input" placeholder="Выберите изображение">
+                <span class="input-group-btn">
+                    <button class="btn btn-default select-btn" type="button">Выбрать</button>
+                </span>
             </div>
         </div>
     </div>
     <br />
-
-    <div class="form-group">
-        <button type="submit" class="btn btn-default">Добавить</button>
-        @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">@(Model.Id == Guid.Empty ? "Добавить" : "Сохранить")</button>
+                @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
+                @if (!isNew)
+                {
+                    <button type="button" class="btn btn-danger pull-right">Удалить игру</button>
+                }
+            </div>
+        </div>
     </div>
 </form>
 
 @section scripts{
-    <script type="text/javascript" src="~/bower_components/cropper/dist/cropper.min.js"></script>
     <script type="text/javascript">
-
-        function handleFiles(files)
-        {
-            $('#openFileDialog button').append('&nbsp;<i class="fa fa-spinner fa-spin"></i>');
-            var file = files[0];
-            var imageType = /^image\//;
-
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function (e) {
-                $('#image').cropper('replace', e.target.result);
-                $('#openFileDialog button i').remove();
-            };
-        }
-
         $(function () {
-
-            'use strict';
-
-            var console = window.console || { log: function () { } };
-            var $image = $('#image');
-            var $download = $('#download');
-            var $dataX = $('#dataX');
-            var $dataY = $('#dataY');
-            var $dataHeight = $('#dataHeight');
-            var $dataWidth = $('#dataWidth');
-            var $dataRotate = $('#dataRotate');
-            var $dataScaleX = $('#dataScaleX');
-            var $dataScaleY = $('#dataScaleY');
-            var options = {
-                aspectRatio: 16 / 9,
-                preview: '.img-preview',
-                crop: function (e) {
-                    $dataX.val(Math.round(e.x));
-                    $dataY.val(Math.round(e.y));
-                    $dataHeight.val(Math.round(e.height));
-                    $dataWidth.val(Math.round(e.width));
-                    $dataRotate.val(e.rotate);
-                    $dataScaleX.val(e.scaleX);
-                    $dataScaleY.val(e.scaleY);
+            $('[type="file"]').change(function (e) {
+                var file = e.target.files[0];
+                @if(isNew)
+                {
+                    <text>
+                $('#Caption').val(file.name);
+                $('#Description').val('Name: ' + file.name + '\nType: ' + file.type + '\nSize: ' + file.size + ' byte');
+                $('#ImgFormat').val(file.type);
+                </text>
                 }
-            };
-
-
-            // Tooltip
-            $('[data-toggle="tooltip"]').tooltip();
-
-
-            // Cropper
-            $image.on({
-                'build.cropper': function (e) {
-                    //console.log(e.type);
-                },
-                'built.cropper': function (e) {
-                    //console.log(e.type);
-                },
-                'cropstart.cropper': function (e) {
-                    //console.log(e.type, e.action);
-                },
-                'cropmove.cropper': function (e) {
-                    //console.log(e.type, e.action);
-                },
-                'cropend.cropper': function (e) {
-                    //console.log(e.type, e.action);
-                },
-                'crop.cropper': function (e) {
-                   //console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
-                },
-                'zoom.cropper': function (e) {
-                    //console.log(e.type, e.ratio);
-                }
-            }).cropper(options);
-
-
-            // Buttons
-            if (!$.isFunction(document.createElement('canvas').getContext)) {
-                $('button[data-method="getCroppedCanvas"]').prop('disabled', true);
-            }
-
-            if (typeof document.createElement('cropper').style.transition === 'undefined') {
-                $('button[data-method="rotate"]').prop('disabled', true);
-                $('button[data-method="scale"]').prop('disabled', true);
-            }
-
-
-            // Download
-            if (typeof $download[0].download === 'undefined') {
-                $download.addClass('disabled');
-            }
-
-
-            // Options
-            $('.docs-toggles').on('change', 'input', function () {
-                var $this = $(this);
-                var name = $this.attr('name');
-                var type = $this.prop('type');
-                var cropBoxData;
-                var canvasData;
-
-                if (!$image.data('cropper')) {
-                    return;
-                }
-
-                if (type === 'checkbox') {
-                    options[name] = $this.prop('checked');
-                    cropBoxData = $image.cropper('getCropBoxData');
-                    canvasData = $image.cropper('getCanvasData');
-
-                    options.built = function () {
-                        $image.cropper('setCropBoxData', cropBoxData);
-                        $image.cropper('setCanvasData', canvasData);
-                    };
-                } else if (type === 'radio') {
-                    options[name] = $this.val();
-                }
-
-                $image.cropper('destroy').cropper(options);
+                $('.select-input').val(file.name);
             });
 
-
-            // Methods
-            $('.docs-buttons').on('click', '[data-method]', function () {
-                var $this = $(this);
-                var data = $this.data();
-                var $target;
-                var result;
-
-                if ($this.prop('disabled') || $this.hasClass('disabled')) {
-                    return;
-                }
-
-                if ($image.data('cropper') && data.method) {
-                    data = $.extend({}, data); // Clone a new one
-
-                    if (typeof data.target !== 'undefined') {
-                        $target = $(data.target);
-
-                        if (typeof data.option === 'undefined') {
-                            try {
-                                data.option = JSON.parse($target.val());
-                            } catch (e) {
-                                console.log(e.message);
-                            }
-                        }
-                    }
-
-                    result = $image.cropper(data.method, data.option, data.secondOption);
-
-                    switch (data.method) {
-                        case 'scaleX':
-                        case 'scaleY':
-                            $(this).data('option', -data.option);
-                            break;
-
-                        case 'getCroppedCanvas':
-                            if (result) {
-
-                                // Bootstrap's Modal
-                                $('#getCroppedCanvasModal').modal().find('.modal-body').html(result);
-
-                                if (!$download.hasClass('disabled')) {
-                                    $download.attr('href', result.toDataURL());
-                                }
-                            }
-
-                            break;
-                    }
-
-                    if ($.isPlainObject(result) && $target) {
-                        try {
-                            $target.val(JSON.stringify(result));
-                        } catch (e) {
-                            console.log(e.message);
-                        }
-                    }
-
-                }
+            $('.select-btn').click(function () {
+                $(this).closest('.input-group').prev('[type="file"]').click();
             });
 
-
-            // Keyboard
-            $(document.body).on('keydown', function (e) {
-
-                if (!$image.data('cropper') || this.scrollTop > 300) {
-                    return;
-                }
-
-                switch (e.which) {
-                    case 37:
-                        e.preventDefault();
-                        $image.cropper('move', -1, 0);
-                        break;
-
-                    case 38:
-                        e.preventDefault();
-                        $image.cropper('move', 0, -1);
-                        break;
-
-                    case 39:
-                        e.preventDefault();
-                        $image.cropper('move', 1, 0);
-                        break;
-
-                    case 40:
-                        e.preventDefault();
-                        $image.cropper('move', 0, 1);
-                        break;
-                }
-
+            $('.select-input').click(function () {
+                $(this).closest('.input-group').find('.select-btn').trigger('click');
             });
-
-
-            // Import image
-            var $inputImage = $('#inputImage');
-            var URL = window.URL || window.webkitURL;
-            var blobURL;
-
-            if (URL) {
-                $inputImage.change(function () {
-                    var files = this.files;
-                    var file;
-
-                    if (!$image.data('cropper')) {
-                        return;
-                    }
-
-                    if (files && files.length) {
-                        file = files[0];
-
-                        if (/^image\/\w+$/.test(file.type)) {
-                            blobURL = URL.createObjectURL(file);
-                            $image.one('built.cropper', function () {
-
-                                // Revoke when load complete
-                                URL.revokeObjectURL(blobURL);
-                            }).cropper('reset').cropper('replace', blobURL);
-                            $inputImage.val('');
-                        } else {
-                            window.alert('Please choose an image file.');
-                        }
-                    }
-                });
-            } else {
-                $inputImage.prop('disabled', true).parent().addClass('disabled');
-            }
-
         });
-
     </script>
 }

@@ -1,42 +1,132 @@
 ﻿@model VMEditGame
 
+@section styles{
+    <style type="text/css">
+        .edit-img{
+            position:relative;
+        }
+            .edit-img .dropdown {
+                display:none;
+                position: absolute;
+                margin-top: -2px;
+                z-index:1;
+                background-color:#fff;
+            }
+    </style>
+}
+
 <h2>
     @(Model.Id == 0 ? "Добавить игру" : "Редактировать игру")
 </h2>
-
-@using (Html.BeginForm("Edit", "Games", FormMethod.Post, new { @class = "form" }))
-{
+<br />
+<form method="post" action="edit" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(x => x.Id)
-    @Html.HiddenFor(x => x.DateCreate)
 
     <div class="row">
         <div class="col-md-9">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Title)
-                @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.Title)
-            </div>
+            @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Title)
         </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Show)
-                @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.Show)
-            </div>
+        <div class="col-md-2">
+            @Html.LabelFor(x => x.TitleAbbr, new { @class = "control-label" })
+            @Html.EditorFor(x => x.TitleAbbr, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.TitleAbbr)
         </div>
+        <div class="col-md-1">
+            @Html.LabelFor(x => x.Show, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Show)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+
+            @Html.LabelFor(x => x.Description, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Description)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
+            @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.FrontPictureId)
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(x => x.GoodPictureId, new { @class = "control-label" })
+            @Html.EditorFor(x => x.GoodPictureId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.GoodPictureId)
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(x => x.BadPictureId, new { @class = "control-label" })
+            @Html.EditorFor(x => x.BadPictureId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.BadPictureId)
+        </div>
+    </div>
+    <br />
+    <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                @Html.LabelFor(x => x.Description)
-                @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.Description)
+                <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
+                @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
+                @if (Model.Id != 0)
+                {
+                    <button type="button" class="btn btn-danger pull-right">Удалить игру</button>
+                }
             </div>
         </div>
     </div>
+</form>
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-default">Добавить</button>
-        @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
-    </div>
+@section scripts{
+    @if (false)
+    {
+        <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+    }
+    <script type="text/javascript">
+        $(function () {
+
+            $('.edit-img [type="text"]').click(function () {
+                var $input = $(this);
+                var $imgBox = $input.closest('.edit-img');
+                var width = $input.closest('.input-group').width();
+                var $dropdown = $('<div class="dropdown"></div>').css({
+                    'width': width+'px'
+                });
+                if ($imgBox.find('.dropdown').length == 0) {
+                    $.ajax({
+                        method: 'post',
+                        url: '/pictures/FindTable',
+                        success: function (data) {
+                            $dropdown.html(data);
+                        },
+                        complete: function () {
+                            $dropdown.find('table tr').click(function () {
+                                var pictureId = $(this).data('picture-id');
+                                $input.val(pictureId);
+                                $imgBox.find('[type="hidden"]').val(pictureId);
+                                $dropdown.slideToggle('fast');
+                            });
+                        }
+                    });
+                    $imgBox.append($dropdown);
+                    $('.edit-img .dropdown').hide();
+                    $dropdown.slideToggle('fast');
+                }
+                else {
+                    $imgBox.find('.dropdown').slideToggle('fast');
+                    $('.edit-img').not($imgBox).find('.dropdown').hide();
+                }
+            });
+
+            $('.edit-img button').click(function () {
+                $(this).closest('.input-group').find('[type="text"]').trigger('click');
+            });
+        });
+    </script>
 }

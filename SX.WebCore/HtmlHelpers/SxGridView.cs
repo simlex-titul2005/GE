@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 
 namespace SX.WebCore.HtmlHelpers
 {
@@ -233,7 +235,7 @@ namespace SX.WebCore.HtmlHelpers
                 for (int i = 0; i < data.Length; i++)
                 {
                     var model = data[i];
-                    sb.Append(getGridViewRow(model, settings));
+                    sb.Append(getGridViewRow(model, settings, htmlHelper));
                 }
             }
 
@@ -336,7 +338,7 @@ namespace SX.WebCore.HtmlHelpers
             return count > 0;
         }
 
-        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings)
+        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings, HtmlHelper htmlHelper)
         {
             var tr = new TagBuilder("tr");
             if (settings.ShowFilterRowMenu || settings.EnableEditing)

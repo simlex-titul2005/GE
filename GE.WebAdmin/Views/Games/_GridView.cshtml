@@ -12,7 +12,9 @@
         UpdateTargetId = "grid-games",
         Data = Model,
         Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Наименование игры"},
+            new SxExtantions.SxGridViewColumn{FieldName="TitleFull", Caption="Наименование игры"},
+            new SxExtantions.SxGridViewColumn{FieldName="Description", Caption="Описание"},
+            new SxExtantions.SxGridViewColumn{FieldName="Show", Caption="Показывать"},
         },
         Filter = filter,
         SortDirections = sortDirections

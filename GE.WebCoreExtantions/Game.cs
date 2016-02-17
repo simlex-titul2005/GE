@@ -16,6 +16,9 @@ namespace GE.WebCoreExtantions
         [Column("TITLE"), MaxLength(100), Required]
         public string Title { get; set; }
 
+        [Column("TITLE_ABBR"), MaxLength(100),]
+        public string TitleAbbr { get; set; }
+
         [Column("SHOW")]
         public bool Show { get; set; }
 
@@ -25,5 +28,13 @@ namespace GE.WebCoreExtantions
         [Column("FRONT_PICTURE_ID")]
         public Guid? FrontPictureId { get; set; }
         public virtual SxPicture FrontPicture { get; set; }
+
+        [Column("GOOD_PICTURE_ID")]
+        public Guid? GoodPictureId { get; set; }
+        public virtual SxPicture GoodPicture { get; set; }
+
+        [Column("BAD_PICTURE_ID")]
+        public Guid? BadPictureId { get; set; }
+        public virtual SxPicture BadPicture { get; set; }
     }
 }

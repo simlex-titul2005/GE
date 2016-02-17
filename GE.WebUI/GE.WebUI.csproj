@@ -393,6 +393,8 @@
     <Content Include="bower_components\jquery\src\.jshintrc" />
     <Content Include="Content\less\colors.less" />
     <Content Include="Content\less\site.less" />
+    <Content Include="Content\less\bootstrap-ext.less" />
+    <Content Include="Content\less\game-list.less" />
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -405,8 +407,12 @@
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuesController.cs" />
+    <Compile Include="GamesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -416,6 +422,7 @@
     <Compile Include="MenuesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VMGame.cs" />
     <Compile Include="Models\VMMenu.cs" />
     <Compile Include="Models\VMMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -438,6 +445,7 @@
     <Content Include="package.json" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Menues\_MenuItems.cshtml" />
+    <Content Include="Views\Games\_GameList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

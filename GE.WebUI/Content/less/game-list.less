@@ -1,9 +1,13 @@
 ﻿@import (reference) "colors.less";
 
 @g-m-h: 60px;
+@g-l-h:324px;
 
 .game-menu {
     background-color: @color-game-menu;
+    z-index: 1;
+    position: absolute;
+    width: 100%;
 }
 
 .game-menu ul {
@@ -18,4 +22,24 @@
 
 .game-menu ul > li {
     float: left;
+}
+
+.game-menu ul > li > a > img {
+    height:40px;
+}
+
+.game-images{
+    display:table;
+    width:100%;
+    position:absolute;
+}
+
+.game-images .game-good-img, .game-images .game-bad-img  {
+    display: table-cell;
+    width: 50%;
+    float: left;
+}
+
+.game-images .img > figure > img{
+    width:100%;
 }

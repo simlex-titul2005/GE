@@ -87,6 +87,7 @@
     <Compile Include="Abstract\SxMaterial.cs" />
     <Compile Include="HtmlHelpers\SxGridView.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
+    <Compile Include="PictureHandler.cs" />
     <Compile Include="SxArticle.cs" />
     <Compile Include="SxDbContext.cs" />
     <Compile Include="Enums.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="SxRouteValue.cs" />
     <Compile Include="SxSeoInfo.cs" />
     <Compile Include="SxSeoKeyWord.cs" />
+    <Compile Include="SxSiteSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

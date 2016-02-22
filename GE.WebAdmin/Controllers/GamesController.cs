@@ -25,7 +25,7 @@ namespace GE.WebAdmin.Controllers
         {
             var list = _repo.All
                 .Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<Game, VMGame>(x)).ToArray();
+                .Take(_pageSize).OrderBy(x=>x.Title).Select(x => Mapper.Map<Game, VMGame>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
@@ -63,7 +63,7 @@ namespace GE.WebAdmin.Controllers
             }
 
             var list = temp.Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<Game, VMGame>(x)).ToArray();
+                .Take(_pageSize).Select(x => Mapper.Map<Game, VMGame>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;

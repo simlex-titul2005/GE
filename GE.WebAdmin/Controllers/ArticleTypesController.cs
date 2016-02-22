@@ -1,6 +1,7 @@
 ﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
+using SX.WebCore.Abstract;
 using SX.WebCore.HtmlHelpers;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace GE.WebAdmin.Controllers
 {
     public partial class ArticleTypesController : BaseController
     {
-        SX.WebCore.Abstract.SxDbRepository<byte, ArticleType, DbContext> _repo;
+        SxDbRepository<byte, ArticleType, DbContext> _repo;
         public ArticleTypesController()
         {
             _repo = new RepoArticleType();

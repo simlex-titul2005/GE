@@ -578,6 +578,7 @@
     <Compile Include="Controllers\ArticleTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RouteValuesController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="GamesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -597,6 +598,7 @@
     <Compile Include="Models\VMArticle.cs" />
     <Compile Include="Models\VMEditArticle.cs" />
     <Compile Include="Models\VMEditArticleType.cs" />
+    <Compile Include="Models\VMEditEmptyGameSettings.cs" />
     <Compile Include="Models\VMEditGame.cs" />
     <Compile Include="Models\VMEditMenuItem.cs" />
     <Compile Include="Models\VMEditMenu.cs" />
@@ -624,6 +626,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="RouteValuesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SharedController.generated.cs">
@@ -669,6 +674,7 @@
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditImage.cshtml" />
     <Content Include="Views\Pictures\FindTable.cshtml" />
+    <Content Include="Views\Settings\EditEmptyGame.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

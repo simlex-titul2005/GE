@@ -36,6 +36,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.PicturesController Pictures = new GE.WebAdmin.Controllers.T4MVC_PicturesController();
     public static GE.WebAdmin.Controllers.RoutesController Routes = new GE.WebAdmin.Controllers.T4MVC_RoutesController();
     public static GE.WebAdmin.Controllers.RouteValuesController RouteValues = new GE.WebAdmin.Controllers.T4MVC_RouteValuesController();
+    public static GE.WebAdmin.Controllers.SettingsController Settings = new GE.WebAdmin.Controllers.T4MVC_SettingsController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

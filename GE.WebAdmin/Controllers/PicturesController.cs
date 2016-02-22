@@ -79,7 +79,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Edit(Guid? id)
         {
-            var model = id.HasValue ? _repo.GetByKey(id) : new SxPicture ();
+            var model = id.HasValue ? _repo.GetByKey(id) : new SxPicture();
             return View(Mapper.Map<SxPicture, VMEditPicture>(model));
         }
 
@@ -87,22 +87,31 @@ namespace GE.WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditPicture picture, HttpPostedFileBase file)
         {
-            var redactModel=Mapper.Map<VMEditPicture, SxPicture>(picture);
-            if(picture.Id==Guid.Empty)
+            if (ModelState.IsValid)
             {
-                var image = Image.FromStream(file.InputStream);
-                redactModel.OriginalContent = new byte[file.ContentLength];
-                file.InputStream.Read(redactModel.OriginalContent, 0, redactModel.OriginalContent.Length);
-                redactModel.Width = image.Width;
-                redactModel.Height = image.Height;
-                _repo.Create(redactModel);
-            }
-            else
-            {
-                _repo.Update(redactModel, "Caption", "Description");
+                var redactModel = Mapper.Map<VMEditPicture, SxPicture>(picture);
+                if (picture.Id == Guid.Empty)
+                {
+                    byte[] imageData = null;
+                    Image image = null;
+                    using (var binaryReader = new BinaryReader(file.InputStream))
+                    {
+                        imageData = binaryReader.ReadBytes(file.ContentLength);
+                        image = Image.FromStream(file.InputStream);
+                    }
+                    redactModel.OriginalContent = imageData;
+                    redactModel.Width = image.Width;
+                    redactModel.Height = image.Height;
+                    _repo.Create(redactModel);
+                }
+                else
+                {
+                    _repo.Update(redactModel, "Caption", "Description");
+                }
+                return RedirectToAction(MVC.Pictures.Index());
             }
 
-            return RedirectToAction(MVC.Pictures.Index());
+            return View(picture);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]

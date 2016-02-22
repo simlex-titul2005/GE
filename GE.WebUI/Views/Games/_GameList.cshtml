@@ -1,19 +1,48 @@
-﻿@model VMGame[]
+﻿@model VMGameMenu
 @{
-    var length = Math.Round((decimal)100 / Model.Length, 4).ToString();
+    var length = Math.Round((decimal)100 / (Model.Length + 1), 4).ToString().Replace(',', '.');
 }
 <div id="game-list">
     <div class="game-menu">
         <div class="container">
             <ul>
+                <li style="width:@(length + "%")">
+                    <a href="#" title="Показать все">
+                        <img alt="Показать все" src="@(Model.EmptyGame.IconPath)" />
+                    </a>
+                </li>
+
                 @for (int i = 0; i < Model.Length; i++)
                 {
-                    var item = Model[i];
+                    var item = Model.Games[i];
                     <li style="width:@(length + "%")">
-                        @item.Title
+                        <a href="#" title="@item.Title">
+                            <img alt="@item.Title" src="@Url.Action(MVC.Pictures.Picture(item.FrontPictureId, height: 80 ))" />
+                        </a>
                     </li>
                 }
             </ul>
+        </div>
+    </div>
+    <div class="game-images">
+        <div class="container">
+            <div class="game-good-img">
+                <figure>
+                    <img alt="" src="@Url.Action(MVC.Pictures.Picture(Model.Games[0].GoodPictureId, width: 570 ))" />
+                </figure>
+            </div>
+            <div class="game-bad-img">
+                <figure>
+                    <img alt="" src="@Url.Action(MVC.Pictures.Picture(Model.Games[0].BadPictureId, width: 570 ))" />
+                </figure>
+            </div>
+        </div>
+    </div>
+    <div class="game-icon-wrapper">
+        <div class="box">
+            <div class="img">
+                <img src="@Url.Action(MVC.Pictures.Picture(Model.Games[0].FrontPictureId, height: 80 ))" />
+            </div>
         </div>
     </div>
 </div>

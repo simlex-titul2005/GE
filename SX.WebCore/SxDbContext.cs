@@ -1,6 +1,7 @@
 ﻿using SX.WebCore.Abstract;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,8 @@ namespace SX.WebCore
 
         public DbSet<SxSeoKeyWord> SeoKeyWords { get; set; }
 
+        public DbSet<SxSiteSetting> SxSiteSettings { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -43,6 +46,9 @@ namespace SX.WebCore
                 .HasRequired(x => x.Material)
                 .WithMany()
                 .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
+
+            modelBuilder.Entity<SxSiteSetting>()
+                .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

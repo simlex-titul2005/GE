@@ -32,7 +32,5 @@ namespace SX.WebCore
 
         [Column("DESCRIPTION"), MaxLength(255)]
         public string Description { get; set; }
-
-        public virtual ICollection<SxPictureDetail> Pictures { get; set; }
     }
 }

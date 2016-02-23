@@ -80,6 +80,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
+            public readonly string FindTable = "FindTable";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -87,6 +88,7 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
+            public const string FindTable = "FindTable";
         }
 
 
@@ -109,6 +111,15 @@ namespace GE.WebAdmin.Controllers
             public readonly string id = "id";
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_FindTable s_params_FindTable = new ActionParamsClass_FindTable();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_FindTable FindTableParams { get { return s_params_FindTable; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_FindTable
+        {
+            public readonly string page = "page";
+            public readonly string pageSize = "pageSize";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -121,10 +132,12 @@ namespace GE.WebAdmin.Controllers
             {
                 public readonly string _GridView = "_GridView";
                 public readonly string Edit = "Edit";
+                public readonly string FindTable = "FindTable";
                 public readonly string Index = "Index";
             }
             public readonly string _GridView = "~/Views/Games/_GridView.cshtml";
             public readonly string Edit = "~/Views/Games/Edit.cshtml";
+            public readonly string FindTable = "~/Views/Games/FindTable.cshtml";
             public readonly string Index = "~/Views/Games/Index.cshtml";
         }
     }
@@ -181,6 +194,19 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void FindTableOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page, int pageSize);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult FindTable(int page, int pageSize)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.FindTable);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
+            FindTableOverride(callInfo, page, pageSize);
             return callInfo;
         }
 

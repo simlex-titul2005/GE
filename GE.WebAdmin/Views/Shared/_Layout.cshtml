@@ -284,13 +284,22 @@
                             <a href="@Url.Action(MVC.Games.Index())"><i class="fa fa-fighter-jet fa-fw"></i> Игры</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-file-text-o fa-fw"></i> Статьи<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-archive fa-fw"></i> Материалы<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="@Url.Action(MVC.Articles.Index())">Каталог статей</a>
+                                    <a href="#"><i class="fa fa-book"></i> Статьи <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="@Url.Action(MVC.Articles.Index())">Каталог статей</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action(MVC.ArticleTypes.Index())">Типы статей</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
                                 </li>
                                 <li>
-                                    <a href="@Url.Action(MVC.ArticleTypes.Index())">Типы статей</a>
+                                    <a href="@Url.Action(MVC.News.Index())"><i class="fa fa-newspaper-o"></i> Новости</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

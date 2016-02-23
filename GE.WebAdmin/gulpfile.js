@@ -74,6 +74,14 @@ function createJs() {
             suffix: '.min'
         }))
         .pipe(gulp.dest('content/dist/js'));
+
+    gulp.src([
+        'bower_components/ckeditor/ckeditor.js'
+    ])
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest('content/dist/js'));
 }
 
 gulp.task('watch', function (cb) {

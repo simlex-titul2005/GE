@@ -28,8 +28,10 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Index(int page = 1)
         {
             var list = _repo.All
+                .OrderByDescending(x => x.DateCreate)
                 .Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray();
+                .Take(_pageSize)
+                .Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
@@ -67,7 +69,8 @@ namespace GE.WebAdmin.Controllers
             }
 
             var list = temp.Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray();
+                .Take(_pageSize)
+                .Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
@@ -115,12 +118,24 @@ namespace GE.WebAdmin.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual ViewResult FindTable(int page = 1)
+        public virtual ViewResult FindTable(int page = 1, int pageSize = 10)
         {
-            var list = _repo.All
-            .Skip((page - 1) * _pageSize)
-            .Take(_pageSize).ToArray().Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray();
-            return View(list);
+            var viewModel = new SxExtantions.SxPagedCollection<VMPicture>
+            {
+                Collection = _repo.All
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray(),
+                PagerInfo = new SxExtantions.SxPagerInfo
+                {
+                    Page = page,
+                    PageSize = pageSize,
+                    TotalItems = _repo.All.Count(),
+                    PagerSize = 4
+                }
+            };
+
+            return View(viewModel);
         }
     }
 }

@@ -1,16 +1,38 @@
-﻿@model VMPicture[]
+﻿@model SxExtantions.SxPagedCollection<VMPicture>
 @{
     Layout = null;
 }
 <table class="table table-condensed table-responsive table-hover table-bordered">
-    @for (int i = 0; i < Model.Length; i++)
-    {
-        var item = Model[i];
-        <tr data-picture-id="@item.Id">
-            <td>@item.Width x @item.Height</td>
-            <td>@item.ImgFormat</td>
-            <td>@item.Caption</td>
+    <thead>
+        <tr>
+            <th>
+                <input type="text" />
+            </th>
+            <th>
+                <input type="text" />
+            </th>
+            <th>
+                <input type="text" />
+            </th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Length; i++)
+        {
+            var item = Model.Collection[i];
+            <tr data-id="@item.Id">
+                <td>@item.Width x @item.Height</td>
+                <td>@item.ImgFormat</td>
+                <td data-text-field>@item.Caption</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                @Html.SxPager(Model.PagerInfo)
+            </td>
+        </tr>
+    </tfoot>
 </table>
 

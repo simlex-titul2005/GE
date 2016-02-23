@@ -1,0 +1,75 @@
+﻿@model VMEditNews
+@{
+    var isNew = Model.Id == 0;
+    ViewBag.Title=isNew ? "Добавить новость" : "Редактировать новость \"" + Model.Title + "\"";
+}
+<h2>@ViewBag.Title</h2>
+@if (Model.Id != 0)
+{
+    <form method="post" action="delete">
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.ModelCoreType)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger pull-right">Удалить новость</button>
+    </form>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.News.Edit())">
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ModelCoreType)
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Title)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(x => x.Show, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Show)
+        </div>
+        <div class="col-md-5">
+            @Html.LabelFor(x => x.GameId, new { @class = "control-label" })
+            @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.GameId)
+        </div>
+        <div class="col-md-5">
+            @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
+            @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.FrontPictureId)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Html, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Html)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
+                @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+        if (CKEDITOR.instances['Html']) {
+            CKEDITOR.remove(CKEDITOR.instances['Html']);
+        }
+        CKEDITOR.replace('Html', { height: 400 });
+    </script>
+}

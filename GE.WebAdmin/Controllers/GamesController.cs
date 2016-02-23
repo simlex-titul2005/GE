@@ -96,5 +96,27 @@ namespace GE.WebAdmin.Controllers
             else
                 return View(model);
         }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public virtual ViewResult FindTable(int page = 1, int pageSize = 10)
+        {
+            var viewModel = new SxExtantions.SxPagedCollection<VMGame>
+            {
+                Collection = _repo.All
+                .OrderBy(x=>x.Title)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(x => Mapper.Map<Game, VMGame>(x)).ToArray(),
+                PagerInfo = new SxExtantions.SxPagerInfo
+                {
+                    Page = page,
+                    PageSize = pageSize,
+                    TotalItems = _repo.All.Count(),
+                    PagerSize = 4
+                }
+            };
+
+            return View(viewModel);
+        }
     }
 }

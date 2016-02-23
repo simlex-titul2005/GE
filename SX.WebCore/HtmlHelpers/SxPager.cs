@@ -12,7 +12,8 @@ namespace SX.WebCore.HtmlHelpers
         public static MvcHtmlString SxPager(this HtmlHelper htmlHelper, SxPagerInfo pagerinfo)
         {
             var ul = new TagBuilder("ul");
-            ul.MergeAttributes(new Dictionary<string, object> {
+            ul.MergeAttributes(new Dictionary<string, object>
+            {
             });
             ul.AddCssClass("sx-pager");
 
@@ -30,11 +31,11 @@ namespace SX.WebCore.HtmlHelpers
             {
                 ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Prev);
             }
-            
+
             //normal
             for (int i = min; i <= max; i++)
             {
-                if (i == pagerinfo.TotalPages+1) break;
+                if (i == pagerinfo.TotalPages + 1) break;
 
                 ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Normal, i);
             }
@@ -54,11 +55,11 @@ namespace SX.WebCore.HtmlHelpers
             return MvcHtmlString.Create(ul.ToString());
         }
 
-        private static TagBuilder getPagerItem(SxPagerInfo pagerinfo, SxPagerItemType itemType, int? number=null)
+        private static TagBuilder getPagerItem(SxPagerInfo pagerinfo, SxPagerItemType itemType, int? number = null)
         {
             int page = 1;
             string cssClass = null;
-            switch(itemType)
+            switch (itemType)
             {
                 case SxPagerItemType.First:
                     page = 1;
@@ -110,8 +111,8 @@ namespace SX.WebCore.HtmlHelpers
             public int Page { get; set; }
             public int PageSize { get; set; }
             public int TotalItems { get; set; }
-            public int TotalPages 
-            { 
+            public int TotalPages
+            {
                 get
                 {
                     var count = (int)Math.Ceiling((decimal)TotalItems / PageSize);
@@ -132,8 +133,8 @@ namespace SX.WebCore.HtmlHelpers
                 }
             }
 
-            public int PartsCount 
-            { 
+            public int PartsCount
+            {
                 get
                 {
                     return (int)Math.Ceiling((decimal)TotalPages / PagerSize);
@@ -150,12 +151,30 @@ namespace SX.WebCore.HtmlHelpers
 
         private enum SxPagerItemType : byte
         {
-            Unknown=0,
-            First=1,
-            Prev=2,
-            Normal=3,
-            Next=4,
-            Last=5
+            Unknown = 0,
+            First = 1,
+            Prev = 2,
+            Normal = 3,
+            Next = 4,
+            Last = 5
+        }
+
+        public sealed class SxPagedCollection<TModel>
+        {
+            public SxPagedCollection()
+            {
+                Collection = new TModel[0];
+            }
+
+            public TModel[] Collection { get; set; }
+            public SX.WebCore.HtmlHelpers.SxExtantions.SxPagerInfo PagerInfo { get; set; }
+            public int Length
+            {
+                get
+                {
+                    return this.Collection.Length;
+                }
+            }
         }
     }
 }

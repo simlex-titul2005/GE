@@ -1,3 +1,26 @@
-﻿.navbar{
+﻿@import (reference) "colors.less";
+
+h1, h2, h3, h4, h5, h6{
+    margin:0;
+}
+
+.navbar{
     margin-bottom:0;
+}
+
+.navbar-toggle{
+    border-radius:unset;
+    color:red;
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+    background-color:none;
+}
+
+.navbar-default .navbar-toggle[aria-expanded="true"]{
+    background-color:#E9E9E9;
+}
+
+.navbar-default .navbar-toggle .icon-bar{
+    background-color:@color-black;
 }

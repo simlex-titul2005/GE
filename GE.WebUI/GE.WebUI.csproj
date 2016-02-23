@@ -395,6 +395,9 @@
     <Content Include="Content\less\site.less" />
     <Content Include="Content\less\bootstrap-ext.less" />
     <Content Include="Content\less\game-list.less" />
+    <Content Include="Content\less\sizes.less" />
+    <Content Include="Content\less\last-news-block.less" />
+    <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -410,6 +413,7 @@
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuesController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="GamesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -424,8 +428,12 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VMGameMenu .cs" />
+    <Compile Include="Models\VMLastNewsBlock.cs" />
     <Compile Include="Models\VMMenu.cs" />
     <Compile Include="Models\VMMenuItem.cs" />
+    <Compile Include="NewsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="PicturesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -450,6 +458,7 @@
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Menues\_MenuItems.cshtml" />
     <Content Include="Views\Games\_GameList.cshtml" />
+    <Content Include="Views\News\LastNewsBlock.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

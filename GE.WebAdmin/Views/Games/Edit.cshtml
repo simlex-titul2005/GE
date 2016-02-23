@@ -1,20 +1,5 @@
 ﻿@model VMEditGame
 
-@section styles{
-    <style type="text/css">
-        .edit-img{
-            position:relative;
-        }
-            .edit-img .dropdown {
-                display:none;
-                position: absolute;
-                margin-top: -2px;
-                z-index:1;
-                background-color:#fff;
-            }
-    </style>
-}
-
 <h2>
     @(Model.Id == 0 ? "Добавить игру" : "Редактировать игру")
 </h2>
@@ -44,7 +29,6 @@
     <br />
     <div class="row">
         <div class="col-md-12">
-
             @Html.LabelFor(x => x.Description, new { @class = "control-label" })
             @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(x => x.Description)
@@ -82,51 +66,3 @@
         </div>
     </div>
 </form>
-
-@section scripts{
-    @if (false)
-    {
-        <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-    }
-    <script type="text/javascript">
-        $(function () {
-
-            $('.edit-img [type="text"]').click(function () {
-                var $input = $(this);
-                var $imgBox = $input.closest('.edit-img');
-                var width = $input.closest('.input-group').width();
-                var $dropdown = $('<div class="dropdown"></div>').css({
-                    'width': width+'px'
-                });
-                if ($imgBox.find('.dropdown').length == 0) {
-                    $.ajax({
-                        method: 'post',
-                        url: '/pictures/FindTable',
-                        success: function (data) {
-                            $dropdown.html(data);
-                        },
-                        complete: function () {
-                            $dropdown.find('table tr').click(function () {
-                                var pictureId = $(this).data('picture-id');
-                                $input.val(pictureId);
-                                $imgBox.find('[type="hidden"]').val(pictureId);
-                                $dropdown.slideToggle('fast');
-                            });
-                        }
-                    });
-                    $imgBox.append($dropdown);
-                    $('.edit-img .dropdown').hide();
-                    $dropdown.slideToggle('fast');
-                }
-                else {
-                    $imgBox.find('.dropdown').slideToggle('fast');
-                    $('.edit-img').not($imgBox).find('.dropdown').hide();
-                }
-            });
-
-            $('.edit-img button').click(function () {
-                $(this).closest('.input-group').find('[type="text"]').trigger('click');
-            });
-        });
-    </script>
-}

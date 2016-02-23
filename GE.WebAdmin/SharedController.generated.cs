@@ -54,6 +54,7 @@ namespace T4MVC
             public partial class _EditorTemplatesClass
             {
                 public readonly string Boolean = "Boolean";
+                public readonly string EditGame = "EditGame";
                 public readonly string EditImage = "EditImage";
             }
         }

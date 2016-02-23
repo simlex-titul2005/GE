@@ -54,9 +54,16 @@ namespace GE.WebAdmin.Controllers
                 
                 if(!isExists)
                 {
-                    _repo.Create(new SxSiteSetting { Id = __emptyGameIconPath, Value = model.IconPath });
-                    _repo.Create(new SxSiteSetting { Id = __emptyGameGoodImagePath, Value = model.GoodImagePath });
-                    _repo.Create(new SxSiteSetting { Id = __emptyGameBadImagePath, Value = model.BadImagePath });
+                    var settings = new SxSiteSetting[] {
+                        new SxSiteSetting { Id = __emptyGameIconPath, Value = model.IconPath },
+                        new SxSiteSetting { Id = __emptyGameGoodImagePath, Value = model.GoodImagePath },
+                        new SxSiteSetting { Id = __emptyGameBadImagePath, Value = model.BadImagePath }
+                    };
+                    for (int i = 0; i < settings.Length; i++)
+                    {
+                        _repo.Create(settings[i]);
+                    }
+                   
                     TempData["EditEmptyGameMessage"] = "Настройки успешно сохранены";
                     return RedirectToAction(MVC.Settings.EditEmptyGame());
                 }

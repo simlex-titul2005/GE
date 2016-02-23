@@ -28,7 +28,7 @@ namespace SX.WebCore
 
         public DbSet<SxSeoKeyWord> SeoKeyWords { get; set; }
 
-        public DbSet<SxSiteSetting> SxSiteSettings { get; set; }
+        public DbSet<SxSiteSetting> SiteSettings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

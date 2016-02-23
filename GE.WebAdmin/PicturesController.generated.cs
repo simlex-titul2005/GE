@@ -119,6 +119,7 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_FindTable
         {
             public readonly string page = "page";
+            public readonly string pageSize = "pageSize";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -199,14 +200,15 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void FindTableOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
+        partial void FindTableOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page, int pageSize);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult FindTable(int page)
+        public override System.Web.Mvc.ViewResult FindTable(int page, int pageSize)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.FindTable);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            FindTableOverride(callInfo, page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
+            FindTableOverride(callInfo, page, pageSize);
             return callInfo;
         }
 

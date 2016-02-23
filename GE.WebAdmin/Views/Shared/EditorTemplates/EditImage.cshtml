@@ -1,9 +1,10 @@
-﻿<div class="edit-img">
-    <input type="hidden" name="@Html.NameForModel()" value="@Html.ValueForModel()"/>
+﻿<div class="edit-img sx-find-table" data-is-load="false" data-url="/pictures/findtable" data-page="1">
+    <input type="hidden" name="@Html.NameForModel()" value="@Html.ValueForModel()" />
     <div class="input-group">
         <input type="text" class="form-control" placeholder="Выберите изображение" value="@Html.ValueForModel()">
         <span class="input-group-btn">
             <button class="btn btn-default" type="button">Выбрать</button>
         </span>
     </div>
+    <div class="dropdown"></div>
 </div>

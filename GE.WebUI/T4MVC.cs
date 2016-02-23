@@ -30,6 +30,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.GamesController Games = new GE.WebUI.Controllers.T4MVC_GamesController();
     public static GE.WebUI.Controllers.HomeController Home = new GE.WebUI.Controllers.T4MVC_HomeController();
     public static GE.WebUI.Controllers.MenuesController Menues = new GE.WebUI.Controllers.T4MVC_MenuesController();
+    public static GE.WebUI.Controllers.NewsController News = new GE.WebUI.Controllers.T4MVC_NewsController();
     public static GE.WebUI.Controllers.PicturesController Pictures = new GE.WebUI.Controllers.T4MVC_PicturesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
@@ -143,7 +144,9 @@ namespace Links
             public static readonly string bootstrap_ext_less = Url("bootstrap-ext.less");
             public static readonly string colors_less = Url("colors.less");
             public static readonly string game_list_less = Url("game-list.less");
+            public static readonly string last_news_block_less = Url("last-news-block.less");
             public static readonly string site_less = Url("site.less");
+            public static readonly string sizes_less = Url("sizes.less");
         }
     
     }

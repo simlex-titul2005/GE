@@ -43,6 +43,11 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxMenuItem, VMEditMenuItem>();
                     cfg.CreateMap<VMEditMenuItem, SxMenuItem>();
 
+                    //news
+                    cfg.CreateMap<News, VMNews>();
+                    cfg.CreateMap<News, VMEditNews>();
+                    cfg.CreateMap<VMEditNews, News>();
+
                     //picture
                     cfg.CreateMap<SxPicture, VMPicture>();
                     cfg.CreateMap<SxPicture, VMEditPicture>();

@@ -15,26 +15,38 @@ namespace SX.WebCore.Abstract
         where TDbContext : SxDbContext
     {
         private SxDbContext _dbContext;
+        private string _connectionString;
         public SxDbRepository()
         {
             _dbContext = Activator.CreateInstance<TDbContext>();
+            _connectionString = _dbContext.Database.Connection.ConnectionString;
+        }
+        public string ConnectionString
+        {
+            get
+            {
+                return _connectionString;
+            }
         }
 
         public virtual TModel Create(TModel model)
         {
             if (model is SxDbUpdatedModel<TKey>)
             {
-                var m = model as SxDbUpdatedModel<TKey>;
-                var date=DateTime.Now;
-                if (m.DateUpdate == DateTime.MinValue)
-                    m.DateUpdate = date;
-                if (m.DateCreate == DateTime.MinValue)
-                    m.DateCreate = date;
+                prepareUpdatedModel(model as SxDbUpdatedModel<TKey>);
             }
             _dbContext.Entry(model).State = EntityState.Added;
             _dbContext.SaveChanges();
             
             return model;
+        }
+        private static void prepareUpdatedModel(SxDbUpdatedModel<TKey> model)
+        {
+            var date = DateTime.Now;
+            if (model.DateUpdate == DateTime.MinValue)
+                model.DateUpdate = date;
+            if (model.DateCreate == DateTime.MinValue)
+                model.DateCreate = date;
         }
 
         public virtual TModel Update(TModel model, params string[] propertiesForChange)
@@ -71,11 +83,11 @@ namespace SX.WebCore.Abstract
             _dbContext.SaveChanges();
         }
 
-        public virtual IEnumerable<TModel> All
+        public virtual IQueryable<TModel> All
         {
             get
             {
-                return _dbContext.Set<TModel>();
+                return _dbContext.Set<TModel>().AsNoTracking();
             }
         }
 

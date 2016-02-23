@@ -96,7 +96,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Edit(int? id)
         {
-            var model = id.HasValue ? _repo.GetByKey(id, Enums.ModelCoreType.Article) : new Article();
+            var model = id.HasValue ? _repo.GetByKey(id, Enums.ModelCoreType.Article) : new Article { ModelCoreType = Enums.ModelCoreType.Article };
             return View(Mapper.Map<Article, VMEditArticle>(model));
         }
     }

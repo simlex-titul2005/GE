@@ -27,6 +27,10 @@ namespace GE.WebUI
                     cfg.CreateMap<SxMenuItem, VMMenuItem>()
                         .ForMember(d => d.Url, d => d.MapFrom(s => s.Route != null ? s.Route.Url.ToLower() : null));
 
+                    //news
+                    cfg.CreateMap<News, VMLastNewsBlockNews>()
+                        .ForMember(d => d.DateCreate, d => d.MapFrom(s => s.DateCreate.ToString("dd-MM-yyy")));
+
                 });
             }
         }

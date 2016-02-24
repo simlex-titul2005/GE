@@ -14,28 +14,35 @@
                     {
                         var news = Model.News[i];
                         <li>
-                            <a>
-                                <span class="date">@news.DateCreate</span> <span class="title">@news.Title</span>
+                            <a href="@Url.Action(MVC.News.Details(news.Id))" data-game-id="@news.GameId">
+                                <span class="date">@news.DateCreate.ToString("dd-MM-yyy")</span> <span class="title">@news.Title</span>
                             </a>
                         </li>
                     }
                 </ul>
             </div>
             <div class="col-md-8">
-                <ul class="games">
-                    @for (int i = 0; i < Model.NewsLength; i++)
-                    {
-                        var news = Model.News[i];
-                        if (news.FrontPictureId.HasValue)
+                <div class="games-wrapper">
+                    <ul class="games">
+                        @for (int i = 0; i < Model.GamesLength; i++)
                         {
-                            <li @("style=width:"+(100/Math.Round((decimal)Model.NewsLength,4)).ToString().Replace(',','.')+"%")>
-                                <a>
-                                    <img alt="" src="@Url.Action(MVC.Pictures.Picture((Guid)news.FrontPictureId, height:300))" />
-                                </a>
-                            </li>
+                            var game = Model.Games[i];
+                            if (game.FrontPictureId.HasValue)
+                            {
+                                var length=Model.GamesLength > 4 ? 4 : Model.GamesLength;
+                                var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
+                                <li @("style=width:" + width + "%")>
+                                    <a href="#">
+                                        <figure data-game-id="@game.Id">
+                                            <img alt="" src="@Url.Action(MVC.Pictures.Picture((Guid)game.FrontPictureId, height: 220))" />
+                                            <span class="game-title">@game.Title</span>
+                                        </figure>
+                                    </a>
+                                </li>
+                            }
                         }
-                    }
-                </ul>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

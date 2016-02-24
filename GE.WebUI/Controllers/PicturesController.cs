@@ -22,7 +22,7 @@ namespace GE.WebUI.Controllers
 
         [AcceptVerbs(HttpVerbs.Get)]
 //#if !DEBUG
-        [OutputCache(Duration = 300, VaryByParam = "id;width")]
+        [OutputCache(Duration = 300, VaryByParam = "id;width;height")]
 //#endif
         public virtual FileResult Picture(Guid id, int? width = null, int? height=null)
         {

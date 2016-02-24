@@ -1,6 +1,7 @@
 ﻿var gulp = require('gulp');
 var minifyCss = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
+var rename = require('gulp-rename');
 var del = require('del');
 var less = require('gulp-less');
 var watch = require('gulp-watch');
@@ -59,10 +60,22 @@ function createJs() {
         .pipe(uglify())
         .pipe(gulp.dest('content/dist/js'));
 
+    gulp.src([
+        'scripts/**/*.js'
+    ])
+        .pipe(uglify())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest('content/dist/js'));
+
 }
 
 gulp.task('watch', function (cb) {
-    watch(['content/less/**/*.less'], function () {
+    watch([
+        'content/less/**/*.less',
+        'scripts/**/*.js'
+    ], function () {
         clear();
         createFonts();
         createCss();

@@ -56,6 +56,12 @@ namespace GE.WebUI.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ViewResult Details()
+        {
+            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public NewsController Actions { get { return MVC.News; } }
@@ -73,12 +79,14 @@ namespace GE.WebUI.Controllers
         public class ActionNamesClass
         {
             public readonly string LastNewsBlock = "LastNewsBlock";
+            public readonly string Details = "Details";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string LastNewsBlock = "LastNewsBlock";
+            public const string Details = "Details";
         }
 
 
@@ -88,7 +96,15 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_LastNewsBlock
         {
-            public readonly string newsCount = "newsCount";
+            public readonly string amount = "amount";
+        }
+        static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Details
+        {
+            public readonly string id = "id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -112,14 +128,26 @@ namespace GE.WebUI.Controllers
         public T4MVC_NewsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void LastNewsBlockOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int newsCount);
+        partial void LastNewsBlockOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int amount);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult LastNewsBlock(int newsCount)
+        public override System.Web.Mvc.ViewResult LastNewsBlock(int amount)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.LastNewsBlock);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "newsCount", newsCount);
-            LastNewsBlockOverride(callInfo, newsCount);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "amount", amount);
+            LastNewsBlockOverride(callInfo, amount);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int id);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult Details(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            DetailsOverride(callInfo, id);
             return callInfo;
         }
 

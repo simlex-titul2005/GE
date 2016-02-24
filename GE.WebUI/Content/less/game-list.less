@@ -1,5 +1,6 @@
 ﻿@import (reference) "colors.less";
 @import (reference) "sizes.less";
+@import (reference) "positioned.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
 @g-m-h: 60px;
@@ -231,13 +232,7 @@
 }
 
 .game-icon-wrapper > img {
-    position: relative;
-    top: 50%;
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    .centerVertical;
 
     @media (max-width: @screen-xs-max) {
         max-height: 40px;

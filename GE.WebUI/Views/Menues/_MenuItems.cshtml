@@ -2,11 +2,11 @@
 
 @if (Model.Items.Length != 0)
 {
-    <ul class="nav navbar-nav @(ViewBag.MenuCssClass)">
+    <ul class="@(ViewBag.MenuCssClass)">
         @foreach (var item in Model.Items)
         {
             <li>
-                <a href="@item.Url">@item.Caption</a>
+                @Html.RouteLink(item.Caption, new { controller = item.Controller, action=item.Action})
             </li>
         }
     </ul>

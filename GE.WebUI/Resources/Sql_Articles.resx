@@ -142,14 +142,19 @@ ORDER BY
     <comment>Список игр и типов статей для меню в блоке "Геймеру почитать"</comment>
   </data>
   <data name="PreviewMaterials" xml:space="preserve">
-    <value>SELECT da.Id,
+    <value>--DECLARE @GAME_ID INT=1, @ARTICLE_TYPE_NAME VARCHAR(150)='guid',@LETTERS_COUNT INT=200
+
+SELECT da.Id,
        dm.Title,
        dm.DateCreate,
        dm.ViewsCount,
        dm.CommentsCount,
-       SUBSTRING(dm.Html, 0, @LETTERS_COUNT)  AS Foreword
-FROM   D_ARTICLE                   AS da
-       JOIN DV_MATERIAL            AS dm
+       CASE 
+            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
+            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, @LETTERS_COUNT)+'...'
+       END               AS Foreword
+FROM   D_ARTICLE         AS da
+       JOIN DV_MATERIAL  AS dm
             ON  dm.ID = da.ID
             AND dm.ModelCoreType = da.ModelCoreType
 WHERE  da.ArticleTypeName = @ARTICLE_TYPE_NAME

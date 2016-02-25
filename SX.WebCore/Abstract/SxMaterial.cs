@@ -16,6 +16,9 @@ namespace SX.WebCore.Abstract
 
         public string Html { get; set; }
 
+        [MaxLength(400)]
+        public string Foreword { get; set; }
+
         public Enums.ModelCoreType ModelCoreType { get; set; }
 
         public bool Show { get; set; }

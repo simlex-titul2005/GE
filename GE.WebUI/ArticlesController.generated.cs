@@ -126,11 +126,11 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _ForGamersBlock = "_ForGamersBlock";
                 public readonly string _Preview = "_Preview";
-                public readonly string ForGamersBlock = "ForGamersBlock";
             }
+            public readonly string _ForGamersBlock = "~/Views/Articles/_ForGamersBlock.cshtml";
             public readonly string _Preview = "~/Views/Articles/_Preview.cshtml";
-            public readonly string ForGamersBlock = "~/Views/Articles/ForGamersBlock.cshtml";
         }
     }
 
@@ -140,12 +140,12 @@ namespace GE.WebUI.Controllers
         public T4MVC_ArticlesController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void ForGamersBlockOverride(T4MVC_System_Web_Mvc_ViewResult callInfo);
+        partial void ForGamersBlockOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult ForGamersBlock()
+        public override System.Web.Mvc.PartialViewResult ForGamersBlock()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.ForGamersBlock);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.ForGamersBlock);
             ForGamersBlockOverride(callInfo);
             return callInfo;
         }

@@ -27,7 +27,7 @@ namespace GE.WebAdmin.Controllers
         {
             var list = _repo.All
                 .Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<SxMenu, VMMenu>(x)).ToArray();
+                .Take(_pageSize).Select(x => Mapper.Map<SxMenu, VMMenu>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
@@ -65,7 +65,7 @@ namespace GE.WebAdmin.Controllers
             }
 
             var list = temp.Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<SxMenu, VMMenu>(x)).ToArray();
+                .Take(_pageSize).Select(x => Mapper.Map<SxMenu, VMMenu>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;

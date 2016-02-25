@@ -21,11 +21,10 @@ namespace GE.WebUI.Controllers
         }
 
         [ChildActionOnly]
-        [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult ForGamersBlock()
+        public virtual PartialViewResult ForGamersBlock()
         {
             var viewModel = (_repo as RepoArticle).ForGamersBlock();
-            return View(viewModel);
+            return PartialView(MVC.Articles.Views._ForGamersBlock, viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]

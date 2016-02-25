@@ -16,7 +16,9 @@ namespace GE.WebCoreExtantions.Repositories
             {
                 using (var conn = new SqlConnection(base.ConnectionString))
                 {
-                    var result = conn.Query<News>("select dvm.ID as Id, dvm.DATE_CREATE as DateCreate, dvm.TITLE as Title, dvm.HTML as Html, dvm.CORE_TYPE as CoreType, dvm.SHOW as Show, dvm.FRONT_PICTURE_ID as FrontPictureId, dn.GAME_ID as GameId from DV_MATERIAL dvm join D_NEWS dn on dn.ID=dvm.ID and dn.CORE_TYPE=dvm.CORE_TYPE order by dvm.DATE_CREATE desc");
+                    var result = conn.Query<News>(@"SELECT*FROM D_NEWS AS dn
+JOIN DV_MATERIAL AS dm ON dm.ID = dn.ID AND dm.ModelCoreType = dn.ModelCoreType
+ORDER BY dm.DateCreate DESC");
                     return result.AsQueryable();
                 }
             }

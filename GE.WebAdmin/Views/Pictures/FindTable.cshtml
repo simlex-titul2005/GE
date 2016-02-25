@@ -26,17 +26,19 @@
                 <td>@item.ImgFormat</td>
                 <td data-text-field>@item.Caption</td>
                 <td style="text-align:center;">
-                    <img alt="@item.Caption" src="@Url.Action(MVC.Pictures.Picture(item.Id, height:30))"/>
+                    <img alt="@item.Caption" src="@Url.Action(MVC.Pictures.Picture(item.Id, height:30))" />
                 </td>
             </tr>
         }
     </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="3">
-                @Html.SxPager(Model.PagerInfo)
-            </td>
-        </tr>
-    </tfoot>
+    @if (Model.PagerInfo.TotalPages > 1)
+    {
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    @Html.SxPager(Model.PagerInfo)
+                </td>
+            </tr>
+        </tfoot>
+    }
 </table>
-

@@ -11,6 +11,8 @@ namespace SX.WebCore.HtmlHelpers
     {
         public static MvcHtmlString SxPager(this HtmlHelper htmlHelper, SxPagerInfo pagerinfo)
         {
+            if (pagerinfo.TotalPages == 1) return null;
+
             var ul = new TagBuilder("ul");
             ul.MergeAttributes(new Dictionary<string, object>
             {

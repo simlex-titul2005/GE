@@ -25,7 +25,9 @@ namespace GE.WebUI
 
                     //menu item
                     cfg.CreateMap<SxMenuItem, VMMenuItem>()
-                        .ForMember(d => d.Url, d => d.MapFrom(s => s.Route != null ? s.Route.Url.ToLower() : null));
+                        .ForMember(d => d.Url, d => d.MapFrom(s => s.Route != null ? s.Route.Url.ToLower() : null))
+                        .ForMember(d => d.Controller, d => d.MapFrom(s => s.Route != null ? s.Route.Controller : null))
+                        .ForMember(d => d.Action, d => d.MapFrom(s => s.Route != null ? s.Route.Action : null));
                 });
             }
         }

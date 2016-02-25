@@ -12,6 +12,19 @@ namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoMenu : SxDbRepository<int, SxMenu, DbContext>
     {
-        
+        public override IQueryable<SxMenu> All
+        {
+            get
+            {
+                using (var conn = new SqlConnection(base.ConnectionString))
+                {
+                    var result = conn.Query<SxMenu>(@"SELECT *
+FROM   D_MENU AS dm
+ORDER BY
+       dm.NAME");
+                    return result.AsQueryable();
+                }
+            }
+        }
     }
 }

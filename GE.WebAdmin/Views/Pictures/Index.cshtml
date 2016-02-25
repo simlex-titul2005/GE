@@ -1,7 +1,10 @@
 ﻿@model VMPicture[]
+@{
+    ViewBag.Title = "Фото-контент";
+}
 
-<h2>Фото-контент</h2>
-
+<h2>@ViewBag.Title</h2>
+<br />
 <div id="grid-pictures">
     @Html.Partial(MVC.Pictures.Views._GridView, Model)
 </div>

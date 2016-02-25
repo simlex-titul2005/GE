@@ -19,12 +19,14 @@
             </tr>
         }
     </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="1">
-                @Html.SxPager(Model.PagerInfo)
-            </td>
-        </tr>
-    </tfoot>
+    @if (Model.PagerInfo.TotalPages > 1)
+    {
+        <tfoot>
+            <tr>
+                <td colspan="1">
+                    @Html.SxPager(Model.PagerInfo)
+                </td>
+            </tr>
+        </tfoot>
+    }
 </table>
-

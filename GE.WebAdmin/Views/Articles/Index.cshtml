@@ -1,5 +1,10 @@
 ﻿@model VMArticle[]
+@{
+    ViewBag.Title = "Статьи";
+}
 
+<h2>@ViewBag.Title</h2>
+<br />
 <div id="grid-articles">
     @Html.Partial(MVC.Articles.Views._GridView, Model)
 </div>

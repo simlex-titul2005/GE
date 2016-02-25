@@ -11,14 +11,12 @@ namespace GE.WebCoreExtantions
     [Table("D_CONTEST_PRIZE")]
     public class ContestPrize : SX.WebCore.Abstract.SxDbUpdatedModel<int>
     {
-        [Column("TITLE"), MaxLength(100), Required]
+        [MaxLength(100), Required]
         public string Title { get; set; }
 
         public virtual Contest Contest { get; set; }
-        [Column("CONTEST_ID")]
         public int ContestId { get; set; }
 
-        [Column("MATERIAL_CORE_TYPE")]
         public SX.WebCore.Enums.ModelCoreType MaterialCoreType { get; set; }
     }
 }

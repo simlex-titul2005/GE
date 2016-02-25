@@ -17,8 +17,8 @@
     <![endif]-->
 </head>
 <body>
+    @Html.Partial(MVC.Shared.Views._NavBar)
     <div class="wrapper">
-        @Html.Partial(MVC.Shared.Views._NavBar)
         @Html.Action(MVC.Games.GameList())
         <div class="container">
             @RenderBody()
@@ -26,6 +26,9 @@
     </div>
 
     <script src="~/Content/dist/js/site.min.js"></script>
+    <script type="text/javascript">
+        $('#game-list').geGameMenu();
+    </script>
     @RenderSection("scripts", false)
 </body>
 </html>

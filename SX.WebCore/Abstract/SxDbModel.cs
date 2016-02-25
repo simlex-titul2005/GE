@@ -10,10 +10,10 @@ namespace SX.WebCore.Abstract
 {
     public abstract class SxDbModel<TKey>
     {
-        [Column("ID"), Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public TKey Id { get; set; }
 
-        [Column("DATE_CREATE"), DataType(DataType.DateTime)]
+        [DataType(DataType.DateTime)]
         public DateTime DateCreate { get; set; }
     }
 }

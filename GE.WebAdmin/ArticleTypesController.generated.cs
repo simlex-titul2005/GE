@@ -56,6 +56,12 @@ namespace GE.WebAdmin.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ArticleTypesByGameId()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ArticleTypesByGameId);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ArticleTypesController Actions { get { return MVC.ArticleTypes; } }
@@ -74,6 +80,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
+            public readonly string ArticleTypesByGameId = "ArticleTypesByGameId";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -81,6 +88,7 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
+            public const string ArticleTypesByGameId = "ArticleTypesByGameId";
         }
 
 
@@ -104,6 +112,15 @@ namespace GE.WebAdmin.Controllers
             public readonly string gameId = "gameId";
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_ArticleTypesByGameId s_params_ArticleTypesByGameId = new ActionParamsClass_ArticleTypesByGameId();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ArticleTypesByGameId ArticleTypesByGameIdParams { get { return s_params_ArticleTypesByGameId; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ArticleTypesByGameId
+        {
+            public readonly string gameId = "gameId";
+            public readonly string curName = "curName";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -114,10 +131,12 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _ArticleTypesByGameId = "_ArticleTypesByGameId";
                 public readonly string _GridView = "_GridView";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
+            public readonly string _ArticleTypesByGameId = "~/Views/ArticleTypes/_ArticleTypesByGameId.cshtml";
             public readonly string _GridView = "~/Views/ArticleTypes/_GridView.cshtml";
             public readonly string Edit = "~/Views/ArticleTypes/Edit.cshtml";
             public readonly string Index = "~/Views/ArticleTypes/Index.cshtml";
@@ -177,6 +196,19 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ArticleTypesByGameIdOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? gameId, string curName);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ArticleTypesByGameId(int? gameId, string curName)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ArticleTypesByGameId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gameId", gameId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "curName", curName);
+            ArticleTypesByGameIdOverride(callInfo, gameId, curName);
             return callInfo;
         }
 

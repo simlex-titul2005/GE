@@ -12,13 +12,11 @@ namespace GE.WebCoreExtantions
     public class Article : SX.WebCore.SxArticle, IHasGame
     {
         public virtual Game Game { get; set; }
-        [Column("GAME_ID")]
         public int? GameId { get; set; }
 
         public virtual ArticleType ArticleType { get; set; }
-        [Column("ARTICLE_TYPE_NAME")]
         public string ArticleTypeName { get; set; }
-        [Column("ARTICLE_TYPE_GAME_ID")]
+
         public int? ArticleTypeGameId { get; set; } 
     }
 }

@@ -20,7 +20,8 @@ namespace GE.WebUI.Controllers
             _repo = new RepoMenu();
         }
 
-        //[OutputCache(Duration = 300, VaryByParam = "menuMarker;cssClass")]
+        [OutputCache(Duration = 300, VaryByParam = "menuMarker;cssClass")]
+        [ChildActionOnly]
         public virtual PartialViewResult Menu(int menuMarker, string cssClass=null)
         {
             ViewBag.MenuCssClass = cssClass;

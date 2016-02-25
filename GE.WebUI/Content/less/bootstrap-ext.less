@@ -4,13 +4,18 @@ h1, h2, h3, h4, h5, h6{
     margin:0;
 }
 
+a{
+    outline: none !important;
+}
+
 .navbar{
     margin-bottom:0;
+    border-radius: 0;
+    border: none;
 }
 
 .navbar-toggle{
     border-radius:unset;
-    color:red;
 }
 
 .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
@@ -23,4 +28,28 @@ h1, h2, h3, h4, h5, h6{
 
 .navbar-default .navbar-toggle .icon-bar{
     background-color:@color-black;
+}
+
+@tt-color:@colr-dark-blue;
+.tooltip-inner {
+    background-color: @tt-color;
+    color: #fff;
+    font-family: 'Open Sans Condensed';
+    font-size:14px;
+}
+
+.tooltip.top .tooltip-arrow {
+    border-top-color: @tt-color;
+}
+
+.tooltip.right .tooltip-arrow {
+    border-right-color: @tt-color;
+}
+
+.tooltip.bottom .tooltip-arrow {
+    border-bottom-color: @tt-color;
+}
+
+.tooltip.left .tooltip-arrow {
+    border-left-color: @tt-color;
 }

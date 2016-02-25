@@ -137,5 +137,28 @@ namespace GE.WebAdmin.Controllers
 
             return View(viewModel);
         }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        //#if !DEBUG
+        [OutputCache(Duration = 300, VaryByParam = "id;width;height")]
+        //#endif
+        public virtual FileResult Picture(Guid id, int? width = null, int? height = null)
+        {
+            if (_repo == null)
+                _repo = new RepoPicture();
+
+            var viewModel = _repo.GetByKey(id);
+            byte[] byteArray = viewModel.OriginalContent;
+            if (width.HasValue && viewModel.Width > width)
+            {
+                byteArray = SX.WebCore.PictureHandler.ScaleImage(viewModel.OriginalContent, SX.WebCore.PictureHandler.ImageScaleMode.Width, destWidth: width);
+            }
+            else if (height.HasValue && viewModel.Height > height)
+            {
+                byteArray = SX.WebCore.PictureHandler.ScaleImage(viewModel.OriginalContent, SX.WebCore.PictureHandler.ImageScaleMode.Height, destHeight: height);
+            }
+
+            return new FileStreamResult(new System.IO.MemoryStream(byteArray), viewModel.ImgFormat);
+        }
     }
 }

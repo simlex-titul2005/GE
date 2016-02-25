@@ -56,6 +56,18 @@ namespace GE.WebUI.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Preview()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Preview);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ViewResult Details()
+        {
+            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ArticlesController Actions { get { return MVC.Articles; } }
@@ -73,15 +85,37 @@ namespace GE.WebUI.Controllers
         public class ActionNamesClass
         {
             public readonly string ForGamersBlock = "ForGamersBlock";
+            public readonly string Preview = "Preview";
+            public readonly string Details = "Details";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string ForGamersBlock = "ForGamersBlock";
+            public const string Preview = "Preview";
+            public const string Details = "Details";
         }
 
 
+        static readonly ActionParamsClass_Preview s_params_Preview = new ActionParamsClass_Preview();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Preview PreviewParams { get { return s_params_Preview; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Preview
+        {
+            public readonly string gameId = "gameId";
+            public readonly string articleType = "articleType";
+            public readonly string lettersCount = "lettersCount";
+        }
+        static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Details
+        {
+            public readonly string id = "id";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -92,8 +126,10 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _Preview = "_Preview";
                 public readonly string ForGamersBlock = "ForGamersBlock";
             }
+            public readonly string _Preview = "~/Views/Articles/_Preview.cshtml";
             public readonly string ForGamersBlock = "~/Views/Articles/ForGamersBlock.cshtml";
         }
     }
@@ -111,6 +147,32 @@ namespace GE.WebUI.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.ForGamersBlock);
             ForGamersBlockOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void PreviewOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int gameId, string articleType, int lettersCount);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Preview(int gameId, string articleType, int lettersCount)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Preview);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gameId", gameId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "articleType", articleType);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lettersCount", lettersCount);
+            PreviewOverride(callInfo, gameId, articleType, lettersCount);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int id);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult Details(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            DetailsOverride(callInfo, id);
             return callInfo;
         }
 

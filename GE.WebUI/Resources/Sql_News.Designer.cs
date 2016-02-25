@@ -61,19 +61,21 @@ namespace GE.WebUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT TOP(@AMOUNT) dm.ID   AS Id,
-        ///       dm.DATE_CREATE       AS DateCreate,
-        ///       dm.TITLE             AS Title,
-        ///       dm.FRONT_PICTURE_ID  AS FrontPictureId,
-        ///       dn.GAME_ID           AS GameId,
-        ///       dg.TITLE             AS GameTitle
+        ///   Looks up a localized string similar to SELECT TOP(@AMOUNT) dm.ID,
+        ///       dm.DateCreate,
+        ///       dm.TITLE,
+        ///       dm.FrontPictureId,
+        ///       dn.GameId,
+        ///       dg.Title          AS GameTitle
         ///FROM   (
-        ///           SELECT MAX(dm.DATE_CREATE)  AS DATE_CREATE,
-        ///                  dn.GAME_ID
-        ///           FROM   D_NEWS               AS dn
-        ///                  JOIN DV_MATERIAL     AS dm
+        ///           SELECT MAX(dm.DateCreate)  AS DateCreate,
+        ///                  dn.GameId           AS GameId
+        ///           FROM   D_NEWS              AS dn
+        ///                  JOIN DV_MATERIAL    AS dm
         ///                       ON  dm.ID = dn.ID
-        ///                       AND dm.COR [rest of string was truncated]&quot;;.
+        ///                       AND dm.ModelCoreType = dn.ModelCoreType
+        ///           GROUP BY
+        ///                  dn.GameId        /// [rest of string was truncated]&quot;;.
         /// </summary>
         public static string LastNews {
             get {

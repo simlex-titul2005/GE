@@ -56,6 +56,10 @@
     background: transparent linear-gradient(to bottom,#e1e1e1 0,#f7f7f7 41%,#f7f7f7 61%,#e0e0e0 100%) repeat scroll 0 0;
 }
 
+.f-g-b .games > li h4{
+    font-size:24px;
+}
+
 .f-g-b .games > li.selected {
     border-left-color: @color-red;
 }
@@ -68,7 +72,6 @@
     line-height: 1;
     position: relative;
     text-decoration: none;
-    outline: none;
 }
 
 f-g-b .games > li > a:hover {
@@ -106,7 +109,6 @@ f-g-b .games > li > a:hover {
 .f-g-b ul > li > .dropdown a {
     color: inherit;
     display: block;
-    outline: none;
     text-decoration: none;
     padding: 10px @def-pad;
     line-height: 1em;
@@ -114,5 +116,49 @@ f-g-b .games > li > a:hover {
 }
 
 .f-g-b ul > li > .dropdown li:last-child > a {
-    border-bottom:none;
+    border-bottom: none;
+}
+
+.preview-info {
+    color: @colr-muted-blue;
+    display: inline-block;
+    width: 100%;
+}
+
+.preview-info li {
+    float: left;
+    margin-right:5px;
+}
+
+.preview-info li:last-child{
+    margin-right:0;
+}
+.pv-article{
+    padding:0 @def-pad;
+}
+.pv-article a {
+    color: inherit;
+}
+
+.pv-article .title {
+    color: @colr-dark-blue;
+    font-size: 22px;
+    text-decoration: underline;
+    font-weight: bold;
+    display: block;
+    line-height: 1;
+}
+
+.pv-article .preview-info {
+    margin: 10px 0;
+}
+
+.pv-article .foreword{
+    font-size:1.2em;
+}
+
+.f-g-b .btn-transparent.red {
+    font-weight:700;
+    text-transform:uppercase;
+    margin: @def-pad*2 0;
 }

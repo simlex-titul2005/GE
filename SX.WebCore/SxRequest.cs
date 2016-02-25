@@ -26,31 +26,29 @@ namespace SX.WebCore
             QueryString = request.QueryString != null ? request.QueryString.ToString() : null;
         }
 
-        [Required, MaxLength(128), Column("SESSION_ID")]
+        [Required, MaxLength(128)]
         public string SessionId { get; set; }
 
-        [Column("URL_REF")]
         public string UrlRef { get; set; }
 
-        [Required, MaxLength(30), Column("CONTROLLER")]
+        [Required, MaxLength(30)]
         public string Controller { get; set; }
 
-        [Required, MaxLength(30), Column("ACTION")]
+        [Required, MaxLength(30)]
         public string Action { get; set; }
 
-        [Required, MaxLength(150), Column("BROWSER")]
+        [Required, MaxLength(150)]
         public string Browser { get; set; }
 
-        [Required, MaxLength(150), Column("CLIENT_IP")]
+        [Required, MaxLength(150)]
         public string ClientIP { get; set; }
 
-        [Required, MaxLength(150), Column("USER_AGENT")]
+        [Required, MaxLength(150)]
         public string UserAgent { get; set; }
 
-        [Required, MaxLength(20), Column("REQUEST_TYPE")]
+        [Required, MaxLength(20)]
         public string RequestType { get; set; }
 
-        [Column("QUERY_STRING")]
         public string QueryString { get; set; }
     }
 }

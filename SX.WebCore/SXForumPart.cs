@@ -12,10 +12,10 @@ namespace SX.WebCore
     [Table("D_FORUM_PART")]
     public class SXForumPart : SxDbUpdatedModel<int>, ISxHasHtml
     {
-        [Column("TITLE"), MaxLength(255), Required]
+        [MaxLength(255), Required]
         public string Title { get; set; }
 
-        [Column("HTML"), Required]
+        [Required]
         public string Html { get; set; }
     }
 }

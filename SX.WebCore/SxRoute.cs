@@ -12,16 +12,16 @@ namespace SX.WebCore
     [Table("D_ROUTE")]
     public class SxRoute : SxDbUpdatedModel<Guid>
     {
-        [Required, MaxLength(100), Column("NAME")]
+        [Required, MaxLength(100)]
         public string Name { get; set; }
 
-        [MaxLength(100), Column("DOMAIN")]
+        [MaxLength(100)]
         public string Domain { get; set; }
 
-        [Required, MaxLength(100), Column("CONTROLLER")]
+        [Required, MaxLength(100)]
         public string Controller { get; set; }
 
-        [Required, MaxLength(100), Column("ACTION")]
+        [Required, MaxLength(100)]
         public string Action { get; set; }
 
         public virtual ICollection<SxRouteValue> Values { get; set; }

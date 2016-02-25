@@ -118,32 +118,32 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LastNews" xml:space="preserve">
-    <value>SELECT TOP(@AMOUNT) dm.ID   AS Id,
-       dm.DATE_CREATE       AS DateCreate,
-       dm.TITLE             AS Title,
-       dm.FRONT_PICTURE_ID  AS FrontPictureId,
-       dn.GAME_ID           AS GameId,
-       dg.TITLE             AS GameTitle
+    <value>SELECT TOP(@AMOUNT) dm.ID,
+       dm.DateCreate,
+       dm.TITLE,
+       dm.FrontPictureId,
+       dn.GameId,
+       dg.Title          AS GameTitle
 FROM   (
-           SELECT MAX(dm.DATE_CREATE)  AS DATE_CREATE,
-                  dn.GAME_ID
-           FROM   D_NEWS               AS dn
-                  JOIN DV_MATERIAL     AS dm
+           SELECT MAX(dm.DateCreate)  AS DateCreate,
+                  dn.GameId           AS GameId
+           FROM   D_NEWS              AS dn
+                  JOIN DV_MATERIAL    AS dm
                        ON  dm.ID = dn.ID
-                       AND dm.CORE_TYPE = dn.CORE_TYPE
+                       AND dm.ModelCoreType = dn.ModelCoreType
            GROUP BY
-                  dn.GAME_ID
+                  dn.GameId
        ) X
-       JOIN D_NEWS          AS dn
-            ON  dn.GAME_ID = X.GAME_ID
-       JOIN DV_MATERIAL     AS dm
+       JOIN D_NEWS       AS dn
+            ON  dn.GameId = X.GameId
+       JOIN DV_MATERIAL  AS dm
             ON  dm.ID = dn.ID
-            AND dm.CORE_TYPE = dn.CORE_TYPE
-            AND dm.DATE_CREATE = X.DATE_CREATE
-       JOIN D_GAME          AS dg
-            ON  dg.ID = dn.GAME_ID
+            AND dm.ModelCoreType = dn.ModelCoreType
+            AND dm.DateCreate = X.DateCreate
+       JOIN D_GAME       AS dg
+            ON  dg.ID = dn.GameId
 ORDER BY
-       X.DATE_CREATE DESC</value>
+       X.DateCreate DESC</value>
     <comment>Выбрать последние новости. @AMOUNT - кол-во выборки</comment>
   </data>
 </root>

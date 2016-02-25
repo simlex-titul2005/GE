@@ -413,6 +413,7 @@
     </None>
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\ge-for-gamers-block.js" />
+    <Content Include="Scripts\ge-game-menu.js" />
     <Content Include="Scripts\ge-last-news-block.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -448,6 +449,8 @@
     <Compile Include="Models\VMLastNewsBlock.cs" />
     <Compile Include="Models\VMMenu.cs" />
     <Compile Include="Models\VMMenuItem.cs" />
+    <Compile Include="Models\VMPreviewArticle.cs" />
+    <Compile Include="Models\VMPreviewInfo.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -487,6 +490,8 @@
     <Content Include="Views\Games\_GameList.cshtml" />
     <Content Include="Views\News\LastNewsBlock.cshtml" />
     <Content Include="Views\Articles\ForGamersBlock.cshtml" />
+    <Content Include="Views\Articles\_Preview.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\VMPreviewInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -495,7 +500,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Base\" />
     <Folder Include="Views\Pictures\" />
   </ItemGroup>
   <ItemGroup>

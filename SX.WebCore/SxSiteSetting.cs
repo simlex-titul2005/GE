@@ -12,10 +12,10 @@ namespace SX.WebCore
     [Table("D_SITE_SETTING")]
     public sealed class SxSiteSetting : SxDbUpdatedModel<string>
     {
-        [Column("VALUE"), Required, MaxLength(255)]
+        //[Column("VALUE"), Required, MaxLength(255)]
         public string Value { get; set; }
 
-        [Column("DESCRIPTION"), MaxLength(100)]
+        //[Column("DESCRIPTION"), MaxLength(100)]
         public string Description { get; set; }
     }
 }

@@ -25,7 +25,7 @@
 .game-menu {
     background-color: @color-game-menu;
     z-index: 1;
-    position: absolute;
+    position: fixed;
     width: 100%;
 
     @media (max-width: @screen-xs-max) {
@@ -35,6 +35,7 @@
         overflow: hidden;
         overflow-y: auto;
         max-width: @g-m-xs-w;
+        position:absolute;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {

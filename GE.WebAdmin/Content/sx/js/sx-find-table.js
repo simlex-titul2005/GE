@@ -13,8 +13,16 @@ $(function () {
         $dropdown.slideToggle('fast');
     });
 
-    $('.sx-find-table button').click(function () {
+    $('.sx-find-table .input-group-btn button:first-child').click(function () {
         $(this).closest('.input-group').find('[type="text"]').trigger('click');
+    });
+
+    $('.sx-find-table .input-group-btn button:last-child').click(function () {
+        var $box = $(this).closest('.sx-find-table');
+        var $txt=$(this).closest('.input-group').find('[type="text"]');
+        $txt.val(null);
+        $box.find('[type="hidden"]').val(null);
+        $txt.trigger('change');
     });
 });
 
@@ -28,6 +36,7 @@ function findTableRowClick(e) {
     $input.val(textField.text());
     $hidden.val(id);
     $dropdown.hide();
+    $input.trigger('change');
 }
 
 function findTablePagerClick(e) {
@@ -46,13 +55,13 @@ function getFindTableHtml(box) {
         url: $(box).data('url'),
         data: { page: $(box).data('page') },
         beforeSend: function () {
-            $(box).find('button').prepend('<i class="fa fa-spinner fa-spin"></i> ');
+            $(box).find('button').first().prepend('<i class="fa fa-spinner fa-spin"></i> ');
         },
         success: function (data) {
             $(box).find('.dropdown').html(data);
         },
         complete: function () {
-            $(box).find('button i').remove();
+            $(box).find('button i.fa-spin').remove();
             $(box).data('is-load', true);
             var $dropdown = $(box).find('.dropdown');
             $dropdown.find('tbody tr').click(function () {

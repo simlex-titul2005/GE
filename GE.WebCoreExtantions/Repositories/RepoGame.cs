@@ -16,7 +16,10 @@ namespace GE.WebCoreExtantions.Repositories
             {
                 using (var conn = new SqlConnection(base.ConnectionString))
                 {
-                    var result = conn.Query<Game>("select dg.ID as Id, dg.TITLE as Title, dg.SHOW as Show, dg.[DESCRIPTION] as [Description], dg.FRONT_PICTURE_ID as FrontPictureId, dg.TITLE_ABBR as TitleAbbr, dg.GOOD_PICTURE_ID as GoodPictureId, dg.BAD_PICTURE_ID as BadPictureId from D_GAME dg order by dg.[TITLE]");
+                    var result = conn.Query<Game>(@"SELECT *
+FROM   D_GAME                  dg
+ORDER BY
+       dg.[TITLE]");
                     return result.AsQueryable();
                 }
             }

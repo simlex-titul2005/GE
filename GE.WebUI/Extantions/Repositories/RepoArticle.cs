@@ -20,7 +20,7 @@ namespace GE.WebUI.Extantions.Repositories
             }
 
             var games = result
-                .Select(x => new 
+                .Select(x => new
                 {
                     Id = x.GameId,
                     Description = x.Description,
@@ -30,9 +30,10 @@ namespace GE.WebUI.Extantions.Repositories
 
             viewModel.Games = new VMFGBGame[games.Length];
             for (int i = 0; i < games.Length; i++)
-			{
+            {
                 var game = games[i];
-                viewModel.Games[i] = new VMFGBGame {
+                viewModel.Games[i] = new VMFGBGame
+                {
                     Id = game.Id,
                     Description = game.Description,
                     FrontPictureId = game.FrontPictureId,
@@ -43,9 +44,17 @@ namespace GE.WebUI.Extantions.Repositories
                         Description = t.ArticleTypeDesc
                     }).ToArray()
                 };
-			}
+            }
 
             return viewModel;
+        }
+
+        public static VMPreviewArticle[] PreviewMaterials(this GE.WebCoreExtantions.Repositories.RepoArticle repo, int gameId, string articleType, int lettersCount=200)
+        {
+            using (var conn = new SqlConnection(repo.ConnectionString))
+            {
+                return conn.Query<VMPreviewArticle>(Resources.Sql_Articles.PreviewMaterials, new { GAME_ID = gameId, ARTICLE_TYPE_NAME = articleType, LETTERS_COUNT=lettersCount }).ToArray();
+            }
         }
     }
 }

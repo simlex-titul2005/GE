@@ -11,7 +11,7 @@ namespace GE.WebCoreExtantions
     [Table("D_CONTEST")]
     public class Contest : SX.WebCore.Abstract.SxMaterial
     {
-        [Column("DATE_START"), DataType(DataType.DateTime)]
+        [DataType(DataType.DateTime)]
         public DateTime DateStart { get; set; }
 
         public virtual ICollection<ContestPrize> Prizes { get; set; }

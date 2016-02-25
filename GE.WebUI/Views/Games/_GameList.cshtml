@@ -7,7 +7,7 @@
         <div class="container">
             <ul>
                 <li style="width:@(length + "%")">
-                    <a href="#" title="Показать все">
+                    <a href="#" title="Показать все" data-toggle="tooltip" data-placement="bottom" class="red-tooltip">
                         <img alt="Показать все" src="@(Model.EmptyGame.IconPath)" />
                     </a>
                 </li>
@@ -16,7 +16,7 @@
                 {
                     var item = Model.Games[i];
                     <li style="width:@(length + "%")">
-                        <a href="#" title="@item.Title">
+                        <a href="#" title="@item.Title" data-toggle="tooltip" data-placement="bottom" class="red-tooltip">
                             <img alt="@item.Title" src="@Url.Action(MVC.Pictures.Picture(item.FrontPictureId, height: 80 ))" />
                             <span class="visible-xs">@item.Title</span>
                         </a>

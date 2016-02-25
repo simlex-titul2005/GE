@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GE.WebUI.Resources {
+namespace GE.WebAdmin.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace GE.WebUI.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Sql_Articles {
+    public class Sql_ArticleTypes {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Sql_Articles() {
+        internal Sql_ArticleTypes() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace GE.WebUI.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GE.WebUI.Resources.Sql_Articles", typeof(Sql_Articles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GE.WebAdmin.Resources.Sql_ArticleTypes", typeof(Sql_ArticleTypes).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,51 +61,12 @@ namespace GE.WebUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT da.GameId,
-        ///       dg.Title,
-        ///       dg.FrontPictureId,
-        ///       dg.[Description],
-        ///       da.Name           AS ArticleTypeName,
-        ///       da.[Description]  AS ArticleTypeDesc
-        ///FROM   D_ARTICLE_TYPE da
-        ///       JOIN D_GAME dg
-        ///            ON  da.GameId = dg.ID
-        ///WHERE  dg.FrontPictureid IS NOT NULL
-        ///       AND dg.Show = 1
-        ///GROUP BY
-        ///       da.GameId,
-        ///       dg.Title,
-        ///       dg.FrontPictureid,
-        ///       dg.[Description],
-        ///       da.Name,
-        ///       da.[Description]
-        ///ORDER BY
-        ///       dg.Title,
-        ///       da.[Desc [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to SELECT*FROM D_ARTICLE_TYPE AS dat WHERE dat.GameId=@GAME_ID
+        ///ORDER BY dat.[DESCRIPTION].
         /// </summary>
-        public static string FGBGameMenu {
+        public static string GetArticleTypesByGameId {
             get {
-                return ResourceManager.GetString("FGBGameMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SELECT da.Id,
-        ///       dm.Title,
-        ///       dm.DateCreate,
-        ///       dm.ViewsCount,
-        ///       dm.CommentsCount,
-        ///       SUBSTRING(dm.Html, 0, @LETTERS_COUNT)  AS Foreword
-        ///FROM   D_ARTICLE                   AS da
-        ///       JOIN DV_MATERIAL            AS dm
-        ///            ON  dm.ID = da.ID
-        ///            AND dm.ModelCoreType = da.ModelCoreType
-        ///WHERE  da.ArticleTypeName = @ARTICLE_TYPE_NAME
-        ///       AND da.ArticleTypeGameId = @GAME_ID.
-        /// </summary>
-        public static string PreviewMaterials {
-            get {
-                return ResourceManager.GetString("PreviewMaterials", resourceCulture);
+                return ResourceManager.GetString("GetArticleTypesByGameId", resourceCulture);
             }
         }
     }

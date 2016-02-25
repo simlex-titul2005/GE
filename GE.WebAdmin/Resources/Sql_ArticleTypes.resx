@@ -117,42 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FGBGameMenu" xml:space="preserve">
-    <value>SELECT da.GameId,
-       dg.Title,
-       dg.FrontPictureId,
-       dg.[Description],
-       da.Name           AS ArticleTypeName,
-       da.[Description]  AS ArticleTypeDesc
-FROM   D_ARTICLE_TYPE da
-       JOIN D_GAME dg
-            ON  da.GameId = dg.ID
-WHERE  dg.FrontPictureid IS NOT NULL
-       AND dg.Show = 1
-GROUP BY
-       da.GameId,
-       dg.Title,
-       dg.FrontPictureid,
-       dg.[Description],
-       da.Name,
-       da.[Description]
-ORDER BY
-       dg.Title,
-       da.[Description]</value>
-    <comment>Список игр и типов статей для меню в блоке "Геймеру почитать"</comment>
-  </data>
-  <data name="PreviewMaterials" xml:space="preserve">
-    <value>SELECT da.Id,
-       dm.Title,
-       dm.DateCreate,
-       dm.ViewsCount,
-       dm.CommentsCount,
-       SUBSTRING(dm.Html, 0, @LETTERS_COUNT)  AS Foreword
-FROM   D_ARTICLE                   AS da
-       JOIN DV_MATERIAL            AS dm
-            ON  dm.ID = da.ID
-            AND dm.ModelCoreType = da.ModelCoreType
-WHERE  da.ArticleTypeName = @ARTICLE_TYPE_NAME
-       AND da.ArticleTypeGameId = @GAME_ID</value>
+  <data name="GetArticleTypesByGameId" xml:space="preserve">
+    <value>SELECT*FROM D_ARTICLE_TYPE AS dat WHERE dat.GameId=@GAME_ID
+ORDER BY dat.[DESCRIPTION]</value>
   </data>
 </root>

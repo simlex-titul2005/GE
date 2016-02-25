@@ -12,14 +12,13 @@ namespace SX.WebCore
     [Table("D_MATERIAL_TAG")]
     public class SxMaterialTag : SxDbUpdatedModel<int>
     {
-        [Column("VALUE"), MaxLength(100), Required]
+        [MaxLength(100), Required]
         public string Value { get; set; }
 
         public SxMaterial Material { get; set; }
-        [Column("MATERIAL_ID")]
+        
         public int? MaterialId { get; set; }
 
-        [Column("MATERIAL_CORE_TYPE")]
         public Enums.ModelCoreType ModelCoreType { get; set; }
     }
 }

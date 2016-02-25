@@ -1,7 +1,7 @@
 ﻿@import (reference) "colors.less";
 @import (reference) "sizes.less";
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700&subset=latin,cyrillic);
+@import "//fonts.googleapis.com/css?family=Open+Sans+Condensed:300&subset=cyrillic,latin";
 
 body {
     font-family: 'Open Sans Condensed';
@@ -9,8 +9,15 @@ body {
     background-color: @color-bg;
 }
 
+.navbar{
+    position:fixed;
+    width:100%;
+    z-index:100;
+}
+
 .wrapper {
     padding-bottom: @def-pad*2;
+    padding-top: 50px;
 }
 
 .btn-transparent, .btn-transparent:hover, .btn-transparent:focus, .btn-transparent:active {
@@ -27,4 +34,9 @@ body {
 .btn-transparent.dark-blue{
     border:1px solid @colr-dark-blue;
     color:@colr-dark-blue;
+}
+
+.btn-transparent.red {
+    border: 1px solid @color-red;
+    color: @color-red;
 }

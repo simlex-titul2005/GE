@@ -10,7 +10,7 @@ namespace SX.WebCore.Abstract
 {
     public abstract class SxDbUpdatedModel<TKey> : SxDbModel<TKey>
     {
-        [Column("DATE_UPDATE"), DataType(DataType.DateTime)]
+        [DataType(DataType.DateTime)]
         public DateTime DateUpdate { get; set; }
     }
 }

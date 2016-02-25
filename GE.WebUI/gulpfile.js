@@ -54,14 +54,16 @@ function createJs() {
     gulp.src([
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
-        'bower_components/bootstrap/dist/js/bootstrap.min.js'
+        'bower_components/bootstrap/dist/js/bootstrap.min.js',
+        'scripts/ge-game-menu.js'
     ])
         .pipe(concat('site.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('content/dist/js'));
 
     gulp.src([
-        'scripts/**/*.js'
+        'scripts/ge-for-gamers-block.js',
+        'scripts/ge-last-news-block.js'
     ])
         .pipe(uglify())
         .pipe(rename({

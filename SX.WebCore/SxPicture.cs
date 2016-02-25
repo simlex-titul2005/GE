@@ -15,22 +15,20 @@ namespace SX.WebCore
     [Table("D_PICTURE")]
     public class SxPicture : SxDbUpdatedModel<Guid>
     {
-        [Column("IMG_FORMAT"), MaxLength(50), Required]
+        [MaxLength(50), Required]
         public string ImgFormat { get; set; }
 
-        [Column("ORIGINAL_CONTENT"), Required]
+        [Required]
         public byte[] OriginalContent { get; set; }
 
-        [Column("WIDTH")]
         public int Width { get; set; }
 
-        [Column("HEIGHT")]
         public int Height { get; set; }
 
-        [Column("CAPTION"), Required, MaxLength(100)]
+        [Required, MaxLength(100)]
         public string Caption { get; set; }
 
-        [Column("DESCRIPTION"), MaxLength(255)]
+        [MaxLength(255)]
         public string Description { get; set; }
     }
 }

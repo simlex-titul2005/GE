@@ -12,7 +12,6 @@ namespace GE.WebCoreExtantions
     public class News : SX.WebCore.SxNews, IHasGame
     {
         public virtual Game Game { get; set; }
-        [Column("GAME_ID")]
         public int? GameId { get; set; }
     }
 }

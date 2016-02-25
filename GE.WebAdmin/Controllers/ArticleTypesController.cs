@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GE.WebAdmin.Extantions.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -96,6 +97,22 @@ namespace GE.WebAdmin.Controllers
             }
             else
                 return View(redactModel);
+        }
+
+        public virtual ActionResult ArticleTypesByGameId(int? gameId, string curName)
+        {
+            if (gameId.HasValue)
+            {
+                var viewModel = (_repo as RepoArticleType).GetArticleTypesByGameId((int)gameId)
+                    .Select(x => new SelectListItem
+                    {
+                        Text = x.Description,
+                        Value = x.Name,
+                        Selected = x.Name == curName
+                    });
+                return PartialView(MVC.ArticleTypes.Views._ArticleTypesByGameId, viewModel);
+            }
+            else return Content("<span class=\"form-control text-danger\">Не поддерживается без выбора игры</span>");
         }
     }
 }

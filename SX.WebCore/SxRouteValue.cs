@@ -12,14 +12,14 @@ namespace SX.WebCore
     [Table("D_ROUTE_VALUE")]
     public class SxRouteValue : SxDbUpdatedModel<Guid>
     {
-        [Required, MaxLength(50), Column("NAME")]
+        [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        [Required, MaxLength(100), Column("VALUE")]
+        [Required, MaxLength(100)]
         public string Value { get; set; }
 
         public virtual SxRoute Route { get; set; }
-        [Column("ROUTE_ID")]
+        
         public Guid RouteId { get; set; }
     }
 }

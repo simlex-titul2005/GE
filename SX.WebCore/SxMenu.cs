@@ -12,10 +12,10 @@ namespace SX.WebCore
     [Table("D_MENU")]
     public class SxMenu : SxDbUpdatedModel<int>
     {
-        [Required, MaxLength(100), Column("NAME")]
+        [Required, MaxLength(100)]
         public string Name { get; set; }
 
-        [MaxLength(500), Column("DESCRIPTION")]
+        [MaxLength(500)]
         public string Description { get; set; }
 
         public virtual ICollection<SxMenuItem> Items { get; set; }

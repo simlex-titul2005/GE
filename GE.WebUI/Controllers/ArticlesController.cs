@@ -28,5 +28,20 @@ namespace GE.WebUI.Controllers
             return View(viewModel);
         }
 
+        [AcceptVerbs(HttpVerbs.Get)]
+        public virtual ActionResult Preview(int gameId, string articleType, int lettersCount)
+        {
+            if (!Request.IsAjaxRequest()) return null;
+
+            var viewModel = (_repo as RepoArticle).PreviewMaterials(gameId, articleType, lettersCount);
+            if (!viewModel.Any()) return Content("<div class=\"empty-result\">Данные отсутствуют</div>");
+            return PartialView(MVC.Articles.Views._Preview, viewModel);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public virtual ViewResult Details(int id)
+        {
+            return View();
+        }
     }
 }

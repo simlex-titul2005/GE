@@ -2,21 +2,25 @@
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
+using SX.WebCore.Abstract;
 using SX.WebCore.HtmlHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GE.WebAdmin.Extantions.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
     public partial class ArticlesController : BaseController
     {
-        SX.WebCore.Abstract.SxDbRepository<int, Article, DbContext> _repo;
+        SxDbRepository<int, Article, DbContext> _repo;
+        SxDbRepository<int, ArticleType, DbContext> _repoArticleTypes;
         public ArticlesController()
         {
             _repo = new RepoArticle();
+            _repoArticleTypes = new RepoArticleType();
         }
 
         private static int _pageSize = 20;
@@ -26,7 +30,7 @@ namespace GE.WebAdmin.Controllers
         {
             var list = _repo.All
                 .Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
+                .Take(_pageSize).Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
@@ -98,6 +102,34 @@ namespace GE.WebAdmin.Controllers
         {
             var model = id.HasValue ? _repo.GetByKey(id, Enums.ModelCoreType.Article) : new Article { ModelCoreType = Enums.ModelCoreType.Article };
             return View(Mapper.Map<Article, VMEditArticle>(model));
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Edit(VMEditArticle model)
+        {
+            var redactModel = Mapper.Map<VMEditArticle, Article>(model);
+            redactModel.ArticleTypeGameId = model.GameId;
+            if (ModelState.IsValid)
+            {
+                Article newModel = null;
+                if (model.Id == 0)
+                    newModel = _repo.Create(redactModel);
+                else
+                    newModel = _repo.Update(redactModel, "Title", "Show", "GameId", "FrontPictureId", "Html", "ArticleTypeName", "ArticleTypeGameId");
+
+                return RedirectToAction(MVC.Articles.Index());
+            }
+            else
+                return View(model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete(VMEditNews model)
+        {
+            _repo.Delete(model.Id, model.ModelCoreType);
+            return RedirectToAction(MVC.Articles.Index());
         }
     }
 }

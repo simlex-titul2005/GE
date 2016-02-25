@@ -1,0 +1,25 @@
+﻿@model VMPreviewArticle[]
+@{
+    Layout = null;
+}
+
+<div class="row">
+    @for (int i = 0; i < Model.Length; i++)
+    {
+        var m = Model[i];
+        <div class="col-md-6">
+            <div class="pv-article">
+                <h5 class="title">
+                    <a href="@Url.Action(MVC.Articles.Details(m.Id))" target="_blank">@m.Title</a>
+                </h5>
+                @Html.DisplayFor(x=>m.PreviewInfo)
+                <p class="foreword">
+                    @m.Foreword
+                </p>
+            </div>
+        </div>
+    }
+</div>
+<div class="text-center">
+    <button class="btn btn-default btn-transparent red">Все записи</button>
+</div>

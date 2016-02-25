@@ -1,45 +1,91 @@
 ﻿@model VMEditArticle
-
-@using (Html.BeginForm("Edit", "Articles", FormMethod.Post, new { @class = "form" }))
+@{
+    var isNew = Model.Id == 0;
+    ViewBag.Title = isNew ? "Добавить статью" : "Редактировать статью \"" + Model.Title + "\"";
+    ViewBag.GameTitle = isNew ? null : Model.Game != null ? Model.Game.Title : null;
+}
+<h2>@ViewBag.Title</h2>
+@if (Model.Id != 0)
 {
+    <form method="post" action="delete">
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.ModelCoreType)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger pull-right">Удалить статью</button>
+    </form>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.Articles.Edit())">
     @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ModelCoreType)
 
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Title)
-                @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.Title)
-            </div>
+            @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название статьи" } })
+            @Html.ValidationMessageFor(x => x.Title)
         </div>
     </div>
-
+    <br />
     <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Show)
-                @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.Show)
-            </div>
+        <div class="col-md-2">
+            @Html.LabelFor(x => x.Show, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Show)
         </div>
         <div class="col-md-4">
-            <div class="form-group">
-                @Html.LabelFor(x => x.ArticleTypeId)
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        @Html.RouteLink("Типы статей", new { action = "Index" }, new { @class = "btn btn-default" })
-                    </span>
-                    @Html.EditorFor(x => x.ArticleTypeId, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                @Html.ValidationMessageFor(x => x.ArticleTypeId)
+            @Html.LabelFor(x => x.GameId, new { @class = "control-label" })
+            @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.GameId)
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(x => x.ArticleTypeName, new { @class = "control-label" })
+            <div id="at">
+                @Html.Action(MVC.ArticleTypes.ArticleTypesByGameId(Model.GameId, Model.ArticleTypeName))
             </div>
+            @Html.ValidationMessageFor(x => x.ArticleTypeName)
         </div>
         <div class="col-md-4">
+            @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
+            @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.FrontPictureId)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Html, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Html)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
             <div class="form-group">
-                @Html.LabelFor(x => x.GameId)
-                @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.GameId)
+                <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
+                @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
             </div>
         </div>
     </div>
+</form>
+
+@section scripts{
+    <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+        if (CKEDITOR.instances['Html']) {
+            CKEDITOR.remove(CKEDITOR.instances['Html']);
+        }
+        CKEDITOR.replace('Html', { height: 400 });
+
+        $(function () {
+            $('.edit-game [type="text"]').on('change', function () {
+                var gameId = $('[name="GameId"] ').val();
+                $('#at').load('/articletypes/articletypesbygameId?gameId=' + gameId);
+            });
+        });
+    </script>
 }

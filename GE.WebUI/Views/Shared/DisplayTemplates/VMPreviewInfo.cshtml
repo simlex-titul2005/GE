@@ -1,0 +1,16 @@
+﻿@model VMPreviewInfo
+@{
+    Layout = null;
+}
+
+<ul class="preview-info">
+    <li>
+        <i class="fa fa-clock-o"></i>: @(((DateTime)Model.DateCreate).ToString("dd.MM.yyy"))
+    </li>
+    <li>
+        <i class="fa fa-eye"></i>: @Model.ViewsCount
+    </li>
+    <li>
+        <i class="fa fa-comments-o"></i>: @Model.CommentsCount
+    </li>
+</ul>

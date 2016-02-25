@@ -12,15 +12,15 @@ namespace SX.WebCore
     [Table("D_MENU_ITEM")]
     public class SxMenuItem : SxDbUpdatedModel<int>
     {
-        [Required, MaxLength(100), Column("CAPTION")]
+        [Required, MaxLength(100)]
         public string Caption { get; set; }
 
         public virtual SxMenu Menu { get; set; }
-        [Column("MENU_ID")]
+        
         public int MenuId { get; set; }
 
         public virtual SxRoute Route { get; set; }
-        [Column("ROUTE_ID")]
+        
         public Guid? RouteId { get; set; }
     }
 }

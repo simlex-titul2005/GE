@@ -73,12 +73,14 @@ namespace GE.WebAdmin.Controllers
         public class ActionNamesClass
         {
             public readonly string EditEmptyGame = "EditEmptyGame";
+            public readonly string EditSiteLogo = "EditSiteLogo";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string EditEmptyGame = "EditEmptyGame";
+            public const string EditSiteLogo = "EditSiteLogo";
         }
 
 
@@ -87,6 +89,14 @@ namespace GE.WebAdmin.Controllers
         public ActionParamsClass_EditEmptyGame EditEmptyGameParams { get { return s_params_EditEmptyGame; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_EditEmptyGame
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_EditSiteLogo s_params_EditSiteLogo = new ActionParamsClass_EditSiteLogo();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_EditSiteLogo EditSiteLogoParams { get { return s_params_EditSiteLogo; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_EditSiteLogo
         {
             public readonly string model = "model";
         }
@@ -101,8 +111,10 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string EditEmptyGame = "EditEmptyGame";
+                public readonly string SiteLogo = "SiteLogo";
             }
             public readonly string EditEmptyGame = "~/Views/Settings/EditEmptyGame.cshtml";
+            public readonly string SiteLogo = "~/Views/Settings/SiteLogo.cshtml";
         }
     }
 
@@ -131,6 +143,29 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditEmptyGame);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditEmptyGameOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditSiteLogoOverride(T4MVC_System_Web_Mvc_ViewResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult EditSiteLogo()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.EditSiteLogo);
+            EditSiteLogoOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditSiteLogoOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMSiteLogoSettings model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult EditSiteLogo(GE.WebAdmin.Models.VMSiteLogoSettings model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditSiteLogo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EditSiteLogoOverride(callInfo, model);
             return callInfo;
         }
 

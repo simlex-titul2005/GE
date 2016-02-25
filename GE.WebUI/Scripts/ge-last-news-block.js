@@ -17,6 +17,8 @@
     };
 
     $.fn.geLastNewsBlock = function () {
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
         this.each(function () {
             var $this = $(this);
             var $menu = $this.find('.menu');
@@ -26,6 +28,8 @@
             var H = $menu.height() - padTop - padBottom;
 
             $this.find('.menu a').mouseenter(function () {
+                //if (width < 768) return;
+
                 var $a = $(this);
                 var gameId = $a.data('game-id');
                 var $firstFigure = $this.find('.games figure');

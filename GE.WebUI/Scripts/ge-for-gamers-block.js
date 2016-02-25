@@ -4,6 +4,7 @@
         this.each(function () {
             var $this = $(this);
             var $previewBox = $('#materials-preview');
+            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
             
             $this.find('.games > li > a[rel="noreferrer"]').click(function () {
                 var $a = $(this);
@@ -28,6 +29,11 @@
                     },
                     success: function (data) {
                         $previewBox.html(data);
+                        if (width < 768) {
+                            $('html, body').animate({
+                                scrollTop: ($previewBox.offset().top - $(window).height())
+                            }, 100);
+                        }
                     },
                     complete: function () {
                         $a.find('.fa-spin').remove();

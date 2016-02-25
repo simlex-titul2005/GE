@@ -88,6 +88,11 @@
     <Compile Include="HtmlHelpers\SxGridView.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
     <Compile Include="PictureHandler.cs" />
+    <Compile Include="Resources\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.resx</DependentUpon>
+    </Compile>
     <Compile Include="SxArticle.cs" />
     <Compile Include="SxDbContext.cs" />
     <Compile Include="Enums.cs" />
@@ -107,6 +112,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Settings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -18,6 +18,7 @@ namespace GE.WebUI
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             _mapperConfiguration = AutoMapperConfig.MapperConfigurationInstance;
+            SiteSettings.InitializeSiteSettings();
         }
 
         public static MapperConfiguration MapperConfiguration

@@ -1,5 +1,6 @@
 ﻿@import (reference) "colors.less";
 @import (reference) "sizes.less";
+@import (reference) "../../bower_components/bootstrap/less/variables.less";
 
 .f-g-b {
     margin-top: @def-pad*2;
@@ -22,11 +23,41 @@
     background-color: @color-white;
     padding: @def-pad;
     padding-top: 0;
+    @media (max-width: @screen-xs-max) {
+        display:block;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .f-g-b .content > .row > div[class^="col-"]:first-child {
     border-right: @def-pad solid @color-bg;
     padding: 0;
+    @media (max-width: @screen-xs-max) {
+        border-right: 0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .f-g-b .content > .row > div[class^="col-"] > h3 {

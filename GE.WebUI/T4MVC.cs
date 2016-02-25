@@ -33,6 +33,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.MenuesController Menues = new GE.WebUI.Controllers.T4MVC_MenuesController();
     public static GE.WebUI.Controllers.NewsController News = new GE.WebUI.Controllers.T4MVC_NewsController();
     public static GE.WebUI.Controllers.PicturesController Pictures = new GE.WebUI.Controllers.T4MVC_PicturesController();
+    public static T4MVC.SettingsController Settings = new T4MVC.SettingsController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -171,6 +172,7 @@ namespace Links
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string bootstrap_ext_less = Url("bootstrap-ext.less");
             public static readonly string colors_less = Url("colors.less");
+            public static readonly string footer_less = Url("footer.less");
             public static readonly string for_gamers_block_less = Url("for-gamers-block.less");
             public static readonly string game_list_less = Url("game-list.less");
             public static readonly string last_news_block_less = Url("last-news-block.less");

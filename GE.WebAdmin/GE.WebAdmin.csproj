@@ -3257,6 +3257,7 @@
     <Compile Include="Models\VMRoute.cs" />
     <Compile Include="Models\VMRouteValue.cs" />
     <Compile Include="Models\VMRouteValueList.cs" />
+    <Compile Include="Models\VMSiteLogoSettings.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -3333,6 +3334,7 @@
     <Content Include="Views\Shared\EditorTemplates\EditGame.cshtml" />
     <Content Include="Views\Games\FindTable.cshtml" />
     <Content Include="Views\ArticleTypes\_ArticleTypesByGameId.cshtml" />
+    <Content Include="Views\Settings\EditSiteLogo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

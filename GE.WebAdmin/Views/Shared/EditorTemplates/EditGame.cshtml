@@ -1,7 +1,7 @@
 ﻿<div class="edit-game sx-find-table" data-is-load="false" data-url="/games/findtable" data-page="1">
     <input type="hidden" name="@Html.NameForModel()" value="@Html.ValueForModel()" />
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="Выберите игру" value="@Html.ValueForModel()">
+        <input type="text" class="form-control" placeholder="Выберите игру" value="@ViewBag.GameTitle">
         <span class="input-group-btn">
             <button class="btn btn-default" type="button">Выбрать</button>
         </span>

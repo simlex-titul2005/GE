@@ -13,7 +13,7 @@ namespace GE.WebAdmin.Controllers
 {
     public partial class ArticleTypesController : BaseController
     {
-        SxDbRepository<byte, ArticleType, DbContext> _repo;
+        SxDbRepository<int, ArticleType, DbContext> _repo;
         public ArticleTypesController()
         {
             _repo = new RepoArticleType();
@@ -53,7 +53,7 @@ namespace GE.WebAdmin.Controllers
             {
                 foreach (var o in orders)
                 {
-                    if (o.Key == "Name")
+                    if (o.Key == "Id")
                     {
                         if (o.Value == SxExtantions.SortDirection.Desc)
                             temp = temp.OrderByDescending(x => x.Name);
@@ -64,7 +64,7 @@ namespace GE.WebAdmin.Controllers
             }
 
             var list = temp.Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<ArticleType, VMArticleType>(x)).ToArray();
+                .Take(_pageSize).Select(x => Mapper.Map<ArticleType, VMArticleType>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
@@ -74,15 +74,15 @@ namespace GE.WebAdmin.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Edit(int? id)
+        public virtual ViewResult Edit(string name=null, int? gameId=null )
         {
-            var model = id.HasValue ? _repo.GetByKey(id) : new ArticleType { DateCreate = DateTime.Now };
+            var model = gameId.HasValue ? _repo.GetByKey(name, gameId) : new ArticleType();
             return View(Mapper.Map<ArticleType, VMEditArticleType>(model));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
-        public virtual ViewResult Edit(VMEditArticleType model)
+        public virtual ActionResult Edit(VMEditArticleType model)
         {
             var redactModel = Mapper.Map<VMEditArticleType, ArticleType>(model);
             if (ModelState.IsValid)
@@ -91,8 +91,8 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, "Name");
-                return View(Mapper.Map<ArticleType, VMEditArticleType>(redactModel));
+                    newModel = _repo.Update(redactModel, "Description");
+                return RedirectToAction(MVC.ArticleTypes.Index());
             }
             else
                 return View(redactModel);

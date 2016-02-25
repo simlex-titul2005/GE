@@ -1,40 +1,52 @@
 ﻿@model VMEditArticleType
+@{
+    var isNew = Model.Id == 0;
+    ViewBag.Title = isNew ? "Добавить тип статьи" : "Редактировать тип статьи \""+Model.Name+"\" для игры\""+Model.Game.Title+"\"";
+    ViewBag.GameTitle = isNew ? null : Model.Game.Title;
+}
 
-<h2>
-    @(Model.Id == 0 ? "Добавить тип статьи" : "Редактировать тип статьи")
-</h2>
-
-@using (Html.BeginForm("Edit", "ArticleTypes", FormMethod.Post, new { @class = "form" }))
+<h2>@ViewBag.Title</h2>
+@if (!isNew)
 {
+    <p class="lead text-info">В существующем типе статьи редактировать возможно только описание.<br /> Если нужно изменить наименование типа или игру, удалите существующую модель и создайте новую с необходимыми параметрами.</p>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.ArticleTypes.Edit())">
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(x => x.Id)
-    @Html.HiddenFor(x => x.DateCreate)
 
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Name)
-                @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control" } })
+    @if (isNew)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название типа статьи" } })
                 @Html.ValidationMessageFor(x => x.Name)
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                @Html.LabelFor(x => x.GameId)
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        @Html.RouteLink("Игры", new { action = "Index" }, new { @class = "btn btn-default" })
-                    </span>
-                    @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(x => x.GameId, new { @class = "control-label" })
+                @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(x => x.GameId)
             </div>
         </div>
+        <br />
+    }
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Description, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Description)
+        </div>
     </div>
-
-    <div class="form-group">
-        <button type="submit" class="btn btn-default">Добавить</button>
-        @Html.RouteLink("Назад", new { controller = "ArticleTypes", action = "Index" }, new { @class = "btn btn-default" })
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+            @Html.RouteLink("Назад", new { controller = "ArticleTypes", action = "Index" }, new { @class = "btn btn-default" })
+        </div>
     </div>
-}
+</form>

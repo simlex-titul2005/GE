@@ -31,22 +31,27 @@ namespace SX.WebCore.Abstract
 
         public virtual TModel Create(TModel model)
         {
-            if (model is SxDbUpdatedModel<TKey>)
-            {
-                prepareUpdatedModel(model as SxDbUpdatedModel<TKey>);
-            }
+            if(model is SxDbModel<TKey>)
+                prepareUpdatedModel(model as SxDbModel<TKey>);
+            _dbContext.Configuration.AutoDetectChangesEnabled = false;
             _dbContext.Entry(model).State = EntityState.Added;
+            _dbContext.Configuration.AutoDetectChangesEnabled = true;
             _dbContext.SaveChanges();
             
             return model;
         }
-        private static void prepareUpdatedModel(SxDbUpdatedModel<TKey> model)
+        private static void prepareUpdatedModel(SxDbModel<TKey> model)
         {
             var date = DateTime.Now;
-            if (model.DateUpdate == DateTime.MinValue)
-                model.DateUpdate = date;
             if (model.DateCreate == DateTime.MinValue)
                 model.DateCreate = date;
+            if (model is SxDbUpdatedModel<TKey>)
+            {
+                var m = model as SxDbUpdatedModel<TKey>;
+                if (m.DateUpdate == DateTime.MinValue)
+                    m.DateUpdate = date;
+            }
+            
         }
 
         public virtual TModel Update(TModel model, params string[] propertiesForChange)
@@ -68,7 +73,9 @@ namespace SX.WebCore.Abstract
             if (oldModel is SxDbUpdatedModel<TKey>)
                 (oldModel as SxDbUpdatedModel<TKey>).DateUpdate = DateTime.Now;
 
+            _dbContext.Configuration.AutoDetectChangesEnabled = false;
             _dbContext.Entry(oldModel).State = EntityState.Modified;
+            _dbContext.Configuration.AutoDetectChangesEnabled = true;
             _dbContext.SaveChanges();
 
             return oldModel;

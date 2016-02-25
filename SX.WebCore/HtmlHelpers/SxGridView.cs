@@ -1,6 +1,9 @@
 ﻿using SX.WebCore.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -62,6 +65,11 @@ namespace SX.WebCore.HtmlHelpers
 
         public class SxGridViewSettings<TModel>
         {
+            public SxGridViewSettings()
+            {
+                KeyFieldsName = new string[] { "Id" };
+            }
+
             public string UpdateTargetId { get; set; }
 
             public TModel[] Data { get; set; }
@@ -76,6 +84,8 @@ namespace SX.WebCore.HtmlHelpers
             }
 
             public SxGridViewColumn[] Columns { get; set; }
+
+            public string[] KeyFieldsName { get; set; }
 
             private bool _showFilterRowMenu = true;
             public bool ShowFilterRowMenu 
@@ -241,6 +251,51 @@ namespace SX.WebCore.HtmlHelpers
 
             return sb.ToString();
         }
+        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings, HtmlHelper htmlHelper)
+        {
+            var tr = new TagBuilder("tr");
+            if (settings.ShowFilterRowMenu || settings.EnableEditing)
+            {
+                var td = new TagBuilder("td");
+                td.AddCssClass("sx-gv-edit-column");
+
+                if(settings.EnableEditing)
+                {
+                    var routes = HttpContext.Current.Request.RequestContext.RouteData.Values;
+                    var controller = routes["controller"].ToString().ToLower();
+
+                    //edit link
+                    var a = new TagBuilder("a");
+                    var type = typeof(TModel);
+                    var queryString = new StringBuilder();
+                    queryString.Append("?");
+                    for (int i = 0; i < settings.KeyFieldsName.Length; i++)
+                    {
+                        var key=settings.KeyFieldsName[i];
+                        queryString.Append(key + "=" + model.GetType().GetProperty(key).GetValue(model)+"&");
+                    }
+                    var qs = queryString.ToString().Substring(0, queryString.Length - 1);
+
+                    a.MergeAttribute("href", string.Format("{0}/edit{1}", controller, qs));
+                    a.InnerHtml += "<i class=\"fa fa-pencil\"></i>";
+
+                    td.InnerHtml += a;
+                }
+
+                tr.InnerHtml += td;
+            }
+
+            var props = model.GetType().GetProperties();
+            for (int i = 0; i < settings.Columns.Length; i++)
+            {
+                var column = settings.Columns[i];
+                var td = new TagBuilder("td");
+                var value = props.First(x => x.Name == column.FieldName).GetValue(model);
+                td.InnerHtml += value;
+                tr.InnerHtml += td;
+            }
+            return tr;
+        }
 
         private static TagBuilder getGridViewRowMenu<TModel>(SxGridViewSettings<TModel> settings)
         {
@@ -338,42 +393,6 @@ namespace SX.WebCore.HtmlHelpers
             return count > 0;
         }
 
-        private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings, HtmlHelper htmlHelper)
-        {
-            var tr = new TagBuilder("tr");
-            if (settings.ShowFilterRowMenu || settings.EnableEditing)
-            {
-                var td = new TagBuilder("td");
-                td.AddCssClass("sx-gv-edit-column");
-
-                if(settings.EnableEditing)
-                {
-                    var routes = HttpContext.Current.Request.RequestContext.RouteData.Values;
-                    var controller = routes["controller"].ToString().ToLower();
-
-                    //edit link
-                    var a = new TagBuilder("a");
-                    a.MergeAttribute("href", string.Format("{0}/edit?id={1}", controller, model.GetType().GetProperty("Id").GetValue(model)));
-                    a.InnerHtml += "<i class=\"fa fa-pencil\"></i>";
-
-                    td.InnerHtml += a;
-                }
-
-                tr.InnerHtml += td;
-            }
-
-            var props = model.GetType().GetProperties();
-            for (int i = 0; i < settings.Columns.Length; i++)
-            {
-                var column = settings.Columns[i];
-                var td = new TagBuilder("td");
-                var value = props.First(x => x.Name == column.FieldName).GetValue(model);
-                td.InnerHtml += value;
-                tr.InnerHtml += td;
-            }
-            return tr;
-        }
-
         private static TagBuilder getGridViewFooter<TModel>(HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings)
         {
             
@@ -403,22 +422,6 @@ namespace SX.WebCore.HtmlHelpers
             //tfoot.InnerHtml += getGridViewPagerProgress(settings);
             return tfoot;
         }
-        //private static TagBuilder getGridViewPagerProgress<TModel>(SxGridViewSettings<TModel> settings)
-        //{
-        //    var tr = new TagBuilder("tr");
-        //    var td = new TagBuilder("td");
-        //    var colspan = settings.EnableEditing || settings.ShowFilterRowMenu ? settings.Columns.Length + 1 : settings.Columns.Length;
-        //    td.MergeAttribute("colspan", colspan.ToString());
-        //    td.AddCssClass("sx-pager-progress");
-
-        //    var div = new TagBuilder("div");
-        //    var percent = 100 * settings.PagerInfo.Page / settings.PagerInfo.TotalPages;
-        //    div.MergeAttribute("style", string.Format("width:{0}%", percent));
-        //    td.InnerHtml += div;
-
-        //    tr.InnerHtml += td;
-        //    return tr;
-        //}
 
         private static string[] getModelColumns(Type modelType)
         {

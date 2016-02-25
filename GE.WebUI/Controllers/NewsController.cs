@@ -36,6 +36,12 @@ namespace GE.WebUI.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+        public virtual ViewResult List(int page)
+        {
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Details(int id)
         {
             return View();

@@ -16,7 +16,9 @@ namespace GE.WebCoreExtantions
         public int? GameId { get; set; }
 
         public virtual ArticleType ArticleType { get; set; }
-        [Column("ARTICLE_TYPE_ID")]
-        public byte? ArticleTypeId { get; set; }
+        [Column("ARTICLE_TYPE_NAME")]
+        public string ArticleTypeName { get; set; }
+        [Column("ARTICLE_TYPE_GAME_ID")]
+        public int? ArticleTypeGameId { get; set; } 
     }
 }

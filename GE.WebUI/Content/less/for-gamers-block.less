@@ -1,0 +1,50 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+
+.f-g-b {
+    margin-top: @def-pad*2;
+}
+
+.f-g-b .content {
+    margin-top: @def-pad;
+}
+
+.f-g-b .content > .row {
+    display: table;
+    width: 100%;
+    margin: 0;
+}
+
+.f-g-b .content > .row > div[class^="col-"] {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+    background-color: @color-white;
+    padding: @def-pad;
+    padding-top: 0;
+}
+
+.f-g-b .content > .row > div[class^="col-"]:first-child {
+    border-right: @def-pad solid @color-bg;
+    padding: 0;
+}
+
+.f-g-b .content > .row > div[class^="col-"] > h3 {
+    margin-bottom: 12px;
+    padding: @def-pad;
+    padding-bottom: 3px;
+}
+
+.f-g-b .content > .row > div[class^="col-"]:last-child > h3 {
+    border-bottom: 1px dotted @color-gray;
+}
+
+.f-g-b ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.f-g-b ul > li > .dropdown {
+    padding-left:@def-pad*2;
+}

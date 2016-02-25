@@ -29,6 +29,7 @@ namespace GE.WebAdmin
 
                     //game
                     cfg.CreateMap<Game, VMGame>();
+                    cfg.CreateMap<VMGame, Game>();
                     cfg.CreateMap<Game, VMEditGame>();
                     cfg.CreateMap<VMEditGame, Game>();
 

@@ -11,5 +11,10 @@ namespace GE.WebAdmin.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+
+        public VMGame Game { get; set; }
+        public int GameId { get { return Game.Id; } }
+        public string GameTitle { get { return Game.Title; } }
     }
 }

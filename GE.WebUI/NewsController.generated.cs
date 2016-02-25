@@ -58,6 +58,12 @@ namespace GE.WebUI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ViewResult List()
+        {
+            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.List);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ViewResult Details()
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
@@ -79,6 +85,7 @@ namespace GE.WebUI.Controllers
         public class ActionNamesClass
         {
             public readonly string LastNewsBlock = "LastNewsBlock";
+            public readonly string List = "List";
             public readonly string Details = "Details";
         }
 
@@ -86,6 +93,7 @@ namespace GE.WebUI.Controllers
         public class ActionNameConstants
         {
             public const string LastNewsBlock = "LastNewsBlock";
+            public const string List = "List";
             public const string Details = "Details";
         }
 
@@ -97,6 +105,14 @@ namespace GE.WebUI.Controllers
         public class ActionParamsClass_LastNewsBlock
         {
             public readonly string amount = "amount";
+        }
+        static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_List ListParams { get { return s_params_List; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_List
+        {
+            public readonly string page = "page";
         }
         static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -136,6 +152,18 @@ namespace GE.WebUI.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.LastNewsBlock);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "amount", amount);
             LastNewsBlockOverride(callInfo, amount);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ListOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult List(int page)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.List);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ListOverride(callInfo, page);
             return callInfo;
         }
 

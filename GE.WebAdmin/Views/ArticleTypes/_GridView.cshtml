@@ -12,8 +12,11 @@
         UpdateTargetId = "grid-article-types",
         Data = Model,
         Columns = new SxExtantions.SxGridViewColumn[]{
+            new SxExtantions.SxGridViewColumn{FieldName="GameTitle", Caption="Игра"},
             new SxExtantions.SxGridViewColumn{FieldName="Name", Caption="Наименование"},
+            new SxExtantions.SxGridViewColumn{FieldName="Description", Caption="Описание"}
         },
+        KeyFieldsName = new string[] { "Name", "GameId" },
         Filter = filter,
         SortDirections = sortDirections
     },

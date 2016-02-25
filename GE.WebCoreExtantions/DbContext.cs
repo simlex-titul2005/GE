@@ -25,6 +25,14 @@ namespace GE.WebCoreExtantions
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<ArticleType>()
+                .HasKey(x => new { x.Name, x.GameId });
+
+            modelBuilder.Entity<Article>()
+                .HasOptional(x => x.ArticleType)
+                .WithMany()
+                .HasForeignKey(x => new { x.ArticleTypeName, x.ArticleTypeGameId });
+
             modelBuilder.Entity<ContestPrize>()
                 .HasRequired(x => x.Contest)
                 .WithMany(x=>x.Prizes)

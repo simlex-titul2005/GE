@@ -243,6 +243,7 @@
     <Content Include="bower_components\jquery\src\wrap.js" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\dist\js\ge-for-gamers-block.min.js" />
     <Content Include="Content\dist\js\ge-last-news-block.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -411,6 +412,7 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Scripts\ge-for-gamers-block.js" />
     <Content Include="Scripts\ge-last-news-block.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -427,6 +429,8 @@
     <Compile Include="Controllers\MenuesController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="Extantions\Repositories\RepoNews.cs" />
+    <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="GamesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

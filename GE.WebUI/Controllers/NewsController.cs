@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Dapper;
+using GE.WebUI.Extantions.Repositories;
 
 namespace GE.WebUI.Controllers
 {
@@ -25,13 +25,7 @@ namespace GE.WebUI.Controllers
         [ChildActionOnly]
         public virtual ViewResult LastNewsBlock(int amount = 5)
         {
-            var viewModel = new VMLastNewsBlock(amount);
-            using (var conn = new SqlConnection(_repo.ConnectionString))
-            {
-                var result = conn.Query<VMLastNewsBlockNews>(Resources.Sql_News.LastNews, new { AMOUNT = amount });
-                viewModel.News = result.ToArray();
-            }
-
+            var viewModel = (_repo as RepoNews).LastNewsBlock(amount);
             return viewModel.HasNews ? View(viewModel) : null;
         }
 

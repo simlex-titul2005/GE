@@ -37,6 +37,7 @@
 
 .f-g-b .content > .row > div[class^="col-"]:last-child > h3 {
     border-bottom: 1px dotted @color-gray;
+    padding: 15px 0;
 }
 
 .f-g-b ul {
@@ -45,6 +46,73 @@
     margin: 0;
 }
 
+.f-g-b .games {
+    border-right: 1px solid rgb(235, 238, 238);
+}
+
+.f-g-b .games > li {
+    border-bottom: 1px solid #ebeeee;
+    border-left: 4px solid #d6d8d9;
+    background: transparent linear-gradient(to bottom,#e1e1e1 0,#f7f7f7 41%,#f7f7f7 61%,#e0e0e0 100%) repeat scroll 0 0;
+}
+
+.f-g-b .games > li.selected {
+    border-left-color: @color-red;
+}
+
+.f-g-b .games > li > a {
+    display: block;
+    color: @colr-dark-blue;
+    padding: @def-pad;
+    padding-left: @def-pad*4;
+    line-height: 1;
+    position: relative;
+    text-decoration: none;
+    outline: none;
+}
+
+f-g-b .games > li > a:hover {
+    text-decoration: none;
+}
+
+.f-g-b .games > li > a > figure > img {
+    width: 40px;
+    position: absolute;
+    left: 15px;
+}
+
+.f-g-b .games > li > a .desc {
+    font-size: 13px;
+    line-height: 1.2;
+    display: block;
+    margin-top: 10px;
+}
+
+.f-g-b .games > li > a.link {
+    padding-top: 0;
+    font-size: 1em;
+    text-decoration: underline;
+}
+
+.f-g-b .games > li > a.link:hover {
+    text-decoration: none;
+}
+
 .f-g-b ul > li > .dropdown {
-    padding-left:@def-pad*2;
+    display: none;
+    background-color: @color-white;
+}
+
+.f-g-b ul > li > .dropdown a {
+    color: inherit;
+    display: block;
+    outline: none;
+    text-decoration: none;
+    padding: 10px @def-pad;
+    line-height: 1em;
+    border-bottom: 1px solid @color-light-gray;
+}
+
+.f-g-b ul > li > .dropdown li:last-child > a {
+    border-bottom:none;
 }

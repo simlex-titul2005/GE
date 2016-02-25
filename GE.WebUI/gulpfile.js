@@ -13,7 +13,7 @@ function clear() {
     del([
         'content/dist/css/**/*.css',
         'content/dist/js/**/*.js',
-        'content/fonts',
+        //'content/fonts',
         'fonts/**/*'
     ]);
 }

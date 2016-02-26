@@ -2,37 +2,33 @@
     Layout = null;
 }
 <footer>
+    <div class="shadow"></div>
     <div class="top">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    @Html.Action(MVC.Menues.Menu(2, cssClass: "menu"))
+                <div class="col-md-6 col-sm-6">
+                    @Html.Action(MVC.Menues.Menu(4, cssClass: "menu"))
                 </div>
-                <div class="col-md-6">
-                    <ul class="icons">
-                        <li>
-                            <a href="#"><span class="fa fa-facebook"></span></a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="fa fa-twitter"></span></a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="fa fa-instagram"></span></a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="fa fa-youtube-play"></span></a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="fa fa-vk"></span></a>
-                        </li>
-                    </ul>
+                <div class="col-md-6 col-sm-6">
+                    @Html.Partial(MVC.Shared.Views._SocialIconsMenu)
                 </div>
             </div>
         </div>
     </div>
     <div class="middle">
         <div class="container">
-            sdf
+            <div class="row">
+                <div class="col-md-4">
+                    <h6 class="header">Последние публикации</h6>
+                    @Html.Action(MVC.Articles.Last(3))
+                </div>
+                <div class="col-md-4">
+                    @Html.Action(MVC.Menues.Menu(5, "menu"))
+                </div>
+                <div class="col-md-4">
+                    @Html.Action(MVC.Menues.Menu(6, "sign-menu"))
+                </div>
+            </div>
         </div>
     </div>
     <div class="bottom">

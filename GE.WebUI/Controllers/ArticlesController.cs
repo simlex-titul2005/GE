@@ -42,5 +42,13 @@ namespace GE.WebUI.Controllers
         {
             return View();
         }
+
+        [ChildActionOnly]
+        [OutputCache(Duration = 900, VaryByParam = "amount")]
+        public virtual PartialViewResult Last(int amount=3)
+        {
+            var viewModel = (_repo as RepoArticle).Last(amount);
+            return PartialView(MVC.Articles.Views._Last, viewModel);
+        }
     }
 }

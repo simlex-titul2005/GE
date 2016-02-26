@@ -28,9 +28,11 @@
             var H = $menu.height() - padTop - padBottom;
 
             $this.find('.menu a').mouseenter(function () {
-                //if (width < 768) return;
+                if (width < 768) return;
 
+                $this.find('.menu a').removeClass('hover');
                 var $a = $(this);
+                $a.addClass('hover');
                 var gameId = $a.data('game-id');
                 var $firstFigure = $this.find('.games figure');
                 var $figure = $container.find('figure[data-game-id="' + gameId + '"]');
@@ -38,6 +40,7 @@
             });
 
             $this.find('.games img').one('load', function () {
+                if (width < 768) return;
                 var $img = $(this);
 
                 var W = $img.closest('figure').width();
@@ -53,6 +56,7 @@
                 if (w > W)
                     $img.addClass('centerHorizontal');
             }).each(function () {
+                if (width < 768) return;
                 if (this.complete) $(this).load();
             });
         });

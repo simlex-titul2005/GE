@@ -15,6 +15,9 @@ namespace SX.WebCore
         [Required, MaxLength(100)]
         public string Caption { get; set; }
 
+        [MaxLength(150)]
+        public string Title { get; set; }
+
         public virtual SxMenu Menu { get; set; }
         
         public int MenuId { get; set; }

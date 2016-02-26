@@ -1,0 +1,13 @@
+﻿@model Dictionary<int, string>
+@{
+    Layout = null;
+}
+
+<ul class="last-articles">
+    @foreach (var item in Model)
+    {
+        <li>
+            <a title="@item.Value" href="@Url.Action(MVC.Articles.Details(item.Key))">@item.Value</a>
+        </li>
+    }
+</ul>

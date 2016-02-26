@@ -21,5 +21,6 @@ namespace GE.WebUI.Models
         public string Url { get; set; }
         public string Controller { get; set; }
         public string Action { get; set; }
+        public string Title { get; set; }
     }
 }

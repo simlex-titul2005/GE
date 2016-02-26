@@ -154,6 +154,17 @@ namespace Links
             }
         
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class i {
+                private const string URLPATH = "~/Content/dist/i";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string footer_bg_lg_jpg = Url("footer-bg-lg.jpg");
+                public static readonly string footer_bg_md_jpg = Url("footer-bg-md.jpg");
+                public static readonly string footer_bg_sm_jpg = Url("footer-bg-sm.jpg");
+                public static readonly string footer_bg_xs_jpg = Url("footer-bg-xs.jpg");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class js {
                 private const string URLPATH = "~/Content/dist/js";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -208,6 +219,12 @@ namespace Links
                     }
                 }
                 public static partial class fonts 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class i 
                 {
                     public static class Assets
                     {

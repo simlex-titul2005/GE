@@ -141,6 +141,12 @@ ORDER BY
        da.[Description]</value>
     <comment>Список игр и типов статей для меню в блоке "Геймеру почитать"</comment>
   </data>
+  <data name="LastArticles" xml:space="preserve">
+    <value>--DECLARE @AMOUNT INT=3
+SELECT TOP(@AMOUNT) da.Id, dm.Title FROM D_ARTICLE AS da
+JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
+ORDER BY dm.DateCreate DESC</value>
+  </data>
   <data name="PreviewMaterials" xml:space="preserve">
     <value>--DECLARE @GAME_ID INT=1, @ARTICLE_TYPE_NAME VARCHAR(150)='guid',@LETTERS_COUNT INT=200
 

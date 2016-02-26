@@ -244,6 +244,10 @@
     <Content Include="bower_components\jquery\src\wrap.js" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\dist\i\footer-bg-lg.jpg" />
+    <Content Include="Content\dist\i\footer-bg-md.jpg" />
+    <Content Include="Content\dist\i\footer-bg-sm.jpg" />
+    <Content Include="Content\dist\i\footer-bg-xs.jpg" />
     <Content Include="Content\dist\js\ge-for-gamers-block.min.js" />
     <Content Include="Content\dist\js\ge-last-news-block.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
@@ -498,6 +502,8 @@
     <Content Include="Views\Articles\_Preview.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\VMPreviewInfo.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_SocialIconsMenu.cshtml" />
+    <Content Include="Views\Articles\_Last.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

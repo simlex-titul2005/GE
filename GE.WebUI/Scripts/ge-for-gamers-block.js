@@ -29,14 +29,16 @@
                     },
                     success: function (data) {
                         $previewBox.html(data);
-                        if (width < 768) {
-                            $('html, body').animate({
-                                scrollTop: ($previewBox.offset().top - $(window).height())
-                            }, 100);
-                        }
                     },
                     complete: function () {
                         $a.find('.fa-spin').remove();
+                        if (width < 768) {
+                            var st = $previewBox.closest('div').offset().top-120;
+                            console.log(st);
+                            $('html, body').animate({
+                                scrollTop: st
+                            }, 100);
+                        }
                     }
                 });
                 return false;

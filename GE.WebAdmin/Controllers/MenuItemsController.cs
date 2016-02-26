@@ -45,11 +45,16 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repoMenuItem.Create(redactModel);
                 else
-                    newModel = _repoMenuItem.Update(redactModel, "Caption", "RouteId");
+                    newModel = _repoMenuItem.Update(redactModel, "Caption", "RouteId", "Title");
                 return RedirectToAction("Edit", "Menues", new { @id = newModel.MenuId });
             }
             else
+            {
+                var routes = _repoRoute.All.Select(x => Mapper.Map<SxRoute, VMRoute>(x));
+                var routesList = new SelectList(routes, "Id", "Name");
+                ViewData["Routes"] = routesList;
                 return View(model);
+            }
         }
 
         [AcceptVerbs(HttpVerbs.Post)]

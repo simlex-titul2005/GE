@@ -56,5 +56,20 @@ namespace GE.WebUI.Extantions.Repositories
                 return conn.Query<VMPreviewArticle>(Resources.Sql_Articles.PreviewMaterials, new { GAME_ID = gameId, ARTICLE_TYPE_NAME = articleType, LETTERS_COUNT=lettersCount }).ToArray();
             }
         }
+
+        public static Dictionary<int, string> Last(this GE.WebCoreExtantions.Repositories.RepoArticle repo, int amount)
+        {
+            var result = new Dictionary<int, string>();
+            using (var conn = new SqlConnection(repo.ConnectionString))
+            {
+                var results = conn.Query<dynamic>(Resources.Sql_Articles.LastArticles, new { AMOUNT = amount }).ToArray();
+                for (int i = 0; i < results.Length; i++)
+                {
+                    var a=results[i];
+                    result.Add(a.Id, a.Title);
+                }
+            }
+            return result;
+        }
     }
 }

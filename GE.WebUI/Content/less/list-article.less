@@ -1,0 +1,143 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "../../bower_components/bootstrap/less/variables.less";
+
+
+.list-article {
+    display: inline-table;
+    height: 100%;
+    background-color: @color-white;
+    width:100%;
+
+    @media (max-width: @screen-xs-max) {
+        margin-top: @def-pad*2;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article > .content {
+    padding: 0 10px @def-pad 10px;
+}
+
+.list-article figure > img {
+    @media (max-width: @screen-xs-max) {
+        width: 100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article .info {
+    position: relative;
+    margin-top: @def-pad*2;
+}
+
+.list-article ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-article ul > li {
+    float: unset;
+    margin-right: unset;
+}
+
+.list-article a {
+    color: inherit;
+}
+
+.list-article .btn-transparent {
+    width: 100%;
+    min-width: unset;
+    @media (max-width: @screen-xs-max) {
+        margin-top:@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article .link {
+    font-size: 22px;
+    color: #2d3e50;
+    font-weight: 700;
+    line-height: 1;
+    display: block;
+    margin-top: @def-pad;
+}
+
+.list-article .foreword {
+    margin-top: @def-pad;
+}
+
+.list-article-container .sx-list.t-mode {
+    @media (max-width: @screen-xs-max) {
+        margin: 0 !important;
+        margin-bottom:-@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article-container  .sx-list > .row {
+    @media (max-width: @screen-xs-max) {
+        display: inline-block !important;
+        margin: 0 !important;
+        width:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article-container .sx-list > .row > div {
+    @media (max-width: @screen-xs-max) {
+        display: inline-block !important;
+        width:100%;
+        padding:0 !important;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}

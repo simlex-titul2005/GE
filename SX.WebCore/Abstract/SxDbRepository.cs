@@ -98,6 +98,19 @@ namespace SX.WebCore.Abstract
             }
         }
 
+        public virtual IQueryable<TModel> Query(SxFilter filter)
+        {
+            return All;
+        }
+
+        public virtual int Count
+        {
+            get
+            {
+                return All.Count();
+            }
+        }
+
         public virtual TModel GetByKey(params object[] id)
         {
             var dbSet = _dbContext.Set<TModel>();

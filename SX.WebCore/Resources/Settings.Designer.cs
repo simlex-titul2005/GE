@@ -95,5 +95,14 @@ namespace SX.WebCore.Resources {
                 return ResourceManager.GetString("siteLogoPath", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to siteName.
+        /// </summary>
+        public static string siteName {
+            get {
+                return ResourceManager.GetString("siteName", resourceCulture);
+            }
+        }
     }
 }

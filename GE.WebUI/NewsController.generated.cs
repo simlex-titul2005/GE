@@ -58,12 +58,6 @@ namespace GE.WebUI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult List()
-        {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.List);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ViewResult Details()
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
@@ -112,6 +106,7 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_List
         {
+            public readonly string game = "game";
             public readonly string page = "page";
         }
         static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
@@ -132,9 +127,11 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string LastNewsBlock = "LastNewsBlock";
+                public readonly string _LastNewsBlock = "_LastNewsBlock";
+                public readonly string List = "List";
             }
-            public readonly string LastNewsBlock = "~/Views/News/LastNewsBlock.cshtml";
+            public readonly string _LastNewsBlock = "~/Views/News/_LastNewsBlock.cshtml";
+            public readonly string List = "~/Views/News/List.cshtml";
         }
     }
 
@@ -144,26 +141,27 @@ namespace GE.WebUI.Controllers
         public T4MVC_NewsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void LastNewsBlockOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int amount);
+        partial void LastNewsBlockOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int amount);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult LastNewsBlock(int amount)
+        public override System.Web.Mvc.PartialViewResult LastNewsBlock(int amount)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.LastNewsBlock);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.LastNewsBlock);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "amount", amount);
             LastNewsBlockOverride(callInfo, amount);
             return callInfo;
         }
 
         [NonAction]
-        partial void ListOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
+        partial void ListOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string game, int page);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult List(int page)
+        public override System.Web.Mvc.ViewResult List(string game, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.List);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "game", game);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            ListOverride(callInfo, page);
+            ListOverride(callInfo, game, page);
             return callInfo;
         }
 

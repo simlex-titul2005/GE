@@ -1,0 +1,8 @@
+﻿@model SxExtantions.SxPagedCollection<Article>
+@{
+    ViewBag.Title = "Статьи";
+}
+
+<h1>Статьи</h1>
+
+@Html.Partial(MVC.Articles.Views._Collection, Model)

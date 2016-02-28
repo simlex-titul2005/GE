@@ -27,8 +27,9 @@
                                 @for (int y = 0; y < game.ArticleTypeLength; y++)
                                 {
                                     var aType = game.ArticleTypes[y];
+                                    var title = "Показать " + aType.Description + " в блоке просмотра";
                                     <li>
-                                        <a href="#" data-game-id="@game.Id" data-article-type="@aType.Name">Показать @aType.Description в блоке просмотра</a>
+                                        <a title="@title" href="#" data-game-id="@game.Id" data-article-type="@aType.Name">@title</a>
                                     </li>
                                 }
                             </ul>

@@ -8,6 +8,8 @@ footer {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+    bottom:0;
+    width:100%;
 
     @media (max-width: @screen-xs-max) {
         background-image: url(../i/footer-bg-xs.jpg);
@@ -16,6 +18,7 @@ footer {
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
         background-image: url(../i/footer-bg-sm.jpg);
+        background-size: auto 100%;
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
@@ -190,6 +193,7 @@ footer .middle div[class^="col-"] {
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        margin-bottom: @def-pad*4;
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
@@ -205,6 +209,7 @@ footer .middle div[class^="col-"]:last-child{
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        margin-bottom:unset;
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {

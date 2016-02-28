@@ -146,27 +146,51 @@ f-g-b .games > li > a:hover {
     border-bottom: 1px solid @color-light-gray;
 }
 
+.f-g-b ul > li > .dropdown a.active {
+    background-color:@color-red;
+    color:@color-white;
+}
 .f-g-b ul > li > .dropdown li:last-child > a {
     border-bottom: none;
 }
 
-.preview-info {
-    color: @colr-muted-blue;
-    display: inline-block;
-    width: 100%;
-}
-
-.preview-info li {
-    float: left;
-    margin-right:5px;
-}
-
-.preview-info li:last-child{
-    margin-right:0;
-}
 .pv-article{
     padding:0 @def-pad;
+    @media (max-width: @screen-xs-max) {
+        margin-bottom:@def-pad*4;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
+
+.pv-article.last{
+    @media (max-width: @screen-xs-max) {
+        margin-bottom:unset;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
+}
+
 .pv-article a {
     color: inherit;
 }
@@ -180,7 +204,7 @@ f-g-b .games > li > a:hover {
     line-height: 1;
 }
 
-.pv-article .preview-info {
+.pv-article .mat-info {
     margin: 10px 0;
 }
 
@@ -189,7 +213,5 @@ f-g-b .games > li > a:hover {
 }
 
 .f-g-b .btn-transparent.red {
-    font-weight:700;
-    text-transform:uppercase;
     margin: @def-pad*2 0;
 }

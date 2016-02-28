@@ -1,0 +1,40 @@
+﻿@model VMSiteSettings
+@{
+    ViewBag.Title = "Настройки сайта";
+    var message = TempData["EditEmptyGameMessage"];
+}
+<h2>@ViewBag.Title</h2>
+<br />
+@if (message != null)
+{
+    <p class="text-success">@message</p>
+}
+<form method="post" action="@Url.Action(MVC.Settings.EditSite())">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.OldLogoPath)
+    @Html.HiddenFor(x => x.OldSiteName)
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.SiteName, new { @class = "control-label" })
+            @Html.EditorFor(x => x.SiteName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите наименование сайта" } })
+            @Html.ValidationMessageFor(x => x.SiteName)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.LogoPath, new { @class = "control-label" })
+            @Html.EditorFor(x => x.LogoPath, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите путь к изображению" } })
+            @Html.ValidationMessageFor(x => x.LogoPath)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</form>

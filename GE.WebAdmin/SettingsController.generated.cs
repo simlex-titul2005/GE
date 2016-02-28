@@ -73,14 +73,14 @@ namespace GE.WebAdmin.Controllers
         public class ActionNamesClass
         {
             public readonly string EditEmptyGame = "EditEmptyGame";
-            public readonly string EditSiteLogo = "EditSiteLogo";
+            public readonly string EditSite = "EditSite";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string EditEmptyGame = "EditEmptyGame";
-            public const string EditSiteLogo = "EditSiteLogo";
+            public const string EditSite = "EditSite";
         }
 
 
@@ -92,11 +92,11 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string model = "model";
         }
-        static readonly ActionParamsClass_EditSiteLogo s_params_EditSiteLogo = new ActionParamsClass_EditSiteLogo();
+        static readonly ActionParamsClass_EditSite s_params_EditSite = new ActionParamsClass_EditSite();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_EditSiteLogo EditSiteLogoParams { get { return s_params_EditSiteLogo; } }
+        public ActionParamsClass_EditSite EditSiteParams { get { return s_params_EditSite; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_EditSiteLogo
+        public class ActionParamsClass_EditSite
         {
             public readonly string model = "model";
         }
@@ -111,10 +111,10 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string EditEmptyGame = "EditEmptyGame";
-                public readonly string SiteLogo = "SiteLogo";
+                public readonly string EditSite = "EditSite";
             }
             public readonly string EditEmptyGame = "~/Views/Settings/EditEmptyGame.cshtml";
-            public readonly string SiteLogo = "~/Views/Settings/SiteLogo.cshtml";
+            public readonly string EditSite = "~/Views/Settings/EditSite.cshtml";
         }
     }
 
@@ -147,25 +147,25 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void EditSiteLogoOverride(T4MVC_System_Web_Mvc_ViewResult callInfo);
+        partial void EditSiteOverride(T4MVC_System_Web_Mvc_ViewResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult EditSiteLogo()
+        public override System.Web.Mvc.ViewResult EditSite()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.EditSiteLogo);
-            EditSiteLogoOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.EditSite);
+            EditSiteOverride(callInfo);
             return callInfo;
         }
 
         [NonAction]
-        partial void EditSiteLogoOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMSiteLogoSettings model);
+        partial void EditSiteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMSiteSettings model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult EditSiteLogo(GE.WebAdmin.Models.VMSiteLogoSettings model)
+        public override System.Web.Mvc.ActionResult EditSite(GE.WebAdmin.Models.VMSiteSettings model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditSiteLogo);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditSite);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            EditSiteLogoOverride(callInfo, model);
+            EditSiteOverride(callInfo, model);
             return callInfo;
         }
 

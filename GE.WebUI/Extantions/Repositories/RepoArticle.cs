@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Dapper;
+using SX.WebCore.Abstract;
 
 namespace GE.WebUI.Extantions.Repositories
 {

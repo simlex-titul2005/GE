@@ -5,7 +5,7 @@ using System.Web;
 
 namespace GE.WebUI.Models
 {
-    public sealed class VMPreviewInfo
+    public sealed class VMMateriallnfo
     {
         public DateTime? DateCreate { get; set; }
         public int? ViewsCount { get; set; }

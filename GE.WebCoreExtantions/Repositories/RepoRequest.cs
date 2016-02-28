@@ -10,6 +10,16 @@ namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoRequest : SxDbRepository<Guid, SxRequest, DbContext>
     {
-        
+        public bool Exists(SxRequest request)
+        {
+            var result = base.All.FirstOrDefault(x => 
+                x.SessionId==request.SessionId
+                && x.Controller==request.Controller
+                && x.Action==request.Action
+                && x.RequestType==request.RequestType
+                && x.QueryString==request.QueryString
+                );
+            return result != null;
+        }
     }
 }

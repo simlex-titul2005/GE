@@ -47,6 +47,6 @@
         </div>
     </div>
     <div class="text-center all-news-btn">
-        @Html.RouteLink("Все новости", new { controller = "#", action = "" }, new { @class = "btn btn-default btn-transparent dark-blue" })
+        <a href="@Url.Action(MVC.News.List())" class="btn btn-default btn-transparent dark-blue">Все новости</a>
     </div>
 </aside>

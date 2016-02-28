@@ -9,21 +9,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
+using SX.WebCore;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class ArticlesController : BaseController
+    public partial class ArticlesController : MaterialsController<int, Article>
     {
-        private SxDbRepository<int, Article, DbContext> _repo;
-        public ArticlesController()
-        {
-            _repo = new RepoArticle();
-        }
+        public ArticlesController() : base(Enums.ModelCoreType.Article) { }
 
         [ChildActionOnly]
         public virtual PartialViewResult ForGamersBlock()
         {
-            var viewModel = (_repo as RepoArticle).ForGamersBlock();
+            var viewModel = (base.Repository as RepoArticle).ForGamersBlock();
             return PartialView(MVC.Articles.Views._ForGamersBlock, viewModel);
         }
 
@@ -32,22 +29,16 @@ namespace GE.WebUI.Controllers
         {
             if (!Request.IsAjaxRequest()) return null;
 
-            var viewModel = (_repo as RepoArticle).PreviewMaterials(gameId, articleType, lettersCount);
+            var viewModel = (base.Repository as RepoArticle).PreviewMaterials(gameId, articleType, lettersCount);
             if (!viewModel.Any()) return Content("<div class=\"empty-result\">Данные отсутствуют</div>");
             return PartialView(MVC.Articles.Views._Preview, viewModel);
-        }
-
-        [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Details(int id)
-        {
-            return View();
         }
 
         [ChildActionOnly]
         [OutputCache(Duration = 900, VaryByParam = "amount")]
         public virtual PartialViewResult Last(int amount=3)
         {
-            var viewModel = (_repo as RepoArticle).Last(amount);
+            var viewModel = (base.Repository as RepoArticle).Last(amount);
             return PartialView(MVC.Articles.Views._Last, viewModel);
         }
     }

@@ -133,4 +133,8 @@
     <value>siteLogoPath</value>
     <comment>Путь к логотипу сайта</comment>
   </data>
+  <data name="siteName" xml:space="preserve">
+    <value>siteName</value>
+    <comment>Наименование сайта</comment>
+  </data>
 </root>

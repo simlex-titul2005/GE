@@ -17,6 +17,6 @@ namespace GE.WebCoreExtantions
         public virtual ArticleType ArticleType { get; set; }
         public string ArticleTypeName { get; set; }
 
-        public int? ArticleTypeGameId { get; set; } 
+        public int? ArticleTypeGameId { get; set; }
     }
 }

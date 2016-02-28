@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace GE.WebUI.Controllers
 {
@@ -21,9 +22,7 @@ namespace GE.WebUI.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-//#if !DEBUG
-        [OutputCache(Duration = 300, VaryByParam = "id;width;height")]
-//#endif
+        [OutputCache(Duration = 900, VaryByParam = "id;width;height")]
         public virtual FileResult Picture(Guid id, int? width = null, int? height=null)
         {
             var viewModel = _repo.GetByKey(id);

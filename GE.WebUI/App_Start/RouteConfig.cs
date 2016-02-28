@@ -15,10 +15,36 @@ namespace GE.WebUI
 
             routes.LowercaseUrls = true;
 
+            #region articles
             routes.MapRoute(
-                name: "Default",
+                name: null,
+                url: "articles",
+                defaults: new { controller = "articles", action = "list", game = "", area = "" }
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "articles/preview",
+                defaults: new { controller = "articles", action = "preview", area = "" }
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "articles/{game}",
+                defaults: new { controller = "articles", action = "list", area = "" }
+            );
+            #endregion
+
+            routes.MapRoute(
+                name: null,
+                url: "home/{game}",
+                defaults: new { controller = "home", action = "index", area = "" }
+            );
+
+            routes.MapRoute(
+                name: null,
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, area="" }
+                defaults: new { controller = "home", action = "index", id = UrlParameter.Optional, area = "" }
             );
         }
     }

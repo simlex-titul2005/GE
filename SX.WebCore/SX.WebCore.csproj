@@ -84,8 +84,10 @@
     <Compile Include="Abstract\SxDbModel.cs" />
     <Compile Include="Abstract\SxDbRepository.cs" />
     <Compile Include="Abstract\SxDbUpdatedModel.cs" />
+    <Compile Include="Abstract\SxFilter.cs" />
     <Compile Include="Abstract\SxMaterial.cs" />
     <Compile Include="HtmlHelpers\SxGridView.cs" />
+    <Compile Include="HtmlHelpers\SxList.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
     <Compile Include="PictureHandler.cs" />
     <Compile Include="Resources\Settings.Designer.cs">

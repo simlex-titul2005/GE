@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IHasGame.cs" />
     <Compile Include="ArticleType.cs" />
+    <Compile Include="Filter.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="News.cs" />
     <Compile Include="Article.cs" />

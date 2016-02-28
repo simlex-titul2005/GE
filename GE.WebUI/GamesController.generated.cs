@@ -82,6 +82,15 @@ namespace GE.WebUI.Controllers
         }
 
 
+        static readonly ActionParamsClass_GameList s_params_GameList = new ActionParamsClass_GameList();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_GameList GameListParams { get { return s_params_GameList; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_GameList
+        {
+            public readonly string imgWidth = "imgWidth";
+            public readonly string iconHeight = "iconHeight";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -95,6 +104,13 @@ namespace GE.WebUI.Controllers
                 public readonly string _GameList = "_GameList";
             }
             public readonly string _GameList = "~/Views/Games/_GameList.cshtml";
+            static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
+            public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _DisplayTemplatesClass
+            {
+                public readonly string VMImgGame = "VMImgGame";
+            }
         }
     }
 
@@ -104,13 +120,15 @@ namespace GE.WebUI.Controllers
         public T4MVC_GamesController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void GameListOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo);
+        partial void GameListOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int imgWidth, int iconHeight);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult GameList()
+        public override System.Web.Mvc.PartialViewResult GameList(int imgWidth, int iconHeight)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.GameList);
-            GameListOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "imgWidth", imgWidth);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "iconHeight", iconHeight);
+            GameListOverride(callInfo, imgWidth, iconHeight);
             return callInfo;
         }
 

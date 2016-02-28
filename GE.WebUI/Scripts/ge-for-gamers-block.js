@@ -32,6 +32,8 @@
                     },
                     complete: function () {
                         $a.find('.fa-spin').remove();
+                        $this.find('.dropdown > li > a').removeClass('active');
+                        $a.toggleClass('active');
                         if (width < 768) {
                             var st = $previewBox.closest('div').offset().top-120;
                             console.log(st);

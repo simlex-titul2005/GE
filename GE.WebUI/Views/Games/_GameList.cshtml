@@ -1,13 +1,16 @@
 ﻿@model VMGameMenu
 @{
     var length = Math.Round((decimal)100 / (Model.Length + 1), 4).ToString().Replace(',', '.');
+    var controllerName = (string)ViewBag.ControllerName;
+    var actionName = (string)ViewBag.ActionName;
+    var gameName = !string.IsNullOrEmpty(ViewBag.GameName) ? (string)ViewBag.GameName : null;
 }
 <div id="game-list">
     <div class="game-menu">
         <div class="container">
             <ul>
-                <li style="width:@(length + "%")">
-                    <a href="#" title="Показать все" data-toggle="tooltip" data-placement="bottom" class="red-tooltip">
+                <li style="width:@(length + "%")" @(gameName == null ? "class=active" : null)>
+                    <a href="@Url.Action(actionName, new { controller = controllerName, game="" })" title="Показать все" data-toggle="tooltip" data-placement="bottom" class="red-tooltip">
                         <img alt="Показать все" src="@(Model.EmptyGame.IconPath)" />
                     </a>
                 </li>
@@ -15,9 +18,9 @@
                 @for (int i = 0; i < Model.Length; i++)
                 {
                     var item = Model.Games[i];
-                    <li style="width:@(length + "%")">
-                        <a href="#" title="@item.Title" data-toggle="tooltip" data-placement="bottom" class="red-tooltip">
-                            <img alt="@item.Title" src="@Url.Action(MVC.Pictures.Picture(item.FrontPictureId, height: 80 ))" />
+                    <li style="width:@(length + "%")" @(item.Title.ToLower() == gameName ? "class=active" : null)>
+                        <a href="@Url.Action(actionName, new { controller = controllerName, game = item.Title })" title="@item.Title" data-toggle="tooltip" data-placement="bottom" class="red-tooltip ">
+                            <img alt="@item.Title" src="@Url.Action(MVC.Pictures.Picture(item.FrontPictureId, height: 80))" />
                             <span class="visible-xs">@item.Title</span>
                         </a>
                     </li>
@@ -27,19 +30,7 @@
     </div>
     <div class="game-images">
         <div class="container">
-            <div class="game-good-img">
-                <figure>
-                    <img alt="" src="@Url.Action(MVC.Pictures.Picture(Model.Games[0].GoodPictureId, width: 570 ))" />
-                </figure>
-            </div>
-            <div class="game-bad-img">
-                <figure>
-                    <img alt="" src="@Url.Action(MVC.Pictures.Picture(Model.Games[0].BadPictureId, width: 570 ))" />
-                </figure>
-            </div>
-            <div class="game-icon-wrapper">
-                <img alt="" src="@Url.Action(MVC.Pictures.Picture(Model.Games[0].FrontPictureId, height: 80))" />
-            </div>
+            @Html.DisplayFor(x => Model[gameName], new { LoadImg = true })
         </div>
     </div>
 </div>

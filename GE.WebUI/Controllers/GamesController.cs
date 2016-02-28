@@ -25,9 +25,15 @@ namespace GE.WebUI.Controllers
         private const string __emptyGameGoodImagePath = "emptyGameGoodImagePath";
         private const string __emptyGameBadImagePath = "emptyGameBadImagePath";
         [ChildActionOnly]
-        public virtual PartialViewResult GameList()
+        public virtual PartialViewResult GameList(int imgWidth=570, int iconHeight=80)
         {
-            var viewModel = new VMGameMenu();
+            var routes = Request.RequestContext.RouteData.Values;
+            ViewBag.ControllerName = routes["controller"];
+            ViewBag.ActionName = routes["action"];
+            var gameName = routes["game"];
+            ViewBag.GameName = gameName;
+
+            var viewModel = new VMGameMenu(imgWidth, iconHeight);
             viewModel.Games = _repo.All.Where(x => x.Show && x.FrontPictureId.HasValue).OrderBy(x => x.Title).Select(x => Mapper.Map<Game, VMGame>(x)).ToArray();
 
             var emptyGameIconPath = _repoSetting.GetByKey(__emptyGameIconPath);

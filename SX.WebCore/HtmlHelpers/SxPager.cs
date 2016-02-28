@@ -117,6 +117,7 @@ namespace SX.WebCore.HtmlHelpers
             {
                 get
                 {
+                    if (PageSize == 0) return 0;
                     var count = (int)Math.Ceiling((decimal)TotalItems / PageSize);
                     return count;
                 }

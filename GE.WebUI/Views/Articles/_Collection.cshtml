@@ -1,0 +1,12 @@
+﻿@model SxExtantions.SxPagedCollection<Article>
+@{
+    Layout = null;
+}
+
+@if (Model.Length != 0)
+{
+    <div class="list-article-container">
+        @Html.SxList(Model, new SxExtantions.SxListSettings { ColCount = 3, CellCssStyle = "list-article" })
+        @Html.SxPager(Model.PagerInfo)
+    </div>
+}

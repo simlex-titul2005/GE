@@ -31,7 +31,6 @@
     @media (max-width: @screen-xs-max) {
         width: unset;
         height: 100%;
-        padding: 10px;
         overflow: hidden;
         overflow-y: auto;
         max-width: @g-m-xs-w;
@@ -106,6 +105,10 @@
     }
 }
 
+.game-menu ul > li.active{
+    background-color: rgba(17,25,54,.6);
+}
+
 .game-menu ul > li > a {
     display: block;
     color: @color-white;
@@ -115,6 +118,7 @@
         font-size: 0.9em;
         -ms-word-wrap: break-word;
         word-wrap: break-word;
+        padding:10px;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {

@@ -46,9 +46,13 @@ namespace GE.WebUI.Controllers
 
         private static void writeRequestInfo(SxDbRepository<Guid, SxRequest, DbContext> repo, HttpRequestBase request)
         {
+            var sessionId = request.RequestContext.HttpContext.Session.SessionID;
             Task.Run(() =>
             {
-                repo.Create(new SxRequest(request));
+                var r = new SxRequest(request, sessionId);
+                if ((repo as RepoRequest).Exists(r)) return;
+
+                repo.Create(new SxRequest(request, sessionId));
             });
         }
     }

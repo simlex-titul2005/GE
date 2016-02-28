@@ -3,6 +3,11 @@
 
 @import "//fonts.googleapis.com/css?family=Open+Sans+Condensed:300&subset=cyrillic,latin";
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
     font-family: 'Open Sans Condensed';
     color: @color-black;
@@ -28,7 +33,10 @@ body {
 }
 
 .btn-transparent {
-    padding: @def-pad + 5px @def-pad*4;
+    padding: @def-pad + 5px 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    min-width:200px;
 }
 
 .btn-transparent.dark-blue{
@@ -47,4 +55,9 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,.4);
+}
+
+.site-menu > li.active > a{
+    background-color:@color-red !important;
+    color:@color-white !important;
 }

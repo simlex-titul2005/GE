@@ -13,7 +13,7 @@ namespace GE.WebUI
     public static class SiteSettings
     {
         private static MemoryCache _cache;
-        public static void InitializeSiteSettings()
+        static SiteSettings()
         {
             _cache = new MemoryCache("SITE_SETTINGS");
         }

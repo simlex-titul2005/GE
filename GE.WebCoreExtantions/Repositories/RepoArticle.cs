@@ -58,10 +58,15 @@ FROM   D_ARTICLE         AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.ID = da.ID
             AND dm.ModelCoreType = da.ModelCoreType
-ORDER BY
+       LEFT JOIN D_GAME  AS dg
+            ON  dg.ID = da.GameId";
+                if (filter != null && !string.IsNullOrEmpty(f.GameTitle))
+                    query += @" WHERE  dg.Title = @GAME_TITLE
+       OR  @GAME_TITLE IS NULL";
+                query += @" ORDER BY
        dm.DateCreate DESC";
-                
-                var data = conn.Query<Article>(query);
+
+                var data = filter != null && !string.IsNullOrEmpty(f.GameTitle) ? conn.Query<Article>(query, new { GAME_TITLE = f.GameTitle }) : conn.Query<Article>(query);
 
                 return data.AsQueryable();
             }

@@ -66,8 +66,14 @@ namespace GE.WebAdmin
 
                     //seo info
                     cfg.CreateMap<SxSeoInfo, VMSeoInfo>();
+                    cfg.CreateMap<VMSeoInfo, SxSeoInfo>();
                     cfg.CreateMap<SxSeoInfo, VMEditSeoInfo>();
                     cfg.CreateMap<VMEditSeoInfo, SxSeoInfo>();
+
+                    //seo keywords
+                    cfg.CreateMap<SxSeoKeyword, VMSeoKeyword>();
+                    cfg.CreateMap<SxSeoKeyword, VMEditSeoKeyword>();
+                    cfg.CreateMap<VMEditSeoKeyword, SxSeoKeyword>();
                 });
             }
         }

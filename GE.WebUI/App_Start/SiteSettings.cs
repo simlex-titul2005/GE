@@ -18,7 +18,7 @@ namespace GE.WebUI
             _cache = new MemoryCache("SITE_SETTINGS");
         }
 
-        private static CacheItemPolicy defaultPolicy
+        private static CacheItemPolicy _defaultPolicy
         {
             get
             {
@@ -36,7 +36,7 @@ namespace GE.WebUI
 
             var repo = new RepoSiteSetting();
             var value = repo.GetByKey(keySetting);
-            _cache.Add(new CacheItem(keySetting, value.Value), defaultPolicy);
+            _cache.Add(new CacheItem(keySetting, value.Value), _defaultPolicy);
             return value.Value;
         }
     }

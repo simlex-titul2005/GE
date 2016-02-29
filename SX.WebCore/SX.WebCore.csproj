@@ -109,7 +109,7 @@
     <Compile Include="SxRoute.cs" />
     <Compile Include="SxRouteValue.cs" />
     <Compile Include="SxSeoInfo.cs" />
-    <Compile Include="SxSeoKeyWord.cs" />
+    <Compile Include="SxSeoKeyword.cs" />
     <Compile Include="SxSiteSetting.cs" />
   </ItemGroup>
   <ItemGroup>

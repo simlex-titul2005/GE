@@ -25,10 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebAdmin.Controllers
 {
-    public partial class SeoController
+    public partial class SeoInfoController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected SeoController(Dummy d) { }
+        protected SeoInfoController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -70,13 +70,13 @@ namespace GE.WebAdmin.Controllers
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public SeoController Actions { get { return MVC.Seo; } }
+        public SeoInfoController Actions { get { return MVC.SeoInfo; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Seo";
+        public readonly string Name = "SeoInfo";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Seo";
+        public const string NameConst = "SeoInfo";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -137,16 +137,16 @@ namespace GE.WebAdmin.Controllers
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
-            public readonly string _GridView = "~/Views/Seo/_GridView.cshtml";
-            public readonly string Edit = "~/Views/Seo/Edit.cshtml";
-            public readonly string Index = "~/Views/Seo/Index.cshtml";
+            public readonly string _GridView = "~/Views/SeoInfo/_GridView.cshtml";
+            public readonly string Edit = "~/Views/SeoInfo/Edit.cshtml";
+            public readonly string Index = "~/Views/SeoInfo/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_SeoController : GE.WebAdmin.Controllers.SeoController
+    public partial class T4MVC_SeoInfoController : GE.WebAdmin.Controllers.SeoInfoController
     {
-        public T4MVC_SeoController() : base(Dummy.Instance) { }
+        public T4MVC_SeoInfoController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);

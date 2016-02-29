@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace SX.WebCore
 {
     [Table("D_SEO_KEYWORD")]
-    public class SxSeoKeyWord : SxDbUpdatedModel<int>
+    public class SxSeoKeyword : SxDbUpdatedModel<int>
     {
         [MaxLength(50), Required]
-        string Value { get; set; }
+        public string Value { get; set; }
 
         public virtual SxSeoInfo SeoInfo { get; set; }
         public int SeoInfoId { get; set; }

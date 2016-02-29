@@ -1,0 +1,28 @@
+﻿@model VMEditSeoKeyword
+@{
+    var isNew = Model.Id == 0;
+}
+<h2>@(isNew ? "Добавить ключевое слово" : "Редактировать ключевое слово")</h2>
+<br />
+<form method="post" action="edit" class="form">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.SeoInfoId)
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--value-->
+            <div class="form-group">
+                @Html.LabelFor(x => x.Value, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Value, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите значение ключевого слова" } })
+                @Html.ValidationMessageFor(x => x.Value)
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
+        @Html.ActionLink("Назад", MVC.SeoInfo.Edit(Model.SeoInfoId), new { @class = "btn btn-default" })
+    </div>
+</form>
+

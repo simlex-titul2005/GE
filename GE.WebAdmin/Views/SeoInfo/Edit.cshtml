@@ -13,7 +13,7 @@
         <button type="submit" class="btn btn-danger pull-right">Удалить</button>
     </form>
 }
-<form method="post" action="@Url.Action(MVC.Seo.Edit())">
+<form method="post" action="@Url.Action(MVC.SeoInfo.Edit())">
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(x => x.Id)
@@ -21,6 +21,7 @@
     <div class="row">
         <div class="col-md-12">
             @Html.LabelFor(x => x.RawUrl, new { @class = "control-label" })
+            <span class="text-info"> (необходимо использовать внутренний адрес)</span>
             @Html.EditorFor(x => x.RawUrl, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите адрес" } })
             @Html.ValidationMessageFor(x => x.RawUrl)
         </div>
@@ -29,6 +30,7 @@
     <div class="row">
         <div class="col-md-12">
             @Html.LabelFor(x => x.SeoTitle, new { @class = "control-label" })
+            <span class="text-info"> (тег Title)</span>
             @Html.EditorFor(x => x.SeoTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите заголовок страницы" } })
             @Html.ValidationMessageFor(x => x.RawUrl)
         </div>
@@ -37,8 +39,25 @@
     <div class="row">
         <div class="col-md-12">
             @Html.LabelFor(x => x.SeoDescription, new { @class = "control-label" })
+            <span class="text-info"> (тег Description)</span>
             @Html.EditorFor(x => x.SeoDescription, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание страницы" } })
             @Html.ValidationMessageFor(x => x.SeoDescription)
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+        <div class="row">
+            @if (Model.Id != 0)
+            {
+                <!--keywords-->
+                <div id="menu-@Model.Id">
+                    @Html.Partial(MVC.SeoKeywords.Views._SeoKeywords, new VMSeoKeywordList { SeoInfoId = Model.Id, Keywords = Model.Keywords })
+                </div>
+                <!--keywords-->}
+            else
+            {
+                <p class="text-info">Редактирование ключевых слов доступно только только при наличии отслеживаемой страницы в базе данных.</p>
+            }
         </div>
     </div>
     <br />

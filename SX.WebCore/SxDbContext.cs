@@ -26,7 +26,7 @@ namespace SX.WebCore
 
         public DbSet<SxSeoInfo> SeoInfo { get; set; }
 
-        public DbSet<SxSeoKeyWord> SeoKeyWords { get; set; }
+        public DbSet<SxSeoKeyword> SeoKeyWords { get; set; }
 
         public DbSet<SxSiteSetting> SiteSettings { get; set; }
 

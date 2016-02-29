@@ -18,7 +18,7 @@ namespace SX.WebCore
         [MaxLength(1000)]
         public string SeoDescription { get; set; }
 
-        public virtual ICollection<SxSeoKeyWord> SeoKeyWords { get; set; }
+        public virtual ICollection<SxSeoKeyword> Keywords { get; set; }
 
         [MaxLength(255), Required, Index]
         public string RawUrl { get; set; }

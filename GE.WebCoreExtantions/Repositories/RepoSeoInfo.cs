@@ -18,13 +18,8 @@ namespace GE.WebCoreExtantions.Repositories
             {
                 using (var conn = new SqlConnection(base.ConnectionString))
                 {
-                    var query = @"SELECT 
-	dsi.*
-FROM D_SEO_INFO AS dsi
-ORDER BY dsi.RawUrl";
-                    var data = conn.Query<SxSeoInfo>(query);
-
-                    return data.AsQueryable();
+                    var seoInfo = conn.Query<SxSeoInfo>(@"SELECT*FROM D_SEO_INFO AS dsi ORDER BY dsi.RawUrl");
+                    return seoInfo.AsQueryable();
                 }
             }
         }
@@ -36,6 +31,10 @@ ORDER BY dsi.RawUrl";
                 var query = @"SELECT*FROM D_SEO_INFO AS dsi
 WHERE dsi.RawUrl=@RAW_URL";
                 var data = conn.Query<SxSeoInfo>(query, new { RAW_URL = rawUrl }).FirstOrDefault();
+                if(data!=null)
+                {
+                    data.Keywords = conn.Query<SxSeoKeyword>(@"SELECT*FROM D_SEO_KEYWORD AS dsk WHERE dsk.SeoInfoId=@SEO_INFO_ID", new { SEO_INFO_ID = data.Id }).ToArray();
+                }
 
                 return data;
             }

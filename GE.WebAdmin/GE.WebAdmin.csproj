@@ -3208,6 +3208,7 @@
     <Compile Include="ArticleTypesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\SeoKeywordsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -3219,7 +3220,7 @@
     <Compile Include="Controllers\ArticleTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RouteValuesController.cs" />
-    <Compile Include="Controllers\SeoController.cs" />
+    <Compile Include="Controllers\SeoInfoController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Extantions\Repositories\RepoArticleType.cs" />
     <Compile Include="GamesController.generated.cs">
@@ -3237,8 +3238,10 @@
     <Compile Include="MenuItemsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VMEditSeoKeyword.cs" />
     <Compile Include="Models\VMEditNews.cs" />
     <Compile Include="Models\VMEditSeoInfo.cs" />
+    <Compile Include="Models\VMSeoKeywordList.cs" />
     <Compile Include="Models\VMNews.cs" />
     <Compile Include="Models\VMArticleType.cs" />
     <Compile Include="Models\VMArticle.cs" />
@@ -3260,6 +3263,7 @@
     <Compile Include="Models\VMRouteValue.cs" />
     <Compile Include="Models\VMRouteValueList.cs" />
     <Compile Include="Models\VMSeoInfo.cs" />
+    <Compile Include="Models\VMSeoKeyword.cs" />
     <Compile Include="Models\VMSiteSettings.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -3284,7 +3288,10 @@
     <Compile Include="RouteValuesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="SeoController.generated.cs">
+    <Compile Include="SeoInfoController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SeoKeywordsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SettingsController.generated.cs">
@@ -3341,9 +3348,11 @@
     <Content Include="Views\Games\FindTable.cshtml" />
     <Content Include="Views\ArticleTypes\_ArticleTypesByGameId.cshtml" />
     <Content Include="Views\Settings\EditSite.cshtml" />
-    <Content Include="Views\Seo\Index.cshtml" />
-    <Content Include="Views\Seo\_GridView.cshtml" />
-    <Content Include="Views\Seo\Edit.cshtml" />
+    <Content Include="Views\SeoInfo\Index.cshtml" />
+    <Content Include="Views\SeoInfo\_GridView.cshtml" />
+    <Content Include="Views\SeoInfo\Edit.cshtml" />
+    <Content Include="Views\SeoKeywords\_SeoKeywords.cshtml" />
+    <Content Include="Views\SeoKeywords\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

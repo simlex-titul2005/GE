@@ -11,10 +11,10 @@ using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class SeoController : BaseController
+    public partial class SeoInfoController : BaseController
     {
         SxDbRepository<int, SxSeoInfo, DbContext> _repo;
-        public SeoController()
+        public SeoInfoController()
         {
             _repo = new RepoSeoInfo();
         }
@@ -38,7 +38,10 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id) : new SxSeoInfo();
-            return View(Mapper.Map<SxSeoInfo, VMEditSeoInfo>(model));
+            var seoInfo = Mapper.Map<SxSeoInfo, VMEditSeoInfo>(model);
+            if(id.HasValue)
+                seoInfo.Keywords = model.Keywords.Select(x => Mapper.Map<SxSeoKeyword, VMSeoKeyword>(x)).ToArray();
+            return View(seoInfo);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -54,7 +57,7 @@ namespace GE.WebAdmin.Controllers
                 else
                     newModel = _repo.Update(redactModel, "RawUrl", "SeoTitle", "SeoDescription");
 
-                return RedirectToAction(MVC.Seo.Index());
+                return RedirectToAction(MVC.SeoInfo.Index());
             }
             else
                 return View(model);
@@ -65,7 +68,7 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult Delete(VMEditSeoInfo model)
         {
             _repo.Delete(model.Id);
-            return RedirectToAction(MVC.Seo.Index());
+            return RedirectToAction(MVC.SeoInfo.Index());
         }
     }
 }

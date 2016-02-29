@@ -8,6 +8,11 @@ namespace GE.WebAdmin.Models
 {
     public sealed class VMEditSeoInfo
     {
+        public VMEditSeoInfo()
+        {
+            Keywords = new VMSeoKeyword[0];
+        }
+
         public int Id { get; set; }
 
         [MaxLength(255), Required, Display(Name="Адрес")]
@@ -18,5 +23,7 @@ namespace GE.WebAdmin.Models
 
         [MaxLength(1000), Display(Name = "Описание страницы"), DataType(DataType.MultilineText)]
         public string SeoDescription { get; set; }
+
+        public VMSeoKeyword[] Keywords { get; set; }
     }
 }

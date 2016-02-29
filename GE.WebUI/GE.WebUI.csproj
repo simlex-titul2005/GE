@@ -468,6 +468,7 @@
     <Compile Include="MenuesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SiteSeoInfo.cs" />
     <Compile Include="Models\VMMateriallnfo.cs" />
     <Compile Include="Models\VMFGBlock.cs" />
     <Compile Include="Models\VMGameMenu .cs" />

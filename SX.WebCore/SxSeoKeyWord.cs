@@ -15,8 +15,7 @@ namespace SX.WebCore
         [MaxLength(50), Required]
         string Value { get; set; }
 
-        public SxSeoInfo SeoInfo { get; set; }
-        
+        public virtual SxSeoInfo SeoInfo { get; set; }
         public int SeoInfoId { get; set; }
     }
 }

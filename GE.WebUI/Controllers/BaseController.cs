@@ -16,10 +16,12 @@ namespace GE.WebUI.Controllers
     {
         private IMapper _mapper;
         private SxDbRepository<Guid, SxRequest, DbContext> _repo;
+        private SxDbRepository<int, SxSeoInfo, DbContext> _repoSeoInfo;
         public BaseController()
         {
             _mapper = MvcApplication.MapperConfiguration.CreateMapper();
             _repo = new RepoRequest();
+            _repoSeoInfo = new RepoSeoInfo();
         }
 
         public BaseController(int displayWidth)
@@ -42,6 +44,15 @@ namespace GE.WebUI.Controllers
             if (filterContext.IsChildAction) return;
 
             writeRequestInfo(_repo, Request);
+
+            //seo
+            var url = filterContext.RequestContext.HttpContext.Request.RawUrl;
+            var seoInfo = (_repoSeoInfo as RepoSeoInfo).GetByRawUrl(url);
+            if(seoInfo!=null)
+            {
+                ViewBag.Title = seoInfo.SeoTitle;
+                ViewBag.Description = seoInfo.SeoDescription;
+            }
         }
 
         private static void writeRequestInfo(SxDbRepository<Guid, SxRequest, DbContext> repo, HttpRequestBase request)

@@ -42,11 +42,6 @@ namespace SX.WebCore
                .WithMany()
                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
 
-            modelBuilder.Entity<SxSeoInfo>()
-                .HasRequired(x => x.Material)
-                .WithMany()
-                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
-
             modelBuilder.Entity<SxSiteSetting>()
                 .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }

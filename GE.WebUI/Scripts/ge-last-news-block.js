@@ -3,7 +3,7 @@
     jQuery.fn.swap = function (b) {
         b = jQuery(b)[0];
         var a = this[0];
-        if (a == b) return;
+        if (a === b) return;
 
         var a2 = a.cloneNode(true),
             b2 = b.cloneNode(true),

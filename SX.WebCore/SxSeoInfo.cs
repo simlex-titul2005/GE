@@ -20,9 +20,7 @@ namespace SX.WebCore
 
         public virtual ICollection<SxSeoKeyWord> SeoKeyWords { get; set; }
 
-        public SxMaterial Material { get; set; }
-        public int MaterialId { get; set; }
-
-        public Enums.ModelCoreType ModelCoreType { get; set; }
+        [MaxLength(255), Required, Index]
+        public string RawUrl { get; set; }
     }
 }

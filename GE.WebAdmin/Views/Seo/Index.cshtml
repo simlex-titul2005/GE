@@ -1,0 +1,10 @@
+﻿@model VMSeoInfo[]
+@{
+    ViewBag.Title = "Seo-оптимизация";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-seo">
+    @Html.Partial(MVC.Seo.Views._GridView, Model)
+</div>

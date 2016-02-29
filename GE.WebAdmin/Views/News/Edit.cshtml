@@ -4,7 +4,7 @@
     ViewBag.Title=isNew ? "Добавить новость" : "Редактировать новость \"" + Model.Title + "\"";
 }
 <h2>@ViewBag.Title</h2>
-@if (Model.Id != 0)
+@if (!isNew)
 {
     <form method="post" action="delete">
         @Html.HiddenFor(x => x.Id)

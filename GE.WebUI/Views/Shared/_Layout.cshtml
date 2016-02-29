@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+    <meta name="description" content="@ViewBag.Description"/>
+    <title>@ViewBag.Title | @GE.WebUI.SiteSettings.Get()</title>
 
     <link href="~/Content/dist/css/site.min.css" rel="stylesheet">
 
@@ -28,6 +29,8 @@
 
     <script src="~/Content/dist/js/site.min.js"></script>
     <script type="text/javascript">
+        var $WIDTH_SX = 768;
+
         resizeFooter();
         $(window).resize(function () {
             resizeFooter();

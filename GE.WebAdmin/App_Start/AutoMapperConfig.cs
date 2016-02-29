@@ -63,6 +63,11 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxRouteValue, VMRouteValue>();
                     cfg.CreateMap<SxRouteValue, VMEditRouteValue>();
                     cfg.CreateMap<VMEditRouteValue, SxRouteValue>();
+
+                    //seo info
+                    cfg.CreateMap<SxSeoInfo, VMSeoInfo>();
+                    cfg.CreateMap<SxSeoInfo, VMEditSeoInfo>();
+                    cfg.CreateMap<VMEditSeoInfo, SxSeoInfo>();
                 });
             }
         }

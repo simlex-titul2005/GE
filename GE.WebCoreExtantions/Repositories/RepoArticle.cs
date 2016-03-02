@@ -11,6 +11,21 @@ namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoArticle : SX.WebCore.Abstract.SxDbRepository<int, Article, DbContext>
     {
+        public override IQueryable<Article> All
+        {
+            get
+            {
+                using (var conn = new SqlConnection(base.ConnectionString))
+                {
+                    var query = @"SELECT*FROM D_ARTICLE AS da
+JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
+ORDER BY dm.DateCreate DESC";
+
+                    return conn.Query<Article>(query).AsQueryable();
+                }
+            }
+        }
+
         public override IQueryable<Article> Query(SxFilter filter)
         {
             var f = filter as Filter;

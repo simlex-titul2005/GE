@@ -52,7 +52,7 @@ namespace T4MVC
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public partial class _DisplayTemplatesClass
             {
-                public readonly string VMMaterialInfo = "VMMaterialInfo";
+                public readonly string VMMateriallnfo = "VMMateriallnfo";
             }
         }
     }

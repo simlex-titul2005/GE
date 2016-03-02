@@ -127,9 +127,11 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _Collection = "_Collection";
                 public readonly string _LastNewsBlock = "_LastNewsBlock";
                 public readonly string List = "List";
             }
+            public readonly string _Collection = "~/Views/News/_Collection.cshtml";
             public readonly string _LastNewsBlock = "~/Views/News/_LastNewsBlock.cshtml";
             public readonly string List = "~/Views/News/List.cshtml";
         }

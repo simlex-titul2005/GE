@@ -38,8 +38,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -249,6 +249,7 @@
     <Content Include="bower_components\jquery\src\wrap.js" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\dist\i\article-empty.png" />
     <Content Include="Content\dist\i\footer-bg-lg.jpg" />
     <Content Include="Content\dist\i\footer-bg-md.jpg" />
     <Content Include="Content\dist\i\footer-bg-sm.jpg" />
@@ -419,6 +420,8 @@
     <Content Include="Content\less\mat-info.less" />
     <Content Include="Content\less\sx-list.less" />
     <Content Include="Content\less\list-article.less" />
+    <Content Include="Content\less\sx-pager.less" />
+    <Content Include="Content\less\list-news.less" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt">
@@ -462,9 +465,6 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="MaterialsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="MenuesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -491,9 +491,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Sql_News.resx</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -526,6 +523,8 @@
     <Content Include="Views\Games\DisplayTemplates\VMImgGame.cshtml" />
     <Content Include="Views\Articles\_Collection.cshtml" />
     <Content Include="Views\Articles\DisplayTemplates\Article.cshtml" />
+    <Content Include="Views\News\_Collection.cshtml" />
+    <Content Include="Views\News\DisplayTemplates\News.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,11 +1,25 @@
-﻿@model SX.WebCore.HtmlHelpers.SxExtantions.SxPagedCollection<News>
-@{
-    ViewBag.Title = "List";
-}
+﻿@model SxExtantions.SxPagedCollection<News>
 
-<h2>List</h2>
+<h1 class="header">Новости</h1>
 
-@for (int i = 0; i < Model.Length; i++)
-{
-    @Html.DisplayFor(x => Model.Collection[i])
+@Html.Partial(MVC.News.Views._Collection, Model)
+
+@section scripts{
+    <script type="text/javascript">
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        $(function () {
+            if (width >= 768) {
+                alignNews();
+            }
+        });
+
+        function alignNews() {
+            $('.list-news figure').each(function () {
+                var $figure = $(this);
+                var $news = $figure.closest('.list-news');
+                var h = $news.height();
+                $figure.height(h);
+            });
+        }
+    </script>
 }

@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace SX.WebCore.HtmlHelpers
 {
     public static partial class SxExtantions
     {
-        public static MvcHtmlString SxPager(this HtmlHelper htmlHelper, SxPagerInfo pagerinfo)
+        public static MvcHtmlString SxPager(this HtmlHelper htmlHelper, SxPagerInfo pagerinfo, Func<int, string> pageUrl=null, bool isAjax = true, object htmlAttributes = null)
         {
             if (pagerinfo.TotalPages == 1) return null;
 
             var ul = new TagBuilder("ul");
-            ul.MergeAttributes(new Dictionary<string, object>
+            if (htmlAttributes != null)
             {
-            });
+                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+                ul.MergeAttributes(attributes, true);
+            }
             ul.AddCssClass("sx-pager");
 
             var max = pagerinfo.CurrentPart * pagerinfo.PagerSize;
@@ -25,13 +28,13 @@ namespace SX.WebCore.HtmlHelpers
             //first
             if (pagerinfo.CurrentPart > 1)
             {
-                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.First);
+                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.First, isAjax, pageUrl);
             }
 
             //prev
             if (pagerinfo.CurrentPart > 1)
             {
-                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Prev);
+                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Prev, isAjax, pageUrl);
             }
 
             //normal
@@ -39,25 +42,25 @@ namespace SX.WebCore.HtmlHelpers
             {
                 if (i == pagerinfo.TotalPages + 1) break;
 
-                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Normal, i);
+                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Normal, isAjax, pageUrl, i);
             }
 
             //next
             if (pagerinfo.CurrentPart < pagerinfo.PartsCount)
             {
-                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Next);
+                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Next, isAjax, pageUrl);
             }
 
             //last
             if (pagerinfo.CurrentPart < pagerinfo.PartsCount)
             {
-                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Last);
+                ul.InnerHtml += getPagerItem(pagerinfo, SxPagerItemType.Last, isAjax, pageUrl);
             }
 
             return MvcHtmlString.Create(ul.ToString());
         }
 
-        private static TagBuilder getPagerItem(SxPagerInfo pagerinfo, SxPagerItemType itemType, int? number = null)
+        private static TagBuilder getPagerItem(SxPagerInfo pagerinfo, SxPagerItemType itemType, bool isAjax, Func<int, string> pageUrl = null, int? number = null)
         {
             int page = 1;
             string cssClass = null;
@@ -88,11 +91,20 @@ namespace SX.WebCore.HtmlHelpers
             if (pagerinfo.Page == page && itemType == SxPagerItemType.Normal)
                 li.AddCssClass("active");
             var a = new TagBuilder("a");
-            a.MergeAttributes(new Dictionary<string, object>() {
+
+            if (isAjax)
+                a.MergeAttributes(new Dictionary<string, object>() {
                         { "href", "javascript:void(0)" },
                         { "data-page", page },
                         { "onclick", "clickPager(this)" },
                     });
+            else
+            {
+                a.MergeAttributes(new Dictionary<string, object>() {
+                        { "href", pageUrl(page) }
+                    });
+            }
+
             if (itemType != SxPagerItemType.Normal)
             {
                 var span = new TagBuilder("span");

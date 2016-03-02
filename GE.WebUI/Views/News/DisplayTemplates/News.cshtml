@@ -1,0 +1,33 @@
+﻿@model News
+@{
+    Layout = null;
+    var info = new VMMateriallnfo
+    {
+        DateCreate = Model.DateCreate,
+        CommentsCount = Model.CommentsCount,
+        ViewsCount = Model.ViewsCount
+    };
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <figure class="mat-f-p">
+            @if (Model.FrontPictureId != null)
+            {
+                <img alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId, height: 200))" />
+            }
+            else
+            {
+                <img alt="@Model.Title" src="~/Content/dist/i/article-empty.png" />
+            }
+        </figure>
+    </div>
+    <div class="col-md-6">
+        <div class="content">
+            <time>@Model.DateCreate.ToString("dd.MM.yyyy")</time>
+            <a class="link" href="@Url.Action(MVC.News.Details(Model.Id))">@Model.Title</a>
+            <p class="foreword">@Model.Foreword</p>
+            <a href="@Url.Action(MVC.News.Details(Model.Id))" class="btn btn-default btn-transparent dark-blue visible-xs">Подробнее</a>
+        </div>
+    </div>
+</div>

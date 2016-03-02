@@ -7,6 +7,8 @@
 {
     <div class="list-article-container">
         @Html.SxList(Model, new SxExtantions.SxListSettings { ColCount = 3, CellCssStyle = "list-article" })
-        @Html.SxPager(Model.PagerInfo)
+        <div class="text-center">
+            @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action(MVC.Articles.List(game: (string)ViewBag.GameTitle, page: x)), isAjax: false, htmlAttributes: new { @class = "pagination" })
+        </div>
     </div>
 }

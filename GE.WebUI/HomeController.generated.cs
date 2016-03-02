@@ -85,6 +85,14 @@ namespace GE.WebUI.Controllers
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index
+        {
+            public readonly string game = "game";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -107,13 +115,14 @@ namespace GE.WebUI.Controllers
         public T4MVC_HomeController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string game);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Index()
+        public override System.Web.Mvc.ViewResult Index(string game)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
-            IndexOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "game", game);
+            IndexOverride(callInfo, game);
             return callInfo;
         }
 

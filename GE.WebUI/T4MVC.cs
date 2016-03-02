@@ -33,8 +33,6 @@ public static partial class MVC
     public static GE.WebUI.Controllers.MenuesController Menues = new GE.WebUI.Controllers.T4MVC_MenuesController();
     public static GE.WebUI.Controllers.NewsController News = new GE.WebUI.Controllers.T4MVC_NewsController();
     public static GE.WebUI.Controllers.PicturesController Pictures = new GE.WebUI.Controllers.T4MVC_PicturesController();
-    public static T4MVC.MaterialsController Materials = new T4MVC.MaterialsController();
-    public static T4MVC.SettingsController Settings = new T4MVC.SettingsController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -159,6 +157,7 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/i";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string article_empty_png = Url("article-empty.png");
                 public static readonly string footer_bg_lg_jpg = Url("footer-bg-lg.jpg");
                 public static readonly string footer_bg_md_jpg = Url("footer-bg-md.jpg");
                 public static readonly string footer_bg_sm_jpg = Url("footer-bg-sm.jpg");
@@ -188,9 +187,13 @@ namespace Links
             public static readonly string for_gamers_block_less = Url("for-gamers-block.less");
             public static readonly string game_list_less = Url("game-list.less");
             public static readonly string last_news_block_less = Url("last-news-block.less");
+            public static readonly string list_article_less = Url("list-article.less");
+            public static readonly string mat_info_less = Url("mat-info.less");
             public static readonly string positioned_less = Url("positioned.less");
             public static readonly string site_less = Url("site.less");
             public static readonly string sizes_less = Url("sizes.less");
+            public static readonly string sx_list_less = Url("sx-list.less");
+            public static readonly string sx_pager_less = Url("sx-pager.less");
         }
     
     }

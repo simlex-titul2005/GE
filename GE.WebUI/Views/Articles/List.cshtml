@@ -3,38 +3,3 @@
 <h1 class="header">Статьи</h1>
 
 @Html.Partial(MVC.Articles.Views._Collection, Model)
-
-@section scripts{
-    <script type="text/javascript">
-        $(function () {
-            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-            if (width > $WIDTH_SX) {
-                alignArticleInfo();
-            }
-        });
-
-        function alignArticleInfo() {
-            var $container = $('.sx-list.t-mode');
-            $container.children('.row').each(function () {
-                var $row = $(this);
-                var array = [];
-                $($row).find('.info').each(function () {
-                    var $info = $(this);
-                    array.push($info.offset().top);
-                });
-                var max = Math.max.apply(Math, array);
-                $($row).find('.info').each(function () {
-                    var $info = $(this);
-                    var top = $info.offset().top;
-                    if (top < max) {
-                        var newTop = max - top;
-                        $info.css({
-                            'position': 'relative',
-                            'top': newTop + 'px'
-                        });
-                    }
-                });
-            });
-        }
-    </script>
-}

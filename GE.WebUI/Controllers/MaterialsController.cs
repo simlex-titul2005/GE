@@ -44,22 +44,27 @@ namespace GE.WebUI.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult List(string game = null, int page = 1)
         {
+            ViewBag.GameTitle = game;
+
             var pageSize = 10;
             switch(_modelCoreType)
             {
                 case Enums.ModelCoreType.Article:
+                    pageSize = 9;
+                    break;
+                case Enums.ModelCoreType.News:
                     pageSize = 10;
                     break;
             }
 
             var viewModel = new SxExtantions.SxPagedCollection<TModel>();
-            var filter = new EXT.Filter { GameTitle = game, PageSize = pageSize };
+            var filter = new EXT.Filter { GameTitle = game, SkipCount=pageSize*(page-1), PageSize = pageSize };
             viewModel.Collection = _repo.Query(filter).ToArray();
             viewModel.PagerInfo = new SxExtantions.SxPagerInfo
             {
                 Page = page,
                 PageSize = pageSize,
-                PagerSize = 2,
+                PagerSize = 3,
                 TotalItems = _repo.Count
             };
 

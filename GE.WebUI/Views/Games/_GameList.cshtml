@@ -10,7 +10,7 @@
         <div class="container">
             <ul>
                 <li style="width:@(length + "%")" @(gameName == null ? "class=active" : null)>
-                    <a href="@Url.Action(actionName, new { controller = controllerName, game="" })" title="Показать все" data-toggle="tooltip" data-placement="bottom" class="red-tooltip">
+                    <a href="@(controllerName != "home" ? Url.Action(actionName, new { controller = controllerName, game = "" }) : "/")" title="Показать все" data-toggle="tooltip" data-placement="bottom" class="red-tooltip">
                         <img alt="Показать все" src="@(Model.EmptyGame.IconPath)" />
                     </a>
                 </li>

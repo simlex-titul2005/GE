@@ -27,7 +27,7 @@
             var padBottom = parseInt($container.css('padding-bottom').replace('px', ''));
             var H = $menu.height() - padTop - padBottom;
 
-            $this.find('.menu a').mouseenter(function () {
+            $this.find('.menu a').hoverIntent(function () {
                 if (width < 768) return;
 
                 $this.find('.menu a').removeClass('hover');

@@ -69,7 +69,7 @@ namespace GE.WebUI.Models
 
     public sealed class VMLastNewsBlockNews
     {
-        public int Id { get; set; }
+        public string TitleUrl { get; set; }
         public string Title { get; set; }
         public int GameId { get; set; }
         public string GameTitle { get; set; }

@@ -11,6 +11,7 @@ using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace GE.WebUI.Controllers
 {
@@ -61,14 +62,31 @@ namespace GE.WebUI.Controllers
 
             writeRequestInfo(_repo, Request);
 
-            //seo
+            writeSeoInfo(filterContext);
+
+            writeBreadcrumbs(filterContext);
+        }
+
+        private static void writeRequestInfo(SxDbRepository<Guid, SxRequest, DbContext> repo, HttpRequestBase request)
+        {
+            var sessionId = request.RequestContext.HttpContext.Session.SessionID;
+            Task.Run(() =>
+            {
+                var r = new SxRequest(request, sessionId);
+                if ((repo as RepoRequest).Exists(r)) return;
+
+                repo.Create(new SxRequest(request, sessionId));
+            });
+        }
+        private void writeSeoInfo(ActionExecutingContext filterContext)
+        {
             var rawUrl = filterContext.RequestContext.HttpContext.Request.RawUrl;
 
             var seoInfo = (SiteSeoInfo)_seoInfoCache.Get(rawUrl);
-            if(seoInfo==null)
+            if (seoInfo == null)
             {
-                var seo=(_repoSeoInfo as RepoSeoInfo).GetByRawUrl(rawUrl);
-                if(seo!=null)
+                var seo = (_repoSeoInfo as RepoSeoInfo).GetByRawUrl(rawUrl);
+                if (seo != null)
                 {
                     seoInfo = _mapper.Map<SxSeoInfo, SiteSeoInfo>(seo);
                     seoInfo.IsEmpty = false;
@@ -87,17 +105,43 @@ namespace GE.WebUI.Controllers
                 ViewBag.Keywords = seoInfo.KeywordsString;
             }
         }
-
-        private static void writeRequestInfo(SxDbRepository<Guid, SxRequest, DbContext> repo, HttpRequestBase request)
+        private void writeBreadcrumbs(ActionExecutingContext filterContext)
         {
-            var sessionId = request.RequestContext.HttpContext.Session.SessionID;
-            Task.Run(() =>
-            {
-                var r = new SxRequest(request, sessionId);
-                if ((repo as RepoRequest).Exists(r)) return;
+            var routes = filterContext.RouteData.Values;
+            var controllerName = routes["controller"].ToString();
+            var actionName = routes["action"].ToString();
+            var gameName = routes["game"] != null && !string.IsNullOrEmpty(routes["game"].ToString()) ? routes["game"].ToString() : null;
 
-                repo.Create(new SxRequest(request, sessionId));
-            });
+            var breadcrumbs = new List<VMBreadcrumb>();
+            breadcrumbs.Add(new VMBreadcrumb { Title = "Главная", Url = "/" });
+            if (controllerName == "articles")
+            {
+                if (actionName == "list")
+                {
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = Url.Action(MVC.Articles.List(game: "")) });
+                    if (gameName!=null)
+                        breadcrumbs.Add(new VMBreadcrumb { Title = gameName });
+                }
+                else if (actionName == "details")
+                {
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = Url.Action(MVC.Articles.List(game: "")) });
+                }
+            }
+            else if (controllerName == "news")
+            {
+                if (actionName == "list")
+                {
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = Url.Action(MVC.News.List(game: "")) });
+                    if (gameName != null)
+                        breadcrumbs.Add(new VMBreadcrumb { Title = gameName });
+                }
+                else if (actionName == "details")
+                {
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = Url.Action(MVC.News.List(game: "")) });
+                }
+            }
+
+            ViewBag.Breadcrumbs = breadcrumbs.ToArray();
         }
     }
 }

@@ -20,7 +20,7 @@
     }
 </figure>
 <div class="content">
-    <a class="link" href="@Url.Action(MVC.Articles.Details(Model.Id))" title="@Model.Title">@Model.Title</a>
+    <a class="link" href="@Url.Action(MVC.Articles.Details(Model.TitleUrl))" title="@Model.Title">@Model.Title</a>
     <p class="foreword">
         @Model.Foreword
     </p>
@@ -30,7 +30,7 @@
                 @Html.DisplayFor(x => info)
             </div>
             <div class="col-md-6">
-                <a class="btn btn-default btn-transparent dark-blue">Подробнее</a>
+                <a class="btn btn-default btn-transparent dark-blue" href="@Url.Action(MVC.Articles.Details(Model.TitleUrl))">Подробнее</a>
             </div>
         </div>
     </div>

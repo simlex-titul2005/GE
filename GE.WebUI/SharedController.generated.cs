@@ -38,11 +38,13 @@ namespace T4MVC
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _Breadcrumbs = "_Breadcrumbs";
                 public readonly string _Footer = "_Footer";
                 public readonly string _Layout = "_Layout";
                 public readonly string _NavBar = "_NavBar";
                 public readonly string _SocialIconsMenu = "_SocialIconsMenu";
             }
+            public readonly string _Breadcrumbs = "~/Views/Shared/_Breadcrumbs.cshtml";
             public readonly string _Footer = "~/Views/Shared/_Footer.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
             public readonly string _NavBar = "~/Views/Shared/_NavBar.cshtml";

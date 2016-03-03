@@ -25,9 +25,9 @@
     <div class="col-md-6">
         <div class="content">
             <time>@Model.DateCreate.ToString("dd.MM.yyyy")</time>
-            <a class="link" href="@Url.Action(MVC.News.Details(Model.Id))">@Model.Title</a>
+            <a class="link" href="@Url.Action(MVC.News.Details(Model.TitleUrl))">@Model.Title</a>
             <p class="foreword">@Model.Foreword</p>
-            <a href="@Url.Action(MVC.News.Details(Model.Id))" class="btn btn-default btn-transparent dark-blue visible-xs">Подробнее</a>
+            <a href="@Url.Action(MVC.News.Details(Model.TitleUrl))" class="btn btn-default btn-transparent dark-blue visible-xs">Подробнее</a>
         </div>
     </div>
 </div>

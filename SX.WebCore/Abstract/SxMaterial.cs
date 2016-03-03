@@ -11,8 +11,11 @@ namespace SX.WebCore.Abstract
     [Table("DV_MATERIAL")]
     public abstract class SxMaterial : SxDbUpdatedModel<int>, ISxHasHtml, ISxHasFrontPicture
     {
-        [MaxLength(400), Required]
+        [MaxLength(255), Required]
         public string Title { get; set; }
+
+        [MaxLength(255), Required, Index]
+        public string TitleUrl { get; set; }
 
         public string Html { get; set; }
 

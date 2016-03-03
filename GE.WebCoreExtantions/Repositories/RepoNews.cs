@@ -32,6 +32,7 @@ ORDER BY dm.DateCreate DESC";
             using (var conn = new SqlConnection(base.ConnectionString))
             {
                 var query = @"SELECT da.Id,
+       dm.TitleUrl,
        dm.FrontPictureId,
        dm.Title,
        SUBSTRING(
@@ -76,6 +77,18 @@ FROM   D_NEWS         AS da
 
                     return (int)data;
                 }
+            }
+        }
+
+        public News GetByTitleUrl(string titleUrl)
+        {
+            using (var conn = new SqlConnection(base.ConnectionString))
+            {
+                var query = @"SELECT*FROM D_NEWS AS dn
+JOIN DV_MATERIAL AS dm ON dm.ID = dn.ID AND dm.ModelCoreType = dn.ModelCoreType
+WHERE dm.TitleUrl=@TITLE_URL";
+
+                return conn.Query<News>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();
             }
         }
     }

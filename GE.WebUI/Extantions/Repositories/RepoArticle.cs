@@ -58,16 +58,16 @@ namespace GE.WebUI.Extantions.Repositories
             }
         }
 
-        public static Dictionary<int, string> Last(this GE.WebCoreExtantions.Repositories.RepoArticle repo, int amount)
+        public static Dictionary<string, string> Last(this GE.WebCoreExtantions.Repositories.RepoArticle repo, int amount)
         {
-            var result = new Dictionary<int, string>();
+            var result = new Dictionary<string, string>();
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var results = conn.Query<dynamic>(Resources.Sql_Articles.LastArticles, new { AMOUNT = amount }).ToArray();
                 for (int i = 0; i < results.Length; i++)
                 {
                     var a=results[i];
-                    result.Add(a.Id, a.Title);
+                    result.Add(a.TitleUrl, a.Title);
                 }
             }
             return result;

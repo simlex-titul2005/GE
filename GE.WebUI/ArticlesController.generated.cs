@@ -135,7 +135,7 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Details
         {
-            public readonly string id = "id";
+            public readonly string titleUrl = "titleUrl";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -151,12 +151,14 @@ namespace GE.WebUI.Controllers
                 public readonly string _ForGamersBlock = "_ForGamersBlock";
                 public readonly string _Last = "_Last";
                 public readonly string _Preview = "_Preview";
+                public readonly string Details = "Details";
                 public readonly string List = "List";
             }
             public readonly string _Collection = "~/Views/Articles/_Collection.cshtml";
             public readonly string _ForGamersBlock = "~/Views/Articles/_ForGamersBlock.cshtml";
             public readonly string _Last = "~/Views/Articles/_Last.cshtml";
             public readonly string _Preview = "~/Views/Articles/_Preview.cshtml";
+            public readonly string Details = "~/Views/Articles/Details.cshtml";
             public readonly string List = "~/Views/Articles/List.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
@@ -224,14 +226,14 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int id);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string titleUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Details(int id)
+        public override System.Web.Mvc.ViewResult Details(string titleUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            DetailsOverride(callInfo, id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
+            DetailsOverride(callInfo, titleUrl);
             return callInfo;
         }
 

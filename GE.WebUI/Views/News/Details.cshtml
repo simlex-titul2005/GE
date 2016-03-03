@@ -1,0 +1,34 @@
+﻿@model News
+@{
+    var info = new VMMateriallnfo
+    {
+        DateCreate = Model.DateCreate,
+        CommentsCount = Model.CommentsCount,
+        ViewsCount = Model.ViewsCount
+    };
+}
+<h1>@Model.Title</h1>
+
+@Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
+
+<div class="detail-article">
+    <div class="m-html">
+        @if (Model.FrontPictureId.HasValue)
+        {
+            <img class="f-picture" alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))" />
+        }
+        @Html.Raw(Model.Html)
+    </div>
+    <div class="m-info">
+        <div class="row">
+            <div class="col-md-6">
+                sdsd
+            </div>
+            <div class="col-md-6">
+                <div class="text-right">
+                    @Html.DisplayFor(x => info)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

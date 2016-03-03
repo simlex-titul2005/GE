@@ -18,11 +18,14 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Тип статьи")]
         public string ArticleTypeName { get; set; }
+
+        [MaxLength(255)]
+        public string OldTitleUrl { get; set; }
     }
 
     sealed class VMEditArticleMetadata
     {
-        [Display(Name = "Название статьи"), MaxLength(400), Required]
+        [Display(Name = "Название статьи"), MaxLength(255), Required]
         public string Title { get; set; }
 
         [Display(Name = "Контент"), Required, DataType(DataType.MultilineText), AllowHtml]
@@ -36,5 +39,8 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Изображение"), UIHint("EditImage")]
         public Guid? FrontPictureId { get; set; }
+
+        [Display(Name = "Строковый ключ"), MaxLength(255), Required]
+        public string TitleUrl { get; set; }
     }
 }

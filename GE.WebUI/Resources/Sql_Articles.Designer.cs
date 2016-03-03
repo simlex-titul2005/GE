@@ -91,7 +91,7 @@ namespace GE.WebUI.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to --DECLARE @AMOUNT INT=3
-        ///SELECT TOP(@AMOUNT) da.Id, dm.Title FROM D_ARTICLE AS da
+        ///SELECT TOP(@AMOUNT) dm.TitleUrl, dm.Title FROM D_ARTICLE AS da
         ///JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
         ///ORDER BY dm.DateCreate DESC.
         /// </summary>

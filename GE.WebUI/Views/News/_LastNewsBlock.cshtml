@@ -14,7 +14,7 @@
                     {
                         var news = Model.News[i];
                         <li>
-                            <a href="@Url.Action(MVC.News.Details(news.Id))" data-game-id="@news.GameId">
+                            <a href="@Url.Action(MVC.News.Details(news.TitleUrl))" data-game-id="@news.GameId">
                                 <span class="date">@news.DateCreate.ToString("dd-MM-yyy")</span> <span class="title">@news.Title</span>
                             </a>
                         </li>
@@ -32,7 +32,7 @@
                                 var length=Model.GamesLength > 4 ? 4 : Model.GamesLength;
                                 var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
                                 <li @("style=width:" + width + "%")>
-                                    <a href="#">
+                                    <a href="@Url.Action(MVC.News.List(game: game.Title))">
                                         <figure data-game-id="@game.Id">
                                             <img alt="" src="@Url.Action(MVC.Pictures.Picture((Guid)game.FrontPictureId, height: 220))" />
                                             <span class="game-title">@game.Title</span>

@@ -18,6 +18,12 @@ namespace GE.WebUI
             #region articles
             routes.MapRoute(
                 name: null,
+                url: "articles/details/{titleUrl}",
+                defaults: new { controller = "articles", action = "details", area = "" }
+            );
+
+            routes.MapRoute(
+                name: null,
                 url: "articles",
                 defaults: new { controller = "articles", action = "list", game = "", page=1, area = "" }
             );
@@ -48,6 +54,12 @@ namespace GE.WebUI
             #endregion
 
             #region news
+            routes.MapRoute(
+                name: null,
+                url: "news/details/{titleUrl}",
+                defaults: new { controller = "news", action = "details", area = "" }
+            );
+
             routes.MapRoute(
                 name: null,
                 url: "news",

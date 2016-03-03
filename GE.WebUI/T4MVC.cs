@@ -181,6 +181,7 @@ namespace Links
             private const string URLPATH = "~/Content/less";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string article_less = Url("article.less");
             public static readonly string bootstrap_ext_less = Url("bootstrap-ext.less");
             public static readonly string colors_less = Url("colors.less");
             public static readonly string footer_less = Url("footer.less");
@@ -188,7 +189,8 @@ namespace Links
             public static readonly string game_list_less = Url("game-list.less");
             public static readonly string last_news_block_less = Url("last-news-block.less");
             public static readonly string list_article_less = Url("list-article.less");
-            public static readonly string mat_info_less = Url("mat-info.less");
+            public static readonly string list_news_less = Url("list-news.less");
+            public static readonly string material_less = Url("material.less");
             public static readonly string positioned_less = Url("positioned.less");
             public static readonly string site_less = Url("site.less");
             public static readonly string sizes_less = Url("sizes.less");

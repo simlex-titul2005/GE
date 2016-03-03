@@ -20,6 +20,7 @@
 
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.ModelCoreType)
+    @Html.HiddenFor(x => x.OldTitleUrl)
 
     <div class="row">
         <div class="col-md-12">
@@ -29,6 +30,18 @@
         </div>
     </div>
     <br />
+    @if (!isNew && !string.IsNullOrEmpty(Model.TitleUrl))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+                <span class="text-info"> (применяется для уникальной идентификации материала)</span>
+                @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.TitleUrl)
+            </div>
+        </div>
+        <br />
+    }
     <div class="row">
         <div class="col-md-2">
             @Html.LabelFor(x => x.Show, new { @class = "control-label" })

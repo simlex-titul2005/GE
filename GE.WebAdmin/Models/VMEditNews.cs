@@ -14,11 +14,14 @@ namespace GE.WebAdmin.Models
     {
         [UIHint("EditGame"), Display(Name = "Игра")]
         public int? GameId { get; set; }
+
+        [MaxLength(255)]
+        public string OldTitleUrl { get; set; }
     }
 
     sealed class VMEditNewsMetadata
     {
-        [Display(Name="Название новости"), MaxLength(400), Required]
+        [Display(Name="Название новости"), MaxLength(255), Required]
         public string Title { get; set; }
 
         [Display(Name = "Контент"), Required, DataType(DataType.MultilineText), AllowHtml]
@@ -32,5 +35,8 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Изображение"), UIHint("EditImage")]
         public Guid? FrontPictureId { get; set; }
+
+        [Display(Name = "Строковый ключ"), MaxLength(255), Required]
+        public string TitleUrl { get; set; }
     }
 }

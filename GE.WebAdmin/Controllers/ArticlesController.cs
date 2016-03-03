@@ -101,22 +101,51 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id, Enums.ModelCoreType.Article) : new Article { ModelCoreType = Enums.ModelCoreType.Article };
-            return View(Mapper.Map<Article, VMEditArticle>(model));
+            var viewModel = Mapper.Map<Article, VMEditArticle>(model);
+            viewModel.OldTitleUrl = viewModel.TitleUrl;
+            return View(viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditArticle model)
         {
-            var redactModel = Mapper.Map<VMEditArticle, Article>(model);
-            redactModel.ArticleTypeGameId = model.GameId;
+            if(string.IsNullOrEmpty(model.TitleUrl))
+            {
+                var titleUrl = SX.WebCore.StringHelper.SeoFriendlyUrl(model.Title);
+                var existModel = (_repo as RepoArticle).GetByTitleUrl(titleUrl);
+                if (existModel != null && existModel.Id != model.Id)
+                    ModelState.AddModelError("Title", "Строковый ключ должен быть уникальным");
+                else
+                {
+                    model.TitleUrl = titleUrl;
+                    ModelState.Remove("TitleUrl");
+                }
+            }
+            
             if (ModelState.IsValid)
             {
+                var isNew = model.Id == 0;
+                var redactModel = Mapper.Map<VMEditArticle, Article>(model);
+                redactModel.ArticleTypeGameId = model.GameId;
                 Article newModel = null;
-                if (model.Id == 0)
+
+                if (isNew)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, "Title", "Show", "GameId", "FrontPictureId", "Html", "ArticleTypeName", "ArticleTypeGameId");
+                {
+                    if (model.TitleUrl != model.OldTitleUrl)
+                    {
+                        var existModel = (_repo as RepoArticle).GetByTitleUrl(model.TitleUrl);
+                        if (existModel != null)
+                        {
+                            ModelState.AddModelError("TitleUrl", "Строковый ключ должен быть уникальным");
+                            return View(model);
+                        }
+                    }
+
+                    newModel = _repo.Update(redactModel, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "ArticleTypeName", "ArticleTypeGameId");
+                }
 
                 return RedirectToAction(MVC.Articles.Index());
             }

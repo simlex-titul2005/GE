@@ -95,6 +95,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Settings.resx</DependentUpon>
     </Compile>
+    <Compile Include="StringHelper.cs" />
     <Compile Include="SxArticle.cs" />
     <Compile Include="SxDbContext.cs" />
     <Compile Include="Enums.cs" />

@@ -2,4 +2,6 @@
 
 <h1 class="header">Статьи</h1>
 
+@Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
+
 @Html.Partial(MVC.Articles.Views._Collection, Model)

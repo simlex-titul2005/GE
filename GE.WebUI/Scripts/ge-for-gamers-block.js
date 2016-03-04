@@ -6,7 +6,7 @@
             var $previewBox = $('#materials-preview');
             var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
             
-            $this.find('.games > li > a[rel="noreferrer"]').click(function () {
+            $this.find('.games > li > a[rel="nofollow"]').click(function () {
                 var $a = $(this);
                 var $li = $a.closest('li');
                 $this.find('.games > li').not($li).removeClass('selected');

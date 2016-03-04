@@ -81,7 +81,7 @@ namespace GE.WebAdmin.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
-        public virtual ViewResult Edit(VMEditGame model)
+        public virtual ActionResult Edit(VMEditGame model)
         {
             var redactModel = Mapper.Map<VMEditGame, Game>(model);
             if (ModelState.IsValid)
@@ -91,7 +91,7 @@ namespace GE.WebAdmin.Controllers
                     newModel = _repo.Create(redactModel);
                 else
                     newModel = _repo.Update(redactModel, "Title", "TitleAbbr", "Description", "Show", "FrontPictureId", "GoodPictureId", "BadPictureId");
-                return View(Mapper.Map<Game, VMEditGame>(redactModel));
+                return RedirectToAction(MVC.Games.Index());
             }
             else
                 return View(model);

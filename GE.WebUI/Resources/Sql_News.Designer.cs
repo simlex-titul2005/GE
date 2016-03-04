@@ -63,7 +63,7 @@ namespace GE.WebUI.Resources {
         /// <summary>
         ///   Looks up a localized string similar to SELECT TOP(@AMOUNT) dm.ID,
         ///       dm.DateCreate,
-        ///       dm.TITLE,
+        ///       dm.Title, dm.TitleUrl,
         ///       dm.FrontPictureId,
         ///       dn.GameId,
         ///       dg.Title          AS GameTitle
@@ -75,7 +75,7 @@ namespace GE.WebUI.Resources {
         ///                       ON  dm.ID = dn.ID
         ///                       AND dm.ModelCoreType = dn.ModelCoreType
         ///           GROUP BY
-        ///                  dn.GameId        /// [rest of string was truncated]&quot;;.
+        ///                [rest of string was truncated]&quot;;.
         /// </summary>
         public static string LastNews {
             get {

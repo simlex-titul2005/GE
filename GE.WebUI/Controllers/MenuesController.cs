@@ -27,6 +27,8 @@ namespace GE.WebUI.Controllers
         {
             ViewBag.MenuCssClass = cssClass;
             var menu = _repo.GetByKey(menuMarker);
+            if (menu == null) return null;
+
             var viewModel = Mapper.Map<SxMenu, VMMenu>(menu);
             return PartialView(MVC.Menues.Views._MenuItems, viewModel);
         }

@@ -67,7 +67,7 @@ namespace GE.WebUI.Controllers
                 Page = page,
                 PageSize = pageSize,
                 PagerSize = 3,
-                TotalItems = _repo.Count
+                TotalItems = _repo.Count(filter)
             };
 
             return View(viewModel);
@@ -97,6 +97,8 @@ namespace GE.WebUI.Controllers
                 if (ViewBag.Title == null)
                     ViewBag.Title = model.Title;
 
+                var viewsCount = model.ViewsCount;
+
                 var breadcrumbs = (VMBreadcrumb[])ViewBag.Breadcrumbs;
                 if(breadcrumbs!=null)
                 {
@@ -111,15 +113,15 @@ namespace GE.WebUI.Controllers
                     switch (_modelCoreType)
                     {
                         case Enums.ModelCoreType.Article:
-                            (_repo as RepoArticle).Update(new Article { Id = model.Id, ModelCoreType=model.ModelCoreType, ViewsCount = model.ViewsCount + 1 }, "ViewsCount");
+                            (_repo as RepoArticle).Update(new Article { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, "ViewsCount");
                             break;
                         case Enums.ModelCoreType.News:
-                            (_repo as RepoNews).Update(new News { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = model.ViewsCount + 1 }, "ViewsCount");
+                            (_repo as RepoNews).Update(new News { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, "ViewsCount");
                             break;
                     }
                 });
 
-                model.ViewsCount = model.ViewsCount + 1;
+                model.ViewsCount = viewsCount + 1;
 
                 return View(model);
             }

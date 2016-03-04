@@ -103,12 +103,9 @@ namespace SX.WebCore.Abstract
             return All;
         }
 
-        public virtual int Count
+        public virtual int Count(SxFilter filter)
         {
-            get
-            {
-                return All.Count();
-            }
+            return All.Count();
         }
 
         public virtual TModel GetByKey(params object[] id)

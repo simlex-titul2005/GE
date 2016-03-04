@@ -12,6 +12,7 @@ namespace GE.WebAdmin.Models
     [MetadataType(typeof(VMEditNewsMetadata))]
     public sealed class VMEditNews : SxMaterial, ISxViewModel<int>
     {
+        public Game Game { get; set; }
         [UIHint("EditGame"), Display(Name = "Игра")]
         public int? GameId { get; set; }
 

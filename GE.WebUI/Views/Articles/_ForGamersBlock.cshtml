@@ -15,14 +15,14 @@
                     {
                         var game = Model.Games[i];
                         <li>
-                            <a href="#" rel="noreferrer">
+                            <a href="#" rel="nofollow">
                                 <figure>
                                     <img alt="@game.Title" src="@Url.Action(MVC.Pictures.Picture(game.FrontPictureId, height:80))" />
                                     <h4>@game.Title</h4>
                                     <span class="desc">@game.Description</span>
                                 </figure>
                             </a>
-                            <a href="#" class="link">Кликнуть, чтобы открыть новую вкладку со статьями по игре @game.Title</a>
+                            <a href="@Url.Action(MVC.Articles.List(game: game.Title))" class="link">Кликнуть, чтобы открыть новую вкладку со статьями по игре @game.Title</a>
                             <ul class="dropdown">
                                 @for (int y = 0; y < game.ArticleTypeLength; y++)
                                 {

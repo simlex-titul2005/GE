@@ -52,31 +52,61 @@ FROM   D_NEWS         AS da
             AND dm.ModelCoreType = da.ModelCoreType
        LEFT JOIN D_GAME  AS dg
             ON  dg.ID = da.GameId";
-                if (filter != null && !string.IsNullOrEmpty(f.GameTitle))
+                if (f != null && !string.IsNullOrEmpty(f.GameTitle))
                     query += @" WHERE  dg.Title = @GAME_TITLE
        OR  @GAME_TITLE IS NULL";
                 query += @" ORDER BY
        dm.DateCreate DESC";
-                if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
-                    query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
+                if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
+                    query += " OFFSET " + f.SkipCount + " ROWS FETCH NEXT " + f.PageSize + " ROWS ONLY";
 
-                var data = filter != null && !string.IsNullOrEmpty(f.GameTitle) ? conn.Query<News>(query, new { GAME_TITLE = f.GameTitle }) : conn.Query<News>(query);
+                var data = f != null && !string.IsNullOrEmpty(f.GameTitle) ? conn.Query<News>(query, new { GAME_TITLE = f.GameTitle }) : conn.Query<News>(query);
 
                 return data.AsQueryable();
             }
         }
 
-        public override int Count
+        public IQueryable<News> QueryForAdmin(SxFilter filter)
         {
-            get
+            var f = filter as Filter;
+            using (var conn = new SqlConnection(base.ConnectionString))
             {
-                using (var conn = new SqlConnection(base.ConnectionString))
-                {
-                    var query = @"SELECT COUNT(1) FROM D_NEWS";
-                    var data = conn.Query<int>(query).Single();
+                var query = @"SELECT da.Id,
+       dm.DateCreate,
+       dm.Title
+FROM   D_NEWS         AS da
+       JOIN DV_MATERIAL  AS dm
+            ON  dm.ID = da.ID
+            AND dm.ModelCoreType = da.ModelCoreType
+       LEFT JOIN D_GAME  AS dg
+            ON  dg.ID = da.GameId";
+                if (f != null && !string.IsNullOrEmpty(f.GameTitle))
+                    query += @" WHERE  dg.Title = @GAME_TITLE
+       OR  @GAME_TITLE IS NULL";
+                query += @" ORDER BY
+       dm.DateCreate DESC";
+                if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
+                    query += " OFFSET " + f.SkipCount + " ROWS FETCH NEXT " + f.PageSize + " ROWS ONLY";
 
-                    return (int)data;
-                }
+                var data = f != null && !string.IsNullOrEmpty(f.GameTitle) ? conn.Query<News>(query, new { GAME_TITLE = f.GameTitle }) : conn.Query<News>(query);
+
+                return data.AsQueryable();
+            }
+        }
+
+        public override int Count(SxFilter filter)
+        {
+            var f = (Filter)filter;
+            using (var conn = new SqlConnection(base.ConnectionString))
+            {
+                var query = @"SELECT COUNT(1) FROM D_NEWS AS da
+LEFT JOIN D_GAME dg ON dg.Id=da.GameId
+WHERE @GAME_TITLE IS NULL OR dg.Title=@GAME_TITLE";
+                var data = f != null && !string.IsNullOrEmpty(f.GameTitle)
+                    ? conn.Query<int>(query, new { GAME_TITLE = f.GameTitle }).Single()
+                    : conn.Query<int>(query, new { GAME_TITLE = (string)null }).Single();
+
+                return (int)data;
             }
         }
 

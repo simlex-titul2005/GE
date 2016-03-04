@@ -125,8 +125,10 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _SeoKeywords = "_SeoKeywords";
+                public readonly string Edit = "Edit";
             }
             public readonly string _SeoKeywords = "~/Views/SeoKeywords/_SeoKeywords.cshtml";
+            public readonly string Edit = "~/Views/SeoKeywords/Edit.cshtml";
         }
     }
 

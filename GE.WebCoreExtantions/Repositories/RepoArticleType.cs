@@ -17,8 +17,8 @@ namespace GE.WebCoreExtantions.Repositories
                 using (var conn = new SqlConnection(base.ConnectionString))
                 {
                     var query = @"SELECT*FROM D_ARTICLE_TYPE AS dat
-JOIN D_GAME AS dg ON dg.ID = dat.GameId
-ORDER BY dg.TITLE, dat.NAME";
+JOIN D_GAME AS dg ON dg.Id = dat.GameId
+ORDER BY dg.Title, dat.Name";
                     var data = conn.Query<ArticleType, Game, ArticleType>(query, (a, g) => {
                         a.Game = new Game { Title = g.Title, Id=g.Id };
                         return a;

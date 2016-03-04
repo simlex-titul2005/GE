@@ -20,7 +20,7 @@ namespace GE.WebCoreExtantions.Repositories
             {
                 using (var conn = new SqlConnection(base.ConnectionString))
                 {
-                    var result = conn.Query<SxPicture>(@"select dp.ID, dp.CAPTION, dp.[DESCRIPTION], dp.WIDTH, dp.HEIGHT, dp.ImgFormat from D_PICTURE dp order by dp.DateCreate desc");
+                    var result = conn.Query<SxPicture>(@"select dp.Id, dp.Caption, dp.[Description], dp.Width, dp.Height, dp.ImgFormat from D_PICTURE dp order by dp.DateCreate desc");
                     return result.AsQueryable();
                 }
             }
@@ -30,7 +30,7 @@ namespace GE.WebCoreExtantions.Repositories
         {
             using (var conn = new SqlConnection(base.ConnectionString))
             {
-                var picture = conn.Query<SxPicture>("select dp.OriginalContent, dp.WIDTH as Width, dp.HEIGHT as Height, dp.ImgFormat from D_PICTURE dp where dp.ID=@PICTURE_ID", new { PICTURE_ID = id }).SingleOrDefault();
+                var picture = conn.Query<SxPicture>("select dp.Id, dp.Caption, dp.Description, dp.OriginalContent, dp.Width, dp.Height, dp.ImgFormat, dp.DateCreate from D_PICTURE dp where dp.ID=@PICTURE_ID", new { PICTURE_ID = id }).SingleOrDefault();
                 return picture;
             }
         }

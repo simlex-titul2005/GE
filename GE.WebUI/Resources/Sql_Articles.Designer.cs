@@ -105,7 +105,7 @@ namespace GE.WebUI.Resources {
         ///   Looks up a localized string similar to --DECLARE @GAME_ID INT=1, @ARTICLE_TYPE_NAME VARCHAR(150)=&apos;guid&apos;,@LETTERS_COUNT INT=200
         ///
         ///SELECT da.Id,
-        ///       dm.Title,
+        ///       dm.Title, dm.TitleUrl,
         ///       dm.DateCreate,
         ///       dm.ViewsCount,
         ///       dm.CommentsCount,
@@ -116,7 +116,7 @@ namespace GE.WebUI.Resources {
         ///FROM   D_ARTICLE         AS da
         ///       JOIN DV_MATERIAL  AS dm
         ///            ON  dm.ID = da.ID
-        ///            AND dm.ModelCor [rest of string was truncated]&quot;;.
+        ///            AN [rest of string was truncated]&quot;;.
         /// </summary>
         public static string PreviewMaterials {
             get {

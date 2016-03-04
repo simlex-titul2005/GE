@@ -120,7 +120,7 @@
   <data name="LastNews" xml:space="preserve">
     <value>SELECT TOP(@AMOUNT) dm.ID,
        dm.DateCreate,
-       dm.TITLE,
+       dm.Title, dm.TitleUrl,
        dm.FrontPictureId,
        dn.GameId,
        dg.Title          AS GameTitle

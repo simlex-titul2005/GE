@@ -17,7 +17,7 @@ namespace GE.WebAdmin.Models
         [Display(Name="Название типа"), MaxLength(150), Required]
         public string Name { get; set; }
 
-        [Display(Name = "Игра"), UIHint("EditGame")]
+        [Display(Name = "Игра"), UIHint("EditGame"), Required]
         public int GameId { get; set; }
         public VMGame Game { get; set; }
     }

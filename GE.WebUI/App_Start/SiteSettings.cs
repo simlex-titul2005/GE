@@ -36,6 +36,8 @@ namespace GE.WebUI
 
             var repo = new RepoSiteSetting();
             var value = repo.GetByKey(keySetting);
+            if (value == null) return null;
+
             _cache.Add(new CacheItem(keySetting, value.Value), _defaultPolicy);
             return value.Value;
         }

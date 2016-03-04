@@ -151,7 +151,7 @@ ORDER BY dm.DateCreate DESC</value>
     <value>--DECLARE @GAME_ID INT=1, @ARTICLE_TYPE_NAME VARCHAR(150)='guid',@LETTERS_COUNT INT=200
 
 SELECT da.Id,
-       dm.Title,
+       dm.Title, dm.TitleUrl,
        dm.DateCreate,
        dm.ViewsCount,
        dm.CommentsCount,

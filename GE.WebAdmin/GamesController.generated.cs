@@ -186,12 +186,12 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, GE.WebAdmin.Models.VMEditGame model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditGame model);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Edit(GE.WebAdmin.Models.VMEditGame model)
+        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditGame model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditOverride(callInfo, model);
             return callInfo;

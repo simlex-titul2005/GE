@@ -12,8 +12,7 @@ namespace GE.WebAdmin.Controllers
     {
         public virtual ViewResult Index(DbContext dbContext)
         {
-            var dbRepo = new RepoArticle();
-            return View(dbRepo.All);
+            return View();
         }
     }
 }

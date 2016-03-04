@@ -28,9 +28,8 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var list = _repo.All
-                .Skip((page - 1) * _pageSize)
-                .Take(_pageSize).Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
+            var list = (_repo as RepoArticle).QueryForAdmin(new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize })
+                .Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;

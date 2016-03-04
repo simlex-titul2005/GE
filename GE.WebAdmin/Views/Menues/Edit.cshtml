@@ -1,4 +1,7 @@
 ﻿@model VMEditMenu
+@{
+    var isNew = Model.Id == 0;
+}
 
 <h2>@(Model.Id != 0 ? "Редактирование меню" : "Добавление меню")</h2>
 
@@ -10,7 +13,11 @@
         <div class="col-md-12">
             <!--name-->
             <div class="form-group">
-                @Html.LabelFor(x => x.Name, new { @class = "control-label" }) <span class="text-danger" data-toggle="tooltip" data-placement="right" data-container="body" title="Идентификатор меню">[ Marker=@Model.Id ]</span>
+                @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+                @if (!isNew)
+                {
+                    <span class="text-danger" data-toggle="tooltip" data-placement="right" data-container="body" title="Идентификатор меню">[ Marker=@Model.Id ]</span>
+                }
                 @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите наименование меню" } })
                 @Html.ValidationMessageFor(x => x.Name)
             </div>

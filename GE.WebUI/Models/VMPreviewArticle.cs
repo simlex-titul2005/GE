@@ -9,6 +9,7 @@ namespace GE.WebUI.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public string TitleUrl { get; set; }
         public DateTime DateCreate { get; set; }
         public int ViewsCount { get; set; }
         public int CommentsCount { get; set; }

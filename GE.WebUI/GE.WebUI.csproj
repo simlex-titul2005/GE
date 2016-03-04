@@ -138,6 +138,8 @@
     <Content Include="bower_components\font-awesome\css\font-awesome.min.css" />
     <Content Include="bower_components\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="bower_components\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="bower_components\jquery-hoverIntent\jquery.hoverIntent.html" />
+    <Content Include="bower_components\jquery-hoverIntent\jquery.hoverIntent.js" />
     <Content Include="bower_components\jquery\AUTHORS.txt" />
     <Content Include="bower_components\jquery\dist\jquery.js" />
     <Content Include="bower_components\jquery\dist\jquery.min.js" />
@@ -423,7 +425,11 @@
     <Content Include="Content\less\list-news.less" />
     <Content Include="Content\less\material.less" />
     <Content Include="Content\less\article.less" />
+    <Content Include="bower_components\jquery-hoverIntent\.bower.json" />
+    <Content Include="bower_components\jquery-hoverIntent\bower.json" />
+    <Content Include="bower_components\jquery-hoverIntent\README.md" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
+    <None Include="Properties\PublishProfiles\RELESE.pubxml" />
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

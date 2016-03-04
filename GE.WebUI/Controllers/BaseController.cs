@@ -60,7 +60,8 @@ namespace GE.WebUI.Controllers
 
             if (filterContext.IsChildAction) return;
 
-            writeRequestInfo(_repo, Request);
+            if(!Request.IsLocal)
+                writeRequestInfo(_repo, Request);
 
             writeSeoInfo(filterContext);
 

@@ -6,6 +6,10 @@
 <h2>
     @(isNew ? "Добавить фото" : "Редактировать фото")
 </h2>
+@if (!isNew)
+{
+    <button type="button" class="btn btn-danger pull-right">Удалить фото</button>
+}
 <br />
 <form method="post" action="edit" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
@@ -28,28 +32,32 @@
         </div>
     </div>
     <br />
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label">Выбор фото</label>
-            <input type="file" name="file" class="hidden" />
-            <div class="input-group">
-                <input type="text" class="form-control select-input" placeholder="Выберите изображение">
-                <span class="input-group-btn">
-                    <button class="btn btn-default select-btn" type="button">Выбрать</button>
-                </span>
+    @if (isNew)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label">Выбор фото</label>
+                <input type="file" name="file" class="hidden" />
+                <div class="input-group">
+                    <input type="text" class="form-control select-input" placeholder="Выберите изображение">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default select-btn" type="button">Выбрать</button>
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <img alt="@Model.Caption" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Id))" />
+        <br />
+    }
     <br />
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">@(Model.Id == Guid.Empty ? "Добавить" : "Сохранить")</button>
                 @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
-                @if (!isNew)
-                {
-                    <button type="button" class="btn btn-danger pull-right">Удалить игру</button>
-                }
             </div>
         </div>
     </div>

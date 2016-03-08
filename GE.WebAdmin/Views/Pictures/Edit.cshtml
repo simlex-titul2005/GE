@@ -8,7 +8,11 @@
 </h2>
 @if (!isNew)
 {
-    <button type="button" class="btn btn-danger pull-right">Удалить фото</button>
+    <form method="post" action="@Url.Action(MVC.Pictures.Delete(id: Model.Id))">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.Id)
+        <button type="submit" class="btn btn-danger pull-right">Удалить фото</button>
+    </form>
 }
 <br />
 <form method="post" action="edit" enctype="multipart/form-data">

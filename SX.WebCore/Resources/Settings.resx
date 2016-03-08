@@ -129,6 +129,10 @@
     <value>emptyGameIconPath</value>
     <comment>Путь к иконке изображения по-умолчанию в меню игр</comment>
   </data>
+  <data name="siteBgPath" xml:space="preserve">
+    <value>siteBgPath</value>
+    <comment>Путь к файлу фона сайта</comment>
+  </data>
   <data name="siteLogoPath" xml:space="preserve">
     <value>siteLogoPath</value>
     <comment>Путь к логотипу сайта</comment>

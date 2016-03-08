@@ -18,7 +18,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body style="background-image:url(@GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath))">
     @Html.Partial(MVC.Shared.Views._NavBar)
     <div class="wrapper">
         @Html.Action(MVC.Games.GameList())

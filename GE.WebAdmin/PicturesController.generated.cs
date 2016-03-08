@@ -68,6 +68,12 @@ namespace GE.WebAdmin.Controllers
         {
             return new T4MVC_System_Web_Mvc_FileResult(Area, Name, ActionNames.Picture);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Delete()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public PicturesController Actions { get { return MVC.Pictures; } }
@@ -88,6 +94,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string Edit = "Edit";
             public readonly string FindTable = "FindTable";
             public readonly string Picture = "Picture";
+            public readonly string Delete = "Delete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -97,6 +104,7 @@ namespace GE.WebAdmin.Controllers
             public const string Edit = "Edit";
             public const string FindTable = "FindTable";
             public const string Picture = "Picture";
+            public const string Delete = "Delete";
         }
 
 
@@ -138,6 +146,14 @@ namespace GE.WebAdmin.Controllers
             public readonly string id = "id";
             public readonly string width = "width";
             public readonly string height = "height";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete
+        {
+            public readonly string id = "id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -241,6 +257,18 @@ namespace GE.WebAdmin.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "width", width);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "height", height);
             PictureOverride(callInfo, id, width, height);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Guid id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Delete(System.Guid id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            DeleteOverride(callInfo, id);
             return callInfo;
         }
 

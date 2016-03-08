@@ -160,5 +160,13 @@ namespace GE.WebAdmin.Controllers
 
             return new FileStreamResult(new System.IO.MemoryStream(byteArray), viewModel.ImgFormat);
         }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete(Guid id)
+        {
+            _repo.Delete(id);
+            return RedirectToAction(MVC.Pictures.Index());
+        }
     }
 }

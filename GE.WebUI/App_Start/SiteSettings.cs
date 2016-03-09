@@ -15,7 +15,8 @@ namespace GE.WebUI
         private static MemoryCache _cache;
         static SiteSettings()
         {
-            _cache = new MemoryCache("SITE_SETTINGS");
+            if(_cache==null)
+                _cache = new MemoryCache("SITE_SETTINGS");
         }
 
         private static CacheItemPolicy _defaultPolicy
@@ -38,7 +39,9 @@ namespace GE.WebUI
             var value = repo.GetByKey(keySetting);
             if (value == null) return null;
 
-            _cache.Add(new CacheItem(keySetting, value.Value), _defaultPolicy);
+            if(value.Value!=null)
+                _cache.Add(new CacheItem(keySetting, value.Value), _defaultPolicy);
+
             return value.Value;
         }
     }

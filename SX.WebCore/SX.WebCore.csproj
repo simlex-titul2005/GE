@@ -97,6 +97,8 @@
     </Compile>
     <Compile Include="StringHelper.cs" />
     <Compile Include="SxArticle.cs" />
+    <Compile Include="SxClickType.cs" />
+    <Compile Include="SxClick.cs" />
     <Compile Include="SxDbContext.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="SXForumPart.cs" />

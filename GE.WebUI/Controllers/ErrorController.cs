@@ -13,5 +13,11 @@ namespace GE.WebUI.Controllers
             Response.StatusCode = 404;
             return View();
         }
+
+        public virtual ActionResult ServerError()
+        {
+            Response.StatusCode = 500;
+            return View();
+        }
     }
 }

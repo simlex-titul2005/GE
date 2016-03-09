@@ -437,6 +437,7 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Scripts\click-stat-handler.js" />
     <Content Include="Scripts\ge-for-gamers-block.js" />
     <Content Include="Scripts\ge-game-menu.js" />
     <Content Include="Scripts\ge-last-news-block.js" />
@@ -452,8 +453,12 @@
     <Compile Include="ArticlesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClicksController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ClicksController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -542,6 +547,7 @@
     <Content Include="Views\News\Details.cshtml" />
     <Content Include="Views\Shared\_Breadcrumbs.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\ServerError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -549,7 +555,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Clicks\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">
       <Project>{bf57645e-fa93-44aa-8c87-7f1bdd240dc2}</Project>

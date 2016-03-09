@@ -23,15 +23,12 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace GE.WebUI.Controllers
+namespace GE.WebAdmin.Controllers
 {
-    public partial class ErrorController
+    public partial class ClicksController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ErrorController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ErrorController(Dummy d) { }
+        protected ClicksController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -61,13 +58,13 @@ namespace GE.WebUI.Controllers
 
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ErrorController Actions { get { return MVC.Error; } }
+        public ClicksController Actions { get { return MVC.Clicks; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Error";
+        public readonly string Name = "Clicks";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Error";
+        public const string NameConst = "Clicks";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -75,18 +72,26 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string NotFound = "NotFound";
-            public readonly string ServerError = "ServerError";
+            public readonly string Index = "Index";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string NotFound = "NotFound";
-            public const string ServerError = "ServerError";
+            public const string Index = "Index";
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index
+        {
+            public readonly string page = "page";
+            public readonly string filter = "filter";
+            public readonly string order = "order";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -97,38 +102,42 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string NotFound = "NotFound";
-                public readonly string ServerError = "ServerError";
+                public readonly string _GridView = "_GridView";
+                public readonly string Index = "Index";
             }
-            public readonly string NotFound = "~/Views/Error/NotFound.cshtml";
-            public readonly string ServerError = "~/Views/Error/ServerError.cshtml";
+            public readonly string _GridView = "~/Views/Clicks/_GridView.cshtml";
+            public readonly string Index = "~/Views/Clicks/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_ErrorController : GE.WebUI.Controllers.ErrorController
+    public partial class T4MVC_ClicksController : GE.WebAdmin.Controllers.ClicksController
     {
-        public T4MVC_ErrorController() : base(Dummy.Instance) { }
+        public T4MVC_ClicksController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void NotFoundOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult NotFound()
+        public override System.Web.Mvc.ViewResult Index(int page)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NotFound);
-            NotFoundOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            IndexOverride(callInfo, page);
             return callInfo;
         }
 
         [NonAction]
-        partial void ServerErrorOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMClick filter, System.Collections.Generic.IDictionary<string,SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult ServerError()
+        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMClick filter, System.Collections.Generic.IDictionary<string,SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ServerError);
-            ServerErrorOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filter", filter);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            IndexOverride(callInfo, filter, order, page);
             return callInfo;
         }
 

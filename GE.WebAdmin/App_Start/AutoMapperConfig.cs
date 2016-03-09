@@ -27,6 +27,11 @@ namespace GE.WebAdmin
                     cfg.CreateMap<ArticleType, VMEditArticleType>();
                     cfg.CreateMap<VMEditArticleType, ArticleType>();
 
+                    //click type
+                    cfg.CreateMap<SxClickType, VMClickType>();
+                    cfg.CreateMap<SxClickType, VMEditClickType>();
+                    cfg.CreateMap<VMEditClickType, SxClickType>();
+
                     //game
                     cfg.CreateMap<Game, VMGame>();
                     cfg.CreateMap<VMGame, Game>();

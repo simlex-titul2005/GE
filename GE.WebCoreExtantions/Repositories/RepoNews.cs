@@ -46,7 +46,10 @@ ORDER BY dm.DateCreate DESC";
        )                 AS Foreword,
        dm.DateCreate,
        dm.ViewsCount,
-       dm.CommentsCount
+       dm.CommentsCount,
+       da.GameId,
+       dg.Title,
+       dg.FrontPictureId
 FROM   D_NEWS         AS da
        LEFT JOIN D_GAME  AS dg
             ON  dg.ID = da.GameId
@@ -60,9 +63,10 @@ FROM   D_NEWS         AS da
                     query += " OFFSET " + f.SkipCount + " ROWS FETCH NEXT " + f.PageSize + " ROWS ONLY";
 
                 var data = conn.Query<News, Game, News>(query, (n, g)=>{
-                    n.Game = new Game();
+                    n.Game = g;
+                    n.GameId = n.GameId;
                     return n;
-                }, param: new { GAME_TITLE = f.GameTitle }, splitOn: "Game");
+                }, param: new { GAME_TITLE = f.GameTitle }, splitOn: "GameId");
 
                 return data.AsQueryable();
             }

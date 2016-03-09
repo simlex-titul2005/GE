@@ -3242,6 +3242,14 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ClicksController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClickTypesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\ClicksController.cs" />
+    <Compile Include="Controllers\ClickTypesController.cs" />
     <Compile Include="Controllers\RedirectsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\SeoKeywordsController.cs" />
@@ -3258,6 +3266,7 @@
     <Compile Include="Controllers\RouteValuesController.cs" />
     <Compile Include="Controllers\SeoInfoController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Extantions\Repositories\RepoClick.cs" />
     <Compile Include="Extantions\Repositories\RepoArticleType.cs" />
     <Compile Include="GamesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -3278,6 +3287,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\VMClick.cs" />
+    <Compile Include="Models\VMClickType.cs" />
+    <Compile Include="Models\VMEditClickType.cs" />
     <Compile Include="Models\VMEditSeoKeyword.cs" />
     <Compile Include="Models\VMEditNews.cs" />
     <Compile Include="Models\VMEditSeoInfo.cs" />
@@ -3423,6 +3435,11 @@
     <Content Include="Views\Redirects\Index.cshtml" />
     <Content Include="Views\Redirects\Edit.cshtml" />
     <Content Include="Views\Settings\EditRobotsFile.cshtml" />
+    <Content Include="Views\ClickTypes\_GridView.cshtml" />
+    <Content Include="Views\ClickTypes\Edit.cshtml" />
+    <Content Include="Views\ClickTypes\Index.cshtml" />
+    <Content Include="Views\Clicks\_GridView.cshtml" />
+    <Content Include="Views\Clicks\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

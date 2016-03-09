@@ -335,6 +335,18 @@
                         <li>
                             <a href="@Url.Action(MVC.Request.Index())"><i class="fa fa-history fa-fw"></i> Статистика запросов</a>
                         </li>
+                        <li>
+                            <a href="#"><i class="fa fa-hand-o-up fa-fw"></i> Статистика кликов<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="@Url.Action(MVC.Clicks.Index())">Статистика кликов</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action(MVC.ClickTypes.Index())">Типы статистики кликов</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

@@ -1,0 +1,25 @@
+﻿@model VMClick[]
+@{
+    Layout = null;
+    var filter = ViewBag.Filter != null ? (VMClick)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+}
+
+
+@Html.SxGridView(
+                    new SxExtantions.SxGridViewSettings<VMClick>
+    {
+        UpdateTargetId = "grid-clicks",
+        Data = Model,
+        Columns = new SxExtantions.SxGridViewColumn[]{
+            new SxExtantions.SxGridViewColumn{FieldName="UrlRef", Caption="Исходящий адрес"},
+            new SxExtantions.SxGridViewColumn{FieldName="RawUrl", Caption="Адрес назначения"},
+            new SxExtantions.SxGridViewColumn{FieldName="LinkTarget", Caption="Тип клика"},
+            new SxExtantions.SxGridViewColumn{FieldName="ClickTypeName", Caption="Статистика клика"}
+        },
+        Filter = filter,
+        SortDirections = sortDirections,
+        EnableEditing=false
+    },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

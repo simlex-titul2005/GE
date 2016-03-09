@@ -25,6 +25,10 @@
     <div class="col-md-6">
         <div class="content">
             <time>@Model.DateCreate.ToString("dd.MM.yyyy")</time>
+            @if (Model.Game != null && Model.Game.FrontPictureId.HasValue)
+            {
+                <img class="g-img" alt="@Model.Game.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Game.FrontPictureId, height: 80))" />
+            }
             <a class="link" href="@Url.Action(MVC.News.Details(Model.TitleUrl))">@Model.Title</a>
             <p class="foreword">@Model.Foreword</p>
             <a href="@Url.Action(MVC.News.Details(Model.TitleUrl))" class="btn btn-default btn-transparent dark-blue visible-xs">Подробнее</a>

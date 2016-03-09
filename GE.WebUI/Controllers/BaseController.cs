@@ -43,11 +43,6 @@ namespace GE.WebUI.Controllers
                 _seoInfoCache = new MemoryCache("SEO_INFO_CACHE");
         }
 
-        public BaseController(int displayWidth)
-        {
-            
-        }
-
         protected IMapper Mapper
         {
             get
@@ -69,7 +64,7 @@ namespace GE.WebUI.Controllers
                 return;
             }
 
-            if(!Request.IsLocal)
+            if (!Request.IsLocal)
                 writeRequestInfo(_repo, Request);
 
             writeSeoInfo(filterContext);

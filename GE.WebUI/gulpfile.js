@@ -56,6 +56,7 @@ function createJs() {
         'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
         'scripts/ge-game-menu.js',
+        'scripts/click-stat-handler.js',
         'bower_components/jquery-hoverIntent/jquery.hoverIntent.js'
     ])
         .pipe(concat('site.min.js'))

@@ -29,6 +29,7 @@ namespace GE.WebUI.Controllers
         {
             var routes = Request.RequestContext.RouteData.Values;
             ViewBag.ControllerName = routes["controller"];
+            if (ViewBag.ControllerName == "error") return null;
             ViewBag.ActionName = routes["action"];
             var gameName = routes["game"];
             ViewBag.GameName = gameName;

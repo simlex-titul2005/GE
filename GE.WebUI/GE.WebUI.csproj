@@ -428,6 +428,7 @@
     <Content Include="bower_components\jquery-hoverIntent\.bower.json" />
     <Content Include="bower_components\jquery-hoverIntent\bower.json" />
     <Content Include="bower_components\jquery-hoverIntent\README.md" />
+    <Content Include="Content\less\error-page.less" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\RELESE.pubxml" />
     <None Include="T4MVC.tt.hooks.t4" />
@@ -453,6 +454,7 @@
     </Compile>
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaterialsController.cs">
@@ -461,6 +463,9 @@
     <Compile Include="Controllers\MenuesController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="ErrorController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="GamesController.generated.cs">
@@ -536,6 +541,7 @@
     <Content Include="Views\Articles\Details.cshtml" />
     <Content Include="Views\News\Details.cshtml" />
     <Content Include="Views\Shared\_Breadcrumbs.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -596,7 +602,9 @@
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
+  
   <Target Name="AfterBuild">
+    <TransformXml Source="Web.config" Transform="Web.$(Configuration).config" Destination="Web.config" StackTrace="true" />
   </Target>
-  -->
+-->
 </Project>

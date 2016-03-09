@@ -3104,6 +3104,7 @@
     <Content Include="bower_components\ckeditor\skins\kama\readme.md" />
     <Content Include="bower_components\ckeditor\skins\moono\readme.md" />
     <Content Include="Content\sx\less\sx-find-table.less" />
+    <Content Include="robots.txt" />
     <Content Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
@@ -3238,6 +3239,7 @@
     <Compile Include="ArticleTypesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\SeoKeywordsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
@@ -3271,6 +3273,7 @@
     <Compile Include="Models\VMEditSeoKeyword.cs" />
     <Compile Include="Models\VMEditNews.cs" />
     <Compile Include="Models\VMEditSeoInfo.cs" />
+    <Compile Include="Models\VMRequest.cs" />
     <Compile Include="Models\VMSeoKeywordList.cs" />
     <Compile Include="Models\VMNews.cs" />
     <Compile Include="Models\VMArticleType.cs" />
@@ -3302,6 +3305,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Constants.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3383,6 +3389,8 @@
     <Content Include="Views\SeoInfo\Edit.cshtml" />
     <Content Include="Views\SeoKeywords\_SeoKeywords.cshtml" />
     <Content Include="Views\SeoKeywords\Edit.cshtml" />
+    <Content Include="Views\Request\Index.cshtml" />
+    <Content Include="Views\Request\_GridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

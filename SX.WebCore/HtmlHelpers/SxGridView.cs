@@ -123,7 +123,7 @@ namespace SX.WebCore.HtmlHelpers
                 }
                 set
                 {
-                    _enableEditing = true;
+                    _enableEditing = value;
                 }
             }
 

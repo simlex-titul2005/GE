@@ -1,0 +1,29 @@
+﻿@model VMRequest[]
+@{
+    Layout = null;
+    var filter = ViewBag.Filter != null ? (VMRequest)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+}
+
+
+@Html.SxGridView(
+        new SxExtantions.SxGridViewSettings<VMRequest>
+    {
+        UpdateTargetId = "grid-request",
+        Data = Model,
+        Columns = new SxExtantions.SxGridViewColumn[]{
+            new SxExtantions.SxGridViewColumn{FieldName="DateCreate", Caption="Дата посещения"},
+            new SxExtantions.SxGridViewColumn{FieldName="SessionId", Caption="Идентификатор сессии"},
+            new SxExtantions.SxGridViewColumn{FieldName="Browser", Caption="Браузер"},
+            new SxExtantions.SxGridViewColumn{FieldName="ClientIP", Caption="IP клиента"},
+            new SxExtantions.SxGridViewColumn{FieldName="UserAgent", Caption="Строка агента"},
+            new SxExtantions.SxGridViewColumn{FieldName="RequestType", Caption="Тип запросв"},
+            new SxExtantions.SxGridViewColumn{FieldName="UrlRef", Caption="UrlRef"},
+            new SxExtantions.SxGridViewColumn{FieldName="RawUrl", Caption="Целевой адрес"}
+        },
+        Filter = filter,
+        SortDirections = sortDirections,
+        EnableEditing=false
+    },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

@@ -73,9 +73,6 @@ namespace GE.WebUI.Controllers
             var sessionId = request.RequestContext.HttpContext.Session.SessionID;
             Task.Run(() =>
             {
-                var r = new SxRequest(request, sessionId);
-                if ((repo as RepoRequest).Exists(r)) return;
-
                 repo.Create(new SxRequest(request, sessionId));
             });
         }

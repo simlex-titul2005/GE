@@ -42,6 +42,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.SeoInfoController SeoInfo = new GE.WebAdmin.Controllers.T4MVC_SeoInfoController();
     public static GE.WebAdmin.Controllers.SeoKeywordsController SeoKeywords = new GE.WebAdmin.Controllers.T4MVC_SeoKeywordsController();
     public static GE.WebAdmin.Controllers.SettingsController Settings = new GE.WebAdmin.Controllers.T4MVC_SettingsController();
+    public static T4MVC.RobotsController Robots = new T4MVC.RobotsController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

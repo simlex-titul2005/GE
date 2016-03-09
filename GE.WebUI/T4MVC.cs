@@ -185,6 +185,7 @@ namespace Links
             public static readonly string article_less = Url("article.less");
             public static readonly string bootstrap_ext_less = Url("bootstrap-ext.less");
             public static readonly string colors_less = Url("colors.less");
+            public static readonly string error_page_less = Url("error-page.less");
             public static readonly string footer_less = Url("footer.less");
             public static readonly string for_gamers_block_less = Url("for-gamers-block.less");
             public static readonly string game_list_less = Url("game-list.less");

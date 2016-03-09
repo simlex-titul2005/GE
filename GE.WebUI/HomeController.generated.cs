@@ -76,12 +76,14 @@ namespace GE.WebUI.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string Robotstxt = "Robotstxt";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string Robotstxt = "Robotstxt";
         }
 
 
@@ -123,6 +125,17 @@ namespace GE.WebUI.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "game", game);
             IndexOverride(callInfo, game);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void RobotstxtOverride(T4MVC_System_Web_Mvc_FileResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.FileResult Robotstxt()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_FileResult(Area, Name, ActionNames.Robotstxt);
+            RobotstxtOverride(callInfo);
             return callInfo;
         }
 

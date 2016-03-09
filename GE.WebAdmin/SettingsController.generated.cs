@@ -74,6 +74,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string EditEmptyGame = "EditEmptyGame";
             public readonly string EditSite = "EditSite";
+            public readonly string EditRobotsFile = "EditRobotsFile";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -81,6 +82,7 @@ namespace GE.WebAdmin.Controllers
         {
             public const string EditEmptyGame = "EditEmptyGame";
             public const string EditSite = "EditSite";
+            public const string EditRobotsFile = "EditRobotsFile";
         }
 
 
@@ -100,6 +102,14 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_EditRobotsFile s_params_EditRobotsFile = new ActionParamsClass_EditRobotsFile();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_EditRobotsFile EditRobotsFileParams { get { return s_params_EditRobotsFile; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_EditRobotsFile
+        {
+            public readonly string model = "model";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -111,9 +121,11 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string EditEmptyGame = "EditEmptyGame";
+                public readonly string EditRobotsFile = "EditRobotsFile";
                 public readonly string EditSite = "EditSite";
             }
             public readonly string EditEmptyGame = "~/Views/Settings/EditEmptyGame.cshtml";
+            public readonly string EditRobotsFile = "~/Views/Settings/EditRobotsFile.cshtml";
             public readonly string EditSite = "~/Views/Settings/EditSite.cshtml";
         }
     }
@@ -166,6 +178,29 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditSite);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditSiteOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditRobotsFileOverride(T4MVC_System_Web_Mvc_ViewResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult EditRobotsFile()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.EditRobotsFile);
+            EditRobotsFileOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditRobotsFileOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMRobotsFile model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult EditRobotsFile(GE.WebAdmin.Models.VMRobotsFile model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditRobotsFile);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EditRobotsFileOverride(callInfo, model);
             return callInfo;
         }
 

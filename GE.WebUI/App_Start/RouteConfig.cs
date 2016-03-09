@@ -14,6 +14,12 @@ namespace GE.WebUI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.LowercaseUrls = true;
+            
+            routes.MapRoute(
+                name: null,
+                url: "robots.txt",
+                defaults: new { controller = "home", action = "robotstxt", area = "" }
+            );
 
             #region articles
             routes.MapRoute(

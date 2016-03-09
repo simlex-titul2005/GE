@@ -3284,6 +3284,7 @@
     <Compile Include="Models\VMEditRedirect.cs" />
     <Compile Include="Models\VMRedirect.cs" />
     <Compile Include="Models\VMRequest.cs" />
+    <Compile Include="Models\VMRobotsFile.cs" />
     <Compile Include="Models\VMSeoKeywordList.cs" />
     <Compile Include="Models\VMNews.cs" />
     <Compile Include="Models\VMArticleType.cs" />
@@ -3334,6 +3335,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Sql_ArticleTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RobotsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="RoutesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -3418,6 +3422,7 @@
     <Content Include="Views\Redirects\_GridView.cshtml" />
     <Content Include="Views\Redirects\Index.cshtml" />
     <Content Include="Views\Redirects\Edit.cshtml" />
+    <Content Include="Views\Settings\EditRobotsFile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3427,6 +3432,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="Views\Robots\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

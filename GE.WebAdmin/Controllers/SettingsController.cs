@@ -148,5 +148,56 @@ namespace GE.WebAdmin.Controllers
         }
         #endregion
 
+        #region Robots.txt
+        [AcceptVerbs(HttpVerbs.Get)]
+        public virtual ViewResult EditRobotsFile()
+        {
+            var robotsFileSetting = _repo.GetByKey(Settings.robotsFileSetting);
+            var viewModel = new VMRobotsFile
+            {
+                FileContent = robotsFileSetting != null ? robotsFileSetting.Value : null
+            };
+            viewModel.OldFileContent = viewModel.FileContent;
+            return View(viewModel);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult EditRobotsFile(VMRobotsFile model)
+        {
+            if (ModelState.IsValid)
+            {
+                var isExists = !string.IsNullOrEmpty(model.OldFileContent);
+                var isModified = !Equals(model.FileContent, model.OldFileContent);
+
+                if (!isExists)
+                {
+                    var settings = new SxSiteSetting[] {
+                        new SxSiteSetting { Id = Settings.robotsFileSetting, Value = model.FileContent }
+                    };
+                    for (int i = 0; i < settings.Length; i++)
+                    {
+                        _repo.Create(settings[i]);
+                    }
+
+                    TempData["EditEmptyGameMessage"] = "Настройки успешно сохранены";
+                    return RedirectToAction(MVC.Settings.EditRobotsFile());
+                }
+                else if (isExists && isModified)
+                {
+                    _repo.Update(new SxSiteSetting { Id = Settings.robotsFileSetting, Value = model.FileContent }, "Value");
+                    TempData["EditEmptyGameMessage"] = "Настройки успешно обновлены";
+                    return RedirectToAction(MVC.Settings.EditRobotsFile());
+                }
+                else
+                {
+                    TempData["EditEmptyGameMessage"] = "В настройках нет изменений";
+                    return View(model);
+                }
+            }
+
+            return View(model);
+        }
+        #endregion
     }
 }

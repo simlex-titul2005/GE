@@ -106,6 +106,7 @@
     <Compile Include="SxNews.cs" />
     <Compile Include="SxPicture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SxRedirect.cs" />
     <Compile Include="SxRequest.cs" />
     <Compile Include="SxRoute.cs" />
     <Compile Include="SxRouteValue.cs" />

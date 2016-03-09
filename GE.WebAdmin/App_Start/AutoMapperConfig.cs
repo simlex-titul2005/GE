@@ -59,6 +59,11 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxRoute, VMEditRoute>();
                     cfg.CreateMap<VMEditRoute, SxRoute>();
 
+                    //redirect
+                    cfg.CreateMap<SxRedirect, VMRedirect>();
+                    cfg.CreateMap<SxRedirect, VMEditRedirect>();
+                    cfg.CreateMap<VMEditRedirect, SxRedirect>();
+
                     //request
                     cfg.CreateMap<SxRequest, VMRequest>();
 

@@ -10,19 +10,19 @@ using Dapper;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoRequest : SxDbRepository<Guid, SxRequest, DbContext>
+    public sealed class RepoRedirect : SxDbRepository<Guid, SxRedirect, DbContext>
     {
-        public IQueryable<SxRequest> QueryForAdmin(SxFilter filter)
+        public IQueryable<SxRedirect> QueryForAdmin(SxFilter filter)
         {
             var f = (Filter)filter;
             using (var conn = new SqlConnection(base.ConnectionString))
             {
-                var query = @"select dr.Id, dr.SessionId, dr.UrlRef, dr.Browser, dr.ClientIP, dr.UserAgent, dr.RequestType, dr.DateCreate, dr.RawUrl from D_REQUEST dr
+                var query = @"select dr.Id, dr.OldUrl, dr.NewUrl, dr.DateCreate from D_REDIRECT dr
 order by dr.DateCreate desc";
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
                     query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
 
-                var data = conn.Query<SxRequest>(query);
+                var data = conn.Query<SxRedirect>(query);
 
                 return data.AsQueryable();
             }
@@ -33,9 +33,19 @@ order by dr.DateCreate desc";
             var f = (Filter)filter;
             using (var conn = new SqlConnection(base.ConnectionString))
             {
-                var query = @"SELECT COUNT(1) FROM D_REQUEST AS dr";
+                var query = @"SELECT COUNT(1) FROM D_REDIRECT AS dr";
                 var data = conn.Query<int>(query).Single();
                 return (int)data;
+            }
+        }
+
+        public string GetNewUrl(string oldUrl)
+        {
+            using (var conn = new SqlConnection(base.ConnectionString))
+            {
+                var query = @"SELECT dr.NewUrl FROM D_REDIRECT AS dr where dr.OldUrl=@OLD_URL";
+                var data = conn.Query<string>(query, new { OLD_URL = oldUrl }).SingleOrDefault();
+                return data != null ? data.ToString() : null;
             }
         }
     }

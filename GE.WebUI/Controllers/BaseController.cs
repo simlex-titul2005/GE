@@ -31,12 +31,14 @@ namespace GE.WebUI.Controllers
         private IMapper _mapper;
         private SxDbRepository<Guid, SxRequest, DbContext> _repo;
         private SxDbRepository<int, SxSeoInfo, DbContext> _repoSeoInfo;
+        private SxDbRepository<Guid, SxRedirect, DbContext> _repoRedirect;
         private static MemoryCache _seoInfoCache;
         public BaseController()
         {
             _mapper = MvcApplication.MapperConfiguration.CreateMapper();
             _repo = new RepoRequest();
             _repoSeoInfo = new RepoSeoInfo();
+            _repoRedirect=new RepoRedirect();
             if (_seoInfoCache == null)
                 _seoInfoCache = new MemoryCache("SEO_INFO_CACHE");
         }
@@ -60,6 +62,13 @@ namespace GE.WebUI.Controllers
 
             if (filterContext.IsChildAction) return;
 
+            var newUrl = getNewUrl(Request.RawUrl);
+            if (newUrl != null)
+            {
+                filterContext.Result = new RedirectResult(newUrl);
+                return;
+            }
+
             if(!Request.IsLocal)
                 writeRequestInfo(_repo, Request);
 
@@ -68,6 +77,11 @@ namespace GE.WebUI.Controllers
             writeBreadcrumbs(filterContext);
         }
 
+        private string getNewUrl(string oldUrl)
+        {
+            var newUrl = (_repoRedirect as RepoRedirect).GetNewUrl(oldUrl);
+            return newUrl;
+        }
         private static void writeRequestInfo(SxDbRepository<Guid, SxRequest, DbContext> repo, HttpRequestBase request)
         {
             var sessionId = request.RequestContext.HttpContext.Session.SessionID;

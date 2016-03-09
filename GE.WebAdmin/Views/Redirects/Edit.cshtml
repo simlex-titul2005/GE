@@ -1,0 +1,44 @@
+﻿@model VMEditRedirect
+@{
+    var isNew = Model.Id==Guid.Empty;
+    ViewBag.Title = isNew ? "Добавить 301 редирект" : "Редактировать 301 редирект для \"" + Model.OldUrl + "\"";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (!isNew)
+{
+    <form method="post" action="@Url.Action(MVC.Redirects.Delete())">
+        @Html.HiddenFor(x => x.Id)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger pull-right">Удалить редирект</button>
+    </form>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.Redirects.Edit())">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.OldUrl, new { @class = "control-label" })
+            @Html.EditorFor(x => x.OldUrl, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите старый адрес" } })
+            @Html.ValidationMessageFor(x => x.OldUrl)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.NewUrl, new { @class = "control-label" })
+            @Html.EditorFor(x => x.NewUrl, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите новый адрес" } })
+            @Html.ValidationMessageFor(x => x.NewUrl)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+            @Html.ActionLink("Назад", MVC.Redirects.Index(), new { @class = "btn btn-default" })
+            @Html.ActionLink("Статистика запросов", MVC.Request.Index(), new { @class = "btn btn-default", @target="_blank" })
+        </div>
+    </div>
+</form>

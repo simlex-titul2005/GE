@@ -1,0 +1,11 @@
+﻿@model VMRedirect[]
+@{
+    ViewBag.Title = "301 редирект";
+}
+
+<h2>@ViewBag.Title</h2>
+<p class="text-info">В силу невозможности отследить все битые ссылки рекомендуется заменять редирект для всех страниц, уже прошедших индексацию</p>
+<br />
+<div id="grid-301-redirect">
+    @Html.Partial(MVC.Redirects.Views._GridView, Model)
+</div>

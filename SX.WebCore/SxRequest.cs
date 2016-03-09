@@ -17,7 +17,7 @@ namespace SX.WebCore
         public SxRequest(HttpRequestBase request, string sessionId)
         {
             UrlRef = request.UrlReferrer != null ? request.UrlReferrer.AbsolutePath : null;
-            Browser = request.Browser.Browser;
+            Browser = request.Browser != null ? request.Browser.Browser : "не определено";
             UserAgent = request.UserAgent;
             SessionId = sessionId;
             ClientIP = request.ServerVariables["REMOTE_ADDR"];

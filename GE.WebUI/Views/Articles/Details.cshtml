@@ -11,8 +11,9 @@
     <h1 class="@(Model.ArticleTypeName)">@Model.Title</h1>
 
     @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
-
-
+    <br />
+    <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 1)">Это интересно, что тут есть ещё?</a>
+    <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 2)">Это не то, что я искал, попробую снова</a>
     <div class="m-html">
         @if (Model.FrontPictureId.HasValue)
         {

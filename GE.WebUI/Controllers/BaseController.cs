@@ -80,6 +80,10 @@ namespace GE.WebUI.Controllers
         private static void writeRequestInfo(SxDbRepository<Guid, SxRequest, DbContext> repo, HttpRequestBase request)
         {
             var sessionId = request.RequestContext.HttpContext.Session.SessionID;
+            var urlRef = request.UrlReferrer != null ? request.UrlReferrer.AbsolutePath.ToLower() : null;
+            var rawUrl = request.RawUrl.ToLower();
+            if (Equals(urlRef, rawUrl)) return;
+
             Task.Run(() =>
             {
                 repo.Create(new SxRequest(request, sessionId));

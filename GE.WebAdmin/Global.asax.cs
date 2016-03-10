@@ -4,6 +4,7 @@ using GE.WebCoreExtantions;
 using SX.WebCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,7 +17,9 @@ namespace GE.WebAdmin
         private static MapperConfiguration _mapperConfiguration;
         protected void Application_Start()
         {
+            Database.SetInitializer<GE.WebCoreExtantions.DbContext>(null);
             AreaRegistration.RegisterAllAreas();
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             _mapperConfiguration = AutoMapperConfig.MapperConfigurationInstance;
         }

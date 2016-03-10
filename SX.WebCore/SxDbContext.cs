@@ -1,4 +1,5 @@
-﻿using SX.WebCore.Abstract;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using SX.WebCore.Abstract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,10 +10,20 @@ using System.Threading.Tasks;
 
 namespace SX.WebCore
 {
-    public class SxDbContext : System.Data.Entity.DbContext
+    public class SxDbContext : IdentityDbContext<SxAppUser>
     {
         //Строка поделючения задается здесь
-        public SxDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
+        private static string _nameOrConnectionString;
+        public SxDbContext(string nameOrConnectionString)
+            : base(nameOrConnectionString) 
+        {
+            _nameOrConnectionString = nameOrConnectionString;
+        }
+        public static TDbContext Create<TDbContext>()
+        {
+            var context = Activator.CreateInstance<TDbContext>();
+            return context;
+        }
 
         public DbSet<SxArticle> Articles { get; set; }
 

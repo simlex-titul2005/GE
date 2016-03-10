@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class HomeController : Controller
+    public partial class HomeController : BaseController
     {
         public virtual ViewResult Index(DbContext dbContext)
         {

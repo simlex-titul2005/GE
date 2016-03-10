@@ -13,24 +13,12 @@ namespace SX.WebCore
     [Table("D_REQUEST")]
     public sealed class SxRequest : SxDbModel<Guid>
     {
-        public SxRequest() { }
-        public SxRequest(HttpRequestBase request, string sessionId)
-        {
-            UrlRef = request.UrlReferrer != null ? request.UrlReferrer.AbsolutePath : null;
-            Browser = request.Browser != null ? request.Browser.Browser : "не определено";
-            UserAgent = request.UserAgent;
-            SessionId = sessionId;
-            ClientIP = request.ServerVariables["REMOTE_ADDR"];
-            RequestType = request.RequestType;
-            RawUrl = request.RawUrl;
-        }
-
         [Required, MaxLength(128), Index]
         public string SessionId { get; set; }
 
         public string UrlRef { get; set; }
 
-        [Required, MaxLength(150)]
+        [MaxLength(150)]
         public string Browser { get; set; }
 
         [Required, MaxLength(150)]

@@ -30,19 +30,17 @@ namespace GE.WebUI
             }
         }
 
-        public static object Get(string keySetting)
+        public static SxSiteSetting Get(string keySetting)
         {
             var setting = _cache.Get(keySetting);
-            if (setting != null) return setting;
+            if (setting != null) return (SxSiteSetting)setting;
 
             var repo = new RepoSiteSetting();
             var value = repo.GetByKey(keySetting);
-            if (value == null) return null;
+            var newItem = value == null || (value != null && value.Value == null) ? new SxSiteSetting { Id = keySetting, Value = null } : value;
+            _cache.Add(new CacheItem(keySetting, newItem), _defaultPolicy);
 
-            if(value.Value!=null)
-                _cache.Add(new CacheItem(keySetting, value.Value), _defaultPolicy);
-
-            return value.Value;
+            return (SxSiteSetting)_cache.Get(keySetting);
         }
     }
 }

@@ -39,13 +39,13 @@ order by dr.DateCreate desc";
             }
         }
 
-        public string GetNewUrl(string oldUrl)
+        public SxRedirect GetRedirectUrl(string rawUrl)
         {
             using (var conn = new SqlConnection(base.ConnectionString))
             {
                 var query = @"SELECT dr.NewUrl FROM D_REDIRECT AS dr where dr.OldUrl=@OLD_URL";
-                var data = conn.Query<string>(query, new { OLD_URL = oldUrl }).SingleOrDefault();
-                return data != null ? data.ToString() : null;
+                var data = conn.Query<SxRedirect>(query, new { OLD_URL = rawUrl }).SingleOrDefault();
+                return data;
             }
         }
     }

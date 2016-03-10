@@ -17,5 +17,10 @@ namespace SX.WebCore
 
         //[Column("DESCRIPTION"), MaxLength(100)]
         public string Description { get; set; }
+
+        public override string ToString()
+        {
+            return this.Value;
+        }
     }
 }

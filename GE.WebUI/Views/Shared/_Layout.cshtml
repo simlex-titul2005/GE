@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+    var bgUrl=GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -18,7 +22,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body style="background-image:url(@GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath))">
+<body @(bgUrl != null ? "style=background-image:url(" + bgUrl + ")" : null)>
     @Html.Partial(MVC.Shared.Views._NavBar)
     <div class="wrapper">
         @Html.Action(MVC.Games.GameList())

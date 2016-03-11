@@ -107,26 +107,26 @@ namespace GE.WebUI.Extantions.Controllers
             {
                 if (actionName == "list")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = controller.Url.Action(MVC.Articles.List(game: "")) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = controller.Url.Action(MVC.Articles.List()) });
                     if (gameName != null)
                         breadcrumbs.Add(new VMBreadcrumb { Title = gameName });
                 }
                 else if (actionName == "details")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = controller.Url.Action(MVC.Articles.List(game: "")) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = controller.Url.Action(MVC.Articles.List()) });
                 }
             }
             else if (controllerName == "news")
             {
                 if (actionName == "list")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = controller.Url.Action(MVC.News.List(game: "")) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = controller.Url.Action(MVC.News.List()) });
                     if (gameName != null)
                         breadcrumbs.Add(new VMBreadcrumb { Title = gameName });
                 }
                 else if (actionName == "details")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = controller.Url.Action(MVC.News.List(game: "")) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = controller.Url.Action(MVC.News.List()) });
                 }
             }
 

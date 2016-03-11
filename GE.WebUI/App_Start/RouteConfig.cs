@@ -24,78 +24,71 @@ namespace GE.WebUI
             #region articles
             routes.MapRoute(
                 name: null,
-                url: "articles/details/{titleUrl}",
-                defaults: new { controller = "articles", action = "details", area = "" }
-            );
-
-            routes.MapRoute(
-                name: null,
-                url: "articles",
-                defaults: new { controller = "articles", action = "list", game = "", page=1, area = "" }
-            );
-
-            routes.MapRoute(
-               name: null,
-               url: "articles/page{page}",
-               defaults: new { controller = "articles", action = "list", game = "", page = 1, area = "" }
-           );
-
-            routes.MapRoute(
-                name: null,
                 url: "articles/preview",
                 defaults: new { controller = "articles", action = "preview", area = "" }
             );
-            
             routes.MapRoute(
                 name: null,
-                url: "articles/{game}",
-                defaults: new { controller = "articles", action = "list", page=1, area = "" }
+                url: "articles",
+                defaults: new { controller = "articles", action = "list", gameTitle = "", page = 1, area = "" }
             );
-
             routes.MapRoute(
                 name: null,
-                url: "articles/{game}/page{page}",
-                defaults: new { controller = "articles", action = "list", page=1, area = "" }
+                url: "articles/page{page}",
+                defaults: new { controller = "articles", action = "list", gameTitle = (string)null, page = 1, area = "" }
+            );
+            routes.MapRoute(
+                name: null,
+                url: "articles/{gameTitle}",
+                defaults: new { controller = "articles", action = "list", page = 1, area = "" }
+            );
+            routes.MapRoute(
+                name: null,
+                url: "articles/{gameTitle}/page{page}",
+                defaults: new { controller = "articles", action = "list", page = 1, area = "" }
+            );
+            routes.MapRoute(
+                name: null,
+                url: "articles/{year}/{month}/{day}/{titleUrl}",
+                defaults: new { controller = "articles", action = "details", area = "" },
+                constraints: new { year = @"\d{4}" }
             );
             #endregion
 
             #region news
             routes.MapRoute(
                 name: null,
-                url: "news/details/{titleUrl}",
-                defaults: new { controller = "news", action = "details", area = "" }
-            );
-
-            routes.MapRoute(
-                name: null,
                 url: "news",
-                defaults: new { controller = "news", action = "list", game = "", page = 1, area = "" }
+                defaults: new { controller = "news", action = "list", gameTitle = "", page = 1, area = "" }
             );
-
-            routes.MapRoute(
-               name: null,
-               url: "news/page{page}",
-               defaults: new { controller = "news", action = "list", game = "", page = 1, area = "" }
-           );
-
             routes.MapRoute(
                 name: null,
-                url: "news/{game}",
-                defaults: new { controller = "news", action = "list", page = 1, area = "" }
+                url: "news/page{page}",
+                defaults: new { controller = "news", action = "list", gameTitle = (string)null, page = 1, area = "" }
             );
-
             routes.MapRoute(
                 name: null,
-                url: "news/{game}/page{page}",
+                url: "news/{gameTitle}",
                 defaults: new { controller = "news", action = "list", page = 1, area = "" }
+            );
+            routes.MapRoute(
+                name: null,
+                url: "news/{gameTitle}/page{page}",
+                defaults: new { controller = "news", action = "list", page = 1, area = "" }
+            );
+            routes.MapRoute(
+                name: null,
+                url: "news/{year}/{month}/{day}/{titleUrl}",
+                defaults: new { controller = "news", action = "details", area = "" },
+                constraints: new { year = @"\d{4}" }
             );
             #endregion
 
-            routes.MapRoute(
-                name: null,
-                url: "home/{game}",
-                defaults: new { controller = "home", action = "index", game="", area = "" }
-            );
+            //routes.MapRoute(
+            //    name: null,
+            //    url: "home/{game}",
+            //    defaults: new { controller = "home", action = "index", game="", area = "" }
+            //);
 
             routes.MapRoute(
                 name: null,

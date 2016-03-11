@@ -31,7 +31,7 @@ namespace GE.WebUI.Controllers
             ViewBag.ControllerName = routes["controller"];
             if (ViewBag.ControllerName == "error") return null;
             ViewBag.ActionName = routes["action"];
-            var gameName = routes["game"];
+            var gameName = routes["gameTitle"];
             ViewBag.GameName = gameName;
 
             var viewModel = new VMGameMenu(imgWidth, iconHeight);

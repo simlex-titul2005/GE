@@ -7,6 +7,11 @@
         CommentsCount = Model.CommentsCount,
         ViewsCount = Model.ViewsCount
     };
+    
+    var year = Model.DateCreate.Year;
+    var month = Model.DateCreate.Month.ToString("00");
+    var day = Model.DateCreate.Day.ToString("00");
+    var titleUrl = Model.TitleUrl;
 }
 
 <figure class="mat-f-p">
@@ -20,7 +25,7 @@
     }
 </figure>
 <div class="content">
-    <a class="link" href="@Url.Action(MVC.Articles.Details(Model.TitleUrl))" title="@Model.Title">@Model.Title</a>
+    <a class="link" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))" title="@Model.Title">@Model.Title</a>
     <p class="foreword">
         @Model.Foreword
     </p>
@@ -30,7 +35,7 @@
                 @Html.DisplayFor(x => info)
             </div>
             <div class="col-md-6">
-                <a class="btn btn-default btn-transparent dark-blue" href="@Url.Action(MVC.Articles.Details(Model.TitleUrl))">Подробнее</a>
+                <a class="btn btn-default btn-transparent dark-blue" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))">Подробнее</a>
             </div>
         </div>
     </div>

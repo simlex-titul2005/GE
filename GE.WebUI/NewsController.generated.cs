@@ -58,6 +58,12 @@ namespace GE.WebUI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ViewResult List()
+        {
+            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.List);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ViewResult Details()
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
@@ -106,8 +112,7 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_List
         {
-            public readonly string game = "game";
-            public readonly string page = "page";
+            public readonly string filter = "filter";
         }
         static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -115,6 +120,9 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Details
         {
+            public readonly string year = "year";
+            public readonly string month = "month";
+            public readonly string day = "day";
             public readonly string titleUrl = "titleUrl";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -164,27 +172,29 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void ListOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string game, int page);
+        partial void ListOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, GE.WebCoreExtantions.Filter filter);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult List(string game, int page)
+        public override System.Web.Mvc.ViewResult List(GE.WebCoreExtantions.Filter filter)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.List);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "game", game);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            ListOverride(callInfo, game, page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filter", filter);
+            ListOverride(callInfo, filter);
             return callInfo;
         }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string titleUrl);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int year, string month, string day, string titleUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Details(string titleUrl)
+        public override System.Web.Mvc.ViewResult Details(int year, string month, string day, string titleUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "year", year);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "month", month);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "day", day);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
-            DetailsOverride(callInfo, titleUrl);
+            DetailsOverride(callInfo, year, month, day, titleUrl);
             return callInfo;
         }
 

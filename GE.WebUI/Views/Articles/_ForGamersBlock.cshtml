@@ -22,7 +22,7 @@
                                     <span class="desc">@game.Description</span>
                                 </figure>
                             </a>
-                            <a href="@Url.Action(MVC.Articles.List(game: game.Title))" class="link">Кликнуть, чтобы открыть новую вкладку со статьями по игре @game.Title</a>
+                            <a href="@Url.Action("list", new { controller="articles", gameTitle=game.Title})" class="link">Кликнуть, чтобы открыть новую вкладку со статьями по игре @game.Title</a>
                             <ul class="dropdown">
                                 @for (int y = 0; y < game.ArticleTypeLength; y++)
                                 {

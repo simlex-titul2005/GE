@@ -44,15 +44,15 @@ namespace GE.WebUI.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult List(string game = null, int page = 1)
+        public virtual ViewResult List(GE.WebCoreExtantions.Filter filter)
         {
-            ViewBag.GameTitle = game;
+            ViewBag.GameTitle = filter.GameTitle;
 
             var pageSize = 10;
             switch (_modelCoreType)
             {
                 case Enums.ModelCoreType.Article:
-                    pageSize = 9;
+                    pageSize = 3;
                     break;
                 case Enums.ModelCoreType.News:
                     pageSize = 10;
@@ -60,11 +60,12 @@ namespace GE.WebUI.Controllers
             }
 
             var viewModel = new SxExtantions.SxPagedCollection<TModel>();
-            var filter = new EXT.Filter { GameTitle = game, SkipCount = pageSize * (page - 1), PageSize = pageSize };
+            filter.PageSize = pageSize;
+            filter.SkipCount = pageSize * (filter.Page - 1);
             viewModel.Collection = _repo.Query(filter).ToArray();
             viewModel.PagerInfo = new SxExtantions.SxPagerInfo
             {
-                Page = page,
+                Page = filter.Page,
                 PageSize = pageSize,
                 PagerSize = 3,
                 TotalItems = _repo.Count(filter)
@@ -74,7 +75,7 @@ namespace GE.WebUI.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Details(string titleUrl)
+        public virtual ViewResult Details(int year, string month, string day, string titleUrl)
         {
             SxMaterial model = null;
             switch (_modelCoreType)

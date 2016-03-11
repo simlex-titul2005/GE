@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using Dapper;
 using SX.WebCore.Abstract;
+using GE.WebCoreExtantions;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -58,19 +59,13 @@ namespace GE.WebUI.Extantions.Repositories
             }
         }
 
-        public static Dictionary<string, string> Last(this GE.WebCoreExtantions.Repositories.RepoArticle repo, int amount)
+        public static Article[] Last(this GE.WebCoreExtantions.Repositories.RepoArticle repo, int amount)
         {
-            var result = new Dictionary<string, string>();
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var results = conn.Query<dynamic>(Resources.Sql_Articles.LastArticles, new { AMOUNT = amount }).ToArray();
-                for (int i = 0; i < results.Length; i++)
-                {
-                    var a=results[i];
-                    result.Add(a.TitleUrl, a.Title);
-                }
+                var results = conn.Query<Article>(Resources.Sql_Articles.LastArticles, new { AMOUNT = amount }).ToArray();
+                return results;
             }
-            return result;
         }
     }
 }

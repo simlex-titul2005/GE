@@ -14,7 +14,7 @@
                     {
                         var news = Model.News[i];
                         <li>
-                            <a href="@Url.Action(MVC.News.Details(news.TitleUrl))" data-game-id="@news.GameId">
+                            <a href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))" data-game-id="@news.GameId">
                                 <span class="date">@news.DateCreate.ToString("dd-MM-yyy")</span> <span class="title">@news.Title</span>
                             </a>
                         </li>
@@ -32,7 +32,7 @@
                                 var length=Model.GamesLength > 4 ? 4 : Model.GamesLength;
                                 var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
                                 <li @("style=width:" + width + "%")>
-                                    <a href="@Url.Action(MVC.News.List(game: game.Title))">
+                                    <a href="@Url.Action("list", new { controller = "news", gameTitle = game.Title })">
                                         <figure data-game-id="@game.Id">
                                             <img alt="" src="@Url.Action(MVC.Pictures.Picture((Guid)game.FrontPictureId, height: 220))" />
                                             <span class="game-title">@game.Title</span>
@@ -47,6 +47,6 @@
         </div>
     </div>
     <div class="text-center all-news-btn">
-        <a href="@Url.Action(MVC.News.List(game:"", page: 1))" class="btn btn-default btn-transparent dark-blue">Все новости</a>
+        <a href="@Url.Action(MVC.News.List())" class="btn btn-default btn-transparent dark-blue">Все новости</a>
     </div>
 </aside>

@@ -1,4 +1,4 @@
-﻿@model Dictionary<string, string>
+﻿@model Article[]
 @{
     Layout = null;
 }
@@ -7,7 +7,7 @@
     @foreach (var item in Model)
     {
         <li>
-            <a title="@item.Value" href="@Url.Action(MVC.Articles.Details(item.Key))">@item.Value</a>
+            <a title="@item.Title" href="@Url.Action(MVC.Articles.Details(item.DateCreate.Year, item.DateCreate.Month.ToString("00"), item.DateCreate.Day.ToString("00"), item.TitleUrl))">@item.Title</a>
         </li>
     }
 </ul>

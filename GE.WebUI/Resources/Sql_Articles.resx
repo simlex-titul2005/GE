@@ -143,7 +143,7 @@ ORDER BY
   </data>
   <data name="LastArticles" xml:space="preserve">
     <value>--DECLARE @AMOUNT INT=3
-SELECT TOP(@AMOUNT) dm.TitleUrl, dm.Title FROM D_ARTICLE AS da
+SELECT TOP(@AMOUNT) dm.TitleUrl, dm.Title, dm.DateCreate FROM D_ARTICLE AS da
 JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
 ORDER BY dm.DateCreate DESC</value>
   </data>

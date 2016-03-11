@@ -100,8 +100,9 @@ namespace SX.WebCore.HtmlHelpers
                     });
             else
             {
+                var href = pageUrl(page);
                 a.MergeAttributes(new Dictionary<string, object>() {
-                        { "href", pageUrl(page) }
+                        { "href", href }
                     });
             }
 

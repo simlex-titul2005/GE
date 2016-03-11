@@ -1,6 +1,7 @@
 ﻿@model SxExtantions.SxPagedCollection<News>
 @{
     Layout = null;
+    var gameTitle=(string)ViewBag.GameTitle;
 }
 
 @if (Model.Length != 0)
@@ -8,7 +9,7 @@
     <div class="list-news-container">
         @Html.SxList(Model, new SxExtantions.SxListSettings { ColCount = 2, CellCssStyle = "list-news" })
         <div class="text-center">
-            @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action(MVC.News.List(game: (string)ViewBag.GameTitle, page: x)), isAjax: false, htmlAttributes: new { @class = "pagination" })
+            @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("list", new { gameTitle = gameTitle , page=x}), isAjax: false, htmlAttributes: new { @class = "pagination" })
         </div>
     </div>
 }

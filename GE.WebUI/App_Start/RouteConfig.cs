@@ -84,11 +84,11 @@ namespace GE.WebUI
             );
             #endregion
 
-            //routes.MapRoute(
-            //    name: null,
-            //    url: "home/{game}",
-            //    defaults: new { controller = "home", action = "index", game="", area = "" }
-            //);
+            routes.MapRoute(
+                name: null,
+                url: "home/{gameTitle}",
+                defaults: new { controller = "home", action = "index", gameTitle = UrlParameter.Optional, area = "" }
+            );
 
             routes.MapRoute(
                 name: null,

@@ -3257,6 +3257,7 @@
     <Content Include="bower_components\jquery\README.md" />
     <Content Include="bower_components\jquery\src\.jshintrc" />
     <Content Include="Content\less\signin.less" />
+    <Content Include="Content\less\manuals.less" />
     <None Include="Properties\PublishProfiles\admin-game-exe.pubxml" />
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt.settings.xml" />
@@ -3297,6 +3298,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClicksController.cs" />
     <Compile Include="Controllers\ClickTypesController.cs" />
+    <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\RedirectsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\SeoKeywordsController.cs" />
@@ -3325,6 +3327,9 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManualsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="MenuesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -3489,6 +3494,7 @@
     <Content Include="Views\Clicks\_GridView.cshtml" />
     <Content Include="Views\Clicks\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Manuals\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

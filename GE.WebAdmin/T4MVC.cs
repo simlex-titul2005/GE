@@ -46,7 +46,6 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.SeoInfoController SeoInfo = new GE.WebAdmin.Controllers.T4MVC_SeoInfoController();
     public static GE.WebAdmin.Controllers.SeoKeywordsController SeoKeywords = new GE.WebAdmin.Controllers.T4MVC_SeoKeywordsController();
     public static GE.WebAdmin.Controllers.SettingsController Settings = new GE.WebAdmin.Controllers.T4MVC_SettingsController();
-    public static T4MVC.RobotsController Robots = new T4MVC.RobotsController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -185,6 +184,7 @@ namespace Links
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string bootstrap_ext_less = Url("bootstrap-ext.less");
             public static readonly string colors_less = Url("colors.less");
+            public static readonly string manuals_less = Url("manuals.less");
             public static readonly string sb_admin_2_less = Url("sb-admin-2.less");
             public static readonly string signin_less = Url("signin.less");
             public static readonly string site_less = Url("site.less");

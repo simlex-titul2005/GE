@@ -30,6 +30,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 	dat.Id,
 	dat.Name,
 	dat.[Description],
+    dat.GameId,
 	dg.Title AS GameTitle
 FROM D_ARTICLE_TYPE AS dat
 JOIN D_GAME AS dg ON dg.Id = dat.GameId

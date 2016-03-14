@@ -90,6 +90,7 @@ namespace GE.WebUI.Extantions.Controllers
                 controller.ViewBag.Title = seoInfo.SeoTitle;
                 controller.ViewBag.Description = seoInfo.SeoDescription;
                 controller.ViewBag.Keywords = seoInfo.KeywordsString;
+                controller.ViewBag.H1 = seoInfo.H1;
             }
         }
 

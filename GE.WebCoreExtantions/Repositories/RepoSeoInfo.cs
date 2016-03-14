@@ -24,6 +24,17 @@ namespace GE.WebCoreExtantions.Repositories
             }
         }
 
+        public override int Count(SxFilter filter)
+        {
+            var f = (Filter)filter;
+            using (var conn = new SqlConnection(base.ConnectionString))
+            {
+                var query = @"SELECT COUNT(1) FROM D_SEO_INFO";
+                var data = conn.Query<int>(query).Single();
+                return (int)data;
+            }
+        }
+
         public SxSeoInfo GetByRawUrl(string rawUrl)
         {
             using (var conn = new SqlConnection(base.ConnectionString))

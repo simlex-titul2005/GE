@@ -1,6 +1,8 @@
 ﻿@model SxExtantions.SxPagedCollection<News>
-
-<h1 class="header">Новости</h1>
+@{
+    ViewBag.H1 = ViewBag.H1 ?? "Новости";
+    ViewBag.H1CssClass = "header";
+}
 
 @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
 

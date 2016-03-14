@@ -22,5 +22,11 @@ namespace SX.WebCore
 
         [MaxLength(255), Required, Index]
         public string RawUrl { get; set; }
+
+        [MaxLength(80), Index]
+        public string H1 { get; set; }
+
+        [MaxLength(20)]
+        public string H1CssClass { get; set; }
     }
 }

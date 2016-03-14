@@ -3315,6 +3315,7 @@
     <Compile Include="Controllers\RouteValuesController.cs" />
     <Compile Include="Controllers\SeoInfoController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Extantions\Repositories\RepoSeoInfo.cs" />
     <Compile Include="Extantions\Repositories\RepoClick.cs" />
     <Compile Include="Extantions\Repositories\RepoArticleType.cs" />
     <Compile Include="GamesController.generated.cs">
@@ -3400,9 +3401,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Sql_ArticleTypes.resx</DependentUpon>
-    </Compile>
-    <Compile Include="RobotsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="RoutesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -3504,7 +3502,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="Views\Robots\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

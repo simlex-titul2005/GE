@@ -7,11 +7,9 @@
         ViewsCount = Model.ViewsCount
     };
 }
-<h1>@Model.Title</h1>
 
-@Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
-
-<div class="detail-article">
+<div class="detail-news">
+    @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
     <br />
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 1)">Это интересно, что тут есть ещё?</a>
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 2)">Это не то, что я искал, попробую снова</a>

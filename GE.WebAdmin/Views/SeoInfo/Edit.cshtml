@@ -10,7 +10,7 @@
     <form method="post" action="delete">
         @Html.HiddenFor(x => x.Id)
         @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-danger pull-right">Удалить</button>
+        <button type="submit" class="btn btn-danger pull-right" onclick="if(!confirm('Удалить запись?')) return false;">Удалить</button>
     </form>
 }
 <form method="post" action="@Url.Action(MVC.SeoInfo.Edit())">
@@ -32,7 +32,7 @@
             @Html.LabelFor(x => x.SeoTitle, new { @class = "control-label" })
             <span class="text-info"> (тег Title)</span>
             @Html.EditorFor(x => x.SeoTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите заголовок страницы" } })
-            @Html.ValidationMessageFor(x => x.RawUrl)
+            @Html.ValidationMessageFor(x => x.SeoTitle)
         </div>
     </div>
     <br />
@@ -42,6 +42,21 @@
             <span class="text-info"> (тег Description)</span>
             @Html.EditorFor(x => x.SeoDescription, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание страницы" } })
             @Html.ValidationMessageFor(x => x.SeoDescription)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-9">
+            @Html.LabelFor(x => x.H1, new { @class = "control-label" })
+            <span class="text-info"> (тег h1)</span>
+            @Html.EditorFor(x => x.H1, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите тег h1" } })
+            @Html.ValidationMessageFor(x => x.H1)
+            <div class="text-info">Тег отображается непосредственно перед началом любого полезного контента страницы. В случае, если для материалов предусмотррен тег h1 в теле материала, этот тег заменяется заданным здесь.</div>
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(x => x.H1CssClass, new { @class = "control-label" })
+            @Html.EditorFor(x => x.H1CssClass, new { htmlAttributes = new { @class = "form-control", @placeholder = "Css стиль тега h1" } })
+            @Html.ValidationMessageFor(x => x.H1CssClass)
         </div>
     </div>
     <br />
@@ -56,7 +71,7 @@
                 <!--keywords-->}
             else
             {
-                <p class="text-info">Редактирование ключевых слов доступно только только при наличии отслеживаемой страницы в базе данных.</p>
+                <p class="text-muted"><i class="fa fa-info"></i> Редактирование ключевых слов доступно только только при наличии отслеживаемой страницы в базе данных.</p>
             }
         </div>
     </div>

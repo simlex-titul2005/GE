@@ -6,10 +6,9 @@
         CommentsCount = Model.CommentsCount,
         ViewsCount = Model.ViewsCount
     };
+    ViewBag.H1CssClass = ViewBag.H1CssClass ?? Model.ArticleTypeName;
 }
 <div class="detail-article @(Model.ArticleTypeName)">
-    <h1 class="@(Model.ArticleTypeName)">@Model.Title</h1>
-
     @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
     <br />
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 1)">Это интересно, что тут есть ещё?</a>

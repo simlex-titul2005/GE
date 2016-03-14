@@ -22,5 +22,19 @@ namespace GE.WebCoreExtantions.Repositories
                 return (int)data;
             }
         }
+
+        public override void Delete(params object[] id)
+        {
+            using (var conn = new SqlConnection(base.ConnectionString))
+            {
+                var query = @"UPDATE D_ARTICLE
+SET
+	ArticleTypeName = NULL,
+	ArticleTypeGameId = NULL
+WHERE ArticleTypeName=@AT_NAME AND ArticleTypeGameId=@AT_GAME_ID ";
+                conn.Execute(query, new { @AT_NAME = id[0], @AT_GAME_ID=id[1]});
+            }
+            base.Delete(id);
+        }
     }
 }

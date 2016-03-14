@@ -62,6 +62,12 @@ namespace GE.WebAdmin.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ArticleTypesByGameId);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Delete()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ArticleTypesController Actions { get { return MVC.ArticleTypes; } }
@@ -81,6 +87,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
             public readonly string ArticleTypesByGameId = "ArticleTypesByGameId";
+            public readonly string Delete = "Delete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -89,6 +96,7 @@ namespace GE.WebAdmin.Controllers
             public const string Index = "Index";
             public const string Edit = "Edit";
             public const string ArticleTypesByGameId = "ArticleTypesByGameId";
+            public const string Delete = "Delete";
         }
 
 
@@ -120,6 +128,14 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string gameId = "gameId";
             public readonly string curName = "curName";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete
+        {
+            public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -209,6 +225,18 @@ namespace GE.WebAdmin.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gameId", gameId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "curName", curName);
             ArticleTypesByGameIdOverride(callInfo, gameId, curName);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditArticleType model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Delete(GE.WebAdmin.Models.VMEditArticleType model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            DeleteOverride(callInfo, model);
             return callInfo;
         }
 

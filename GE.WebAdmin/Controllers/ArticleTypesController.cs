@@ -95,7 +95,7 @@ namespace GE.WebAdmin.Controllers
                 return RedirectToAction(MVC.ArticleTypes.Index());
             }
             else
-                return View(redactModel);
+                return View(model);
         }
 
         public virtual ActionResult ArticleTypesByGameId(int? gameId, string curName)
@@ -112,6 +112,14 @@ namespace GE.WebAdmin.Controllers
                 return PartialView(MVC.ArticleTypes.Views._ArticleTypesByGameId, viewModel);
             }
             else return Content("<span class=\"form-control text-danger\">Не поддерживается без выбора игры</span>");
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete(VMEditArticleType model)
+        {
+            _repo.Delete(model.Name, model.GameId);
+            return RedirectToAction("index");
         }
     }
 }

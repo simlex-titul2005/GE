@@ -36,58 +36,15 @@ namespace GE.WebAdmin.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(VMRedirect filter, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMRedirect filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
-            //string sessionId = filter != null ? filter.SessionId : null;
-            //string urlRef = filter != null ? filter.UrlRef : null;
-            //string browser = filter != null ? filter.Browser : null;
-            //string clientIP = filter != null ? filter.ClientIP : null;
-            //string userAgent = filter != null ? filter.UserAgent : null;
-            //string requestType = filter != null ? filter.RequestType : null;
-            //string rawUrl = filter != null ? filter.RawUrl : null;
-            ViewBag.Filter = filter;
+            string oldUrl = filterModel != null ? filterModel.OldUrl : null;
+            string newUrl = filterModel != null ? filterModel.NewUrl : null;
+            ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            //select
-            //var temp = _repo.All;
-            //if (id != 0)
-            //    temp = temp.Where(x => x.Id == id);
-            //if (title != null)
-            //    temp = temp.Where(x => x.Title.Contains(title));
-            //if (html != null)
-            //    temp = temp.Where(x => x.Html.Contains(html));
-
-            //order
-            //var orders = order.Where(x => x.Value != SxExtantions.SortDirection.Unknown);
-            //if (orders.Count() != 0)
-            //{
-            //    foreach (var o in orders)
-            //    {
-            //        if (o.Key == "Title")
-            //        {
-            //            if (o.Value == SxExtantions.SortDirection.Desc)
-            //                temp = temp.OrderByDescending(x => x.Title);
-            //            else if (o.Value == SxExtantions.SortDirection.Asc)
-            //                temp = temp.OrderBy(x => x.Title);
-            //        }
-            //        if (o.Key == "Html")
-            //        {
-            //            if (o.Value == SxExtantions.SortDirection.Desc)
-            //                temp = temp.OrderByDescending(x => x.Html);
-            //            else if (o.Value == SxExtantions.SortDirection.Asc)
-            //                temp = temp.OrderBy(x => x.Html);
-            //        }
-            //        if (o.Key == "DateCreate")
-            //        {
-            //            if (o.Value == SxExtantions.SortDirection.Desc)
-            //                temp = temp.OrderByDescending(x => x.DateCreate);
-            //            else if (o.Value == SxExtantions.SortDirection.Asc)
-            //                temp = temp.OrderBy(x => x.DateCreate);
-            //        }
-            //    }
-            //}
-
-            var list = (_repo as RepoRedirect).QueryForAdmin(new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize })
+            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var list = (_repo as RepoRedirect).QueryForAdmin(filter)
                 .Select(x => Mapper.Map<SxRedirect, VMRedirect>(x)).ToArray();
 
             ViewData["Page"] = page;

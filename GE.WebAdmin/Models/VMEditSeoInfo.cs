@@ -25,5 +25,11 @@ namespace GE.WebAdmin.Models
         public string SeoDescription { get; set; }
 
         public VMSeoKeyword[] Keywords { get; set; }
+
+        [MaxLength(80), Display(Name = "Тег h1")]
+        public string H1 { get; set; }
+
+        [MaxLength(20), Display(Name = "Css стиль тега h1")]
+        public string H1CssClass { get; set; }
     }
 }

@@ -97,6 +97,8 @@ namespace GE.WebUI.Controllers
             {
                 if (ViewBag.Title == null)
                     ViewBag.Title = model.Title;
+                if (ViewBag.H1 == null)
+                    ViewBag.H1 = model.Title;
 
                 var viewsCount = model.ViewsCount;
 

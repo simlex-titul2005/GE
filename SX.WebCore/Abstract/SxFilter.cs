@@ -10,5 +10,6 @@ namespace SX.WebCore.Abstract
     {
         public int? SkipCount { get; set; }
         public int? PageSize { get; set; }
+        public object[] Additional { get; set; }
     }
 }

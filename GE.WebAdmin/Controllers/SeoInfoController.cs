@@ -31,7 +31,7 @@ namespace GE.WebAdmin.Controllers
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = _repo.All.Count();
+            ViewData["RowsCount"] = (_repo as RepoSeoInfo).FilterCount(null);
 
             return View(list);
         }
@@ -43,12 +43,12 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            var list = (_repo as RepoSeoInfo).QueryForAdmin(filter).ToArray();
+            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Additional = new object[] { rawUrl } };
+            var list = (_repo as RepoSeoInfo).QueryForAdmin(filter, order).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = _repo.Count(null);
+            ViewData["RowsCount"] = (_repo as RepoSeoInfo).FilterCount(filter);
 
             return PartialView("_GridView", list);
         }

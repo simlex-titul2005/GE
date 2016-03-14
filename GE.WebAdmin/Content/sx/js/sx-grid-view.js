@@ -1,5 +1,5 @@
 ﻿function fillGridViewForm(guid) {
-    var gridView = $('.sx-grid-view[id="' + guid + '"]');
+    var gridView = $('.sx-gv[id="' + guid + '"]');
     var form = $('#grid-view-form-' + guid);
 
     var filterRow = gridView.find('.filter-row');
@@ -34,7 +34,6 @@ function pressGridViewColumn(e) {
     direction = direction == 'Asc' ? 'Desc' : 'Asc';
     gridView.find('th.ordered-column').attr('data-sort-direction', 'Unknown');
     $(e).attr('data-sort-direction', direction);
-
 
     var page = $('.sx-grid-view[id="' + guid + '"] .sx-pager li.active a').text();
     $('#grid-view-form-' + guid + ' input[name="page"]').val(page);

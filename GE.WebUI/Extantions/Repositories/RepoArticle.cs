@@ -27,7 +27,8 @@ namespace GE.WebUI.Extantions.Repositories
                     Id = x.GameId,
                     Description = x.Description,
                     FrontPictureId = x.FrontPictureId,
-                    Title = x.Title
+                    Title = x.Title,
+                    TitleUrl=x.TitleUrl
                 }).Distinct().ToArray();
 
             viewModel.Games = new VMFGBGame[games.Length];

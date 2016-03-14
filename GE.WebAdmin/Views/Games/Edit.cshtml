@@ -29,6 +29,15 @@
     <br />
     <div class="row">
         <div class="col-md-12">
+            @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+            @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.TitleUrl)
+            <div class="text-info">Ключ учавствует при формировании ссылок сайта. По-умолчанию задается равным наименованию игры.</div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
             @Html.LabelFor(x => x.Description, new { @class = "control-label" })
             @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(x => x.Description)

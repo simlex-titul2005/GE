@@ -46,7 +46,8 @@ namespace GE.WebUI.Models
                 {
                     Id=x.GameId,
                     FrontPictureId = x.FrontPictureId,
-                    Title = x.GameTitle
+                    Title = x.GameTitle,
+                    TitleUrl=x.GameTitle
                 })
                 .ToArray();
             }
@@ -81,6 +82,7 @@ namespace GE.WebUI.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public string TitleUrl { get; set; }
         public Guid? FrontPictureId { get; set; }
     }
 }

@@ -27,7 +27,7 @@
 
 function pressGridViewColumn(e) {
     var guid = $(e).closest('table').attr('id');
-    var gridView = $('.sx-grid-view[id="' + guid + '"]');
+    var gridView = $('.sx-gv[id="' + guid + '"]');
 
     var direction = $(e).attr('data-sort-direction');
     var column = $(e).attr('data-column-name');
@@ -35,7 +35,7 @@ function pressGridViewColumn(e) {
     gridView.find('th.ordered-column').attr('data-sort-direction', 'Unknown');
     $(e).attr('data-sort-direction', direction);
 
-    var page = $('.sx-grid-view[id="' + guid + '"] .sx-pager li.active a').text();
+    var page = $('.sx-gv[id="' + guid + '"] .sx-pager li.active a').text();
     $('#grid-view-form-' + guid + ' input[name="page"]').val(page);
 
     fillGridViewForm(guid);

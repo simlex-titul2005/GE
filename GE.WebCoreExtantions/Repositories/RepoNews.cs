@@ -56,8 +56,8 @@ FROM   D_NEWS         AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.ID = da.ID
             AND dm.ModelCoreType = da.ModelCoreType
-       WHERE  dg.Title = @GAME_TITLE
-       OR  @GAME_TITLE IS NULL
+       WHERE  dg.TitleUrl = @GAME_TITLE_URL
+       OR  @GAME_TITLE_URL IS NULL
        ORDER BY dm.DateCreate DESC";
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
                     query += " OFFSET " + f.SkipCount + " ROWS FETCH NEXT " + f.PageSize + " ROWS ONLY";
@@ -66,7 +66,7 @@ FROM   D_NEWS         AS da
                     n.Game = g;
                     n.GameId = n.GameId;
                     return n;
-                }, param: new { GAME_TITLE = f.GameTitle }, splitOn: "GameId");
+                }, param: new { GAME_TITLE_URL = f.GameTitle }, splitOn: "GameId");
 
                 return data.AsQueryable();
             }

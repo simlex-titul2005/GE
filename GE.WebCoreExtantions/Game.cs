@@ -16,6 +16,9 @@ namespace GE.WebCoreExtantions
         [MaxLength(100), Required]
         public string Title { get; set; }
 
+        [MaxLength(100), Required]
+        public string TitleUrl { get; set; }
+
         [MaxLength(100),]
         public string TitleAbbr { get; set; }
 

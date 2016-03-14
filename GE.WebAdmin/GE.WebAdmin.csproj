@@ -3315,6 +3315,7 @@
     <Compile Include="Controllers\RouteValuesController.cs" />
     <Compile Include="Controllers\SeoInfoController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Extantions\Repositories\RepoPicture.cs" />
     <Compile Include="Extantions\Repositories\RepoSeoInfo.cs" />
     <Compile Include="Extantions\Repositories\RepoClick.cs" />
     <Compile Include="Extantions\Repositories\RepoArticleType.cs" />

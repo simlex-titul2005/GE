@@ -53,14 +53,14 @@ FROM   D_ARTICLE         AS da
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = da.GameId";
                 if (f != null && !string.IsNullOrEmpty(f.GameTitle))
-                    query += @" WHERE  dg.Title = @GAME_TITLE
-       OR  @GAME_TITLE IS NULL";
+                    query += @" WHERE  dg.TitleUrl = @GAME_TITLE_URL
+       OR  @GAME_TITLE_URL IS NULL";
                 query += @" ORDER BY
        dm.DateCreate DESC";
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
                     query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
 
-                var data = f != null && !string.IsNullOrEmpty(f.GameTitle) ? conn.Query<Article>(query, new { GAME_TITLE = f.GameTitle }) : conn.Query<Article>(query);
+                var data = f != null && !string.IsNullOrEmpty(f.GameTitle) ? conn.Query<Article>(query, new { GAME_TITLE_URL = f.GameTitle }) : conn.Query<Article>(query);
 
                 return data.AsQueryable();
             }
@@ -101,10 +101,10 @@ FROM   D_ARTICLE         AS da
             {
                 var query = @"SELECT COUNT(1) FROM D_ARTICLE AS da
 LEFT JOIN D_GAME dg ON dg.Id=da.GameId
-WHERE @GAME_TITLE IS NULL OR dg.Title=@GAME_TITLE";
+WHERE @TITLE_URL IS NULL OR dg.TitleUrl=@TITLE_URL";
                 var data = f != null && !string.IsNullOrEmpty(f.GameTitle)
-                    ? conn.Query<int>(query, new { GAME_TITLE = f.GameTitle }).Single()
-                    : conn.Query<int>(query, new { GAME_TITLE = (string)null }).Single();
+                    ? conn.Query<int>(query, new { TITLE_URL = f.GameTitle }).Single()
+                    : conn.Query<int>(query, new { TITLE_URL = (string)null }).Single();
 
                 return (int)data;
             }

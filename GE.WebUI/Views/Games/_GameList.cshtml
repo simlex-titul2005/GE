@@ -18,8 +18,9 @@
                 @for (int i = 0; i < Model.Length; i++)
                 {
                     var item = Model.Games[i];
-                    <li style="width:@(length + "%")" @(item.Title.ToLower() == gameName ? "class=active" : null)>
-                        <a href="@Url.Action(actionName, new { controller=controllerName, gameTitle = item.Title })" title="@item.Title" data-toggle="tooltip" data-placement="bottom" class="red-tooltip ">
+                    var url = actionName == "list" || actionName=="index" ? Url.Action(actionName, new { controller = controllerName, gameTitle = item.TitleUrl }) : Url.Action("list", new { controller = controllerName, gameTitle = item.TitleUrl });
+                    <li style="width:@(length + "%")" @(item.TitleUrl.ToLower() == gameName ? "class=active" : null)>
+                        <a href="@url" title="@item.Title" data-toggle="tooltip" data-placement="bottom" class="red-tooltip ">
                             <img alt="@item.Title" src="@Url.Action(MVC.Pictures.Picture(item.FrontPictureId, height: 80))" />
                             <span class="visible-xs">@item.Title</span>
                         </a>

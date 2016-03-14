@@ -66,7 +66,7 @@ namespace GE.WebUI.Resources {
         ///       dm.Title, dm.TitleUrl,
         ///       dm.FrontPictureId,
         ///       dn.GameId,
-        ///       dg.Title          AS GameTitle
+        ///       dg.TitleUrl          AS GameTitle
         ///FROM   (
         ///           SELECT MAX(dm.DateCreate)  AS DateCreate,
         ///                  dn.GameId           AS GameId
@@ -75,7 +75,7 @@ namespace GE.WebUI.Resources {
         ///                       ON  dm.ID = dn.ID
         ///                       AND dm.ModelCoreType = dn.ModelCoreType
         ///           GROUP BY
-        ///                [rest of string was truncated]&quot;;.
+        ///             [rest of string was truncated]&quot;;.
         /// </summary>
         public static string LastNews {
             get {

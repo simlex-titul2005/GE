@@ -14,18 +14,6 @@ namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoPicture : SxDbRepository<Guid, SxPicture, DbContext>
     {
-        public override IQueryable<SxPicture> All
-        {
-            get
-            {
-                using (var conn = new SqlConnection(base.ConnectionString))
-                {
-                    var result = conn.Query<SxPicture>(@"select dp.Id, dp.Caption, dp.[Description], dp.Width, dp.Height, dp.ImgFormat from D_PICTURE dp order by dp.DateCreate desc");
-                    return result.AsQueryable();
-                }
-            }
-        }
-
         public override SxPicture GetByKey(params object[] id)
         {
             using (var conn = new SqlConnection(base.ConnectionString))

@@ -32,7 +32,7 @@
                                 var length=Model.GamesLength > 4 ? 4 : Model.GamesLength;
                                 var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
                                 <li @("style=width:" + width + "%")>
-                                    <a href="@Url.Action("list", new { controller = "news", gameTitle = game.Title })">
+                                    <a href="@Url.Action("list", new { controller = "news", gameTitle = game.TitleUrl })">
                                         <figure data-game-id="@game.Id">
                                             <img alt="" src="@Url.Action(MVC.Pictures.Picture((Guid)game.FrontPictureId, height: 220))" />
                                             <span class="game-title">@game.Title</span>

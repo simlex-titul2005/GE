@@ -90,7 +90,7 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, "Title", "TitleAbbr", "Description", "Show", "FrontPictureId", "GoodPictureId", "BadPictureId");
+                    newModel = _repo.Update(redactModel, "Title", "TitleAbbr", "Description", "Show", "FrontPictureId", "GoodPictureId", "BadPictureId", "TitleUrl");
                 return RedirectToAction(MVC.Games.Index());
             }
             else

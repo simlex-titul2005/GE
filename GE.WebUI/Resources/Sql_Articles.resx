@@ -119,7 +119,7 @@
   </resheader>
   <data name="FGBGameMenu" xml:space="preserve">
     <value>SELECT da.GameId,
-       dg.Title,
+       dg.Title, dg.TitleUrl,
        dg.FrontPictureId,
        dg.[Description],
        da.Name           AS ArticleTypeName,
@@ -131,7 +131,7 @@ WHERE  dg.FrontPictureid IS NOT NULL
        AND dg.Show = 1
 GROUP BY
        da.GameId,
-       dg.Title,
+       dg.Title,dg.TitleUrl,
        dg.FrontPictureid,
        dg.[Description],
        da.Name,

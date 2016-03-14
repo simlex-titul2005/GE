@@ -14,6 +14,9 @@ namespace GE.WebAdmin.Models
         [Required, Display(Name="Полное наименование игры")]
         public string Title { get; set; }
 
+        [Required, Display(Name = "Ключ формирования ссылки"), RegularExpression(@"^[A-Za-z0-9]([-]*[A-Za-z0-9])*$", ErrorMessage="Поле должно содержать только буквы латинского алфавита и тире")]
+        public string TitleUrl { get; set; }
+
         [Display(Name = "Сокращенное наименование игры")]
         public string TitleAbbr { get; set; }
 

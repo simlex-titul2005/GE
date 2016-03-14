@@ -62,7 +62,7 @@ namespace GE.WebUI.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to SELECT da.GameId,
-        ///       dg.Title,
+        ///       dg.Title, dg.TitleUrl,
         ///       dg.FrontPictureId,
         ///       dg.[Description],
         ///       da.Name           AS ArticleTypeName,
@@ -74,14 +74,13 @@ namespace GE.WebUI.Resources {
         ///       AND dg.Show = 1
         ///GROUP BY
         ///       da.GameId,
-        ///       dg.Title,
+        ///       dg.Title,dg.TitleUrl,
         ///       dg.FrontPictureid,
         ///       dg.[Description],
         ///       da.Name,
         ///       da.[Description]
         ///ORDER BY
-        ///       dg.Title,
-        ///       da.[Desc [rest of string was truncated]&quot;;.
+        ///       d [rest of string was truncated]&quot;;.
         /// </summary>
         public static string FGBGameMenu {
             get {

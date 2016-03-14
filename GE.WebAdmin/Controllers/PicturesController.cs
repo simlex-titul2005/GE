@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GE.WebAdmin.Extantions.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -27,56 +28,39 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var list = _repo.All
-                .OrderByDescending(x => x.DateCreate)
-                .Skip((page - 1) * _pageSize)
-                .Take(_pageSize)
-                .Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray();
+            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var temp = (_repo as RepoPicture).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
             ViewData["RowsCount"] = _repo.All.Count();
 
-            return View(list);
+            return View(temp);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(VMPicture filter, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMPicture filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
-            int width = filter != null ? filter.Width : 0;
-            ViewBag.Filter = filter;
+            ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
             //select
-            var temp = _repo.All;
-            if (width != 0)
-                temp = temp.Where(x => x.Width == width);
+            var addi=(filterModel != null  && filterModel.Id != Guid.Empty)
+                || (filterModel != null && filterModel.Caption != null)
+                || (filterModel != null && filterModel.Description != null)
+                || (filterModel != null && filterModel.Width != 0)
+                || (filterModel != null && filterModel.Height != 0) ? filterModel : null;
 
-            //order
-            var orders = order.Where(x => x.Value != SxExtantions.SortDirection.Unknown);
-            if (orders.Count() != 0)
-            {
-                foreach (var o in orders)
-                {
-                    if (o.Key == "Width")
-                    {
-                        if (o.Value == SxExtantions.SortDirection.Desc)
-                            temp = temp.OrderByDescending(x => x.Width);
-                        else if (o.Value == SxExtantions.SortDirection.Asc)
-                            temp = temp.OrderBy(x => x.Width);
-                    }
-                }
-            }
+            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            if (addi != null) filter.Additional = new object[] { addi };
 
-            var list = temp.Skip((page - 1) * _pageSize)
-                .Take(_pageSize)
-                .Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray();
+            var temp = (_repo as RepoPicture).QueryForAdmin(filter, order).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = temp.Count();
+            ViewData["RowsCount"] = (_repo as RepoPicture).FilterCount(filter);
 
-            return PartialView("_GridView", list);
+            return PartialView("_GridView", temp);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]

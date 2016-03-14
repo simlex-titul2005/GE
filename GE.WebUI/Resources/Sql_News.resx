@@ -123,7 +123,7 @@
        dm.Title, dm.TitleUrl,
        dm.FrontPictureId,
        dn.GameId,
-       dg.Title          AS GameTitle
+       dg.TitleUrl          AS GameTitle
 FROM   (
            SELECT MAX(dm.DateCreate)  AS DateCreate,
                   dn.GameId           AS GameId

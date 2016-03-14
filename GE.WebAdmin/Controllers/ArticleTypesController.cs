@@ -25,13 +25,12 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var list = _repo.All
-                .Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<ArticleType, VMArticleType>(x)).ToArray();
+            var f = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var list = (_repo as RepoArticleType).QueryForAdmin(f).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = _repo.All.Count();
+            ViewData["RowsCount"] = _repo.Count(f);
 
             return View(list);
         }
@@ -39,37 +38,37 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual PartialViewResult Index(VMArticleType filter, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
-            string name = filter != null ? filter.Name : null;
+            //string name = filter != null ? filter.Name : null;
             ViewBag.Filter = filter;
             ViewBag.Order = order;
 
             //select
-            var temp = _repo.All;
-            if (name != null)
-                temp = temp.Where(x => x.Name.Contains(name));
+            //var temp = _repo.All;
+            //if (name != null)
+            //    temp = temp.Where(x => x.Name.Contains(name));
 
             //order
-            var orders = order.Where(x => x.Value != SxExtantions.SortDirection.Unknown);
-            if (orders.Count() != 0)
-            {
-                foreach (var o in orders)
-                {
-                    if (o.Key == "Id")
-                    {
-                        if (o.Value == SxExtantions.SortDirection.Desc)
-                            temp = temp.OrderByDescending(x => x.Name);
-                        else if (o.Value == SxExtantions.SortDirection.Asc)
-                            temp = temp.OrderBy(x => x.Name);
-                    }
-                }
-            }
+            //var orders = order.Where(x => x.Value != SxExtantions.SortDirection.Unknown);
+            //if (orders.Count() != 0)
+            //{
+            //    foreach (var o in orders)
+            //    {
+            //        if (o.Key == "Id")
+            //        {
+            //            if (o.Value == SxExtantions.SortDirection.Desc)
+            //                temp = temp.OrderByDescending(x => x.Name);
+            //            else if (o.Value == SxExtantions.SortDirection.Asc)
+            //                temp = temp.OrderBy(x => x.Name);
+            //        }
+            //    }
+            //}
 
-            var list = temp.Skip((page - 1) * _pageSize)
-                .Take(_pageSize).Select(x => Mapper.Map<ArticleType, VMArticleType>(x)).ToArray();
+            var f = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var list = (_repo as RepoArticleType).QueryForAdmin(f).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = temp.Count();
+            ViewData["RowsCount"] = _repo.Count(f);
 
             return PartialView("_GridView", list);
         }

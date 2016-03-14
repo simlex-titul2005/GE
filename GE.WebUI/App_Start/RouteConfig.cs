@@ -30,7 +30,7 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "articles",
-                defaults: new { controller = "articles", action = "list", gameTitle = "", page = 1, area = "" }
+                defaults: new { controller = "articles", action = "list", gameTitle = (string)null, page = 1, area = "" }
             );
             routes.MapRoute(
                 name: null,
@@ -59,7 +59,7 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "news",
-                defaults: new { controller = "news", action = "list", gameTitle = "", page = 1, area = "" }
+                defaults: new { controller = "news", action = "list", gameTitle = (string)null, page = 1, area = "" }
             );
             routes.MapRoute(
                 name: null,

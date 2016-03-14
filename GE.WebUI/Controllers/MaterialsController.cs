@@ -52,7 +52,7 @@ namespace GE.WebUI.Controllers
             switch (_modelCoreType)
             {
                 case Enums.ModelCoreType.Article:
-                    pageSize = 3;
+                    pageSize = 9;
                     break;
                 case Enums.ModelCoreType.News:
                     pageSize = 10;

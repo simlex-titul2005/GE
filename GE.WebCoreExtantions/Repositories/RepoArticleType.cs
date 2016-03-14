@@ -5,27 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using SX.WebCore.Abstract;
 
 namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoArticleType : SX.WebCore.Abstract.SxDbRepository<int, ArticleType, DbContext>
     {
-        public override IQueryable<ArticleType> All
+        public override int Count(SxFilter filter)
         {
-            get
+            var f = (Filter)filter;
+            using (var conn = new SqlConnection(base.ConnectionString))
             {
-                using (var conn = new SqlConnection(base.ConnectionString))
-                {
-                    var query = @"SELECT*FROM D_ARTICLE_TYPE AS dat
-JOIN D_GAME AS dg ON dg.Id = dat.GameId
-ORDER BY dg.Title, dat.Name";
-                    var data = conn.Query<ArticleType, Game, ArticleType>(query, (a, g) => {
-                        a.Game = new Game { Title = g.Title, Id=g.Id };
-                        return a;
-                    });
+                var query = @"SELECT COUNT(1) FROM D_ARTICLE_TYPE AS dat";
+                var data = conn.Query<int>(query).Single();
 
-                    return data.AsQueryable();
-                }
+                return (int)data;
             }
         }
     }

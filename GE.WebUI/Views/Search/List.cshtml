@@ -1,0 +1,37 @@
+﻿@model VMSearchResult[]
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Any())
+{
+    for (int i = 0; i < Model.Length; i++)
+    {
+        var item = Model[i];
+        string url = null;
+        switch(item.ModelCoreType)
+        {
+            case SX.WebCore.Enums.ModelCoreType.Article:
+                url = Url.Action(MVC.Articles.Details(item.DateCreate.Year, item.DateCreate.Month.ToString("00"), item.DateCreate.Day.ToString("00"), item.TitleUrl));
+                break;
+            case SX.WebCore.Enums.ModelCoreType.News:
+                url = Url.Action(MVC.News.Details(item.DateCreate.Year, item.DateCreate.Month.ToString("00"), item.DateCreate.Day.ToString("00"), item.TitleUrl));
+                break;
+        }
+        <div class="search-item">
+            <div class="row">
+                <div class="col-md-6">
+                    <time>@item.DateCreate.ToString("dd.MM.yyyy")</time><br /><br />
+                    <a href="@url" title="@item.Title">@item.Title</a>
+                </div>
+                <div class="col-md-6">
+                    @item.Foreword
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p class="text-info">Отсутствуют результаты поиска или не задан ключ.</p>
+}

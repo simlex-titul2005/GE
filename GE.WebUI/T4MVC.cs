@@ -35,6 +35,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.MenuesController Menues = new GE.WebUI.Controllers.T4MVC_MenuesController();
     public static GE.WebUI.Controllers.NewsController News = new GE.WebUI.Controllers.T4MVC_NewsController();
     public static GE.WebUI.Controllers.PicturesController Pictures = new GE.WebUI.Controllers.T4MVC_PicturesController();
+    public static GE.WebUI.Controllers.SearchController Search = new GE.WebUI.Controllers.T4MVC_SearchController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+<form class="navbar-form navbar-right" role="search" id="seach-block">
+    <div class="input-group">
+        <input id="xs-input" type="text" name="key" class="form-control hidden-lg" placeholder="Поиск">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+    <div class="lg-block">
+        <p class="text-muted small">Поиск осуществляется в статьях и новостях и проводится по названию и анонсу материалов.</p>
+
+        <input id="lg-input" type="text" name="key" class="form-control hidden-xs" placeholder="Введите строку для поиска" />
+        <i class="fa fa-spinner fa-spin"></i>
+        <button type="submit" class="hidden"></button>
+
+        <div id="search-res">
+        </div>
+    </div>
+</form>

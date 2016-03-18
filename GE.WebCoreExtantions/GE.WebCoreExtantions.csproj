@@ -76,6 +76,7 @@
     <Compile Include="Repositories\RepoClick.cs" />
     <Compile Include="Repositories\RepoClickType.cs" />
     <Compile Include="Repositories\RepoRedirect.cs" />
+    <Compile Include="Repositories\RepoVote.cs" />
     <Compile Include="Repositories\RepoSeoKeywords.cs" />
     <Compile Include="Repositories\RepoSeoInfo.cs" />
     <Compile Include="Repositories\RepoSiteSetting.cs" />

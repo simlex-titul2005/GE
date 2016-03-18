@@ -59,6 +59,12 @@ namespace SX.WebCore
 
             modelBuilder.Entity<SxSiteSetting>()
                 .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            modelBuilder.Entity<SxMaterial>()
+                .HasMany(x => x.Votes)
+                .WithRequired(v => v.Material)
+                .HasForeignKey(v => new { v.MaterialId, v.ModelCoreType })
+                .WillCascadeOnDelete();
         }
     }
 }

@@ -158,6 +158,7 @@
     <Compile Include="SxSeoInfo.cs" />
     <Compile Include="SxSeoKeyword.cs" />
     <Compile Include="SxSiteSetting.cs" />
+    <Compile Include="SxVote.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

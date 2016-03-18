@@ -32,5 +32,7 @@ namespace SX.WebCore.Abstract
         public int ViewsCount { get; set; }
 
         public int CommentsCount { get; set; }
+
+        public virtual ICollection<SxVote> Votes { get; set; }
     }
 }

@@ -17,13 +17,12 @@ namespace GE.WebUI.Controllers
             return View();
         }
 
-        public virtual FileResult Robotstxt()
+        [OutputCache(Duration =900)]
+        public virtual ContentResult Robotstxt()
         {
             var fileContent = SiteSettings.Get(SX.WebCore.Resources.Settings.robotsFileSetting);
             if (fileContent != null)
-                return File(Encoding.UTF8.GetBytes(fileContent.ToString()),
-                     "text/plain",
-                      string.Format("{0}.txt", "robots"));
+                return Content(fileContent.Value, "text/plain", Encoding.UTF8);
             else return null;
         }
     }

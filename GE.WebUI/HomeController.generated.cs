@@ -129,12 +129,12 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void RobotstxtOverride(T4MVC_System_Web_Mvc_FileResult callInfo);
+        partial void RobotstxtOverride(T4MVC_System_Web_Mvc_ContentResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.FileResult Robotstxt()
+        public override System.Web.Mvc.ContentResult Robotstxt()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_FileResult(Area, Name, ActionNames.Robotstxt);
+            var callInfo = new T4MVC_System_Web_Mvc_ContentResult(Area, Name, ActionNames.Robotstxt);
             RobotstxtOverride(callInfo);
             return callInfo;
         }

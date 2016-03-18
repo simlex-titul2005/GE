@@ -108,6 +108,19 @@ internal partial class T4MVC_System_Web_Mvc_EmptyResult : System.Web.Mvc.EmptyRe
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_ContentResult : System.Web.Mvc.ContentResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_ContentResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_FileResult : System.Web.Mvc.FileResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_FileResult(string area, string controller, string action, string protocol = null): base(" ")
@@ -133,6 +146,7 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string click_stat_handler_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/click-stat-handler.min.js") ? Url("click-stat-handler.min.js") : Url("click-stat-handler.js");
+        public static readonly string find_engine_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/find-engine.min.js") ? Url("find-engine.min.js") : Url("find-engine.js");
         public static readonly string ge_for_gamers_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-for-gamers-block.min.js") ? Url("ge-for-gamers-block.min.js") : Url("ge-for-gamers-block.js");
         public static readonly string ge_game_menu_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-game-menu.min.js") ? Url("ge-game-menu.min.js") : Url("ge-game-menu.js");
         public static readonly string ge_last_news_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-last-news-block.min.js") ? Url("ge-last-news-block.min.js") : Url("ge-last-news-block.js");
@@ -210,6 +224,7 @@ namespace Links
             public static readonly string list_news_less = Url("list-news.less");
             public static readonly string material_less = Url("material.less");
             public static readonly string positioned_less = Url("positioned.less");
+            public static readonly string seach_block_less = Url("seach-block.less");
             public static readonly string site_less = Url("site.less");
             public static readonly string sizes_less = Url("sizes.less");
             public static readonly string sx_list_less = Url("sx-list.less");
@@ -227,6 +242,7 @@ namespace Links
             public static class Assets
             {
                 public const string click_stat_handler_js = "~/Scripts/click-stat-handler.js"; 
+                public const string find_engine_js = "~/Scripts/find-engine.js"; 
                 public const string ge_for_gamers_block_js = "~/Scripts/ge-for-gamers-block.js"; 
                 public const string ge_game_menu_js = "~/Scripts/ge-game-menu.js"; 
                 public const string ge_last_news_block_js = "~/Scripts/ge-last-news-block.js"; 

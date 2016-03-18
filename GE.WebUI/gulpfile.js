@@ -1,13 +1,14 @@
-﻿var gulp = require('gulp');
-var minifyCss = require('gulp-minify-css');
-var autoprefixer = require('gulp-autoprefixer');
-var rename = require('gulp-rename');
-var del = require('del');
-var less = require('gulp-less');
-var watch = require('gulp-watch');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var merge = require('merge-stream');
+﻿var promise = require('es6-promise'),
+    gulp = require('gulp'),
+    minifyCss = require('gulp-minify-css'),
+    autoprefixer = require('gulp-autoprefixer'),
+    rename = require('gulp-rename'),
+    del = require('del'),
+    less = require('gulp-less'),
+    watch = require('gulp-watch'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
+    merge = require('merge-stream');
 
 function clear() {
     del([

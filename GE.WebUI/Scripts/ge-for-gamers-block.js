@@ -1,4 +1,4 @@
-﻿/// <reference path="D:\GE\GE.WebUI\bower_components/jquery/dist/jquery.min.js" />
+﻿/// <reference path="../bower_components/jquery/dist/jquery.min.js" />
 (function ($) {
     $.fn.geFGB = function (lettersCount) {
         this.each(function () {
@@ -12,21 +12,24 @@
                 $this.find('.games > li').not($li).removeClass('selected');
                 $li.toggleClass('selected');
 
-                var gameTitle = $a.data('game-title');
-                var url = '/articles/preview?gameTitle=' + gameTitle + '&lettersCount=' + lettersCount;
-                $.ajax({
-                    method: 'get',
-                    url: url,
-                    beforeSend: function () {
-                        
-                    },
-                    success: function (data) {
-                        $previewBox.html(data);
-                    },
-                    complete: function () {
-                        
-                    }
-                });
+                var isSelected = $a.closest('li').hasClass('selected');
+                if (isSelected) {
+                    var gameTitle = $a.data('game-title');
+                    var url = '/articles/preview?gameTitle=' + gameTitle + '&lettersCount=' + lettersCount;
+                    $.ajax({
+                        method: 'get',
+                        url: url,
+                        beforeSend: function () {
+
+                        },
+                        success: function (data) {
+                            $previewBox.html(data);
+                        },
+                        complete: function () {
+
+                        }
+                    });
+                }
                 return false;
             });
 

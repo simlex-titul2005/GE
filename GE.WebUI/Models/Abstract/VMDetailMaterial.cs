@@ -13,7 +13,7 @@ namespace GE.WebUI.Models.Abstract
         public Guid? FrontPictureId { get; set; }
         public string Title { get; set; }
         public string Html { get; set; }
-        public DateTime DateCreate { get; set; }
+        public DateTime DateOfPublication { get; set; }
         public int CommentsCount { get; set; }
         public int ViewsCount { get; set; }
         public int VoteUpCount { get; set; }
@@ -22,12 +22,13 @@ namespace GE.WebUI.Models.Abstract
         {
             get
             {
-                return new VMMateriallnfo {
-                    DateCreate=this.DateCreate,
-                    CommentsCount=this.CommentsCount,
-                    ViewsCount=this.ViewsCount,
-                    VoteUpCount=this.VoteUpCount,
-                    VoteDownCount=this.VoteDownCount
+                return new VMMateriallnfo
+                {
+                    DateOfPublication = this.DateOfPublication,
+                    CommentsCount = this.CommentsCount,
+                    ViewsCount = this.ViewsCount,
+                    VoteUpCount = this.VoteUpCount,
+                    VoteDownCount = this.VoteDownCount
                 };
             }
         }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using SX.WebCore.Abstract;
+using SX.WebCore;
 
 namespace GE.WebCoreExtantions.Repositories
 {
@@ -43,30 +44,35 @@ ORDER BY dm.DateCreate DESC";
            END,
            0,
            200
-       )                 AS Foreword,
+       )+'...'                AS Foreword,
        dm.DateCreate,
+       dm.DateOfPublication,
        dm.ViewsCount,
        dm.CommentsCount,
+       dm.UserId,
+       anu.NikName,
        da.GameId,
        dg.Title,
+       dg.TitleUrl,
        dg.FrontPictureId
 FROM   D_NEWS         AS da
-       LEFT JOIN D_GAME  AS dg
-            ON  dg.ID = da.GameId
        JOIN DV_MATERIAL  AS dm
-            ON  dm.ID = da.ID
+            ON  dm.Id = da.ID
             AND dm.ModelCoreType = da.ModelCoreType
-       WHERE  dg.TitleUrl = @GAME_TITLE_URL
-       OR  @GAME_TITLE_URL IS NULL
-       ORDER BY dm.DateCreate DESC";
+       LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
+       LEFT JOIN D_GAME  AS dg
+            ON  dg.Id = da.GameId WHERE  (dg.TitleUrl = @GAME_TITLE_URL
+       OR  @GAME_TITLE_URL IS NULL) AND dm.DateOfPublication <= GETDATE()";
+                query += @" ORDER BY
+       dm.DateCreate DESC";
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
-                    query += " OFFSET " + f.SkipCount + " ROWS FETCH NEXT " + f.PageSize + " ROWS ONLY";
+                    query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
 
-                var data = conn.Query<News, Game, News>(query, (n, g)=>{
-                    n.Game = g;
-                    n.GameId = n.GameId;
-                    return n;
-                }, param: new { GAME_TITLE_URL = f.GameTitle }, splitOn: "GameId");
+                var data = conn.Query<News, SxAppUser, Game, News>(query, (da, anu, dg) => {
+                    da.Game = dg;
+                    da.User = anu;
+                    return da;
+                }, new { GAME_TITLE_URL = f.GameTitle }, splitOn: "UserId, GameId");
 
                 return data.AsQueryable();
             }

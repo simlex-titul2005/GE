@@ -3,11 +3,11 @@
     Layout = null;
     var info = new VMMateriallnfo
     {
-        DateCreate = Model.DateCreate,
+        DateOfPublication = Model.DateOfPublication,
         CommentsCount = Model.CommentsCount,
         ViewsCount = Model.ViewsCount
     };
-    
+
     var year = Model.DateCreate.Year;
     var month = Model.DateCreate.Month.ToString("00");
     var day = Model.DateCreate.Day.ToString("00");
@@ -29,6 +29,18 @@
     <p class="foreword">
         @Model.Foreword
     </p>
+    @if (Model.User != null)
+    {
+        <div class="author">
+            <i>Автор: <strong>@Model.User.NikName</strong></i>
+        </div>
+    }
+    @if (Model.Game != null)
+    {
+        <div class="game">
+            <i>Игра: <strong>@Model.Game.Title</strong></i>
+        </div>
+    }
     <div class="info">
         <div class="row">
             <div class="col-md-6">

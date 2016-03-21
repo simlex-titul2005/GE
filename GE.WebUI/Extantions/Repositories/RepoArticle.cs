@@ -46,9 +46,10 @@ namespace GE.WebUI.Extantions.Repositories
                 };
             }
 
+            var query = Resources.Sql_Articles.PreviewMaterials;
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var articles = conn.Query<VMPreviewArticle>(Resources.Sql_Articles.PreviewMaterials, new { GAME_TITLE = gameTitle, ARTICLE_TYPE_NAME = (string)null, LETTERS_COUNT = 200 }).ToArray();
+                var articles = conn.Query<VMPreviewArticle>(query, new { GAME_TITLE = gameTitle, ARTICLE_TYPE_NAME = (string)null, LETTERS_COUNT = 200 }).ToArray();
                 viewModel.Articles = articles;
             }
 

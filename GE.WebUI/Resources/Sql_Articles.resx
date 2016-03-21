@@ -148,26 +148,27 @@ JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
 ORDER BY dm.DateCreate DESC</value>
   </data>
   <data name="PreviewMaterials" xml:space="preserve">
-    <value>--DECLARE @GAME_TITLE            VARCHAR(100) = 'dota2',
---        @ARTICLE_TYPE_NAME     VARCHAR(150) = 'guid',
---        @LETTERS_COUNT         INT = 200
-
-SELECT TOP(8) da.Id,
+    <value>SELECT TOP(8) da.Id,
        dm.Title,
        dm.TitleUrl,
        dm.DateCreate,
+       dm.DateOfPublication,
        dm.ViewsCount,
        dm.CommentsCount,
        CASE 
             WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
             ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, @LETTERS_COUNT) +
                  '...'
-       END               AS Foreword
-FROM   D_ARTICLE         AS da
-       JOIN DV_MATERIAL  AS dm
+       END                    AS Foreword,
+       anu.NikName AS UserName,
+       dg.Title AS GameTitle
+FROM   D_ARTICLE              AS da
+       JOIN DV_MATERIAL       AS dm
             ON  dm.Id = da.Id
             AND dm.ModelCoreType = da.ModelCoreType
-       LEFT JOIN D_GAME  AS dg
+       LEFT JOIN AspNetUsers  AS anu
+            ON  anu.Id = dm.UserId
+       LEFT JOIN D_GAME       AS dg
             ON  dg.Id = da.GameId
 WHERE  (@GAME_TITLE IS NULL)
        OR  (

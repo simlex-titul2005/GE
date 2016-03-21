@@ -201,6 +201,7 @@
     <Content Include="Scripts\ge-for-gamers-block.js" />
     <Content Include="Scripts\ge-game-menu.js" />
     <Content Include="Scripts\ge-last-news-block.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>
     </Content>

@@ -10,10 +10,12 @@ namespace GE.WebUI.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string TitleUrl { get; set; }
-        public DateTime DateCreate { get; set; }
+        public DateTime DateOfPublication { get; set; }
         public int ViewsCount { get; set; }
         public int CommentsCount { get; set; }
         public string Foreword { get; set; }
+        public string UserName { get; set; }
+        public string GameTitle { get; set; }
         public VMMateriallnfo Info
         {
             get
@@ -21,7 +23,7 @@ namespace GE.WebUI.Models
                 return new VMMateriallnfo
                 {
                     CommentsCount=this.CommentsCount,
-                    DateCreate=this.DateCreate,
+                    DateOfPublication =this.DateOfPublication,
                     ViewsCount=this.ViewsCount
                 };
             }

@@ -3,7 +3,7 @@
     Layout = null;
     var info = new VMMateriallnfo
     {
-        DateCreate = Model.DateCreate,
+        DateOfPublication = Model.DateOfPublication,
         CommentsCount = Model.CommentsCount,
         ViewsCount = Model.ViewsCount
     };
@@ -26,13 +26,19 @@
     </div>
     <div class="col-md-6">
         <div class="content">
-            <time>@Model.DateCreate.ToString("dd.MM.yyyy")</time>
-            @if (Model.Game != null && Model.Game.FrontPictureId.HasValue)
-            {
-                <img class="g-img" alt="@Model.Game.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Game.FrontPictureId, height: 80))" />
-            }
+            <time>@Model.DateOfPublication.ToString("dd.MM.yyyy")</time>
             <a class="link" href="@url">@Model.Title</a>
             <p class="foreword">@Model.Foreword</p>
+            <div>
+                @if(Model.User!=null)
+                {
+                    <i>Автор: <strong>@Model.User.NikName</strong></i>
+                }
+                @if(Model.Game!=null)
+                {
+                    <i>; игра: <strong>@Model.Game.Title</strong></i>
+                }
+            </div>
             <a href="@url" class="btn btn-default btn-transparent dark-blue visible-xs">Подробнее</a>
         </div>
     </div>

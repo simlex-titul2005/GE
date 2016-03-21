@@ -15,12 +15,22 @@
             <div class="col-md-6">
                 <div class="pv-article">
                     <h5 class="title">
-                        <a href="@Url.Action(MVC.Articles.Details(m.DateCreate.Year, m.DateCreate.Month.ToString("00"), m.DateCreate.Day.ToString("00"), m.TitleUrl))" target="_blank">@m.Title</a>
+                        <a href="@Url.Action(MVC.Articles.Details(m.DateOfPublication.Year, m.DateOfPublication.Month.ToString("00"), m.DateOfPublication.Day.ToString("00"), m.TitleUrl))" target="_blank">@m.Title</a>
                     </h5>
                     @Html.DisplayFor(x => m.Info)
                     <p class="foreword">
                         @m.Foreword
                     </p>
+                    <div>
+                        @if(!string.IsNullOrEmpty(m.UserName))
+                        {
+                            <div><i>Автор: <strong>@m.UserName</strong></i></div>
+                        }
+                        @if (!string.IsNullOrEmpty(m.GameTitle))
+                        {
+                            <div><i>Игра: <strong>@m.GameTitle</strong></i></div>
+                        }
+                    </div>
                 </div>
             </div>
         }

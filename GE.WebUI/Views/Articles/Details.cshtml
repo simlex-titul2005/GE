@@ -2,7 +2,26 @@
 @{
     ViewBag.H1CssClass = ViewBag.H1CssClass ?? Model.ArticleTypeName;
 }
-<div class="detail-article @(Model.ArticleTypeName)">
+@section styles{
+    @if (Model.ThemeColor != null)
+    {
+        <style type="text/css">
+        .@Model.ArticleTypeName{
+            color:@Model.ThemeColor;
+        }
+
+        .m-html{
+            border-top:6px solid @Model.ThemeColor;
+        }
+
+            .m-html hr{
+                border-top:1px solid @Model.ThemeColor;
+            }
+        </style>
+    }
+}
+
+<div class="detail-article">
     @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
     <br />
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 1)">Это интересно, что тут есть ещё?</a>

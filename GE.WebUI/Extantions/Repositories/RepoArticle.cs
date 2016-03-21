@@ -78,8 +78,9 @@ namespace GE.WebUI.Extantions.Repositories
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var query = @"SELECT*FROM D_ARTICLE AS da
+                var query = @"SELECT da.*, dm.*, dat.Name AS ArticleTypeName, dat.Color AS ThemeColor FROM D_ARTICLE AS da
 JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
+LEFT JOIN D_ARTICLE_TYPE AS dat ON dat.Name = da.ArticleTypeName AND dat.GameId = da.ArticleTypeGameId
 WHERE dm.TitleUrl=@TITLE_URL";
 
                 return conn.Query<VMDetailArticle>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();

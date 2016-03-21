@@ -144,13 +144,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\dist\css\bootstrap-datepicker.min.css" />
+    <Content Include="Content\dist\css\colorpicker.min.css" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\dist\js\bootstrap-colorpicker.min.js" />
     <Content Include="Content\dist\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\dist\js\ckeditor.min.js" />
     <Content Include="Content\dist\js\menues.min.js" />
     <Content Include="Content\dist\js\routes.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
+    <Content Include="Content\i\bootstrap-colorpicker\alpha.png" />
+    <Content Include="Content\i\bootstrap-colorpicker\hue.png" />
+    <Content Include="Content\i\bootstrap-colorpicker\saturation.png" />
     <Content Include="Content\sx\js\sx-find-table.js" />
     <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="faveicon.png" />

@@ -5,6 +5,10 @@
     ViewBag.GameTitle = isNew ? null : Model.Game.Title;
 }
 
+@section styles{
+    <link rel="stylesheet" href="~/Content/dist/css/colorpicker.min.css" />
+}
+
 <h2>@ViewBag.Title</h2>
 
 @if (!isNew)
@@ -58,8 +62,25 @@
     <br />
     <div class="row">
         <div class="col-md-12">
+            @Html.LabelFor(x => x.Color, new { @class = "control-label colorpicker-2x" })
+            @Html.EditorFor(x => x.Color, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Color)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
             <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
             @Html.RouteLink("Назад", new { controller = "ArticleTypes", action = "Index" }, new { @class = "btn btn-default" })
         </div>
     </div>
 </form>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/dist/js/bootstrap-colorpicker.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#Color').colorpicker();
+        });
+    </script>
+}

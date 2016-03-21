@@ -20,5 +20,8 @@ namespace GE.WebCoreExtantions
 
         public virtual Game Game { get; set; }
         public int GameId { get; set; }
+
+        [MaxLength(100)]
+        public string Color { get; set; }
     }
 }

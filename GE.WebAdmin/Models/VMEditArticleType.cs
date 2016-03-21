@@ -20,5 +20,8 @@ namespace GE.WebAdmin.Models
         [Display(Name = "Игра"), UIHint("EditGame"), Required]
         public int GameId { get; set; }
         public VMGame Game { get; set; }
+
+        [MaxLength(150), Display(Name="Цвет темы")]
+        public string Color { get; set; }
     }
 }

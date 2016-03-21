@@ -1,11 +1,5 @@
-﻿@model Article
+﻿@model VMDetailArticle
 @{
-    var info = new VMMateriallnfo
-    {
-        DateCreate = Model.DateCreate,
-        CommentsCount = Model.CommentsCount,
-        ViewsCount = Model.ViewsCount
-    };
     ViewBag.H1CssClass = ViewBag.H1CssClass ?? Model.ArticleTypeName;
 }
 <div class="detail-article @(Model.ArticleTypeName)">
@@ -23,11 +17,11 @@
     <div class="m-info">
         <div class="row">
             <div class="col-md-6">
-                sdsd
+                @Html.Partial(MVC.Votes.Views._Vote, Model.Info)
             </div>
             <div class="col-md-6">
                 <div class="text-right">
-                    @Html.DisplayFor(x => info)
+                    @Html.DisplayFor(x => Model.Info)
                 </div>
             </div>
         </div>

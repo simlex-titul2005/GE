@@ -109,17 +109,5 @@ WHERE @TITLE_URL IS NULL OR dg.TitleUrl=@TITLE_URL";
                 return (int)data;
             }
         }
-
-        public Article GetByTitleUrl(string titleUrl)
-        {
-            using (var conn = new SqlConnection(base.ConnectionString))
-            {
-                var query = @"SELECT*FROM D_ARTICLE AS da
-JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
-WHERE dm.TitleUrl=@TITLE_URL";
-
-                return conn.Query<Article>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();
-            }
-        }
     }
 }

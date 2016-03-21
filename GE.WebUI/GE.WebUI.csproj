@@ -247,8 +247,11 @@
     <Compile Include="MenuesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Abstract\VMDetailMaterial.cs" />
     <Compile Include="Models\SiteSeoInfo.cs" />
     <Compile Include="Models\VMBreadcrumb.cs" />
+    <Compile Include="Models\VMDetailNews.cs" />
+    <Compile Include="Models\VMDetailArticle.cs" />
     <Compile Include="Models\VMMateriallnfo.cs" />
     <Compile Include="Models\VMFGBlock.cs" />
     <Compile Include="Models\VMGameMenu .cs" />
@@ -284,6 +287,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="VotesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -316,6 +322,7 @@
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Search\List.cshtml" />
     <Content Include="Views\Search\_Search.cshtml" />
+    <Content Include="Views\Votes\_Vote.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -323,9 +330,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Votes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">
       <Project>{bf57645e-fa93-44aa-8c87-7f1bdd240dc2}</Project>

@@ -36,6 +36,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.NewsController News = new GE.WebUI.Controllers.T4MVC_NewsController();
     public static GE.WebUI.Controllers.PicturesController Pictures = new GE.WebUI.Controllers.T4MVC_PicturesController();
     public static GE.WebUI.Controllers.SearchController Search = new GE.WebUI.Controllers.T4MVC_SearchController();
+    public static GE.WebUI.Controllers.VotesController Votes = new GE.WebUI.Controllers.T4MVC_VotesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -229,6 +230,7 @@ namespace Links
             public static readonly string sizes_less = Url("sizes.less");
             public static readonly string sx_list_less = Url("sx-list.less");
             public static readonly string sx_pager_less = Url("sx-pager.less");
+            public static readonly string vote_less = Url("vote.less");
         }
     
     }

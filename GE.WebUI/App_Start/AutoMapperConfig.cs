@@ -17,6 +17,9 @@ namespace GE.WebUI
             {
                 return new MapperConfiguration(cfg =>
                 {
+                    //articles
+                    cfg.CreateMap<Article, VMDetailArticle>();
+
                     //games
                     cfg.CreateMap<Game, VMGame>();
 

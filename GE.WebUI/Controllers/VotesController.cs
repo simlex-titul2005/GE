@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity;
 
 namespace GE.WebUI.Controllers
 {
-    public class VotesController : BaseController
+    public partial class VotesController : BaseController
     {
         private SxDbRepository<int, SxVote, DbContext> _repo;
         public VotesController()
@@ -17,13 +17,13 @@ namespace GE.WebUI.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public EmptyResult Create(Enums.ModelCoreType mct, int mid, byte up = 0)
+        public virtual EmptyResult Create(Enums.ModelCoreType mct, int mid, byte up = 0)
         {
             if (!User.Identity.IsAuthenticated) return null;
 
             Task.Run(() =>
             {
-                var model = new SxVote { ModelCoreType = mct, MaterialId = mid, IsUp = up, UserId=User.Identity.GetUserId() };
+                var model = new SxVote { ModelCoreType = mct, MaterialId = mid, IsUp = up, UserId = User.Identity.GetUserId() };
                 _repo.Create(model);
             });
             return null;

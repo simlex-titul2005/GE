@@ -21,5 +21,35 @@ namespace GE.WebUI.Extantions.Repositories
 
             return viewModel;
         }
+
+        public static VMDetailNews GetByTitleUrl(this GE.WebCoreExtantions.Repositories.RepoNews repo, string titleUrl)
+        {
+            using (var conn = new SqlConnection(repo.ConnectionString))
+            {
+                var query = @"SELECT dn.*,
+       dm.*,
+       (
+           SELECT ISNULL(SUM(1), 0)
+           FROM   D_VOTE AS dv1
+           WHERE  dv1.IsUp = 1
+                  AND dv1.MaterialId = dm.Id
+                  AND dv1.ModelCoreType = dm.ModelCoreType
+       )                 AS VoteUpCount,
+       (
+           SELECT ISNULL(SUM(1), 0)
+           FROM   D_VOTE AS dv1
+           WHERE  dv1.IsUp = 0
+                  AND dv1.MaterialId = dm.Id
+                  AND dv1.ModelCoreType = dm.ModelCoreType
+       )                 AS VoteDownCount
+FROM   D_NEWS            AS dn
+       JOIN DV_MATERIAL  AS dm
+            ON  dm.Id = dn.Id
+            AND dm.ModelCoreType = dn.ModelCoreType
+WHERE  dm.TitleUrl = @TITLE_URL";
+
+                return conn.Query<VMDetailNews>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();
+            }
+        }
     }
 }

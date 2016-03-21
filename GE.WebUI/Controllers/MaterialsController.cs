@@ -2,16 +2,15 @@
 using GE.WebCoreExtantions.Abstract;
 using GE.WebCoreExtantions.Repositories;
 using GE.WebUI.Models;
+using GE.WebUI.Models.Abstract;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using SX.WebCore.HtmlHelpers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using EXT = GE.WebCoreExtantions;
+using GE.WebUI.Extantions.Repositories;
 
 namespace GE.WebUI.Controllers
 {
@@ -77,7 +76,7 @@ namespace GE.WebUI.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Details(int year, string month, string day, string titleUrl)
         {
-            SxMaterial model = null;
+            VMDetailMaterial model = null;
             switch (_modelCoreType)
             {
                 case Enums.ModelCoreType.Article:

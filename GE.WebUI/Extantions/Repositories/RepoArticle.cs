@@ -1,11 +1,7 @@
 ﻿using GE.WebUI.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using Dapper;
-using SX.WebCore.Abstract;
 using GE.WebCoreExtantions;
 
 namespace GE.WebUI.Extantions.Repositories
@@ -66,6 +62,18 @@ namespace GE.WebUI.Extantions.Repositories
             {
                 var results = conn.Query<Article>(Resources.Sql_Articles.LastArticles, new { AMOUNT = amount }).ToArray();
                 return results;
+            }
+        }
+
+        public static VMDetailArticle GetByTitleUrl(this GE.WebCoreExtantions.Repositories.RepoArticle repo, string titleUrl)
+        {
+            using (var conn = new SqlConnection(repo.ConnectionString))
+            {
+                var query = @"SELECT*FROM D_ARTICLE AS da
+JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
+WHERE dm.TitleUrl=@TITLE_URL";
+
+                return conn.Query<VMDetailArticle>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();
             }
         }
     }

@@ -11,16 +11,30 @@
                 var $li = $a.closest('li');
                 $this.find('.games > li').not($li).removeClass('selected');
                 $li.toggleClass('selected');
-                var $dropdown = $li.children('.dropdown').toggle();
-                $this.find('.games > li > .dropdown').not($dropdown).hide();
+
+                var gameTitle = $a.data('game-title');
+                var url = '/articles/preview?gameTitle=' + gameTitle + '&lettersCount=' + lettersCount;
+                $.ajax({
+                    method: 'get',
+                    url: url,
+                    beforeSend: function () {
+                        
+                    },
+                    success: function (data) {
+                        $previewBox.html(data);
+                    },
+                    complete: function () {
+                        
+                    }
+                });
                 return false;
             });
 
             $this.find('.dropdown > li > a').click(function () {
                 var $a = $(this);
-                var gameId = $a.data('game-id');
+                var gameTitle = $a.data('game-title');
                 var articleType = $a.data('article-type');
-                var url = '/articles/preview?gameId=' + gameId + '&articleType=' + articleType+'&lettersCount='+lettersCount;
+                var url = '/articles/preview?gameTitle=' + gameTitle + '&articleType=' + articleType + '&lettersCount=' + lettersCount;
                 $.ajax({
                     method: 'get',
                     url: url,

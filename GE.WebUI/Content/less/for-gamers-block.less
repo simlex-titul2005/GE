@@ -137,6 +137,10 @@ f-g-b .games > li > a:hover {
     background-color: @color-white;
 }
 
+.f-g-b .games > li.selected > .dropdown {
+   display:block;
+}
+
 .f-g-b ul > li > .dropdown a {
     color: inherit;
     display: block;
@@ -159,24 +163,6 @@ f-g-b .games > li > a:hover {
     margin-bottom:@def-pad*2;
     @media (max-width: @screen-xs-max) {
         margin-bottom:@def-pad*4;
-    }
-
-    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-        
-    }
-
-    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-        
-    }
-
-    @media (min-width: @screen-lg-min) {
-        
-    }
-}
-
-.pv-article.last{
-    @media (max-width: @screen-xs-max) {
-        margin-bottom:unset;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {

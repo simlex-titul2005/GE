@@ -8,9 +8,9 @@ namespace GE.WebUI.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMFGBlock ForGamersBlock(this GE.WebCoreExtantions.Repositories.RepoArticle repo)
+        public static VMFGBlock ForGamersBlock(this GE.WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle=null)
         {
-            var viewModel = new VMFGBlock();
+            var viewModel = new VMFGBlock() { SelectedGameTitle= gameTitle };
             dynamic[] result = null;
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
@@ -37,6 +37,7 @@ namespace GE.WebUI.Extantions.Repositories
                     Description = game.Description,
                     FrontPictureId = game.FrontPictureId,
                     Title = game.Title,
+                    TitleUrl=game.TitleUrl,
                     ArticleTypes = result.Where(t => t.GameId == game.Id).Select(t => new VMFGBArticleType
                     {
                         Name = t.ArticleTypeName,
@@ -45,14 +46,21 @@ namespace GE.WebUI.Extantions.Repositories
                 };
             }
 
+            using (var conn = new SqlConnection(repo.ConnectionString))
+            {
+                var articles = conn.Query<VMPreviewArticle>(Resources.Sql_Articles.PreviewMaterials, new { GAME_TITLE = gameTitle, ARTICLE_TYPE_NAME = (string)null, LETTERS_COUNT = 200 }).ToArray();
+                viewModel.Articles = articles;
+            }
+
             return viewModel;
         }
 
-        public static VMPreviewArticle[] PreviewMaterials(this GE.WebCoreExtantions.Repositories.RepoArticle repo, int gameId, string articleType, int lettersCount=200)
+        public static VMPreviewArticle[] PreviewMaterials(this GE.WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle, string articleType, int lettersCount=200)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                return conn.Query<VMPreviewArticle>(Resources.Sql_Articles.PreviewMaterials, new { GAME_ID = gameId, ARTICLE_TYPE_NAME = articleType, LETTERS_COUNT=lettersCount }).ToArray();
+                var data=conn.Query<VMPreviewArticle>(Resources.Sql_Articles.PreviewMaterials, new { GAME_TITLE = gameTitle, ARTICLE_TYPE_NAME = articleType, LETTERS_COUNT=lettersCount }).ToArray();
+                return data;
             }
         }
 

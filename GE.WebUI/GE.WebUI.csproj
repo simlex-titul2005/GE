@@ -188,6 +188,7 @@
     <Content Include="Content\less\error-page.less" />
     <Content Include="Content\less\seach-block.less" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
+    <None Include="Properties\PublishProfiles\release.pubxml" />
     <None Include="Properties\PublishProfiles\RELESE.pubxml" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

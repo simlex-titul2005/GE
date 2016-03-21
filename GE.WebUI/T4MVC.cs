@@ -190,6 +190,7 @@ namespace Links
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 public static readonly string article_empty_png = Url("article-empty.png");
+                public static readonly string faveicon_png = Url("faveicon.png");
                 public static readonly string footer_bg_lg_jpg = Url("footer-bg-lg.jpg");
                 public static readonly string footer_bg_md_jpg = Url("footer-bg-md.jpg");
                 public static readonly string footer_bg_sm_jpg = Url("footer-bg-sm.jpg");
@@ -230,7 +231,6 @@ namespace Links
             public static readonly string sizes_less = Url("sizes.less");
             public static readonly string sx_list_less = Url("sx-list.less");
             public static readonly string sx_pager_less = Url("sx-pager.less");
-            public static readonly string vote_less = Url("vote.less");
         }
     
     }

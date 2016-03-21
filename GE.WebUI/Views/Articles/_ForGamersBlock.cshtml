@@ -14,22 +14,22 @@
                     @for (int i = 0; i < Model.GameLength; i++)
                     {
                         var game = Model.Games[i];
-                        <li>
-                            <a href="#" rel="nofollow">
+                        <li @(Model.SelectedGameTitle!=null && Model.SelectedGameTitle.ToLowerInvariant()==game.TitleUrl.ToLowerInvariant()?"class=selected":null)>
+                            <a href="#" rel="nofollow" data-game-title="@game.TitleUrl">
                                 <figure>
                                     <img alt="@game.Title" src="@Url.Action(MVC.Pictures.Picture(game.FrontPictureId, height:80))" />
                                     <h4>@game.Title</h4>
                                     <span class="desc">@game.Description</span>
                                 </figure>
                             </a>
-                            <a href="@Url.Action("list", new { controller="articles", gameTitle=game.Title})" class="link">Кликнуть, чтобы открыть новую вкладку со статьями по игре @game.Title</a>
+                            <a href="@Url.Action("list", new { controller="articles", gameTitle=game.TitleUrl})" class="link">Кликнуть, чтобы открыть новую вкладку со статьями по игре @game.Title</a>
                             <ul class="dropdown">
                                 @for (int y = 0; y < game.ArticleTypeLength; y++)
                                 {
                                     var aType = game.ArticleTypes[y];
                                     var title = aType.Description;
                                     <li>
-                                        <a title="@title" href="#" data-game-id="@game.Id" data-article-type="@aType.Name">@title</a>
+                                        <a title="@title" href="#" data-game-title="@game.TitleUrl" data-article-type="@aType.Name">@title</a>
                                     </li>
                                 }
                             </ul>
@@ -40,7 +40,7 @@
             <div class="col-md-9">
                 <h3>Анонсы статей</h3>
                 <div id="materials-preview">
-
+                    @Html.Partial(MVC.Articles.Views._Preview, Model.Articles)
                 </div>
             </div>
         </div>

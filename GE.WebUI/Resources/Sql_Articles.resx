@@ -148,22 +148,40 @@ JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
 ORDER BY dm.DateCreate DESC</value>
   </data>
   <data name="PreviewMaterials" xml:space="preserve">
-    <value>--DECLARE @GAME_ID INT=1, @ARTICLE_TYPE_NAME VARCHAR(150)='guid',@LETTERS_COUNT INT=200
+    <value>--DECLARE @GAME_TITLE            VARCHAR(100) = 'dota2',
+--        @ARTICLE_TYPE_NAME     VARCHAR(150) = 'guid',
+--        @LETTERS_COUNT         INT = 200
 
-SELECT da.Id,
-       dm.Title, dm.TitleUrl,
+SELECT TOP(8) da.Id,
+       dm.Title,
+       dm.TitleUrl,
        dm.DateCreate,
        dm.ViewsCount,
        dm.CommentsCount,
        CASE 
             WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
-            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, @LETTERS_COUNT)+'...'
+            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, @LETTERS_COUNT) +
+                 '...'
        END               AS Foreword
 FROM   D_ARTICLE         AS da
        JOIN DV_MATERIAL  AS dm
-            ON  dm.ID = da.ID
+            ON  dm.Id = da.Id
             AND dm.ModelCoreType = da.ModelCoreType
-WHERE  da.ArticleTypeName = @ARTICLE_TYPE_NAME
-       AND da.ArticleTypeGameId = @GAME_ID</value>
+       LEFT JOIN D_GAME  AS dg
+            ON  dg.Id = da.GameId
+WHERE  (@GAME_TITLE IS NULL)
+       OR  (
+               @GAME_TITLE IS NOT NULL
+               AND @ARTICLE_TYPE_NAME IS NULL
+               AND dg.TitleUrl = @GAME_TITLE
+           )
+       OR  (
+               @GAME_TITLE IS NOT NULL
+               AND @ARTICLE_TYPE_NAME IS NOT NULL
+               AND dg.TitleUrl = @GAME_TITLE
+               AND da.ArticleTypeName = @ARTICLE_TYPE_NAME
+           )
+ORDER BY
+       dm.DateCreate DESC</value>
   </data>
 </root>

@@ -114,7 +114,7 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Preview
         {
-            public readonly string gameId = "gameId";
+            public readonly string gameTitle = "gameTitle";
             public readonly string articleType = "articleType";
             public readonly string lettersCount = "lettersCount";
         }
@@ -195,16 +195,16 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void PreviewOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int gameId, string articleType, int lettersCount);
+        partial void PreviewOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string gameTitle, string articleType, int lettersCount);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Preview(int gameId, string articleType, int lettersCount)
+        public override System.Web.Mvc.ActionResult Preview(string gameTitle, string articleType, int lettersCount)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Preview);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gameId", gameId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gameTitle", gameTitle);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "articleType", articleType);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lettersCount", lettersCount);
-            PreviewOverride(callInfo, gameId, articleType, lettersCount);
+            PreviewOverride(callInfo, gameTitle, articleType, lettersCount);
             return callInfo;
         }
 

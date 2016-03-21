@@ -15,6 +15,8 @@ namespace GE.WebUI.Models
         public VMFGBGame[] Games { get; set; }
         public int GameLength { get { return Games.Length; } }
         public bool HasGames { get { return GameLength != 0; } }
+        public VMPreviewArticle[] Articles { get; set; }
+        public string SelectedGameTitle { get; set; }
     }
 
     public sealed class VMFGBGame
@@ -26,6 +28,7 @@ namespace GE.WebUI.Models
         public int Id { get; set; }
         public Guid FrontPictureId { get; set; }
         public string Title { get; set; }
+        public string TitleUrl { get; set; }
         public string Description { get; set; }
 
         public VMFGBArticleType[] ArticleTypes { get; set; }

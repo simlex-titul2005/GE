@@ -143,8 +143,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\dist\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\dist\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\dist\js\ckeditor.min.js" />
     <Content Include="Content\dist\js\menues.min.js" />
     <Content Include="Content\dist\js\routes.min.js" />

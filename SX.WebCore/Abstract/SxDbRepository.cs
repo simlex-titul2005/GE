@@ -50,6 +50,8 @@ namespace SX.WebCore.Abstract
                 var m = model as SxDbUpdatedModel<TKey>;
                 if (m.DateUpdate == DateTime.MinValue)
                     m.DateUpdate = date;
+                if (model is SxMaterial)
+                    (model as SxMaterial).DateOfPublication = model.DateCreate;
             }
             
         }

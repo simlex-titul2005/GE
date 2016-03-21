@@ -11,6 +11,9 @@ namespace SX.WebCore.Abstract
     [Table("DV_MATERIAL")]
     public abstract class SxMaterial : SxDbUpdatedModel<int>, ISxHasHtml, ISxHasFrontPicture
     {
+        [Index]
+        public DateTime DateOfPublication { get; set; }
+
         [MaxLength(255), Required]
         public string Title { get; set; }
 
@@ -34,5 +37,9 @@ namespace SX.WebCore.Abstract
         public int CommentsCount { get; set; }
 
         public virtual ICollection<SxVote> Votes { get; set; }
+
+        public virtual SxAppUser User { get; set; }
+        [MaxLength(128)]
+        public string UserId { get; set; }
     }
 }

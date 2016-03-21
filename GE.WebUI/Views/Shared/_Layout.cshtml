@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
-    var bgUrl=GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
+    var bgUrl = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
+    var faveicon = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteFaveiconPath).ToString();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -10,8 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="@ViewBag.Description" />
-    <meta name="keywords" content="@ViewBag.Keywords"/>
+    <meta name="keywords" content="@ViewBag.Keywords" />
     <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="@(faveicon!=null?faveicon:"/content/dist/i/faveicon.png")" type="image/png" />
 
     <link href="~/Content/dist/css/site.min.css" rel="stylesheet">
 
@@ -47,14 +49,13 @@
 
         $('#game-list').geGameMenu();
 
-        function resizeFooter()
-        {
+        function resizeFooter() {
             var $footer = $('footer');
             var h = $footer.height();
             $footer.css({
                 'position': 'absolute'
             });
-            $('body').css('margin-bottom', h+'px');
+            $('body').css('margin-bottom', h + 'px');
         }
     </script>
     @RenderSection("scripts", false)

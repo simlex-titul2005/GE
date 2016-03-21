@@ -22,5 +22,10 @@ namespace GE.WebAdmin.Models
         public string SiteBgPath { get; set; }
         [MaxLength(255)]
         public string OldSiteBgPath { get; set; }
+
+        [Display(Name = "Путь к иконке сайта"), MaxLength(255)]
+        public string SiteFaveiconPath { get; set; }
+        [MaxLength(255)]
+        public string OldSiteFaveiconPath { get; set; }
     }
 }

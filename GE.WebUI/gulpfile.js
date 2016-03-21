@@ -14,14 +14,14 @@ function clear() {
     del([
         'content/dist/css/**/*.css',
         'content/dist/js/**/*.js',
-        //'content/fonts',
+        'content/fonts',
         'fonts/**/*'
     ]);
 }
 
 function createFonts() {
     gulp.src([
-        'bower_components/bootstrap/dist/fonts/**/'
+        'bower_components/bootstrap/fonts/**/'
     ])
         .pipe(gulp.dest('fonts'));
 

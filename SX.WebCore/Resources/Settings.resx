@@ -137,6 +137,10 @@
     <value>siteBgPath</value>
     <comment>Путь к файлу фона сайта</comment>
   </data>
+  <data name="siteFaveiconPath" xml:space="preserve">
+    <value>siteFaveiconPath</value>
+    <comment>Путь к иконке сайта</comment>
+  </data>
   <data name="siteLogoPath" xml:space="preserve">
     <value>siteLogoPath</value>
     <comment>Путь к логотипу сайта</comment>

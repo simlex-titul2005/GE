@@ -93,15 +93,18 @@ namespace GE.WebAdmin.Controllers
             var siteLogoPath = _repo.GetByKey(Settings.siteLogoPath);
             var siteName = _repo.GetByKey(Settings.siteName);
             var siteBgPath = _repo.GetByKey(Settings.siteBgPath);
+            var siteFaveiconPath = _repo.GetByKey(Settings.siteFaveiconPath);
             var viewModel = new VMSiteSettings
             {
                 LogoPath = siteLogoPath != null ? siteLogoPath.Value : null,
                 SiteName = siteName != null ? siteName.Value : null,
-                SiteBgPath = siteBgPath != null ? siteBgPath.Value : null
+                SiteBgPath = siteBgPath != null ? siteBgPath.Value : null,
+                SiteFaveiconPath = siteFaveiconPath != null ? siteFaveiconPath.Value : null
             };
             viewModel.OldLogoPath = viewModel.LogoPath;
             viewModel.OldSiteName = viewModel.SiteName;
             viewModel.OldSiteBgPath = viewModel.SiteBgPath;
+            viewModel.OldSiteFaveiconPath = viewModel.SiteFaveiconPath;
             return View(viewModel);
         }
 
@@ -111,15 +114,16 @@ namespace GE.WebAdmin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isExists = !string.IsNullOrEmpty(model.OldLogoPath) || !string.IsNullOrEmpty(model.OldSiteName) || !string.IsNullOrEmpty(model.OldSiteBgPath);
-                var isModified = !Equals(model.LogoPath, model.OldLogoPath) || !Equals(model.SiteName, model.OldSiteName) || !Equals(model.SiteBgPath, model.OldSiteBgPath);
+                var isExists = !string.IsNullOrEmpty(model.OldLogoPath) || !string.IsNullOrEmpty(model.OldSiteName) || !string.IsNullOrEmpty(model.OldSiteBgPath) || !string.IsNullOrEmpty(model.OldSiteFaveiconPath);
+                var isModified = !Equals(model.LogoPath, model.OldLogoPath) || !Equals(model.SiteName, model.OldSiteName) || !Equals(model.SiteBgPath, model.OldSiteBgPath) || !Equals(model.SiteFaveiconPath, model.OldSiteFaveiconPath);
 
                 if (!isExists)
                 {
                     var settings = new SxSiteSetting[] {
                         new SxSiteSetting { Id = Settings.siteLogoPath, Value = model.LogoPath },
                         new SxSiteSetting { Id = Settings.siteName, Value = model.SiteName },
-                        new SxSiteSetting { Id = Settings.siteBgPath, Value = model.SiteBgPath }
+                        new SxSiteSetting { Id = Settings.siteBgPath, Value = model.SiteBgPath },
+                        new SxSiteSetting { Id = Settings.siteFaveiconPath, Value = model.SiteFaveiconPath }
                     };
                     for (int i = 0; i < settings.Length; i++)
                     {
@@ -134,6 +138,7 @@ namespace GE.WebAdmin.Controllers
                     _repo.Update(new SxSiteSetting { Id = Settings.siteLogoPath, Value = model.LogoPath }, "Value");
                     _repo.Update(new SxSiteSetting { Id = Settings.siteName, Value = model.SiteName }, "Value");
                     _repo.Update(new SxSiteSetting { Id = Settings.siteBgPath, Value = model.SiteBgPath }, "Value");
+                    _repo.Update(new SxSiteSetting { Id = Settings.siteFaveiconPath, Value = model.SiteFaveiconPath }, "Value");
                     TempData["EditEmptyGameMessage"] = "Настройки успешно обновлены";
                     return RedirectToAction(MVC.Settings.EditSite());
                 }

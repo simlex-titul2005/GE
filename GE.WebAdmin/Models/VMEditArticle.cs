@@ -42,5 +42,8 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Строковый ключ"), MaxLength(255), Required]
         public string TitleUrl { get; set; }
+
+        [Display(Name = "Дата публикации")]
+        public DateTime DateOfPublication { get; set; }
     }
 }

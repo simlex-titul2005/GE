@@ -54,7 +54,7 @@ FROM   D_ARTICLE         AS da
             ON  dg.Id = da.GameId";
                 if (f != null && !string.IsNullOrEmpty(f.GameTitle))
                     query += @" WHERE  dg.TitleUrl = @GAME_TITLE_URL
-       OR  @GAME_TITLE_URL IS NULL";
+       OR  @GAME_TITLE_URL IS NULL AND dm.DateOfPublication <= GETDATE()";
                 query += @" ORDER BY
        dm.DateCreate DESC";
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)

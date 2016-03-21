@@ -150,6 +150,7 @@
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\dist\i\article-empty.png" />
+    <Content Include="Content\dist\i\faveicon.png" />
     <Content Include="Content\dist\i\footer-bg-lg.jpg" />
     <Content Include="Content\dist\i\footer-bg-md.jpg" />
     <Content Include="Content\dist\i\footer-bg-sm.jpg" />

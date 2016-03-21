@@ -1,4 +1,7 @@
-﻿
+﻿/// <reference path="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
+/// <reference path="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
+/// <reference path="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
+
 var promise = require('es6-promise'),
     gulp = require('gulp'),
     minifyCss = require('gulp-minify-css'),
@@ -53,6 +56,16 @@ function createCss() {
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
         .pipe(minifyCss())
         .pipe(gulp.dest('content/dist/css'));
+
+    gulp.src([
+       'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css'
+    ])
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
+        .pipe(minifyCss())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest('content/dist/css'));
 }
 
 function createJs() {
@@ -69,7 +82,9 @@ function createJs() {
         .pipe(gulp.dest('content/dist/js'));
 
     gulp.src([
-        'scripts/**/*.js'
+        'scripts/**/*.js',
+        'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js'
+
     ])
         .pipe(uglify())
         .pipe(rename({

@@ -14,6 +14,7 @@
     @Html.HiddenFor(x => x.OldLogoPath)
     @Html.HiddenFor(x => x.OldSiteName)
     @Html.HiddenFor(x => x.OldSiteBgPath)
+    @Html.HiddenFor(x => x.OldSiteFaveiconPath)
 
     <div class="row">
         <div class="col-md-12">
@@ -36,6 +37,14 @@
             @Html.LabelFor(x => x.SiteBgPath, new { @class = "control-label" })
             @Html.EditorFor(x => x.SiteBgPath, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите путь к файлу фона" } })
             @Html.ValidationMessageFor(x => x.SiteBgPath)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.SiteFaveiconPath, new { @class = "control-label" }) <span class="text-info"> (faveicon)</span>
+            @Html.EditorFor(x => x.SiteFaveiconPath, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите путь к файлу фона" } })
+            @Html.ValidationMessageFor(x => x.SiteFaveiconPath)
         </div>
     </div>
     <br />

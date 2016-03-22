@@ -10,6 +10,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    @if (!Request.IsLocal)
+    {
+        <meta name='yandex-verification' content='6ffb2f4165dc2f9b' />
+    }
     <meta name="description" content="@ViewBag.Description" />
     <meta name="keywords" content="@ViewBag.Keywords" />
     <title>@ViewBag.Title</title>
@@ -39,6 +43,7 @@
     </div>
     @Html.Partial(MVC.Shared.Views._Footer)
 
+    @Html.Partial(MVC.Shared.Views._Analytics)
     <script src="~/Content/dist/js/site.min.js"></script>
     <script type="text/javascript">
         var $WIDTH_SX = 768;

@@ -187,6 +187,7 @@
     <Content Include="Content\less\article.less" />
     <Content Include="Content\less\error-page.less" />
     <Content Include="Content\less\seach-block.less" />
+    <Content Include="Content\less\forum.less" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
     <None Include="Properties\PublishProfiles\RELESE.pubxml" />
@@ -222,6 +223,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClicksController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaterialsController.cs">
@@ -238,6 +240,9 @@
     <Compile Include="Extantions\Controllers\BaseControllerExt.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
+    <Compile Include="ForumController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="GamesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -255,6 +260,7 @@
     <Compile Include="Models\VMBreadcrumb.cs" />
     <Compile Include="Models\VMDetailNews.cs" />
     <Compile Include="Models\VMDetailArticle.cs" />
+    <Compile Include="Models\VMForumPart.cs" />
     <Compile Include="Models\VMMateriallnfo.cs" />
     <Compile Include="Models\VMFGBlock.cs" />
     <Compile Include="Models\VMGameMenu .cs" />
@@ -326,6 +332,8 @@
     <Content Include="Views\Search\List.cshtml" />
     <Content Include="Views\Search\_Search.cshtml" />
     <Content Include="Views\Votes\_Vote.cshtml" />
+    <Content Include="Views\Shared\_Analytics.cshtml" />
+    <Content Include="Views\Forum\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

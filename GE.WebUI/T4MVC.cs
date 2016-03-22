@@ -30,6 +30,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.ArticlesController Articles = new GE.WebUI.Controllers.T4MVC_ArticlesController();
     public static GE.WebUI.Controllers.ClicksController Clicks = new GE.WebUI.Controllers.T4MVC_ClicksController();
     public static GE.WebUI.Controllers.ErrorController Error = new GE.WebUI.Controllers.T4MVC_ErrorController();
+    public static GE.WebUI.Controllers.ForumController Forum = new GE.WebUI.Controllers.T4MVC_ForumController();
     public static GE.WebUI.Controllers.GamesController Games = new GE.WebUI.Controllers.T4MVC_GamesController();
     public static GE.WebUI.Controllers.HomeController Home = new GE.WebUI.Controllers.T4MVC_HomeController();
     public static GE.WebUI.Controllers.MenuesController Menues = new GE.WebUI.Controllers.T4MVC_MenuesController();
@@ -146,6 +147,7 @@ namespace Links
         private const string URLPATH = "~/Scripts";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
         public static readonly string click_stat_handler_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/click-stat-handler.min.js") ? Url("click-stat-handler.min.js") : Url("click-stat-handler.js");
         public static readonly string find_engine_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/find-engine.min.js") ? Url("find-engine.min.js") : Url("find-engine.js");
         public static readonly string ge_for_gamers_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-for-gamers-block.min.js") ? Url("ge-for-gamers-block.min.js") : Url("ge-for-gamers-block.js");
@@ -243,6 +245,7 @@ namespace Links
         {
             public static class Assets
             {
+                public const string _references_js = "~/Scripts/_references.js"; 
                 public const string click_stat_handler_js = "~/Scripts/click-stat-handler.js"; 
                 public const string find_engine_js = "~/Scripts/find-engine.js"; 
                 public const string ge_for_gamers_block_js = "~/Scripts/ge-for-gamers-block.js"; 

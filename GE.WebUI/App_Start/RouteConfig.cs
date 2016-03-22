@@ -21,6 +21,30 @@ namespace GE.WebUI
                 defaults: new { controller = "home", action = "robotstxt", area = "" }
             );
 
+            #region forum
+            routes.MapRoute(
+                name: null,
+                url: "forum",
+                defaults: new { controller = "forum", action = "list", gameTitle = (string)null, page = 1, area = "" }
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "forum/page{page}",
+                defaults: new { controller = "forum", action = "list", gameTitle = (string)null, page = 1, area = "" }
+            );
+            routes.MapRoute(
+                name: null,
+                url: "forum/{gameTitle}",
+                defaults: new { controller = "forum", action = "list", page = 1, area = "" }
+            );
+            routes.MapRoute(
+                name: null,
+                url: "forum/{gameTitle}/page{page}",
+                defaults: new { controller = "forum", action = "list", page = 1, area = "" }
+            );
+            #endregion
+
             #region articles
             routes.MapRoute(
                 name: null,

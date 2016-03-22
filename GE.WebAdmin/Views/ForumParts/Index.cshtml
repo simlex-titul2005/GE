@@ -1,0 +1,10 @@
+﻿@model VMForumPart[]
+@{
+    ViewBag.Title = "Разделы форума";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-forum-parts">
+    @Html.Partial(MVC.ForumParts.Views._GridView, Model)
+</div>

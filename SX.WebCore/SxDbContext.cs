@@ -29,6 +29,8 @@ namespace SX.WebCore
 
         public DbSet<SxClick> Clicks { get; set; }
 
+        public DbSet<SxForumPart> ForumParts { get; set; }
+
         public DbSet<SxMenu> Menues { get; set; }
 
         public DbSet<SxNews> News { get; set; }

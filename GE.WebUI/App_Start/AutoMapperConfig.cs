@@ -20,6 +20,9 @@ namespace GE.WebUI
                     //articles
                     cfg.CreateMap<Article, VMDetailArticle>();
 
+                    //articles
+                    cfg.CreateMap<SxForumPart, VMForumPart>();
+
                     //games
                     cfg.CreateMap<Game, VMGame>();
 

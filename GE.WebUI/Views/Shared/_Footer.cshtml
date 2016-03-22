@@ -39,12 +39,32 @@
                         <img alt="@(GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteName))" src="@(GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteLogoPath)+"?height=30")" />
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="second">
                         Любое использование или копирование материалов сайта - только с разрешения правообладателя и только с указанием ссылки на сайт
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-1">
+                    <div class="third">
+                        @if (!Request.IsLocal)
+                        {
+                        <!--LiveInternet counter-->
+                        <script type="text/javascript">
+<!--
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t14.6;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число просмотров за 24"+
+" часа, посетителей за 24 часа и за сегодня' "+
+"border='0' width='88' height='31'><\/a>")
+//--></script><!--/LiveInternet-->
+                        }
+                    </div>
+                </div>
+                <div class="col-md-2">
                     <div class="last">
                         © Все права защищены, 2015 - @(DateTime.Now.Year) год<br />
                         Разработка и поддержка: <a href="mailto:simlex.dev.2014@gmail.com">simlex</a>

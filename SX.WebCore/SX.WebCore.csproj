@@ -147,7 +147,8 @@
     <Compile Include="SxClick.cs" />
     <Compile Include="SxDbContext.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="SXForumPart.cs" />
+    <Compile Include="SxForumPart.cs" />
+    <Compile Include="SxForumTheme.cs" />
     <Compile Include="SxMaterialTag.cs" />
     <Compile Include="SxMenu.cs" />
     <Compile Include="SxMenuItem.cs" />

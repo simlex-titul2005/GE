@@ -1,0 +1,22 @@
+﻿@model VMForumPart[]
+@{
+    Layout = null;
+    var filter = ViewBag.Filter != null ? (VMForumPart)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+}
+
+
+@Html.SxGridView(
+    new SxExtantions.SxGridViewSettings<VMForumPart>
+    {
+        UpdateTargetId = "grid-forum-parts",
+        Data = Model,
+        Columns = new SxExtantions.SxGridViewColumn[]{
+            new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Заголовок раздела"},
+            new SxExtantions.SxGridViewColumn{FieldName="Html", Caption="Описание раздела"},
+        },
+        Filter = filter,
+        SortDirections = sortDirections
+    },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

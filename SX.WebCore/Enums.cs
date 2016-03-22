@@ -13,8 +13,7 @@ namespace SX.WebCore
             Unknown = 0,
             Article = 1,
             News = 2,
-            SeoKeyWord = 3,
-            SeoInfo = 4
+            ForumTheme = 3
         }
     }
 }

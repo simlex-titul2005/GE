@@ -1,4 +1,14 @@
-﻿@Html.Action(MVC.News.LastNewsBlock())
+﻿@{ 
+    ViewBag.Title = ViewBag.Title ?? "Новости, статьи игровой индустрии";
+    if (ViewBag.GameTitle != null)
+    {
+        ViewBag.Title += " " + ViewBag.GameTitle;
+    }
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.H1CssClass = "hidden";
+}
+
+@Html.Action(MVC.News.LastNewsBlock())
 
 @Html.Action(MVC.Articles.ForGamersBlock())
 

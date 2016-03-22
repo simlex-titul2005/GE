@@ -1,0 +1,43 @@
+﻿@model VMEditForumPart
+@{
+    var isNew = Model.Id == 0;
+    ViewBag.Title = isNew ? "Добавить раздел форума" : "Редактировать раздел форума \"" + Model.Title + "\"";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (!isNew)
+{
+    <form method="post" action="@Url.Action(MVC.ForumParts.Delete())">
+        @Html.HiddenFor(x => x.Id)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger pull-right" onclick="if(!confirm('Удалить запись?')) {return false;}">Удалить раздел форума</button>
+    </form>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.ForumParts.Edit())">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите наименование раздела" } })
+            @Html.ValidationMessageFor(x => x.Title)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Html, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание раздела" } })
+            @Html.ValidationMessageFor(x => x.Html)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+            @Html.ActionLink("Назад", MVC.ForumParts.Index(), new { @class = "btn btn-default" })
+        </div>
+    </div>
+</form>

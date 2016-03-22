@@ -130,6 +130,15 @@ namespace GE.WebUI.Extantions.Controllers
                     breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = controller.Url.Action(MVC.News.List()) });
                 }
             }
+            else if (controllerName == "forum")
+            {
+                if (actionName == "list")
+                {
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Форум", Url = controller.Url.Action(MVC.Forum.List()) });
+                    if (gameName != null)
+                        breadcrumbs.Add(new VMBreadcrumb { Title = gameName });
+                }
+            }
 
             controller.ViewBag.Breadcrumbs = breadcrumbs.ToArray();
         }

@@ -74,6 +74,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Login = "Login";
             public readonly string LogOff = "LogOff";
+            public readonly string UserList = "UserList";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -81,6 +82,7 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Login = "Login";
             public const string LogOff = "LogOff";
+            public const string UserList = "UserList";
         }
 
 
@@ -104,8 +106,10 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Login = "Login";
+                public readonly string UserList = "UserList";
             }
             public readonly string Login = "~/Views/Account/Login.cshtml";
+            public readonly string UserList = "~/Views/Account/UserList.cshtml";
         }
     }
 
@@ -146,6 +150,17 @@ namespace GE.WebAdmin.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOff);
             LogOffOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UserListOverride(T4MVC_System_Web_Mvc_ViewResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult UserList()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.UserList);
+            UserListOverride(callInfo);
             return callInfo;
         }
 

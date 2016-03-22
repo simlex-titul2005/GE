@@ -22,6 +22,7 @@ namespace AspNetIdentityApp
             app.CreatePerOwinContext<DbContext>(DbContext.Create<DbContext>);
             app.CreatePerOwinContext<SxAppUserManager>(SxAppUserManager.Create<DbContext>);
             app.CreatePerOwinContext<SxAppSignInManager>(SxAppSignInManager.Create);
+            app.CreatePerOwinContext<SxAppRoleManager>(SxAppRoleManager.Create<DbContext>);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,

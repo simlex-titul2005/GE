@@ -153,9 +153,9 @@
     <Content Include="Content\dist\js\menues.min.js" />
     <Content Include="Content\dist\js\routes.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
-    <Content Include="Content\i\bootstrap-colorpicker\alpha.png" />
-    <Content Include="Content\i\bootstrap-colorpicker\hue.png" />
-    <Content Include="Content\i\bootstrap-colorpicker\saturation.png" />
+    <Content Include="img\alpha.png" />
+    <Content Include="img\hue.png" />
+    <Content Include="img\saturation.png" />
     <Content Include="Content\sx\js\sx-find-table.js" />
     <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="faveicon.png" />
@@ -223,6 +223,7 @@
     <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\RedirectsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeoKeywordsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Models\VMClick.cs" />
     <Compile Include="Models\VMClickType.cs" />
     <Compile Include="Models\VMEditClickType.cs" />
+    <Compile Include="Models\VMEditRole.cs" />
     <Compile Include="Models\VMEditSeoKeyword.cs" />
     <Compile Include="Models\VMEditNews.cs" />
     <Compile Include="Models\VMEditSeoInfo.cs" />
@@ -272,6 +274,7 @@
     <Compile Include="Models\VMRedirect.cs" />
     <Compile Include="Models\VMRequest.cs" />
     <Compile Include="Models\VMRobotsFile.cs" />
+    <Compile Include="Models\VMRole.cs" />
     <Compile Include="Models\VMSeoKeywordList.cs" />
     <Compile Include="Models\VMNews.cs" />
     <Compile Include="Models\VMArticleType.cs" />
@@ -318,6 +321,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Sql_ArticleTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RolesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="RoutesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -403,6 +409,10 @@
     <Content Include="Views\Clicks\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Manuals\Index.cshtml" />
+    <Content Include="Views\Account\UserList.cshtml" />
+    <Content Include="Views\Roles\_GridView.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -412,6 +422,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="Content\i\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

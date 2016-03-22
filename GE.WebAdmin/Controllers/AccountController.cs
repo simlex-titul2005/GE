@@ -1,32 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using SX.WebCore.Managers;
-using Microsoft.Owin.Security;
 using GE.WebAdmin.Models;
-using SX.WebCore;
-using System.Security.Claims;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GE.WebAdmin.Controllers
 {
     [Authorize]
-    public partial class AccountController : Controller
+    public partial class AccountController : BaseController
     {
         private SxAppSignInManager _signInManager;
         private SxAppUserManager _userManager;
-
         public AccountController() { }
-        public AccountController(SxAppUserManager userManager, SxAppSignInManager signInManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
 
         private SxAppSignInManager SignInManager
         {
@@ -109,6 +95,12 @@ namespace GE.WebAdmin.Controllers
             //    });
             //AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public virtual ViewResult UserList()
+        {
+            return View();
         }
     }
 }

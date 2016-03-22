@@ -59,6 +59,11 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxPicture, VMEditPicture>();
                     cfg.CreateMap<VMEditPicture, SxPicture>();
 
+                    //roles
+                    cfg.CreateMap<SxAppRole, VMRole>();
+                    cfg.CreateMap<SxAppRole, VMEditRole>();
+                    cfg.CreateMap<VMEditRole, SxAppRole>();
+
                     //route
                     cfg.CreateMap<SxRoute, VMRoute>();
                     cfg.CreateMap<SxRoute, VMEditRoute>();

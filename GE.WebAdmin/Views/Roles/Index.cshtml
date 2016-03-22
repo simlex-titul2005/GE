@@ -1,0 +1,10 @@
+﻿@model VMRole[]
+@{
+    ViewBag.Title = "Роли пользователей";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-roles">
+    @Html.Partial(MVC.Roles.Views._GridView, Model)
+</div>

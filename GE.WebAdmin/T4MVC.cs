@@ -41,6 +41,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.PicturesController Pictures = new GE.WebAdmin.Controllers.T4MVC_PicturesController();
     public static GE.WebAdmin.Controllers.RedirectsController Redirects = new GE.WebAdmin.Controllers.T4MVC_RedirectsController();
     public static GE.WebAdmin.Controllers.RequestController Request = new GE.WebAdmin.Controllers.T4MVC_RequestController();
+    public static GE.WebAdmin.Controllers.RolesController Roles = new GE.WebAdmin.Controllers.T4MVC_RolesController();
     public static GE.WebAdmin.Controllers.RoutesController Routes = new GE.WebAdmin.Controllers.T4MVC_RoutesController();
     public static GE.WebAdmin.Controllers.RouteValuesController RouteValues = new GE.WebAdmin.Controllers.T4MVC_RouteValuesController();
     public static GE.WebAdmin.Controllers.SeoInfoController SeoInfo = new GE.WebAdmin.Controllers.T4MVC_SeoInfoController();
@@ -148,6 +149,8 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/css";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string bootstrap_datepicker_min_css = Url("bootstrap-datepicker.min.css");
+                public static readonly string colorpicker_min_css = Url("colorpicker.min.css");
                 public static readonly string site_min_css = Url("site.min.css");
             }
         
@@ -169,12 +172,21 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/js";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string bootstrap_colorpicker_min_js = Url("bootstrap-colorpicker.min.js");
+                public static readonly string bootstrap_datepicker_min_js = Url("bootstrap-datepicker.min.js");
                 public static readonly string ckeditor_min_js = Url("ckeditor.min.js");
                 public static readonly string menues_min_js = Url("menues.min.js");
                 public static readonly string routes_min_js = Url("routes.min.js");
                 public static readonly string site_min_js = Url("site.min.js");
             }
         
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class i {
+            private const string URLPATH = "~/Content/i";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -241,6 +253,8 @@ namespace Links
                 {
                     public static class Assets
                     {
+                        public const string bootstrap_datepicker_min_css = "~/Content/dist/css/bootstrap-datepicker.min.css";
+                        public const string colorpicker_min_css = "~/Content/dist/css/colorpicker.min.css";
                         public const string site_min_css = "~/Content/dist/css/site.min.css";
                     }
                 }
@@ -254,12 +268,20 @@ namespace Links
                 {
                     public static class Assets
                     {
+                        public const string bootstrap_colorpicker_min_js = "~/Content/dist/js/bootstrap-colorpicker.min.js"; 
+                        public const string bootstrap_datepicker_min_js = "~/Content/dist/js/bootstrap-datepicker.min.js"; 
                         public const string ckeditor_min_js = "~/Content/dist/js/ckeditor.min.js"; 
                         public const string menues_min_js = "~/Content/dist/js/menues.min.js"; 
                         public const string routes_min_js = "~/Content/dist/js/routes.min.js"; 
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }
+                public static class Assets
+                {
+                }
+            }
+            public static partial class i 
+            {
                 public static class Assets
                 {
                 }

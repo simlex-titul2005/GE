@@ -16,7 +16,9 @@
             new SxExtantions.SxGridViewColumn{FieldName="SessionId", Caption="Идентификатор сессии"},
             new SxExtantions.SxGridViewColumn{FieldName="Browser", Caption="Браузер"},
             new SxExtantions.SxGridViewColumn{FieldName="ClientIP", Caption="IP клиента"},
-            new SxExtantions.SxGridViewColumn{FieldName="UserAgent", Caption="Строка агента"},
+            new SxExtantions.SxGridViewColumn{FieldName="UserAgent", Caption="Строка агента", Template=(col, val)=> {
+                return val.ToString().Contains("bot")?string.Format("<i class=\"text-danger\">{0}</i>",val):val.ToString();
+            } },
             new SxExtantions.SxGridViewColumn{FieldName="RequestType", Caption="Тип запросв"},
             new SxExtantions.SxGridViewColumn{FieldName="UrlRef", Caption="UrlRef",Template=(col, val)=> {
                 return string.Format("<a href=\"{0}\" target=\"_blank\">{0}</a>", val);

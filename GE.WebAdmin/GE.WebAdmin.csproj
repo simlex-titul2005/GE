@@ -161,28 +161,18 @@
     <Content Include="faveicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="gulpfile.js" />
-    <Content Include="Content\less\sb-admin-2.less" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\less\bootstrap-ext.less" />
-    <Content Include="Content\sx\less\colors.less" />
-    <Content Include="Content\sx\less\sx-grid-view.less" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\dist\fonts\FontAwesome.otf" />
-    <Content Include="Content\sx\less\sx-pager.less" />
-    <Content Include="Content\sx\less\sx.less" />
-    <Content Include="Content\less\validation.less" />
-    <Content Include="Content\sx\less\sx-find-table.less" />
     <Content Include="robots.txt" />
-    <Content Include="Content\less\signin.less" />
-    <Content Include="Content\less\manuals.less" />
     <None Include="Properties\PublishProfiles\admin-game-exe.pubxml" />
+    <None Include="Properties\PublishProfiles\release.pubxml" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
@@ -358,11 +348,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="packages.config" />
-    <Content Include="bower.json" />
-    <Content Include="package.json" />
-    <Content Include="Content\less\site.less" />
-    <Content Include="Content\less\colors.less" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Articles\Index.cshtml" />

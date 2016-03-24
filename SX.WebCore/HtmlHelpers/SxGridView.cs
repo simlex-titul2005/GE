@@ -146,6 +146,8 @@ namespace SX.WebCore.HtmlHelpers
                     _caption = value;
                 }
             }
+
+            public Func<SxGridViewColumn, object, string> Template { get; set; }
         }
 
         private static TagBuilder getForm<TModel>(SxGridViewSettings<TModel> settings, string guid)
@@ -276,7 +278,7 @@ namespace SX.WebCore.HtmlHelpers
                     }
                     var qs = queryString.ToString().Substring(0, queryString.Length - 1);
 
-                    a.MergeAttribute("href", string.Format("{0}/edit{1}", controller, qs));
+                    a.MergeAttribute("href", string.Format("/{0}/edit{1}", controller, qs));
                     a.InnerHtml += "<i class=\"fa fa-pencil\"></i>";
 
                     td.InnerHtml += a;
@@ -290,7 +292,12 @@ namespace SX.WebCore.HtmlHelpers
             {
                 var column = settings.Columns[i];
                 var td = new TagBuilder("td");
-                var value = props.First(x => x.Name == column.FieldName).GetValue(model);
+
+                var val=props.First(x => x.Name == column.FieldName).GetValue(model);
+                var value = column.Template != null && val!= null
+                    ? column.Template(column, val)
+                    : val;
+
                 td.InnerHtml += value;
                 tr.InnerHtml += td;
             }

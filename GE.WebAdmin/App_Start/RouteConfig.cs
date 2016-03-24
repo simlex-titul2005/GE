@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace GE.WebAdmin
@@ -18,7 +14,7 @@ namespace GE.WebAdmin
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "home", action = "index", id = UrlParameter.Optional, page=1 }
+                defaults: new { controller = "account", action = "login", id = UrlParameter.Optional, page=1 }
             );
         }
     }

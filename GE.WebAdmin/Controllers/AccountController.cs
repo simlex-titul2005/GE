@@ -7,7 +7,6 @@ using GE.WebAdmin.Models;
 
 namespace GE.WebAdmin.Controllers
 {
-    [Authorize]
     public partial class AccountController : BaseController
     {
         private SxAppSignInManager _signInManager;

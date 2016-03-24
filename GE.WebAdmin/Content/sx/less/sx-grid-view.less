@@ -2,7 +2,8 @@
 @import (reference) "../../../bower_components/bootstrap/less/variables.less";
 
 .sx-gv a {
-    color: @color-orange;
+    color: inherit;
+    text-decoration:underline;
 }
 
 .sx-gv th {
@@ -15,11 +16,12 @@
 }
 
 .sx-gv .ordered-column:active {
-    background-color: @color-blue;
+    background-color: @color-orange;
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    color:@color-white;
 }
 
 .sx-gv .ordered-column > .sort-btn {

@@ -8,7 +8,7 @@ namespace GE.WebUI.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMFGBlock ForGamersBlock(this GE.WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle=null)
+        public static VMFGBlock ForGamersBlock(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle=null)
         {
             var viewModel = new VMFGBlock() { SelectedGameTitle= gameTitle };
             dynamic[] result = null;
@@ -56,7 +56,7 @@ namespace GE.WebUI.Extantions.Repositories
             return viewModel;
         }
 
-        public static VMPreviewArticle[] PreviewMaterials(this GE.WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle, string articleType, int lettersCount=200)
+        public static VMPreviewArticle[] PreviewMaterials(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle, string articleType, int lettersCount=200)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
@@ -65,7 +65,7 @@ namespace GE.WebUI.Extantions.Repositories
             }
         }
 
-        public static Article[] Last(this GE.WebCoreExtantions.Repositories.RepoArticle repo, int amount)
+        public static Article[] Last(this WebCoreExtantions.Repositories.RepoArticle repo, int amount)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
@@ -74,14 +74,31 @@ namespace GE.WebUI.Extantions.Repositories
             }
         }
 
-        public static VMDetailArticle GetByTitleUrl(this GE.WebCoreExtantions.Repositories.RepoArticle repo, string titleUrl)
+        public static VMDetailArticle GetByTitleUrl(this WebCoreExtantions.Repositories.RepoArticle repo, string titleUrl)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var query = @"SELECT da.*, dm.*, dat.Name AS ArticleTypeName, dat.Color AS ThemeColor FROM D_ARTICLE AS da
-JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
-LEFT JOIN D_ARTICLE_TYPE AS dat ON dat.Name = da.ArticleTypeName AND dat.GameId = da.ArticleTypeGameId
-WHERE dm.TitleUrl=@TITLE_URL";
+                var query = @"SELECT da.*,
+       dm.*,
+       (
+           SELECT ISNULL(SUM(1), 0)
+           FROM   D_LIKE AS dl
+           WHERE  dl.Direction = 1
+                  AND dl.MaterialId = dm.Id
+                  AND dl.ModelCoreType = dm.ModelCoreType
+       )                 AS LikeUpCount,
+       (
+           SELECT ISNULL(SUM(1), 0)
+           FROM   D_LIKE AS dl
+           WHERE  dl.Direction = 0
+                  AND dl.MaterialId = dm.Id
+                  AND dl.ModelCoreType = dm.ModelCoreType
+       )                 AS LikeDownCount
+FROM   D_ARTICLE         AS da
+       JOIN DV_MATERIAL  AS dm
+            ON  dm.Id = da.Id
+            AND dm.ModelCoreType = da.ModelCoreType
+WHERE  dm.TitleUrl = @TITLE_URL";
 
                 return conn.Query<VMDetailArticle>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();
             }

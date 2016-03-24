@@ -1,0 +1,10 @@
+﻿@model GE.WebUI.Models.Abstract.VMDetailMaterial
+@{ 
+    Layout = null;
+    var popContent = "Спасибо! Ваш голос уже учтён.";
+}
+
+<div class="like">
+    <i class="fa fa-thumbs-o-up up" title="Класс" onclick="setMaterialLike(@Model.Id, @((int)Model.ModelCoreType), '@Session.SessionID', '', 1, this)" data-content="@popContent" data-trigger="focus" tabindex="0"></i> <span class="up">@Model.LikeUpCount</span>
+    <i class="fa fa-thumbs-o-down down" title="Не очень" onclick="setMaterialLike(@Model.Id, @((int)Model.ModelCoreType), '@Session.SessionID', '', 0, this)" data-content="@popContent" data-trigger="focus" tabindex="1"></i><span class="down">@Model.LikeDownCount</span>
+</div>

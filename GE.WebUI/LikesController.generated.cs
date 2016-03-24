@@ -25,10 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebUI.Controllers
 {
-    public partial class VotesController
+    public partial class LikesController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected VotesController(Dummy d) { }
+        protected LikesController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -58,19 +58,19 @@ namespace GE.WebUI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.EmptyResult Create()
+        public virtual System.Web.Mvc.ActionResult Like()
         {
-            return new T4MVC_System_Web_Mvc_EmptyResult(Area, Name, ActionNames.Create);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Like);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public VotesController Actions { get { return MVC.Votes; } }
+        public LikesController Actions { get { return MVC.Likes; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Votes";
+        public readonly string Name = "Likes";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Votes";
+        public const string NameConst = "Likes";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -78,25 +78,23 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Create = "Create";
+            public readonly string Like = "Like";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Create = "Create";
+            public const string Like = "Like";
         }
 
 
-        static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
+        static readonly ActionParamsClass_Like s_params_Like = new ActionParamsClass_Like();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Create CreateParams { get { return s_params_Create; } }
+        public ActionParamsClass_Like LikeParams { get { return s_params_Like; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Create
+        public class ActionParamsClass_Like
         {
-            public readonly string mct = "mct";
-            public readonly string mid = "mid";
-            public readonly string up = "up";
+            public readonly string like = "like";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -108,28 +106,26 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _Vote = "_Vote";
+                public readonly string _Likes = "_Likes";
             }
-            public readonly string _Vote = "~/Views/Votes/_Vote.cshtml";
+            public readonly string _Likes = "~/Views/Likes/_Likes.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_VotesController : GE.WebUI.Controllers.VotesController
+    public partial class T4MVC_LikesController : GE.WebUI.Controllers.LikesController
     {
-        public T4MVC_VotesController() : base(Dummy.Instance) { }
+        public T4MVC_LikesController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_EmptyResult callInfo, SX.WebCore.Enums.ModelCoreType mct, int mid, byte up);
+        partial void LikeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, SX.WebCore.SxLike like);
 
         [NonAction]
-        public override System.Web.Mvc.EmptyResult Create(SX.WebCore.Enums.ModelCoreType mct, int mid, byte up)
+        public override System.Web.Mvc.ActionResult Like(SX.WebCore.SxLike like)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_EmptyResult(Area, Name, ActionNames.Create);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "up", up);
-            CreateOverride(callInfo, mct, mid, up);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Like);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "like", like);
+            LikeOverride(callInfo, like);
             return callInfo;
         }
 

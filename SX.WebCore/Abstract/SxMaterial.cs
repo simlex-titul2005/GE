@@ -36,8 +36,6 @@ namespace SX.WebCore.Abstract
 
         public int CommentsCount { get; set; }
 
-        public virtual ICollection<SxVote> Votes { get; set; }
-
         public virtual SxAppUser User { get; set; }
         [MaxLength(128)]
         public string UserId { get; set; }

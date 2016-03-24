@@ -33,11 +33,11 @@ public static partial class MVC
     public static GE.WebUI.Controllers.ForumController Forum = new GE.WebUI.Controllers.T4MVC_ForumController();
     public static GE.WebUI.Controllers.GamesController Games = new GE.WebUI.Controllers.T4MVC_GamesController();
     public static GE.WebUI.Controllers.HomeController Home = new GE.WebUI.Controllers.T4MVC_HomeController();
+    public static GE.WebUI.Controllers.LikesController Likes = new GE.WebUI.Controllers.T4MVC_LikesController();
     public static GE.WebUI.Controllers.MenuesController Menues = new GE.WebUI.Controllers.T4MVC_MenuesController();
     public static GE.WebUI.Controllers.NewsController News = new GE.WebUI.Controllers.T4MVC_NewsController();
     public static GE.WebUI.Controllers.PicturesController Pictures = new GE.WebUI.Controllers.T4MVC_PicturesController();
     public static GE.WebUI.Controllers.SearchController Search = new GE.WebUI.Controllers.T4MVC_SearchController();
-    public static GE.WebUI.Controllers.VotesController Votes = new GE.WebUI.Controllers.T4MVC_VotesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -211,30 +211,6 @@ namespace Links
         
         }
     
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class less {
-            private const string URLPATH = "~/Content/less";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string article_less = Url("article.less");
-            public static readonly string bootstrap_ext_less = Url("bootstrap-ext.less");
-            public static readonly string colors_less = Url("colors.less");
-            public static readonly string error_page_less = Url("error-page.less");
-            public static readonly string footer_less = Url("footer.less");
-            public static readonly string for_gamers_block_less = Url("for-gamers-block.less");
-            public static readonly string game_list_less = Url("game-list.less");
-            public static readonly string last_news_block_less = Url("last-news-block.less");
-            public static readonly string list_article_less = Url("list-article.less");
-            public static readonly string list_news_less = Url("list-news.less");
-            public static readonly string material_less = Url("material.less");
-            public static readonly string positioned_less = Url("positioned.less");
-            public static readonly string seach_block_less = Url("seach-block.less");
-            public static readonly string site_less = Url("site.less");
-            public static readonly string sizes_less = Url("sizes.less");
-            public static readonly string sx_list_less = Url("sx-list.less");
-            public static readonly string sx_pager_less = Url("sx-pager.less");
-        }
-    
     }
 
     
@@ -285,12 +261,6 @@ namespace Links
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }
-                public static class Assets
-                {
-                }
-            }
-            public static partial class less 
-            {
                 public static class Assets
                 {
                 }

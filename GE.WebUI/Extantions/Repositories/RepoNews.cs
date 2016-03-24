@@ -1,9 +1,6 @@
 ﻿using GE.WebUI.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using Dapper;
 
 namespace GE.WebUI.Extantions.Repositories
@@ -30,18 +27,18 @@ namespace GE.WebUI.Extantions.Repositories
        dm.*,
        (
            SELECT ISNULL(SUM(1), 0)
-           FROM   D_VOTE AS dv1
-           WHERE  dv1.IsUp = 1
-                  AND dv1.MaterialId = dm.Id
-                  AND dv1.ModelCoreType = dm.ModelCoreType
-       )                 AS VoteUpCount,
+           FROM   D_LIKE AS dl
+           WHERE  dl.Direction = 1
+                  AND dl.MaterialId = dm.Id
+                  AND dl.ModelCoreType = dm.ModelCoreType
+       )                 AS LikeUpCount,
        (
            SELECT ISNULL(SUM(1), 0)
-           FROM   D_VOTE AS dv1
-           WHERE  dv1.IsUp = 0
-                  AND dv1.MaterialId = dm.Id
-                  AND dv1.ModelCoreType = dm.ModelCoreType
-       )                 AS VoteDownCount
+           FROM   D_LIKE AS dl
+           WHERE  dl.Direction = 0
+                  AND dl.MaterialId = dm.Id
+                  AND dl.ModelCoreType = dm.ModelCoreType
+       )                 AS LikeDownCount
 FROM   D_NEWS            AS dn
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = dn.Id

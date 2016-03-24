@@ -10,7 +10,7 @@ namespace GE.WebUI.Models
         public DateTime DateOfPublication  { get; set; }
         public int? ViewsCount { get; set; }
         public int? CommentsCount { get; set; }
-        public int VoteUpCount { get; set; }
-        public int VoteDownCount { get; set; }
+        public int LikeUpCount { get; set; }
+        public int LikeDownCount { get; set; }
     }
 }

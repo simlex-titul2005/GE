@@ -31,6 +31,8 @@ namespace SX.WebCore
 
         public DbSet<SxForumPart> ForumParts { get; set; }
 
+        public DbSet<SxLike> Likes { get; set; }
+
         public DbSet<SxMenu> Menues { get; set; }
 
         public DbSet<SxNews> News { get; set; }
@@ -62,10 +64,10 @@ namespace SX.WebCore
             modelBuilder.Entity<SxSiteSetting>()
                 .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-            modelBuilder.Entity<SxMaterial>()
-                .HasMany(x => x.Votes)
-                .WithRequired(v => v.Material)
-                .HasForeignKey(v => new { v.MaterialId, v.ModelCoreType })
+            modelBuilder.Entity<SxLike>()
+                .HasRequired(x => x.Material)
+                .WithMany()
+                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
                 .WillCascadeOnDelete();
         }
     }

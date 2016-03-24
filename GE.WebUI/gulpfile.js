@@ -58,7 +58,8 @@ function createJs() {
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
         'scripts/ge-game-menu.js',
         'scripts/click-stat-handler.js',
-        'scripts/find-engine.js'
+        'scripts/find-engine.js',
+        'scripts/like-engine.js'
     ])
         .pipe(concat('site.min.js'))
         .pipe(uglify())

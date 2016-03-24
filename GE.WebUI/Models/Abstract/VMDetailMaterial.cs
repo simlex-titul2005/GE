@@ -16,8 +16,8 @@ namespace GE.WebUI.Models.Abstract
         public DateTime DateOfPublication { get; set; }
         public int CommentsCount { get; set; }
         public int ViewsCount { get; set; }
-        public int VoteUpCount { get; set; }
-        public int VoteDownCount { get; set; }
+        public int LikeUpCount { get; set; }
+        public int LikeDownCount { get; set; }
         public VMMateriallnfo Info
         {
             get
@@ -27,8 +27,8 @@ namespace GE.WebUI.Models.Abstract
                     DateOfPublication = this.DateOfPublication,
                     CommentsCount = this.CommentsCount,
                     ViewsCount = this.ViewsCount,
-                    VoteUpCount = this.VoteUpCount,
-                    VoteDownCount = this.VoteDownCount
+                    LikeUpCount = this.LikeUpCount,
+                    LikeDownCount = this.LikeDownCount
                 };
             }
         }

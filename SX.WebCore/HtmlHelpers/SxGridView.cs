@@ -147,7 +147,7 @@ namespace SX.WebCore.HtmlHelpers
                 }
             }
 
-            public Func<SxGridViewColumn, object, string> Template { get; set; }
+            public Func<object, string> Template { get; set; }
         }
 
         private static TagBuilder getForm<TModel>(SxGridViewSettings<TModel> settings, string guid)
@@ -295,7 +295,7 @@ namespace SX.WebCore.HtmlHelpers
 
                 var val=props.First(x => x.Name == column.FieldName).GetValue(model);
                 var value = column.Template != null && val!= null
-                    ? column.Template(column, val)
+                    ? column.Template(val)
                     : val;
 
                 td.InnerHtml += value;

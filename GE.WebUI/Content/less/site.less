@@ -36,6 +36,18 @@ body {
 .wrapper {
     padding-bottom: @def-pad*2;
     padding-top: 50px;
+    @media (max-width: @screen-xs-max) {
+        padding-top: 0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
 }
 
 .btn-transparent, .btn-transparent:hover, .btn-transparent:focus, .btn-transparent:active {

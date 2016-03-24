@@ -170,24 +170,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\less\colors.less" />
-    <Content Include="Content\less\site.less" />
-    <Content Include="Content\less\bootstrap-ext.less" />
-    <Content Include="Content\less\game-list.less" />
-    <Content Include="Content\less\sizes.less" />
-    <Content Include="Content\less\last-news-block.less" />
-    <Content Include="Content\less\positioned.less" />
-    <Content Include="Content\less\for-gamers-block.less" />
-    <Content Include="Content\less\footer.less" />
-    <Content Include="Content\less\sx-list.less" />
-    <Content Include="Content\less\list-article.less" />
-    <Content Include="Content\less\sx-pager.less" />
-    <Content Include="Content\less\list-news.less" />
-    <Content Include="Content\less\material.less" />
-    <Content Include="Content\less\article.less" />
-    <Content Include="Content\less\error-page.less" />
-    <Content Include="Content\less\seach-block.less" />
-    <Content Include="Content\less\forum.less" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
     <None Include="Properties\PublishProfiles\RELESE.pubxml" />
@@ -203,6 +185,7 @@
     <Content Include="Scripts\ge-game-menu.js" />
     <Content Include="Scripts\ge-last-news-block.js" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\like-engine.js" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -226,6 +209,7 @@
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LikesController.cs" />
     <Compile Include="Controllers\MaterialsController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -233,7 +217,6 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\VotesController.cs" />
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -250,6 +233,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HomeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LikesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="MenuesController.generated.cs">
@@ -296,9 +282,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="VotesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -331,7 +314,7 @@
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Search\List.cshtml" />
     <Content Include="Views\Search\_Search.cshtml" />
-    <Content Include="Views\Votes\_Vote.cshtml" />
+    <Content Include="Views\Likes\_Likes.cshtml" />
     <Content Include="Views\Shared\_Analytics.cshtml" />
     <Content Include="Views\Forum\List.cshtml" />
     <None Include="Web.Debug.config">

@@ -98,6 +98,8 @@ namespace GE.WebUI.Controllers
                     ViewBag.Title = model.Title;
                 if (ViewBag.H1 == null)
                     ViewBag.H1 = model.Title;
+                if (model.GameTitleUrl != null)
+                    ViewBag.GameName = model.GameTitleUrl.ToLowerInvariant();
 
                 var viewsCount = model.ViewsCount;
 

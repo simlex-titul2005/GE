@@ -80,6 +80,7 @@ namespace GE.WebUI.Extantions.Repositories
             {
                 var query = @"SELECT da.*,
        dm.*,
+       dg.TitleUrl       AS GameTitleUrl,
        (
            SELECT ISNULL(SUM(1), 0)
            FROM   D_LIKE AS dl
@@ -98,6 +99,8 @@ FROM   D_ARTICLE         AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.Id
             AND dm.ModelCoreType = da.ModelCoreType
+       LEFT JOIN D_GAME  AS dg
+            ON  dg.Id = da.GameId
 WHERE  dm.TitleUrl = @TITLE_URL";
 
                 return conn.Query<VMDetailArticle>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();

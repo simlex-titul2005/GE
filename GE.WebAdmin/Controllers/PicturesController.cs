@@ -104,12 +104,10 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual ViewResult FindTable(int page = 1, int pageSize = 10)
         {
+            var filter = new GE.WebCoreExtantions.Filter { PageSize = pageSize, SkipCount = (page - 1) * pageSize };
             var viewModel = new SxExtantions.SxPagedCollection<VMPicture>
             {
-                Collection = _repo.All
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Select(x => Mapper.Map<SxPicture, VMPicture>(x)).ToArray(),
+                Collection = (_repo as RepoPicture).QueryForAdmin(filter, null).ToArray(),
                 PagerInfo = new SxExtantions.SxPagerInfo
                 {
                     Page = page,

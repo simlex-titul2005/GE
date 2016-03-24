@@ -47,7 +47,7 @@ namespace GE.WebUI.Models
                 for (int i = 0; i < Length; i++)
                 {
                     var g = Games[i];
-                    if (g.Title.ToLower() == gameName.ToLower())
+                    if (g.TitleUrl.ToLower() == gameName.ToLower())
                     {
                         model = new VMImgGame
                         {

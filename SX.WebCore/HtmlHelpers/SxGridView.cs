@@ -203,7 +203,7 @@ namespace SX.WebCore.HtmlHelpers
                 var controller=values["controller"].ToString().ToLower();
                 var th = new TagBuilder("th");
                 th.AddCssClass("sx-gv-add-column");
-                th.InnerHtml += settings.EnableEditing ? string.Format("<a href=\"{0}/edit\"><i class=\"fa fa-plus-circle\"></i></a>", controller) : "#";
+                th.InnerHtml += settings.EnableEditing ? string.Format("<a href=\"/{0}/edit\"><i class=\"fa fa-plus-circle\"></i></a>", controller) : "#";
                 tr.InnerHtml += th;
             }
 

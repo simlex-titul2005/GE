@@ -160,7 +160,6 @@
     <Content Include="Content\dist\js\site.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="gulpfile.js" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff" />
@@ -285,12 +284,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="bower.json" />
-    <Content Include="package.json" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Menues\_MenuItems.cshtml" />
     <Content Include="Views\Games\_GameList.cshtml" />

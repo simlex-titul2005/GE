@@ -80,7 +80,11 @@ namespace GE.WebUI.Extantions.Repositories
             {
                 var query = @"SELECT da.*,
        dm.*,
-       dg.TitleUrl       AS GameTitleUrl,
+       dg.TitleUrl       AS GameTitleUrl,CASE 
+            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
+            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, 200) +
+                 '...'
+       END                    AS Foreword,
        (
            SELECT ISNULL(SUM(1), 0)
            FROM   D_LIKE AS dl

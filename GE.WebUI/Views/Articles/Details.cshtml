@@ -5,6 +5,7 @@
     ViewBag.Title = title ?? Model.Title;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.H1CssClass = ViewBag.H1CssClass ?? Model.ArticleTypeName;
+    ViewBag.Description = ViewBag.Description ?? Model.Foreword;
 }
 @section styles{
     @if (Model.ThemeColor != null)
@@ -21,6 +22,10 @@
             .m-html hr{
                 border-top:1px solid @Model.ThemeColor;
             }
+
+            .m-fwd{
+                border-left-color:@Model.ThemeColor;
+            }
         </style>
     }
 }
@@ -30,6 +35,11 @@
     <br />
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 1)">Это интересно, что тут есть ещё?</a>
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 2)">Это не то, что я искал, попробую снова</a>
+
+    <blockquote class="mat-fwd">
+        @Model.Foreword
+    </blockquote>
+
     <div class="m-html">
         @if (Model.FrontPictureId.HasValue)
         {

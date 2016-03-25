@@ -6,7 +6,7 @@
         @foreach (var item in Model.Items)
         {
             <li>
-                <a href="@Url.Action(item.Action, new { controller=item.Controller})" @(!string.IsNullOrEmpty(item.Title) ? "title=" + item.Title : "title=" + item.Caption)>@item.Caption</a>
+                <a href="@Url.Action(item.Action, new { controller=item.Controller})" title="@(!string.IsNullOrEmpty(item.Title)? item.Title:item.Caption)">@item.Caption</a>
             </li>
         }
     </ul>

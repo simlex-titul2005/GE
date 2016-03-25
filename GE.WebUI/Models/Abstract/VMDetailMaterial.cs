@@ -13,6 +13,7 @@ namespace GE.WebUI.Models.Abstract
         public Enums.ModelCoreType ModelCoreType { get; set; }
         public Guid? FrontPictureId { get; set; }
         public string Title { get; set; }
+        public string Foreword { get; set; }
         public string Html { get; set; }
         public DateTime DateOfPublication { get; set; }
         public int CommentsCount { get; set; }

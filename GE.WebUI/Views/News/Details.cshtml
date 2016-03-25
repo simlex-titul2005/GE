@@ -4,6 +4,7 @@
     var h1 = ViewBag.H1;
     ViewBag.Title = title ?? Model.Title;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.Description = ViewBag.Description ?? Model.Foreword;
 }
 
 <div class="detail-news">

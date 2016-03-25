@@ -5,6 +5,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using SX.WebCore;
+using SX.WebCore.Abstract;
 using SX.WebCore.Managers;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace AspNetIdentityApp
             app.CreatePerOwinContext<DbContext>(DbContext.Create<DbContext>);
             app.CreatePerOwinContext<SxAppUserManager>(SxAppUserManager.Create<DbContext>);
             app.CreatePerOwinContext<SxAppSignInManager>(SxAppSignInManager.Create);
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,

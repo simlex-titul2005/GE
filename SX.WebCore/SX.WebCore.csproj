@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="Abstract\ISxHasFrontPicture.cs" />
     <Compile Include="Abstract\ISxHasHtml.cs" />
+    <Compile Include="Abstract\ISxSiteMapProvider.cs" />
     <Compile Include="Abstract\ISxViewModel.cs" />
     <Compile Include="Abstract\SxDbModel.cs" />
     <Compile Include="Abstract\SxDbRepository.cs" />

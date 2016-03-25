@@ -235,6 +235,7 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\SiteMapProvider.cs" />
     <Compile Include="LikesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

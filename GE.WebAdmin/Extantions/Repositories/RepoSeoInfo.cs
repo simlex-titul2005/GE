@@ -25,10 +25,13 @@ namespace GE.WebAdmin.Extantions.Repositories
 FROM D_SEO_INFO AS dsi
 WHERE @RAW_URL IS NULL OR dsi.RawUrl LIKE '%'+@RAW_URL+'%'
 ORDER BY dsi.RawUrl";
-                if (order != null && order.ContainsKey("RawUrl"))
-                    query += " " + order["RawUrl"];
+
                 if (filter != null && filter.Additional != null && filter.Additional[0] != null)
                     rawUrl = filter.Additional[0].ToString();
+
+                if (order != null && order.ContainsKey("RawUrl") && order["RawUrl"]!= SxExtantions.SortDirection.Unknown)
+                    query += " " + order["RawUrl"];
+                
                 if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
                     query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
 

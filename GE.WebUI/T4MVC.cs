@@ -38,6 +38,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.NewsController News = new GE.WebUI.Controllers.T4MVC_NewsController();
     public static GE.WebUI.Controllers.PicturesController Pictures = new GE.WebUI.Controllers.T4MVC_PicturesController();
     public static GE.WebUI.Controllers.SearchController Search = new GE.WebUI.Controllers.T4MVC_SearchController();
+    public static GE.WebUI.Controllers.SeoController Seo = new GE.WebUI.Controllers.T4MVC_SeoController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -110,19 +111,6 @@ internal partial class T4MVC_System_Web_Mvc_EmptyResult : System.Web.Mvc.EmptyRe
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_System_Web_Mvc_ContentResult : System.Web.Mvc.ContentResult, IT4MVCActionResult
-{
-    public T4MVC_System_Web_Mvc_ContentResult(string area, string controller, string action, string protocol = null): base()
-    {
-        this.InitMVCT4Result(area, controller, action, protocol);
-    }
-    
-    public string Controller { get; set; }
-    public string Action { get; set; }
-    public string Protocol { get; set; }
-    public RouteValueDictionary RouteValueDictionary { get; set; }
-}
-[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_FileResult : System.Web.Mvc.FileResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_FileResult(string area, string controller, string action, string protocol = null): base(" ")
@@ -131,6 +119,19 @@ internal partial class T4MVC_System_Web_Mvc_FileResult : System.Web.Mvc.FileResu
     }
      
     protected override void WriteFile(System.Web.HttpResponseBase response) { }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_ContentResult : System.Web.Mvc.ContentResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_ContentResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
     
     public string Controller { get; set; }
     public string Action { get; set; }
@@ -153,6 +154,7 @@ namespace Links
         public static readonly string ge_for_gamers_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-for-gamers-block.min.js") ? Url("ge-for-gamers-block.min.js") : Url("ge-for-gamers-block.js");
         public static readonly string ge_game_menu_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-game-menu.min.js") ? Url("ge-game-menu.min.js") : Url("ge-game-menu.js");
         public static readonly string ge_last_news_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-last-news-block.min.js") ? Url("ge-last-news-block.min.js") : Url("ge-last-news-block.js");
+        public static readonly string like_engine_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/like-engine.min.js") ? Url("like-engine.min.js") : Url("like-engine.js");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -227,6 +229,7 @@ namespace Links
                 public const string ge_for_gamers_block_js = "~/Scripts/ge-for-gamers-block.js"; 
                 public const string ge_game_menu_js = "~/Scripts/ge-game-menu.js"; 
                 public const string ge_last_news_block_js = "~/Scripts/ge-last-news-block.js"; 
+                public const string like_engine_js = "~/Scripts/like-engine.js"; 
             }
         }
         public static partial class Content 

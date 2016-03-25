@@ -25,13 +25,13 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebUI.Controllers
 {
-    public partial class HomeController
+    public partial class SeoController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController() { }
+        public SeoController() { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected HomeController(Dummy d) { }
+        protected SeoController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -61,13 +61,13 @@ namespace GE.WebUI.Controllers
 
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController Actions { get { return MVC.Home; } }
+        public SeoController Actions { get { return MVC.Seo; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Home";
+        public readonly string Name = "Seo";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Home";
+        public const string NameConst = "Seo";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -75,24 +75,18 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Index = "Index";
+            public readonly string Robotstxt = "Robotstxt";
+            public readonly string Sitemap = "Sitemap";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Index = "Index";
+            public const string Robotstxt = "Robotstxt";
+            public const string Sitemap = "Sitemap";
         }
 
 
-        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Index
-        {
-            public readonly string game = "game";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -103,26 +97,34 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Index = "Index";
             }
-            public readonly string Index = "~/Views/Home/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_HomeController : GE.WebUI.Controllers.HomeController
+    public partial class T4MVC_SeoController : GE.WebUI.Controllers.SeoController
     {
-        public T4MVC_HomeController() : base(Dummy.Instance) { }
+        public T4MVC_SeoController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string game);
+        partial void RobotstxtOverride(T4MVC_System_Web_Mvc_ContentResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Index(string game)
+        public override System.Web.Mvc.ContentResult Robotstxt()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "game", game);
-            IndexOverride(callInfo, game);
+            var callInfo = new T4MVC_System_Web_Mvc_ContentResult(Area, Name, ActionNames.Robotstxt);
+            RobotstxtOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void SitemapOverride(T4MVC_System_Web_Mvc_ContentResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ContentResult Sitemap()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ContentResult(Area, Name, ActionNames.Sitemap);
+            SitemapOverride(callInfo);
             return callInfo;
         }
 

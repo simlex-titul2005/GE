@@ -1,5 +1,9 @@
 ﻿@model VMDetailArticle
 @{
+    var title = ViewBag.Title;
+    var h1 = ViewBag.H1;
+    ViewBag.Title = title ?? Model.Title;
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.H1CssClass = ViewBag.H1CssClass ?? Model.ArticleTypeName;
 }
 @section styles{

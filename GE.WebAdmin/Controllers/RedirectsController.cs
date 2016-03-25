@@ -7,8 +7,8 @@ using SX.WebCore.HtmlHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using GE.WebAdmin.Extantions.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -25,12 +25,13 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var list = (_repo as RepoRedirect).QueryForAdmin(new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize })
+            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var list = (_repo as RepoRedirect).QueryForAdmin(filter)
                 .Select(x => Mapper.Map<SxRedirect, VMRedirect>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = _repo.All.Count();
+            ViewData["RowsCount"] = (_repo as RepoRedirect).FilterCount(filter);
 
             return View(list);
         }
@@ -44,12 +45,13 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            var list = (_repo as RepoRedirect).QueryForAdmin(filter)
+            filter.Additional = new[] { oldUrl, newUrl };
+            var list = (_repo as RepoRedirect).QueryForAdmin(filter, order)
                 .Select(x => Mapper.Map<SxRedirect, VMRedirect>(x)).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = _repo.Count(null);
+            ViewData["RowsCount"] = (_repo as RepoRedirect).FilterCount(filter);
 
             return PartialView("_GridView", list);
         }

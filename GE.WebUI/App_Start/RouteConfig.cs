@@ -18,7 +18,13 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "robots.txt",
-                defaults: new { controller = "home", action = "robotstxt", area = "" }
+                defaults: new { controller = "seo", action = "robotstxt", area = "" }
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "sitemap.xml",
+                defaults: new { controller = "seo", action = "sitemap", area = "" }
             );
 
             #region forum

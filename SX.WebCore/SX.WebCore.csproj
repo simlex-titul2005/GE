@@ -166,6 +166,7 @@
     <Compile Include="SxRouteValue.cs" />
     <Compile Include="SxSeoInfo.cs" />
     <Compile Include="SxSeoKeyword.cs" />
+    <Compile Include="SxSiteMapUrl.cs" />
     <Compile Include="SxSiteSetting.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,13 @@
 ﻿@model SxExtantions.SxPagedCollection<Article>
 @{
-    ViewBag.Title = ViewBag.Title ?? "Статьи";
-    if (ViewBag.GameTitle != null)
+    var title = ViewBag.Title;
+    var h1 = ViewBag.H1;
+    ViewBag.Title = title ?? "Статьи";
+    if (title == null && ViewBag.GameTitle != null)
     {
         ViewBag.Title += " " + ViewBag.GameTitle;
     }
-    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.H1 = h1 ?? ViewBag.Title;
     ViewBag.H1CssClass = "header";
 }
 

@@ -50,13 +50,26 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new GE.WebCoreExtantions.Filter { PageSize = _rolePageSize, SkipCount = (page - 1) * _rolePageSize };
-            IQueryable<SxAppRole> roles = null;
+            IQueryable<SxAppRole> roles = RoleManager.Roles;
+
+            //where clause
+            if (!string.IsNullOrEmpty(name))
+                roles=roles.Where(x => x.Name.Contains(name));
+            if (!string.IsNullOrEmpty(desc))
+                roles=roles.Where(x => x.Description.Contains(desc));
+
+            //order
             if (order["Name"] != SxExtantions.SortDirection.Unknown)
-                roles = RoleManager.Roles.OrderBy(x => x.Name);
+                roles = order["Name"] == SxExtantions.SortDirection.Asc
+                    ? roles.OrderBy(x => x.Name)
+                    : roles.OrderByDescending(x => x.Name);
             else if (order["Description"] != SxExtantions.SortDirection.Unknown)
-                roles = RoleManager.Roles.OrderBy(x => x.Description);
+                roles = order["Description"] == SxExtantions.SortDirection.Asc
+                    ? roles.OrderBy(x => x.Description)
+                    : roles.OrderByDescending(x => x.Description);
             else
                 roles = RoleManager.Roles.OrderBy(x => x.Name);
+
             var list = roles.Skip((int)filter.SkipCount).Take(_rolePageSize).ToArray().Select(x => Mapper.Map<SxAppRole, VMRole>(x)).ToArray();
 
             ViewData["Page"] = page;

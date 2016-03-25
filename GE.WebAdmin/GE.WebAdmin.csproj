@@ -2896,6 +2896,7 @@
     <Compile Include="Controllers\SeoInfoController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Extantions\RepoNews.cs" />
+    <Compile Include="Extantions\Repositories\RepoRedirect.cs" />
     <Compile Include="Extantions\Repositories\RepoPicture.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="Extantions\Repositories\RepoForumPart.cs" />

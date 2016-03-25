@@ -1,4 +1,10 @@
 ﻿@model VMDetailNews
+@{
+    var title = ViewBag.Title;
+    var h1 = ViewBag.H1;
+    ViewBag.Title = title ?? Model.Title;
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+}
 
 <div class="detail-news">
     @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)

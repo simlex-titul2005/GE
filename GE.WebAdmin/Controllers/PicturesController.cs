@@ -6,7 +6,6 @@ using SX.WebCore.HtmlHelpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -28,14 +27,14 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new GE.WebCoreExtantions.Filter{ PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            var temp = (_repo as RepoPicture).QueryForAdmin(filter).ToArray();
+            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var list = (_repo as RepoPicture).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = _repo.All.Count();
+            ViewData["RowsCount"] = (_repo as RepoPicture).FilterCount(filter);
 
-            return View(temp);
+            return View(list);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -44,23 +43,14 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            //select
-            var addi=(filterModel != null  && filterModel.Id != Guid.Empty)
-                || (filterModel != null && filterModel.Caption != null)
-                || (filterModel != null && filterModel.Description != null)
-                || (filterModel != null && filterModel.Width != 0)
-                || (filterModel != null && filterModel.Height != 0) ? filterModel : null;
-
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            if (addi != null) filter.WhereExpressionObject = addi;
-
-            var temp = (_repo as RepoPicture).QueryForAdmin(filter, order).ToArray();
+            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Orders = order, WhereExpressionObject = filterModel };
+            var list = (_repo as RepoPicture).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
             ViewData["RowsCount"] = (_repo as RepoPicture).FilterCount(filter);
 
-            return PartialView("_GridView", temp);
+            return PartialView("_GridView", list);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
@@ -104,10 +94,10 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual ViewResult FindTable(int page = 1, int pageSize = 10)
         {
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = pageSize, SkipCount = (page - 1) * pageSize };
+            var filter = new WebCoreExtantions.Filter { PageSize = pageSize, SkipCount = (page - 1) * pageSize };
             var viewModel = new SxExtantions.SxPagedCollection<VMPicture>
             {
-                Collection = (_repo as RepoPicture).QueryForAdmin(filter, null).ToArray(),
+                Collection = (_repo as RepoPicture).QueryForAdmin(filter).ToArray(),
                 PagerInfo = new SxExtantions.SxPagerInfo
                 {
                     Page = page,
@@ -133,11 +123,11 @@ namespace GE.WebAdmin.Controllers
             byte[] byteArray = viewModel.OriginalContent;
             if (width.HasValue && viewModel.Width > width)
             {
-                byteArray = SX.WebCore.PictureHandler.ScaleImage(viewModel.OriginalContent, SX.WebCore.PictureHandler.ImageScaleMode.Width, destWidth: width);
+                byteArray = PictureHandler.ScaleImage(viewModel.OriginalContent, PictureHandler.ImageScaleMode.Width, destWidth: width);
             }
             else if (height.HasValue && viewModel.Height > height)
             {
-                byteArray = SX.WebCore.PictureHandler.ScaleImage(viewModel.OriginalContent, SX.WebCore.PictureHandler.ImageScaleMode.Height, destHeight: height);
+                byteArray = PictureHandler.ScaleImage(viewModel.OriginalContent, PictureHandler.ImageScaleMode.Height, destHeight: height);
             }
 
             return new FileStreamResult(new System.IO.MemoryStream(byteArray), viewModel.ImgFormat);

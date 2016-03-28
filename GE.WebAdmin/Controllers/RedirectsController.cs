@@ -25,9 +25,8 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            var list = (_repo as RepoRedirect).QueryForAdmin(filter)
-                .Select(x => Mapper.Map<SxRedirect, VMRedirect>(x)).ToArray();
+            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var list = (_repo as RepoRedirect).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
@@ -39,15 +38,11 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual PartialViewResult Index(VMRedirect filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
-            string oldUrl = filterModel != null ? filterModel.OldUrl : null;
-            string newUrl = filterModel != null ? filterModel.NewUrl : null;
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            filter.WhereExpressionObject = filterModel;
-            var list = (_repo as RepoRedirect).QueryForAdmin(filter, order)
-                .Select(x => Mapper.Map<SxRedirect, VMRedirect>(x)).ToArray();
+            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Orders = order, WhereExpressionObject = filterModel };
+            var list = (_repo as RepoRedirect).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;

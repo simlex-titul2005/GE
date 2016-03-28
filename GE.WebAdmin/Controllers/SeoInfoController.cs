@@ -23,13 +23,12 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var list = _repo.All
-                .Skip((page - 1) * _pageSize)
-                .Take(_pageSize).Select(x => Mapper.Map<SxSeoInfo, VMSeoInfo>(x)).ToArray();
+            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var list = (_repo as RepoSeoInfo).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoSeoInfo).FilterCount(null);
+            ViewData["RowsCount"] = (_repo as RepoSeoInfo).FilterCount(filter);
 
             return View(list);
         }
@@ -37,11 +36,10 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual PartialViewResult Index(VMSeoInfo filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
-            string rawUrl = filterModel != null ? filterModel.RawUrl : null;
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, WhereExpressionObject = filterModel };
+            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Orders=order, WhereExpressionObject = filterModel };
             var list = (_repo as RepoSeoInfo).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;

@@ -19,24 +19,15 @@ namespace GE.WebAdmin.Extantions.Repositories
                 var query = QueryProvider.GetSelectString();
                 query += @" FROM D_ROUTE AS dr";
 
-                query += " WHERE (dr.Name LIKE '%'+@name+'%' OR @name IS NULL)";
-                query += " AND (dr.Controller LIKE '%'+@c+'%' OR @c IS NULL)";
-                query += " AND (dr.Action LIKE '%'+@a+'%' OR @a IS NULL)";
+                object param = null;
+                query += getRoutetWhereString(filter, out param);
 
                 query += QueryProvider.GetOrderString("dr.Name", SortDirection.Asc, filter.Orders);
 
                 if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
                     query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
 
-                var name = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Name != null ? filter.WhereExpressionObject.Name : null;
-                var controller = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Controller != null ? filter.WhereExpressionObject.Controller : null;
-                var action = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Action != null ? filter.WhereExpressionObject.Action : null;
-                var data = conn.Query<VMRoute>(query, new
-                {
-                    name = (string)name,
-                    c=(string)controller,
-                    a=(string)action
-                });
+                var data = conn.Query<VMRoute>(query, param: param);
 
                 return data.AsQueryable();
             }
@@ -44,23 +35,39 @@ namespace GE.WebAdmin.Extantions.Repositories
 
         public static int FilterCount(this WebCoreExtantions.Repositories.RepoRoute repo, Filter filter)
         {
-            var name = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Name != null ? filter.WhereExpressionObject.Name : null;
-            var controller = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Controller != null ? filter.WhereExpressionObject.Controller : null;
-            var action = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Action != null ? filter.WhereExpressionObject.Action : null;
             var query = @"SELECT COUNT(1) FROM D_ROUTE AS dr";
-            query += " WHERE (dr.Name LIKE '%'+@name+'%' OR @name IS NULL)";
+
+            object param = null;
+            query += getRoutetWhereString(filter, out param);
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var data = conn.Query<int>(query, new
-                {
-                    name = (string)name,
-                    c = (string)controller,
-                    a = (string)action
-                }).Single();
+                var data = conn.Query<int>(query, param: param).Single();
 
                 return data;
             }
+        }
+
+        private static string getRoutetWhereString(Filter filter, out object param)
+        {
+            param = null;
+            string query = null;
+            query += " WHERE (dr.Name LIKE '%'+@name+'%' OR @name IS NULL)";
+            query += " AND (dr.Controller LIKE '%'+@c+'%' OR @c IS NULL)";
+            query += " AND (dr.Action LIKE '%'+@a+'%' OR @a IS NULL)";
+
+            var name = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Name != null ? (string)filter.WhereExpressionObject.Name : null;
+            var c = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Controller != null ? (string)filter.WhereExpressionObject.Controller : null;
+            var a = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Action != null ? (string)filter.WhereExpressionObject.Action : null;
+
+            param = new
+            {
+                name = name,
+                c = c,
+                a = a
+            };
+
+            return query;
         }
     }
 }

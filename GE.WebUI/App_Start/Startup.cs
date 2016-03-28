@@ -23,6 +23,7 @@ namespace AspNetIdentityApp
             app.CreatePerOwinContext<DbContext>(DbContext.Create<DbContext>);
             app.CreatePerOwinContext<SxAppUserManager>(SxAppUserManager.Create<DbContext>);
             app.CreatePerOwinContext<SxAppSignInManager>(SxAppSignInManager.Create);
+            app.CreatePerOwinContext<SxMailManager>(SxMailManager.Create);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

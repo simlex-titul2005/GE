@@ -137,6 +137,7 @@
     <Compile Include="Managers\SxAppRoleManager.cs" />
     <Compile Include="Managers\SxAppSignInManager.cs" />
     <Compile Include="Managers\SxAppUserManager.cs" />
+    <Compile Include="Managers\SxMailManager.cs" />
     <Compile Include="PictureHandler.cs" />
     <Compile Include="Providers\QueryProvider.cs" />
     <Compile Include="Repositories\RepoLike.cs" />

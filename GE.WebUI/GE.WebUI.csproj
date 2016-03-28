@@ -169,6 +169,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
     <None Include="Properties\PublishProfiles\RELESE.pubxml" />
@@ -221,6 +222,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Extantions\Controllers\BaseControllerExt.cs" />
+    <Compile Include="Extantions\Repositories\RepoGame.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="ForumController.generated.cs">
@@ -326,6 +328,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\less\" />
     <Folder Include="Views\Seo\" />
   </ItemGroup>
   <ItemGroup>

@@ -60,7 +60,7 @@ FROM   D_ARTICLE         AS da
        LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = da.GameId WHERE  (dg.TitleUrl = @GAME_TITLE_URL
-       OR  @GAME_TITLE_URL IS NULL) AND dm.DateOfPublication <= GETDATE()";
+       OR  @GAME_TITLE_URL IS NULL) AND dm.DateOfPublication <= GETDATE() AND dm.Show=1";
                 query += @" ORDER BY
        dm.DateCreate DESC";
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)

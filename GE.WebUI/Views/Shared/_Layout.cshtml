@@ -22,8 +22,10 @@
     {
         <meta name="keywords" content="@ViewBag.Keywords" />
     }
+    <meta property="og:url" content="@Request.Url" />
     <title>@ViewBag.Title</title>
     <meta property="og:title" content="@ViewBag.Title"/>
+    <meta property="og:image" content="@(faveicon!=null?faveicon:"/content/dist/i/faveicon.png")" />
 
     <link rel="shortcut icon" href="@(faveicon!=null?faveicon:"/content/dist/i/faveicon.png")" type="image/png" />
 

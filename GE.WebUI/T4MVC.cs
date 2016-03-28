@@ -213,6 +213,13 @@ namespace Links
         
         }
     
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class less {
+            private const string URLPATH = "~/Content/less";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        }
+    
     }
 
     
@@ -264,6 +271,12 @@ namespace Links
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }
+                public static class Assets
+                {
+                }
+            }
+            public static partial class less 
+            {
                 public static class Assets
                 {
                 }

@@ -40,7 +40,7 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Additional = new object[] { title, html } };
+            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, WhereExpressionObject = filterModel };
             var data = (_repo as RepoForumPart).QueryForAdmin(filter, order);
 
             ViewData["Page"] = page;

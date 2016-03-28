@@ -34,10 +34,10 @@ ORDER BY";
                     query += " Title";
 
                 //filter
-                if (filter != null && filter.Additional != null && filter.Additional[0] != null)
-                    title = filter.Additional[0].ToString();
-                if (filter != null && filter.Additional != null && filter.Additional[1] != null)
-                    html = filter.Additional[1].ToString();
+                if (filter != null && filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null)
+                    title = filter.WhereExpressionObject.Title;
+                if (filter != null && filter.WhereExpressionObject != null && filter.WhereExpressionObject.Html != null)
+                    html = filter.WhereExpressionObject.Html;
 
                 if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
                     query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
@@ -55,12 +55,12 @@ ORDER BY";
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var query = @"SELECT COUNT(1) FROM D_FORUM_PART AS dfp WHERE (@TITLE IS NULL OR dfp.Title LIKE '%'+@TITLE+'%') AND (@HTML IS NULL OR dfp.Html LIKE '%'+@HTML+'%')";
-                
+
                 //filter
-                if (filter != null && filter.Additional != null && filter.Additional[0] != null)
-                    title = filter.Additional[0].ToString();
-                if (filter != null && filter.Additional != null && filter.Additional[1] != null)
-                    html = filter.Additional[1].ToString();
+                if (filter != null && filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null)
+                    title = filter.WhereExpressionObject.Title;
+                if (filter != null && filter.WhereExpressionObject != null && filter.WhereExpressionObject.Html != null)
+                    html = filter.WhereExpressionObject.Html;
 
                 var data = conn.Query<int>(query, new { @TITLE = title, @HTML = html }).Single();
                 return (int)data;

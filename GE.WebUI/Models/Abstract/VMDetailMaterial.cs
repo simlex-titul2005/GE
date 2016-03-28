@@ -9,10 +9,12 @@ namespace GE.WebUI.Models.Abstract
     public class VMDetailMaterial
     {
         public int Id { get; set; }
+        public DateTime DateCreate { get; set; }
         public string GameTitleUrl { get; set; }
         public Enums.ModelCoreType ModelCoreType { get; set; }
         public Guid? FrontPictureId { get; set; }
         public string Title { get; set; }
+        public string TitleUrl { get; set; }
         public string Foreword { get; set; }
         public string Html { get; set; }
         public DateTime DateOfPublication { get; set; }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Helpers;
+﻿using System.Collections.Generic;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace SX.WebCore.Abstract
 {
@@ -11,6 +7,7 @@ namespace SX.WebCore.Abstract
     {
         public int? SkipCount { get; set; }
         public int? PageSize { get; set; }
-        public object[] Additional { get; set; }
+        public dynamic WhereExpressionObject { get; set; }
+        public IDictionary<string, SortDirection> Orders { get; set; }
     }
 }

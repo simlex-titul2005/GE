@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using GE.WebCoreExtantions;
+using GE.WebUI.Models.Abstract;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -65,11 +66,37 @@ namespace GE.WebUI.Extantions.Repositories
             }
         }
 
-        public static Article[] Last(this WebCoreExtantions.Repositories.RepoArticle repo, int amount)
+        public static VMDetailMaterial[] Last(this WebCoreExtantions.Repositories.RepoArticle repo, int amount)
         {
+            var query = @"SELECT TOP(@AMOUNT) *
+FROM   (
+           SELECT TOP(@AMOUNT) dm.DateCreate,
+                  dm.Title,
+                  dm.TitleUrl,
+                  dm.ModelCoreType
+           FROM   DV_MATERIAL     AS dm
+                  JOIN D_ARTICLE  AS da
+                       ON  da.ModelCoreType = dm.ModelCoreType
+                       AND da.Id = dm.Id
+           ORDER BY
+                  dm.DateCreate DESC
+           UNION
+           SELECT TOP(@AMOUNT) dm.DateCreate,
+                  dm.Title,
+                  dm.TitleUrl,
+                  dm.ModelCoreType
+           FROM   DV_MATERIAL  AS dm
+                  JOIN D_NEWS  AS dn
+                       ON  dn.ModelCoreType = dm.ModelCoreType
+                       AND dn.Id = dm.Id
+           ORDER BY
+                  dm.DateCreate DESC
+       ) x
+ORDER BY
+       x.DateCreate DESC";
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var results = conn.Query<Article>(Resources.Sql_Articles.LastArticles, new { AMOUNT = amount }).ToArray();
+                var results = conn.Query<VMDetailMaterial>(query, new { AMOUNT = amount }).ToArray();
                 return results;
             }
         }

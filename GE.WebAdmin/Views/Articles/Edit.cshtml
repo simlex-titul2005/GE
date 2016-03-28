@@ -17,7 +17,7 @@
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.ModelCoreType)
             @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-danger">Удалить статью</button>
+            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить статью</button>
         </form>
     </div>
 }
@@ -28,6 +28,10 @@
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.ModelCoreType)
     @Html.HiddenFor(x => x.OldTitleUrl)
+    @if (!isNew)
+    {
+        @Html.HiddenFor(x => x.UserId)
+    }
 
     <div class="row">
         <div class="col-md-@(isNew?12:9)">
@@ -45,7 +49,7 @@
         }
     </div>
     <br />
-    @if (!isNew && !string.IsNullOrEmpty(Model.TitleUrl))
+    @if (!isNew && !string.IsNullOrEmpty(Model.TitleUrl) && User.IsInRole("architect"))
     {
         <div class="row">
             <div class="col-md-12">

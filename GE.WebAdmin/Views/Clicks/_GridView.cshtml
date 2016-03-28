@@ -12,9 +12,9 @@
         UpdateTargetId = "grid-clicks",
         Data = Model,
         Columns = new SxExtantions.SxGridViewColumn[]{
+            new SxExtantions.SxGridViewColumn{FieldName="DateCreate", Caption="Дата"},
             new SxExtantions.SxGridViewColumn{FieldName="UrlRef", Caption="Исходящий адрес"},
             new SxExtantions.SxGridViewColumn{FieldName="RawUrl", Caption="Адрес назначения"},
-            new SxExtantions.SxGridViewColumn{FieldName="LinkTarget", Caption="Тип клика"},
             new SxExtantions.SxGridViewColumn{FieldName="ClickTypeName", Caption="Статистика клика"}
         },
         Filter = filter,

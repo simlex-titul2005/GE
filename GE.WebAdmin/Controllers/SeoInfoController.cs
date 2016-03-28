@@ -4,10 +4,8 @@ using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using SX.WebCore.HtmlHelpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 
@@ -43,8 +41,8 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Additional = new object[] { rawUrl } };
-            var list = (_repo as RepoSeoInfo).QueryForAdmin(filter, order).ToArray();
+            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, WhereExpressionObject = filterModel };
+            var list = (_repo as RepoSeoInfo).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;

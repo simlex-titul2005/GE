@@ -274,9 +274,12 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="@Url.Action(MVC.Routes.Index())"><i class="fa fa-road fa-fw"></i> Маршруты</a>
-                        </li>
+                        @if (User.IsInRole("architect"))
+                        {
+                            <li>
+                                <a href="@Url.Action(MVC.Routes.Index())"><i class="fa fa-road fa-fw"></i> Маршруты</a>
+                            </li>
+                        }
                         <li>
                             <a href="@Url.Action(MVC.Menues.Index())"><i class="fa fa-bars fa-fw"></i> Меню сайта</a>
                         </li>

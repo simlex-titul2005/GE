@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
+using Microsoft.AspNet.Identity;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -125,10 +126,14 @@ namespace GE.WebAdmin.Controllers
                 var isNew = model.Id == 0;
                 var redactModel = Mapper.Map<VMEditArticle, Article>(model);
                 redactModel.ArticleTypeGameId = model.GameId;
+                
                 Article newModel = null;
 
                 if (isNew)
+                {
+                    redactModel.UserId = User.Identity.GetUserId();
                     newModel = _repo.Create(redactModel);
+                }
                 else
                 {
                     if (model.TitleUrl != model.OldTitleUrl)
@@ -141,7 +146,7 @@ namespace GE.WebAdmin.Controllers
                         }
                     }
 
-                    newModel = _repo.Update(redactModel, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "ArticleTypeName", "ArticleTypeGameId", "DateOfPublication");
+                    newModel = _repo.Update(redactModel, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "ArticleTypeName", "ArticleTypeGameId", "DateOfPublication", "UserId", "Foreword");
                 }
 
                 return RedirectToAction(MVC.Articles.Index());

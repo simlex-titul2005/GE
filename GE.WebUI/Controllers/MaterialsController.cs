@@ -17,10 +17,12 @@ namespace GE.WebUI.Controllers
     public abstract partial class MaterialsController<TKey, TModel> : BaseController where TModel : SxDbModel<TKey>, IHasGame
     {
         private SxDbRepository<TKey, TModel, DbContext> _repo;
+        private SxDbRepository<int, Game, DbContext> _repoGame;
         protected MaterialsController() { }
         private Enums.ModelCoreType _modelCoreType;
         protected MaterialsController(Enums.ModelCoreType modelCoreType)
         {
+            _repoGame = new RepoGame();
             _modelCoreType = modelCoreType;
             switch (_modelCoreType)
             {
@@ -46,6 +48,17 @@ namespace GE.WebUI.Controllers
         public virtual ViewResult List(GE.WebCoreExtantions.Filter filter)
         {
             ViewBag.GameTitle = filter.GameTitle;
+
+            if(filter.GameTitle!=null)
+            {
+                var existGame = (_repoGame as RepoGame).ExistGame(filter.GameTitle);
+                if(!existGame)
+                {
+                    Response.StatusCode = 404;
+                    Response.Clear();
+                    return null;
+                }
+            }
 
             var pageSize = 10;
             switch (_modelCoreType)
@@ -112,18 +125,21 @@ namespace GE.WebUI.Controllers
                 }
 
                 //update views count
-                Task.Run(() =>
+                if (!Request.IsLocal)
                 {
-                    switch (_modelCoreType)
+                    Task.Run(() =>
                     {
-                        case Enums.ModelCoreType.Article:
-                            (_repo as RepoArticle).Update(new Article { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, "ViewsCount");
-                            break;
-                        case Enums.ModelCoreType.News:
-                            (_repo as RepoNews).Update(new News { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, "ViewsCount");
-                            break;
-                    }
-                });
+                        switch (_modelCoreType)
+                        {
+                            case Enums.ModelCoreType.Article:
+                                (_repo as RepoArticle).Update(new Article { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, "ViewsCount");
+                                break;
+                            case Enums.ModelCoreType.News:
+                                (_repo as RepoNews).Update(new News { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, "ViewsCount");
+                                break;
+                        }
+                    });
+                }
 
                 model.ViewsCount = viewsCount + 1;
 

@@ -12,6 +12,11 @@
     <br />
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 1)">Это интересно, что тут есть ещё?</a>
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 2)">Это не то, что я искал, попробую снова</a>
+
+    <blockquote class="mat-fwd">
+        @Model.Foreword
+    </blockquote>
+
     <div class="m-html">
         @if (Model.FrontPictureId.HasValue)
         {

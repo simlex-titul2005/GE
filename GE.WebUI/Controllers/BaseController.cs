@@ -1,17 +1,6 @@
 ﻿using AutoMapper;
-using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
-using GE.WebUI.Models;
-using SX.WebCore;
-using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Caching;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using GE.WebUI.Extantions.Controllers;
 
 namespace GE.WebUI.Controllers

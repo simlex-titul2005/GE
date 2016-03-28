@@ -45,7 +45,7 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            filter.Additional = new[] { oldUrl, newUrl };
+            filter.WhereExpressionObject = filterModel;
             var list = (_repo as RepoRedirect).QueryForAdmin(filter, order)
                 .Select(x => Mapper.Map<SxRedirect, VMRedirect>(x)).ToArray();
 

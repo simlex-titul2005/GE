@@ -1,20 +1,13 @@
 ﻿using GE.WebCoreExtantions;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using Dapper;
-using SX.WebCore.Abstract;
-using GE.WebAdmin.Models;
-using SX.WebCore;
-using SX.WebCore.HtmlHelpers;
 
 namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static Article GetByTitleUrl(this GE.WebCoreExtantions.Repositories.RepoArticle repo, string titleUrl)
+        public static Article GetByTitleUrl(this WebCoreExtantions.Repositories.RepoArticle repo, string titleUrl)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {

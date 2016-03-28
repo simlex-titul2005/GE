@@ -26,9 +26,9 @@ namespace GE.WebAdmin.Extantions.Repositories
 FROM   D_PICTURE AS dp";
 
                 //where
-                if(filter.Additional!=null && filter.Additional[0]!=null)
+                if(filter.WhereExpressionObject!=null)
                 {
-                    var addi = (VMPicture)filter.Additional[0];
+                    var addi = (VMPicture)filter.WhereExpressionObject;
                     query += @" WHERE";
                     query += whereClause(addi);
                 }
@@ -53,9 +53,9 @@ FROM   D_PICTURE AS dp";
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var query = @"SELECT COUNT(1) FROM D_PICTURE as dp";
-                if (filter.Additional != null && filter.Additional[0] != null)
+                if (filter.WhereExpressionObject!=null)
                 {
-                    var addi = (VMPicture)filter.Additional[0];
+                    var addi = (VMPicture)filter.WhereExpressionObject;
                     query += @" WHERE";
                     query += whereClause(addi);
                 }

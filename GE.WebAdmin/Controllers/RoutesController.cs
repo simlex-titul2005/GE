@@ -4,13 +4,15 @@ using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using GE.WebAdmin.Extantions.Repositories;
 using System.Web.Mvc;
+using System.Collections.Generic;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebAdmin.Controllers
 {
+    [Authorize(Roles ="architect")]
     public partial class RoutesController : BaseController
     {
         private SxDbRepository<Guid, SxRoute, DbContext> _repo;
@@ -24,15 +26,30 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var list = _repo.All
-                .Skip((page - 1) * _pageSize)
-                .Take(_pageSize).Select(x => Mapper.Map<SxRoute, VMRoute>(x)).ToArray();
+            var filter = new WebCoreExtantions.Filter { SkipCount = (page - 1) * _pageSize, PageSize = _pageSize };
+            var list = (_repo as RepoRoute).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = _repo.All.Count();
+            ViewData["RowsCount"] = (_repo as RepoRoute).FilterCount(filter);
 
             return View(list);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public virtual PartialViewResult Index(VMRoute filter, IDictionary<string, SortDirection> order, int page = 1)
+        {
+            ViewBag.Filter = filter;
+            ViewBag.Order = order;
+
+            var f = new WebCoreExtantions.Filter { SkipCount = (page - 1) * _pageSize, PageSize = _pageSize, Orders = order, WhereExpressionObject = filter };
+            var list = (_repo as RepoRoute).QueryForAdmin(f).ToArray();
+
+            ViewData["Page"] = page;
+            ViewData["PageSize"] = _pageSize;
+            ViewData["RowsCount"] = (_repo as RepoRoute).FilterCount(f);
+
+            return PartialView("_GridView", list);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]

@@ -191,20 +191,6 @@ namespace Links
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class less {
-            private const string URLPATH = "~/Content/less";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string bootstrap_ext_less = Url("bootstrap-ext.less");
-            public static readonly string colors_less = Url("colors.less");
-            public static readonly string manuals_less = Url("manuals.less");
-            public static readonly string sb_admin_2_less = Url("sb-admin-2.less");
-            public static readonly string signin_less = Url("signin.less");
-            public static readonly string site_less = Url("site.less");
-            public static readonly string validation_less = Url("validation.less");
-        }
-    
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class sx {
             private const string URLPATH = "~/Content/sx";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -216,18 +202,6 @@ namespace Links
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 public static readonly string sx_find_table_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/sx-find-table.min.js") ? Url("sx-find-table.min.js") : Url("sx-find-table.js");
                 public static readonly string sx_grid_view_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/sx-grid-view.min.js") ? Url("sx-grid-view.min.js") : Url("sx-grid-view.js");
-            }
-        
-            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-            public static class less {
-                private const string URLPATH = "~/Content/sx/less";
-                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string colors_less = Url("colors.less");
-                public static readonly string sx_find_table_less = Url("sx-find-table.less");
-                public static readonly string sx_grid_view_less = Url("sx-grid-view.less");
-                public static readonly string sx_pager_less = Url("sx-pager.less");
-                public static readonly string sx_less = Url("sx.less");
             }
         
         }
@@ -287,12 +261,6 @@ namespace Links
                 {
                 }
             }
-            public static partial class less 
-            {
-                public static class Assets
-                {
-                }
-            }
             public static partial class sx 
             {
                 public static partial class js 
@@ -301,12 +269,6 @@ namespace Links
                     {
                         public const string sx_find_table_js = "~/Content/sx/js/sx-find-table.js"; 
                         public const string sx_grid_view_js = "~/Content/sx/js/sx-grid-view.js"; 
-                    }
-                }
-                public static partial class less 
-                {
-                    public static class Assets
-                    {
                     }
                 }
                 public static class Assets

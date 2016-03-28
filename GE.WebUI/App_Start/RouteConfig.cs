@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace GE.WebUI
@@ -52,6 +48,8 @@ namespace GE.WebUI
             #endregion
 
             #region articles
+            routes.IgnoreRoute("articles/details/{id}");
+
             routes.MapRoute(
                 name: null,
                 url: "articles/preview",
@@ -86,6 +84,8 @@ namespace GE.WebUI
             #endregion
 
             #region news
+            routes.IgnoreRoute("news/details/{id}");
+
             routes.MapRoute(
                 name: null,
                 url: "news",

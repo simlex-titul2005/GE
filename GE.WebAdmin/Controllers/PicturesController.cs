@@ -28,7 +28,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var filter = new GE.WebCoreExtantions.Filter{ PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
             var temp = (_repo as RepoPicture).QueryForAdmin(filter).ToArray();
 
             ViewData["Page"] = page;
@@ -52,7 +52,7 @@ namespace GE.WebAdmin.Controllers
                 || (filterModel != null && filterModel.Height != 0) ? filterModel : null;
 
             var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            if (addi != null) filter.Additional = new object[] { addi };
+            if (addi != null) filter.WhereExpressionObject = addi;
 
             var temp = (_repo as RepoPicture).QueryForAdmin(filter, order).ToArray();
 

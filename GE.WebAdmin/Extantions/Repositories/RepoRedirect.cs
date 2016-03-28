@@ -25,13 +25,13 @@ namespace GE.WebAdmin.Extantions.Repositories
 FROM   D_REDIRECT dr
 WHERE  (dr.OldUrl LIKE '%' + @old_url + '%' OR @old_url IS NULL)
        AND (dr.NewUrl = '%' + @new_url + '%' OR @new_url IS NULL)
-ORDER BY ";
+ORDER BY dr.DateCreate DESC";
 
                 //where
-                if (filter != null && filter.Additional != null && filter.Additional[0] != null)
-                    oldUrl = filter.Additional[0].ToString();
-                if (filter != null && filter.Additional != null && filter.Additional[1] != null)
-                    newUrl = filter.Additional[1].ToString();
+                if (filter != null && filter.WhereExpressionObject != null && filter.WhereExpressionObject.OldUrl != null)
+                    oldUrl = filter.WhereExpressionObject.OldUrl;
+                if (filter != null && filter.WhereExpressionObject != null && filter.WhereExpressionObject.NewUrl != null)
+                    newUrl = filter.WhereExpressionObject.NewUrl;
 
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
                     query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
@@ -54,10 +54,10 @@ WHERE  (dr.OldUrl LIKE '%' + @old_url + '%' OR @old_url IS NULL)
        AND (dr.NewUrl = '%' + @new_url + '%' OR @new_url IS NULL)";
 
                 //where
-                if (filter != null && filter.Additional != null && filter.Additional[0] != null)
-                    oldUrl = filter.Additional[0].ToString();
-                if (filter != null && filter.Additional != null && filter.Additional[1] != null)
-                    newUrl = filter.Additional[1].ToString();
+                if (filter != null && filter.WhereExpressionObject != null && filter.WhereExpressionObject.OldUrl != null)
+                    oldUrl = filter.WhereExpressionObject.OldUrl;
+                if (filter != null && filter.WhereExpressionObject != null && filter.WhereExpressionObject.NewUrl != null)
+                    newUrl = filter.WhereExpressionObject.NewUrl;
 
                 var data = conn.Query<int>(query, new { old_url = oldUrl, new_url = newUrl }).Single();
                 return (int)data;

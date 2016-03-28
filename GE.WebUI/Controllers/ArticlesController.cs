@@ -1,12 +1,6 @@
 ﻿using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
-using GE.WebUI.Models;
-using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using SX.WebCore;

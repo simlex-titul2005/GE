@@ -29,7 +29,7 @@ ORDER BY dm.DateCreate DESC";
 
         public override IQueryable<News> Query(SxFilter filter)
         {
-            var f = filter as Filter;
+            var f = (Filter)filter;
             f.GameTitle = !string.IsNullOrEmpty(f.GameTitle) ? f.GameTitle : null;
             using (var conn = new SqlConnection(base.ConnectionString))
             {
@@ -62,7 +62,7 @@ FROM   D_NEWS         AS da
        LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = da.GameId WHERE  (dg.TitleUrl = @GAME_TITLE_URL
-       OR  @GAME_TITLE_URL IS NULL) AND dm.DateOfPublication <= GETDATE()";
+       OR  @GAME_TITLE_URL IS NULL) AND dm.DateOfPublication <= GETDATE() AND dm.Show=1";
                 query += @" ORDER BY
        dm.DateCreate DESC";
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
@@ -80,7 +80,7 @@ FROM   D_NEWS         AS da
 
         public IQueryable<News> QueryForAdmin(SxFilter filter)
         {
-            var f = filter as Filter;
+            var f = (Filter)filter;
             using (var conn = new SqlConnection(base.ConnectionString))
             {
                 var query = @"SELECT da.Id,
@@ -93,8 +93,8 @@ FROM   D_NEWS         AS da
        LEFT JOIN D_GAME  AS dg
             ON  dg.ID = da.GameId";
                 if (f != null && !string.IsNullOrEmpty(f.GameTitle))
-                    query += @" WHERE  dg.Title = @GAME_TITLE
-       OR  @GAME_TITLE IS NULL";
+                    query += @" WHERE  (dg.Title = @GAME_TITLE
+       OR  @GAME_TITLE IS NULL)";
                 query += @" ORDER BY
        dm.DateCreate DESC";
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)

@@ -1,4 +1,4 @@
-﻿@model Article[]
+﻿@model GE.WebUI.Models.Abstract.VMDetailMaterial[]
 @{
     Layout = null;
 }
@@ -6,8 +6,19 @@
 <ul class="last-articles">
     @foreach (var item in Model)
     {
+        var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
+        string url = null;
+        switch (mct)
+        {
+            case SX.WebCore.Enums.ModelCoreType.Article:
+                url = Url.Action(MVC.Articles.Details(item.DateCreate.Year, item.DateCreate.Month.ToString("00"), item.DateCreate.Day.ToString("00"), item.TitleUrl));
+                break;
+            case SX.WebCore.Enums.ModelCoreType.News:
+                url = Url.Action(MVC.News.Details(item.DateCreate.Year, item.DateCreate.Month.ToString("00"), item.DateCreate.Day.ToString("00"), item.TitleUrl));
+                break;
+        }
         <li>
-            <a title="@item.Title" href="@Url.Action(MVC.Articles.Details(item.DateCreate.Year, item.DateCreate.Month.ToString("00"), item.DateCreate.Day.ToString("00"), item.TitleUrl))">@item.Title</a>
+            <a title="@item.Title" href="@url">@item.Title</a>
         </li>
     }
 </ul>

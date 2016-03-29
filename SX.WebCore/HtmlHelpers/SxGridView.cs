@@ -68,6 +68,11 @@ namespace SX.WebCore.HtmlHelpers
             public SxGridViewSettings()
             {
                 KeyFieldsName = new string[] { "Id" };
+                ShowFilterRowMenu = true;
+                EnableSorting = true;
+                EnableCreate = true;
+                EnableEditing = true;
+                EnableDelete = false;
             }
 
             public string UpdateTargetId { get; set; }
@@ -85,50 +90,29 @@ namespace SX.WebCore.HtmlHelpers
 
             public SxGridViewColumn[] Columns { get; set; }
 
+            public string GeneralControllerName { get; set; }
+
             public string[] KeyFieldsName { get; set; }
 
-            private bool _showFilterRowMenu = true;
-            public bool ShowFilterRowMenu 
-            { 
-                get
-                {
-                    return _showFilterRowMenu;
-                }
-                set
-                {
-                    _showFilterRowMenu = value;
-                }
-            }
+            public bool ShowFilterRowMenu { get; set; }
 
-            private bool _enableSorting = true;
-            public bool EnableSorting 
-            { 
-                get
-                {
-                    return _enableSorting;
-                }
-                set
-                {
-                    _enableSorting=value;
-                }
-            }
+            public bool EnableSorting { get; set; }
 
             public IDictionary<string, SortDirection> SortDirections { get; set; }
-            private bool _enableEditing = true;
-            public bool EnableEditing 
-            { 
-                get
-                {
-                    return _enableEditing;
-                }
-                set
-                {
-                    _enableEditing = value;
-                }
-            }
+
+            public bool EnableCreate { get; set; }
+
+            public bool EnableEditing { get; set; }
+
+            
+            public string CreateLink { get; set; }
+
+            public bool EnableDelete { get; set; }
+            public string DeleteLink { get; set; }
 
             public dynamic Filter { get; set; }
             public SxPagerInfo PagerInfo { get; set; }
+            public string PagerLink { get; set; }
         }
         public class SxGridViewColumn
         {
@@ -157,7 +141,8 @@ namespace SX.WebCore.HtmlHelpers
                     {"id", "grid-view-form-"+guid},
                     {"method", "post"},
                     {"data-ajax", "true"},
-                    {"data-ajax-update", "#"+settings.UpdateTargetId}
+                    {"data-ajax-update", "#"+settings.UpdateTargetId},
+                    {"data-ajax-url", settings.PagerLink ?? "index"}
                 });
 
             //pager
@@ -197,13 +182,16 @@ namespace SX.WebCore.HtmlHelpers
             var thead = new TagBuilder("thead");
             var tr = new TagBuilder("tr");
 
-            if (settings.ShowFilterRowMenu || settings.EnableEditing)
+            if (settings.ShowFilterRowMenu || settings.EnableCreate)
             {
                 var values=HttpContext.Current.Request.RequestContext.RouteData.Values;
-                var controller=values["controller"].ToString().ToLower();
+                var controller= values["controller"].ToString().ToLower();
                 var th = new TagBuilder("th");
                 th.AddCssClass("sx-gv-add-column");
-                th.InnerHtml += settings.EnableEditing ? string.Format("<a href=\"/{0}/edit\"><i class=\"fa fa-plus-circle\"></i></a>", controller) : "#";
+                var createUrl = settings.CreateLink!=null
+                    ? string.Format("<a href=\"{0}\"><i class=\"fa fa-plus-circle\"></i></a>", settings.CreateLink)
+                    : string.Format("<a href=\"/{0}/edit\"><i class=\"fa fa-plus-circle\"></i></a>", controller);
+                th.InnerHtml += settings.EnableCreate ? createUrl : "#";
                 tr.InnerHtml += th;
             }
 
@@ -261,27 +249,40 @@ namespace SX.WebCore.HtmlHelpers
                 var td = new TagBuilder("td");
                 td.AddCssClass("sx-gv-edit-column");
 
-                if(settings.EnableEditing)
+                var routes = HttpContext.Current.Request.RequestContext.RouteData.Values;
+                var controller = routes["controller"].ToString().ToLower();
+                controller = settings.GeneralControllerName != null ? settings.GeneralControllerName.ToLowerInvariant() : controller;
+                var queryString = new StringBuilder();
+                queryString.Append("?");
+                for (int i = 0; i < settings.KeyFieldsName.Length; i++)
                 {
-                    var routes = HttpContext.Current.Request.RequestContext.RouteData.Values;
-                    var controller = routes["controller"].ToString().ToLower();
-
-                    //edit link
+                    var key = settings.KeyFieldsName[i];
+                    queryString.Append(key + "=" + model.GetType().GetProperty(key).GetValue(model) + "&");
+                }
+                var qs = queryString.ToString().Substring(0, queryString.Length - 1);
+                //edit link
+                if (settings.EnableEditing)
+                {
                     var a = new TagBuilder("a");
                     var type = typeof(TModel);
-                    var queryString = new StringBuilder();
-                    queryString.Append("?");
-                    for (int i = 0; i < settings.KeyFieldsName.Length; i++)
-                    {
-                        var key=settings.KeyFieldsName[i];
-                        queryString.Append(key + "=" + model.GetType().GetProperty(key).GetValue(model)+"&");
-                    }
-                    var qs = queryString.ToString().Substring(0, queryString.Length - 1);
 
                     a.MergeAttribute("href", string.Format("/{0}/edit{1}", controller, qs));
                     a.InnerHtml += "<i class=\"fa fa-pencil\"></i>";
 
                     td.InnerHtml += a;
+                }
+                //delete link
+                if(settings.EnableDelete)
+                {
+                    td.InnerHtml += string.Format("<form method=\"post\" data-ajax-method=\"post\" action=\"{0}\" data-ajax=\"true\" data-ajax-mode=\"replace\" data-ajax-update=\"#{1}\">", settings.DeleteLink ?? "delete", settings.UpdateTargetId);
+                    td.InnerHtml += htmlHelper.AntiForgeryToken();
+                    for (int i = 0; i < settings.KeyFieldsName.Length; i++)
+                    {
+                        var key = settings.KeyFieldsName[i];
+                        td.InnerHtml += string.Format("<input type=\"hidden\" name=\"{0}\" value=\"{1}\" />", key, model.GetType().GetProperty(key).GetValue(model));
+                    }
+                    td.InnerHtml += string.Format("<button title=\"Удалить\" type=\"submit\" onclick=\"if(!confirm('Удалить запись?')){{return false;}}\"><i class=\"fa fa-times\"></i></button>");
+                    td.InnerHtml += string.Format("</form>");
                 }
 
                 tr.InnerHtml += td;

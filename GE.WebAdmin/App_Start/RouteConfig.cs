@@ -12,9 +12,9 @@ namespace GE.WebAdmin
             routes.LowercaseUrls = true;
 
             routes.MapRoute(
-                name: "Default",
+                name: null,
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "account", action = "login", id = UrlParameter.Optional, page=1 }
+                defaults: new { controller = "account", action = "login", id = UrlParameter.Optional, page=1, area="" }
             );
         }
     }

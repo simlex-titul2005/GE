@@ -213,6 +213,7 @@
     <Compile Include="Controllers\ClickTypesController.cs" />
     <Compile Include="Controllers\ForumPartsController.cs" />
     <Compile Include="Controllers\ManualsController.cs" />
+    <Compile Include="Controllers\MaterialTagsController.cs" />
     <Compile Include="Controllers\RedirectsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Extantions\RepoNews.cs" />
     <Compile Include="Extantions\Repositories\RepoMenu.cs" />
+    <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
     <Compile Include="Extantions\Repositories\RepoRequest.cs" />
     <Compile Include="Extantions\Repositories\RepoRoute.cs" />
     <Compile Include="Extantions\Repositories\RepoRedirect.cs" />
@@ -256,6 +258,9 @@
     <Compile Include="ManualsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="MaterialTagsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="MenuesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -266,6 +271,7 @@
     <Compile Include="Models\VMClickType.cs" />
     <Compile Include="Models\VMEditClickType.cs" />
     <Compile Include="Models\VMEditForumPart.cs" />
+    <Compile Include="Models\VMEditMaterialTag.cs" />
     <Compile Include="Models\VMEditRole.cs" />
     <Compile Include="Models\VMEditSeoKeyword.cs" />
     <Compile Include="Models\VMEditNews.cs" />
@@ -273,6 +279,7 @@
     <Compile Include="Models\VMEditRedirect.cs" />
     <Compile Include="Models\VMForumPart.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
+    <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMRedirect.cs" />
     <Compile Include="Models\VMRequest.cs" />
     <Compile Include="Models\VMRobotsFile.cs" />
@@ -413,6 +420,8 @@
     <Content Include="Views\ForumParts\_GridView.cshtml" />
     <Content Include="Views\ForumParts\Edit.cshtml" />
     <Content Include="Views\ForumParts\Index.cshtml" />
+    <Content Include="Views\MaterialTags\_GridView.cshtml" />
+    <Content Include="Views\MaterialTags\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -422,7 +431,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="bower_components\" />
     <Folder Include="Content\i\" />
   </ItemGroup>
   <ItemGroup>

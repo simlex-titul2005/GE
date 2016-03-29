@@ -1,0 +1,31 @@
+﻿@model VMMaterialTag[]
+@{
+    Layout = null;
+    var filter = ViewBag.Filter != null ? (VMMaterialTag)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+    var mid = (int)ViewBag.MaterialId;
+    var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
+}
+
+<h3>Теги</h3>
+@Html.SxGridView(
+        new SxExtantions.SxGridViewSettings<VMMaterialTag>
+        {
+            UpdateTargetId = "grid-mat-tags",
+            Data = Model,
+            Columns = new SxExtantions.SxGridViewColumn[]{ new SxExtantions.SxGridViewColumn{
+                FieldName ="Id",
+                Caption ="Значение"
+            } },
+            Filter = filter,
+            SortDirections = sortDirections,
+            GeneralControllerName = "materialtags",
+            KeyFieldsName = new string[] { "Id", "MaterialId", "ModelCoreType" },
+            EnableEditing = false,
+            EnableDelete = true,
+            DeleteLink = Url.Action(MVC.MaterialTags.Delete()),
+            CreateLink = Url.Action(MVC.MaterialTags.Edit(mid: mid, mct: mct)),
+            PagerLink=string.Format("/materialtags/index?mid={0}&mct={1}", mid, mct)
+        },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

@@ -25,10 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebAdmin.Controllers
 {
-    public partial class RoutesController
+    public partial class MaterialTagsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RoutesController(Dummy d) { }
+        protected MaterialTagsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -58,19 +58,31 @@ namespace GE.WebAdmin.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult Index()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ViewResult Edit()
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.RedirectToRouteResult Delete()
+        {
+            return new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public RoutesController Actions { get { return MVC.Routes; } }
+        public MaterialTagsController Actions { get { return MVC.MaterialTags; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Routes";
+        public readonly string Name = "MaterialTags";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Routes";
+        public const string NameConst = "MaterialTags";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -80,6 +92,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
+            public readonly string Delete = "Delete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -87,6 +100,7 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
+            public const string Delete = "Delete";
         }
 
 
@@ -96,6 +110,8 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Index
         {
+            public readonly string mid = "mid";
+            public readonly string mct = "mct";
             public readonly string page = "page";
             public readonly string filter = "filter";
             public readonly string order = "order";
@@ -106,7 +122,17 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Edit
         {
+            public readonly string mid = "mid";
+            public readonly string mct = "mct";
             public readonly string id = "id";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete
+        {
             public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -121,66 +147,82 @@ namespace GE.WebAdmin.Controllers
             {
                 public readonly string _GridView = "_GridView";
                 public readonly string Edit = "Edit";
-                public readonly string Index = "Index";
             }
-            public readonly string _GridView = "~/Views/Routes/_GridView.cshtml";
-            public readonly string Edit = "~/Views/Routes/Edit.cshtml";
-            public readonly string Index = "~/Views/Routes/Index.cshtml";
+            public readonly string _GridView = "~/Views/MaterialTags/_GridView.cshtml";
+            public readonly string Edit = "~/Views/MaterialTags/Edit.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_RoutesController : GE.WebAdmin.Controllers.RoutesController
+    public partial class T4MVC_MaterialTagsController : GE.WebAdmin.Controllers.MaterialTagsController
     {
-        public T4MVC_RoutesController() : base(Dummy.Instance) { }
+        public T4MVC_MaterialTagsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct, int page);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Index(int page)
+        public override System.Web.Mvc.PartialViewResult Index(int mid, SX.WebCore.Enums.ModelCoreType mct, int page)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            IndexOverride(callInfo, page);
+            IndexOverride(callInfo, mid, mct, page);
             return callInfo;
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMRoute filter, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct, GE.WebAdmin.Models.VMMaterialTag filter, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMRoute filter, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        public override System.Web.Mvc.PartialViewResult Index(int mid, SX.WebCore.Enums.ModelCoreType mct, GE.WebAdmin.Models.VMMaterialTag filter, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filter", filter);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            IndexOverride(callInfo, filter, order, page);
+            IndexOverride(callInfo, mid, mct, filter, order, page);
             return callInfo;
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, System.Guid? id);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct, string id);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Edit(System.Guid? id)
+        public override System.Web.Mvc.ViewResult Edit(int mid, SX.WebCore.Enums.ModelCoreType mct, string id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            EditOverride(callInfo, id);
+            EditOverride(callInfo, mid, mct, id);
             return callInfo;
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditRoute model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditMaterialTag model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditRoute model)
+        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditMaterialTag model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_RedirectToRouteResult callInfo, GE.WebAdmin.Models.VMMaterialTag model);
+
+        [NonAction]
+        public override System.Web.Mvc.RedirectToRouteResult Delete(GE.WebAdmin.Models.VMMaterialTag model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            DeleteOverride(callInfo, model);
             return callInfo;
         }
 

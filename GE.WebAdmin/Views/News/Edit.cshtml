@@ -1,7 +1,7 @@
 ﻿@model VMEditNews
 @{
     var isNew = Model.Id == 0;
-    ViewBag.Title=isNew ? "Добавить новость" : "Редактировать новость \"" + Model.Title + "\"";
+    ViewBag.Title = isNew ? "Добавить новость" : "Редактировать новость \"" + Model.Title + "\"";
     ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
 }
 <h2>@ViewBag.Title</h2>
@@ -99,6 +99,17 @@
         </div>
     </div>
 </form>
+
+@if (!isNew)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div id="grid-mat-tags">
+                @Html.Action(MVC.MaterialTags.Index(mid: Model.Id, mct: Model.ModelCoreType))
+            </div>
+        </div>
+    </div>
+}
 
 @section scripts{
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>

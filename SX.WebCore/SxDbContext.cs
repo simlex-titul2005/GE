@@ -58,11 +58,6 @@ namespace SX.WebCore
             modelBuilder.Entity<SxMaterial>()
                 .HasKey(x => new { x.Id, x.ModelCoreType });
 
-            modelBuilder.Entity<SxMaterialTag>()
-               .HasOptional(x => x.Material)
-               .WithMany()
-               .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
-
             modelBuilder.Entity<SxSiteSetting>()
                 .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
@@ -77,6 +72,15 @@ namespace SX.WebCore
                .WithMany()
                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<SxMaterialTag>()
+                .HasKey(x=> new { x.Id, x.MaterialId, x.ModelCoreType })
+                .HasRequired(x => x.Material)
+                .WithMany()
+                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
+                .WillCascadeOnDelete();
+            modelBuilder.Entity<SxMaterialTag>()
+                .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

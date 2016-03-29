@@ -36,6 +36,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.GamesController Games = new GE.WebAdmin.Controllers.T4MVC_GamesController();
     public static GE.WebAdmin.Controllers.HomeController Home = new GE.WebAdmin.Controllers.T4MVC_HomeController();
     public static GE.WebAdmin.Controllers.ManualsController Manuals = new GE.WebAdmin.Controllers.T4MVC_ManualsController();
+    public static GE.WebAdmin.Controllers.MaterialTagsController MaterialTags = new GE.WebAdmin.Controllers.T4MVC_MaterialTagsController();
     public static GE.WebAdmin.Controllers.MenuesController Menues = new GE.WebAdmin.Controllers.T4MVC_MenuesController();
     public static GE.WebAdmin.Controllers.MenuItemsController MenuItems = new GE.WebAdmin.Controllers.T4MVC_MenuItemsController();
     public static GE.WebAdmin.Controllers.NewsController News = new GE.WebAdmin.Controllers.T4MVC_NewsController();
@@ -97,6 +98,19 @@ internal partial class T4MVC_System_Web_Mvc_ViewResult : System.Web.Mvc.ViewResu
 internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_RedirectToRouteResult : System.Web.Mvc.RedirectToRouteResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_RedirectToRouteResult(string area, string controller, string action, string protocol = null): base(default(System.Web.Routing.RouteValueDictionary))
     {
         this.InitMVCT4Result(area, controller, action, protocol);
     }

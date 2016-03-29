@@ -1,0 +1,41 @@
+﻿@model VMEditMaterialTag
+@{
+    var isNew = string.IsNullOrEmpty(Model.Id);
+    string backUrl = null;
+    string coreName = null;
+    switch (Model.ModelCoreType)
+    {
+        case SX.WebCore.Enums.ModelCoreType.Article:
+            backUrl = Url.Action(MVC.Articles.Edit(Model.MaterialId));
+            coreName = " для статьи";
+            break;
+        case SX.WebCore.Enums.ModelCoreType.News:
+            backUrl = Url.Action(MVC.News.Edit(Model.MaterialId));
+            coreName = " для новости";
+            break;
+    }
+}
+
+<h2>Добавление тега @coreName</h2>
+<br />
+<form method="post" action="@Url.Action(MVC.MaterialTags.Edit())" class="form">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.MaterialId)
+    @Html.HiddenFor(x => x.ModelCoreType)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Id, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Id, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите значение тега" } })
+                @Html.ValidationMessageFor(x => x.Id)
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+        <a href="@backUrl" class="btn btn-default">Назад</a>
+    </div>
+</form>

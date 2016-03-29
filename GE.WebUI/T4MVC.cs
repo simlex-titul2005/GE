@@ -29,6 +29,7 @@ public static partial class MVC
 {
     public static GE.WebUI.Controllers.ArticlesController Articles = new GE.WebUI.Controllers.T4MVC_ArticlesController();
     public static GE.WebUI.Controllers.ClicksController Clicks = new GE.WebUI.Controllers.T4MVC_ClicksController();
+    public static GE.WebUI.Controllers.CommentsController Comments = new GE.WebUI.Controllers.T4MVC_CommentsController();
     public static GE.WebUI.Controllers.ErrorController Error = new GE.WebUI.Controllers.T4MVC_ErrorController();
     public static GE.WebUI.Controllers.ForumController Forum = new GE.WebUI.Controllers.T4MVC_ForumController();
     public static GE.WebUI.Controllers.GamesController Games = new GE.WebUI.Controllers.T4MVC_GamesController();
@@ -208,6 +209,7 @@ namespace Links
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 public static readonly string ge_for_gamers_block_min_js = Url("ge-for-gamers-block.min.js");
                 public static readonly string ge_last_news_block_min_js = Url("ge-last-news-block.min.js");
+                public static readonly string jquery_unobtrusive_ajax_min_js = Url("jquery.unobtrusive-ajax.min.js");
                 public static readonly string site_min_js = Url("site.min.js");
             }
         
@@ -268,6 +270,7 @@ namespace Links
                     {
                         public const string ge_for_gamers_block_min_js = "~/Content/dist/js/ge-for-gamers-block.min.js"; 
                         public const string ge_last_news_block_min_js = "~/Content/dist/js/ge-last-news-block.min.js"; 
+                        public const string jquery_unobtrusive_ajax_min_js = "~/Content/dist/js/jquery.unobtrusive-ajax.min.js"; 
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }

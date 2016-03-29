@@ -67,7 +67,10 @@ function createJs() {
 
     gulp.src([
         'scripts/ge-for-gamers-block.js',
-        'scripts/ge-last-news-block.js'
+        'scripts/ge-last-news-block.js',
+        'bower_components/jquery-validation/dist/jquery.validate.js',
+        //'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js',
+        'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js'
     ])
         .pipe(uglify())
         .pipe(rename({

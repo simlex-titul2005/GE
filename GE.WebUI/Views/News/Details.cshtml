@@ -36,4 +36,18 @@
             </div>
         </div>
     </div>
+
+    @*comments*@
+    <div class="comments">
+        <h5 class="text-uppercase">Оставить комментарий</h5>
+        <br />
+        <div id="new-comment">
+            @Html.Action(MVC.Comments.Create(mid: Model.Id, mct: Model.ModelCoreType))
+        </div>
+        <br />
+        <h5 class="text-uppercase">Последние комментарии</h5>
+        <div id="comments-list">
+            @Html.Action(MVC.Comments.List(mid: Model.Id, mct: Model.ModelCoreType))
+        </div>
+    </div>
 </div>

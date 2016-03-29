@@ -2,7 +2,7 @@
 @{
     var isNew = Model.Id == 0;
     ViewBag.Title = isNew ? "Добавить статью" : "Редактировать статью \"" + Model.Title + "\"";
-    ViewBag.GameTitle = isNew ? null : Model.Game != null ? Model.Game.Title : null;
+    ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
 }
 
 @section styles{

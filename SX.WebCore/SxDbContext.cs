@@ -27,6 +27,8 @@ namespace SX.WebCore
 
         public DbSet<SxArticle> Articles { get; set; }
 
+        public DbSet<SxComment> Comments { get; set; }
+
         public DbSet<SxClick> Clicks { get; set; }
 
         public DbSet<SxForumPart> ForumParts { get; set; }
@@ -69,6 +71,12 @@ namespace SX.WebCore
                 .WithMany()
                 .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<SxComment>()
+               .HasRequired(x => x.Material)
+               .WithMany()
+               .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
+               .WillCascadeOnDelete();
         }
     }
 }

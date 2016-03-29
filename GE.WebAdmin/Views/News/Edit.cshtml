@@ -2,7 +2,7 @@
 @{
     var isNew = Model.Id == 0;
     ViewBag.Title=isNew ? "Добавить новость" : "Редактировать новость \"" + Model.Title + "\"";
-    ViewBag.GameTitle = isNew ? null : Model.Game.Title;
+    ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
 }
 <h2>@ViewBag.Title</h2>
 @if (!isNew)

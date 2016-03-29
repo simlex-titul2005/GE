@@ -157,6 +157,8 @@
     <Content Include="Content\dist\i\footer-bg-xs.jpg" />
     <Content Include="Content\dist\js\ge-for-gamers-block.min.js" />
     <Content Include="Content\dist\js\ge-last-news-block.min.js" />
+    <Content Include="Content\dist\js\jquery.validate.min.js" />
+    <Content Include="Content\dist\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -202,9 +204,13 @@
     <Compile Include="ClicksController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="CommentsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClicksController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
@@ -222,6 +228,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Extantions\Controllers\BaseControllerExt.cs" />
+    <Compile Include="Extantions\Repositories\RepoComment.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
@@ -247,8 +254,10 @@
     <Compile Include="Models\Abstract\VMDetailMaterial.cs" />
     <Compile Include="Models\SiteSeoInfo.cs" />
     <Compile Include="Models\VMBreadcrumb.cs" />
+    <Compile Include="Models\VMComment.cs" />
     <Compile Include="Models\VMDetailNews.cs" />
     <Compile Include="Models\VMDetailArticle.cs" />
+    <Compile Include="Models\VMEditComment.cs" />
     <Compile Include="Models\VMForumPart.cs" />
     <Compile Include="Models\VMMateriallnfo.cs" />
     <Compile Include="Models\VMFGBlock.cs" />
@@ -320,6 +329,9 @@
     <Content Include="Views\Likes\_Likes.cshtml" />
     <Content Include="Views\Shared\_Analytics.cshtml" />
     <Content Include="Views\Forum\List.cshtml" />
+    <Content Include="Views\Comments\_Create.cshtml" />
+    <Content Include="Views\Comments\_List.cshtml" />
+    <Content Include="Views\Comments\DisplayTemplates\VMComment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

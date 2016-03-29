@@ -1,0 +1,11 @@
+﻿@model VMComment
+@{ 
+    Layout = null;
+}
+
+<div class="comment">
+    <strong>@Model.UserName</strong><br />
+    <time>@Model.DateCreate</time>
+    <p>@Model.Html</p>
+</div>
+<br />

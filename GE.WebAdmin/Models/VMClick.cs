@@ -1,9 +1,8 @@
-﻿using SX.WebCore.Abstract;
-using System;
+﻿using System;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMClick : ISxViewModel<Guid>
+    public sealed class VMClick
     {
         public Guid Id { get; set; }
         public DateTime DateCreate { get; set; }

@@ -1,14 +1,8 @@
-﻿using SX.WebCore;
-using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMEditSeoKeyword : ISxViewModel<int>
+    public sealed class VMEditSeoKeyword
     {
         public int Id { get; set; }
 

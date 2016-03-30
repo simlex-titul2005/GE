@@ -1,5 +1,5 @@
 /*
- * metismenu - v2.4.0
+ * metismenu - v2.4.3
  * A jQuery menu plugin
  * https://github.com/onokumus/metisMenu#readme
  *
@@ -148,7 +148,7 @@
         }
 
         if($this.options.onTransitionStart) {
-          $this.options.onTransitionStart();
+          $this.options.onTransitionStart(e);
         }
 
         //Do we need to enable the double tap

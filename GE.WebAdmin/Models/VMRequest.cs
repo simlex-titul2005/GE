@@ -1,12 +1,8 @@
-﻿using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMRequest : ISxViewModel<Guid>
+    public sealed class VMRequest
     {
         public Guid Id { get; set; }
 

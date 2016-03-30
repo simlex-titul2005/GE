@@ -44,13 +44,15 @@ namespace GE.WebUI.Extantions.Repositories
            WHERE  dl.Direction = 0
                   AND dl.MaterialId = dm.Id
                   AND dl.ModelCoreType = dm.ModelCoreType
-       )                 AS LikeDownCount
+       )                 AS LikeDownCount,
+       anu.NikName AS UserNikName
 FROM   D_NEWS            AS dn
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = dn.Id
             AND dm.ModelCoreType = dn.ModelCoreType
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = dn.GameId
+            JOIN  AspNetUsers AS anu ON anu.Id = dm.UserId
 WHERE  dm.TitleUrl = @TITLE_URL";
 
                 return conn.Query<VMDetailNews>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();

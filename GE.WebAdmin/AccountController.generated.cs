@@ -106,10 +106,8 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Login = "Login";
-                public readonly string UserList = "UserList";
             }
             public readonly string Login = "~/Views/Account/Login.cshtml";
-            public readonly string UserList = "~/Views/Account/UserList.cshtml";
         }
     }
 

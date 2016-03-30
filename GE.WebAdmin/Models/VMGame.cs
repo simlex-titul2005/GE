@@ -1,12 +1,8 @@
-﻿using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMGame : ISxViewModel<int>
+    public sealed class VMGame
     {
         public int Id { get; set; }
         public DateTime DateCreate { get; set; }

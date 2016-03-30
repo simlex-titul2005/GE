@@ -34,7 +34,7 @@
                 {
                     <i>Автор: <strong>@Model.User.NikName</strong></i>
                 }
-                @if(Model.Game!=null)
+                @if(Model.Game!=null && Model.Game.TitleUrl!=null)
                 {
                     <i>; игра: <strong>@Model.Game.Title</strong></i>
                 }

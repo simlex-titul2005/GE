@@ -1,13 +1,8 @@
-﻿using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMEditRole : ISxViewModel<string>
+    public sealed class VMEditRole
     {
         public string Id { get; set; }
 

@@ -1,0 +1,10 @@
+﻿@model VMUser[]
+@{
+    ViewBag.Title = "Управление пользователями";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-users">
+    @Html.Partial(MVC.Users.Views._GridView, Model)
+</div>

@@ -22,6 +22,7 @@ namespace GE.WebUI.Models.Abstract
         public int ViewsCount { get; set; }
         public int LikeUpCount { get; set; }
         public int LikeDownCount { get; set; }
+        public string UserNikName { get; set; }
         public VMMateriallnfo Info
         {
             get

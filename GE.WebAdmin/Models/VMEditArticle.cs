@@ -1,16 +1,13 @@
 ﻿using GE.WebCoreExtantions;
 using SX.WebCore.Abstract;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GE.WebAdmin.Models
 {
     [MetadataType(typeof(VMEditArticleMetadata))]
-    public sealed class VMEditArticle : SxMaterial, ISxViewModel<int>
+    public sealed class VMEditArticle : SxMaterial
     {
         public Game Game { get; set; }
         [UIHint("EditGame"), Display(Name = "Игра")]

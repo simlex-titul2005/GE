@@ -1,8 +1,6 @@
-﻿using SX.WebCore.Abstract;
-
-namespace GE.WebAdmin.Models
+﻿namespace GE.WebAdmin.Models
 {
-    public class VMRole : ISxViewModel<string>
+    public class VMRole
     {
         public string Id { get; set; }
         public string Name { get; set; }

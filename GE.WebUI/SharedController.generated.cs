@@ -42,17 +42,21 @@ namespace T4MVC
                 public readonly string _Breadcrumbs = "_Breadcrumbs";
                 public readonly string _Errors = "_Errors";
                 public readonly string _Footer = "_Footer";
+                public readonly string _Foreword = "_Foreword";
                 public readonly string _Layout = "_Layout";
                 public readonly string _NavBar = "_NavBar";
                 public readonly string _SocialIconsMenu = "_SocialIconsMenu";
+                public readonly string _SocNetButtons = "_SocNetButtons";
             }
             public readonly string _Analytics = "~/Views/Shared/_Analytics.cshtml";
             public readonly string _Breadcrumbs = "~/Views/Shared/_Breadcrumbs.cshtml";
             public readonly string _Errors = "~/Views/Shared/_Errors.cshtml";
             public readonly string _Footer = "~/Views/Shared/_Footer.cshtml";
+            public readonly string _Foreword = "~/Views/Shared/_Foreword.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
             public readonly string _NavBar = "~/Views/Shared/_NavBar.cshtml";
             public readonly string _SocialIconsMenu = "~/Views/Shared/_SocialIconsMenu.cshtml";
+            public readonly string _SocNetButtons = "~/Views/Shared/_SocNetButtons.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

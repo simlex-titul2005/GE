@@ -335,6 +335,8 @@
     <Content Include="Views\Comments\_List.cshtml" />
     <Content Include="Views\Comments\DisplayTemplates\VMComment.cshtml" />
     <Content Include="Views\Shared\_Errors.cshtml" />
+    <Content Include="Views\Shared\_SocNetButtons.cshtml" />
+    <Content Include="Views\Shared\_Foreword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -343,6 +345,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\less\" />
     <Folder Include="Views\Seo\" />
   </ItemGroup>
   <ItemGroup>

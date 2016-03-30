@@ -1,13 +1,8 @@
-﻿using GE.WebCoreExtantions;
-using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using SX.WebCore.Abstract;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMNews : SxMaterial, ISxViewModel<int>
+    public sealed class VMNews : SxMaterial
     {
        
     }

@@ -1,12 +1,8 @@
-﻿using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMPicture : ISxViewModel<Guid>
+    public sealed class VMPicture
     {
         public Guid Id { get; set; }
         public string Caption { get; set; }

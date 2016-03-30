@@ -35,10 +35,8 @@
     <br />
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 1)">Это интересно, что тут есть ещё?</a>
     <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 2)">Это не то, что я искал, попробую снова</a>
-
-    <blockquote class="mat-fwd">
-        @Model.Foreword
-    </blockquote>
+    
+    @Html.Partial(MVC.Shared.Views._Foreword, Model)
 
     <div class="m-html">
         @if (Model.FrontPictureId.HasValue)
@@ -46,6 +44,7 @@
             <img class="f-picture" alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))" />
         }
         @Html.Raw(Model.Html)
+        @Html.Partial(MVC.Shared.Views._SocNetButtons)
     </div>
     <div class="m-info">
         <div class="row">

@@ -1,6 +1,6 @@
 {
     "name": "jquery-ajax-unobtrusive",
-    "version": "3.2.3",
+    "version": "3.2.4",
     "homepage": "https://github.com/aspnet/jquery-ajax-unobtrusive",
     "description": "Add-on to jQuery Ajax to enable unobtrusive options in data-* attributes",
     "main": [
@@ -10,7 +10,8 @@
         "**/.*",
         "*.json",
         "*.md",
-        "*.txt"
+        "*.txt",
+        "!LICENSE.txt"
     ],
     "keywords": [
         "jquery",
@@ -22,7 +23,7 @@
     "authors": [
         "Microsoft"
     ],
-    "license": "http://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm",
+    "license": "https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm",
     "repository": {
         "type": "git",
         "url": "git://github.com/aspnet/jquery-ajax-unobtrusive.git"

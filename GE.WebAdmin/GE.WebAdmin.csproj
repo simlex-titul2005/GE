@@ -216,6 +216,7 @@
     <Compile Include="Controllers\MaterialTagsController.cs" />
     <Compile Include="Controllers\RedirectsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeoKeywordsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="Models\VMEditNews.cs" />
     <Compile Include="Models\VMEditSeoInfo.cs" />
     <Compile Include="Models\VMEditRedirect.cs" />
+    <Compile Include="Models\VMEditUser.cs" />
     <Compile Include="Models\VMForumPart.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
@@ -308,6 +310,7 @@
     <Compile Include="Models\VMSeoInfo.cs" />
     <Compile Include="Models\VMSeoKeyword.cs" />
     <Compile Include="Models\VMSiteSettings.cs" />
+    <Compile Include="Models\VMUser.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -350,6 +353,9 @@
     <Compile Include="T4MVC.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -408,7 +414,6 @@
     <Content Include="Views\Clicks\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Manuals\Index.cshtml" />
-    <Content Include="Views\Account\UserList.cshtml" />
     <Content Include="Views\Roles\_GridView.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
@@ -417,6 +422,8 @@
     <Content Include="Views\ForumParts\Index.cshtml" />
     <Content Include="Views\MaterialTags\_GridView.cshtml" />
     <Content Include="Views\MaterialTags\Edit.cshtml" />
+    <Content Include="Views\Users\_GridView.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

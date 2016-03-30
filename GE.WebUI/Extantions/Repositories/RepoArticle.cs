@@ -125,13 +125,15 @@ ORDER BY
            WHERE  dl.Direction = 0
                   AND dl.MaterialId = dm.Id
                   AND dl.ModelCoreType = dm.ModelCoreType
-       )                 AS LikeDownCount
+       )                 AS LikeDownCount,
+       anu.NikName AS UserNikName
 FROM   D_ARTICLE         AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.Id
             AND dm.ModelCoreType = da.ModelCoreType
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = da.GameId
+       JOIN  AspNetUsers AS anu ON anu.Id = dm.UserId
 WHERE  dm.TitleUrl = @TITLE_URL";
 
                 return conn.Query<VMDetailArticle>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();

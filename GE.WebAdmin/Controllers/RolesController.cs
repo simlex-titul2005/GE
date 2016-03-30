@@ -12,6 +12,7 @@ using System;
 
 namespace GE.WebAdmin.Controllers
 {
+    [Authorize(Roles = "admin")]
     public partial class RolesController : BaseController
     {
         private SxAppRoleManager _roleManager;

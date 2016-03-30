@@ -1,12 +1,8 @@
-﻿using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMMenuItem : ISxViewModel<int>
+    public sealed class VMMenuItem
     {
         public int Id { get; set; }
         public int MenuId { get; set; }

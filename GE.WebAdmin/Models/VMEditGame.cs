@@ -1,13 +1,9 @@
-﻿using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMEditGame : ISxViewModel<int>
+    public sealed class VMEditGame
     {
         public int Id { get; set; }
 

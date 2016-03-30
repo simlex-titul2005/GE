@@ -1,9 +1,8 @@
-﻿using SX.WebCore.Abstract;
-using static SX.WebCore.Enums;
+﻿using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMMaterialTag : ISxViewModel<string>
+    public sealed class VMMaterialTag
     {
         public string Id { get; set; }
         public int MaterialId { get; set; }

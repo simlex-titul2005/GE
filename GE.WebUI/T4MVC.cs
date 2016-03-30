@@ -173,6 +173,7 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/css";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string error_page_min_css = Url("error-page.min.css");
                 public static readonly string site_min_css = Url("site.min.css");
             }
         
@@ -200,6 +201,14 @@ namespace Links
                 public static readonly string footer_bg_md_jpg = Url("footer-bg-md.jpg");
                 public static readonly string footer_bg_sm_jpg = Url("footer-bg-sm.jpg");
                 public static readonly string footer_bg_xs_jpg = Url("footer-bg-xs.jpg");
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class temp {
+                    private const string URLPATH = "~/Content/dist/i/temp";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string _48ce50da_eac8_11e5_9308_94708ff8d766_jpg = Url("48ce50da-eac8-11e5-9308-94708ff8d766.jpg");
+                }
+            
             }
         
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -214,6 +223,13 @@ namespace Links
                 public static readonly string site_min_js = Url("site.min.js");
             }
         
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class less {
+            private const string URLPATH = "~/Content/less";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         }
     
     }
@@ -243,6 +259,7 @@ namespace Links
                 {
                     public static class Assets
                     {
+                        public const string error_page_min_css = "~/Content/dist/css/error-page.min.css";
                         public const string site_min_css = "~/Content/dist/css/site.min.css";
                     }
                 }
@@ -254,6 +271,12 @@ namespace Links
                 }
                 public static partial class i 
                 {
+                    public static partial class temp 
+                    {
+                        public static class Assets
+                        {
+                        }
+                    }
                     public static class Assets
                     {
                     }
@@ -269,6 +292,12 @@ namespace Links
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }
+                public static class Assets
+                {
+                }
+            }
+            public static partial class less 
+            {
                 public static class Assets
                 {
                 }

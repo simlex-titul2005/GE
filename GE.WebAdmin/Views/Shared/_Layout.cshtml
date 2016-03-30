@@ -263,17 +263,20 @@
                         <li>
                             <a href="@Url.Action(MVC.Home.Index())"><i class="fa fa-home fa-fw"></i> Главная</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Система доступа<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="@Url.Action(MVC.Roles.Index())"><i class="fa fa-fw fa-street-view"></i> Роли</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action(MVC.Account.UserList())"><i class="fa fa-fw fa-users"></i> Пользователи</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-user"></i> Система доступа<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action(MVC.Roles.Index())"><i class="fa fa-fw fa-street-view"></i> Роли</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action(MVC.Users.Index())"><i class="fa fa-fw fa-users"></i> Пользователи</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                         @if (User.IsInRole("architect"))
                         {
                             <li>

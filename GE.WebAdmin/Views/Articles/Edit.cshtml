@@ -113,6 +113,17 @@
     </div>
 </form>
 
+@if (!isNew)
+{
+<div class="row">
+    <div class="col-md-12">
+        <div id="grid-mat-tags">
+            @Html.Action(MVC.MaterialTags.Index(mid: Model.Id, mct: Model.ModelCoreType))
+        </div>
+    </div>
+</div>
+}
+
 @section scripts{
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/bootstrap-datepicker.min.js"></script>

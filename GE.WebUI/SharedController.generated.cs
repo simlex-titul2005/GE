@@ -40,6 +40,7 @@ namespace T4MVC
             {
                 public readonly string _Analytics = "_Analytics";
                 public readonly string _Breadcrumbs = "_Breadcrumbs";
+                public readonly string _Errors = "_Errors";
                 public readonly string _Footer = "_Footer";
                 public readonly string _Layout = "_Layout";
                 public readonly string _NavBar = "_NavBar";
@@ -47,6 +48,7 @@ namespace T4MVC
             }
             public readonly string _Analytics = "~/Views/Shared/_Analytics.cshtml";
             public readonly string _Breadcrumbs = "~/Views/Shared/_Breadcrumbs.cshtml";
+            public readonly string _Errors = "~/Views/Shared/_Errors.cshtml";
             public readonly string _Footer = "~/Views/Shared/_Footer.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
             public readonly string _NavBar = "~/Views/Shared/_NavBar.cshtml";

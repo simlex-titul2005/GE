@@ -209,17 +209,11 @@ namespace Links
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 public static readonly string ge_for_gamers_block_min_js = Url("ge-for-gamers-block.min.js");
                 public static readonly string ge_last_news_block_min_js = Url("ge-last-news-block.min.js");
-                public static readonly string jquery_unobtrusive_ajax_min_js = Url("jquery.unobtrusive-ajax.min.js");
+                public static readonly string jquery_validate_min_js = Url("jquery.validate.min.js");
+                public static readonly string jquery_validate_unobtrusive_min_js = Url("jquery.validate.unobtrusive.min.js");
                 public static readonly string site_min_js = Url("site.min.js");
             }
         
-        }
-    
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class less {
-            private const string URLPATH = "~/Content/less";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         }
     
     }
@@ -270,16 +264,11 @@ namespace Links
                     {
                         public const string ge_for_gamers_block_min_js = "~/Content/dist/js/ge-for-gamers-block.min.js"; 
                         public const string ge_last_news_block_min_js = "~/Content/dist/js/ge-last-news-block.min.js"; 
-                        public const string jquery_unobtrusive_ajax_min_js = "~/Content/dist/js/jquery.unobtrusive-ajax.min.js"; 
+                        public const string jquery_validate_min_js = "~/Content/dist/js/jquery.validate.min.js"; 
+                        public const string jquery_validate_unobtrusive_min_js = "~/Content/dist/js/jquery.validate.unobtrusive.min.js"; 
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }
-                public static class Assets
-                {
-                }
-            }
-            public static partial class less 
-            {
                 public static class Assets
                 {
                 }

@@ -29,7 +29,6 @@ namespace GE.WebAdmin.Extantions.Repositories
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var data = conn.Query<VMClick>(query, param: param);
-
                 return data.AsEnumerable();
             }
         }

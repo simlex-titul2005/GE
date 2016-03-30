@@ -33,14 +33,29 @@ function createFonts() {
 
 function createCss() {
     var lessStream = gulp.src([
-        'content/less/**/*.less'
+        'content/less/article.less',
+        'content/less/bootstrap-ext.less',
+        'content/less/comments.less',
+        'content/less/footer.less',
+        'content/less/for-gamers-block.less',
+        'content/less/forum.less',
+        'content/less/game-list.less',
+        'content/less/last-news-block.less',
+        'content/less/list-article.less',
+        'content/less/list-news.less',
+        'content/less/material.less',
+        'content/less/positioned.less',
+        'content/less/seach-block.less',
+        'content/less/site.less',
+        'content/less/sx-list.less',
+        'content/less/sx-pager.less',
     ])
         .pipe(less())
         .pipe(concat('less-files.less'));
 
     var cssStream = gulp.src([
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
-        'bower_components/font-awesome/css/font-awesome.min.css'
+        'bower_components/font-awesome/css/font-awesome.min.css',
     ])
         .pipe(concat('css-files.css'));
 
@@ -48,6 +63,17 @@ function createCss() {
         .pipe(concat('site.min.css'))
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
         .pipe(minifyCss())
+        .pipe(gulp.dest('content/dist/css'));
+
+    gulp.src([
+        'content/less/error-page.less',
+    ])
+        .pipe(less())
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
+        .pipe(minifyCss())
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(gulp.dest('content/dist/css'));
 }
 
@@ -69,7 +95,6 @@ function createJs() {
         'scripts/ge-for-gamers-block.js',
         'scripts/ge-last-news-block.js',
         'bower_components/jquery-validation/dist/jquery.validate.js',
-        //'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js',
         'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js'
     ])
         .pipe(uglify())

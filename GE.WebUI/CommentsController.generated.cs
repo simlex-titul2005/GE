@@ -130,6 +130,13 @@ namespace GE.WebUI.Controllers
             }
             public readonly string _Create = "~/Views/Comments/_Create.cshtml";
             public readonly string _List = "~/Views/Comments/_List.cshtml";
+            static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
+            public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _DisplayTemplatesClass
+            {
+                public readonly string VMComment = "VMComment";
+            }
         }
     }
 

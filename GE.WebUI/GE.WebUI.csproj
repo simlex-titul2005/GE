@@ -340,7 +340,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\less\" />
     <Folder Include="Views\Seo\" />
   </ItemGroup>
   <ItemGroup>

@@ -6,10 +6,9 @@ namespace GE.WebUI.Infrastructure
 {
     public class SiteMapProvider : ISxSiteMapProvider
     {
-        private static SiteMapProvider _pvd;
         public static SiteMapProvider Create()
         {
-            return _pvd ?? new SiteMapProvider();
+            return new SiteMapProvider();
         }
 
         public string GenerateSiteMap(SxSiteMapUrl[] data)

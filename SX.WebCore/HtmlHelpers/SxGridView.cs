@@ -205,7 +205,7 @@ namespace SX.WebCore.HtmlHelpers
                 if (settings.EnableSorting)
                 {
                     var hasOrderDirection = settings.SortDirections != null && settings.SortDirections.ContainsKey(column.FieldName);
-                    var direction = hasOrderDirection && settings.SortDirections[column.FieldName] != SortDirection.Unknown ? settings.SortDirections[column.FieldName] : SortDirection.Asc;
+                    var direction = hasOrderDirection && settings.SortDirections[column.FieldName] != SortDirection.Unknown ? settings.SortDirections[column.FieldName] : SortDirection.Unknown;
                     th.MergeAttributes(new Dictionary<string, object>() {
                         {"onclick", "pressGridViewColumn(this)"},
                         { "class", "ordered-column" },

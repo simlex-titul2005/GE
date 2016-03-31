@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.WebUI", "GE.WebUI\GE.WebUI.csproj", "{453390AF-544C-4CE2-A8E9-6AF4896F8F42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SX.WebCore", "SX.WebCore\SX.WebCore.csproj", "{DAF1A092-DED8-4C43-B08D-20E55C6F03A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.WebCoreExtantions", "GE.WebCoreExtantions\GE.WebCoreExtantions.csproj", "{BF57645E-FA93-44AA-8C87-7F1BDD240DC2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.Tests", "GE.Tests\GE.Tests.csproj", "{52DED62D-BC30-4DBA-9C53-686F3FF78C1C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.WebAdmin", "GE.WebAdmin\GE.WebAdmin.csproj", "{D29359E2-092C-4A22-8261-A8933E12B27B}"
 EndProject
@@ -31,10 +29,6 @@ Global
 		{BF57645E-FA93-44AA-8C87-7F1BDD240DC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF57645E-FA93-44AA-8C87-7F1BDD240DC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF57645E-FA93-44AA-8C87-7F1BDD240DC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{52DED62D-BC30-4DBA-9C53-686F3FF78C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52DED62D-BC30-4DBA-9C53-686F3FF78C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52DED62D-BC30-4DBA-9C53-686F3FF78C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52DED62D-BC30-4DBA-9C53-686F3FF78C1C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D29359E2-092C-4A22-8261-A8933E12B27B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D29359E2-092C-4A22-8261-A8933E12B27B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D29359E2-092C-4A22-8261-A8933E12B27B}.Release|Any CPU.ActiveCfg = Release|Any CPU

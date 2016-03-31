@@ -1,7 +1,6 @@
 ﻿function fillGridViewForm(guid) {
     var gridView = $('.sx-gv[id="' + guid + '"]');
     var form = $('#grid-view-form-' + guid);
-
     var filterRow = gridView.find('.filter-row');
     if (filterRow.length != 0) {
         filterRow.find('input').each(function (i, input) {
@@ -17,9 +16,10 @@
 
     var sordedColumns = gridView.find('.ordered-column');
     if (sordedColumns.length != 0) {
-        sordedColumns.each(function (i, column) {
-            var name = $(column).attr('data-column-name');
-            var direction = $(column).attr('data-sort-direction');
+        sordedColumns.each(function () {
+            var $column = $(this);
+            var name = $column.attr('data-column-name');
+            var direction = $column.attr('data-sort-direction');
             formInput = form.find('input[name="order[' + name + ']"]').val(direction);
         });
     }

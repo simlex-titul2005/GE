@@ -30,6 +30,6 @@
     "metisMenu": "2.4.3",
     "bootstrap-datepicker": "1.6.0",
     "bootstrap-colorpicker": "*",
-    "jquery": "2.2.2"
+    "jquery": "2.2.2",
   }
 }

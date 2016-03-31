@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GE.WebAdmin</RootNamespace>
     <AssemblyName>GE.WebAdmin</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -98,22 +99,21 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\T4MVCExtensions.3.17.3\lib\net40\T4MVCExtensions.dll</HintPath>
       <Private>True</Private>
@@ -232,7 +232,7 @@
     <Compile Include="Controllers\RouteValuesController.cs" />
     <Compile Include="Controllers\SeoInfoController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
-    <Compile Include="Extantions\RepoNews.cs" />
+    <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Extantions\Repositories\RepoMenu.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
     <Compile Include="Extantions\Repositories\RepoRequest.cs" />

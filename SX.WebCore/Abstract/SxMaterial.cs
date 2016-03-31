@@ -39,5 +39,7 @@ namespace SX.WebCore.Abstract
         public virtual SxAppUser User { get; set; }
         [MaxLength(128)]
         public string UserId { get; set; }
+
+        public ICollection<SxSeoInfo> SeoInfo { get; set; }
     }
 }

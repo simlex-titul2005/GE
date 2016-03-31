@@ -85,6 +85,7 @@ namespace GE.WebAdmin.Controllers
                         break;
                 }
 
+                TempData["TabId"] = "tags-cloud";
                 return RedirectToAction("edit", new { controller = controller, id = model.MaterialId });
             }
             return View(model);

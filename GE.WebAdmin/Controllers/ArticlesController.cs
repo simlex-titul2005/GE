@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -16,10 +17,12 @@ namespace GE.WebAdmin.Controllers
     {
         SxDbRepository<int, Article, DbContext> _repo;
         SxDbRepository<int, ArticleType, DbContext> _repoArticleTypes;
+        SxDbRepository<int, SxSeoInfo, DbContext> _repoSeoInfo;
         public ArticlesController()
         {
             _repo = new RepoArticle();
             _repoArticleTypes = new RepoArticleType();
+            _repoSeoInfo = new RepoSeoInfo();
         }
 
         private static int _pageSize = 20;
@@ -159,6 +162,11 @@ namespace GE.WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditNews model)
         {
+            Task.Run(() =>
+            {
+                (_repoSeoInfo as RepoSeoInfo).DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
+            });
+
             _repo.Delete(model.Id, model.ModelCoreType);
             return RedirectToAction(MVC.Articles.Index());
         }

@@ -424,6 +424,8 @@
     <Content Include="Views\MaterialTags\Edit.cshtml" />
     <Content Include="Views\Users\_GridView.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\SeoInfo\_EditForMaterial.cshtml" />
+    <Content Include="Views\SeoInfo\_GeneralEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

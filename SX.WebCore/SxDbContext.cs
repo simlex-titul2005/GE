@@ -81,6 +81,12 @@ namespace SX.WebCore
                 .WillCascadeOnDelete();
             modelBuilder.Entity<SxMaterialTag>()
                 .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            modelBuilder.Entity<SxSeoInfo>()
+                .HasOptional(x => x.Material)
+                .WithMany(x => x.SeoInfo)
+                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
+                .WillCascadeOnDelete();
         }
     }
 }

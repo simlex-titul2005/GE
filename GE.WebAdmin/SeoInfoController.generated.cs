@@ -64,6 +64,18 @@ namespace GE.WebAdmin.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult EditForMaterial()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditForMaterial);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult DeleteForMaterial()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.DeleteForMaterial);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult Delete()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
@@ -86,6 +98,8 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
+            public readonly string EditForMaterial = "EditForMaterial";
+            public readonly string DeleteForMaterial = "DeleteForMaterial";
             public readonly string Delete = "Delete";
         }
 
@@ -94,6 +108,8 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
+            public const string EditForMaterial = "EditForMaterial";
+            public const string DeleteForMaterial = "DeleteForMaterial";
             public const string Delete = "Delete";
         }
 
@@ -117,6 +133,25 @@ namespace GE.WebAdmin.Controllers
             public readonly string id = "id";
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_EditForMaterial s_params_EditForMaterial = new ActionParamsClass_EditForMaterial();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_EditForMaterial EditForMaterialParams { get { return s_params_EditForMaterial; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_EditForMaterial
+        {
+            public readonly string mid = "mid";
+            public readonly string mct = "mct";
+            public readonly string id = "id";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_DeleteForMaterial s_params_DeleteForMaterial = new ActionParamsClass_DeleteForMaterial();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DeleteForMaterial DeleteForMaterialParams { get { return s_params_DeleteForMaterial; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DeleteForMaterial
+        {
+            public readonly string model = "model";
+        }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
@@ -135,10 +170,14 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _EditForMaterial = "_EditForMaterial";
+                public readonly string _GeneralEdit = "_GeneralEdit";
                 public readonly string _GridView = "_GridView";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
+            public readonly string _EditForMaterial = "~/Views/SeoInfo/_EditForMaterial.cshtml";
+            public readonly string _GeneralEdit = "~/Views/SeoInfo/_GeneralEdit.cshtml";
             public readonly string _GridView = "~/Views/SeoInfo/_GridView.cshtml";
             public readonly string Edit = "~/Views/SeoInfo/Edit.cshtml";
             public readonly string Index = "~/Views/SeoInfo/Index.cshtml";
@@ -197,6 +236,44 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditForMaterialOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct, int? id);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult EditForMaterial(int mid, SX.WebCore.Enums.ModelCoreType mct, int? id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditForMaterial);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            EditForMaterialOverride(callInfo, mid, mct, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditForMaterialOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMEditSeoInfo model);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult EditForMaterial(GE.WebAdmin.Models.VMEditSeoInfo model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditForMaterial);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EditForMaterialOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DeleteForMaterialOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMEditSeoInfo model);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult DeleteForMaterial(GE.WebAdmin.Models.VMEditSeoInfo model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.DeleteForMaterial);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            DeleteForMaterialOverride(callInfo, model);
             return callInfo;
         }
 

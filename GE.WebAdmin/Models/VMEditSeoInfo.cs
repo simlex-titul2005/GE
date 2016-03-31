@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
 {
@@ -15,7 +12,7 @@ namespace GE.WebAdmin.Models
 
         public int Id { get; set; }
 
-        [MaxLength(255), Required, Display(Name="Адрес")]
+        [MaxLength(255), Display(Name="Адрес")]
         public string RawUrl { get; set; }
 
         [MaxLength(255), Required, Display(Name = "Заголовок страницы")]
@@ -31,5 +28,8 @@ namespace GE.WebAdmin.Models
 
         [MaxLength(20), Display(Name = "Css стиль тега h1")]
         public string H1CssClass { get; set; }
+
+        public int MaterialId { get; set; }
+        public ModelCoreType ModelCoreType { get; set; }
     }
 }

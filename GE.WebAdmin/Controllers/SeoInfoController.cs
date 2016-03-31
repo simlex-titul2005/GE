@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
+using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -84,6 +85,51 @@ namespace GE.WebAdmin.Controllers
             }
             else
                 return View(model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public virtual PartialViewResult EditForMaterial(int mid, ModelCoreType mct, int? id)
+        {
+            var model = id.HasValue ? _repo.GetByKey(id) : new SxSeoInfo();
+            var seoInfo = Mapper.Map<SxSeoInfo, VMEditSeoInfo>(model);
+            if (id.HasValue)
+                seoInfo.Keywords = model.Keywords.Select(x => Mapper.Map<SxSeoKeyword, VMSeoKeyword>(x)).ToArray();
+            return PartialView(MVC.SeoInfo.Views._EditForMaterial, seoInfo);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual PartialViewResult EditForMaterial(VMEditSeoInfo model)
+        {
+            SxSeoInfo newModel = null;
+            if (ModelState.IsValid)
+            {
+                var isNew = model.Id == 0;
+                var redactModel = Mapper.Map<VMEditSeoInfo, SxSeoInfo>(model);
+                if (isNew)
+                {
+                    newModel = _repo.Create(redactModel);
+                    TempData["ModelSeoInfoRedactInfo"] = "Успешно добавлено";
+                }
+                else
+                {
+                    newModel = _repo.Update(redactModel, "SeoTitle", "SeoDescription", "H1", "H1CssClass");
+                    TempData["ModelSeoInfoRedactInfo"] = "Успешно обновлено";
+                }
+                var viewModel = Mapper.Map<SxSeoInfo, VMEditSeoInfo>(newModel);
+                return PartialView(MVC.SeoInfo.Views._EditForMaterial, viewModel);
+            }
+            else
+                return PartialView(MVC.SeoInfo.Views._EditForMaterial, model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual PartialViewResult DeleteForMaterial(VMEditSeoInfo model)
+        {
+            _repo.Delete(model.Id);
+            TempData["ModelSeoInfoRedactInfo"] = "Успешно удалено";
+            return PartialView(MVC.SeoInfo.Views._EditForMaterial, new VMEditSeoInfo { MaterialId = model.MaterialId, ModelCoreType = model.ModelCoreType, Id=0 });
         }
 
         [AcceptVerbs(HttpVerbs.Post)]

@@ -84,9 +84,8 @@ namespace SX.WebCore
 
             modelBuilder.Entity<SxSeoInfo>()
                 .HasOptional(x => x.Material)
-                .WithMany(x => x.SeoInfo)
-                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
-                .WillCascadeOnDelete();
+                .WithMany()
+                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
         }
     }
 }

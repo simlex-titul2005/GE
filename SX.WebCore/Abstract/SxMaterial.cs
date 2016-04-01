@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SX.WebCore.Abstract
 {
@@ -40,6 +36,7 @@ namespace SX.WebCore.Abstract
         [MaxLength(128)]
         public string UserId { get; set; }
 
-        public ICollection<SxSeoInfo> SeoInfo { get; set; }
+        public virtual SxSeoInfo SeoInfo { get; set; }
+        public int? SeoInfoId { get; set; }
     }
 }

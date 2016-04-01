@@ -1,0 +1,42 @@
+﻿@model VMSeoKeyword[]
+@{
+    Layout = null;
+    var filter = ViewBag.Filter != null ? (VMSeoKeyword)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+    var seoInfoId = ViewBag.SeoInfoId;
+}
+
+<br />
+<h3>Ключевые слова</h3>
+@using (Ajax.BeginForm(MVC.SeoKeywords.Edit(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo-kw" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="SeoInfoId" name="SeoInfoId" value="@seoInfoId" autocomplete="off"  />
+    <label for="Value">Новое ключевое слово</label>
+    <div class="input-group">
+        <input type="text" id="Value" name="Value" class="form-control" placeholder="Введите ключевое слово" autocomplete="off" />
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Добавить</button>
+        </span>
+    </div>
+}
+<br />
+@Html.SxGridView(
+            new SxExtantions.SxGridViewSettings<VMSeoKeyword>
+            {
+                UpdateTargetId = "seo-kw",
+                Data = Model,
+                Columns = new SxExtantions.SxGridViewColumn[]{
+            new SxExtantions.SxGridViewColumn{FieldName="Value", Caption="Ключевое слово"}
+        },
+                Filter = filter,
+                SortDirections = sortDirections,
+                GeneralControllerName = "seokeywords",
+                EnableEditing = false,
+                EnableDelete = true,
+                EnableCreate = false,
+                DeleteLink = Url.Action("delete", new { controller="seokeywords", SeoInfoId= seoInfoId }),
+                PagerLink = string.Format("/seokeywords/index?seoInfoId={0}", seoInfoId)
+            },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

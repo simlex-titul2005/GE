@@ -58,15 +58,21 @@ namespace GE.WebAdmin.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult Index()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ViewResult Edit()
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Delete()
+        public virtual System.Web.Mvc.RedirectToRouteResult Delete()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            return new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -84,6 +90,7 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
+            public readonly string Index = "Index";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
         }
@@ -91,11 +98,23 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
+            public const string Index = "Index";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index
+        {
+            public readonly string seoInfoId = "seoInfoId";
+            public readonly string page = "page";
+            public readonly string filterModel = "filterModel";
+            public readonly string order = "order";
+        }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
@@ -124,9 +143,11 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _GridView = "_GridView";
                 public readonly string _SeoKeywords = "_SeoKeywords";
                 public readonly string Edit = "Edit";
             }
+            public readonly string _GridView = "~/Views/SeoKeywords/_GridView.cshtml";
             public readonly string _SeoKeywords = "~/Views/SeoKeywords/_SeoKeywords.cshtml";
             public readonly string Edit = "~/Views/SeoKeywords/Edit.cshtml";
         }
@@ -136,6 +157,33 @@ namespace GE.WebAdmin.Controllers
     public partial class T4MVC_SeoKeywordsController : GE.WebAdmin.Controllers.SeoKeywordsController
     {
         public T4MVC_SeoKeywordsController() : base(Dummy.Instance) { }
+
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int seoInfoId, int page);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult Index(int seoInfoId, int page)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "seoInfoId", seoInfoId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            IndexOverride(callInfo, seoInfoId, page);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMSeoKeyword filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMSeoKeyword filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            IndexOverride(callInfo, filterModel, order, page);
+            return callInfo;
+        }
 
         [NonAction]
         partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int seoInfoId, int? id);
@@ -151,24 +199,24 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditSeoKeyword model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_RedirectToRouteResult callInfo, GE.WebAdmin.Models.VMEditSeoKeyword model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditSeoKeyword model)
+        public override System.Web.Mvc.RedirectToRouteResult Edit(GE.WebAdmin.Models.VMEditSeoKeyword model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditOverride(callInfo, model);
             return callInfo;
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditSeoKeyword model);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_RedirectToRouteResult callInfo, GE.WebAdmin.Models.VMEditSeoKeyword model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(GE.WebAdmin.Models.VMEditSeoKeyword model)
+        public override System.Web.Mvc.RedirectToRouteResult Delete(GE.WebAdmin.Models.VMEditSeoKeyword model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             DeleteOverride(callInfo, model);
             return callInfo;

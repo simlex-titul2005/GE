@@ -14,7 +14,7 @@ namespace GE.WebAdmin.Controllers
 {
     public partial class SeoInfoController : BaseController
     {
-        SxDbRepository<int, SxSeoInfo, DbContext> _repo;
+        private SxDbRepository<int, SxSeoInfo, DbContext> _repo;
         public SeoInfoController()
         {
             _repo = new RepoSeoInfo();
@@ -90,7 +90,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual PartialViewResult EditForMaterial(int mid, ModelCoreType mct, int? id)
         {
-            var model = id.HasValue ? _repo.GetByKey(id) : new SxSeoInfo();
+            var model = id.HasValue ? _repo.GetByKey(id) : new SxSeoInfo { MaterialId=mid, ModelCoreType=mct };
             var seoInfo = Mapper.Map<SxSeoInfo, VMEditSeoInfo>(model);
             if (id.HasValue)
                 seoInfo.Keywords = model.Keywords.Select(x => Mapper.Map<SxSeoKeyword, VMSeoKeyword>(x)).ToArray();
@@ -109,6 +109,7 @@ namespace GE.WebAdmin.Controllers
                 if (isNew)
                 {
                     newModel = _repo.Create(redactModel);
+                    updateMaterialSeoInfo(model.MaterialId, model.ModelCoreType, newModel.Id);
                     TempData["ModelSeoInfoRedactInfo"] = "Успешно добавлено";
                 }
                 else
@@ -116,6 +117,7 @@ namespace GE.WebAdmin.Controllers
                     newModel = _repo.Update(redactModel, "SeoTitle", "SeoDescription", "H1", "H1CssClass");
                     TempData["ModelSeoInfoRedactInfo"] = "Успешно обновлено";
                 }
+
                 var viewModel = Mapper.Map<SxSeoInfo, VMEditSeoInfo>(newModel);
                 return PartialView(MVC.SeoInfo.Views._EditForMaterial, viewModel);
             }
@@ -127,6 +129,8 @@ namespace GE.WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public virtual PartialViewResult DeleteForMaterial(VMEditSeoInfo model)
         {
+            updateMaterialSeoInfo(model.MaterialId, model.ModelCoreType, null);
+
             _repo.Delete(model.Id);
             TempData["ModelSeoInfoRedactInfo"] = "Успешно удалено";
             return PartialView(MVC.SeoInfo.Views._EditForMaterial, new VMEditSeoInfo { MaterialId = model.MaterialId, ModelCoreType = model.ModelCoreType, Id=0 });
@@ -138,6 +142,26 @@ namespace GE.WebAdmin.Controllers
         {
             _repo.Delete(model.Id);
             return RedirectToAction(MVC.SeoInfo.Index());
+        }
+
+
+        private static void updateMaterialSeoInfo(int mid, ModelCoreType mct, int? siid)
+        {
+            switch (mct)
+            {
+                case ModelCoreType.Article:
+                    var repoA = new RepoArticle();
+                    var art = repoA.GetByKey(mid, mct);
+                    art.SeoInfoId = siid;
+                    repoA.Update(art, "SeoInfoId");
+                    break;
+                case ModelCoreType.News:
+                    var repoN = new RepoNews();
+                    var news = repoN.GetByKey(mid, mct);
+                    news.SeoInfoId = siid;
+                    repoN.Update(news, "SeoInfoId");
+                    break;
+            }
         }
     }
 }

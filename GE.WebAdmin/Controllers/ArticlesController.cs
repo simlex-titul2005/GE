@@ -113,7 +113,7 @@ namespace GE.WebAdmin.Controllers
         {
             if(string.IsNullOrEmpty(model.TitleUrl))
             {
-                var titleUrl = SX.WebCore.StringHelper.SeoFriendlyUrl(model.Title);
+                var titleUrl = StringHelper.SeoFriendlyUrl(model.Title);
                 var existModel = (_repo as RepoArticle).GetByTitleUrl(titleUrl);
                 if (existModel != null && existModel.Id != model.Id)
                     ModelState.AddModelError("Title", "Строковый ключ должен быть уникальным");
@@ -149,7 +149,7 @@ namespace GE.WebAdmin.Controllers
                         }
                     }
 
-                    newModel = _repo.Update(redactModel, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "ArticleTypeName", "ArticleTypeGameId", "DateOfPublication", "UserId", "Foreword");
+                    newModel = _repo.Update(redactModel, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "ArticleTypeName", "ArticleTypeGameId", "DateOfPublication", "UserId", "Foreword", "SeoInfoId");
                 }
 
                 return RedirectToAction(MVC.Articles.Index());

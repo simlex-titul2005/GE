@@ -244,6 +244,7 @@
     <Compile Include="Extantions\Repositories\RepoSeoInfo.cs" />
     <Compile Include="Extantions\Repositories\RepoClick.cs" />
     <Compile Include="Extantions\Repositories\RepoArticleType.cs" />
+    <Compile Include="Extantions\Repositories\RepoSeoKeywords.cs" />
     <Compile Include="ForumPartsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -426,6 +427,7 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\SeoInfo\_EditForMaterial.cshtml" />
     <Content Include="Views\SeoInfo\_GeneralEdit.cshtml" />
+    <Content Include="Views\SeoKeywords\_GridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

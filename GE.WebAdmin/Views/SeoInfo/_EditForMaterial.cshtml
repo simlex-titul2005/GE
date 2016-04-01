@@ -15,7 +15,7 @@
             <input type="hidden" name="Id" value="@Model.Id" autocomplete="off" />
             <input type="hidden" name="MaterialId" value="@Model.MaterialId" autocomplete="off" />
             <input type="hidden" name="ModelCoreType" value="@Model.ModelCoreType" autocomplete="off" />
-            <button type="submit" class="btn btn-danger" onclik="if (!confirm('Удалить теги?')) { return false;}">Удалить</button>
+            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить теги?')) { return false;}">Удалить</button>
         }
     </div>
 }
@@ -36,28 +36,18 @@
     @Html.Partial(MVC.SeoInfo.Views._GeneralEdit)
 
     <br />
-    <div class="col-md-12">
-        <div class="row">
-            @if (Model.Id != 0)
-            {
-                <!--keywords-->
-                <div id="menu-@Model.Id">
-                    @Html.Partial(MVC.SeoKeywords.Views._SeoKeywords, new VMSeoKeywordList { SeoInfoId = Model.Id, Keywords = Model.Keywords })
-                </div>
-                <!--keywords-->}
-            else
-            {
-                <p class="text-muted"><i class="fa fa-info"></i> Редактирование ключевых слов доступно только только при наличии отслеживаемой страницы в базе данных.</p>
-            }
-        </div>
-    </div>
-
-    <br />
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
+    </div>
+}
+
+@if (!isNew)
+{
+    <div id="seo-kw">
+        @Html.Action(MVC.SeoKeywords.Index(seoInfoId: Model.Id))
+    </div>
 }

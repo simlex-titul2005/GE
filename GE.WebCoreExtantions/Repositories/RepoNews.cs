@@ -78,34 +78,6 @@ FROM   D_NEWS         AS da
             }
         }
 
-        public IQueryable<News> QueryForAdmin(SxFilter filter)
-        {
-            var f = (Filter)filter;
-            using (var conn = new SqlConnection(base.ConnectionString))
-            {
-                var query = @"SELECT da.Id,
-       dm.DateCreate,
-       dm.Title
-FROM   D_NEWS         AS da
-       JOIN DV_MATERIAL  AS dm
-            ON  dm.ID = da.ID
-            AND dm.ModelCoreType = da.ModelCoreType
-       LEFT JOIN D_GAME  AS dg
-            ON  dg.ID = da.GameId";
-                if (f != null && !string.IsNullOrEmpty(f.GameTitle))
-                    query += @" WHERE  (dg.Title = @GAME_TITLE
-       OR  @GAME_TITLE IS NULL)";
-                query += @" ORDER BY
-       dm.DateCreate DESC";
-                if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
-                    query += " OFFSET " + f.SkipCount + " ROWS FETCH NEXT " + f.PageSize + " ROWS ONLY";
-
-                var data = f != null && !string.IsNullOrEmpty(f.GameTitle) ? conn.Query<News>(query, new { GAME_TITLE = f.GameTitle }) : conn.Query<News>(query);
-
-                return data.AsQueryable();
-            }
-        }
-
         public override int Count(SxFilter filter)
         {
             var f = (Filter)filter;

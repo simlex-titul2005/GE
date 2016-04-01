@@ -30,72 +30,30 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var list = (_repo as RepoArticle).QueryForAdmin(new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize })
-                .Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
+            var filter=new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
+            var list = (_repo as RepoArticle).QueryForAdmin(filter);
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = _repo.All.Count();
+            ViewData["RowsCount"] = (_repo as RepoArticle).FilterCount(filter);
 
             return View(list);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(VMArticle filter, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMArticle filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
-            int id = filter != null ? filter.Id : 0;
-            string title = filter != null ? filter.Title : null;
-            string html = filter != null ? filter.Html : null;
-            ViewBag.Filter = filter;
+            ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            //select
-            var temp = _repo.All;
-            if (id != 0)
-                temp = temp.Where(x => x.Id == id);
-            if (title != null)
-                temp = temp.Where(x => x.Title.Contains(title));
-            if (html != null)
-                temp = temp.Where(x => x.Html.Contains(html));
-
-            //order
-            var orders = order.Where(x => x.Value != SxExtantions.SortDirection.Unknown);
-            if (orders.Count() != 0)
-            {
-                foreach (var o in orders)
-                {
-                    if (o.Key == "Title")
-                    {
-                        if (o.Value == SxExtantions.SortDirection.Desc)
-                            temp = temp.OrderByDescending(x => x.Title);
-                        else if (o.Value == SxExtantions.SortDirection.Asc)
-                            temp = temp.OrderBy(x => x.Title);
-                    }
-                    if (o.Key == "Html")
-                    {
-                        if (o.Value == SxExtantions.SortDirection.Desc)
-                            temp = temp.OrderByDescending(x => x.Html);
-                        else if (o.Value == SxExtantions.SortDirection.Asc)
-                            temp = temp.OrderBy(x => x.Html);
-                    }
-                    if (o.Key == "DateCreate")
-                    {
-                        if (o.Value == SxExtantions.SortDirection.Desc)
-                            temp = temp.OrderByDescending(x => x.DateCreate);
-                        else if (o.Value == SxExtantions.SortDirection.Asc)
-                            temp = temp.OrderBy(x => x.DateCreate);
-                    }
-                }
-            }
-
-            var list = temp.Skip((page - 1) * _pageSize)
-                .Take(_pageSize).ToArray().Select(x => Mapper.Map<Article, VMArticle>(x)).ToArray();
+            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Orders = order, WhereExpressionObject = filterModel };
+            var viewModel = (_repo as RepoArticle).QueryForAdmin(filter);
 
             ViewData["Page"] = page;
             ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = temp.Count();
+            ViewData["RowsCount"] = (_repo as RepoArticle).FilterCount(filter);
 
-            return PartialView("_GridView", list);
+            return PartialView("_GridView", viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]

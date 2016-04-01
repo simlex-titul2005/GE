@@ -14,6 +14,7 @@
         Columns = new SxExtantions.SxGridViewColumn[]{
             new SxExtantions.SxGridViewColumn{FieldName="DateCreate", Caption="Дата создания"},
             new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Заголовок"},
+            new SxExtantions.SxGridViewColumn{FieldName="SeoInfoId", Caption="Инфо", Template=(si)=> { return string.IsNullOrEmpty(si.ToString()) ?"yt":null; } },
         },
         Filter = filter,
         SortDirections = sortDirections

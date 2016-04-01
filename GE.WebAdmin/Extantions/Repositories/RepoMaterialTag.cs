@@ -51,7 +51,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             param = null;
             string query = null;
             query += " WHERE (dmt.Id LIKE '%'+@id+'%' OR @id IS NULL)";
-            query += " AND (dmt.MaterialId=@mid AND dmt.ModelCoreType=@mct)";
+            query += " AND (dmt.MaterialId=@mid AND dmt.ModelCoreType=@mct) ";
 
             var id = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Id != null ? (string)filter.WhereExpressionObject.Id : null;
 

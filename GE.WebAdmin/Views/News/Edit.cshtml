@@ -17,99 +17,124 @@
     </div>
 }
 <br />
-<form method="post" action="@Url.Action(MVC.News.Edit())">
-    @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(x => x.Id)
-    @Html.HiddenFor(x => x.ModelCoreType)
-    @Html.HiddenFor(x => x.OldTitleUrl)
-    @if (!isNew)
-    {
-        @Html.HiddenFor(x => x.UserId)
-    }
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
+    <li role="presentation"><a href="#tags-cloud" aria-controls="tags-cloud" role="tab" data-toggle="tab">Облако тегов</a></li>
+    <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Seo</a></li>
+</ul>
 
-    <div class="row">
-        <div class="col-md-@(isNew?12:9)">
-            @Html.LabelFor(x => x.Title, new { @class = "control-label" })
-            @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(x => x.Title)
-        </div>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="params">
+        <h2>Основные параметры материала</h2>
+        <form method="post" action="@Url.Action(MVC.News.Edit())">
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.ModelCoreType)
+            @Html.HiddenFor(x => x.OldTitleUrl)
+            @if (!isNew)
+            {
+                @Html.HiddenFor(x => x.UserId)
+            }
+
+            <div class="row">
+                <div class="col-md-@(isNew?12:9)">
+                    @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.Title)
+                </div>
+                @if (!isNew)
+            {
+                    <div class="col-md-3">
+                        @Html.LabelFor(x => x.DateOfPublication, new { @class = "control-label" })
+                        @Html.EditorFor(x => x.DateOfPublication, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите дату публикации" } })
+                        @Html.ValidationMessageFor(x => x.DateOfPublication)
+                    </div>
+                }
+            </div>
+            <br />
+            @if (!isNew && !string.IsNullOrEmpty(Model.TitleUrl) && User.IsInRole("architect"))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+                        <span class="text-info"> (применяется для уникальной идентификации материала)</span>
+                        @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(x => x.TitleUrl)
+                    </div>
+                </div>
+                <br />
+            }
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(x => x.Show, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.Show)
+                </div>
+                <div class="col-md-5">
+                    @Html.LabelFor(x => x.GameId, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.GameId)
+                </div>
+                <div class="col-md-5">
+                    @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.FrontPictureId)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(x => x.Foreword, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.Foreword)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(x => x.Html, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.Html)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
+                        @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tags-cloud">
         @if (!isNew)
         {
-            <div class="col-md-3">
-                @Html.LabelFor(x => x.DateOfPublication, new { @class = "control-label" })
-                @Html.EditorFor(x => x.DateOfPublication, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите дату публикации" } })
-                @Html.ValidationMessageFor(x => x.DateOfPublication)
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="grid-mat-tags">
+                        @Html.Action(MVC.MaterialTags.Index(mid: Model.Id, mct: Model.ModelCoreType))
+                    </div>
+                </div>
             </div>
         }
     </div>
-    <br />
-    @if (!isNew && !string.IsNullOrEmpty(Model.TitleUrl) && User.IsInRole("architect"))
-    {
-        <div class="row">
-            <div class="col-md-12">
-                @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
-                <span class="text-info"> (применяется для уникальной идентификации материала)</span>
-                @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.TitleUrl)
+    <div role="tabpanel" class="tab-pane" id="seo">
+        @if (!isNew)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="grid-mat-tags">
+                        @Html.Action(MVC.SeoInfo.EditForMaterial(mid: Model.Id, mct: Model.ModelCoreType, id: Model.SeoInfoId))
+                    </div>
+                </div>
             </div>
-        </div>
-        <br />
-    }
-    <div class="row">
-        <div class="col-md-2">
-            @Html.LabelFor(x => x.Show, new { @class = "control-label" })
-            @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(x => x.Show)
-        </div>
-        <div class="col-md-5">
-            @Html.LabelFor(x => x.GameId, new { @class = "control-label" })
-            @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(x => x.GameId)
-        </div>
-        <div class="col-md-5">
-            @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
-            @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(x => x.FrontPictureId)
-        </div>
+        }
     </div>
-    <br />
-    <div class="row">
-        <div class="col-md-12">
-            @Html.LabelFor(x => x.Foreword, new { @class = "control-label" })
-            @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(x => x.Foreword)
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-12">
-            @Html.LabelFor(x => x.Html, new { @class = "control-label" })
-            @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(x => x.Html)
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
-                @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
-            </div>
-        </div>
-    </div>
-</form>
-
-@if (!isNew)
-{
-    <div class="row">
-        <div class="col-md-12">
-            <div id="grid-mat-tags">
-                @Html.Action(MVC.MaterialTags.Index(mid: Model.Id, mct: Model.ModelCoreType))
-            </div>
-        </div>
-    </div>
-}
+</div>
 
 @section scripts{
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>

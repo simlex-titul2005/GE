@@ -68,19 +68,19 @@ namespace GE.WebUI.Extantions.Controllers
         {
             var request = controller.Request;
             var rawUrl = request.RawUrl.ToLowerInvariant();
-            var seoInfo = (SiteSeoInfo)seoInfoCache.Get(rawUrl);
+            var seoInfo = (VMSeoInfo)seoInfoCache.Get(rawUrl);
             if (seoInfo == null)
             {
                 var repoSeoInfo = new RepoSeoInfo();
-                var seo = (repoSeoInfo as RepoSeoInfo).GetByRawUrl(rawUrl);
+                var seo = (repoSeoInfo as RepoSeoInfo).GetSeoInfo(rawUrl);
                 if (seo != null)
                 {
-                    seoInfo = mapper.Map<SxSeoInfo, SiteSeoInfo>(seo);
+                    seoInfo = mapper.Map<SxSeoInfo, VMSeoInfo>(seo);
                     seoInfo.IsEmpty = false;
                 }
                 else
                 {
-                    seoInfo = new SiteSeoInfo { IsEmpty = true };
+                    seoInfo = new VMSeoInfo { IsEmpty = true };
                 }
                 seoInfoCache.Add(rawUrl, seoInfo, _defaultPolicy);
             }

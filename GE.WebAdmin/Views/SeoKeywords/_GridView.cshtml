@@ -3,7 +3,7 @@
     Layout = null;
     var filter = ViewBag.Filter != null ? (VMSeoKeyword)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
-    var seoInfoId = ViewBag.SeoInfoId;
+    var seoInfoId = ViewBag.SeoInfoId ?? filter.SeoInfoId;
 }
 
 <br />

@@ -2,6 +2,22 @@
 @import (reference) "sizes.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
+.list-article-container .sx-list.t-mode > .row > div{
+    @media (max-width: @screen-xs-max) {
+       
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        width:50%;
+        float:left;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
 
 .list-article {
     display: inline-table;
@@ -29,6 +45,19 @@
 
 .list-article figure{
     text-align:center;
+    @media (max-width: @screen-xs-max) {
+       
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        display:none;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
 }
 
 .list-article figure > img {

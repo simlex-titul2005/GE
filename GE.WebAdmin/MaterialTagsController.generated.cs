@@ -64,9 +64,9 @@ namespace GE.WebAdmin.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Edit()
+        public virtual System.Web.Mvc.RedirectToRouteResult Edit()
         {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
+            return new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Edit);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -122,9 +122,6 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Edit
         {
-            public readonly string mid = "mid";
-            public readonly string mct = "mct";
-            public readonly string id = "id";
             public readonly string model = "model";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
@@ -189,26 +186,12 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct, string id);
+        partial void EditOverride(T4MVC_System_Web_Mvc_RedirectToRouteResult callInfo, GE.WebAdmin.Models.VMEditMaterialTag model);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Edit(int mid, SX.WebCore.Enums.ModelCoreType mct, string id)
+        public override System.Web.Mvc.RedirectToRouteResult Edit(GE.WebAdmin.Models.VMEditMaterialTag model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            EditOverride(callInfo, mid, mct, id);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditMaterialTag model);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditMaterialTag model)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditOverride(callInfo, model);
             return callInfo;

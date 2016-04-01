@@ -45,9 +45,9 @@
     </div>
 }
 
-@if (!isNew)
-{
-    <div id="seo-kw">
+<div id="seo-kw">
+    @if (!isNew)
+    {
         @Html.Action(MVC.SeoKeywords.Index(seoInfoId: Model.Id))
-    </div>
-}
+    }
+</div>

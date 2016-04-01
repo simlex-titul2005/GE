@@ -39,8 +39,6 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual PartialViewResult Index(VMSeoKeyword filterModel, IDictionary<string, SortDirection> order, int page = 1)
         {
-            var r = Request.IsAjaxRequest();
-
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
@@ -52,14 +50,6 @@ namespace GE.WebAdmin.Controllers
             ViewData["RowsCount"] = (_repo as RepoSeoKeywords).FilterCount(filter);
 
             return PartialView(MVC.SeoKeywords.Views._GridView, list);
-        }
-
-        [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Edit(int seoInfoId, int? id=null)
-        {
-            var model = id.HasValue ? _repo.GetByKey(id) : new SxSeoKeyword { SeoInfoId = seoInfoId };
-            var viewModel = Mapper.Map<SxSeoKeyword, VMEditSeoKeyword>(model);
-            return View(viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]

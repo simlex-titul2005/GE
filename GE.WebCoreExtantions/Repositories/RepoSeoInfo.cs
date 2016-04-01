@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Dapper;
 using SX.WebCore.Abstract;
 using SX.WebCore;
+using static SX.WebCore.Enums;
 
 namespace GE.WebCoreExtantions.Repositories
 {
@@ -35,16 +36,45 @@ namespace GE.WebCoreExtantions.Repositories
             }
         }
 
-        public SxSeoInfo GetByRawUrl(string rawUrl)
+        /// <summary>
+        /// Теги для url
+        /// </summary>
+        /// <param name="rawUrl"></param>
+        /// <returns></returns>
+        public SxSeoInfo GetSeoInfo(string rawUrl)
         {
             using (var conn = new SqlConnection(base.ConnectionString))
             {
-                var query = @"SELECT*FROM D_SEO_INFO AS dsi
-WHERE dsi.RawUrl=@RAW_URL";
-                var data = conn.Query<SxSeoInfo>(query, new { RAW_URL = rawUrl }).FirstOrDefault();
+                var query = @"SELECT*FROM D_SEO_INFO AS dsi";
+                query += " WHERE dsi.RawUrl = @raw_url";
+
+                var data = conn.Query<SxSeoInfo>(query, new { raw_url = rawUrl}).SingleOrDefault();
                 if(data!=null)
                 {
-                    data.Keywords = conn.Query<SxSeoKeyword>(@"SELECT*FROM D_SEO_KEYWORD AS dsk WHERE dsk.SeoInfoId=@SEO_INFO_ID", new { SEO_INFO_ID = data.Id }).ToArray();
+                    data.Keywords = conn.Query<SxSeoKeyword>(@"SELECT*FROM D_SEO_KEYWORD AS dsk WHERE dsk.SeoInfoId=@siid", new { siid = data.Id }).ToArray();
+                }
+
+                return data;
+            }
+        }
+
+        /// <summary>
+        /// Теги для материала
+        /// </summary>
+        /// <param name="mid"></param>
+        /// <param name="mct"></param>
+        /// <returns></returns>
+        public SxSeoInfo GetSeoInfo(int mid, ModelCoreType mct)
+        {
+            using (var conn = new SqlConnection(base.ConnectionString))
+            {
+                var query = @"SELECT*FROM D_SEO_INFO AS dsi";
+                query += " WHERE (dsi.MaterialId = @mid AND dsi.ModelCoreType = @mct)";
+
+                var data = conn.Query<SxSeoInfo>(query, new { mid = mid, mct = mct }).SingleOrDefault();
+                if (data != null)
+                {
+                    data.Keywords = conn.Query<SxSeoKeyword>(@"SELECT*FROM D_SEO_KEYWORD AS dsk WHERE dsk.SeoInfoId=@siid", new { siid = data.Id }).ToArray();
                 }
 
                 return data;

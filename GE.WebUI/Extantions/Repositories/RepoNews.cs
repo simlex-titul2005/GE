@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
+using AutoMapper;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -25,37 +26,38 @@ namespace GE.WebUI.Extantions.Repositories
             {
                 var query = @"SELECT dn.*,
        dm.*,
-       dg.TitleUrl       AS GameTitleUrl,
+       dg.TitleUrl           AS GameTitleUrl,
        CASE 
             WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
             ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, 200) +
                  '...'
-       END                    AS Foreword,
+       END                   AS Foreword,
        (
            SELECT ISNULL(SUM(1), 0)
            FROM   D_LIKE AS dl
            WHERE  dl.Direction = 1
                   AND dl.MaterialId = dm.Id
                   AND dl.ModelCoreType = dm.ModelCoreType
-       )                 AS LikeUpCount,
+       )                     AS LikeUpCount,
        (
            SELECT ISNULL(SUM(1), 0)
            FROM   D_LIKE AS dl
            WHERE  dl.Direction = 0
                   AND dl.MaterialId = dm.Id
                   AND dl.ModelCoreType = dm.ModelCoreType
-       )                 AS LikeDownCount,
-       anu.NikName AS UserNikName
-FROM   D_NEWS            AS dn
-       JOIN DV_MATERIAL  AS dm
+       )                     AS LikeDownCount,
+       anu.NikName           AS UserNikName
+FROM   D_NEWS                AS dn
+       JOIN DV_MATERIAL      AS dm
             ON  dm.Id = dn.Id
             AND dm.ModelCoreType = dn.ModelCoreType
-       LEFT JOIN D_GAME  AS dg
+       LEFT JOIN D_GAME      AS dg
             ON  dg.Id = dn.GameId
-            JOIN  AspNetUsers AS anu ON anu.Id = dm.UserId
-WHERE  dm.TitleUrl = @TITLE_URL";
+       JOIN AspNetUsers      AS anu
+            ON  anu.Id = dm.UserId
+WHERE  dm.TitleUrl = @title_url";
 
-                return conn.Query<VMDetailNews>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();
+                return conn.Query<VMDetailNews>(query, new { title_url = titleUrl }).SingleOrDefault();
             }
         }
     }

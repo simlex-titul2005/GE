@@ -51,7 +51,8 @@ namespace GE.WebAdmin.Extantions.Repositories
         {
             param = null;
             string query = null;
-            query += " WHERE (dsi.RawUrl LIKE '%'+@raw_url+'%' OR @raw_url IS NULL) ";
+            query += " WHERE (dsi.RawUrl LIKE '%'+@raw_url+'%' OR @raw_url IS NULL)";
+            query += " AND (dsi.RawUrl IS NOT NULL) ";
 
             var rawUrl = filter.WhereExpressionObject != null && filter.WhereExpressionObject.RawUrl != null ? (string)filter.WhereExpressionObject.RawUrl : null;
 

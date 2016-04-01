@@ -254,7 +254,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Abstract\VMDetailMaterial.cs" />
-    <Compile Include="Models\SiteSeoInfo.cs" />
+    <Compile Include="Models\VMSeoInfo.cs" />
     <Compile Include="Models\VMBreadcrumb.cs" />
     <Compile Include="Models\VMComment.cs" />
     <Compile Include="Models\VMDetailNews.cs" />

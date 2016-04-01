@@ -114,10 +114,14 @@ namespace GE.WebUI.Controllers
                     ViewBag.FBScript = "<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.5\"; fjs.parentNode.insertBefore(js, fjs); } (document, 'script', 'facebook-jssdk'));</script>";
                 }
 
-                if (ViewBag.Title == null)
-                    ViewBag.Title = model.Title;
-                if (ViewBag.H1 == null)
-                    ViewBag.H1 = model.Title;
+                var seoInfoRepo = new RepoSeoInfo();
+                var matSeoInfo = Mapper.Map<SxSeoInfo, VMSeoInfo>(seoInfoRepo.GetSeoInfo(model.Id, model.ModelCoreType));
+
+                ViewBag.Title = ViewBag.Title ?? (matSeoInfo!=null? matSeoInfo.SeoTitle:null) ?? model.Title;
+                ViewBag.Description = ViewBag.Description ?? (matSeoInfo != null ? matSeoInfo.SeoDescription : null) ?? model.Foreword;
+                ViewBag.Keywords = ViewBag.Keywords ?? (matSeoInfo != null ? matSeoInfo.KeywordsString : null);
+                ViewBag.H1= ViewBag.H1 ?? (matSeoInfo != null ? matSeoInfo.H1 : null) ?? model.Title;
+
                 if (model.GameTitleUrl != null)
                     ViewBag.GameName = model.GameTitleUrl.ToLowerInvariant();
 

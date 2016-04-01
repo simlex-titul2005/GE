@@ -39,7 +39,7 @@ namespace GE.WebUI
                         .ForMember(d => d.Action, d => d.MapFrom(s => s.Route != null ? s.Route.Action : null));
 
                     //seo info
-                    cfg.CreateMap<SxSeoInfo, SiteSeoInfo>();
+                    cfg.CreateMap<SxSeoInfo, VMSeoInfo>();
                 });
             }
         }

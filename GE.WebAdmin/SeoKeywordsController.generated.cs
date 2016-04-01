@@ -64,9 +64,9 @@ namespace GE.WebAdmin.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Edit()
+        public virtual System.Web.Mvc.RedirectToRouteResult Edit()
         {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
+            return new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Edit);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -121,8 +121,6 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Edit
         {
-            public readonly string seoInfoId = "seoInfoId";
-            public readonly string id = "id";
             public readonly string model = "model";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
@@ -144,12 +142,8 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _GridView = "_GridView";
-                public readonly string _SeoKeywords = "_SeoKeywords";
-                public readonly string Edit = "Edit";
             }
             public readonly string _GridView = "~/Views/SeoKeywords/_GridView.cshtml";
-            public readonly string _SeoKeywords = "~/Views/SeoKeywords/_SeoKeywords.cshtml";
-            public readonly string Edit = "~/Views/SeoKeywords/Edit.cshtml";
         }
     }
 
@@ -182,19 +176,6 @@ namespace GE.WebAdmin.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             IndexOverride(callInfo, filterModel, order, page);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int seoInfoId, int? id);
-
-        [NonAction]
-        public override System.Web.Mvc.ViewResult Edit(int seoInfoId, int? id)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "seoInfoId", seoInfoId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            EditOverride(callInfo, seoInfoId, id);
             return callInfo;
         }
 

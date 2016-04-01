@@ -54,17 +54,9 @@ namespace GE.WebAdmin.Controllers
             return PartialView(MVC.MaterialTags.Views._GridView, list);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Edit(int mid, ModelCoreType mct, string id = null)
-        {
-            var newModel = id != null ? _repo.GetByKey(id, mid, mct) : new SxMaterialTag { MaterialId = mid, ModelCoreType = mct };
-            var viewModel = Mapper.Map<SxMaterialTag, VMEditMaterialTag>(newModel);
-            return View(viewModel);
-        }
-
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(VMEditMaterialTag model)
+        public virtual RedirectToRouteResult Edit(VMEditMaterialTag model)
         {
             if (_repo.GetByKey(model.Id, model.MaterialId, model.ModelCoreType) != null)
                 ModelState.AddModelError("Id", "Такой тег уже добавлен для материала");
@@ -73,22 +65,9 @@ namespace GE.WebAdmin.Controllers
                 
                 var redactModel = Mapper.Map<VMEditMaterialTag, SxMaterialTag>(model);
                 _repo.Create(redactModel);
-
-                string controller = null;
-                switch(model.ModelCoreType)
-                {
-                    case ModelCoreType.Article:
-                        controller = "articles";
-                        break;
-                    case ModelCoreType.News:
-                        controller = "news";
-                        break;
-                }
-
-                TempData["TabId"] = "tags-cloud";
-                return RedirectToAction("edit", new { controller = controller, id = model.MaterialId });
             }
-            return View(model);
+
+            return RedirectToAction(MVC.MaterialTags.Index(model.MaterialId, model.ModelCoreType));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]

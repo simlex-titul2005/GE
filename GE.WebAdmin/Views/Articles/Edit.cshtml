@@ -3,7 +3,6 @@
     var isNew = Model.Id == 0;
     ViewBag.Title = isNew ? "Добавить статью" : "Редактировать статью \"" + Model.Title + "\"";
     ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
-    var tabId = (string)TempData["TabId"];
 }
 
 @section styles{
@@ -25,7 +24,7 @@
 <br />
 
 <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" @(tabId==null?"class=active":null)><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
+    <li role="presentation" class="active"><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
     <li role="presentation"><a href="#tags-cloud" aria-controls="tags-cloud" role="tab" data-toggle="tab">Облако тегов</a></li>
     <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Seo</a></li>
 </ul>
@@ -168,10 +167,5 @@
                 $('#at').load('/articletypes/articletypesbygameId?gameId=' + gameId);
             });
         });
-
-        @if(tabId!=null)
-        {
-            <text>$('.nav-tabs a[href="#@tabId"]').tab('show');</text>
-        }
     </script>
 }

@@ -426,6 +426,7 @@
     <Content Include="Views\SeoInfo\_EditForMaterial.cshtml" />
     <Content Include="Views\SeoInfo\_GeneralEdit.cshtml" />
     <Content Include="Views\SeoKeywords\_GridView.cshtml" />
+    <Content Include="Views\Home\_LastComments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -436,6 +437,7 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="Content\i\" />
+    <Folder Include="Content\less\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

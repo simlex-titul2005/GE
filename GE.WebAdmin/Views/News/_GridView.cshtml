@@ -8,16 +8,18 @@
 
 @Html.SxGridView(
         new SxExtantions.SxGridViewSettings<VMNews>
-    {
-        UpdateTargetId = "grid-news",
-        Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
+        {
+            UpdateTargetId = "grid-news",
+            Data = Model,
+            Columns = new SxExtantions.SxGridViewColumn[]{
             new SxExtantions.SxGridViewColumn{FieldName="DateCreate", Caption="Дата создания"},
             new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Заголовок"},
-            new SxExtantions.SxGridViewColumn{FieldName="SeoInfoId", Caption="Инфо", Template=(si)=> { return string.IsNullOrEmpty(si.ToString()) ?"yt":null; } },
+            new SxExtantions.SxGridViewColumn{FieldName="SeoInfoId", Caption="Инфо", Template=(si)=> {
+                return si==null? "<i class=\"text-danger\">не заданы теги seo</i>":null;
+            } },
         },
-        Filter = filter,
-        SortDirections = sortDirections
-    },
+            Filter = filter,
+            SortDirections = sortDirections
+        },
         new { @class = "table table-condensed table-bordered table-responsive table-striped" }
     )

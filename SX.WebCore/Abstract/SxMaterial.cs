@@ -28,6 +28,8 @@ namespace SX.WebCore.Abstract
         public Guid? FrontPictureId { get; set; }
         public virtual SxPicture FrontPicture { get; set; }
 
+        public bool ShowFrontPictureOnDetailPage { get; set; }
+
         public int ViewsCount { get; set; }
 
         public int CommentsCount { get; set; }

@@ -82,12 +82,14 @@ namespace GE.WebAdmin.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string LastComments = "LastComments";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string LastComments = "LastComments";
         }
 
 
@@ -109,8 +111,10 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _LastComments = "_LastComments";
                 public readonly string Index = "Index";
             }
+            public readonly string _LastComments = "~/Views/Home/_LastComments.cshtml";
             public readonly string Index = "~/Views/Home/Index.cshtml";
         }
     }
@@ -129,6 +133,17 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "dbContext", dbContext);
             IndexOverride(callInfo, dbContext);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void LastCommentsOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult LastComments()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.LastComments);
+            LastCommentsOverride(callInfo);
             return callInfo;
         }
 

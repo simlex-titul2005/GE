@@ -37,6 +37,9 @@ namespace GE.WebAdmin.Models
         [Display(Name = "Изображение"), UIHint("EditImage")]
         public Guid? FrontPictureId { get; set; }
 
+        [Display(Name = "Показывать картинку на странице")]
+        public bool ShowFrontPictureOnDetailPage { get; set; }
+
         [Display(Name = "Строковый ключ"), MaxLength(255), Required]
         public string TitleUrl { get; set; }
 

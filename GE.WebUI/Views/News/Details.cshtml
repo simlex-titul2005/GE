@@ -16,7 +16,7 @@
     @Html.Partial(MVC.Shared.Views._Foreword, Model)
 
     <div class="m-html">
-        @if (Model.FrontPictureId.HasValue)
+        @if (Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage)
         {
             <img class="f-picture" alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))" />
         }

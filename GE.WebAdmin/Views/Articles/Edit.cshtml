@@ -43,11 +43,17 @@
             }
 
             <div class="row">
-                <div class="col-md-@(isNew?12:9)">
+                <div class="col-md-@(isNew?9:6)">
                     @Html.LabelFor(x => x.Title, new { @class = "control-label" })
                     @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название статьи" } })
                     @Html.ValidationMessageFor(x => x.Title)
                 </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.Show, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название статьи" } })
+                    @Html.ValidationMessageFor(x => x.Show)
+                </div>
+
                 @if (!isNew)
                 {
                     <div class="col-md-3">
@@ -71,17 +77,11 @@
                 <br />
             }
             <div class="row">
-                <div class="col-md-2">
-                    @Html.LabelFor(x => x.Show, new { @class = "control-label" })
-                    @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(x => x.Show)
-                </div>
                 <div class="col-md-4">
                     @Html.LabelFor(x => x.GameId, new { @class = "control-label" })
                     @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.GameId)
                 </div>
-
                 <div class="col-md-2">
                     @Html.LabelFor(x => x.ArticleTypeName, new { @class = "control-label" })
                     <div id="at">
@@ -91,8 +91,18 @@
                 </div>
                 <div class="col-md-4">
                     @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
+                    @if (!isNew && Model.FrontPictureId.HasValue)
+                    {
+                        @:&nbsp;
+                        <a href="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))">Показать</a>
+                    }
                     @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.FrontPictureId)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(x => x.ShowFrontPictureOnDetailPage, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.ShowFrontPictureOnDetailPage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.ShowFrontPictureOnDetailPage)
                 </div>
             </div>
             <br />

@@ -295,8 +295,8 @@ namespace SX.WebCore.HtmlHelpers
                 var td = new TagBuilder("td");
 
                 var val=props.First(x => x.Name == column.FieldName).GetValue(model);
-                var value = column.Template != null && val!= null
-                    ? column.Template(val)
+                var value = column.Template != null
+                    ? htmlHelper.Raw(column.Template(val))
                     : val;
 
                 td.InnerHtml += value;

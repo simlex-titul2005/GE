@@ -10,6 +10,7 @@ namespace GE.WebUI.Models.Abstract
         public string GameTitleUrl { get; set; }
         public Enums.ModelCoreType ModelCoreType { get; set; }
         public Guid? FrontPictureId { get; set; }
+        public bool ShowFrontPictureOnDetailPage { get; set; }
         public string Title { get; set; }
         public string TitleUrl { get; set; }
         public string Foreword { get; set; }

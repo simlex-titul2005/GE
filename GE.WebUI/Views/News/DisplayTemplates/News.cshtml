@@ -7,8 +7,9 @@
         CommentsCount = Model.CommentsCount,
         ViewsCount = Model.ViewsCount
     };
-    
-    var url=Url.Action(MVC.News.Details(Model.DateCreate.Year, Model.DateCreate.Month.ToString("00"), Model.DateCreate.Day.ToString("00"), Model.TitleUrl));
+
+    var url = Url.Action(MVC.News.Details(Model.DateCreate.Year, Model.DateCreate.Month.ToString("00"), Model.DateCreate.Day.ToString("00"), Model.TitleUrl));
+    var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null && Model.Game.GoodPictureId.HasValue) ? Model.Game.GoodPictureId : null;
 }
 
 <div class="row">
@@ -16,7 +17,7 @@
         <figure class="mat-f-p">
             @if (Model.FrontPictureId != null)
             {
-                <img alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId, height: 200))" />
+                <img alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)picureId, width: 570))" />
             }
             else
             {

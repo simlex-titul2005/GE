@@ -12,12 +12,13 @@
     var month = Model.DateCreate.Month.ToString("00");
     var day = Model.DateCreate.Day.ToString("00");
     var titleUrl = Model.TitleUrl;
+    var picureId = Model.FrontPictureId!=null ? Model.FrontPictureId:(Model.Game != null && Model.Game.BadPictureId.HasValue) ? Model.Game.BadPictureId : null;
 }
 
 <figure class="mat-f-p">
-    @if (Model.FrontPictureId != null)
+    @if (picureId.HasValue)
     {
-        <img alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId, width: 360))" />
+        <img alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)picureId, width: 570))" />
     }
     else
     {

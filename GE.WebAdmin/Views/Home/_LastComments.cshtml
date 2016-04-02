@@ -1,0 +1,27 @@
+﻿@model dynamic[]
+@{ 
+    Layout = null;
+}
+
+@for (int i = 0; i < Model.Length; i++)
+{
+    var item = Model[i];
+    var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
+    string url = null;
+    switch(mct)
+    {
+        case SX.WebCore.Enums.ModelCoreType.Article:
+            url = Url.Action(MVC.Articles.Edit((int)item.Id));
+            break;
+        case SX.WebCore.Enums.ModelCoreType.News:
+            url = Url.Action(MVC.News.Edit((int)item.Id));
+            break;
+    }
+
+    <div class="last-comment">
+        <div><time>@item.DateCreate</time></div>
+        <div><strong>@item.UserName</strong></div>
+        <p class="html">@item.Html</p>
+        <div><a class="btn btn-info btn-sm" href="@url">Редактировать</a></div>
+    </div>
+}

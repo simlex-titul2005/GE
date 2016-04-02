@@ -36,6 +36,7 @@ ORDER BY dm.DateCreate DESC";
                 var query = @"SELECT da.Id,
        dm.TitleUrl,
        dm.FrontPictureId,
+       dm.ShowFrontPictureOnDetailPage,
        dm.Title,
        SUBSTRING(
            CASE 
@@ -54,7 +55,8 @@ ORDER BY dm.DateCreate DESC";
        da.GameId,
        dg.Title,
        dg.TitleUrl,
-       dg.FrontPictureId
+       dg.FrontPictureId,
+       dg.GoodPictureId
 FROM   D_NEWS         AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.ID

@@ -44,6 +44,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
+            var filter = new WebCoreExtantions.Filter(page, _pageSize);
             var users = UsereManager.Users;
             var roles = RoleManager.Roles.Select(x=> new { RoleId=x.Id, RoleName=x.Name }).ToArray();
 
@@ -62,10 +63,8 @@ namespace GE.WebAdmin.Controllers
                 }
             }
 
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = users.Count();
+            filter.PagerInfo.TotalItems= users.Count();
+            ViewBag.PagerInfo = filter.PagerInfo;
 
             return View(data);
         }

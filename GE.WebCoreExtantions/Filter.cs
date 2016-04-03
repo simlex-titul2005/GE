@@ -5,19 +5,19 @@ namespace GE.WebCoreExtantions
 {
     public sealed class Filter : SxFilter
     {
-        public Filter()
-        {
-            Page = 1;
-        }
+        public Filter() : base() { }
 
+        public Filter(int page, int pageSize)
+            :base(page, pageSize)
+        {
+            
+        }
         public int? Year { get; set; }
         public int? Month { get; set; }
         public int? Day { get; set; }
         public string GameTitle { get; set; }
         public string TitleUrl { get; set; }
-        public int Page { get; set; }
         public int? MaterialId { get; set; }
         public ModelCoreType ModelCoreType { get; set; }
-        public string Tag { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static IQueryable<VMPicture> QueryForAdmin(this WebCoreExtantions.Repositories.RepoPicture repo, Filter filter)
+        public static VMPicture[] QueryForAdmin(this WebCoreExtantions.Repositories.RepoPicture repo, Filter filter)
         {
             var query = QueryProvider.GetSelectString(new string[] { "dp.Id", "dp.Caption", "dp.[Description]", "dp.Width", "dp.Height" });
             query += " FROM D_PICTURE AS dp";
@@ -21,13 +21,12 @@ namespace GE.WebAdmin.Extantions.Repositories
 
             query += QueryProvider.GetOrderString("dp.DateCreate", SxExtantions.SortDirection.Desc, filter.Orders);
 
-            if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
-                query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
+            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var data = conn.Query<VMPicture>(query, param: param);
-                return data.AsQueryable();
+                return data.ToArray();
             }
         }
 

@@ -89,7 +89,7 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_Index
         {
             public readonly string page = "page";
-            public readonly string filter = "filter";
+            public readonly string filterModel = "filterModel";
             public readonly string order = "order";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -128,16 +128,16 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMClick filter, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMClick filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMClick filter, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMClick filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filter", filter);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            IndexOverride(callInfo, filter, order, page);
+            IndexOverride(callInfo, filterModel, order, page);
             return callInfo;
         }
 

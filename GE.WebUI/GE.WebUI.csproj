@@ -231,11 +231,11 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Extantions\Controllers\BaseControllerExt.cs" />
-    <Compile Include="Extantions\Repositories\RepoComment.cs" />
-    <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
-    <Compile Include="Extantions\Repositories\RepoGame.cs" />
-    <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
+    <Compile Include="Extantions\Repositories\RepoComment.cs" />
+    <Compile Include="Extantions\Repositories\RepoGame.cs" />
+    <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
+    <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="ForumController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

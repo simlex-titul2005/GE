@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using static SX.WebCore.Enums;
 using GE.WebAdmin.Extantions.Repositories;
 using GE.WebAdmin.Models;
-using System;
 using System.Collections.Generic;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
@@ -24,45 +23,48 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual PartialViewResult Index(int mid, ModelCoreType mct, int page = 1)
         {
-            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            var viewModel = (_repo as RepoMaterialTag).QueryForAdmin(mid, mct, filter);
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoMaterialTag).FilterCount(mid, mct, filter);
             ViewBag.MaterialId = mid;
             ViewBag.ModelCoreType = mct;
+
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { MaterialId= mid, ModelCoreType= mct };
+            var totalItems = (_repo as RepoMaterialTag).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
+
+            var viewModel = (_repo as RepoMaterialTag).QueryForAdmin(filter);
 
             return PartialView(MVC.MaterialTags.Views._GridView, viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(int mid, ModelCoreType mct, VMMaterialTag filter, IDictionary<string, SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(int mid, ModelCoreType mct, VMMaterialTag filterModel, IDictionary<string, SortDirection> order, int page = 1)
         {
-            ViewBag.Filter = filter;
-            ViewBag.Order = order;
-
-            var f = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Orders = order, WhereExpressionObject = filter };
-            var list = (_repo as RepoMaterialTag).QueryForAdmin(mid, mct, f);
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoMaterialTag).FilterCount(mid, mct, f);
             ViewBag.MaterialId = mid;
             ViewBag.ModelCoreType = mct;
 
-            return PartialView(MVC.MaterialTags.Views._GridView, list);
+            ViewBag.Filter = filterModel;
+            ViewBag.Order = order;
+
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel, MaterialId= mid, ModelCoreType= mct };
+            var totalItems = (_repo as RepoMaterialTag).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
+
+            var viewModel = (_repo as RepoMaterialTag).QueryForAdmin(filter);
+
+            return PartialView(MVC.MaterialTags.Views._GridView, viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual RedirectToRouteResult Edit(VMEditMaterialTag model)
         {
+            var id = model.Id.Trim();
+            model.Id = id;
             if (_repo.GetByKey(model.Id, model.MaterialId, model.ModelCoreType) != null)
                 ModelState.AddModelError("Id", "Такой тег уже добавлен для материала");
             if(ModelState.IsValid)
             {
-                
                 var redactModel = Mapper.Map<VMEditMaterialTag, SxMaterialTag>(model);
                 _repo.Create(redactModel);
             }

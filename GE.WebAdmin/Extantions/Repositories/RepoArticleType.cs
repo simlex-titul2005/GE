@@ -38,8 +38,7 @@ ORDER BY dat.[DESCRIPTION]";
 
             query += QueryProvider.GetOrderString("dat.Name", SortDirection.Desc, filter.Orders);
 
-            if(filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
-                query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
+            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {

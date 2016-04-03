@@ -1,9 +1,10 @@
 ﻿@model VMSeoKeyword[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMSeoKeyword)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
-    var seoInfoId = ViewBag.SeoInfoId ?? filter.SeoInfoId;
+    var seoInfoId = ViewBag.SeoInfoId;
 }
 
 <br />
@@ -29,6 +30,7 @@
                 Columns = new SxExtantions.SxGridViewColumn[]{
             new SxExtantions.SxGridViewColumn{FieldName="Value", Caption="Ключевое слово"}
         },
+                PagerInfo=pagerInfo,
                 Filter = filter,
                 SortDirections = sortDirections,
                 GeneralControllerName = "seokeywords",

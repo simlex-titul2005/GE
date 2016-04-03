@@ -10,7 +10,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static IQueryable<VMMenu> QueryForAdmin(this WebCoreExtantions.Repositories.RepoMenu repo, Filter filter)
+        public static VMMenu[] QueryForAdmin(this WebCoreExtantions.Repositories.RepoMenu repo, Filter filter)
         {
             var query = QueryProvider.GetSelectString(new string[] { "dm.Id", "dm.Name" });
             query += " FROM D_MENU AS dm ";
@@ -20,13 +20,12 @@ namespace GE.WebAdmin.Extantions.Repositories
 
             query += QueryProvider.GetOrderString("dm.Name", SortDirection.Asc, filter.Orders);
 
-            if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
-                query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
+            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var data = conn.Query<VMMenu>(query, param: param);
-                return data.AsQueryable();
+                return data.ToArray();
             }
         }
 

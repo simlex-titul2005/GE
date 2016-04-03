@@ -5,7 +5,6 @@ using SX.WebCore;
 using SX.WebCore.Abstract;
 using SX.WebCore.HtmlHelpers;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using Microsoft.AspNet.Identity;
@@ -16,13 +15,9 @@ namespace GE.WebAdmin.Controllers
     public partial class ArticlesController : BaseController
     {
         SxDbRepository<int, Article, DbContext> _repo;
-        SxDbRepository<int, ArticleType, DbContext> _repoArticleTypes;
-        SxDbRepository<int, SxSeoInfo, DbContext> _repoSeoInfo;
         public ArticlesController()
         {
             _repo = new RepoArticle();
-            _repoArticleTypes = new RepoArticleType();
-            _repoSeoInfo = new RepoSeoInfo();
         }
 
         private static int _pageSize = 20;
@@ -30,14 +25,13 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter=new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            var list = (_repo as RepoArticle).QueryForAdmin(filter);
+            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var totalItems = (_repo as RepoArticle).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoArticle).FilterCount(filter);
-
-            return View(list);
+            var viewModel = (_repo as RepoArticle).QueryForAdmin(filter);
+            return View(viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -46,12 +40,12 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Orders = order, WhereExpressionObject = filterModel };
-            var viewModel = (_repo as RepoArticle).QueryForAdmin(filter);
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var totalItems = (_repo as RepoArticle).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoArticle).FilterCount(filter);
+            var viewModel = (_repo as RepoArticle).QueryForAdmin(filter);
 
             return PartialView("_GridView", viewModel);
         }
@@ -122,7 +116,8 @@ namespace GE.WebAdmin.Controllers
         {
             Task.Run(() =>
             {
-                (_repoSeoInfo as RepoSeoInfo).DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
+                var repoSeoInfo = new RepoSeoInfo();
+                repoSeoInfo.DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
             });
 
             _repo.Delete(model.Id, model.ModelCoreType);

@@ -113,7 +113,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string mid = "mid";
             public readonly string mct = "mct";
             public readonly string page = "page";
-            public readonly string filter = "filter";
+            public readonly string filterModel = "filterModel";
             public readonly string order = "order";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
@@ -170,18 +170,18 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct, GE.WebAdmin.Models.VMMaterialTag filter, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct, GE.WebAdmin.Models.VMMaterialTag filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Index(int mid, SX.WebCore.Enums.ModelCoreType mct, GE.WebAdmin.Models.VMMaterialTag filter, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        public override System.Web.Mvc.PartialViewResult Index(int mid, SX.WebCore.Enums.ModelCoreType mct, GE.WebAdmin.Models.VMMaterialTag filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filter", filter);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            IndexOverride(callInfo, mid, mct, filter, order, page);
+            IndexOverride(callInfo, mid, mct, filterModel, order, page);
             return callInfo;
         }
 

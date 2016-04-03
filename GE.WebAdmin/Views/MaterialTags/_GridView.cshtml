@@ -1,10 +1,11 @@
 ﻿@model VMMaterialTag[]
 @{
     Layout = null;
-    var filter = ViewBag.Filter != null ? (VMMaterialTag)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+    var pagerInfo = ViewBag.PagerInfo;
     var mid = (int)ViewBag.MaterialId;
     var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
+    var filter = ViewBag.Filter != null ? (VMMaterialTag)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 <h3>Облако тегов для материала</h3>
@@ -34,6 +35,7 @@
                 FieldName ="Id",
                 Caption ="Значение"
             } },
+            PagerInfo = pagerInfo,
             Filter = filter,
             SortDirections = sortDirections,
             GeneralControllerName = "materialtags",

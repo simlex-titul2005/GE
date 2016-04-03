@@ -13,7 +13,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static IQueryable<VMSeoInfo> QueryForAdmin(this RepoSeoInfo repo, Filter filter)
+        public static VMSeoInfo[] QueryForAdmin(this RepoSeoInfo repo, Filter filter)
         {
             var query = QueryProvider.GetSelectString(new string[] { "dsi.Id", "dsi.RawUrl" });
             query += " FROM D_SEO_INFO AS dsi ";
@@ -23,13 +23,12 @@ namespace GE.WebAdmin.Extantions.Repositories
 
             query += QueryProvider.GetOrderString("dsi.RawUrl", SxExtantions.SortDirection.Asc, filter.Orders);
 
-            if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
-                query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
+            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var data = conn.Query<VMSeoInfo>(query, param: param);
-                return data.AsQueryable();
+                return data.ToArray();
             }
         }
 

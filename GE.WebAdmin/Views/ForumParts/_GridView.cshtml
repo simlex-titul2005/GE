@@ -1,6 +1,7 @@
 ﻿@model VMForumPart[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMForumPart)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -15,6 +16,7 @@
             new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Заголовок раздела"},
             new SxExtantions.SxGridViewColumn{FieldName="Html", Caption="Описание раздела"},
         },
+        PagerInfo=pagerInfo,
         Filter = filter,
         SortDirections = sortDirections
     },

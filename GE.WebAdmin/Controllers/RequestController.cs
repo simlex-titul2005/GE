@@ -4,7 +4,6 @@ using SX.WebCore;
 using SX.WebCore.Abstract;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using GE.WebAdmin.Models;
@@ -25,30 +24,29 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            var list = (_repo as RepoRequest).QueryForAdmin(filter);
+            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var totalItems=(_repo as RepoRequest).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoRequest).FilterCount(filter);
-
-            return View(list);
+            var viewModel = (_repo as RepoRequest).QueryForAdmin(filter);
+            return View(viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(VMRequest filter, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMRequest filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
-            ViewBag.Filter = filter;
+            ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var f = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Orders=order, WhereExpressionObject = filter };
-            var list = (_repo as RepoRequest).QueryForAdmin(f);
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders= order, WhereExpressionObject = filterModel };
+            var totalItems = (_repo as RepoRequest).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoRequest).FilterCount(f);
-
-            return PartialView("_GridView", list);
+            var viewModel = (_repo as RepoRequest).QueryForAdmin(filter);
+            
+            return PartialView("_GridView", viewModel);
         }
     }
 }

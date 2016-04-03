@@ -1,6 +1,7 @@
 ﻿@model VMPicture[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMPicture)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -18,6 +19,7 @@
             new SxExtantions.SxGridViewColumn{FieldName="Width", Caption="Ширина, px"},
             new SxExtantions.SxGridViewColumn{FieldName="Height", Caption="Высота, px"},
         },
+        PagerInfo=pagerInfo,
         Filter = filter,
         SortDirections = sortDirections
     },

@@ -1,6 +1,7 @@
 ﻿@model VMRedirect[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMRedirect)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -8,15 +9,16 @@
 
 @Html.SxGridView(
             new SxExtantions.SxGridViewSettings<VMRedirect>
-    {
-        UpdateTargetId = "grid-301-redirect",
-        Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
+            {
+                UpdateTargetId = "grid-301-redirect",
+                Data = Model,
+                Columns = new SxExtantions.SxGridViewColumn[]{
             new SxExtantions.SxGridViewColumn{FieldName="OldUrl", Caption="Старый адрес"},
             new SxExtantions.SxGridViewColumn{FieldName="NewUrl", Caption="Новый адрес"}
         },
-        Filter = filter,
-        SortDirections = sortDirections
-    },
+                PagerInfo = pagerInfo,
+                Filter = filter,
+                SortDirections = sortDirections
+            },
         new { @class = "table table-condensed table-bordered table-responsive table-striped" }
     )

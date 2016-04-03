@@ -1,6 +1,7 @@
 ﻿@model VMUser[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMUser)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -16,6 +17,7 @@
             new SxExtantions.SxGridViewColumn{FieldName="Email", Caption="Почта", Template=(val)=> { return string.Format("<a href=\"mailto:{0}\">{0}</a>", val); } },
             new SxExtantions.SxGridViewColumn{FieldName="RoleNames", Caption="Роль"},
         },
+        PagerInfo=pagerInfo,
         Filter = filter,
         SortDirections = sortDirections
     },

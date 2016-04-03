@@ -25,13 +25,14 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual PartialViewResult Index(int seoInfoId, int page = 1)
         {
-            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, WhereExpressionObject = new VMSeoKeyword { SeoInfoId= seoInfoId } };
-            var viewModel = (_repo as RepoSeoKeywords).QueryForAdmin(filter);
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoSeoKeywords).FilterCount(filter);
             ViewBag.SeoInfoId = seoInfoId;
+
+            var filter = new WebCoreExtantions.Filter(page, _pageSize){ WhereExpressionObject = new VMSeoKeyword { SeoInfoId = seoInfoId }};
+            var totalItems = (_repo as RepoSeoKeywords).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
+
+            var viewModel = (_repo as RepoSeoKeywords).QueryForAdmin(filter);
 
             return PartialView(MVC.SeoKeywords.Views._GridView, viewModel);
         }
@@ -39,17 +40,18 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual PartialViewResult Index(VMSeoKeyword filterModel, IDictionary<string, SortDirection> order, int page = 1)
         {
+            ViewBag.SeoInfoId = filterModel.SeoInfoId;
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Orders = order, WhereExpressionObject = filterModel };
-            var list = (_repo as RepoSeoKeywords).QueryForAdmin(filter);
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders=order, WhereExpressionObject = filterModel };
+            var totalItems = (_repo as RepoSeoKeywords).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoSeoKeywords).FilterCount(filter);
+            var viewModel = (_repo as RepoSeoKeywords).QueryForAdmin(filter);
 
-            return PartialView(MVC.SeoKeywords.Views._GridView, list);
+            return PartialView(MVC.SeoKeywords.Views._GridView, viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]

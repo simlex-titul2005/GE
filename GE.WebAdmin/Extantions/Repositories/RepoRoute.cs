@@ -12,24 +12,22 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static IEnumerable<VMRoute> QueryForAdmin(this WebCoreExtantions.Repositories.RepoRoute repo, Filter filter)
+        public static VMRoute[] QueryForAdmin(this WebCoreExtantions.Repositories.RepoRoute repo, Filter filter)
         {
+            var query = QueryProvider.GetSelectString();
+            query += @" FROM D_ROUTE AS dr";
+
+            object param = null;
+            query += getRoutetWhereString(filter, out param);
+
+            query += QueryProvider.GetOrderString("dr.Name", SortDirection.Asc, filter.Orders);
+
+            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
+
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var query = QueryProvider.GetSelectString();
-                query += @" FROM D_ROUTE AS dr";
-
-                object param = null;
-                query += getRoutetWhereString(filter, out param);
-
-                query += QueryProvider.GetOrderString("dr.Name", SortDirection.Asc, filter.Orders);
-
-                if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
-                    query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
-
                 var data = conn.Query<VMRoute>(query, param: param);
-
-                return data.AsQueryable();
+                return data.ToArray();
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using GE.WebAdmin.Models;
@@ -11,7 +10,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static IEnumerable<VMClick> QueryForAdmin(this WebCoreExtantions.Repositories.RepoClick repo, Filter filter)
+        public static VMClick[] QueryForAdmin(this WebCoreExtantions.Repositories.RepoClick repo, Filter filter)
         {
             var query = QueryProvider.GetSelectString(new string[] {
                     "dc.Id", "dc.UrlRef", "dc.RawUrl", "dc.LinkTarget", "dct.Name AS ClickTypeName", "dc.DateCreate"
@@ -23,13 +22,12 @@ namespace GE.WebAdmin.Extantions.Repositories
 
             query += QueryProvider.GetOrderString("dc.DateCreate", SortDirection.Desc, filter.Orders);
 
-            if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
-                query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
+            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var data = conn.Query<VMClick>(query, param: param);
-                return data.AsEnumerable();
+                return data.ToArray();
             }
         }
 

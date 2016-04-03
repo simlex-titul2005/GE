@@ -1,6 +1,7 @@
 ﻿@model VMSeoInfo[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMSeoInfo)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -14,6 +15,7 @@
         Columns = new SxExtantions.SxGridViewColumn[]{
             new SxExtantions.SxGridViewColumn{FieldName="RawUrl", Caption="Адрес"}
         },
+        PagerInfo=pagerInfo,
         Filter = filter,
         SortDirections = sortDirections
     },

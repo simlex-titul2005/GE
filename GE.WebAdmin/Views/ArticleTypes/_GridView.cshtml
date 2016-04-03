@@ -1,6 +1,7 @@
 ﻿@model VMArticleType[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMArticleType)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -17,6 +18,7 @@
             new SxExtantions.SxGridViewColumn{FieldName="Description", Caption="Описание"}
         },
         KeyFieldsName = new string[] { "Name", "GameId" },
+        PagerInfo=pagerInfo,
         Filter = filter,
         SortDirections = sortDirections
     },

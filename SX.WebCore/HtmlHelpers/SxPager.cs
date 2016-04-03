@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SX.WebCore.HtmlHelpers
@@ -123,8 +119,22 @@ namespace SX.WebCore.HtmlHelpers
 
         public class SxPagerInfo
         {
+            public SxPagerInfo(int page, int pageSize)
+            {
+                Page = page;
+                PageSize = pageSize;
+                PagerSize = 10;
+            }
             public int Page { get; set; }
             public int PageSize { get; set; }
+            public int SkipCount
+            {
+                get
+                {
+                    var skip=((Page-1)*PageSize);
+                    return skip<0? 0 : skip;
+                }
+            }
             public int TotalItems { get; set; }
             public int TotalPages
             {
@@ -136,18 +146,7 @@ namespace SX.WebCore.HtmlHelpers
                 }
             }
 
-            private int _pagerSize = 10;
-            public int PagerSize
-            {
-                get
-                {
-                    return _pagerSize;
-                }
-                set
-                {
-                    _pagerSize = (int)value;
-                }
-            }
+            public int PagerSize { get; set; }
 
             public int PartsCount
             {

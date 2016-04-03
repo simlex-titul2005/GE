@@ -1,11 +1,10 @@
-﻿using GE.WebAdmin.Models;
+﻿using GE.WebAdmin.Extantions.Repositories;
+using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore.HtmlHelpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
@@ -23,53 +22,29 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var list = _repo.All
-                .Skip((page - 1) * _pageSize)
-                .Take(_pageSize).OrderBy(x=>x.Title).Select(x => Mapper.Map<Game, VMGame>(x)).ToArray();
+            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var totalItems = (_repo as RepoGame).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = _repo.All.Count();
-
-            return View(list);
+            var viewModel = (_repo as RepoGame).QueryForAdmin(filter);
+            return View(viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(VMGame filter, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMGame filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
-            string title = filter != null ? filter.Title : null;
-            ViewBag.Filter = filter;
+            ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            //select
-            var temp = _repo.All;
-            if (title != null)
-                temp = temp.Where(x => x.Title.Contains(title));
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var totalItems = (_repo as RepoGame).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            //order
-            var orders = order.Where(x => x.Value != SxExtantions.SortDirection.Unknown);
-            if (orders.Count() != 0)
-            {
-                foreach (var o in orders)
-                {
-                    if (o.Key == "Name")
-                    {
-                        if (o.Value == SxExtantions.SortDirection.Desc)
-                            temp = temp.OrderByDescending(x => x.Title);
-                        else if (o.Value == SxExtantions.SortDirection.Asc)
-                            temp = temp.OrderBy(x => x.Title);
-                    }
-                }
-            }
+            var viewModel = (_repo as RepoGame).QueryForAdmin(filter);
 
-            var list = temp.Skip((page - 1) * _pageSize)
-                .Take(_pageSize).Select(x => Mapper.Map<Game, VMGame>(x)).ToArray();
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = temp.Count();
-
-            return PartialView("_GridView", list);
+            return PartialView("_GridView", viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
@@ -107,10 +82,8 @@ namespace GE.WebAdmin.Controllers
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Select(x => Mapper.Map<Game, VMGame>(x)).ToArray(),
-                PagerInfo = new SxExtantions.SxPagerInfo
+                PagerInfo = new SxExtantions.SxPagerInfo(page, pageSize)
                 {
-                    Page = page,
-                    PageSize = pageSize,
                     TotalItems = _repo.All.Count(),
                     PagerSize = 4
                 }

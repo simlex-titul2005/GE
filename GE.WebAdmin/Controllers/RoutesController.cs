@@ -26,30 +26,29 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new WebCoreExtantions.Filter { SkipCount = (page - 1) * _pageSize, PageSize = _pageSize };
-            var list = (_repo as RepoRoute).QueryForAdmin(filter).ToArray();
+            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var totalItems = (_repo as RepoRoute).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoRoute).FilterCount(filter);
-
-            return View(list);
+            var viewModel = (_repo as RepoRoute).QueryForAdmin(filter);
+            return View(viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(VMRoute filter, IDictionary<string, SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMRoute filterModel, IDictionary<string, SortDirection> order, int page = 1)
         {
-            ViewBag.Filter = filter;
+            ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var f = new WebCoreExtantions.Filter { SkipCount = (page - 1) * _pageSize, PageSize = _pageSize, Orders = order, WhereExpressionObject = filter };
-            var list = (_repo as RepoRoute).QueryForAdmin(f).ToArray();
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var totalItems = (_repo as RepoRoute).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoRoute).FilterCount(f);
+            var viewModel = (_repo as RepoRoute).QueryForAdmin(filter);
 
-            return PartialView("_GridView", list);
+            return PartialView("_GridView", viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]

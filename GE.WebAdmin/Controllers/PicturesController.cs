@@ -11,12 +11,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
+using SX.WebCore.Abstract;
 
 namespace GE.WebAdmin.Controllers
 {
     public partial class PicturesController : BaseController
     {
-        SX.WebCore.Abstract.SxDbRepository<Guid, SxPicture, DbContext> _repo;
+        private SxDbRepository<Guid, SxPicture, DbContext> _repo;
         public PicturesController()
         {
             _repo = new RepoPicture();
@@ -27,14 +28,13 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            var list = (_repo as RepoPicture).QueryForAdmin(filter).ToArray();
+            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var totalItems = (_repo as RepoPicture).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoPicture).FilterCount(filter);
-
-            return View(list);
+            var viewModel = (_repo as RepoPicture).QueryForAdmin(filter);
+            return View(viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -43,14 +43,14 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, Orders = order, WhereExpressionObject = filterModel };
-            var list = (_repo as RepoPicture).QueryForAdmin(filter).ToArray();
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var totalItems = (_repo as RepoPicture).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoPicture).FilterCount(filter);
+            var viewModel = (_repo as RepoPicture).QueryForAdmin(filter);
 
-            return PartialView("_GridView", list);
+            return PartialView("_GridView", viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
@@ -94,14 +94,16 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual ViewResult FindTable(int page = 1, int pageSize = 10)
         {
-            var filter = new WebCoreExtantions.Filter { PageSize = pageSize, SkipCount = (page - 1) * pageSize };
+            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var totalItems = (_repo as RepoPicture).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
+
             var viewModel = new SxExtantions.SxPagedCollection<VMPicture>
             {
                 Collection = (_repo as RepoPicture).QueryForAdmin(filter).ToArray(),
-                PagerInfo = new SxExtantions.SxPagerInfo
+                PagerInfo = new SxExtantions.SxPagerInfo(page, pageSize)
                 {
-                    Page = page,
-                    PageSize = pageSize,
                     TotalItems = _repo.All.Count(),
                     PagerSize = 4
                 }

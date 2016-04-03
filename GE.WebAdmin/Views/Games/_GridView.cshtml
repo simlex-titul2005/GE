@@ -1,6 +1,7 @@
 ﻿@model VMGame[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMGame)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -12,11 +13,12 @@
         UpdateTargetId = "grid-games",
         Data = Model,
         Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="TitleFull", Caption="Наименование игры"},
+            new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Наименование игры"},
             new SxExtantions.SxGridViewColumn{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
             new SxExtantions.SxGridViewColumn{FieldName="Description", Caption="Описание"},
             new SxExtantions.SxGridViewColumn{FieldName="Show", Caption="Показывать"},
         },
+        PagerInfo=pagerInfo,
         Filter = filter,
         SortDirections = sortDirections
     },

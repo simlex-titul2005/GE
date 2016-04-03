@@ -4,11 +4,6 @@ using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using SX.WebCore.Resources;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers

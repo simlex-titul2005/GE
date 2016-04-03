@@ -49,8 +49,10 @@ namespace GE.WebUI.Controllers
         public virtual ViewResult List(WebCoreExtantions.Filter filter)
         {
             ViewBag.GameTitle = filter.GameTitle;
+            var page = Request.RequestContext.RouteData.Values["page"]!=null? Convert.ToInt32(Request.RequestContext.RouteData.Values["page"]):1;
+            filter.PagerInfo.Page = page;
 
-            if(filter.GameTitle!=null)
+            if (filter.GameTitle!=null)
             {
                 var existGame = (_repoGame as RepoGame).ExistGame(filter.GameTitle);
                 if(!existGame)
@@ -73,17 +75,14 @@ namespace GE.WebUI.Controllers
             }
 
             var viewModel = new SxExtantions.SxPagedCollection<TModel>();
-            filter.PageSize = pageSize;
-            filter.SkipCount = pageSize * (filter.Page - 1);
+            filter.PagerInfo.PageSize = pageSize;
             var tag = Request.QueryString.Get("tag");
             if (!string.IsNullOrEmpty(tag))
                 filter.Tag = tag;
 
             viewModel.Collection = _repo.Query(filter).ToArray();
-            viewModel.PagerInfo = new SxExtantions.SxPagerInfo
+            viewModel.PagerInfo = new SxExtantions.SxPagerInfo(filter.PagerInfo.Page, pageSize)
             {
-                Page = filter.Page,
-                PageSize = pageSize,
                 PagerSize = 3,
                 TotalItems = _repo.Count(filter)
             };

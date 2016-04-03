@@ -22,32 +22,29 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ActionResult Index(int page = 1)
         {
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize };
-            var data = (_repo as RepoForumPart).QueryForAdmin(filter);
+            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var totalItems = (_repo as RepoForumPart).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoForumPart).FilterCount(filter);
-
-            return View(data);
+            var viewModel = (_repo as RepoForumPart).QueryForAdmin(filter);
+            return View(viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual PartialViewResult Index(VMForumPart filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
-            string title = filterModel != null ? filterModel.Title : null;
-            string html = filterModel != null ? filterModel.Html : null;
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _pageSize, SkipCount = (page - 1) * _pageSize, WhereExpressionObject = filterModel };
-            var data = (_repo as RepoForumPart).QueryForAdmin(filter, order);
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var totalItems = (_repo as RepoForumPart).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["RowsCount"] = (_repo as RepoForumPart).FilterCount(filter);
+            var viewModel = (_repo as RepoForumPart).QueryForAdmin(filter);
 
-            return PartialView("_GridView", data);
+            return PartialView("_GridView", viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]

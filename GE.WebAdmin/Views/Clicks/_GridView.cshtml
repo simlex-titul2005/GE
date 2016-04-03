@@ -1,6 +1,7 @@
 ﻿@model VMClick[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMClick)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -17,6 +18,7 @@
             new SxExtantions.SxGridViewColumn{FieldName="RawUrl", Caption="Адрес назначения"},
             new SxExtantions.SxGridViewColumn{FieldName="ClickTypeName", Caption="Статистика клика"}
         },
+                        PagerInfo=pagerInfo,
                         Filter = filter,
                         SortDirections = sortDirections,
                         EnableEditing = false,

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Dapper;
 using SX.WebCore.Abstract;
 using SX.WebCore;
+using SX.WebCore.Providers;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebCoreExtantions.Repositories
 {
@@ -30,14 +32,9 @@ ORDER BY dm.DateCreate DESC";
         public override IQueryable<News> Query(SxFilter filter)
         {
             var f = (Filter)filter;
-            f.GameTitle = !string.IsNullOrEmpty(f.GameTitle) ? f.GameTitle : null;
-            using (var conn = new SqlConnection(base.ConnectionString))
-            {
-                var query = @"SELECT da.Id,
-       dm.TitleUrl,
-       dm.FrontPictureId,
-       dm.ShowFrontPictureOnDetailPage,
-       dm.Title,
+            var query = QueryProvider.GetSelectString(new string[] {
+                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title",
+                @"(SELECT
        SUBSTRING(
            CASE 
                 WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
@@ -45,40 +42,31 @@ ORDER BY dm.DateCreate DESC";
            END,
            0,
            200
-       )+'...'                AS Foreword,
-       dm.DateCreate,
-       dm.DateOfPublication,
-       dm.ViewsCount,
-       dm.CommentsCount,
-       dm.UserId,
-       anu.NikName,
-       da.GameId,
-       dg.Title,
-       dg.TitleUrl,
-       dg.FrontPictureId,
-       dg.GoodPictureId
-FROM   D_NEWS         AS da
+       ))                 AS Foreword",
+                "dm.DateCreate", "dm.DateOfPublication", "dm.ViewsCount", "dm.CommentsCount", "dm.UserId", "anu.NikName", "da.GameId", "dg.Title", "dg.TitleUrl", "dg.BadPictureId"
+            });
+            query += @" FROM D_NEWS AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.ID
             AND dm.ModelCoreType = da.ModelCoreType
        LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
        LEFT JOIN D_GAME  AS dg
-            ON  dg.Id = da.GameId WHERE  (dg.TitleUrl = @GAME_TITLE_URL
-       OR  @GAME_TITLE_URL IS NULL) AND dm.DateOfPublication <= GETDATE() AND dm.Show=1";
-                if (!string.IsNullOrEmpty(f.Tag))
-                    query += string.Format(@" AND (dm.Id IN (SELECT dmt.MaterialId
-                  FROM D_MATERIAL_TAG AS dmt WHERE dmt.MaterialId = dm.Id AND dmt.ModelCoreType = dm.ModelCoreType AND dmt.Id=N'{0}'))", f.Tag);
-                query += @" ORDER BY
-       dm.DateCreate DESC";
-                if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
-                    query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
+            ON  dg.Id = da.GameId";
 
-                var data = conn.Query<News, SxAppUser, Game, News>(query, (da, anu, dg) =>
-                {
+            object param = null;
+            query += getNewsWhereString(f, out param);
+
+            query += QueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc);
+
+            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
+
+            using (var conn = new SqlConnection(base.ConnectionString))
+            {
+                var data = conn.Query<News, SxAppUser, Game, News>(query, (da, anu, dg) => {
                     da.Game = dg;
                     da.User = anu;
                     return da;
-                }, new { GAME_TITLE_URL = f.GameTitle }, splitOn: "UserId, GameId");
+                }, param: param, splitOn: "UserId, GameId");
 
                 return data.AsQueryable();
             }
@@ -87,23 +75,49 @@ FROM   D_NEWS         AS da
         public override int Count(SxFilter filter)
         {
             var f = (Filter)filter;
-            using (var conn = new SqlConnection(base.ConnectionString))
-            {
-                var query = @"SELECT COUNT(1) FROM D_NEWS AS da
-JOIN DV_MATERIAL  AS dm
+            var query = @"SELECT COUNT(1) FROM D_NEWS AS da
+       JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.ID
             AND dm.ModelCoreType = da.ModelCoreType
-LEFT JOIN D_GAME dg ON dg.Id=da.GameId
-WHERE (@GAME_TITLE IS NULL OR dg.Title=@GAME_TITLE)";
-                if (!string.IsNullOrEmpty(f.Tag))
-                    query += string.Format(@" AND (dm.Id IN (SELECT dmt.MaterialId
-                  FROM D_MATERIAL_TAG AS dmt WHERE dmt.MaterialId = dm.Id AND dmt.ModelCoreType = dm.ModelCoreType AND dmt.Id='{0}'))", f.Tag);
-                var data = f != null && !string.IsNullOrEmpty(f.GameTitle)
-                    ? conn.Query<int>(query, new { GAME_TITLE = f.GameTitle }).Single()
-                    : conn.Query<int>(query, new { GAME_TITLE = (string)null }).Single();
+       LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
+       LEFT JOIN D_GAME  AS dg
+            ON  dg.Id = da.GameId";
 
-                return (int)data;
+            object param = null;
+            query += getNewsWhereString(f, out param);
+
+            using (var conn = new SqlConnection(base.ConnectionString))
+            {
+                var data = conn.Query<int>(query, param: param).SingleOrDefault();
+                return data;
             }
+        }
+
+        private static string getNewsWhereString(Filter filter, out object param)
+        {
+            param = null;
+            string query = null;
+            query += " WHERE (dg.TitleUrl LIKE '%'+@gtu+'%' OR @gtu IS NULL) AND dm.DateOfPublication <= GETDATE() AND dm.Show=1 ";
+            if (!string.IsNullOrEmpty(filter.Tag))
+            {
+                query += @" AND (dm.Id IN (SELECT dmt.MaterialId
+                  FROM D_MATERIAL_TAG AS dmt WHERE dmt.MaterialId = dm.Id AND dmt.ModelCoreType = dm.ModelCoreType AND dmt.Id=N''+@tag+'')) ";
+
+                param = new
+                {
+                    gtu = filter.GameTitle,
+                    tag = filter.Tag
+                };
+            }
+            else
+            {
+                param = new
+                {
+                    gtu = filter.GameTitle
+                };
+            }
+
+            return query;
         }
 
         public News[] GetLikeMaterial(Filter filter)
@@ -112,12 +126,17 @@ WHERE (@GAME_TITLE IS NULL OR dg.Title=@GAME_TITLE)";
        dm.DateCreate,
        dm.TitleUrl,
        dm.Title,
-       dm.ModelCoreType
+       dm.ModelCoreType,
+       SUBSTRING(dm.Foreword, 0, 200)  AS Foreword,
+       dm.UserId,
+       anu.NikName
 FROM   D_MATERIAL_TAG    AS dmt
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = dmt.MaterialId
             AND dm.ModelCoreType = dmt.ModelCoreType
             AND dm.Id NOT IN (@mid)
+       JOIN AspNetUsers  AS anu
+            ON  anu.Id = dm.UserId
 WHERE  dmt.Id IN (SELECT dmt2.Id
                   FROM   D_MATERIAL_TAG AS dmt2
                   WHERE  dmt2.MaterialId = @mid
@@ -127,7 +146,10 @@ ORDER BY
 
             using (var conn = new SqlConnection(this.ConnectionString))
             {
-                var data = conn.Query<News>(query, new { mid = filter.MaterialId, mct = filter.ModelCoreType });
+                var data = conn.Query<News, SxAppUser, News>(query, (m,u)=> {
+                    m.User = u;
+                    return m;
+                }, new { mid = filter.MaterialId, mct = filter.ModelCoreType }, splitOn:"UserId");
                 return data.ToArray();
             }
         }

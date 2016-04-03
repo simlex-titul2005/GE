@@ -32,12 +32,13 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
+            var filter = new WebCoreExtantions.Filter(page, _rolePageSize);
+            
             var roles = RoleManager.Roles.OrderBy(x => x.Name).ToArray();
             var data = roles.Select(x => Mapper.Map<SxAppRole, VMRole>(x)).ToArray();
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _rolePageSize;
-            ViewData["RowsCount"] = roles.Count();
+            filter.PagerInfo.TotalItems = roles.Count();
+            ViewBag.PagerInfo = filter.PagerInfo;
 
             return View(data);
         }
@@ -50,7 +51,7 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new GE.WebCoreExtantions.Filter { PageSize = _rolePageSize, SkipCount = (page - 1) * _rolePageSize };
+            var filter = new WebCoreExtantions.Filter(page, _rolePageSize);
             IQueryable<SxAppRole> roles = RoleManager.Roles;
 
             //where clause
@@ -71,11 +72,10 @@ namespace GE.WebAdmin.Controllers
             else
                 roles = RoleManager.Roles.OrderBy(x => x.Name);
 
-            var list = roles.Skip((int)filter.SkipCount).Take(_rolePageSize).ToArray().Select(x => Mapper.Map<SxAppRole, VMRole>(x)).ToArray();
+            var list = roles.Skip(filter.PagerInfo.SkipCount).Take(_rolePageSize).ToArray().Select(x => Mapper.Map<SxAppRole, VMRole>(x)).ToArray();
 
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = _rolePageSize;
-            ViewData["RowsCount"] = roles.Count();
+            filter.PagerInfo.TotalItems= roles.Count();
+            ViewBag.PagerInfo = filter.PagerInfo;
 
             return PartialView(MVC.Roles.Views._GridView, list);
         }

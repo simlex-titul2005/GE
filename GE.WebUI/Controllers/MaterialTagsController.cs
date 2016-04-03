@@ -22,7 +22,7 @@ namespace GE.WebUI.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual PartialViewResult List(int mid, ModelCoreType mct, int maxFs=30, int amount=50)
         {
-            var filter = new WebCoreExtantions.Filter { MaterialId= mid, ModelCoreType=mct };
+            var filter = new WebCoreExtantions.Filter(1, 10) { MaterialId= mid, ModelCoreType=mct };
             var viewModel = (_repo as RepoMaterialTag).GetCloud(filter);
             string url = "#";
             switch(mct)

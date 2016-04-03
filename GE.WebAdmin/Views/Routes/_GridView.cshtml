@@ -1,6 +1,7 @@
 ﻿@model VMRoute[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMRoute)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -16,6 +17,7 @@
             new SxExtantions.SxGridViewColumn{FieldName="Controller", Caption="Контроллер"},
             new SxExtantions.SxGridViewColumn{FieldName="Action", Caption="Действие"},
         },
+        PagerInfo=pagerInfo,
         Filter = filter,
         SortDirections = sortDirections
     },

@@ -1,6 +1,7 @@
 ﻿@model VMArticle[]
 @{
     Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
     var filter = ViewBag.Filter != null ? (VMArticle)ViewBag.Filter : null;
     var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
@@ -18,6 +19,7 @@
                 return si==null? "<i class=\"text-danger\">не заданы теги seo</i>":null;
             } },
         },
+        PagerInfo = pagerInfo,
         Filter = filter,
         SortDirections = sortDirections
     },

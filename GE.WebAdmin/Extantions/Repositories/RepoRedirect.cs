@@ -11,7 +11,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static IQueryable<VMRedirect> QueryForAdmin(this RepoRedirect repo, Filter filter)
+        public static VMRedirect[] QueryForAdmin(this RepoRedirect repo, Filter filter)
         {
             var query = QueryProvider.GetSelectString(new string[] { "dr.Id", "dr.OldUrl", "dr.NewUrl", "dr.DateCreate" });
             query += " FROM   D_REDIRECT dr";
@@ -21,13 +21,12 @@ namespace GE.WebAdmin.Extantions.Repositories
 
             query += QueryProvider.GetOrderString("dr.DateCreate", SxExtantions.SortDirection.Desc, filter.Orders);
 
-            if (filter != null && filter.SkipCount.HasValue && filter.PageSize.HasValue)
-                query += " OFFSET " + filter.SkipCount + " ROWS FETCH NEXT " + filter.PageSize + " ROWS ONLY";
+            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var data = conn.Query<VMRedirect>(query, param: param);
-                return data.AsQueryable();
+                return data.ToArray();
             }
         }
 

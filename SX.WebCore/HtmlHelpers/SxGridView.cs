@@ -21,20 +21,9 @@ namespace SX.WebCore.HtmlHelpers
         {
             var guid = Guid.NewGuid().ToString().ToLower();
 
-            var page = htmlHelper.ViewData["Page"];
-            var pageSize = htmlHelper.ViewData["PageSize"];
-            var rowsCount = htmlHelper.ViewData["RowsCount"];
-            var pagerInfo = new SxPagerInfo
-            {
-                Page = (int)page,
-                PageSize = (int)pageSize,
-                TotalItems = (int)rowsCount
-            };
-            settings.PagerInfo = pagerInfo;
-
             if (settings != null && settings.ShowFilterRowMenu)
             {
-                htmlHelper.ViewContext.Writer.Write(getForm(settings, guid));
+                htmlHelper.ViewContext.Writer.Write(getForm(htmlHelper, settings, guid));
             }
 
             var table = new TagBuilder("table");
@@ -53,7 +42,7 @@ namespace SX.WebCore.HtmlHelpers
             var tbody = new TagBuilder("tbody");
             var showRowMenu = Convert.ToBoolean(settings.ShowFilterRowMenu);
             if (showRowMenu)
-                tbody.InnerHtml += getGridViewRowMenu<TModel>(settings);
+                tbody.InnerHtml += getGridViewRowMenu(settings);
             tbody.InnerHtml += getGridViewRows(settings.Data, settings, htmlHelper);
             table.InnerHtml += tbody;
 
@@ -110,7 +99,7 @@ namespace SX.WebCore.HtmlHelpers
             public bool EnableDelete { get; set; }
             public string DeleteLink { get; set; }
 
-            public dynamic Filter { get; set; }
+            public TModel Filter { get; set; }
             public SxPagerInfo PagerInfo { get; set; }
             public string PagerLink { get; set; }
         }
@@ -134,7 +123,7 @@ namespace SX.WebCore.HtmlHelpers
             public Func<object, string> Template { get; set; }
         }
 
-        private static TagBuilder getForm<TModel>(SxGridViewSettings<TModel> settings, string guid)
+        private static TagBuilder getForm<TModel>(HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings, string guid)
         {
             var form = new TagBuilder("form");
             form.MergeAttributes(new Dictionary<string, string>{
@@ -142,7 +131,7 @@ namespace SX.WebCore.HtmlHelpers
                     {"method", "post"},
                     {"data-ajax", "true"},
                     {"data-ajax-update", "#"+settings.UpdateTargetId},
-                    {"data-ajax-url", settings.PagerLink ?? "index"}
+                    {"data-ajax-url", settings.PagerLink ?? string.Format("/{0}/index", htmlHelper.ViewContext.RouteData.Values["controller"])}
                 });
 
             //pager

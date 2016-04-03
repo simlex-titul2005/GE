@@ -14,7 +14,7 @@ namespace GE.WebAdmin
             routes.MapRoute(
                 name: null,
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "account", action = "login", id = UrlParameter.Optional, page=1, area="" }
+                defaults: new { controller = "home", action = "index", id = UrlParameter.Optional, page=1, area="" }
             );
         }
     }

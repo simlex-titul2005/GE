@@ -49,7 +49,9 @@ function createCss() {
         'content/less/site.less',
         'content/less/sx-list.less',
         'content/less/sx-pager.less',
-        'content/less/sn-btn.less'
+        'content/less/sn-btn.less',
+        'content/less/tags-cloud.less',
+        'content/less/like-mats.less'
     ])
         .pipe(less())
         .pipe(concat('less-files.less'));

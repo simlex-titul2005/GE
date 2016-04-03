@@ -10,7 +10,7 @@ using SX.WebCore;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoArticle : SX.WebCore.Abstract.SxDbRepository<int, Article, DbContext>
+    public sealed class RepoArticle : SxDbRepository<int, Article, DbContext>
     {
         public override IQueryable<Article> All
         {
@@ -63,6 +63,9 @@ FROM   D_ARTICLE         AS da
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = da.GameId WHERE  (dg.TitleUrl = @GAME_TITLE_URL
        OR  @GAME_TITLE_URL IS NULL) AND dm.DateOfPublication <= GETDATE() AND dm.Show=1";
+                if (!string.IsNullOrEmpty(f.Tag))
+                    query += string.Format(@" AND (dm.Id IN (SELECT dmt.MaterialId
+                  FROM D_MATERIAL_TAG AS dmt WHERE dmt.MaterialId = dm.Id AND dmt.ModelCoreType = dm.ModelCoreType AND dmt.Id=N'{0}'))", f.Tag);
                 query += @" ORDER BY
        dm.DateCreate DESC";
                 if (f != null && f.SkipCount.HasValue && f.PageSize.HasValue)
@@ -84,13 +87,45 @@ FROM   D_ARTICLE         AS da
             using (var conn = new SqlConnection(base.ConnectionString))
             {
                 var query = @"SELECT COUNT(1) FROM D_ARTICLE AS da
+JOIN DV_MATERIAL  AS dm
+            ON  dm.Id = da.ID
+            AND dm.ModelCoreType = da.ModelCoreType
 LEFT JOIN D_GAME dg ON dg.Id=da.GameId
-WHERE @TITLE_URL IS NULL OR dg.TitleUrl=@TITLE_URL";
+WHERE (@TITLE_URL IS NULL OR dg.TitleUrl=@TITLE_URL)";
+                if (!string.IsNullOrEmpty(f.Tag))
+                    query += string.Format(@" AND (dm.Id IN (SELECT dmt.MaterialId
+                  FROM D_MATERIAL_TAG AS dmt WHERE dmt.MaterialId = dm.Id AND dmt.ModelCoreType = dm.ModelCoreType AND dmt.Id='{0}'))", f.Tag);
                 var data = f != null && !string.IsNullOrEmpty(f.GameTitle)
                     ? conn.Query<int>(query, new { TITLE_URL = f.GameTitle }).Single()
                     : conn.Query<int>(query, new { TITLE_URL = (string)null }).Single();
 
                 return (int)data;
+            }
+        }
+
+        public Article[] GetLikeMaterial(Filter filter)
+        {
+            var query = @"SELECT DISTINCT
+       dm.DateCreate,
+       dm.TitleUrl,
+       dm.Title,
+       dm.ModelCoreType
+FROM   D_MATERIAL_TAG    AS dmt
+       JOIN DV_MATERIAL  AS dm
+            ON  dm.Id = dmt.MaterialId
+            AND dm.ModelCoreType = dmt.ModelCoreType
+            AND dm.Id NOT IN (@mid)
+WHERE  dmt.Id IN (SELECT dmt2.Id
+                  FROM   D_MATERIAL_TAG AS dmt2
+                  WHERE  dmt2.MaterialId = @mid
+                         AND dmt2.ModelCoreType = @mct)
+ORDER BY
+       dm.DateCreate DESC";
+
+            using (var conn = new SqlConnection(this.ConnectionString))
+            {
+                var data = conn.Query<Article>(query, new { mid = filter.MaterialId, mct = filter.ModelCoreType });
+                return data.ToArray();
             }
         }
     }

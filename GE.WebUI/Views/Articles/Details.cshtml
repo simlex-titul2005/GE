@@ -45,6 +45,8 @@
         }
         @Html.Raw(Model.Html)
         @Html.Partial(MVC.Shared.Views._SocNetButtons)
+        @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
+        @Html.Action("likematerials", new { controller = "articles", materialId = Model.Id, modelCoreType = Model.ModelCoreType })
     </div>
     <div class="m-info">
         <div class="row">

@@ -104,7 +104,7 @@ namespace GE.WebAdmin.Controllers
                         }
                     }
 
-                    newModel = _repo.Update(redactModel, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "DateOfPublication", "UserId", "Foreword", "SeoInfoId", "ShowFrontPictureOnDetailPage");
+                    newModel = _repo.Update(redactModel, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "DateOfPublication", "UserId", "Foreword",  "ShowFrontPictureOnDetailPage");
                 }
 
                 return RedirectToAction(MVC.News.Index());

@@ -103,9 +103,7 @@ ORDER BY
 
         public static VMDetailArticle GetByTitleUrl(this WebCoreExtantions.Repositories.RepoArticle repo, string titleUrl)
         {
-            using (var conn = new SqlConnection(repo.ConnectionString))
-            {
-                var query = @"SELECT da.*,
+            var query = @"SELECT da.*,
        dm.*,
        dg.TitleUrl       AS GameTitleUrl,CASE 
             WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
@@ -136,6 +134,8 @@ FROM   D_ARTICLE         AS da
        JOIN  AspNetUsers AS anu ON anu.Id = dm.UserId
 WHERE  dm.TitleUrl = @TITLE_URL";
 
+            using (var conn = new SqlConnection(repo.ConnectionString))
+            {
                 return conn.Query<VMDetailArticle>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();
             }
         }

@@ -44,6 +44,7 @@ namespace T4MVC
                 public readonly string _Footer = "_Footer";
                 public readonly string _Foreword = "_Foreword";
                 public readonly string _Layout = "_Layout";
+                public readonly string _LikeMaterial = "_LikeMaterial";
                 public readonly string _NavBar = "_NavBar";
                 public readonly string _SocialIconsMenu = "_SocialIconsMenu";
                 public readonly string _SocNetButtons = "_SocNetButtons";
@@ -54,6 +55,7 @@ namespace T4MVC
             public readonly string _Footer = "~/Views/Shared/_Footer.cshtml";
             public readonly string _Foreword = "~/Views/Shared/_Foreword.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
+            public readonly string _LikeMaterial = "~/Views/Shared/_LikeMaterial.cshtml";
             public readonly string _NavBar = "~/Views/Shared/_NavBar.cshtml";
             public readonly string _SocialIconsMenu = "~/Views/Shared/_SocialIconsMenu.cshtml";
             public readonly string _SocNetButtons = "~/Views/Shared/_SocNetButtons.cshtml";

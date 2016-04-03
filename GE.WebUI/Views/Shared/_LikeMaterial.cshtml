@@ -1,0 +1,33 @@
+﻿@model dynamic[]
+@{
+    Layout = null;
+}
+
+@if (Model.Any())
+{
+    <div class="like-mats">
+        <h3>Похожие материалы</h3>
+        <ul>
+            @for (int i = 0; i < Model.Length; i++)
+            {
+                var item = Model[i];
+                var date = (DateTime)item.DateCreate;
+                var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
+                var titleUrl = (string)item.TitleUrl;
+                string url = "#";
+                switch (mct)
+                {
+                    case SX.WebCore.Enums.ModelCoreType.Article:
+                        url = Url.Action(MVC.Articles.Details(date.Year, date.Month.ToString("00"), date.Day.ToString("00"), titleUrl));
+                        break;
+                    case SX.WebCore.Enums.ModelCoreType.News:
+                        url = Url.Action(MVC.News.Details(date.Year, date.Month.ToString("00"), date.Day.ToString("00"), titleUrl));
+                        break;
+                }
+                <li>
+                    <a href="@url" title="@item.Title">@item.Title</a>
+                </li>
+            }
+        </ul>
+    </div>
+}

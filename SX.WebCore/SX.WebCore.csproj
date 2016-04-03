@@ -134,6 +134,7 @@
     <Compile Include="HtmlHelpers\SxGridView.cs" />
     <Compile Include="HtmlHelpers\SxList.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
+    <Compile Include="HtmlHelpers\SxTagsCloud.cs" />
     <Compile Include="Managers\SxAppRoleManager.cs" />
     <Compile Include="Managers\SxAppSignInManager.cs" />
     <Compile Include="Managers\SxAppUserManager.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="SxSeoKeyword.cs" />
     <Compile Include="SxSiteMapUrl.cs" />
     <Compile Include="SxSiteSetting.cs" />
+    <Compile Include="SxVmMaterialTag.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

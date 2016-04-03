@@ -1,9 +1,5 @@
 ﻿using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static SX.WebCore.Enums;
 
 namespace GE.WebCoreExtantions
 {
@@ -20,5 +16,8 @@ namespace GE.WebCoreExtantions
         public string GameTitle { get; set; }
         public string TitleUrl { get; set; }
         public int Page { get; set; }
+        public int? MaterialId { get; set; }
+        public ModelCoreType ModelCoreType { get; set; }
+        public string Tag { get; set; }
     }
 }

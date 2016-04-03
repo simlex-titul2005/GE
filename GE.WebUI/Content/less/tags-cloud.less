@@ -1,0 +1,36 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "../../bower_components/bootstrap/less/variables.less";
+
+@cloud-color: #31B0D5;
+
+.tags-cloud {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: @def-pad;
+    display: inline-block;
+}
+
+.tags-cloud > li {
+    float: left;
+    margin-right: @def-pad*2;
+    margin-top: @def-pad;
+    display: inline-flex;
+}
+
+.tags-cloud > li.current > a {
+    font-weight:700;
+}
+
+.tags-cloud > li > a {
+    text-shadow: -1px 1px 3px @cloud-color;
+    color: @cloud-color;
+}
+
+.tags-cloud > li > a:first-letter{
+    text-transform:uppercase;
+}
+
+.tags-cloud > li > a:hover {
+}

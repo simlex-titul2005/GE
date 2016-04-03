@@ -3,10 +3,7 @@ using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers

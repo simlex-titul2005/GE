@@ -221,6 +221,7 @@
     <Compile Include="Controllers\MaterialsController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\MaterialTagsController.cs" />
     <Compile Include="Controllers\MenuesController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
@@ -231,6 +232,7 @@
     </Compile>
     <Compile Include="Extantions\Controllers\BaseControllerExt.cs" />
     <Compile Include="Extantions\Repositories\RepoComment.cs" />
+    <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
@@ -250,10 +252,14 @@
     <Compile Include="LikesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="MaterialTagsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="MenuesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Abstract\VMDetailMaterial.cs" />
+    <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMSeoInfo.cs" />
     <Compile Include="Models\VMBreadcrumb.cs" />
     <Compile Include="Models\VMComment.cs" />
@@ -337,6 +343,8 @@
     <Content Include="Views\Shared\_Errors.cshtml" />
     <Content Include="Views\Shared\_SocNetButtons.cshtml" />
     <Content Include="Views\Shared\_Foreword.cshtml" />
+    <Content Include="Views\MaterialTags\_TagsCloud.cshtml" />
+    <Content Include="Views\Shared\_LikeMaterial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

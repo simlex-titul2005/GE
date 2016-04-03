@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
+using static SX.WebCore.Enums;
 
 namespace GE.WebUI.Controllers
 {
@@ -19,8 +20,8 @@ namespace GE.WebUI.Controllers
         private SxDbRepository<TKey, TModel, DbContext> _repo;
         private SxDbRepository<int, Game, DbContext> _repoGame;
         protected MaterialsController() { }
-        private Enums.ModelCoreType _modelCoreType;
-        protected MaterialsController(Enums.ModelCoreType modelCoreType)
+        private ModelCoreType _modelCoreType;
+        protected MaterialsController(ModelCoreType modelCoreType)
         {
             _repoGame = new RepoGame();
             _modelCoreType = modelCoreType;
@@ -45,7 +46,7 @@ namespace GE.WebUI.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult List(GE.WebCoreExtantions.Filter filter)
+        public virtual ViewResult List(WebCoreExtantions.Filter filter)
         {
             ViewBag.GameTitle = filter.GameTitle;
 
@@ -63,10 +64,10 @@ namespace GE.WebUI.Controllers
             var pageSize = 10;
             switch (_modelCoreType)
             {
-                case Enums.ModelCoreType.Article:
+                case ModelCoreType.Article:
                     pageSize = 9;
                     break;
-                case Enums.ModelCoreType.News:
+                case ModelCoreType.News:
                     pageSize = 10;
                     break;
             }
@@ -74,6 +75,10 @@ namespace GE.WebUI.Controllers
             var viewModel = new SxExtantions.SxPagedCollection<TModel>();
             filter.PageSize = pageSize;
             filter.SkipCount = pageSize * (filter.Page - 1);
+            var tag = Request.QueryString.Get("tag");
+            if (!string.IsNullOrEmpty(tag))
+                filter.Tag = tag;
+
             viewModel.Collection = _repo.Query(filter).ToArray();
             viewModel.PagerInfo = new SxExtantions.SxPagerInfo
             {
@@ -84,6 +89,27 @@ namespace GE.WebUI.Controllers
             };
 
             return View(viewModel);
+        }
+
+#if !DEBUG
+        [OutputCache(Duration =900, VaryByParam ="MaterialId;ModelCoreType")]
+#endif
+        [AcceptVerbs(HttpVerbs.Get)]
+        [ChildActionOnly]
+        public PartialViewResult LikeMaterials(WebCoreExtantions.Filter filter)
+        {
+            dynamic[] viewModel = null;
+            switch(filter.ModelCoreType)
+            {
+                case ModelCoreType.Article:
+                    viewModel = (_repo as RepoArticle).GetLikeMaterial(filter);
+                    break;
+                case ModelCoreType.News:
+                    viewModel = (_repo as RepoNews).GetLikeMaterial(filter);
+                    break;
+            }
+
+            return PartialView(MVC.Shared.Views._LikeMaterial, viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]

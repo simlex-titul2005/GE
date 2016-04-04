@@ -119,36 +119,22 @@ namespace GE.WebAdmin.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Edit(VMEditRole model)
-        {
-            //var redactModel = Mapper.Map<VMEditRole, SxAppRole>(model);
-            //if (ModelState.IsValid)
-            //{
-            //    if (string.IsNullOrEmpty(model.Id))
-            //    {
-            //        redactModel.Id = Guid.NewGuid().ToString();
-            //        await RoleManager.CreateAsync(redactModel);
-            //    }
-            //    else
-            //    {
-            //        var oldRole = await RoleManager.FindByIdAsync(model.Id);
-            //        oldRole.Name = model.Name;
-            //        oldRole.Description = model.Description;
-            //        await RoleManager.UpdateAsync(oldRole);
-            //    }
-            //    return RedirectToAction(MVC.Roles.Index());
-            //}
-            //else
-            //    return View(model);
-            throw new NotImplementedException();
-        }
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditRole model)
         {
             return RedirectToAction(MVC.Roles.Index());
             throw new NotImplementedException();
+        }
+
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public virtual PartialViewResult UsersOnSite()
+        {
+            var usersOnSite = MvcApplication.UsersOnSite;
+            var ids = usersOnSite.Select(x => x.Value).ToArray();
+            var users = UsereManager.Users.Where(x => ids.Contains(x.Id)).ToArray();
+            var viewModel = users.Select(x=>Mapper.Map<SxAppUser, VMUser>(x)).ToArray();
+
+            return PartialView(MVC.Users.Views._UsersOnSite, viewModel);
         }
     }
 }

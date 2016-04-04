@@ -78,7 +78,10 @@ namespace GE.WebUI.Controllers
             filter.PagerInfo.PageSize = pageSize;
             var tag = Request.QueryString.Get("tag");
             if (!string.IsNullOrEmpty(tag))
+            {
                 filter.Tag = tag;
+                ViewBag.Tag = tag;
+            }
 
             viewModel.Collection = _repo.Query(filter).ToArray();
             viewModel.PagerInfo = new SxExtantions.SxPagerInfo(filter.PagerInfo.Page, pageSize)

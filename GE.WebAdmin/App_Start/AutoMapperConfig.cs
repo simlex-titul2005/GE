@@ -65,6 +65,11 @@ namespace GE.WebAdmin
                     cfg.CreateMap<News, VMEditNews>();
                     cfg.CreateMap<VMEditNews, News>();
 
+                    //news rubric
+                    cfg.CreateMap<NewsRubric, VMNewsRubric>();
+                    cfg.CreateMap<NewsRubric, VMEditNewsRubric>();
+                    cfg.CreateMap<VMEditNewsRubric, NewsRubric>();
+
                     //picture
                     cfg.CreateMap<SxPicture, VMPicture>();
                     cfg.CreateMap<SxPicture, VMEditPicture>();

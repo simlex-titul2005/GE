@@ -25,13 +25,13 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebAdmin.Controllers
 {
-    public partial class HomeController
+    public partial class CommentsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController() { }
+        public CommentsController() { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected HomeController(Dummy d) { }
+        protected CommentsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -59,21 +59,15 @@ namespace GE.WebAdmin.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Index()
-        {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController Actions { get { return MVC.Home; } }
+        public CommentsController Actions { get { return MVC.Comments; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Home";
+        public readonly string Name = "Comments";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Home";
+        public const string NameConst = "Comments";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -81,23 +75,23 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Index = "Index";
+            public readonly string LastComments = "LastComments";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Index = "Index";
+            public const string LastComments = "LastComments";
         }
 
 
-        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        static readonly ActionParamsClass_LastComments s_params_LastComments = new ActionParamsClass_LastComments();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        public ActionParamsClass_LastComments LastCommentsParams { get { return s_params_LastComments; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Index
+        public class ActionParamsClass_LastComments
         {
-            public readonly string dbContext = "dbContext";
+            public readonly string amount = "amount";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -109,28 +103,24 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _LastComments = "_LastComments";
-                public readonly string Index = "Index";
             }
-            public readonly string _LastComments = "~/Views/Home/_LastComments.cshtml";
-            public readonly string Index = "~/Views/Home/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_HomeController : GE.WebAdmin.Controllers.HomeController
+    public partial class T4MVC_CommentsController : GE.WebAdmin.Controllers.CommentsController
     {
-        public T4MVC_HomeController() : base(Dummy.Instance) { }
+        public T4MVC_CommentsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, GE.WebCoreExtantions.DbContext dbContext);
+        partial void LastCommentsOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int amount);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Index(GE.WebCoreExtantions.DbContext dbContext)
+        public override System.Web.Mvc.PartialViewResult LastComments(int amount)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "dbContext", dbContext);
-            IndexOverride(callInfo, dbContext);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.LastComments);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "amount", amount);
+            LastCommentsOverride(callInfo, amount);
             return callInfo;
         }
 

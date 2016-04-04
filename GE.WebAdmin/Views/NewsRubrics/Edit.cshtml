@@ -1,0 +1,41 @@
+﻿@model VMEditNewsRubric
+@{
+    var isNew = Model.Id == null;
+    ViewBag.Title = isNew ? "Добавить новостную рубрику" : "Редактировать новостную рубрику \"" + Model.Id + "\"";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form method="post" action="@Url.Action(MVC.NewsRubrics.Edit())">
+    @Html.AntiForgeryToken()
+    @if (!isNew)
+    {
+        @Html.HiddenFor(x => x.Id)
+    }
+
+    @if (isNew)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(x => x.Id, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.Id)
+            </div>
+        </div>
+        <br />
+    }
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Description, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Description)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+            @Html.RouteLink("Назад", new { controller = "NewsRubrics", action = "Index" }, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</form>

@@ -25,13 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebAdmin.Controllers
 {
-    public partial class UsersController
+    public partial class NewsRubricsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public UsersController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected UsersController(Dummy d) { }
+        protected NewsRubricsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -61,25 +58,19 @@ namespace GE.WebAdmin.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Edit()
+        public virtual System.Web.Mvc.PartialViewResult Delete()
         {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Delete()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Delete);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public UsersController Actions { get { return MVC.Users; } }
+        public NewsRubricsController Actions { get { return MVC.NewsRubrics; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Users";
+        public readonly string Name = "NewsRubrics";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Users";
+        public const string NameConst = "NewsRubrics";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -90,7 +81,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
-            public readonly string UsersOnSite = "UsersOnSite";
+            public readonly string FindTable = "FindTable";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -99,7 +90,7 @@ namespace GE.WebAdmin.Controllers
             public const string Index = "Index";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
-            public const string UsersOnSite = "UsersOnSite";
+            public const string FindTable = "FindTable";
         }
 
 
@@ -120,6 +111,7 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string id = "id";
+            public readonly string model = "model";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -128,6 +120,15 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_Delete
         {
             public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_FindTable s_params_FindTable = new ActionParamsClass_FindTable();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_FindTable FindTableParams { get { return s_params_FindTable; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_FindTable
+        {
+            public readonly string page = "page";
+            public readonly string pageSize = "pageSize";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -140,19 +141,21 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _GridView = "_GridView";
-                public readonly string _UsersOnSite = "_UsersOnSite";
+                public readonly string Edit = "Edit";
+                public readonly string FindTable = "FindTable";
                 public readonly string Index = "Index";
             }
-            public readonly string _GridView = "~/Views/Users/_GridView.cshtml";
-            public readonly string _UsersOnSite = "~/Views/Users/_UsersOnSite.cshtml";
-            public readonly string Index = "~/Views/Users/Index.cshtml";
+            public readonly string _GridView = "~/Views/NewsRubrics/_GridView.cshtml";
+            public readonly string Edit = "~/Views/NewsRubrics/Edit.cshtml";
+            public readonly string FindTable = "~/Views/NewsRubrics/FindTable.cshtml";
+            public readonly string Index = "~/Views/NewsRubrics/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_UsersController : GE.WebAdmin.Controllers.UsersController
+    public partial class T4MVC_NewsRubricsController : GE.WebAdmin.Controllers.NewsRubricsController
     {
-        public T4MVC_UsersController() : base(Dummy.Instance) { }
+        public T4MVC_NewsRubricsController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
@@ -167,10 +170,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMUser filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMNewsRubric filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMUser filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMNewsRubric filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
@@ -193,25 +196,39 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditRole model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditNewsRubric model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(GE.WebAdmin.Models.VMEditRole model)
+        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditNewsRubric model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EditOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMEditNewsRubric model);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult Delete(GE.WebAdmin.Models.VMEditNewsRubric model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             DeleteOverride(callInfo, model);
             return callInfo;
         }
 
         [NonAction]
-        partial void UsersOnSiteOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo);
+        partial void FindTableOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page, int pageSize);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult UsersOnSite()
+        public override System.Web.Mvc.ViewResult FindTable(int page, int pageSize)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.UsersOnSite);
-            UsersOnSiteOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.FindTable);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
+            FindTableOverride(callInfo, page, pageSize);
             return callInfo;
         }
 

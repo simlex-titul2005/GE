@@ -2,7 +2,7 @@
 @{
     var title = ViewBag.Title;
     var h1 = ViewBag.H1;
-    ViewBag.Title = title ?? "Статьи";
+    ViewBag.Title = title ?? (ViewBag.Tag != null ? "Статьи c тегом " + (string)ViewBag.Tag : "Статьи");
     if (title == null && ViewBag.GameTitle != null)
     {
         ViewBag.Title += " " + ViewBag.GameTitle;

@@ -61,7 +61,7 @@ namespace GE.WebAdmin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SX Admin v. 1.0.0.0.
+        ///   Looks up a localized string similar to SX Admin v. 1.0.0.1.
         /// </summary>
         public static string AppName {
             get {

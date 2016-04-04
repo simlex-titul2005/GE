@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Configuration;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GE.WebCoreExtantions
 {
@@ -20,6 +14,8 @@ namespace GE.WebCoreExtantions
         public DbSet<Game> Games { get; set; }
 
         public new DbSet<News> News { get; set; }
+
+        public DbSet<NewsRubric> NewsRubrics { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -37,6 +33,10 @@ namespace GE.WebCoreExtantions
                 .HasRequired(x => x.Contest)
                 .WithMany(x=>x.Prizes)
                 .HasForeignKey(x => new { x.ContestId, x.MaterialCoreType });
+
+            modelBuilder.Entity<NewsRubric>()
+                .Property(x => x.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

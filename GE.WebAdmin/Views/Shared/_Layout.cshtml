@@ -311,13 +311,19 @@
                                             <a href="@Url.Action(MVC.ArticleTypes.Index())">Типы статей</a>
                                         </li>
                                     </ul>
-                                    <!-- /.nav-third-level -->
                                 </li>
                                 <li>
-                                    <a href="@Url.Action(MVC.News.Index())"><i class="fa fa-newspaper-o"></i> Новости</a>
+                                    <a href="#"><i class="fa fa-newspaper-o"></i> Новости <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="@Url.Action(MVC.News.Index())">Каталог новостей</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action(MVC.NewsRubrics.Index())">Рубрики новостей</a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-forumbee fa-fw"></i> Форум<span class="fa arrow"></span></a>
@@ -326,7 +332,6 @@
                                     <a href="@Url.Action(MVC.ForumParts.Index())"><i class="fa fa-envelope"></i> Разделы</a>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-cog fa-fw"></i> Seo оптимизация<span class="fa arrow"></span></a>

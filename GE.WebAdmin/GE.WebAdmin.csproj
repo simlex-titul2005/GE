@@ -208,12 +208,16 @@
     <Compile Include="ClickTypesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="CommentsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\ArticleTypesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClicksController.cs" />
     <Compile Include="Controllers\ClickTypesController.cs" />
+    <Compile Include="Controllers\Comments.cs" />
     <Compile Include="Controllers\ForumPartsController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\ManualsController.cs" />
@@ -221,6 +225,7 @@
     <Compile Include="Controllers\MenuesController.cs" />
     <Compile Include="Controllers\MenuItemsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\NewsRubricsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\RedirectsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
@@ -233,6 +238,7 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
+    <Compile Include="Extantions\Repositories\RepoNewsRubric.cs" />
     <Compile Include="Extantions\Repositories\RepoArticleType.cs" />
     <Compile Include="Extantions\Repositories\RepoClick.cs" />
     <Compile Include="Extantions\Repositories\RepoForumPart.cs" />
@@ -275,6 +281,7 @@
     <Compile Include="Models\VMEditClickType.cs" />
     <Compile Include="Models\VMEditForumPart.cs" />
     <Compile Include="Models\VMEditMaterialTag.cs" />
+    <Compile Include="Models\VMEditNewsRubric.cs" />
     <Compile Include="Models\VMEditRole.cs" />
     <Compile Include="Models\VMEditSeoKeyword.cs" />
     <Compile Include="Models\VMEditNews.cs" />
@@ -284,11 +291,11 @@
     <Compile Include="Models\VMForumPart.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
+    <Compile Include="Models\VMNewsRubric.cs" />
     <Compile Include="Models\VMRedirect.cs" />
     <Compile Include="Models\VMRequest.cs" />
     <Compile Include="Models\VMRobotsFile.cs" />
     <Compile Include="Models\VMRole.cs" />
-    <Compile Include="Models\VMSeoKeywordList.cs" />
     <Compile Include="Models\VMNews.cs" />
     <Compile Include="Models\VMArticleType.cs" />
     <Compile Include="Models\VMArticle.cs" />
@@ -314,6 +321,9 @@
     <Compile Include="Models\VMSiteSettings.cs" />
     <Compile Include="Models\VMUser.cs" />
     <Compile Include="NewsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NewsRubricsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="PicturesController.generated.cs">
@@ -428,6 +438,12 @@
     <Content Include="Views\SeoInfo\_GeneralEdit.cshtml" />
     <Content Include="Views\SeoKeywords\_GridView.cshtml" />
     <Content Include="Views\Home\_LastComments.cshtml" />
+    <Content Include="Views\NewsRubrics\_GridView.cshtml" />
+    <Content Include="Views\NewsRubrics\Edit.cshtml" />
+    <Content Include="Views\NewsRubrics\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditNewsRubric.cshtml" />
+    <Content Include="Views\NewsRubrics\FindTable.cshtml" />
+    <Content Include="Views\Users\_UsersOnSite.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

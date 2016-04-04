@@ -13,6 +13,10 @@ namespace GE.WebAdmin.Models
         [UIHint("EditGame"), Display(Name = "Игра")]
         public int? GameId { get; set; }
 
+        public NewsRubric Rubric { get; set; }
+        [UIHint("EditNewsRubric"), Display(Name = "Рубрика")]
+        public string RubricId { get; set; }
+
         [MaxLength(255)]
         public string OldTitleUrl { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace GE.WebAdmin.Models
 {
@@ -8,10 +9,13 @@ namespace GE.WebAdmin.Models
         public string NikName { get; set; }
         public string Email { get; set; }
         public VMRole[] Roles { get; set; }
+        public Guid? AvatarId { get; set; }
         public string RoleNames
         {
             get
             {
+                if (this.Roles == null) return null;
+
                 var sb=new StringBuilder();
                 for (int i = 0; i < this.Roles.Length; i++)
                 {

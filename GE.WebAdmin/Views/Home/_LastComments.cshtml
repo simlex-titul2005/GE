@@ -1,27 +1,44 @@
 ﻿@model dynamic[]
-@{ 
+@{
     Layout = null;
+    var colCount = 4;
+    var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
 }
 
-@for (int i = 0; i < Model.Length; i++)
+@if (Model.Any())
 {
-    var item = Model[i];
-    var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
-    string url = null;
-    switch(mct)
-    {
-        case SX.WebCore.Enums.ModelCoreType.Article:
-            url = Url.Action(MVC.Articles.Edit((int)item.Id));
-            break;
-        case SX.WebCore.Enums.ModelCoreType.News:
-            url = Url.Action(MVC.News.Edit((int)item.Id));
-            break;
-    }
-
-    <div class="last-comment">
-        <div><time>@item.DateCreate</time></div>
-        <div><strong>@item.UserName</strong></div>
-        <p class="html">@item.Html</p>
-        <div><a class="btn btn-info btn-sm" href="@url">Редактировать</a></div>
+    <div class="lat-mat-comments">
+        @for (int r = 0; r < rowsCount; r++)
+        {
+            var items = Model.Skip(r * colCount).Take(colCount).ToArray();
+            <div class="row">
+                @for (int c = 0; c < items.Length; c++)
+                {
+                    var item = items[c];
+                    var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
+                    string url = null;
+                    switch (mct)
+                    {
+                        case SX.WebCore.Enums.ModelCoreType.Article:
+                            url = Url.Action(MVC.Articles.Edit((int)item.Id));
+                            break;
+                        case SX.WebCore.Enums.ModelCoreType.News:
+                            url = Url.Action(MVC.News.Edit((int)item.Id));
+                            break;
+                    }
+                    if (c < items.Length)
+                    {
+                        <div class="col-md-@(12 / colCount)">
+                            <div class="last-comment">
+                                <div><time>@item.DateCreate</time></div>
+                                <div><strong>@item.UserName</strong></div>
+                                <p class="html">@item.Html</p>
+                                <div class="redact-btn"><a class="btn btn-info btn-sm" href="@url">Редактировать</a></div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
     </div>
 }

@@ -4,10 +4,16 @@
 
 <h3>Добро пожаловать на борт <span class="text-primary">@Constants.AppName</span>, @User.Identity.Name !</h3>
 <br />
-<div class="row">
-    <div class="col-md-6">
-        <h4><strong>Последние комментарии к материалам</strong></h4>
-        @Html.Action(MVC.Home.LastComments())
-    </div>
-    <div class="col-md-6"></div>
-</div>
+
+<h4><strong>Сейчас в админ-панеле</strong></h4>
+<div id="uons"></div>
+
+<h4><strong>Последние комментарии к материалам</strong></h4>
+<div id="lcm"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#uons').load('@Url.Action(MVC.Users.UsersOnSite())');
+        $('#lcm').load('@Url.Action(MVC.Comments.LastComments())');
+    </script>
+}

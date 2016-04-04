@@ -56,6 +56,7 @@ namespace T4MVC
                 public readonly string Boolean = "Boolean";
                 public readonly string EditGame = "EditGame";
                 public readonly string EditImage = "EditImage";
+                public readonly string EditNewsRubric = "EditNewsRubric";
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using SX.WebCore.Managers;
 using GE.WebAdmin.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -61,6 +62,13 @@ namespace GE.WebAdmin.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    var sessionId = Session.SessionID;
+                    var usersOnSite = MvcApplication.UsersOnSite;
+                    if (!usersOnSite.ContainsKey(sessionId))
+                        usersOnSite.Add(sessionId, User.Identity.GetUserId());
+                    else
+                        usersOnSite[sessionId] = User.Identity.GetUserId();
+
                     return RedirectToAction(MVC.Home.Index());
                 case SignInStatus.LockedOut:
                     return View("Lockout");

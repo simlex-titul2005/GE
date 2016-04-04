@@ -6,6 +6,7 @@
 
 <blockquote class="mat-fwd">
     <h2 class="ann">Аннотация</h2>
-    <p>@Model.Foreword</p>
-    <p>Автор материала: <strong>@Model.UserNikName</strong> </p>
+    <p class="fwd">@Model.Foreword</p>
+    <p>Дата публикации: <strong>@Model.DateOfPublication.ToString("dd.MM.yyyy")</strong><br /> Автор материала: <strong>@Model.UserNikName</strong> </p>
+    @Html.Partial(MVC.Shared.Views._Share42, Model)
 </blockquote>

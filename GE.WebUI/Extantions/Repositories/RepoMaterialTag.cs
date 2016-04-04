@@ -4,7 +4,6 @@ using System.Linq;
 using Dapper;
 using GE.WebCoreExtantions;
 using SX.WebCore;
-using System.Threading.Tasks;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -24,7 +23,7 @@ FROM   (
                       AND (dmt.ModelCoreType = @mct OR @mct IS NULL) THEN 1 ELSE 
                           0 END
                   )               AS IsCurrent
-           FROM   D_MATERIAL_TAG  AS dmt
+           FROM   D_MATERIAL_TAG  AS dmt  WHERE dmt.ModelCoreType=@mct
            GROUP BY
                   dmt.Id,
                   dmt.MaterialId,

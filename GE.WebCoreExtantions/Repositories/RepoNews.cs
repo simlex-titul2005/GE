@@ -120,9 +120,9 @@ ORDER BY dm.DateCreate DESC";
             return query;
         }
 
-        public News[] GetLikeMaterial(Filter filter)
+        public News[] GetLikeMaterial(Filter filter, int amount)
         {
-            var query = @"SELECT DISTINCT
+            var query = @"SELECT DISTINCT TOP(@amount)
        dm.DateCreate,
        dm.TitleUrl,
        dm.Title,
@@ -149,7 +149,7 @@ ORDER BY
                 var data = conn.Query<News, SxAppUser, News>(query, (m,u)=> {
                     m.User = u;
                     return m;
-                }, new { mid = filter.MaterialId, mct = filter.ModelCoreType }, splitOn:"UserId");
+                }, new { mid = filter.MaterialId, mct = filter.ModelCoreType, amount = amount }, splitOn:"UserId");
                 return data.ToArray();
             }
         }

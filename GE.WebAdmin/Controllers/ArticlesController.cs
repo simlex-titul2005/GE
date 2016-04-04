@@ -114,11 +114,8 @@ namespace GE.WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditNews model)
         {
-            Task.Run(() =>
-            {
-                var repoSeoInfo = new RepoSeoInfo();
-                repoSeoInfo.DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
-            });
+            var repoSeoInfo = new RepoSeoInfo();
+            repoSeoInfo.DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
 
             _repo.Delete(model.Id, model.ModelCoreType);
             return RedirectToAction(MVC.Articles.Index());

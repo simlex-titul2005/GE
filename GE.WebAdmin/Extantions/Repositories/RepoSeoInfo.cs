@@ -87,7 +87,8 @@ namespace GE.WebAdmin.Extantions.Repositories
         /// <param name="mct"></param>
         public static void DeleteMaterialSeoInfo(this RepoSeoInfo repo, int mid, ModelCoreType mct)
         {
-            var query = "DELETE FROM D_SEO_INFO WHERE Id IN (SELECT dsi.Id FROM D_SEO_INFO AS dsi WHERE MaterialId=@mid AND ModelCoreType=@mct)";
+            var query = "UPDATE DV_MATERIAL SET SeoInfoId=NULL WHERE Id=@mid AND ModelCoreType=@mct;";
+            query+="DELETE FROM D_SEO_INFO WHERE Id IN (SELECT dsi.Id FROM D_SEO_INFO AS dsi WHERE MaterialId=@mid AND ModelCoreType=@mct)";
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
                 connection.Execute(query, new { mid = mid, mct = mct });

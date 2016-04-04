@@ -1,7 +1,7 @@
-﻿@{
+﻿@using SX.WebCore;
+@{
     Layout = null;
     var bgUrl = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
-    var faveicon = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteFaveiconPath).ToString();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +12,7 @@
     @if (!Request.IsLocal)
     {
         <meta name='yandex-verification' content='6ffb2f4165dc2f9b' />
+        <meta name="google-site-verification" content="QYxPEKA9_otcljwYxhy7L8VNJqwih_ZTML5UV_kT5QI" />
     }
     @if (ViewBag.Description != null)
     {
@@ -25,9 +26,9 @@
     <meta property="og:url" content="@Request.Url" />
     <title>@ViewBag.Title</title>
     <meta property="og:title" content="@ViewBag.Title"/>
-    <meta property="og:image" content="@(faveicon!=null?faveicon:"/content/dist/i/faveicon.png")" />
+    <meta property="og:image" content="@Url.ContentAbsUrl(ViewBag.PageImage!=null?(string)ViewBag.PageImage: "~/content/dist/i/faveicon.png")" />
 
-    <link rel="shortcut icon" href="@(faveicon!=null?faveicon:"/content/dist/i/faveicon.png")" type="image/png" />
+    <link rel="shortcut icon" href="@("/content/dist/i/faveicon.png")" type="image/png" />
 
     <link href="~/Content/dist/css/site.min.css" rel="stylesheet" async />
     @RenderSection("styles", false)

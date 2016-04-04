@@ -95,16 +95,16 @@ namespace GE.WebUI.Controllers
 #endif
         [AcceptVerbs(HttpVerbs.Get)]
         [ChildActionOnly]
-        public PartialViewResult LikeMaterials(WebCoreExtantions.Filter filter)
+        public PartialViewResult LikeMaterials(WebCoreExtantions.Filter filter, int amount=10)
         {
             dynamic[] viewModel = null;
             switch(filter.ModelCoreType)
             {
                 case ModelCoreType.Article:
-                    viewModel = (_repo as RepoArticle).GetLikeMaterial(filter);
+                    viewModel = (_repo as RepoArticle).GetLikeMaterial(filter, amount);
                     break;
                 case ModelCoreType.News:
-                    viewModel = (_repo as RepoNews).GetLikeMaterial(filter);
+                    viewModel = (_repo as RepoNews).GetLikeMaterial(filter, amount);
                     break;
             }
 
@@ -134,9 +134,9 @@ namespace GE.WebUI.Controllers
             {
                 if (!Request.IsLocal)
                 {
-                    ViewBag.VKScript = "<script type=\"text/javascript\" src=\"//vk.com/js/api/openapi.js?121\"></script><script type=\"text/javascript\"> VK.init({ apiId: 5387252, onlyWidgets: true}); </script> ";
+                    /*ViewBag.VKScript = "<script type=\"text/javascript\" src=\"//vk.com/js/api/openapi.js?121\"></script><script type=\"text/javascript\"> VK.init({ apiId: 5387252, onlyWidgets: true}); </script> ";
 
-                    ViewBag.FBScript = "<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.5\"; fjs.parentNode.insertBefore(js, fjs); } (document, 'script', 'facebook-jssdk'));</script>";
+                    ViewBag.FBScript = "<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.5\"; fjs.parentNode.insertBefore(js, fjs); } (document, 'script', 'facebook-jssdk'));</script>";*/
                 }
 
                 var seoInfoRepo = new RepoSeoInfo();

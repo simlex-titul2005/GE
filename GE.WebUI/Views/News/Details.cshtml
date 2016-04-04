@@ -5,6 +5,7 @@
     ViewBag.Title = title ?? Model.Title;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
+    ViewBag.PageImage = Model.FrontPictureId.HasValue ? Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId)) : null;
 }
 
 <div class="detail-news">
@@ -21,10 +22,12 @@
             <img class="f-picture" alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))" />
         }
         @Html.Raw(Model.Html)
-        @Html.Partial(MVC.Shared.Views._SocNetButtons)
-        @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
-        @Html.Action("likematerials", new { controller="news", materialId=Model.Id, modelCoreType=Model.ModelCoreType})
+        @*@Html.Partial(MVC.Shared.Views._SocNetButtons)*@
+        @Html.Partial(MVC.Shared.Views._Share42, Model)
     </div>
+    
+    @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
+    @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount=9 })
     
     <div class="m-info">
         <div class="row">
@@ -54,7 +57,9 @@
     </div>
 </div>
 
+
 @section scripts{
+    <script type="text/javascript" src="~/share42/share42.js"></script> 
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
 }

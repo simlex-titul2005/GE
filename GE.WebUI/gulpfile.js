@@ -51,7 +51,8 @@ function createCss() {
         'content/less/sx-pager.less',
         'content/less/sn-btn.less',
         'content/less/tags-cloud.less',
-        'content/less/like-mats.less'
+        'content/less/like-mats.less',
+        'content/less/share42init.less'
     ])
         .pipe(less())
         .pipe(concat('less-files.less'));
@@ -88,7 +89,8 @@ function createJs() {
         'scripts/ge-game-menu.js',
         'scripts/click-stat-handler.js',
         'scripts/find-engine.js',
-        'scripts/like-engine.js'
+        'scripts/like-engine.js',
+        'scripts/site.js'
     ])
         .pipe(concat('site.min.js'))
         .pipe(uglify())

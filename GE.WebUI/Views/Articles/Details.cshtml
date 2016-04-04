@@ -6,6 +6,7 @@
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.H1CssClass = ViewBag.H1CssClass ?? Model.ArticleTypeName;
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
+    ViewBag.PageImage = Model.FrontPictureId.HasValue ? Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId)) : null;
 }
 @section styles{
     @if (Model.ThemeColor != null)
@@ -44,10 +45,13 @@
             <img class="f-picture" alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))" />
         }
         @Html.Raw(Model.Html)
-        @Html.Partial(MVC.Shared.Views._SocNetButtons)
-        @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
-        @Html.Action("likematerials", new { controller = "articles", materialId = Model.Id, modelCoreType = Model.ModelCoreType })
+        @*@Html.Partial(MVC.Shared.Views._SocNetButtons)*@
+        @Html.Partial(MVC.Shared.Views._Share42, Model)
     </div>
+
+    @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
+    @Html.Action("likematerials", new { controller = "articles", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
+
     <div class="m-info">
         <div class="row">
             <div class="col-md-6">
@@ -78,6 +82,7 @@
 </div>
 
 @section scripts{
+    <script type="text/javascript" src="~/share42/share42.js"></script> 
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
 }

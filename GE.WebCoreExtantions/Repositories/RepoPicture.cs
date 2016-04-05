@@ -17,5 +17,27 @@ namespace GE.WebCoreExtantions.Repositories
                 return picture;
             }
         }
+
+        public override void Delete(params object[] id)
+        {
+            var query = @"BEGIN TRANSACTION
+
+UPDATE DV_MATERIAL
+SET    FrontPictureId = NULL
+WHERE  FrontPictureId = @picture_id
+
+UPDATE AspNetUsers
+SET    AvatarId = NULL
+WHERE  AvatarId = @picture_id
+
+DELETE FROM D_PICTURE WHERE Id=@picture_id
+
+COMMIT TRANSACTION";
+
+            using (var connection = new SqlConnection(base.ConnectionString))
+            {
+                connection.Execute(query, new { picture_id= id[0] });
+            }
+        }
     }
 }

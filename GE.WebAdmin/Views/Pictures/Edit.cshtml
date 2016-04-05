@@ -11,7 +11,7 @@
     <form method="post" action="@Url.Action(MVC.Pictures.Delete(id: Model.Id))">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.Id)
-        <button type="submit" class="btn btn-danger pull-right">Удалить фото</button>
+        <button type="submit" class="btn btn-danger pull-right" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить фото</button>
     </form>
 }
 <br />

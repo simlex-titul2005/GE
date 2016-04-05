@@ -46,7 +46,7 @@ namespace GE.WebAdmin
                 UsersOnSite.Add(sessionId, null);
 
             if (User.Identity.IsAuthenticated)
-                UsersOnSite[sessionId] = User.Identity.GetUserId();
+                UsersOnSite[sessionId] = User.Identity.GetUserName();
         }
 
         protected void Session_End()

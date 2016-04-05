@@ -1,28 +1,43 @@
 ﻿@model VMUser[]
+@{
+    Layout = null;
+    var colCount = 4;
+    var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
+}
 
 @if (Model.Any())
 {
-    <div class="row">
-        @for (int i = 0; i < Model.Length; i++)
-        {
-            var item = Model[i];
-            <div class="col-md-3">
-                <div class="us-on-site">
-                    <ul class="list-inline">
-                        <li>
-                            @if (item.AvatarId.HasValue)
-                        {
-                            <img class="img-circle avatar" alt="@item.NikName" src="@Url.Action(MVC.Pictures.Picture((Guid)item.AvatarId))" />
-                        }
-
-                    </li>
-                    <li>
-                        <div><strong>@item.NikName</strong></div>
-                        <div><a href="mailto:@item.Email">@item.Email</a></div>
-                    </li>
-                </ul>
-            </div>
+    for (int r = 0; r < rowsCount; r++)
+    {
+        var items = Model.Skip(r * colCount).Take(colCount).ToArray();
+        <div class="row">
+            @for (int c = 0; c < colCount; c++)
+            {
+                if (c < items.Length)
+                {
+                    var item = items[c];
+                    <div class="col-md-@(12 / colCount)">
+                        <div class="us-on-site">
+                            <ul class="list-inline">
+                                <li>
+                                    @if (item.AvatarId.HasValue)
+                                    {
+                                        <img class="img-circle avatar" alt="@item.NikName" src="@Url.Action(MVC.Pictures.Picture((Guid)item.AvatarId))" />
+                                    }
+                                </li>
+                                <li>
+                                    <div><strong>@item.NikName</strong></div>
+                                    <div><a href="mailto:@item.Email">@item.Email</a></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-@(12 / colCount)"></div>
+                }
+            }
         </div>
-        }
-    </div>
+    }
 }

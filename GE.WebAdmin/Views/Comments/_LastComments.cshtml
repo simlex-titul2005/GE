@@ -12,22 +12,22 @@
         {
             var items = Model.Skip(r * colCount).Take(colCount).ToArray();
             <div class="row">
-                @for (int c = 0; c < items.Length; c++)
+                @for (int c = 0; c < colCount; c++)
                 {
-                    var item = items[c];
-                    var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
-                    string url = null;
-                    switch (mct)
-                    {
-                        case SX.WebCore.Enums.ModelCoreType.Article:
-                            url = Url.Action(MVC.Articles.Edit((int)item.Id));
-                            break;
-                        case SX.WebCore.Enums.ModelCoreType.News:
-                            url = Url.Action(MVC.News.Edit((int)item.Id));
-                            break;
-                    }
                     if (c < items.Length)
                     {
+                        var item = items[c];
+                        var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
+                        string url = null;
+                        switch (mct)
+                        {
+                            case SX.WebCore.Enums.ModelCoreType.Article:
+                                url = Url.Action(MVC.Articles.Edit((int)item.Id));
+                                break;
+                            case SX.WebCore.Enums.ModelCoreType.News:
+                                url = Url.Action(MVC.News.Edit((int)item.Id));
+                                break;
+                        }
                         <div class="col-md-@(12 / colCount)">
                             <div class="last-comment">
                                 <div><time>@item.DateCreate</time></div>
@@ -36,6 +36,10 @@
                                 <div class="redact-btn"><a class="btn btn-info btn-sm" href="@url">Редактировать</a></div>
                             </div>
                         </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-@(12 / colCount)"></div>
                     }
                 }
             </div>

@@ -3,8 +3,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using System;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 
 namespace SX.WebCore.Managers
 {

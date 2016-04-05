@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.Owin;
 using SX.WebCore.Managers;
 using GE.WebAdmin.Models;
 using Microsoft.AspNet.Identity;
+using System.Linq;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -42,7 +43,10 @@ namespace GE.WebAdmin.Controllers
         [AllowAnonymous]
         public virtual ActionResult Login()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction(MVC.Home.Index());
+            else
+                return View();
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -65,9 +69,17 @@ namespace GE.WebAdmin.Controllers
                     var sessionId = Session.SessionID;
                     var usersOnSite = MvcApplication.UsersOnSite;
                     if (!usersOnSite.ContainsKey(sessionId))
-                        usersOnSite.Add(sessionId, User.Identity.GetUserId());
+                        usersOnSite.Add(sessionId, model.Email);
                     else
-                        usersOnSite[sessionId] = User.Identity.GetUserId();
+                    {
+                        if (usersOnSite.ContainsValue(model.Email))
+                        {
+                            var key = usersOnSite.SingleOrDefault(x => x.Value == model.Email).Key;
+                            usersOnSite.Remove(key);
+                        }
+
+                        usersOnSite[sessionId] = model.Email;
+                    }
 
                     return RedirectToAction(MVC.Home.Index());
                 case SignInStatus.LockedOut:

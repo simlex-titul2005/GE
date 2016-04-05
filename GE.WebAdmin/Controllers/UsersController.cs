@@ -7,7 +7,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
-using System.Threading.Tasks;
 using System;
 
 namespace GE.WebAdmin.Controllers
@@ -130,8 +129,8 @@ namespace GE.WebAdmin.Controllers
         public virtual PartialViewResult UsersOnSite()
         {
             var usersOnSite = MvcApplication.UsersOnSite;
-            var ids = usersOnSite.Select(x => x.Value).ToArray();
-            var users = UsereManager.Users.Where(x => ids.Contains(x.Id)).ToArray();
+            var emails = usersOnSite.Select(x => x.Value).ToArray();
+            var users = UsereManager.Users.Where(x => emails.Contains(x.Email)).ToArray();
             var viewModel = users.Select(x=>Mapper.Map<SxAppUser, VMUser>(x)).ToArray();
 
             return PartialView(MVC.Users.Views._UsersOnSite, viewModel);

@@ -103,7 +103,9 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _LastComments = "_LastComments";
             }
+            public readonly string _LastComments = "~/Views/Comments/_LastComments.cshtml";
         }
     }
 

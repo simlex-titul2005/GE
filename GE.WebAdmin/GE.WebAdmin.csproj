@@ -217,7 +217,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClicksController.cs" />
     <Compile Include="Controllers\ClickTypesController.cs" />
-    <Compile Include="Controllers\Comments.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ForumPartsController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\ManualsController.cs" />
@@ -437,7 +437,7 @@
     <Content Include="Views\SeoInfo\_EditForMaterial.cshtml" />
     <Content Include="Views\SeoInfo\_GeneralEdit.cshtml" />
     <Content Include="Views\SeoKeywords\_GridView.cshtml" />
-    <Content Include="Views\Home\_LastComments.cshtml" />
+    <Content Include="Views\Comments\_LastComments.cshtml" />
     <Content Include="Views\NewsRubrics\_GridView.cshtml" />
     <Content Include="Views\NewsRubrics\Edit.cshtml" />
     <Content Include="Views\NewsRubrics\Index.cshtml" />

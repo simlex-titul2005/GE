@@ -2,15 +2,81 @@
 @import (reference) "colors.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
-#uons{
-    margin:@def-pad*2 0;
+#uons {
+    margin-bottom: @def-pad*2;
 }
 
-#uons .us-on-site
-{
+#uons .row {
+    margin-top: @def-pad*2;
+    display: table;
+
+    @media (max-width: @screen-xs-max) {
+        display: block;
+        margin-top: 0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        display: block;
+        margin-top: 0;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        display: block;
+        margin-top: 0;
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+#uons .row > div {
+    display: table-cell;
+    vertical-align: top;
+    float: none;
+    height: 100%;
+    @media (max-width: @screen-xs-max) {
+        display: block;
+        float:left;
+        width:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        display: block;
+        float:left;
+        width:100%;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        display: block;
+        float:left;
+        width:100%;
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+#uons .us-on-site {
     background-color: @color-silver;
-    padding:10px;
+    padding: 10px;
     box-shadow: -1px 1px 4px rgba(0,0,0,0.1);
+    height: 100%;
+    display: inline-table;
+    width: 100%;
+    @media (max-width: @screen-xs-max) {
+        margin-top:@def-pad*2;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        margin-top:@def-pad*2;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        margin-top:@def-pad*2;
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
 }
 
 #uons .us-on-site .avatar {

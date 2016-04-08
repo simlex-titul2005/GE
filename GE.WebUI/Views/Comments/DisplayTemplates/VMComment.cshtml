@@ -4,8 +4,20 @@
 }
 
 <div class="comment">
-    <strong>@Model.UserName</strong><br />
-    <time>@Model.DateCreate</time>
-    <p>@Model.Html</p>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="c-u-info">
+                <img class="img-circle c-u-avatar" alt="@Model.UserName" src="~/Content/dist/i/temp/avatar.jpg" />
+                <div class="c-u-name"><strong>@Model.UserName</strong></div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="c-content">
+                <div class="c-time">@Model.DateCreate</div>
+            </div>
+        </div>
+    </div>
+    <div>
+        
+    </div>
 </div>
-<br />

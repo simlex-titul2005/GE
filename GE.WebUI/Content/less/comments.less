@@ -3,11 +3,18 @@
 @import (reference) "positioned.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
-.comments, #comments-list {
-    margin-top: @def-pad*2;
+@avatar-size:100px;
+
+.comment{
+    margin-top:@def-pad;
 }
 
-.comments {
-    background-color: @color-white;
-    padding: @def-pad;
+.comment .c-u-info{
+    text-align:center;
+}
+
+.comment .c-u-info .c-u-avatar{
+    width:@avatar-size;
+    height:@avatar-size;
+    border:4px solid #b6bac8;
 }

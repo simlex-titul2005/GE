@@ -22,11 +22,11 @@
             } },
             new SxExtantions.SxGridViewColumn{FieldName="RequestType", Caption="Тип запросв"},
             new SxExtantions.SxGridViewColumn{FieldName="UrlRef", Caption="UrlRef",Template=(val)=> {
-                return string.Format("<a href=\"{0}\" target=\"_blank\" rel=\"nofollow\">{0}</a>", val);
+                return val!=null? string.Format("<a href=\"{0}\" target=\"_blank\" rel=\"nofollow\">{0}</a>", val):null;
             }},
             new SxExtantions.SxGridViewColumn{FieldName="RawUrl", Caption="Целевой адрес"}
         },
-            PagerInfo= pagerInfo,
+            PagerInfo = pagerInfo,
             Filter = filter,
             SortDirections = sortDirections,
             EnableEditing = false,

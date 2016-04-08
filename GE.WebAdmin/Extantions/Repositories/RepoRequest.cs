@@ -11,7 +11,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static IEnumerable<VMRequest> QueryForAdmin(this WebCoreExtantions.Repositories.RepoRequest repo, Filter filter)
+        public static VMRequest[] QueryForAdmin(this WebCoreExtantions.Repositories.RepoRequest repo, Filter filter)
         {
             var query = QueryProvider.GetSelectString(new string[] {
                     "dr.Id", "dr.SessionId", "dr.UrlRef", "dr.Browser", "dr.ClientIP", "dr.UserAgent", "dr.RequestType", "dr.DateCreate", "dr.RawUrl"
@@ -28,7 +28,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var data = conn.Query<VMRequest>(query, param: param).ToArray();
-                return data.AsEnumerable();
+                return data.ToArray();
             }
         }
         public static int FilterCount(this WebCoreExtantions.Repositories.RepoRequest repo, Filter filter)

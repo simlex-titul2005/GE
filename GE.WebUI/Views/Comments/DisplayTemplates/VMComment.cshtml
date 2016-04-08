@@ -1,23 +1,52 @@
 ﻿@model VMComment
-@{ 
+@{
     Layout = null;
+    var uName = Model.User != null ? Model.User.NikName : Model.UserName;
 }
 
 <div class="comment">
     <div class="row">
         <div class="col-md-3">
             <div class="c-u-info">
-                <img class="img-circle c-u-avatar" alt="@Model.UserName" src="~/Content/dist/i/temp/avatar.jpg" />
-                <div class="c-u-name"><strong>@Model.UserName</strong></div>
+                <div>
+                    <img class="img-circle c-u-avatar" alt="@uName" src="@((Model.User!=null && Model.User.AvatarId.HasValue)?Url.Action(MVC.Pictures.Picture((Guid)Model.User.AvatarId)):"/Content/dist/i/temp/avatar.jpg")" />
+                    <div class="c-u-name"><strong>@Model.UserName</strong></div>
+                </div>
+                <div class="c-u-details">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span class="c-u-rang">Старожил</span><br />
+                            <span>Рейтинг: 2348 баллов</span>
+                        </div>
+                        <div class="col-md-6">
+                            Регистрация:<br />
+                            25.11.2015
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-9">
             <div class="c-content">
                 <div class="c-time">@Model.DateCreate</div>
+                <p class="c-txt">@Model.Html</p>
             </div>
         </div>
     </div>
-    <div>
-        
+    <div class="c-func">
+        <ul>
+            <li>
+                <a href="#">Редактировать</a>
+            </li>
+            <li>
+                <a href="#">Ответить</a>
+            </li>
+            <li>
+                <a href="#">Цитата</a>
+            </li>
+            <li>
+                <a href="#">Удалить</a>
+            </li>
+        </ul>
     </div>
 </div>

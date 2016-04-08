@@ -25,10 +25,7 @@
         @*@Html.Partial(MVC.Shared.Views._SocNetButtons)*@
         @Html.Partial(MVC.Shared.Views._Share42, Model)
     </div>
-    
-    @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
-    @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount=9 })
-    
+
     <div class="m-info">
         <div class="row">
             <div class="col-md-6">
@@ -41,6 +38,9 @@
             </div>
         </div>
     </div>
+    
+    @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
+    @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount=9 })
 
     @*comments*@
     <div class="comments">

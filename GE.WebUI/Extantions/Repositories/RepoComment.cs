@@ -4,6 +4,7 @@ using System.Linq;
 using Dapper;
 using GE.WebUI.Models;
 using static SX.WebCore.Enums;
+using SX.WebCore;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -12,12 +13,10 @@ namespace GE.WebUI.Extantions.Repositories
         public static VMComment[] GetComments(this RepoComment repo, int mid, ModelCoreType mct)
         {
             var query = @"SELECT dc.Id,
-       CASE 
-            WHEN anu.Id IS NULL THEN dc.UserName
-            ELSE anu.NikName
-       END                    AS UserName,
+       dc.UserName,
        dc.DateCreate,
-       dc.Html
+       dc.Html,
+       dc.UserId
 FROM   D_COMMENT              AS dc
        LEFT JOIN AspNetUsers  AS anu
             ON  anu.Id = dc.UserId
@@ -27,7 +26,10 @@ ORDER BY
        dc.DateCreate DESC";
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                var data = connection.Query<VMComment>(query, new { mid = mid, mct = mct });
+                var data = connection.Query<VMComment, VMUser, VMComment>(query, (c, u)=> {
+                    c.User = u ?? new VMUser { NikName=c.UserName };
+                    return c;
+                }, new { mid = mid, mct = mct }, splitOn: "UserId");
                 return data.ToArray();
             }
         }

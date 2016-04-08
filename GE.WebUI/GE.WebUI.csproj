@@ -276,6 +276,7 @@
     <Compile Include="Models\VMMenu.cs" />
     <Compile Include="Models\VMPreviewArticle.cs" />
     <Compile Include="Models\VMSearchResult.cs" />
+    <Compile Include="Models\VMUser.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

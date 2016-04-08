@@ -33,9 +33,6 @@
 
 <div class="detail-article">
     @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
-    <br />
-    <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 1)">Это интересно, что тут есть ещё?</a>
-    <a href="/" class="btn btn-default" onclick="sendClickStat(this, '/', 2)">Это не то, что я искал, попробую снова</a>
     
     @Html.Partial(MVC.Shared.Views._Foreword, Model)
 
@@ -53,6 +50,8 @@
         <div class="row">
             <div class="col-md-6">
                 @Html.Partial(MVC.Likes.Views._Likes, Model)
+                <a href="/" class="btn btn-info" onclick="sendClickStat(this, '/', 1)">Это интересно!</a>
+                <a href="/" class="btn btn-info" onclick="sendClickStat(this, '/', 2)">Это не то, что я искал (</a>
             </div>
             <div class="col-md-6">
                 <div class="text-right">

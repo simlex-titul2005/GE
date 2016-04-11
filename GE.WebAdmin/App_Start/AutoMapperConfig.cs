@@ -57,8 +57,10 @@ namespace GE.WebAdmin
                     //menu item
                     cfg.CreateMap<SxMenuItem, VMMenuItem>()
                         .ForMember(d => d.Url, d => d.MapFrom(s => s.Route != null ? s.Route.Url : null));
-                    cfg.CreateMap<SxMenuItem, VMEditMenuItem>();
-                    cfg.CreateMap<VMEditMenuItem, SxMenuItem>();
+                    cfg.CreateMap<SxMenuItem, VMEditMenuItem>()
+                    .ForMember(d => d.Show, d => d.MapFrom(s => Convert.ToBoolean(s.Show)));
+                    cfg.CreateMap<VMEditMenuItem, SxMenuItem>()
+                    .ForMember(d => d.Show, d => d.MapFrom(s => Convert.ToByte(s.Show)));
 
                     //news
                     cfg.CreateMap<News, VMNews>();

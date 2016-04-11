@@ -17,5 +17,8 @@ namespace GE.WebAdmin.Models
 
         [MaxLength(150), Display(Name = "Подсказка пункта")]
         public string Title { get; set; }
+
+        [Display(Name = "Показывать")]
+        public bool Show { get; set; }
     }
 }

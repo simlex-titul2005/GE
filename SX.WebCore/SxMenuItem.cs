@@ -1,11 +1,7 @@
 ﻿using SX.WebCore.Abstract;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SX.WebCore
 {
@@ -25,5 +21,7 @@ namespace SX.WebCore
         public virtual SxRoute Route { get; set; }
         
         public Guid? RouteId { get; set; }
+
+        public byte Show { get; set; }
     }
 }

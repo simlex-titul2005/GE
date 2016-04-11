@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using GE.WebCoreExtantions;
+﻿using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using GE.WebUI.Models;
 using SX.WebCore;
 using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers

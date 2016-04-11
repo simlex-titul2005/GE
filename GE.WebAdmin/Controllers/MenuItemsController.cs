@@ -43,7 +43,7 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repoMenuItem.Create(redactModel);
                 else
-                    newModel = _repoMenuItem.Update(redactModel, "Caption", "RouteId", "Title");
+                    newModel = _repoMenuItem.Update(redactModel, "Caption", "RouteId", "Title", "Show");
                 return RedirectToAction("Edit", "Menues", new { @id = newModel.MenuId });
             }
             else

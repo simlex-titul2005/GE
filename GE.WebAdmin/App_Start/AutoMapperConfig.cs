@@ -44,6 +44,17 @@ namespace GE.WebAdmin
                     cfg.CreateMap<Game, VMEditGame>();
                     cfg.CreateMap<VMEditGame, Game>();
 
+                    //manuals
+                    cfg.CreateMap<SxManual, VMManual>();
+                    cfg.CreateMap<SxManual, VMEditManual>();
+                    cfg.CreateMap<VMEditManual, SxManual>();
+
+                    //manual groups
+                    cfg.CreateMap<SxManualGroup, VMManualGroup>();
+                    cfg.CreateMap<VMManualGroup, SxManualGroup>();
+                    cfg.CreateMap<SxManualGroup, VMEditManualGroup>();
+                    cfg.CreateMap<VMEditManualGroup, SxManualGroup>();
+
                     //material tags
                     cfg.CreateMap<SxMaterialTag, VMMaterialTag>();
                     cfg.CreateMap<SxMaterialTag, VMEditMaterialTag>();

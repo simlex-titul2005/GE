@@ -170,6 +170,7 @@
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\dist\fonts\FontAwesome.otf" />
+    <Content Include="ReleaseNotes.txt" />
     <Content Include="robots.txt" />
     <None Include="Properties\PublishProfiles\admin-game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
@@ -212,6 +213,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\ArticleTypesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -220,7 +222,8 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ForumPartsController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
-    <Compile Include="Controllers\ManualsController.cs" />
+    <Compile Include="Controllers\ManualGroupsController.cs" />
+    <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\MaterialTagsController.cs" />
     <Compile Include="Controllers\MenuesController.cs" />
     <Compile Include="Controllers\MenuItemsController.cs" />
@@ -252,6 +255,9 @@
     <Compile Include="Extantions\Repositories\RepoRoute.cs" />
     <Compile Include="Extantions\Repositories\RepoSeoInfo.cs" />
     <Compile Include="Extantions\Repositories\RepoSeoKeywords.cs" />
+    <Compile Include="FAQController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ForumPartsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -262,6 +268,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HomeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ManualGroupsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ManualsController.generated.cs">
@@ -276,10 +285,13 @@
     <Compile Include="MenuItemsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VMEditManual.cs" />
+    <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMClick.cs" />
     <Compile Include="Models\VMClickType.cs" />
     <Compile Include="Models\VMEditClickType.cs" />
     <Compile Include="Models\VMEditForumPart.cs" />
+    <Compile Include="Models\VMEditManualGroup.cs" />
     <Compile Include="Models\VMEditMaterialTag.cs" />
     <Compile Include="Models\VMEditNewsRubric.cs" />
     <Compile Include="Models\VMEditRole.cs" />
@@ -290,6 +302,7 @@
     <Compile Include="Models\VMEditUser.cs" />
     <Compile Include="Models\VMForumPart.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
+    <Compile Include="Models\VMManualGroup.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMNewsRubric.cs" />
     <Compile Include="Models\VMRedirect.cs" />
@@ -423,7 +436,7 @@
     <Content Include="Views\Clicks\_GridView.cshtml" />
     <Content Include="Views\Clicks\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Manuals\Index.cshtml" />
+    <Content Include="Views\FAQ\Index.cshtml" />
     <Content Include="Views\Roles\_GridView.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
@@ -444,6 +457,14 @@
     <Content Include="Views\Shared\EditorTemplates\EditNewsRubric.cshtml" />
     <Content Include="Views\NewsRubrics\FindTable.cshtml" />
     <Content Include="Views\Users\_UsersOnSite.cshtml" />
+    <Content Include="Views\ManualGroups\Index.cshtml" />
+    <Content Include="Views\ManualGroups\Edit.cshtml" />
+    <Content Include="Views\ManualGroups\_TreeViewEditable.cshtml" />
+    <Content Include="Views\Manuals\_GridView.cshtml" />
+    <Content Include="Views\Manuals\Edit.cshtml" />
+    <Content Include="Views\Manuals\Index.cshtml" />
+    <Content Include="Views\ManualGroups\FindTable.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditManualGroup.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -454,7 +475,6 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="Content\i\" />
-    <Folder Include="Content\less\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

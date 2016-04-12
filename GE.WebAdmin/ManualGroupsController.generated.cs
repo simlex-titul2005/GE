@@ -25,10 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebAdmin.Controllers
 {
-    public partial class ManualsController
+    public partial class ManualGroupsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ManualsController(Dummy d) { }
+        protected ManualGroupsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -62,21 +62,15 @@ namespace GE.WebAdmin.Controllers
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
         }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Delete()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ManualsController Actions { get { return MVC.Manuals; } }
+        public ManualGroupsController Actions { get { return MVC.ManualGroups; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Manuals";
+        public readonly string Name = "ManualGroups";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Manuals";
+        public const string NameConst = "ManualGroups";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -86,7 +80,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
-            public readonly string Delete = "Delete";
+            public readonly string FindTable = "FindTable";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -94,7 +88,7 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
-            public const string Delete = "Delete";
+            public const string FindTable = "FindTable";
         }
 
 
@@ -104,9 +98,7 @@ namespace GE.WebAdmin.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Index
         {
-            public readonly string page = "page";
             public readonly string filterModel = "filterModel";
-            public readonly string order = "order";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -117,13 +109,14 @@ namespace GE.WebAdmin.Controllers
             public readonly string id = "id";
             public readonly string model = "model";
         }
-        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        static readonly ActionParamsClass_FindTable s_params_FindTable = new ActionParamsClass_FindTable();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        public ActionParamsClass_FindTable FindTableParams { get { return s_params_FindTable; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Delete
+        public class ActionParamsClass_FindTable
         {
-            public readonly string model = "model";
+            public readonly string page = "page";
+            public readonly string pageSize = "pageSize";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -135,52 +128,51 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _GridView = "_GridView";
+                public readonly string _TreeViewEditable = "_TreeViewEditable";
                 public readonly string Edit = "Edit";
+                public readonly string FindTable = "FindTable";
                 public readonly string Index = "Index";
             }
-            public readonly string _GridView = "~/Views/Manuals/_GridView.cshtml";
-            public readonly string Edit = "~/Views/Manuals/Edit.cshtml";
-            public readonly string Index = "~/Views/Manuals/Index.cshtml";
+            public readonly string _TreeViewEditable = "~/Views/ManualGroups/_TreeViewEditable.cshtml";
+            public readonly string Edit = "~/Views/ManualGroups/Edit.cshtml";
+            public readonly string FindTable = "~/Views/ManualGroups/FindTable.cshtml";
+            public readonly string Index = "~/Views/ManualGroups/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_ManualsController : GE.WebAdmin.Controllers.ManualsController
+    public partial class T4MVC_ManualGroupsController : GE.WebAdmin.Controllers.ManualGroupsController
     {
-        public T4MVC_ManualsController() : base(Dummy.Instance) { }
+        public T4MVC_ManualGroupsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Index(int page)
+        public override System.Web.Mvc.ActionResult Index()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            IndexOverride(callInfo, page);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            IndexOverride(callInfo);
             return callInfo;
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMManual filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMManualGroup filterModel);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMManual filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMManualGroup filterModel)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            IndexOverride(callInfo, filterModel, order, page);
+            IndexOverride(callInfo, filterModel);
             return callInfo;
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int? id);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string id);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Edit(int? id)
+        public override System.Web.Mvc.ViewResult Edit(string id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -189,10 +181,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditManual model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditManualGroup model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditManual model)
+        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditManualGroup model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -201,14 +193,15 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditManual model);
+        partial void FindTableOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page, int pageSize);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(GE.WebAdmin.Models.VMEditManual model)
+        public override System.Web.Mvc.ViewResult FindTable(int page, int pageSize)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            DeleteOverride(callInfo, model);
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.FindTable);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
+            FindTableOverride(callInfo, page, pageSize);
             return callInfo;
         }
 

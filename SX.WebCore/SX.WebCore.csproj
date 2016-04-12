@@ -135,12 +135,15 @@
     <Compile Include="HtmlHelpers\SxList.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
     <Compile Include="HtmlHelpers\SxTagsCloud.cs" />
+    <Compile Include="HtmlHelpers\SxTreeView.cs" />
     <Compile Include="Managers\SxAppRoleManager.cs" />
     <Compile Include="Managers\SxAppSignInManager.cs" />
     <Compile Include="Managers\SxAppUserManager.cs" />
     <Compile Include="PictureHandler.cs" />
     <Compile Include="Providers\QueryProvider.cs" />
     <Compile Include="Repositories\RepoLike.cs" />
+    <Compile Include="Repositories\RepoManual.cs" />
+    <Compile Include="Repositories\RepoManualGroup.cs" />
     <Compile Include="Resources\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -158,6 +161,8 @@
     <Compile Include="SxForumPart.cs" />
     <Compile Include="SxForumTheme.cs" />
     <Compile Include="SxLike.cs" />
+    <Compile Include="SxManual.cs" />
+    <Compile Include="SxManualGroup.cs" />
     <Compile Include="SxMaterialTag.cs" />
     <Compile Include="SxMenu.cs" />
     <Compile Include="SxMenuItem.cs" />

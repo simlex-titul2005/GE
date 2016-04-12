@@ -1,0 +1,87 @@
+﻿@model VMEditManual
+@{
+    var isNew = Model.Id == 0;
+    ViewBag.Title = isNew ? "Добавить справочный материал" : "Редактировать справочный материал \"" + Model.Title + "\"";
+    ViewBag.ManualGroupId = isNew ? null : Model.Group.Title;
+}
+
+<h2>@ViewBag.Title</h2>
+@if (Model.Id != 0)
+{
+    <div class="text-right">
+        <form method="post" action="delete">
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.ModelCoreType)
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить материал</button>
+        </form>
+    </div>
+}
+<br />
+
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="params">
+        <h2>Основные параметры материала</h2>
+        <form method="post" action="@Url.Action(MVC.Manuals.Edit())">
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.ModelCoreType)
+            @if (!isNew)
+            {
+                @Html.HiddenFor(x => x.UserId)
+            }
+
+            <div class="row">
+                <div class="col-md-8">
+                    @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название материала" } })
+                    @Html.ValidationMessageFor(x => x.Title)
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(x => x.GroupId, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.GroupId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название материала" } })
+                    @Html.ValidationMessageFor(x => x.GroupId)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(x => x.Foreword, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание материала" } })
+                    @Html.ValidationMessageFor(x => x.Foreword)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(x => x.Html, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.Html)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
+                        @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+        if (CKEDITOR.instances['Html']) {
+            CKEDITOR.remove(CKEDITOR.instances['Html']);
+        }
+        CKEDITOR.replace('Html', { height: 400 });
+    </script>
+}

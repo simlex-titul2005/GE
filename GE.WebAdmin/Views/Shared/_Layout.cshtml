@@ -346,7 +346,6 @@
                                     <a href="@Url.Action(MVC.Settings.EditRobotsFile())"><i class="fa fa-ship"></i> robot.txt</a>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Настройки<span class="fa arrow"></span></a>
@@ -358,7 +357,6 @@
                                     <a href="@Url.Action(MVC.Settings.EditEmptyGame())">Начальная иконка</a>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="@Url.Action(MVC.Request.Index())"><i class="fa fa-history fa-fw"></i> Статистика запросов</a>
@@ -373,16 +371,30 @@
                                     <a href="@Url.Action(MVC.ClickTypes.Index())">Типы статистики кликов</a>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="@Url.Action(MVC.Manuals.Index())"><i class="fa fa-tasks fa-fw"></i> FAQ</a>
+                            <a href="#"><i class="fa fa-tasks fa-fw"></i> FAQ<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="@Url.Action(MVC.FAQ.Index())">Справочная система</a>
+                                </li>
+                                @if (User.IsInRole("architect"))
+                                {
+                                    <li>
+                                        <a href="@Url.Action(MVC.ManualGroups.Index())">Справочные группы</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action(MVC.Manuals.Index())">Справочные материалы</a>
+                                    </li>
+                                }
+                                <li>
+                                    <a href="~/releasenotes.txt">История выпусков</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
-                <!-- /.sidebar-collapse -->
             </div>
-            <!-- /.navbar-static-side -->
         </nav>
 
         <div id="page-wrapper">

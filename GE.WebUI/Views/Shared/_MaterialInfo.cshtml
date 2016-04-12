@@ -1,0 +1,18 @@
+﻿@model GE.WebUI.Models.Abstract.VMDetailMaterial
+@{ 
+    Layout = null;
+}
+
+<div class="m-info">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="javascript:void(0)" class="btn btn-info up" onclick="setMaterialLike(@Model.Id, @((int)Model.ModelCoreType), '@Session.SessionID', '', 1, this)"><i class="fa fa-thumbs-o-up"></i>Это интересно! <span class="badge">@Model.LikeUpCount</span></a>
+            <a href="javascript:void(0)" class="btn btn-info down" onclick="setMaterialLike(@Model.Id, @((int)Model.ModelCoreType), '@Session.SessionID', '', 0, this)"><i class="fa fa-thumbs-o-down"></i>Это не то, что я искал <span class="badge">@Model.LikeDownCount</span></a>
+        </div>
+        <div class="col-md-6">
+            <div class="text-right">
+                @Html.DisplayFor(x => Model.Info)
+            </div>
+        </div>
+    </div>
+</div>

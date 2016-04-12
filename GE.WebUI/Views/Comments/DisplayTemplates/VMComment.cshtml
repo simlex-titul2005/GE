@@ -1,7 +1,7 @@
 ﻿@model VMComment
 @{
     Layout = null;
-    var uName = Model.User != null ? Model.User.NikName : Model.UserName;
+    var uName = Model.User != null && Model.User.NikName!=null ? Model.User.NikName : Model.UserName;
 }
 
 <div class="comment">
@@ -10,7 +10,7 @@
             <div class="c-u-info">
                 <div>
                     <img class="img-circle c-u-avatar" alt="@uName" src="@((Model.User!=null && Model.User.AvatarId.HasValue)?Url.Action(MVC.Pictures.Picture((Guid)Model.User.AvatarId)):"/Content/dist/i/temp/avatar.jpg")" />
-                    <div class="c-u-name"><strong>@Model.UserName</strong></div>
+                    <div class="c-u-name"><strong>@uName</strong></div>
                 </div>
                 <div class="c-u-details">
                     <div class="row">

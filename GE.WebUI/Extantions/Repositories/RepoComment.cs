@@ -16,7 +16,8 @@ namespace GE.WebUI.Extantions.Repositories
        dc.UserName,
        dc.DateCreate,
        dc.Html,
-       dc.UserId
+       dc.UserId,
+       anu.*
 FROM   D_COMMENT              AS dc
        LEFT JOIN AspNetUsers  AS anu
             ON  anu.Id = dc.UserId

@@ -25,7 +25,12 @@ namespace GE.WebUI.Controllers
         public virtual PartialViewResult GameList(int imgWidth=570, int iconHeight=80)
         {
             var routes = Request.RequestContext.RouteData.Values;
-            ViewBag.ControllerName = routes["controller"];
+            var controller = routes["controller"].ToString().ToLowerInvariant();
+
+            if (controller == "account")
+                return null;
+
+            ViewBag.ControllerName = controller;
             if (ViewBag.ControllerName == "error") return null;
             ViewBag.ActionName = routes["action"];
             var gameName = routes["gameTitle"];

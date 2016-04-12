@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using SX.WebCore.Managers;
 using GE.WebAdmin.Models;
-using Microsoft.AspNet.Identity;
 using System.Linq;
 
 namespace GE.WebAdmin.Controllers

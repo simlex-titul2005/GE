@@ -27,6 +27,7 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    public static GE.WebUI.Controllers.AccountController Account = new GE.WebUI.Controllers.T4MVC_AccountController();
     public static GE.WebUI.Controllers.ArticlesController Articles = new GE.WebUI.Controllers.T4MVC_ArticlesController();
     public static GE.WebUI.Controllers.ClicksController Clicks = new GE.WebUI.Controllers.T4MVC_ClicksController();
     public static GE.WebUI.Controllers.CommentsController Comments = new GE.WebUI.Controllers.T4MVC_CommentsController();
@@ -59,19 +60,6 @@ namespace T4MVC
 }
 
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
-{
-    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
-    {
-        this.InitMVCT4Result(area, controller, action, protocol);
-    }
-    
-    public string Controller { get; set; }
-    public string Action { get; set; }
-    public string Protocol { get; set; }
-    public RouteValueDictionary RouteValueDictionary { get; set; }
-}
-[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_ActionResult(string area, string controller, string action, string protocol = null): base()
@@ -80,6 +68,19 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
     }
      
     public override void ExecuteResult(System.Web.Mvc.ControllerContext context) { }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
     
     public string Controller { get; set; }
     public string Action { get; set; }
@@ -151,12 +152,12 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
-        public static readonly string click_stat_handler_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/click-stat-handler.min.js") ? Url("click-stat-handler.min.js") : Url("click-stat-handler.js");
         public static readonly string find_engine_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/find-engine.min.js") ? Url("find-engine.min.js") : Url("find-engine.js");
         public static readonly string ge_for_gamers_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-for-gamers-block.min.js") ? Url("ge-for-gamers-block.min.js") : Url("ge-for-gamers-block.js");
         public static readonly string ge_game_menu_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-game-menu.min.js") ? Url("ge-game-menu.min.js") : Url("ge-game-menu.js");
         public static readonly string ge_last_news_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-last-news-block.min.js") ? Url("ge-last-news-block.min.js") : Url("ge-last-news-block.js");
         public static readonly string like_engine_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/like-engine.min.js") ? Url("like-engine.min.js") : Url("like-engine.js");
+        public static readonly string site_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.js") ? Url("site.min.js") : Url("site.js");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -207,7 +208,6 @@ namespace Links
                     private const string URLPATH = "~/Content/dist/i/temp";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string _48ce50da_eac8_11e5_9308_94708ff8d766_jpg = Url("48ce50da-eac8-11e5-9308-94708ff8d766.jpg");
                 }
             
             }
@@ -226,13 +226,6 @@ namespace Links
         
         }
     
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class less {
-            private const string URLPATH = "~/Content/less";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        }
-    
     }
 
     
@@ -244,12 +237,12 @@ namespace Links
             public static class Assets
             {
                 public const string _references_js = "~/Scripts/_references.js"; 
-                public const string click_stat_handler_js = "~/Scripts/click-stat-handler.js"; 
                 public const string find_engine_js = "~/Scripts/find-engine.js"; 
                 public const string ge_for_gamers_block_js = "~/Scripts/ge-for-gamers-block.js"; 
                 public const string ge_game_menu_js = "~/Scripts/ge-game-menu.js"; 
                 public const string ge_last_news_block_js = "~/Scripts/ge-last-news-block.js"; 
                 public const string like_engine_js = "~/Scripts/like-engine.js"; 
+                public const string site_js = "~/Scripts/site.js"; 
             }
         }
         public static partial class Content 
@@ -293,12 +286,6 @@ namespace Links
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }
-                public static class Assets
-                {
-                }
-            }
-            public static partial class less 
-            {
                 public static class Assets
                 {
                 }

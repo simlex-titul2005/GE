@@ -131,6 +131,7 @@
     <Compile Include="Abstract\SxDbUpdatedModel.cs" />
     <Compile Include="Abstract\SxFilter.cs" />
     <Compile Include="Abstract\SxMaterial.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="HtmlHelpers\SxGridView.cs" />
     <Compile Include="HtmlHelpers\SxList.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
@@ -174,6 +175,13 @@
     <Compile Include="SxSiteSetting.cs" />
     <Compile Include="SxVmMaterialTag.cs" />
     <Compile Include="UrlHelper.cs" />
+    <Compile Include="ViewModels\SxVMExternalLoginConfirmation.cs" />
+    <Compile Include="ViewModels\SxVMForgotPassword.cs" />
+    <Compile Include="ViewModels\SxVMLogin.cs" />
+    <Compile Include="ViewModels\SxVMRegister.cs" />
+    <Compile Include="ViewModels\SxVMResetPassword.cs" />
+    <Compile Include="ViewModels\SxVMSendCode.cs" />
+    <Compile Include="ViewModels\SxVMVerifyCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -185,6 +193,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

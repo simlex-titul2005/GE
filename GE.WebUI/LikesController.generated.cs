@@ -106,9 +106,7 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _Likes = "_Likes";
             }
-            public readonly string _Likes = "~/Views/Likes/_Likes.cshtml";
         }
     }
 

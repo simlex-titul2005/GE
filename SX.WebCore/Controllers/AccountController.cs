@@ -7,6 +7,7 @@ using SX.WebCore.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using Microsoft.Owin.Security;
+using System;
 
 namespace SX.WebCore.Controllers
 {
@@ -15,6 +16,9 @@ namespace SX.WebCore.Controllers
     {
         private SxAppSignInManager _signInManager;
         private SxAppUserManager _userManager;
+
+        protected virtual Action<SxVMLogin> ActionLogin { get; }
+        protected virtual Action ActionLogOff { get; }
 
         public AccountController()
         {
@@ -77,6 +81,8 @@ namespace SX.WebCore.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    if (ActionLogin != null)
+                        ActionLogin(model);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -84,7 +90,7 @@ namespace SX.WebCore.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("Email", "Неверная комбинация логина и пароля");
                     return View(model);
             }
         }
@@ -389,6 +395,8 @@ namespace SX.WebCore.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult LogOff()
         {
+            if (ActionLogOff != null)
+                ActionLogOff();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }

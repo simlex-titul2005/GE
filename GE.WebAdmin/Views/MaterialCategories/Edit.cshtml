@@ -1,0 +1,56 @@
+﻿@model VMEditMaterialCategory
+@{
+    var isNew = Model.Id == null;
+    var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
+    ViewBag.Title = isNew ? "Добавить категорию" : "Редактировать категорию \"" + Model.Title + "\"";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (!isNew)
+{
+    <form method="post" action="@Url.Action(MVC.MaterialCategories.Delete())">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.ModelCoreType)
+        <button type="submit" class="btn btn-danger pull-right" onclick="if (!confirm('Удалить запись?')) return false;">Удалить</button>
+    </form>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.MaterialCategories.Edit())">
+    @Html.AntiForgeryToken()
+    @if (!isNew)
+    {
+        @Html.HiddenFor(x => x.Id)
+    }
+
+    @Html.HiddenFor(x => x.ParentCategoryId)
+    @Html.HiddenFor(x => x.ModelCoreType)
+
+    @if (isNew)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(x => x.Id, new { @class = "control-label" })
+                <span class="text-info"> (не должен содержать кириллицы и любых знаков, кроме тире)</span>
+                @Html.EditorFor(x => x.Id, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите идентификатор категории" } })
+                @Html.ValidationMessageFor(x => x.Id)
+            </div>
+        </div>
+        <br />
+    }
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+            @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название категории" } })
+            @Html.ValidationMessageFor(x => x.Title)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+            @Html.ActionLink("Назад", MVC.MaterialCategories.Index(mct: mct), new { @class = "btn btn-default" })
+        </div>
+    </div>
+</form>

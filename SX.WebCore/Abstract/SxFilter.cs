@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using static SX.WebCore.Enums;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace SX.WebCore.Abstract
@@ -16,6 +17,7 @@ namespace SX.WebCore.Abstract
         }
         public SxPagerInfo PagerInfo { get; set; }
         public string Tag { get; set; }
+        public ModelCoreType ModelCoreType { get; set; }
         public dynamic WhereExpressionObject { get; set; }
         public IDictionary<string, SortDirection> Orders { get; set; }
     }

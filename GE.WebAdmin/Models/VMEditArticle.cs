@@ -3,6 +3,7 @@ using SX.WebCore.Abstract;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
 {
@@ -45,5 +46,8 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Дата публикации")]
         public DateTime DateOfPublication { get; set; }
+
+        [Display(Name = "Категория"), UIHint("EditMaterialCategory"), AdditionalMetadata("mct", ModelCoreType.Article)]
+        public string CategoryId { get; set; }
     }
 }

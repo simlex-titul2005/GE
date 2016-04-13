@@ -110,24 +110,21 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost]
-        public virtual ViewResult FindTable(int page = 1, int pageSize = 10)
+        public virtual PartialViewResult FindTable(int page = 1, int pageSize = 10)
         {
-            var filter = new WebCoreExtantions.Filter(page, pageSize);
-            var totalItems = (_repo as SX.WebCore.Repositories.RepoManualGroup<DbContext>).Count(filter);
-            var data = (_repo as SX.WebCore.Repositories.RepoManualGroup<DbContext>).GetFindTable(filter);
-
-            var viewModel = new SxExtantions.SxPagedCollection<VMManualGroup>
+            var data = _repo.Query(null).Select(x => Mapper.Map<SxManualGroup, VMManualGroup>(x)).ToArray();
+            var parents = data.Where(x => x.ParentGroupId == null).ToArray();
+            for (int i = 0; i < parents.Length; i++)
             {
-                Collection = data
-                .Select(x => Mapper.Map<SxManualGroup, VMManualGroup>(x)).ToArray(),
-                PagerInfo = new SxExtantions.SxPagerInfo(page, pageSize)
-                {
-                    TotalItems = totalItems,
-                    PagerSize = 4
-                }
-            };
+                var parent = parents[i];
+                parent.Level = 1;
+                updateTreeNodeLevel(parent.Id, data, 1);
+                fillManualGroup(parent, null, data);
+            }
 
-            return View(viewModel);
+            ViewBag.MaxTreeViewLevel = data.Any() ? data.Max(x => x.Level) : 1;
+
+            return PartialView(MVC.ManualGroups.Views._TreeView, parents);
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿<div class="edit-news-rubric sx-find-table" data-is-load="false" data-url="@Url.Action(MVC.NewsRubrics.FindTable())" data-page="1">
+﻿@{ 
+    var mct = (SX.WebCore.Enums.ModelCoreType)ViewData.ModelMetadata.AdditionalValues["mct"];
+}
+<div class="edit-material-category sx-find-table" data-is-load="false" data-url="@Url.Action(MVC.MaterialCategories.FindTable(mct: mct))" data-page="1">
     <input type="hidden" name="@Html.NameForModel()" value="@Html.ValueForModel()" />
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="Выберите рубрику" value="@ViewBag.NewsRubricDesc">
+        <input type="text" class="form-control" placeholder="Выберите категорию" value="@ViewBag.MaterialCategoryTitle">
         <span class="input-group-btn">
             <button class="btn btn-default" type="button">Выбрать</button>
             <button class="btn btn-default" type="button"><i class="fa fa-repeat"></i></button>

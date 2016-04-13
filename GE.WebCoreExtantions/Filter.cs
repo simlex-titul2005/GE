@@ -18,6 +18,5 @@ namespace GE.WebCoreExtantions
         public string GameTitle { get; set; }
         public string TitleUrl { get; set; }
         public int? MaterialId { get; set; }
-        public ModelCoreType ModelCoreType { get; set; }
     }
 }

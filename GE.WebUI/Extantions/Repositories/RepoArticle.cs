@@ -68,9 +68,9 @@ namespace GE.WebUI.Extantions.Repositories
 
         public static VMDetailMaterial[] Last(this WebCoreExtantions.Repositories.RepoArticle repo, int amount)
         {
-            var query = @"SELECT TOP(@AMOUNT) *
+            var query = @"SELECT TOP(@amount) *
 FROM   (
-           SELECT TOP(@AMOUNT) dm.DateCreate,
+           SELECT TOP(@amount) dm.DateCreate,
                   dm.Title,
                   dm.TitleUrl,
                   dm.ModelCoreType
@@ -78,10 +78,12 @@ FROM   (
                   JOIN D_ARTICLE  AS da
                        ON  da.ModelCoreType = dm.ModelCoreType
                        AND da.Id = dm.Id
+           WHERE  dm.Show = 1
+                  AND dm.DateOfPublication <= GETDATE()
            ORDER BY
                   dm.DateCreate DESC
            UNION
-           SELECT TOP(@AMOUNT) dm.DateCreate,
+           SELECT TOP(@amount) dm.DateCreate,
                   dm.Title,
                   dm.TitleUrl,
                   dm.ModelCoreType
@@ -89,6 +91,8 @@ FROM   (
                   JOIN D_NEWS  AS dn
                        ON  dn.ModelCoreType = dm.ModelCoreType
                        AND dn.Id = dm.Id
+           WHERE  dm.Show = 1
+                  AND dm.DateOfPublication <= GETDATE()
            ORDER BY
                   dm.DateCreate DESC
        ) x
@@ -96,7 +100,7 @@ ORDER BY
        x.DateCreate DESC";
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var results = conn.Query<VMDetailMaterial>(query, new { AMOUNT = amount }).ToArray();
+                var results = conn.Query<VMDetailMaterial>(query, new { amount = amount }).ToArray();
                 return results;
             }
         }

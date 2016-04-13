@@ -1,4 +1,5 @@
 ﻿@import (reference) "colors.less";
+@import (reference) "../../../bower_components/bootstrap/less/variables.less";
 
 .sx-find-table {
     position: relative;
@@ -27,4 +28,30 @@
 
 .sx-find-table .data-text-field{
     cursor:default;
+}
+
+.sx-find-table .dropdown tr:active{
+    background-color:red;
+    background-color:@color-gray;
+}
+
+.sx-find-table .dropdown tr td{
+    .noselect;
+    cursor:default !important;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* IE/Edge */
+  user-select: none;           /* non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.sx-find-table.edit-material-category .dropdown{
+    max-height:300px;
+    overflow: hidden;
+overflow-y: auto;
 }

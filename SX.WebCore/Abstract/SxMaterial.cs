@@ -40,5 +40,8 @@ namespace SX.WebCore.Abstract
 
         public virtual SxSeoInfo SeoInfo { get; set; }
         public int? SeoInfoId { get; set; }
+
+        public virtual SxMaterialCategory Category { get; set; }
+        public string CategoryId { get; set; }
     }
 }

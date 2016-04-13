@@ -200,9 +200,6 @@
     <Compile Include="ArticlesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ArticleTypesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="ClicksController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -215,7 +212,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
-    <Compile Include="Controllers\ArticleTypesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClicksController.cs" />
     <Compile Include="Controllers\ClickTypesController.cs" />
@@ -224,11 +220,11 @@
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\ManualGroupsController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
+    <Compile Include="Controllers\MaterialCategoriesController.cs" />
     <Compile Include="Controllers\MaterialTagsController.cs" />
     <Compile Include="Controllers\MenuesController.cs" />
     <Compile Include="Controllers\MenuItemsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
-    <Compile Include="Controllers\NewsRubricsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\RedirectsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
@@ -241,8 +237,6 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
-    <Compile Include="Extantions\Repositories\RepoNewsRubric.cs" />
-    <Compile Include="Extantions\Repositories\RepoArticleType.cs" />
     <Compile Include="Extantions\Repositories\RepoClick.cs" />
     <Compile Include="Extantions\Repositories\RepoForumPart.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
@@ -276,6 +270,9 @@
     <Compile Include="ManualsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="MaterialCategoriesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="MaterialTagsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -286,6 +283,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VMEditManual.cs" />
+    <Compile Include="Models\VMEditMaterialCategory.cs" />
     <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMClick.cs" />
     <Compile Include="Models\VMClickType.cs" />
@@ -302,6 +300,7 @@
     <Compile Include="Models\VMEditUser.cs" />
     <Compile Include="Models\VMForumPart.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
+    <Compile Include="Models\VMMaterialCategory.cs" />
     <Compile Include="Models\VMManualGroup.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMNewsRubric.cs" />
@@ -310,10 +309,8 @@
     <Compile Include="Models\VMRobotsFile.cs" />
     <Compile Include="Models\VMRole.cs" />
     <Compile Include="Models\VMNews.cs" />
-    <Compile Include="Models\VMArticleType.cs" />
     <Compile Include="Models\VMArticle.cs" />
     <Compile Include="Models\VMEditArticle.cs" />
-    <Compile Include="Models\VMEditArticleType.cs" />
     <Compile Include="Models\VMEditEmptyGameSettings.cs" />
     <Compile Include="Models\VMEditGame.cs" />
     <Compile Include="Models\VMEditMenuItem.cs" />
@@ -334,9 +331,6 @@
     <Compile Include="Models\VMSiteSettings.cs" />
     <Compile Include="Models\VMUser.cs" />
     <Compile Include="NewsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="NewsRubricsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="PicturesController.generated.cs">
@@ -392,9 +386,6 @@
     <Content Include="Views\Articles\_GridView.cshtml" />
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
-    <Content Include="Views\ArticleTypes\_GridView.cshtml" />
-    <Content Include="Views\ArticleTypes\Index.cshtml" />
-    <Content Include="Views\ArticleTypes\Edit.cshtml" />
     <Content Include="Views\Games\_GridView.cshtml" />
     <Content Include="Views\Games\Edit.cshtml" />
     <Content Include="Views\Games\Index.cshtml" />
@@ -419,7 +410,6 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditGame.cshtml" />
     <Content Include="Views\Games\FindTable.cshtml" />
-    <Content Include="Views\ArticleTypes\_ArticleTypesByGameId.cshtml" />
     <Content Include="Views\Settings\EditSite.cshtml" />
     <Content Include="Views\SeoInfo\Index.cshtml" />
     <Content Include="Views\SeoInfo\_GridView.cshtml" />
@@ -451,11 +441,7 @@
     <Content Include="Views\SeoInfo\_GeneralEdit.cshtml" />
     <Content Include="Views\SeoKeywords\_GridView.cshtml" />
     <Content Include="Views\Comments\_LastComments.cshtml" />
-    <Content Include="Views\NewsRubrics\_GridView.cshtml" />
-    <Content Include="Views\NewsRubrics\Edit.cshtml" />
-    <Content Include="Views\NewsRubrics\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EditNewsRubric.cshtml" />
-    <Content Include="Views\NewsRubrics\FindTable.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditMaterialCategory.cshtml" />
     <Content Include="Views\Users\_UsersOnSite.cshtml" />
     <Content Include="Views\ManualGroups\Index.cshtml" />
     <Content Include="Views\ManualGroups\Edit.cshtml" />
@@ -463,8 +449,12 @@
     <Content Include="Views\Manuals\_GridView.cshtml" />
     <Content Include="Views\Manuals\Edit.cshtml" />
     <Content Include="Views\Manuals\Index.cshtml" />
-    <Content Include="Views\ManualGroups\FindTable.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditManualGroup.cshtml" />
+    <Content Include="Views\ManualGroups\_TreeView.cshtml" />
+    <Content Include="Views\MaterialCategories\Index.cshtml" />
+    <Content Include="Views\MaterialCategories\_TreeViewEditable.cshtml" />
+    <Content Include="Views\MaterialCategories\Edit.cshtml" />
+    <Content Include="Views\MaterialCategories\_TreeView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

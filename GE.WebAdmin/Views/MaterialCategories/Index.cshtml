@@ -1,0 +1,22 @@
+﻿@model VMMaterialCategory[]
+@{
+    var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
+    var title = (string)ViewBag.PageTitle;
+}
+
+<h2>@title</h2>
+<br />
+
+<div id="matcat-tv">
+    @Html.Partial(MVC.MaterialCategories.Views._TreeViewEditable)
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                container: 'body'
+            });
+        });
+    </script>
+}

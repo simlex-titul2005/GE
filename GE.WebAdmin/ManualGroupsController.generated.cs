@@ -128,14 +128,14 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _TreeView = "_TreeView";
                 public readonly string _TreeViewEditable = "_TreeViewEditable";
                 public readonly string Edit = "Edit";
-                public readonly string FindTable = "FindTable";
                 public readonly string Index = "Index";
             }
+            public readonly string _TreeView = "~/Views/ManualGroups/_TreeView.cshtml";
             public readonly string _TreeViewEditable = "~/Views/ManualGroups/_TreeViewEditable.cshtml";
             public readonly string Edit = "~/Views/ManualGroups/Edit.cshtml";
-            public readonly string FindTable = "~/Views/ManualGroups/FindTable.cshtml";
             public readonly string Index = "~/Views/ManualGroups/Index.cshtml";
         }
     }
@@ -193,12 +193,12 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void FindTableOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page, int pageSize);
+        partial void FindTableOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int page, int pageSize);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult FindTable(int page, int pageSize)
+        public override System.Web.Mvc.PartialViewResult FindTable(int page, int pageSize)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.FindTable);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindTable);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
             FindTableOverride(callInfo, page, pageSize);

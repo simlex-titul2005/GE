@@ -80,7 +80,6 @@ namespace GE.WebAdmin.Controllers
             {
                 var isNew = model.Id == 0;
                 var redactModel = Mapper.Map<VMEditArticle, Article>(model);
-                redactModel.ArticleTypeGameId = model.GameId;
                 
                 Article newModel = null;
 
@@ -101,7 +100,7 @@ namespace GE.WebAdmin.Controllers
                         }
                     }
 
-                    newModel = _repo.Update(redactModel, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "ArticleTypeName", "ArticleTypeGameId", "DateOfPublication", "UserId", "Foreword", "ShowFrontPictureOnDetailPage");
+                    newModel = _repo.Update(redactModel, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "DateOfPublication", "UserId", "Foreword", "ShowFrontPictureOnDetailPage", "CategoryId");
                 }
 
                 return RedirectToAction(MVC.Articles.Index());

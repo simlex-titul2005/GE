@@ -8,14 +8,24 @@ namespace SX.WebCore.HtmlHelpers
     {
         public class SxTreeViewTreeViewSettings<TModel>
         {
+            public SxTreeViewTreeViewSettings()
+            {
+                EnableEditing = false;
+                EnableFiltering = false;
+            }
+
             public Func<TModel, string> FuncContent { get; set; }
+            public Func<TModel, object> FuncModelId { get; set; }
             public Func<TModel, int> FuncCurLevel { get; set; }
             public int MaxLevel { get; set; }
             public Func<TModel, string> FuncEditUrl { get; set; }
+            public Func<TModel, string> FuncEditSubNodeUrl { get; set; }
             public Func<string> FuncCreateUrl { get; set; }
             public Func<TModel, TModel[]> FuncChildren { get; set; }
             public Func<string> FuncSearchUrl { get; set; }
             public string UpdateTargetId { get; set; }
+            public bool EnableEditing { get; set; }
+            public bool EnableFiltering { get; set; }
         }
 
         public static MvcHtmlString SxTreeView<TModel>(this HtmlHelper htmlHelper, TModel[] data, SxTreeViewTreeViewSettings<TModel> settings, object htmlAttributes = null)
@@ -27,21 +37,14 @@ namespace SX.WebCore.HtmlHelpers
                 table.MergeAttributes(attributes, true);
             }
 
-            writeTreeViewHeader(table, settings);
+            if(settings.EnableFiltering)
+                writeTreeViewHeader(table, settings);
 
             var tbody = new TagBuilder("tbody");
 
             if (!data.Any())
             {
-                var tr = new TagBuilder("tr");
-                var td = new TagBuilder("td");
-                td.MergeAttribute("colspan", "3");
-                var div = new TagBuilder("div");
-                div.MergeAttribute("class", "text-danger");
-                div.InnerHtml += "Отсутствуют результаты запроса";
-                td.InnerHtml += div;
-                tr.InnerHtml += td;
-                tbody.InnerHtml += tr;
+                writeEmptyRow(tbody);
             }
             else {
 
@@ -60,6 +63,9 @@ namespace SX.WebCore.HtmlHelpers
         private static void writeTreeViewNode<TModel>(TagBuilder tb, TModel node, SxTreeViewTreeViewSettings<TModel> settings)
         {
             var tr = new TagBuilder("tr");
+            if (settings.FuncModelId != null)
+                tr.MergeAttribute("data-id", settings.FuncModelId(node).ToString());
+
             writeTreeViewRow(tr, node, settings);
             tb.InnerHtml += tr;
 
@@ -76,7 +82,8 @@ namespace SX.WebCore.HtmlHelpers
 
         private static void writeTreeViewRow<TModel>(TagBuilder tr, TModel node, SxTreeViewTreeViewSettings<TModel> settings)
         {
-            writeTreeViewEditCol(tr, node, settings);
+            if (settings.EnableEditing)
+                writeTreeViewEditCol(tr, node, settings);
 
             var cl = settings.FuncCurLevel(node);
             if (cl < settings.MaxLevel)
@@ -87,6 +94,7 @@ namespace SX.WebCore.HtmlHelpers
                     if (cl == i)
                     {
                         td.MergeAttribute("colspan", (settings.MaxLevel - cl + 1).ToString());
+                        td.MergeAttribute("data-text-field", null);
                         td.InnerHtml += settings.FuncContent(node);
                     }
                     else
@@ -103,7 +111,10 @@ namespace SX.WebCore.HtmlHelpers
                 {
                     var td = new TagBuilder("td");
                     if (cl == i)
+                    {
+                        td.MergeAttribute("data-text-field", null);
                         td.InnerHtml += settings.FuncContent(node);
+                    }
                     else
                     {
                         td.MergeAttribute("class", "empty");
@@ -113,18 +124,44 @@ namespace SX.WebCore.HtmlHelpers
             }
         }
 
+        private static void writeEmptyRow(TagBuilder tb)
+        {
+            var tr = new TagBuilder("tr");
+            var td = new TagBuilder("td");
+            td.MergeAttribute("colspan", "3");
+            var div = new TagBuilder("div");
+            div.MergeAttribute("class", "text-danger");
+            div.InnerHtml += "Отсутствуют результаты запроса";
+            td.InnerHtml += div;
+            tr.InnerHtml += td;
+            tb.InnerHtml += tr;
+        }
+
         private static void writeTreeViewEditCol<TModel>(TagBuilder tr, TModel node, SxTreeViewTreeViewSettings<TModel> settings)
         {
             var tdEdit = new TagBuilder("td");
             tdEdit.MergeAttribute("class", "edit-col");
 
+            //edit link
             var a = new TagBuilder("a");
             a.MergeAttribute("href", settings.FuncEditUrl != null ? settings.FuncEditUrl(node) : "javascript:void(0)");
+            a.MergeAttribute("title", "Редактировать");
+            a.MergeAttribute("data-toggle", "tooltip");
             var i = new TagBuilder("i");
             i.MergeAttribute("class", "fa fa-pencil");
             a.InnerHtml += i;
-
             tdEdit.InnerHtml += a;
+
+            //add node link
+            a = new TagBuilder("a");
+            a.MergeAttribute("href", settings.FuncEditSubNodeUrl != null ? settings.FuncEditSubNodeUrl(node) : "javascript:void(0)");
+            a.MergeAttribute("title", "Добавить подузел");
+            a.MergeAttribute("data-toggle", "tooltip");
+            i = new TagBuilder("i");
+            i.MergeAttribute("class", "fa fa-plus");
+            a.InnerHtml += i;
+            tdEdit.InnerHtml += a;
+
             tr.InnerHtml += tdEdit;
         }
 
@@ -132,16 +169,18 @@ namespace SX.WebCore.HtmlHelpers
         {
             var thead = new TagBuilder("thead");
             var tr = new TagBuilder("tr");
-            writeTreeViewCreateCol(tr, settings.FuncCreateUrl);
+            if (settings.EnableEditing)
+                writeTreeViewCreateCol(tr, settings.FuncCreateUrl);
 
             var th = new TagBuilder("th");
             th.MergeAttribute("colspan", settings.MaxLevel.ToString());
+
 
             var form = new TagBuilder("form");
             form.MergeAttribute("action", settings.FuncSearchUrl());
             form.MergeAttribute("data-ajax", "true");
             form.MergeAttribute("data-ajax-method", "post");
-            form.MergeAttribute("data-ajax-update", "#"+settings.UpdateTargetId);
+            form.MergeAttribute("data-ajax-update", "#" + settings.UpdateTargetId);
             var input = new TagBuilder("input");
             input.MergeAttribute("type", "text");
             input.MergeAttribute("placeholder", "Введите строку для поиска");
@@ -161,6 +200,9 @@ namespace SX.WebCore.HtmlHelpers
             th.MergeAttribute("class", "create-col");
             var a = new TagBuilder("a");
             a.MergeAttribute("href", createUrl != null ? createUrl() : "#");
+            a.MergeAttribute("title", "Добавить узел");
+            a.MergeAttribute("data-toggle", "tooltip");
+
             var i = new TagBuilder("i");
             i.MergeAttribute("class", "fa fa-plus-circle");
             a.InnerHtml += i;

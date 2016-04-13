@@ -238,7 +238,10 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <form method="post" action="@Url.Action(MVC.Account.LogOff())" style="display:none;">
+                                @Html.AntiForgeryToken()
+                            </form>
+                            <a href="javascript:void(0)" onclick="if(confirm('Вы действительно хотите покинуть панель управления?')){$(this).prev('form').submit();}"><i class="fa fa-sign-out fa-fw"></i> Выйти</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -308,7 +311,7 @@
                                             <a href="@Url.Action(MVC.Articles.Index())">Каталог статей</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action(MVC.ArticleTypes.Index())">Типы статей</a>
+                                            <a href="@Url.Action(MVC.MaterialCategories.Index(mct: SX.WebCore.Enums.ModelCoreType.Article))">Категории статей</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -319,7 +322,7 @@
                                             <a href="@Url.Action(MVC.News.Index())">Каталог новостей</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action(MVC.NewsRubrics.Index())">Рубрики новостей</a>
+                                            <a href="@Url.Action(MVC.MaterialCategories.Index(mct: SX.WebCore.Enums.ModelCoreType.News))">Категории новостей</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -452,6 +455,8 @@
             $(document).ajaxError(function (event, xhr, settings) {
                 alert(xhr.responseText);
             });
+
+            $().alert();
         });
     </script>
     @RenderSection("scripts", false)

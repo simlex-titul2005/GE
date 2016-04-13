@@ -3,6 +3,7 @@ using SX.WebCore.Abstract;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
 {
@@ -12,10 +13,6 @@ namespace GE.WebAdmin.Models
         public Game Game { get; set; }
         [UIHint("EditGame"), Display(Name = "Игра")]
         public int? GameId { get; set; }
-
-        public NewsRubric Rubric { get; set; }
-        [UIHint("EditNewsRubric"), Display(Name = "Рубрика")]
-        public string RubricId { get; set; }
 
         [MaxLength(255)]
         public string OldTitleUrl { get; set; }
@@ -46,5 +43,8 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Дата публикации")]
         public DateTime DateOfPublication { get; set; }
+
+        [Display(Name = "Категория"), UIHint("EditMaterialCategory"), AdditionalMetadata("mct", ModelCoreType.News)]
+        public string CategoryId { get; set; }
     }
 }

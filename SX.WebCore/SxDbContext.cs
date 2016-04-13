@@ -89,6 +89,9 @@ namespace SX.WebCore
 
             modelBuilder.Entity<SxManualGroup>()
                .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            modelBuilder.Entity<SxMaterialCategory>()
+               .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

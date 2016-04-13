@@ -3,6 +3,7 @@
     var isNew = Model.Id == 0;
     ViewBag.Title = isNew ? "Добавить статью" : "Редактировать статью \"" + Model.Title + "\"";
     ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
+    ViewBag.MaterialCategoryTitle = isNew || Model.CategoryId==null ? null : Model.Category.Title;
 }
 
 @section styles{
@@ -77,17 +78,15 @@
                 <br />
             }
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     @Html.LabelFor(x => x.GameId, new { @class = "control-label" })
                     @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.GameId)
                 </div>
-                <div class="col-md-2">
-                    @Html.LabelFor(x => x.ArticleTypeName, new { @class = "control-label" })
-                    <div id="at">
-                        @Html.Action(MVC.ArticleTypes.ArticleTypesByGameId(Model.GameId, Model.ArticleTypeName))
-                    </div>
-                    @Html.ValidationMessageFor(x => x.ArticleTypeName)
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.CategoryId, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.CategoryId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.CategoryId)
                 </div>
                 <div class="col-md-4">
                     @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })

@@ -23,11 +23,6 @@ namespace GE.WebAdmin
                     cfg.CreateMap<Article, VMEditArticle>();
                     cfg.CreateMap<VMEditArticle, Article>();
 
-                    //article type
-                    cfg.CreateMap<ArticleType, VMArticleType>();
-                    cfg.CreateMap<ArticleType, VMEditArticleType>();
-                    cfg.CreateMap<VMEditArticleType, ArticleType>();
-
                     //click type
                     cfg.CreateMap<SxClickType, VMClickType>();
                     cfg.CreateMap<SxClickType, VMEditClickType>();
@@ -49,11 +44,17 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxManual, VMEditManual>();
                     cfg.CreateMap<VMEditManual, SxManual>();
 
+                    ////manual groups
+                    //cfg.CreateMap<SxManualGroup, VMManualGroup>();
+                    //cfg.CreateMap<VMManualGroup, SxManualGroup>();
+                    //cfg.CreateMap<SxManualGroup, VMEditManualGroup>();
+                    //cfg.CreateMap<VMEditManualGroup, SxManualGroup>();
+
                     //manual groups
-                    cfg.CreateMap<SxManualGroup, VMManualGroup>();
-                    cfg.CreateMap<VMManualGroup, SxManualGroup>();
-                    cfg.CreateMap<SxManualGroup, VMEditManualGroup>();
-                    cfg.CreateMap<VMEditManualGroup, SxManualGroup>();
+                    cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
+                    cfg.CreateMap<VMMaterialCategory, SxMaterialCategory>();
+                    cfg.CreateMap<SxMaterialCategory, VMEditMaterialCategory>();
+                    cfg.CreateMap<VMEditMaterialCategory, SxMaterialCategory>();
 
                     //material tags
                     cfg.CreateMap<SxMaterialTag, VMMaterialTag>();
@@ -77,11 +78,6 @@ namespace GE.WebAdmin
                     cfg.CreateMap<News, VMNews>();
                     cfg.CreateMap<News, VMEditNews>();
                     cfg.CreateMap<VMEditNews, News>();
-
-                    //news rubric
-                    cfg.CreateMap<NewsRubric, VMNewsRubric>();
-                    cfg.CreateMap<NewsRubric, VMEditNewsRubric>();
-                    cfg.CreateMap<VMEditNewsRubric, NewsRubric>();
 
                     //picture
                     cfg.CreateMap<SxPicture, VMPicture>();

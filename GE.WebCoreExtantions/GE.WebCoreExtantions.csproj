@@ -63,7 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IHasGame.cs" />
-    <Compile Include="ArticleType.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="News.cs" />
@@ -72,11 +71,8 @@
     <Compile Include="ContestPrize.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="NewsRubric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\RepoArticle.cs" />
-    <Compile Include="Repositories\RepoNewsRubric.cs" />
-    <Compile Include="Repositories\RepoArticleType.cs" />
     <Compile Include="Repositories\RepoClick.cs" />
     <Compile Include="Repositories\RepoClickType.cs" />
     <Compile Include="Repositories\RepoComment.cs" />

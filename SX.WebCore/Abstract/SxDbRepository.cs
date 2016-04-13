@@ -32,13 +32,7 @@ namespace SX.WebCore.Abstract
             _dbContext.Configuration.AutoDetectChangesEnabled = false;
             _dbContext.Entry(model).State = EntityState.Added;
             _dbContext.Configuration.AutoDetectChangesEnabled = true;
-            try {
-                _dbContext.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-
-            }
+            _dbContext.SaveChanges();
             
             return model;
         }

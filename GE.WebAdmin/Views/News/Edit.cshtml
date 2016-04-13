@@ -3,7 +3,7 @@
     var isNew = Model.Id == 0;
     ViewBag.Title = isNew ? "Добавить новость" : "Редактировать новость \"" + Model.Title + "\"";
     ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
-    ViewBag.NewsRubricDesc = isNew || Model.RubricId==null ? null : Model.Rubric.Description;
+    ViewBag.MaterialCategoryTitle = isNew || Model.CategoryId==null ? null : Model.Category.Title;
 }
 <h2>@ViewBag.Title</h2>
 @if (!isNew)
@@ -79,9 +79,9 @@
                     @Html.ValidationMessageFor(x => x.GameId)
                 </div>
                 <div class="col-md-3">
-                    @Html.LabelFor(x => x.RubricId, new { @class = "control-label" })
-                    @Html.EditorFor(x => x.RubricId, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(x => x.RubricId)
+                    @Html.LabelFor(x => x.CategoryId, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.CategoryId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.CategoryId)
                 </div>
                 <div class="col-md-3">
                     @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })

@@ -29,7 +29,6 @@ public static partial class MVC
 {
     public static GE.WebAdmin.Controllers.AccountController Account = new GE.WebAdmin.Controllers.T4MVC_AccountController();
     public static GE.WebAdmin.Controllers.ArticlesController Articles = new GE.WebAdmin.Controllers.T4MVC_ArticlesController();
-    public static GE.WebAdmin.Controllers.ArticleTypesController ArticleTypes = new GE.WebAdmin.Controllers.T4MVC_ArticleTypesController();
     public static GE.WebAdmin.Controllers.ClicksController Clicks = new GE.WebAdmin.Controllers.T4MVC_ClicksController();
     public static GE.WebAdmin.Controllers.ClickTypesController ClickTypes = new GE.WebAdmin.Controllers.T4MVC_ClickTypesController();
     public static GE.WebAdmin.Controllers.CommentsController Comments = new GE.WebAdmin.Controllers.T4MVC_CommentsController();
@@ -39,11 +38,11 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.HomeController Home = new GE.WebAdmin.Controllers.T4MVC_HomeController();
     public static GE.WebAdmin.Controllers.ManualGroupsController ManualGroups = new GE.WebAdmin.Controllers.T4MVC_ManualGroupsController();
     public static GE.WebAdmin.Controllers.ManualsController Manuals = new GE.WebAdmin.Controllers.T4MVC_ManualsController();
+    public static GE.WebAdmin.Controllers.MaterialCategoriesController MaterialCategories = new GE.WebAdmin.Controllers.T4MVC_MaterialCategoriesController();
     public static GE.WebAdmin.Controllers.MaterialTagsController MaterialTags = new GE.WebAdmin.Controllers.T4MVC_MaterialTagsController();
     public static GE.WebAdmin.Controllers.MenuesController Menues = new GE.WebAdmin.Controllers.T4MVC_MenuesController();
     public static GE.WebAdmin.Controllers.MenuItemsController MenuItems = new GE.WebAdmin.Controllers.T4MVC_MenuItemsController();
     public static GE.WebAdmin.Controllers.NewsController News = new GE.WebAdmin.Controllers.T4MVC_NewsController();
-    public static GE.WebAdmin.Controllers.NewsRubricsController NewsRubrics = new GE.WebAdmin.Controllers.T4MVC_NewsRubricsController();
     public static GE.WebAdmin.Controllers.PicturesController Pictures = new GE.WebAdmin.Controllers.T4MVC_PicturesController();
     public static GE.WebAdmin.Controllers.RedirectsController Redirects = new GE.WebAdmin.Controllers.T4MVC_RedirectsController();
     public static GE.WebAdmin.Controllers.RequestController Request = new GE.WebAdmin.Controllers.T4MVC_RequestController();

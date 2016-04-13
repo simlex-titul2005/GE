@@ -15,28 +15,14 @@ namespace GE.WebCoreExtantions
 
         public new DbSet<News> News { get; set; }
 
-        public DbSet<NewsRubric> NewsRubrics { get; set; }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<ArticleType>()
-                .HasKey(x => new { x.Name, x.GameId });
-
-            modelBuilder.Entity<Article>()
-                .HasOptional(x => x.ArticleType)
-                .WithMany()
-                .HasForeignKey(x => new { x.ArticleTypeName, x.ArticleTypeGameId });
 
             modelBuilder.Entity<ContestPrize>()
                 .HasRequired(x => x.Contest)
                 .WithMany(x=>x.Prizes)
                 .HasForeignKey(x => new { x.ContestId, x.MaterialCoreType });
-
-            modelBuilder.Entity<NewsRubric>()
-                .Property(x => x.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

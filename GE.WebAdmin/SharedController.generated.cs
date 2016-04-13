@@ -57,7 +57,7 @@ namespace T4MVC
                 public readonly string EditGame = "EditGame";
                 public readonly string EditImage = "EditImage";
                 public readonly string EditManualGroup = "EditManualGroup";
-                public readonly string EditNewsRubric = "EditNewsRubric";
+                public readonly string EditMaterialCategory = "EditMaterialCategory";
             }
         }
     }

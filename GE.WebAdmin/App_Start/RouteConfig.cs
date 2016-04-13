@@ -5,6 +5,8 @@ namespace GE.WebAdmin
 {
     public class RouteConfig
     {
+        private static readonly string[] _defNamespace = new string[] { "GE.WebAdmin.Controllers" };
+
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -14,7 +16,8 @@ namespace GE.WebAdmin
             routes.MapRoute(
                 name: null,
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "home", action = "index", id = UrlParameter.Optional, page=1, area="" }
+                defaults: new { controller = "home", action = "index", id = UrlParameter.Optional, page=1, area="" },
+                namespaces: _defNamespace
             );
         }
     }

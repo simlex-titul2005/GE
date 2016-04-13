@@ -285,6 +285,7 @@
     <Compile Include="Models\VMExternalLoginConfirmation.cs" />
     <Compile Include="Models\VMExternalLoginList.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
+    <Compile Include="Models\VMMaterialCategory.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMMenuItem.cs" />
     <Compile Include="Models\VMSeoInfo.cs" />
@@ -309,16 +310,6 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Sql_Articles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Sql_Articles.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Sql_News.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Sql_News.resx</DependentUpon>
-    </Compile>
     <Compile Include="SearchController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -409,16 +400,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Sql_Articles.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Sql_Articles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Sql_News.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Sql_News.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -12,9 +12,9 @@
     {
         UpdateTargetId = "grid-forum-parts",
         Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Заголовок раздела"},
-            new SxExtantions.SxGridViewColumn{FieldName="Html", Caption="Описание раздела"},
+        Columns = new SxExtantions.SxGridViewColumn<VMForumPart>[]{
+            new SxExtantions.SxGridViewColumn<VMForumPart>{FieldName="Title", Caption="Заголовок раздела"},
+            new SxExtantions.SxGridViewColumn<VMForumPart>{FieldName="Html", Caption="Описание раздела"},
         },
         PagerInfo=pagerInfo,
         Filter = filter,

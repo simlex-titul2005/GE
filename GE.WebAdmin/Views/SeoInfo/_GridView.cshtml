@@ -12,8 +12,8 @@
     {
         UpdateTargetId = "grid-seo",
         Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="RawUrl", Caption="Адрес"}
+        Columns = new SxExtantions.SxGridViewColumn<VMSeoInfo>[]{
+            new SxExtantions.SxGridViewColumn<VMSeoInfo>{FieldName="RawUrl", Caption="Адрес"}
         },
         PagerInfo=pagerInfo,
         Filter = filter,

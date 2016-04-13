@@ -12,19 +12,19 @@
         {
             UpdateTargetId = "grid-request",
             Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="DateCreate", Caption="Дата посещения"},
-            new SxExtantions.SxGridViewColumn{FieldName="SessionId", Caption="Идентификатор сессии"},
-            new SxExtantions.SxGridViewColumn{FieldName="Browser", Caption="Браузер"},
-            new SxExtantions.SxGridViewColumn{FieldName="ClientIP", Caption="IP клиента"},
-            new SxExtantions.SxGridViewColumn{FieldName="UserAgent", Caption="Строка агента", Template=(val)=> {
-                return val.ToString().Contains("bot")?string.Format("<i class=\"text-danger\">{0}</i>",val):val.ToString();
+            Columns = new SxExtantions.SxGridViewColumn<VMRequest>[]{
+            new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="DateCreate", Caption="Дата посещения"},
+            new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="SessionId", Caption="Идентификатор сессии"},
+            new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="Browser", Caption="Браузер"},
+            new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="ClientIP", Caption="IP клиента"},
+            new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="UserAgent", Caption="Строка агента", Template=(m)=> {
+                return m.UserAgent.Contains("bot")?string.Format("<i class=\"text-danger\">{0}</i>",m.UserAgent):m.UserAgent;
             } },
-            new SxExtantions.SxGridViewColumn{FieldName="RequestType", Caption="Тип запросв"},
-            new SxExtantions.SxGridViewColumn{FieldName="UrlRef", Caption="UrlRef",Template=(val)=> {
-                return val!=null? string.Format("<a href=\"{0}\" target=\"_blank\" rel=\"nofollow\">{0}</a>", val):null;
+            new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="RequestType", Caption="Тип запросв"},
+            new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="UrlRef", Caption="UrlRef",Template=(m)=> {
+                return !string.IsNullOrEmpty(m.UrlRef)? string.Format("<a href=\"{0}\" target=\"_blank\" rel=\"nofollow\">{0}</a>", m.UrlRef):null;
             }},
-            new SxExtantions.SxGridViewColumn{FieldName="RawUrl", Caption="Целевой адрес"}
+            new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="RawUrl", Caption="Целевой адрес"}
         },
             PagerInfo = pagerInfo,
             Filter = filter,

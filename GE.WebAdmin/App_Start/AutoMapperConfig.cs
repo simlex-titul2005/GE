@@ -44,13 +44,7 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxManual, VMEditManual>();
                     cfg.CreateMap<VMEditManual, SxManual>();
 
-                    ////manual groups
-                    //cfg.CreateMap<SxManualGroup, VMManualGroup>();
-                    //cfg.CreateMap<VMManualGroup, SxManualGroup>();
-                    //cfg.CreateMap<SxManualGroup, VMEditManualGroup>();
-                    //cfg.CreateMap<VMEditManualGroup, SxManualGroup>();
-
-                    //manual groups
+                    //material category
                     cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
                     cfg.CreateMap<VMMaterialCategory, SxMaterialCategory>();
                     cfg.CreateMap<SxMaterialCategory, VMEditMaterialCategory>();

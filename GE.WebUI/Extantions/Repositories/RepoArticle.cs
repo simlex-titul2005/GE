@@ -2,20 +2,83 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using GE.WebCoreExtantions;
 using GE.WebUI.Models.Abstract;
 
 namespace GE.WebUI.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
+        private static readonly string _queryPreviewMaterials = @"SELECT TOP(8) da.Id,
+       dm.Title,
+       dm.TitleUrl,
+       dm.DateCreate,
+       dm.DateOfPublication,
+       dm.ViewsCount,
+       dm.CommentsCount,
+       CASE 
+            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
+            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, @lettersCount) +
+                 '...'
+       END                    AS Foreword,
+       anu.NikName            AS UserName,
+       dg.Title               AS GameTitle
+FROM   D_ARTICLE              AS da
+       JOIN DV_MATERIAL       AS dm
+            ON  dm.Id = da.Id
+            AND dm.ModelCoreType = da.ModelCoreType
+       LEFT JOIN AspNetUsers  AS anu
+            ON  anu.Id = dm.UserId
+       LEFT JOIN D_GAME       AS dg
+            ON  dg.Id = da.GameId
+WHERE  (@gameTitle IS NULL)
+       OR  (
+               @gameTitle IS NOT NULL
+               AND @categoryId IS NULL
+               AND dg.TitleUrl = @gameTitle
+           )
+       OR  (
+               @gameTitle IS NOT NULL
+               AND @categoryId IS NOT NULL
+               AND dg.TitleUrl = @gameTitle
+               AND dm.CategoryId = @categoryId
+           )
+ORDER BY
+       dm.DateCreate DESC";
+
         public static VMFGBlock ForGamersBlock(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle=null)
         {
             var viewModel = new VMFGBlock() { SelectedGameTitle= gameTitle };
             dynamic[] result = null;
+            var query = @"SELECT da.GameId,
+       dg.FrontPictureId,
+       dg.Title,
+       dg.TitleUrl,
+       dg.[Description],
+       dm.CategoryId,
+       dmc.Title                 AS CategoryTitle
+FROM   DV_MATERIAL               AS dm
+       JOIN D_ARTICLE            AS da
+            ON  da.Id = dm.Id
+            AND da.ModelCoreType = dm.ModelCoreType
+       JOIN D_GAME               AS dg
+            ON  dg.Id = da.GameId
+            AND dg.Show = 1
+            AND dg.FrontPictureId IS NOT NULL
+       JOIN D_MATERIAL_CATEGORY  AS dmc
+            ON  dmc.Id = dm.CategoryId
+WHERE  dm.Show = 1
+       AND dm.DateOfPublication <= GETDATE()
+GROUP BY
+       da.GameId,
+       dg.FrontPictureId,
+       dg.Title,
+       dg.TitleUrl,
+       dg.[Description],
+       dm.CategoryId,
+       dmc.Title";
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                result = conn.Query<dynamic>(Resources.Sql_Articles.FGBGameMenu).ToArray();
+                result = conn.Query<dynamic>(query).ToArray();
             }
 
             var games = result
@@ -39,29 +102,26 @@ namespace GE.WebUI.Extantions.Repositories
                     FrontPictureId = game.FrontPictureId,
                     Title = game.Title,
                     TitleUrl=game.TitleUrl,
-                    ArticleTypes = result.Where(t => t.GameId == game.Id).Select(t => new VMFGBArticleType
-                    {
-                        Name = t.ArticleTypeName,
-                        Description = t.ArticleTypeDesc
-                    }).ToArray()
+                    MaterialCategories=result.Where(t=>t.GameId == game.Id)
+                    .Select(t=>new VMMaterialCategory { Id=t.CategoryId, Title=t.CategoryTitle }).ToArray()
                 };
             }
 
-            var query = Resources.Sql_Articles.PreviewMaterials;
+            query = _queryPreviewMaterials;
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var articles = conn.Query<VMPreviewArticle>(query, new { GAME_TITLE = gameTitle, ARTICLE_TYPE_NAME = (string)null, LETTERS_COUNT = 200 }).ToArray();
+                var articles = conn.Query<VMPreviewArticle>(query, new { gameTitle = gameTitle, categoryId = (string)null, lettersCount = 200 }).ToArray();
                 viewModel.Articles = articles;
             }
 
             return viewModel;
         }
 
-        public static VMPreviewArticle[] PreviewMaterials(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle, string articleType, int lettersCount=200)
+        public static VMPreviewArticle[] PreviewMaterials(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle, string categoryId, int lettersCount=200)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var data=conn.Query<VMPreviewArticle>(Resources.Sql_Articles.PreviewMaterials, new { GAME_TITLE = gameTitle, ARTICLE_TYPE_NAME = articleType, LETTERS_COUNT=lettersCount }).ToArray();
+                var data=conn.Query<VMPreviewArticle>(_queryPreviewMaterials, new { gameTitle = gameTitle, categoryId = categoryId, lettersCount=lettersCount }).ToArray();
                 return data;
             }
         }

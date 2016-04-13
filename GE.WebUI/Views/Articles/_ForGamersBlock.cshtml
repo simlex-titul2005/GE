@@ -24,12 +24,12 @@
                             </a>
                             <a href="@Url.Action("list", new { controller="articles", gameTitle=game.TitleUrl})" class="link">Кликнуть, чтобы открыть новую вкладку со статьями по игре @game.Title</a>
                             <ul class="dropdown">
-                                @for (int y = 0; y < game.ArticleTypeLength; y++)
+                                @for (int y = 0; y < game.MaterialCategoryLength; y++)
                                 {
-                                    var aType = game.ArticleTypes[y];
-                                    var title = aType.Description;
+                                    var cat = game.MaterialCategories[y];
+                                    var title = cat.Title;
                                     <li>
-                                        <a title="@title" href="#" data-game-title="@game.TitleUrl" data-article-type="@aType.Name">@title</a>
+                                        <a title="@title" href="#" data-game-title="@game.TitleUrl" data-category-id="@cat.Id">@title</a>
                                     </li>
                                 }
                             </ul>

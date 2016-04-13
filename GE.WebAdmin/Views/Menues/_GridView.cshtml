@@ -12,9 +12,9 @@
     {
         UpdateTargetId = "grid-menues",
         Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="Name", Caption="Наименование"},
-            new SxExtantions.SxGridViewColumn{FieldName="Id", Caption="Идентификатор"}
+        Columns = new SxExtantions.SxGridViewColumn<VMMenu>[]{
+            new SxExtantions.SxGridViewColumn<VMMenu>{FieldName="Name", Caption="Наименование"},
+            new SxExtantions.SxGridViewColumn<VMMenu>{FieldName="Id", Caption="Идентификатор"}
         },
         PagerInfo=pagerInfo,
         Filter = filter,

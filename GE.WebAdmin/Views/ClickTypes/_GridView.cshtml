@@ -12,10 +12,10 @@
                 {
                     UpdateTargetId = "grid-click-types",
                     Data = Model,
-                    Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="Id", Caption="Идентификатор"},
-            new SxExtantions.SxGridViewColumn{FieldName="Name", Caption="Наименование"},
-            new SxExtantions.SxGridViewColumn{FieldName="Description", Caption="Описание"}
+                    Columns = new SxExtantions.SxGridViewColumn<VMClickType>[]{
+            new SxExtantions.SxGridViewColumn<VMClickType>{FieldName="Id", Caption="Идентификатор"},
+            new SxExtantions.SxGridViewColumn<VMClickType>{FieldName="Name", Caption="Наименование"},
+            new SxExtantions.SxGridViewColumn<VMClickType>{FieldName="Description", Caption="Описание"}
         },
                     PagerInfo = pagerInfo,
                     Filter = filter,

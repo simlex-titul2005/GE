@@ -12,11 +12,11 @@
     {
         UpdateTargetId = "grid-games",
         Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Наименование игры"},
-            new SxExtantions.SxGridViewColumn{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
-            new SxExtantions.SxGridViewColumn{FieldName="Description", Caption="Описание"},
-            new SxExtantions.SxGridViewColumn{FieldName="Show", Caption="Показывать"},
+        Columns = new SxExtantions.SxGridViewColumn<VMGame>[]{
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Title", Caption="Наименование игры"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Description", Caption="Описание"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Show", Caption="Показывать"},
         },
         PagerInfo=pagerInfo,
         Filter = filter,

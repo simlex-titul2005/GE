@@ -19,14 +19,15 @@ namespace GE.WebUI.Controllers
             return PartialView(MVC.Articles.Views._ForGamersBlock, viewModel);
         }
 
-        [OutputCache(Duration =900, VaryByParam = "gameTitle;articleType")]
+        [OutputCache(Duration =900, VaryByParam = "gt;c;lc")]
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ActionResult Preview(string gameTitle, string articleType, int lettersCount)
+        public virtual ActionResult Preview(string gt, string c, int lc)
         {
             if (!Request.IsAjaxRequest()) return null;
 
-            var viewModel = (base.Repository as RepoArticle).PreviewMaterials(gameTitle, articleType, lettersCount);
-            if (!viewModel.Any()) return Content("<div class=\"empty-result\">Данные отсутствуют</div>");
+            var viewModel = (base.Repository as RepoArticle).PreviewMaterials(gt, c, lc);
+            if (!viewModel.Any())
+                return Content("<div class=\"empty-result\">Данные отсутствуют</div>");
             return PartialView(MVC.Articles.Views._Preview, viewModel);
         }
 

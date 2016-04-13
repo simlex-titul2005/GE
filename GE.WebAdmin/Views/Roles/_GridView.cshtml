@@ -12,9 +12,9 @@
     {
         UpdateTargetId = "grid-roles",
         Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="Name", Caption="Роль"},
-            new SxExtantions.SxGridViewColumn{FieldName="Description", Caption="Описание"},
+        Columns = new SxExtantions.SxGridViewColumn<VMRole>[]{
+            new SxExtantions.SxGridViewColumn<VMRole>{FieldName="Name", Caption="Роль"},
+            new SxExtantions.SxGridViewColumn<VMRole>{FieldName="Description", Caption="Описание"},
         },
         PagerInfo=pagerInfo,
         Filter = filter,

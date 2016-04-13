@@ -11,8 +11,8 @@ namespace SX.WebCore.Repositories
     {
         public override IQueryable<SxManual> Query(SxFilter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "da.Id", "dm.Title" });
-            query += " FROM D_MANUAL AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType JOIN D_MANUAL_GROUP as dmg on dmg.Id=da.GroupId ";
+            var query = QueryProvider.GetSelectString(new string[] { "da.Id", "dm.Title", "dm.CategoryId" });
+            query += " FROM D_MANUAL AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType LEFT JOIN D_MATERIAL_CATEGORY as dmc on dmc.Id=dm.CategoryId ";
 
             object param = null;
             query += getManualWhereString(filter, out param);

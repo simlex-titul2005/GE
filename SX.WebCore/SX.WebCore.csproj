@@ -145,7 +145,6 @@
     <Compile Include="Repositories\RepoLike.cs" />
     <Compile Include="Repositories\RepoManual.cs" />
     <Compile Include="Repositories\RepoMaterialCategory.cs" />
-    <Compile Include="Repositories\RepoManualGroup.cs" />
     <Compile Include="Resources\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -164,7 +163,6 @@
     <Compile Include="SxForumTheme.cs" />
     <Compile Include="SxLike.cs" />
     <Compile Include="SxManual.cs" />
-    <Compile Include="SxManualGroup.cs" />
     <Compile Include="SxMaterialCategory.cs" />
     <Compile Include="SxMaterialTag.cs" />
     <Compile Include="SxMenu.cs" />

@@ -12,10 +12,12 @@
     {
         UpdateTargetId = "grid-users",
         Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="NikName", Caption="Ник-нейм"},
-            new SxExtantions.SxGridViewColumn{FieldName="Email", Caption="Почта", Template=(val)=> { return string.Format("<a href=\"mailto:{0}\">{0}</a>", val); } },
-            new SxExtantions.SxGridViewColumn{FieldName="RoleNames", Caption="Роль"},
+        Columns = new SxExtantions.SxGridViewColumn<VMUser>[]{
+            new SxExtantions.SxGridViewColumn<VMUser>{FieldName="NikName", Caption="Ник-нейм"},
+            new SxExtantions.SxGridViewColumn<VMUser>{FieldName="Email", Caption="Почта", Template=(m)=> {
+                return string.Format("<a href=\"mailto:{0}\">{0}</a>", m.Email);
+            }},
+            new SxExtantions.SxGridViewColumn<VMUser>{FieldName="RoleNames", Caption="Роль"},
         },
         PagerInfo=pagerInfo,
         Filter = filter,

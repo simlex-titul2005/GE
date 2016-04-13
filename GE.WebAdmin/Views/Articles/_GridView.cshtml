@@ -12,11 +12,11 @@
     {
         UpdateTargetId = "grid-articles",
         Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="DateCreate", Caption="Дата создания"},
-            new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Заголовок"},
-            new SxExtantions.SxGridViewColumn{FieldName="SeoInfoId", Caption="Инфо", Template=(si)=> {
-                return si==null? "<i class=\"text-danger\">не заданы теги seo</i>":null;
+        Columns = new SxExtantions.SxGridViewColumn<VMArticle>[]{
+            new SxExtantions.SxGridViewColumn<VMArticle>{FieldName="DateCreate", Caption="Дата создания"},
+            new SxExtantions.SxGridViewColumn<VMArticle>{FieldName="Title", Caption="Заголовок"},
+            new SxExtantions.SxGridViewColumn<VMArticle>{FieldName="SeoInfoId", Caption="Инфо", Template=(m)=> {
+                return !m.SeoInfoId.HasValue? "<i class=\"text-danger\">не заданы теги seo</i>":null;
             } },
         },
         PagerInfo = pagerInfo,

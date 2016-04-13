@@ -12,11 +12,11 @@
                     {
                         UpdateTargetId = "grid-clicks",
                         Data = Model,
-                        Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="DateCreate", Caption="Дата"},
-            new SxExtantions.SxGridViewColumn{FieldName="UrlRef", Caption="Исходящий адрес"},
-            new SxExtantions.SxGridViewColumn{FieldName="RawUrl", Caption="Адрес назначения"},
-            new SxExtantions.SxGridViewColumn{FieldName="ClickTypeName", Caption="Статистика клика"}
+                        Columns = new SxExtantions.SxGridViewColumn<VMClick>[]{
+            new SxExtantions.SxGridViewColumn<VMClick>{FieldName="DateCreate", Caption="Дата"},
+            new SxExtantions.SxGridViewColumn<VMClick>{FieldName="UrlRef", Caption="Исходящий адрес"},
+            new SxExtantions.SxGridViewColumn<VMClick>{FieldName="RawUrl", Caption="Адрес назначения"},
+            new SxExtantions.SxGridViewColumn<VMClick>{FieldName="ClickTypeName", Caption="Статистика клика"}
         },
                         PagerInfo=pagerInfo,
                         Filter = filter,

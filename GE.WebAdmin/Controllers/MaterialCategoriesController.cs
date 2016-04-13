@@ -64,6 +64,8 @@ namespace GE.WebAdmin.Controllers
                     return "Категории статей";
                 case ModelCoreType.News:
                     return "Категории новостей";
+                case ModelCoreType.Manual:
+                    return "Справочные категории";
                 default:
                     return "Категоря материалов не определена";
             }
@@ -81,7 +83,9 @@ namespace GE.WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditMaterialCategory model)
         {
+            ViewBag.ModelCoreType = model.ModelCoreType;
             var redactModel = Mapper.Map<VMEditMaterialCategory, SxMaterialCategory>(model);
+
             if (ModelState.IsValid)
             {
                 var existModel = _repo.GetByKey(model.Id);
@@ -99,7 +103,6 @@ namespace GE.WebAdmin.Controllers
             }
             else
             {
-                ViewBag.ModelCoreType = model.ModelCoreType;
                 model.Id = null;
                 return View(model);
             }

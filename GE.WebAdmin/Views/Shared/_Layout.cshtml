@@ -384,7 +384,7 @@
                                 @if (User.IsInRole("architect"))
                                 {
                                     <li>
-                                        <a href="@Url.Action(MVC.ManualGroups.Index())">Справочные группы</a>
+                                        <a href="@Url.Action(MVC.MaterialCategories.Index(mct: SX.WebCore.Enums.ModelCoreType.Manual))">Справочные категории</a>
                                     </li>
                                     <li>
                                         <a href="@Url.Action(MVC.Manuals.Index())">Справочные материалы</a>

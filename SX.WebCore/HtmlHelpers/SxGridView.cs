@@ -77,7 +77,7 @@ namespace SX.WebCore.HtmlHelpers
                 }
             }
 
-            public SxGridViewColumn[] Columns { get; set; }
+            public SxGridViewColumn<TModel>[] Columns { get; set; }
 
             public string GeneralControllerName { get; set; }
 
@@ -103,7 +103,7 @@ namespace SX.WebCore.HtmlHelpers
             public SxPagerInfo PagerInfo { get; set; }
             public string PagerLink { get; set; }
         }
-        public class SxGridViewColumn
+        public class SxGridViewColumn<TModel>
         {
             public string FieldName { get; set; }
 
@@ -120,7 +120,7 @@ namespace SX.WebCore.HtmlHelpers
                 }
             }
 
-            public Func<object, string> Template { get; set; }
+            public Func<TModel, string> Template { get; set; }
         }
 
         private static TagBuilder getForm<TModel>(HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings, string guid)
@@ -285,7 +285,7 @@ namespace SX.WebCore.HtmlHelpers
 
                 var val=props.First(x => x.Name == column.FieldName).GetValue(model);
                 var value = column.Template != null
-                    ? htmlHelper.Raw(column.Template(val))
+                    ? htmlHelper.Raw(column.Template(model))
                     : val;
 
                 td.InnerHtml += value;

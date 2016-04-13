@@ -10,9 +10,9 @@ namespace GE.WebAdmin.Models
         public ModelCoreType ModelCoreType { get; set; }
         public string UserId { get; set; }
 
-        public VMManualGroup Group { get; set; }
-        [Display(Name = "Группа"), MaxLength(128), Required, UIHint("EditManualGroup")]
-        public string GroupId { get; set; }
+        public VMEditMaterialCategory Category { get; set; }
+        [Display(Name = "Категория"), UIHint("EditMaterialCategory"), AdditionalMetadata("mct", ModelCoreType.Manual)]
+        public string CategoryId { get; set; }
 
         [Display(Name = "Название материала"), MaxLength(255), Required]
         public string Title { get; set; }

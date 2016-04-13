@@ -2,7 +2,6 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using AutoMapper;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -10,10 +9,36 @@ namespace GE.WebUI.Extantions.Repositories
     {
         public static VMLastNewsBlock LastNewsBlock(this GE.WebCoreExtantions.Repositories.RepoNews repo, int amount=5)
         {
+            var query = @"SELECT TOP(@AMOUNT) dm.ID,
+       dm.DateCreate,
+       dm.Title, dm.TitleUrl,
+       dm.FrontPictureId,
+       dn.GameId,
+       dg.TitleUrl          AS GameTitle
+FROM   (
+           SELECT MAX(dm.DateCreate)  AS DateCreate,
+                  dn.GameId           AS GameId
+           FROM   D_NEWS              AS dn
+                  JOIN DV_MATERIAL    AS dm
+                       ON  dm.ID = dn.ID
+                       AND dm.ModelCoreType = dn.ModelCoreType
+           GROUP BY
+                  dn.GameId
+       ) X
+       JOIN D_NEWS       AS dn
+            ON  dn.GameId = X.GameId
+       JOIN DV_MATERIAL  AS dm
+            ON  dm.ID = dn.ID
+            AND dm.ModelCoreType = dn.ModelCoreType
+            AND dm.DateCreate = X.DateCreate
+       JOIN D_GAME       AS dg
+            ON  dg.ID = dn.GameId
+ORDER BY
+       X.DateCreate DESC";
             var viewModel = new VMLastNewsBlock(amount);
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var result = conn.Query<VMLastNewsBlockNews>(Resources.Sql_News.LastNews, new { AMOUNT = amount });
+                var result = conn.Query<VMLastNewsBlockNews>(query, new { AMOUNT = amount });
                 viewModel.News = result.ToArray();
             }
 

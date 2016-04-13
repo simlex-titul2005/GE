@@ -114,9 +114,9 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Preview
         {
-            public readonly string gameTitle = "gameTitle";
-            public readonly string articleType = "articleType";
-            public readonly string lettersCount = "lettersCount";
+            public readonly string gt = "gt";
+            public readonly string c = "c";
+            public readonly string lc = "lc";
         }
         static readonly ActionParamsClass_Last s_params_Last = new ActionParamsClass_Last();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -195,16 +195,16 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void PreviewOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string gameTitle, string articleType, int lettersCount);
+        partial void PreviewOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string gt, string c, int lc);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Preview(string gameTitle, string articleType, int lettersCount)
+        public override System.Web.Mvc.ActionResult Preview(string gt, string c, int lc)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Preview);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gameTitle", gameTitle);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "articleType", articleType);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lettersCount", lettersCount);
-            PreviewOverride(callInfo, gameTitle, articleType, lettersCount);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gt", gt);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "c", c);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lc", lc);
+            PreviewOverride(callInfo, gt, c, lc);
             return callInfo;
         }
 

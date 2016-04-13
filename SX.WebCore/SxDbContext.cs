@@ -87,9 +87,6 @@ namespace SX.WebCore
                 .WithMany()
                 .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
 
-            modelBuilder.Entity<SxManualGroup>()
-               .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             modelBuilder.Entity<SxMaterialCategory>()
                .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }

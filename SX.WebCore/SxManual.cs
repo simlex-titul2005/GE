@@ -6,7 +6,6 @@ namespace SX.WebCore
     [Table("D_MANUAL")]
     public class SxManual : SxMaterial
     {
-        public virtual SxManualGroup Group { get; set; }
-        public string GroupId { get; set; }
+        
     }
 }

@@ -12,8 +12,11 @@
     {
         UpdateTargetId = "grid-manuals",
         Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Заголовок"}
+        Columns = new SxExtantions.SxGridViewColumn<VMManual>[]{
+            new SxExtantions.SxGridViewColumn<VMManual>{FieldName="Title", Caption="Заголовок"},
+            new SxExtantions.SxGridViewColumn<VMManual>{FieldName="CategoryId", Caption="Инфо", Template=(m)=> {
+                return string.IsNullOrEmpty(m.CategoryId) ?string.Format("<span class=\"text-danger\">{0}</span>", "Не определена категория"):null;
+            } }
         },
         PagerInfo = pagerInfo,
         Filter = filter,

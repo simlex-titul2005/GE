@@ -12,10 +12,10 @@
         {
             UpdateTargetId = "grid-news",
             Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn[]{
-            new SxExtantions.SxGridViewColumn{FieldName="DateCreate", Caption="Дата создания"},
-            new SxExtantions.SxGridViewColumn{FieldName="Title", Caption="Заголовок"},
-            new SxExtantions.SxGridViewColumn{FieldName="SeoInfoId", Caption="Инфо", Template=(si)=> {
+            Columns = new SxExtantions.SxGridViewColumn<VMNews>[]{
+            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="DateCreate", Caption="Дата создания"},
+            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="Title", Caption="Заголовок"},
+            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="SeoInfoId", Caption="Инфо", Template=(si)=> {
                 return si==null? "<i class=\"text-danger\">не заданы теги seo</i>":null;
             } },
         },

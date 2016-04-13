@@ -23,7 +23,7 @@ namespace GE.WebUI.Models
     {
         public VMFGBGame()
         {
-            ArticleTypes = new VMFGBArticleType[0];
+            MaterialCategories = new VMMaterialCategory[0];
         }
         public int Id { get; set; }
         public Guid FrontPictureId { get; set; }
@@ -31,14 +31,8 @@ namespace GE.WebUI.Models
         public string TitleUrl { get; set; }
         public string Description { get; set; }
 
-        public VMFGBArticleType[] ArticleTypes { get; set; }
-        public int ArticleTypeLength { get { return ArticleTypes.Length; } }
-        public bool HasArticleTypes { get { return ArticleTypes.Length != 0; } }
-    }
-
-    public sealed class VMFGBArticleType
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public VMMaterialCategory[] MaterialCategories { get; set; }
+        public int MaterialCategoryLength { get { return MaterialCategories.Length; } }
+        public bool HasMaterialCategories { get { return MaterialCategories.Length != 0; } }
     }
 }

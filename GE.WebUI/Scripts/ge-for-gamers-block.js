@@ -15,7 +15,7 @@
                 var isSelected = $a.closest('li').hasClass('selected');
                 if (isSelected) {
                     var gameTitle = $a.data('game-title');
-                    var url = '/articles/preview?gameTitle=' + gameTitle + '&lettersCount=' + lettersCount;
+                    var url = '/articles/preview?gt=' + gameTitle + '&lc=' + lettersCount;
                     $.ajax({
                         method: 'get',
                         url: url,
@@ -36,8 +36,8 @@
             $this.find('.dropdown > li > a').click(function () {
                 var $a = $(this);
                 var gameTitle = $a.data('game-title');
-                var articleType = $a.data('article-type');
-                var url = '/articles/preview?gameTitle=' + gameTitle + '&articleType=' + articleType + '&lettersCount=' + lettersCount;
+                var categoryId = $a.data('category-id');
+                var url = '/articles/preview?gt=' + gameTitle + '&c=' + categoryId + '&lc=' + lettersCount;
                 $.ajax({
                     method: 'get',
                     url: url,

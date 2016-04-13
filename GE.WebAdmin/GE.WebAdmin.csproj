@@ -218,7 +218,6 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ForumPartsController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
-    <Compile Include="Controllers\ManualGroupsController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\MaterialCategoriesController.cs" />
     <Compile Include="Controllers\MaterialTagsController.cs" />
@@ -264,9 +263,6 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ManualGroupsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="ManualsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -289,7 +285,6 @@
     <Compile Include="Models\VMClickType.cs" />
     <Compile Include="Models\VMEditClickType.cs" />
     <Compile Include="Models\VMEditForumPart.cs" />
-    <Compile Include="Models\VMEditManualGroup.cs" />
     <Compile Include="Models\VMEditMaterialTag.cs" />
     <Compile Include="Models\VMEditNewsRubric.cs" />
     <Compile Include="Models\VMEditRole.cs" />
@@ -301,7 +296,6 @@
     <Compile Include="Models\VMForumPart.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
     <Compile Include="Models\VMMaterialCategory.cs" />
-    <Compile Include="Models\VMManualGroup.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMNewsRubric.cs" />
     <Compile Include="Models\VMRedirect.cs" />
@@ -443,14 +437,9 @@
     <Content Include="Views\Comments\_LastComments.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditMaterialCategory.cshtml" />
     <Content Include="Views\Users\_UsersOnSite.cshtml" />
-    <Content Include="Views\ManualGroups\Index.cshtml" />
-    <Content Include="Views\ManualGroups\Edit.cshtml" />
-    <Content Include="Views\ManualGroups\_TreeViewEditable.cshtml" />
     <Content Include="Views\Manuals\_GridView.cshtml" />
     <Content Include="Views\Manuals\Edit.cshtml" />
     <Content Include="Views\Manuals\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EditManualGroup.cshtml" />
-    <Content Include="Views\ManualGroups\_TreeView.cshtml" />
     <Content Include="Views\MaterialCategories\Index.cshtml" />
     <Content Include="Views\MaterialCategories\_TreeViewEditable.cshtml" />
     <Content Include="Views\MaterialCategories\Edit.cshtml" />

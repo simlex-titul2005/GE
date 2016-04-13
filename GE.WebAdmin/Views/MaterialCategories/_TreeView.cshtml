@@ -16,7 +16,7 @@
         FuncEditUrl = x => Url.Action(MVC.MaterialCategories.Edit(mct:x.ModelCoreType, id: x.Id)),
         FuncEditSubNodeUrl = x => Url.Action(MVC.MaterialCategories.Edit(mct: mct, pcid: x.Id)),
         MaxLevel = maxLevel,
-        FuncSearchUrl = () => Url.Action(MVC.ManualGroups.Index()),
+        FuncSearchUrl = () => Url.Action(MVC.MaterialCategories.Index()),
         UpdateTargetId = "matcat-tv",
         EnableEditing = false,
         EnableFiltering = false,

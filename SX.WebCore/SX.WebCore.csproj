@@ -123,6 +123,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\ISxSeoWordCounter.cs" />
     <Compile Include="Abstract\ISxHasFrontPicture.cs" />
     <Compile Include="Abstract\ISxHasHtml.cs" />
     <Compile Include="Abstract\ISxSiteMapProvider.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Managers\SxAppRoleManager.cs" />
     <Compile Include="Managers\SxAppSignInManager.cs" />
     <Compile Include="Managers\SxAppUserManager.cs" />
+    <Compile Include="Managers\SxSeoWordCounter.cs" />
     <Compile Include="PictureHandler.cs" />
     <Compile Include="Providers\QueryProvider.cs" />
     <Compile Include="Repositories\RepoLike.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="SxRouteValue.cs" />
     <Compile Include="SxSeoInfo.cs" />
     <Compile Include="SxSeoKeyword.cs" />
+    <Compile Include="SxSeoPhrase.cs" />
     <Compile Include="SxSiteMapUrl.cs" />
     <Compile Include="SxSiteSetting.cs" />
     <Compile Include="SxVmMaterialTag.cs" />

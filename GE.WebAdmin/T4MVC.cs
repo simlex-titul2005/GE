@@ -50,6 +50,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.RouteValuesController RouteValues = new GE.WebAdmin.Controllers.T4MVC_RouteValuesController();
     public static GE.WebAdmin.Controllers.SeoInfoController SeoInfo = new GE.WebAdmin.Controllers.T4MVC_SeoInfoController();
     public static GE.WebAdmin.Controllers.SeoKeywordsController SeoKeywords = new GE.WebAdmin.Controllers.T4MVC_SeoKeywordsController();
+    public static GE.WebAdmin.Controllers.SeoWordCounterController SeoWordCounter = new GE.WebAdmin.Controllers.T4MVC_SeoWordCounterController();
     public static GE.WebAdmin.Controllers.SettingsController Settings = new GE.WebAdmin.Controllers.T4MVC_SettingsController();
     public static GE.WebAdmin.Controllers.UsersController Users = new GE.WebAdmin.Controllers.T4MVC_UsersController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();

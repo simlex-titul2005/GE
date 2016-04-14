@@ -233,6 +233,7 @@
     <Compile Include="Controllers\RouteValuesController.cs" />
     <Compile Include="Controllers\SeoInfoController.cs" />
     <Compile Include="Controllers\SeoKeywordsController.cs" />
+    <Compile Include="Controllers\SeoWordCounterController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
@@ -357,6 +358,9 @@
     <Compile Include="SeoKeywordsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="SeoWordCounterController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="SettingsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -444,6 +448,8 @@
     <Content Include="Views\MaterialCategories\_TreeViewEditable.cshtml" />
     <Content Include="Views\MaterialCategories\Edit.cshtml" />
     <Content Include="Views\MaterialCategories\_TreeView.cshtml" />
+    <Content Include="Views\SeoWordCounter\Index.cshtml" />
+    <Content Include="Views\SeoWordCounter\_Table.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -42,8 +42,7 @@ FROM   DV_MATERIAL  AS dm
                             AND dm2.ModelCoreType = dn.ModelCoreType
                        JOIN D_GAME  AS dg1
                             ON  dg1.Id = dn.GameId
-                            AND dg1.TitleUrl = @gturl
-                OR @gturl IS NULL
+                            AND (dg1.TitleUrl = @gturl OR @gturl IS NULL)
                    WHERE dm2.Show = 1
                 AND dm2.DateOfPublication <= GETDATE()
                     ORDER BY
@@ -57,8 +56,7 @@ FROM   DV_MATERIAL  AS dm
                                 AND dm3.ModelCoreType = da.ModelCoreType
                            JOIN D_GAME AS dg2
                                 ON  dg2.Id = da.GameId
-                                AND dg2.TitleUrl = @gturl
-                OR @gturl IS NULL
+                                AND (dg2.TitleUrl = @gturl OR @gturl IS NULL)
                    WHERE dm3.Show = 1
                 AND dm3.DateOfPublication <= GETDATE()
                     ORDER BY

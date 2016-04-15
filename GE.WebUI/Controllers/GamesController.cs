@@ -23,7 +23,7 @@ namespace GE.WebUI.Controllers
         private const string __emptyGameGoodImagePath = "emptyGameGoodImagePath";
         private const string __emptyGameBadImagePath = "emptyGameBadImagePath";
         [ChildActionOnly]
-        public virtual PartialViewResult GameList(int imgWidth = 570, int iconHeight = 80)
+        public virtual PartialViewResult GameList(int imgWidth = 570, int iconHeight = 80, int gnc=3)
         {
             var routes = Request.RequestContext.RouteData.Values;
             var controller = routes["controller"].ToString().ToLowerInvariant();
@@ -39,7 +39,7 @@ namespace GE.WebUI.Controllers
             if (ViewBag.ActionName == "details")
                 ViewBag.GameName = ControllerContext.ParentActionViewContext.ViewBag.GameName;
 
-            var viewModel = (_repo as RepoGame).GetGameMenu(imgWidth, iconHeight, 5, gameName == null ? (string)null : (string)gameName);
+            var viewModel = (_repo as RepoGame).GetGameMenu(imgWidth, iconHeight, gnc, gameName == null ? (string)null : (string)gameName);
 
             var emptyGameIconPath = _repoSetting.GetByKey(__emptyGameIconPath);
             var emptyGameGoodImagePath = _repoSetting.GetByKey(__emptyGameGoodImagePath);

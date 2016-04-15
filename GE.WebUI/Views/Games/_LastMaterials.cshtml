@@ -10,11 +10,20 @@
             @for (int i = 0; i < Model.Length; i++)
             {
                 var item = Model[i];
-                
+                string url = string.Empty;
+                switch(item.ModelCoreType)
+                {
+                    case SX.WebCore.Enums.ModelCoreType.News:
+                        url = Url.Action(MVC.News.Details(year: item.DateCreate.Year, month: item.DateCreate.Month.ToString("00"), day: item.DateCreate.Day.ToString("00"), titleUrl: item.TitleUrl));
+                        break;
+                    case SX.WebCore.Enums.ModelCoreType.Article:
+                        url = Url.Action(MVC.Articles.Details(year: item.DateCreate.Year, month: item.DateCreate.Month.ToString("00"), day: item.DateCreate.Day.ToString("00"), titleUrl: item.TitleUrl));
+                        break;
+                }
                 <li>
-                    <a href="#">@item.Title</a>
+                    <a href="@url">@item.Title</a>
                 </li>
-            }
+                }
         </ul>
     }
 </div>

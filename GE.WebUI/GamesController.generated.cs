@@ -90,6 +90,7 @@ namespace GE.WebUI.Controllers
         {
             public readonly string imgWidth = "imgWidth";
             public readonly string iconHeight = "iconHeight";
+            public readonly string gnc = "gnc";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -122,15 +123,16 @@ namespace GE.WebUI.Controllers
         public T4MVC_GamesController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void GameListOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int imgWidth, int iconHeight);
+        partial void GameListOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int imgWidth, int iconHeight, int gnc);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult GameList(int imgWidth, int iconHeight)
+        public override System.Web.Mvc.PartialViewResult GameList(int imgWidth, int iconHeight, int gnc)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.GameList);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "imgWidth", imgWidth);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "iconHeight", iconHeight);
-            GameListOverride(callInfo, imgWidth, iconHeight);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gnc", gnc);
+            GameListOverride(callInfo, imgWidth, iconHeight, gnc);
             return callInfo;
         }
 

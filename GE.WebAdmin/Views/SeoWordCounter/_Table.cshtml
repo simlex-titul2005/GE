@@ -35,7 +35,7 @@
                     @using (Ajax.BeginForm(MVC.SeoWordCounter.Delete(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "phrases" }))
                     {
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-default" onclick="$('#phrase').val('')"><i class="fa fa-refresh"></i> Очистить</button>
+                        <button type="submit" class="btn btn-default" onclick="$('#text').val('')"><i class="fa fa-refresh"></i> Очистить</button>
                     }
                 </li>
                 <li>

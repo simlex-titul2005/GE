@@ -61,9 +61,9 @@ namespace GE.WebAdmin.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.PartialViewResult AddPhrase()
+        public virtual System.Web.Mvc.PartialViewResult AddPhrases()
         {
-            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.AddPhrase);
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.AddPhrases);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -82,7 +82,7 @@ namespace GE.WebAdmin.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string AddPhrase = "AddPhrase";
+            public readonly string AddPhrases = "AddPhrases";
             public readonly string Report = "Report";
             public readonly string Delete = "Delete";
         }
@@ -91,19 +91,19 @@ namespace GE.WebAdmin.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string AddPhrase = "AddPhrase";
+            public const string AddPhrases = "AddPhrases";
             public const string Report = "Report";
             public const string Delete = "Delete";
         }
 
 
-        static readonly ActionParamsClass_AddPhrase s_params_AddPhrase = new ActionParamsClass_AddPhrase();
+        static readonly ActionParamsClass_AddPhrases s_params_AddPhrases = new ActionParamsClass_AddPhrases();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_AddPhrase AddPhraseParams { get { return s_params_AddPhrase; } }
+        public ActionParamsClass_AddPhrases AddPhrasesParams { get { return s_params_AddPhrases; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_AddPhrase
+        public class ActionParamsClass_AddPhrases
         {
-            public readonly string phrase = "phrase";
+            public readonly string text = "text";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -140,14 +140,14 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void AddPhraseOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, string phrase);
+        partial void AddPhrasesOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, string text);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult AddPhrase(string phrase)
+        public override System.Web.Mvc.PartialViewResult AddPhrases(string text)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.AddPhrase);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "phrase", phrase);
-            AddPhraseOverride(callInfo, phrase);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.AddPhrases);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "text", text);
+            AddPhrasesOverride(callInfo, text);
             return callInfo;
         }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Linq;
 using System.Text;
+using System;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -30,17 +31,25 @@ namespace GE.WebAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual PartialViewResult AddPhrase(string phrase)
+        public virtual PartialViewResult AddPhrases(string text)
         {
-            var model = new SxSeoPhrase(phrase);
-            if (!string.IsNullOrEmpty(phrase) && _data.SingleOrDefault(x => x.Text == phrase) == null)
+            string[] stringSeparators = new string[] { "\r\n" };
+            string[] phrases = text.Split(stringSeparators, StringSplitOptions.None);
+            for (int i = 0; i < phrases.Length; i++)
             {
-                _counter = new SX.WebCore.Managers.SxSeoWordCounter();
-                model.WordCount = _counter.GetWordCount(model);
-                _data.Add(model);
+                var phrase = phrases[i];
+                if (!string.IsNullOrEmpty(phrase) && _data.SingleOrDefault(x => x.Text == phrase) == null)
+                {
+                    var model = new SxSeoPhrase(phrase);
+                    _counter = new SX.WebCore.Managers.SxSeoWordCounter();
+                    model.WordCount = _counter.GetWordCount(model);
+                    _data.Add(model);
+                }
             }
+
             return PartialView(MVC.SeoWordCounter.Views._Table, _data.ToArray());
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -55,9 +64,12 @@ namespace GE.WebAdmin.Controllers
                 {
                     res += "," + str[i];
                 }
-                sb.AppendLine(res.Substring(1));
+                sb.AppendLine(res.Substring(1) + " [" + item.WordCount + "]");
             }
-            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", "seo-words-count.csv");
+            int pageCode = 1251;
+            Encoding encoding = Encoding.GetEncoding(pageCode);
+            Byte[] encodedBytes = encoding.GetBytes(sb.ToString());
+            return File(encodedBytes, "text/csv", "seo-words-count.csv");
         }
 
         [HttpPost]

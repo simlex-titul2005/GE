@@ -5,11 +5,11 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Ajax.BeginForm(MVC.SeoWordCounter.AddPhrase(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "phrases" }))
+@using (Ajax.BeginForm(MVC.SeoWordCounter.AddPhrases(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "phrases" }))
 {
     @Html.AntiForgeryToken()
-    <label for="phrase">Фраза для анализа</label>
-    <textarea placeholder="Введите фразу для анализа" name="phrase" id="phrase" style="min-height:100px;" class="form-control"></textarea>
+    <label for="phrase">Текст для анализа</label>
+    <textarea placeholder="Введите текст для анализа" name="text" id="text" style="min-height:100px;" class="form-control"></textarea>
     <div class="text-left">
         <br />
         <button type="submit" class="btn btn-default"><i class="fa fa-level-down"></i> Отпавить</button>

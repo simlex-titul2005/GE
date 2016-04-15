@@ -131,9 +131,24 @@ namespace GE.WebAdmin.Controllers
             var usersOnSite = MvcApplication.UsersOnSite;
             var emails = usersOnSite.Select(x => x.Value).ToArray();
             var users = UsereManager.Users.Where(x => emails.Contains(x.Email)).ToArray();
-            var viewModel = users.Select(x=>Mapper.Map<SxAppUser, VMUser>(x)).ToArray();
+            var roles = RoleManager.Roles.ToArray();
+            var viewModel = new List<VMUser>();
+            foreach (var user in users)
+            {
+                viewModel.Add(new VMUser {
+                    Id=user.Id,
+                    AvatarId=user.AvatarId,
+                    Email=user.Email,
+                    NikName=user.NikName,
+                    Roles= user.Roles.Join(roles, r=>r.RoleId, u=>u.Id, (r,u)=> new VMRole {
+                        Id=u.Id,
+                        Name=u.Name,
+                        Description=u.Description
+                    }).ToArray()
+                });
+            }
 
-            return PartialView(MVC.Users.Views._UsersOnSite, viewModel);
+            return PartialView(MVC.Users.Views._UsersOnSite, viewModel.ToArray());
         }
     }
 }

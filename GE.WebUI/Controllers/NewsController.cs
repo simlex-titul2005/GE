@@ -14,10 +14,10 @@ namespace GE.WebUI.Controllers
         [OutputCache(Duration =900)]
 #endif
         [ChildActionOnly]
-        public virtual PartialViewResult LastNewsBlock(int amount = 5)
+        public virtual PartialViewResult LastGamesNewsBlock(int lnc = 5, int gc = 4, int glnc = 3, int gtc=20)
         {
-            var viewModel = (base.Repository as RepoNews).LastNewsBlock(amount);
-            return viewModel.HasNews ? PartialView(MVC.News.Views._LastNewsBlock, viewModel) : null;
+            var viewModel = (base.Repository as RepoNews).LastGameNewsBlock(lnc, gc, glnc, gtc);
+            return PartialView(MVC.News.Views._LastNewsBlock, viewModel);
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using SX.WebCore.Abstract;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Web;
+using static SX.WebCore.Enums;
 
 namespace GE.WebUI.Models
 {
@@ -13,6 +11,7 @@ namespace GE.WebUI.Models
             Games = new VMGame[0];
             ImgWidth = imgWidth;
             IconHeight = iconHeight;
+            Materials = new VMImgGameMaterial[0];
         }
 
         public VMEmptyGame EmptyGame { get; set; }
@@ -65,6 +64,7 @@ namespace GE.WebUI.Models
                 return model;
             }
         }
+        public VMImgGameMaterial[] Materials { get; set; }
     }
 
     public sealed class VMEmptyGame
@@ -94,6 +94,15 @@ namespace GE.WebUI.Models
         public string BadPictureUrl { get; set; }
         public string IconUrl { get; set; }
         public int ImgWidth { get; set; }
-        public int IconHeight { get; set; } 
+        public int IconHeight { get; set; }
+    }
+
+    public sealed class VMImgGameMaterial
+    {
+        public ModelCoreType ModelCoreType { get; set; }
+        public DateTime DateCreate { get; set; }
+        public DateTime DateOfPublication { get; set; }
+        public string Title { get; set; }
+        public string TitleUrl { get; set; }
     }
 }

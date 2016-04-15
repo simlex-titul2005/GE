@@ -1,14 +1,18 @@
-﻿@model SX.WebCore.SxVmMaterialTag[]
+﻿@model SxVMMaterialTag[]
 @{
     Layout = null;
-    var maxFs = (int)ViewBag.CloudMaxFs;
-    var url = (string)ViewBag.Url;
+    var maxFs =(int)ViewData["TagsMaxFs"];
+    var url = (string)ViewData["TagsUrl"];
+    var showHeader = Convert.ToBoolean(ViewData["TagsShowHeader"]);
 }
 
 @if (Model.Any())
 {
     <div class="tags-block">
-        <h3>Облако тегов</h3>
+        @if (showHeader)
+        {
+            <h3>Облако тегов</h3>
+        }
         @Html.SxTagsCloud(Model, url, maxFs)
     </div>
 }

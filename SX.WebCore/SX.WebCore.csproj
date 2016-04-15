@@ -181,7 +181,7 @@
     <Compile Include="SxSeoPhrase.cs" />
     <Compile Include="SxSiteMapUrl.cs" />
     <Compile Include="SxSiteSetting.cs" />
-    <Compile Include="SxVmMaterialTag.cs" />
+    <Compile Include="ViewModels\SxVMMaterialTag.cs" />
     <Compile Include="UrlHelper.cs" />
     <Compile Include="ViewModels\SxVMExternalLoginConfirmation.cs" />
     <Compile Include="ViewModels\SxVMForgotPassword.cs" />

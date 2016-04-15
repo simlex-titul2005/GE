@@ -3,13 +3,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using GE.WebCoreExtantions;
-using SX.WebCore;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static SxVmMaterialTag[] GetCloud(this RepoMaterialTag repo, Filter filter, int amount=50)
+        public static SxVMMaterialTag[] GetCloud(this RepoMaterialTag repo, Filter filter, int amount=50)
         {
             var query = @"SELECT TOP(@amount) x.Title,
        SUM(x.[Count])  AS [Count],
@@ -36,7 +36,7 @@ ORDER BY
 
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                var data = connection.Query<SxVmMaterialTag>(query, new {
+                var data = connection.Query<SxVMMaterialTag>(query, new {
                     mid = filter.MaterialId,
                     mct = filter.ModelCoreType,
                     amount = amount

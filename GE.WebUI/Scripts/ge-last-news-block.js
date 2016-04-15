@@ -34,31 +34,31 @@
                 var $a = $(this);
                 $a.addClass('hover');
                 var gameId = $a.data('game-id');
-                var $firstFigure = $this.find('.games figure');
-                var $figure = $container.find('figure[data-game-id="' + gameId + '"]');
+                var $firstFigure = $this.find('.games figure').closest('li');
+                var $figure = $container.find('figure[data-game-id="' + gameId + '"]').closest('li');
                 $figure.swap($firstFigure);
+                setFigures($this.find('.games > li'));
+                $figure.trigger('mouseenter');
             });
 
-            $this.find('.games img').one('load', function () {
-                if (width < 768) return;
-                var $img = $(this);
-
-                var W = $img.closest('figure').width();
-
-                var realW = this.height;
-                var realH = this.width;
-
-                var w = $(this).width();
-                var h = $(this).height();
-
-                if (w < W)
-                    $img.width(W).css('height', 'auto');
-                if (w > W)
-                    $img.addClass('centerHorizontal');
-            }).each(function () {
-                if (width < 768) return;
-                if (this.complete) $(this).load();
+            $this.mouseleave(function () {
+                $(this).find('.lgnb-tags').hide();
             });
+
+            setFigures($this.find('.games > li'));
         });
+
+        function setFigures(e) {
+            $(e).mouseenter(function () {
+                if (width < 768) return;
+
+                var $wrapper = $(this).closest('.games-wrapper');
+                var $tags = $(this).children('.tags').html();
+                var $t = $wrapper.find('.lgnb-tags');
+                $t.html($tags);
+                $t.show();
+                $t.find('.tags-block').show();
+            });
+        }
     };
 })(jQuery);

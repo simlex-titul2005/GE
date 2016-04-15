@@ -34,8 +34,9 @@ namespace GE.WebUI.Controllers
                     url = Url.Action(MVC.News.List());
                     break;
             }
-            ViewBag.Url = url;
-            ViewBag.CloudMaxFs = maxFs;
+            ViewData["TagsMaxFs"] = maxFs;
+            ViewData["TagsUrl"] = url;
+            ViewData["TagsShowHeader"] = true;
             return PartialView(MVC.MaterialTags.Views._TagsCloud, viewModel);
         }
     }

@@ -31,7 +31,7 @@
     </div>
     <div class="game-images">
         <div class="container">
-            @Html.DisplayFor(x => Model[gameName], new { LoadImg = true })
+            @Html.DisplayFor(x => Model[gameName], new { LoadImg = true, Materials = Model.Materials })
         </div>
     </div>
 </div>

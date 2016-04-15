@@ -34,7 +34,7 @@
         overflow: hidden;
         overflow-y: auto;
         max-width: @g-m-xs-w;
-        position:absolute;
+        position: absolute;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -105,7 +105,7 @@
     }
 }
 
-.game-menu ul > li.active{
+.game-menu ul > li.active {
     background-color: rgba(17,25,54,.6);
 }
 
@@ -118,7 +118,7 @@
         font-size: 0.9em;
         -ms-word-wrap: break-word;
         word-wrap: break-word;
-        padding:10px;
+        padding: 10px;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -157,7 +157,7 @@
 .game-images {
     max-height: @g-l-h;
     overflow: hidden;
-    margin-bottom:@def-pad*2;
+    margin-bottom: @def-pad*2;
 
     @media (max-width: @screen-xs-max) {
         max-height: unset;
@@ -193,6 +193,7 @@
 .game-images .game-good-img, .game-images .game-bad-img {
     width: 50%;
     float: left;
+    position: relative;
 
     @media (max-width: @screen-xs-max) {
         float: unset;
@@ -253,4 +254,29 @@
 
     @media (min-width: @screen-lg-min) {
     }
+}
+
+
+.glm {
+    position: absolute;
+    bottom: 0;
+    border: 1px solid red;
+    left: 20px;
+    height: 100px;
+    width: 60%;
+}
+
+.glm > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.glm > ul > li{
+    line-height:1;
+    margin-bottom:10px;
+}
+
+.glm > ul > li > a {
+    line-height:1;
+    color:#000;
 }

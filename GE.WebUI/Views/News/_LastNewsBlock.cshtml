@@ -1,4 +1,4 @@
-﻿@model VMLastNewsBlock
+﻿@model VMLGNB
 @{
     Layout = null;
 }
@@ -10,38 +10,66 @@
         <div class="row">
             <div class="col-md-4">
                 <ul class="menu">
-                    @for (int i = 0; i < Model.NewsLength; i++)
+                    @if (Model.News.Any())
                     {
-                        var news = Model.News[i];
-                        <li>
-                            <a href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))" data-game-id="@news.GameId">
-                                <span class="date">@news.DateCreate.ToString("dd-MM-yyy")</span> <span class="title">@news.Title</span>
-                            </a>
-                        </li>
+                        for (int i = 0; i < Model.News.Length; i++)
+                        {
+                            var news = Model.News[i];
+                            <li>
+                                <a href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))" data-game-id="@news.GameId">
+                                    <span class="date">@news.DateCreate.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
+                                </a>
+                            </li>
+                        }
                     }
                 </ul>
             </div>
             <div class="col-md-8">
                 <div class="games-wrapper">
                     <ul class="games">
-                        @for (int i = 0; i < Model.GamesLength; i++)
+                        @if (Model.Games.Any())
                         {
-                            var game = Model.Games[i];
-                            if (game.FrontPictureId.HasValue)
+                            for (int i = 0; i < Model.Games.Length; i++)
                             {
-                                var length=Model.GamesLength > 4 ? 4 : Model.GamesLength;
-                                var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
-                                <li @("style=width:" + width + "%")>
-                                    <a href="@Url.Action("list", new { controller = "news", gameTitle = game.TitleUrl })">
-                                        <figure data-game-id="@game.Id">
-                                            <img alt="" src="@Url.Action(MVC.Pictures.Picture((Guid)game.FrontPictureId, height: 220))" />
-                                            <span class="game-title">@game.Title</span>
-                                        </figure>
-                                    </a>
-                                </li>
+                                var game = Model.Games[i];
+                                game.FrontPictureId = game.News.Any() && game.News[0].FrontPictureId.HasValue ? game.News[0].FrontPictureId : game.FrontPictureId;
+                                if (game.FrontPictureId.HasValue)
+                                {
+                                    var length = Model.Games.Length > 4 ? 4 : Model.Games.Length;
+                                    var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
+                                    <li @("style=width:" + width + "%")>
+                                        <a href="@Url.Action("list", new { controller = "news", gameTitle = game.TitleUrl })">
+                                            <figure data-game-id="@game.Id" style="background:url('@Url.Action(MVC.Pictures.Picture((Guid)game.FrontPictureId, height: 220))') center / cover">
+                                                
+                                            </figure>
+                                        </a>
+                                        @if(game.News.Any())
+                                        {
+                                            <ul class="lgnb-news hidden-xs">
+                                                @for (int y = 0; y < game.News.Length; y++)
+                                                {
+                                                    var gNews = game.News[y];
+                                                    <li>
+                                                        <a href="@Url.Action(MVC.News.Details(gNews.DateCreate.Year, gNews.DateCreate.Month.ToString("00"), gNews.DateCreate.Day.ToString("00"), gNews.TitleUrl))">@gNews.Title</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                        @if (game.Tags.Any())
+                                        {
+                                            <div class="tags">
+                                                <h4>@game.Title</h4>
+                                                @Html.Partial(MVC.MaterialTags.Views._TagsCloud, game.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action(MVC.News.List()) } })
+                                            </div>
+                                        }
+                                    </li>
+                                }
                             }
                         }
                     </ul>
+                    <div class="lgnb-tags">
+                        
+                    </div>
                 </div>
             </div>
         </div>

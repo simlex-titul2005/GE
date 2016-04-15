@@ -203,6 +203,7 @@
     float: left;
     padding-left: @def-pad;
     height: 100%;
+    position: relative;
 
     @media (max-width: @screen-xs-max) {
         float: unset;
@@ -283,7 +284,7 @@
     }
 }
 
-.l-n-b .content .games-wrapper ul > li > a > figure:hover > img {
+/*.l-n-b .content .games-wrapper ul > li > a > figure:hover > img {
     position: relative;
     left: 50%;
     -moz-transform: scale(1.05) translateX(-50%);
@@ -310,24 +311,75 @@
 
     @media (min-width: @screen-lg-min) {
     }
-}
+}*/
 
-.l-n-b .content .games-wrapper ul > li > a > figure:hover .game-title {
-    color: @color-white;
-}
-
-.l-n-b .content .games-wrapper .game-title {
-    position: absolute;
-    bottom: 0;
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 15px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: @l-n-b-g-t-color;
+.l-n-b .content .games-wrapper ul > li:hover .lgnb-news {
+    display: unset;
 }
 
 .all-news-btn {
     margin-top: @def-pad*2;
+}
+
+.lgnb-news {
+    list-style: none;
+    padding: 0;
+    margin: 0 !important;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding-right: @def-pad;
+    background-color: @color-game-menu;
+    height: auto !important;
+    display: none;
+}
+
+.lgnb-news > li {
+    float: none !important;
+    height: auto !important;
+    padding: 5px !important;
+}
+
+.lgnb-news > li > a {
+    line-height: 1;
+    color: #fff;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.lgnb-news > li > a:hover {
+    font-weight: 700;
+}
+
+.lgnb-tags {
+    display: unset;
+}
+
+.lgnb-tags > li {
+    height: auto !important;
+}
+
+.games-wrapper .games > li > .tags {
+    display: none;
+}
+
+.lgnb-tags > h4 {
+    position: absolute;
+    padding: @def-pad;
+    z-index: 2;
+    text-shadow: -2px 1px 2px rgba(0,0,0,0.4);
+}
+
+.lgnb-tags > .tags-block {
+    margin-top: 0;
+    position: absolute;
+    z-index: 1;
+    box-shadow: -4px 4px 4px rgba(0,0,0,0.2);
+    width: 100%;
+    padding-top: @def-pad*3;
+    display:none;
+}
+
+.lgnb-tags > .tags-block .current > a {
+    font-weight: normal;
 }

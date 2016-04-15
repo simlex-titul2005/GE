@@ -2,47 +2,117 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
+using SX.WebCore;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMLastNewsBlock LastNewsBlock(this GE.WebCoreExtantions.Repositories.RepoNews repo, int amount=5)
+        public static VMLGNB LastGameNewsBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc, int gc, int glnc, int gtc)
         {
-            var query = @"SELECT TOP(@AMOUNT) dm.ID,
+            var model = new VMLGNB(lnc, gc, glnc);
+
+            var queryLastNews = @"SELECT TOP(@lnc) dm.DateOfPublication,
+       dm.Title,
+       dm.TitleUrl,
        dm.DateCreate,
-       dm.Title, dm.TitleUrl,
-       dm.FrontPictureId,
-       dn.GameId,
-       dg.TitleUrl          AS GameTitle
-FROM   (
-           SELECT MAX(dm.DateCreate)  AS DateCreate,
-                  dn.GameId           AS GameId
-           FROM   D_NEWS              AS dn
-                  JOIN DV_MATERIAL    AS dm
-                       ON  dm.ID = dn.ID
-                       AND dm.ModelCoreType = dn.ModelCoreType
-           GROUP BY
-                  dn.GameId
-       ) X
-       JOIN D_NEWS       AS dn
-            ON  dn.GameId = X.GameId
-       JOIN DV_MATERIAL  AS dm
-            ON  dm.ID = dn.ID
-            AND dm.ModelCoreType = dn.ModelCoreType
-            AND dm.DateCreate = X.DateCreate
-       JOIN D_GAME       AS dg
-            ON  dg.ID = dn.GameId
+       dn.GameId
+FROM   DV_MATERIAL  AS dm
+       JOIN D_NEWS  AS dn
+            ON  dn.Id = dm.Id
+            AND dn.ModelCoreType = dm.ModelCoreType
+       JOIN D_GAME  AS dg
+            ON  dg.Id = dn.GameId
+            AND dg.Show = 1
+WHERE  dm.Show = 1
+       AND dm.DateOfPublication <= GETDATE()
 ORDER BY
-       X.DateCreate DESC";
-            var viewModel = new VMLastNewsBlock(amount);
-            using (var conn = new SqlConnection(repo.ConnectionString))
+       dm.DateCreate DESC";
+
+            var queryGames = @"SELECT TOP(@gc) x.TitleUrl,
+       x.Id,
+       x.Title,
+       x.FrontPictureId
+FROM   (
+           SELECT dg.TitleUrl,
+                  dg.Id,
+                  dg.Title,
+                  dg.FrontPictureId,
+                  COUNT(dc.Id)           AS CommentsCount,
+                  COUNT(dm.Id)           AS NewsCount
+           FROM   D_GAME                 AS dg
+                  LEFT JOIN D_NEWS       AS dn
+                       ON  dn.GameId = dg.Id
+                  LEFT JOIN DV_MATERIAL  AS dm
+                       ON  dm.Id = dn.Id
+                       AND dm.ModelCoreType = dn.ModelCoreType
+                  LEFT JOIN D_COMMENT    AS dc
+                       ON  dc.ModelCoreType = dm.ModelCoreType
+                       AND dc.MaterialId = dm.Id
+           WHERE  dg.Show = 1
+           GROUP BY
+                  dg.TitleUrl,
+                  dg.Id,
+                  dg.Title,
+                  dg.FrontPictureId
+       ) AS x
+ORDER BY
+       x.CommentsCount DESC";
+
+            var queryGameNews = @"SELECT TOP(@glnc) dm.DateOfPublication,
+       dm.Title,
+       dm.TitleUrl,
+       dm.FrontPictureId,
+       dm.DateCreate
+FROM   DV_MATERIAL  AS dm
+       JOIN D_NEWS  AS dn
+            ON  dn.Id = dm.Id
+            AND dn.ModelCoreType = dm.ModelCoreType
+       JOIN D_GAME  AS dg
+            ON  dg.Id = dn.GameId
+            AND dg.TitleUrl = @gturl
+WHERE  dm.Show = 1
+       AND dm.DateOfPublication <= GETDATE()
+ORDER BY
+       dm.DateOfPublication DESC";
+
+            var queryGameTags= @"SELECT TOP(@amount)
+       dmt.Id            AS Title,
+       COUNT(dmt.Id)     AS [Count],
+       1                 AS IsCurrent
+FROM   D_MATERIAL_TAG    AS dmt
+       JOIN D_NEWS       AS dn
+            ON  dn.Id = dmt.MaterialId
+            AND dn.ModelCoreType = dmt.ModelCoreType
+       JOIN DV_MATERIAL  AS dm
+            ON  dm.Id = dmt.MaterialId
+            AND dm.ModelCoreType = dmt.ModelCoreType
+            AND dm.Show = 1
+            AND dm.DateOfPublication <= GETDATE()
+       JOIN D_GAME       AS dg
+            ON  dg.Id = dn.GameId
+            AND dg.TitleUrl = @gturl
+GROUP BY
+       dmt.Id";
+
+            using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                var result = conn.Query<VMLastNewsBlockNews>(query, new { AMOUNT = amount });
-                viewModel.News = result.ToArray();
+                model.News = connection.Query<VMLGBNews>(queryLastNews, new { lnc = lnc }).ToArray();
+                model.Games = connection.Query<VMLGNBGame>(queryGames, new { gc = gc }).ToArray();
+                if (model.Games.Any())
+                {
+                    for (int i = 0; i < model.Games.Length; i++)
+                    {
+                        var game = model.Games[i];
+                        game.News = connection.Query<VMLGBNews>(queryGameNews, new { glnc = glnc, gturl = game.TitleUrl }).ToArray();
+                        game.Tags = connection.Query<SxVMMaterialTag>(queryGameTags, new { amount = gtc, gturl = game.TitleUrl }).ToArray();
+                    }
+                }
             }
 
-            return viewModel;
+
+            return model;
         }
 
         public static VMDetailNews GetByTitleUrl(this GE.WebCoreExtantions.Repositories.RepoNews repo, string titleUrl)

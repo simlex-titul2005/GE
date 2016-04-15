@@ -284,6 +284,10 @@
     <Compile Include="Models\Abstract\VMDetailMaterial.cs" />
     <Compile Include="Models\VMExternalLoginConfirmation.cs" />
     <Compile Include="Models\VMExternalLoginList.cs" />
+    <Compile Include="Models\VMLGNB.cs" />
+    <Compile Include="Models\VMLGNBCloudTag.cs" />
+    <Compile Include="Models\VMLGNBGame.cs" />
+    <Compile Include="Models\VMLGBNews.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
     <Compile Include="Models\VMMaterialCategory.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
@@ -298,7 +302,6 @@
     <Compile Include="Models\VMMateriallnfo.cs" />
     <Compile Include="Models\VMFGBlock.cs" />
     <Compile Include="Models\VMGameMenu .cs" />
-    <Compile Include="Models\VMLastNewsBlock.cs" />
     <Compile Include="Models\VMMenu.cs" />
     <Compile Include="Models\VMPreviewArticle.cs" />
     <Compile Include="Models\VMSearchResult.cs" />
@@ -377,6 +380,7 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Shared\_MaterialInfo.cshtml" />
+    <Content Include="Views\Games\_LastMaterials.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

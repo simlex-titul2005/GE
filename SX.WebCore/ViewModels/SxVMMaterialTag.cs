@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SX.WebCore
+namespace SX.WebCore.ViewModels
 {
-    public sealed class SxVmMaterialTag
+    public sealed class SxVMMaterialTag
     {
         public string Title { get; set; }
         public int Count { get; set; }

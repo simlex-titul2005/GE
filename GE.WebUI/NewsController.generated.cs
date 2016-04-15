@@ -84,7 +84,7 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string LastNewsBlock = "LastNewsBlock";
+            public readonly string LastGamesNewsBlock = "LastGamesNewsBlock";
             public readonly string List = "List";
             public readonly string Details = "Details";
         }
@@ -92,19 +92,22 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string LastNewsBlock = "LastNewsBlock";
+            public const string LastGamesNewsBlock = "LastGamesNewsBlock";
             public const string List = "List";
             public const string Details = "Details";
         }
 
 
-        static readonly ActionParamsClass_LastNewsBlock s_params_LastNewsBlock = new ActionParamsClass_LastNewsBlock();
+        static readonly ActionParamsClass_LastGamesNewsBlock s_params_LastGamesNewsBlock = new ActionParamsClass_LastGamesNewsBlock();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_LastNewsBlock LastNewsBlockParams { get { return s_params_LastNewsBlock; } }
+        public ActionParamsClass_LastGamesNewsBlock LastGamesNewsBlockParams { get { return s_params_LastGamesNewsBlock; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_LastNewsBlock
+        public class ActionParamsClass_LastGamesNewsBlock
         {
-            public readonly string amount = "amount";
+            public readonly string lnc = "lnc";
+            public readonly string gc = "gc";
+            public readonly string glnc = "glnc";
+            public readonly string gtc = "gtc";
         }
         static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -160,14 +163,17 @@ namespace GE.WebUI.Controllers
         public T4MVC_NewsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void LastNewsBlockOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int amount);
+        partial void LastGamesNewsBlockOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int lnc, int gc, int glnc, int gtc);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult LastNewsBlock(int amount)
+        public override System.Web.Mvc.PartialViewResult LastGamesNewsBlock(int lnc, int gc, int glnc, int gtc)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.LastNewsBlock);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "amount", amount);
-            LastNewsBlockOverride(callInfo, amount);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.LastGamesNewsBlock);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lnc", lnc);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gc", gc);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "glnc", glnc);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gtc", gtc);
+            LastGamesNewsBlockOverride(callInfo, lnc, gc, glnc, gtc);
             return callInfo;
         }
 

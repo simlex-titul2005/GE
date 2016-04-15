@@ -102,8 +102,10 @@ namespace GE.WebUI.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _GameList = "_GameList";
+                public readonly string _LastMaterials = "_LastMaterials";
             }
             public readonly string _GameList = "~/Views/Games/_GameList.cshtml";
+            public readonly string _LastMaterials = "~/Views/Games/_LastMaterials.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

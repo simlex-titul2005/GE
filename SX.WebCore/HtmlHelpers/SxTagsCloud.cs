@@ -2,13 +2,13 @@
 using System.Web.Mvc;
 using System.Linq;
 using System.Collections.Generic;
-using System;
+using SX.WebCore.ViewModels;
 
 namespace SX.WebCore.HtmlHelpers
 {
     public static partial class SxExtantions
     {
-        public static MvcHtmlString SxTagsCloud(this HtmlHelper htmlHelper, SxVmMaterialTag[] tags, string url, int maxFontSize=30)
+        public static MvcHtmlString SxTagsCloud(this HtmlHelper htmlHelper, SxVMMaterialTag[] tags, string url, int maxFontSize=30)
         {
             var sb = new StringBuilder();
             var list = new Dictionary<string, int>();
@@ -31,7 +31,7 @@ namespace SX.WebCore.HtmlHelpers
             return MvcHtmlString.Create(sb.ToString());
         }
 
-        private static void writeItem(StringBuilder sb, SxVmMaterialTag tag, string url, int maxFontSize, int fs)
+        private static void writeItem(StringBuilder sb, SxVMMaterialTag tag, string url, int maxFontSize, int fs)
         {
             sb.Append("<li ");
             if(tag.IsCurrent)

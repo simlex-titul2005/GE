@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using SX.WebCore.ViewModels;
+using static SX.WebCore.Enums;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -124,25 +125,51 @@ WHERE  dmc.ParentCategoryId IS NULL
 GROUP BY
        dmc.Title, dmc.Id";
 
-            var queryForLastNews = @"SELECT TOP(@lnc)
-       dm.DateOfPublication,
+            var queryForLastNews = @"WITH tree(ModelCoreType, Id, ParentCategoryId, Title, [Level]) AS
+     (
+         SELECT dmc1.ModelCoreType,
+                dmc1.Id,
+                dmc1.ParentCategoryId,
+                dmc1.Title,
+                CASE 
+                     WHEN dmc1.Id = @cat_id
+         OR @cat_id IS NULL THEN 1 ELSE 2 END 
+            FROM D_MATERIAL_CATEGORY AS dmc1
+            WHERE (
+                (dmc1.Id = @cat_id OR dmc1.ParentCategoryId = @cat_id)
+                OR @cat_id IS NULL
+            )
+            UNION ALL
+            SELECT dmc2.ModelCoreType,
+                   dmc2.Id,
+                   dmc2.ParentCategoryId,
+                   dmc2.Title,
+                   t.[Level] + 1
+            FROM   D_MATERIAL_CATEGORY  AS dmc2
+                   JOIN tree            AS t
+                        ON  t.Id = dmc2.ParentCategoryId
+     )
+
+SELECT TOP(@lnc) dm.DateOfPublication,
        dm.DateCreate,
        dm.Title,
        dm.TitleUrl
-FROM   D_NEWS                    AS dn
-       JOIN DV_MATERIAL          AS dm
-            ON  dm.Id = dn.Id
-            AND dm.ModelCoreType = dn.ModelCoreType
-       JOIN D_MATERIAL_CATEGORY  AS dmc
-            ON  dmc.ModelCoreType = dn.ModelCoreType
-WHERE  dmc.Id = @cat_id
-GROUP BY
-       dm.DateOfPublication,
-       dm.DateCreate,
-       dm.Title,
-       dm.TitleUrl
+FROM   DV_MATERIAL           AS dm
+       JOIN (
+                SELECT t.Id,
+                       t.ModelCoreType
+                FROM   tree AS t
+                WHERE  t.ModelCoreType = @mct
+                GROUP BY
+                       t.Id,
+                       t.ModelCoreType
+            ) x
+            ON  x.Id = dm.CategoryId
+            AND dm.ModelCoreType = x.ModelCoreType
+WHERE  dm.Show = 1
+       AND dm.DateOfPublication <= GETDATE()
 ORDER BY
-       dm.DateOfPublication DESC";
+       dm.DateOfPublication     DESC";
 
             var data = new VMLCNB();
 
@@ -154,7 +181,7 @@ ORDER BY
                     for (int i = 0; i < data.Categories.Length; i++)
                     {
                         var category = data.Categories[i];
-                        category.News = connection.Query<VMLCNBNews>(queryForLastNews, new { lnc=lnc, cat_id=category.Id }).ToArray();
+                        category.News = connection.Query<VMLCNBNews>(queryForLastNews, new { lnc=lnc, mct=ModelCoreType.News, cat_id=category.Id }).ToArray();
                     }
                 }
             }

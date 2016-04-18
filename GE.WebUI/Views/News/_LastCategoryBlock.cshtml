@@ -1,31 +1,34 @@
 ﻿@model VMLCNBCategory
-@{ 
+@{
     Layout = null;
 }
 
-<aside class="l-c-n-b">
-    <h2 class="header">Новости категории "@Model.Title"</h2>
-    <div class="content">
-        <div class="row">
-            <div class="col-md-4">
-                <ul class="menu">
-                    @if (Model.News.Any())
-                    {
-                        for (int i = 0; i < Model.News.Length; i++)
+@if (Model.News.Any())
+{
+    <aside class="l-c-n-b">
+        <h2 class="header">@Model.Title</h2>
+        <div class="content">
+            <div class="row">
+                <div class="col-md-4">
+                    <ul class="menu">
+                        @if (Model.News.Any())
                         {
-                            var news = Model.News[i];
-                            <li>
-                                <a href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))">
-                                    <span class="date">@news.DateCreate.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
-                                </a>
-                            </li>
+                            for (int i = 0; i < Model.News.Length; i++)
+                            {
+                                var news = Model.News[i];
+                                <li>
+                                    <a href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))">
+                                        <span class="date">@news.DateCreate.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
+                                    </a>
+                                </li>
+                            }
                         }
-                    }
-                </ul>
-            </div>
-            <div class="col-md-8">
+                    </ul>
+                </div>
+                <div class="col-md-8">
 
+                </div>
             </div>
         </div>
-    </div>
-</aside>
+    </aside>
+}

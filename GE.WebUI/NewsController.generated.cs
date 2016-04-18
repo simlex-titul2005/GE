@@ -85,7 +85,7 @@ namespace GE.WebUI.Controllers
         public class ActionNamesClass
         {
             public readonly string LastGamesNewsBlock = "LastGamesNewsBlock";
-            public readonly string LastCategoryNews = "LastCategoryNews";
+            public readonly string NewsCategories = "NewsCategories";
             public readonly string List = "List";
             public readonly string Details = "Details";
         }
@@ -94,7 +94,7 @@ namespace GE.WebUI.Controllers
         public class ActionNameConstants
         {
             public const string LastGamesNewsBlock = "LastGamesNewsBlock";
-            public const string LastCategoryNews = "LastCategoryNews";
+            public const string NewsCategories = "NewsCategories";
             public const string List = "List";
             public const string Details = "Details";
         }
@@ -110,6 +110,14 @@ namespace GE.WebUI.Controllers
             public readonly string gc = "gc";
             public readonly string glnc = "glnc";
             public readonly string gtc = "gtc";
+        }
+        static readonly ActionParamsClass_NewsCategories s_params_NewsCategories = new ActionParamsClass_NewsCategories();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_NewsCategories NewsCategoriesParams { get { return s_params_NewsCategories; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_NewsCategories
+        {
+            public readonly string lnc = "lnc";
         }
         static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -141,12 +149,16 @@ namespace GE.WebUI.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _Collection = "_Collection";
+                public readonly string _LastCategoryBlock = "_LastCategoryBlock";
                 public readonly string _LastNewsBlock = "_LastNewsBlock";
+                public readonly string _NewsCategories = "_NewsCategories";
                 public readonly string Details = "Details";
                 public readonly string List = "List";
             }
             public readonly string _Collection = "~/Views/News/_Collection.cshtml";
+            public readonly string _LastCategoryBlock = "~/Views/News/_LastCategoryBlock.cshtml";
             public readonly string _LastNewsBlock = "~/Views/News/_LastNewsBlock.cshtml";
+            public readonly string _NewsCategories = "~/Views/News/_NewsCategories.cshtml";
             public readonly string Details = "~/Views/News/Details.cshtml";
             public readonly string List = "~/Views/News/List.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
@@ -180,13 +192,14 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void LastCategoryNewsOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo);
+        partial void NewsCategoriesOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int lnc);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult LastCategoryNews()
+        public override System.Web.Mvc.PartialViewResult NewsCategories(int lnc)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.LastCategoryNews);
-            LastCategoryNewsOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.NewsCategories);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lnc", lnc);
+            NewsCategoriesOverride(callInfo, lnc);
             return callInfo;
         }
 

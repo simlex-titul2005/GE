@@ -2,7 +2,6 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using SX.WebCore;
 using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Extantions.Repositories
@@ -113,6 +112,54 @@ GROUP BY
 
 
             return model;
+        }
+
+        public static VMLCNB LastCategoryBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc)
+        {
+            var queryForCategory = @"SELECT dmc.Title, dmc.Id
+FROM   D_MATERIAL_CATEGORY  AS dmc
+       JOIN D_NEWS          AS dn
+            ON  dn.ModelCoreType = dmc.ModelCoreType
+WHERE  dmc.ParentCategoryId IS NULL
+GROUP BY
+       dmc.Title, dmc.Id";
+
+            var queryForLastNews = @"SELECT TOP(@lnc)
+       dm.DateOfPublication,
+       dm.DateCreate,
+       dm.Title,
+       dm.TitleUrl
+FROM   D_NEWS                    AS dn
+       JOIN DV_MATERIAL          AS dm
+            ON  dm.Id = dn.Id
+            AND dm.ModelCoreType = dn.ModelCoreType
+       JOIN D_MATERIAL_CATEGORY  AS dmc
+            ON  dmc.ModelCoreType = dn.ModelCoreType
+WHERE  dmc.Id = @cat_id
+GROUP BY
+       dm.DateOfPublication,
+       dm.DateCreate,
+       dm.Title,
+       dm.TitleUrl
+ORDER BY
+       dm.DateOfPublication DESC";
+
+            var data = new VMLCNB();
+
+            using (var connection = new SqlConnection(repo.ConnectionString))
+            {
+                data.Categories = connection.Query<VMLCNBCategory>(queryForCategory).ToArray();
+                if(data.Categories.Any())
+                {
+                    for (int i = 0; i < data.Categories.Length; i++)
+                    {
+                        var category = data.Categories[i];
+                        category.News = connection.Query<VMLCNBNews>(queryForLastNews, new { lnc=lnc, cat_id=category.Id }).ToArray();
+                    }
+                }
+            }
+
+            return data;
         }
 
         public static VMDetailNews GetByTitleUrl(this GE.WebCoreExtantions.Repositories.RepoNews repo, string titleUrl)

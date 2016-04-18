@@ -165,8 +165,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Abstract\VMLastMaterial.cs" />
     <Compile Include="Models\VMLCNB.cs" />
     <Compile Include="Models\VMLCNBCategory.cs" />
+    <Compile Include="Models\VMLCNBNews.cs" />
     <Compile Include="UserClicksController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -379,6 +381,8 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Shared\_MaterialInfo.cshtml" />
     <Content Include="Views\Games\_LastMaterials.cshtml" />
+    <Content Include="Views\News\_LastCategoryBlock.cshtml" />
+    <Content Include="Views\News\_NewsCategories.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

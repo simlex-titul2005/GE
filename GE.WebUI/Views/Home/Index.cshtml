@@ -10,6 +10,12 @@
 
 @Html.Action(MVC.News.LastGamesNewsBlock())
 
+@Html.Action(MVC.News.NewsCategories())
+
+<div class="text-center all-news-btn">
+    <a href="@Url.Action(MVC.News.List())" class="btn btn-default btn-transparent dark-blue">Все новости</a>
+</div>
+
 @Html.Action(MVC.Articles.ForGamersBlock())
 
 @section scripts{

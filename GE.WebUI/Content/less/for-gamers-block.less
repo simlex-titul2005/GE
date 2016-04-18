@@ -89,10 +89,22 @@
 
 .f-g-b .games > li h4{
     font-size:24px;
+    position:relative;
+}
+
+.f-g-b .games > li h4 > .fa {
+    font-size: 12px;
+    position: absolute;
+    top: 7px;
+    right: 0;
 }
 
 .f-g-b .games > li.selected {
     border-left-color: @color-red;
+}
+
+.f-g-b .games > li.selected h4 > i{
+    display:none;
 }
 
 .f-g-b .games > li > a {

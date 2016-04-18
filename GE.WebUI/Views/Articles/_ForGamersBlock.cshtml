@@ -18,11 +18,11 @@
                             <a href="#" rel="nofollow" data-game-title="@game.TitleUrl">
                                 <figure>
                                     <img alt="@game.Title" src="@Url.Action(MVC.Pictures.Picture(game.FrontPictureId, height:80))" />
-                                    <h4>@game.Title</h4>
+                                    <h4>@game.Title <i class="fa fa-angle-double-down" title="Развернуть блок"></i></h4>
                                     <span class="desc">@game.Description</span>
                                 </figure>
                             </a>
-                            <a href="@Url.Action("list", new { controller="articles", gameTitle=game.TitleUrl})" class="link">Кликнуть, чтобы открыть новую вкладку со статьями по игре @game.Title</a>
+                            <a href="@Url.Action("list", new { controller="articles", gameTitle=game.TitleUrl})" class="link">Все статьи по игре @game.Title</a>
                             <ul class="dropdown">
                                 @for (int y = 0; y < game.MaterialCategoryLength; y++)
                                 {

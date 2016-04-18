@@ -165,6 +165,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\VMLCNB.cs" />
+    <Compile Include="Models\VMLCNBCategory.cs" />
     <Compile Include="UserClicksController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -283,7 +285,7 @@
     <Compile Include="Models\VMLGNB.cs" />
     <Compile Include="Models\VMLGNBCloudTag.cs" />
     <Compile Include="Models\VMLGNBGame.cs" />
-    <Compile Include="Models\VMLGBNews.cs" />
+    <Compile Include="Models\VMLGNBNews.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
     <Compile Include="Models\VMMaterialCategory.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />

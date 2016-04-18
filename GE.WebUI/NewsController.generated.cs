@@ -85,6 +85,7 @@ namespace GE.WebUI.Controllers
         public class ActionNamesClass
         {
             public readonly string LastGamesNewsBlock = "LastGamesNewsBlock";
+            public readonly string LastCategoryNews = "LastCategoryNews";
             public readonly string List = "List";
             public readonly string Details = "Details";
         }
@@ -93,6 +94,7 @@ namespace GE.WebUI.Controllers
         public class ActionNameConstants
         {
             public const string LastGamesNewsBlock = "LastGamesNewsBlock";
+            public const string LastCategoryNews = "LastCategoryNews";
             public const string List = "List";
             public const string Details = "Details";
         }
@@ -174,6 +176,17 @@ namespace GE.WebUI.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "glnc", glnc);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gtc", gtc);
             LastGamesNewsBlockOverride(callInfo, lnc, gc, glnc, gtc);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void LastCategoryNewsOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult LastCategoryNews()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.LastCategoryNews);
+            LastCategoryNewsOverride(callInfo);
             return callInfo;
         }
 

@@ -98,14 +98,14 @@ GROUP BY
 
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                model.News = connection.Query<VMLGBNews>(queryLastNews, new { lnc = lnc }).ToArray();
+                model.News = connection.Query<VMLGNBNews>(queryLastNews, new { lnc = lnc }).ToArray();
                 model.Games = connection.Query<VMLGNBGame>(queryGames, new { gc = gc }).ToArray();
                 if (model.Games.Any())
                 {
                     for (int i = 0; i < model.Games.Length; i++)
                     {
                         var game = model.Games[i];
-                        game.News = connection.Query<VMLGBNews>(queryGameNews, new { glnc = glnc, gturl = game.TitleUrl }).ToArray();
+                        game.News = connection.Query<VMLGNBNews>(queryGameNews, new { glnc = glnc, gturl = game.TitleUrl }).ToArray();
                         game.Tags = connection.Query<SxVMMaterialTag>(queryGameTags, new { amount = gtc, gturl = game.TitleUrl }).ToArray();
                     }
                 }

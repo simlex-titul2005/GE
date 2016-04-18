@@ -2,7 +2,7 @@
 
 namespace GE.WebUI.Models
 {
-    public class VMLGBNews
+    public class VMLGNBNews
     {
         public DateTime DateOfPublication { get; set; }
         public DateTime DateCreate { get; set; }

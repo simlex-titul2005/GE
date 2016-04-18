@@ -7,14 +7,14 @@ namespace GE.WebUI.Models
     {
         public VMLGNBGame()
         {
-            News = new VMLGBNews[0];
+            News = new VMLGNBNews[0];
             Tags = new SxVMMaterialTag[0];
         }
 
         public int Id { get; set; }
         public string TitleUrl { get; set; }
         public string Title { get; set; }
-        public VMLGBNews[] News { get; set; }
+        public VMLGNBNews[] News { get; set; }
         public SxVMMaterialTag[] Tags { get; set; }
         public Guid? FrontPictureId { get; set; }
     }

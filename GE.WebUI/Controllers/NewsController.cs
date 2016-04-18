@@ -19,5 +19,14 @@ namespace GE.WebUI.Controllers
             var viewModel = (base.Repository as RepoNews).LastGameNewsBlock(lnc, gc, glnc, gtc);
             return PartialView(MVC.News.Views._LastNewsBlock, viewModel);
         }
+
+#if !DEBUG
+        [OutputCache(Duration =900)]
+#endif
+        [ChildActionOnly]
+        public virtual PartialViewResult LastCategoryNews()
+        {
+            return null;
+        }
     }
 }

@@ -8,11 +8,11 @@
         /// <param name="lnc">last news count</param>
         /// <param name="gc">games count</param>
         public VMLGNB(int lnc, int gc, int glnc) {
-            News = new VMLGBNews[lnc];
+            News = new VMLGNBNews[lnc];
             Games = new VMLGNBGame[gc];
         }
 
-        public VMLGBNews[] News { get; set; }
+        public VMLGNBNews[] News { get; set; }
         public VMLGNBGame[] Games { get; set; }
     }
 }

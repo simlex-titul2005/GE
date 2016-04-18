@@ -169,38 +169,50 @@ ORDER BY
         {
             var query = @"SELECT da.*,
        dm.*,
-       dg.TitleUrl       AS GameTitleUrl,CASE 
+       dg.TitleUrl       AS GameTitleUrl,
+       CASE 
             WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
             ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, 200) +
                  '...'
-       END                    AS Foreword,
+       END               AS Foreword,
        (
            SELECT ISNULL(SUM(1), 0)
-           FROM   D_LIKE AS dl
-           WHERE  dl.Direction = 1
-                  AND dl.MaterialId = dm.Id
-                  AND dl.ModelCoreType = dm.ModelCoreType
+           FROM   D_USER_CLICK  AS duc
+                  JOIN D_LIKE   AS dl
+                       ON  dl.UserClickId = duc.Id
+           WHERE  duc.MaterialId = dm.Id
+                  AND duc.ModelCoreType = dm.ModelCoreType
+                  AND dl.Direction = 1
        )                 AS LikeUpCount,
        (
            SELECT ISNULL(SUM(1), 0)
-           FROM   D_LIKE AS dl
-           WHERE  dl.Direction = 0
-                  AND dl.MaterialId = dm.Id
-                  AND dl.ModelCoreType = dm.ModelCoreType
+           FROM   D_USER_CLICK  AS duc
+                  JOIN D_LIKE   AS dl
+                       ON  dl.UserClickId = duc.Id
+           WHERE  duc.MaterialId = dm.Id
+                  AND duc.ModelCoreType = dm.ModelCoreType
+                  AND dl.Direction = 2
        )                 AS LikeDownCount,
-       anu.NikName AS UserNikName
+       (
+           SELECT COUNT(1)
+           FROM   D_COMMENT AS dc
+           WHERE  dc.MaterialId = dm.Id
+                  AND dc.ModelCoreType = dm.ModelCoreType
+       )                 AS CommentsCount,
+       anu.NikName       AS UserNikName
 FROM   D_ARTICLE         AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.Id
             AND dm.ModelCoreType = da.ModelCoreType
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = da.GameId
-       JOIN  AspNetUsers AS anu ON anu.Id = dm.UserId
-WHERE  dm.TitleUrl = @TITLE_URL";
+       JOIN AspNetUsers  AS anu
+            ON  anu.Id = dm.UserId
+WHERE  dm.TitleUrl = @title_url";
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                return conn.Query<VMDetailArticle>(query, new { TITLE_URL = titleUrl }).FirstOrDefault();
+                return conn.Query<VMDetailArticle>(query, new { title_url = titleUrl }).FirstOrDefault();
             }
         }
     }

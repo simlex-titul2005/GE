@@ -29,8 +29,6 @@ public static partial class MVC
 {
     public static GE.WebAdmin.Controllers.AccountController Account = new GE.WebAdmin.Controllers.T4MVC_AccountController();
     public static GE.WebAdmin.Controllers.ArticlesController Articles = new GE.WebAdmin.Controllers.T4MVC_ArticlesController();
-    public static GE.WebAdmin.Controllers.ClicksController Clicks = new GE.WebAdmin.Controllers.T4MVC_ClicksController();
-    public static GE.WebAdmin.Controllers.ClickTypesController ClickTypes = new GE.WebAdmin.Controllers.T4MVC_ClickTypesController();
     public static GE.WebAdmin.Controllers.CommentsController Comments = new GE.WebAdmin.Controllers.T4MVC_CommentsController();
     public static GE.WebAdmin.Controllers.FAQController FAQ = new GE.WebAdmin.Controllers.T4MVC_FAQController();
     public static GE.WebAdmin.Controllers.ForumPartsController ForumParts = new GE.WebAdmin.Controllers.T4MVC_ForumPartsController();
@@ -53,6 +51,8 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.SeoWordCounterController SeoWordCounter = new GE.WebAdmin.Controllers.T4MVC_SeoWordCounterController();
     public static GE.WebAdmin.Controllers.SettingsController Settings = new GE.WebAdmin.Controllers.T4MVC_SettingsController();
     public static GE.WebAdmin.Controllers.UsersController Users = new GE.WebAdmin.Controllers.T4MVC_UsersController();
+    public static T4MVC.ClicksController Clicks = new T4MVC.ClicksController();
+    public static T4MVC.ClickTypesController ClickTypes = new T4MVC.ClickTypesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

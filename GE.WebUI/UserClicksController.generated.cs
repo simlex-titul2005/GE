@@ -25,10 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebUI.Controllers
 {
-    public partial class ClicksController
+    public partial class UserClicksController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ClicksController(Dummy d) { }
+        protected UserClicksController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -56,21 +56,15 @@ namespace GE.WebUI.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.EmptyResult Click()
-        {
-            return new T4MVC_System_Web_Mvc_EmptyResult(Area, Name, ActionNames.Click);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ClicksController Actions { get { return MVC.Clicks; } }
+        public UserClicksController Actions { get { return MVC.UserClicks; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Clicks";
+        public readonly string Name = "UserClicks";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Clicks";
+        public const string NameConst = "UserClicks";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -78,26 +72,14 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Click = "Click";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Click = "Click";
         }
 
 
-        static readonly ActionParamsClass_Click s_params_Click = new ActionParamsClass_Click();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Click ClickParams { get { return s_params_Click; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Click
-        {
-            public readonly string rawUrl = "rawUrl";
-            public readonly string target = "target";
-            public readonly string clickTypeId = "clickTypeId";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -113,23 +95,9 @@ namespace GE.WebUI.Controllers
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_ClicksController : GE.WebUI.Controllers.ClicksController
+    public partial class T4MVC_UserClicksController : GE.WebUI.Controllers.UserClicksController
     {
-        public T4MVC_ClicksController() : base(Dummy.Instance) { }
-
-        [NonAction]
-        partial void ClickOverride(T4MVC_System_Web_Mvc_EmptyResult callInfo, string rawUrl, string target, int clickTypeId);
-
-        [NonAction]
-        public override System.Web.Mvc.EmptyResult Click(string rawUrl, string target, int clickTypeId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_EmptyResult(Area, Name, ActionNames.Click);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "rawUrl", rawUrl);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "target", target);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "clickTypeId", clickTypeId);
-            ClickOverride(callInfo, rawUrl, target, clickTypeId);
-            return callInfo;
-        }
+        public T4MVC_UserClicksController() : base(Dummy.Instance) { }
 
     }
 }

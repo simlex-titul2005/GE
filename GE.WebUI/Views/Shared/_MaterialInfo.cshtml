@@ -1,13 +1,43 @@
 ﻿@model GE.WebUI.Models.Abstract.VMDetailMaterial
-@{ 
+@{
     Layout = null;
 }
 
 <div class="m-info">
     <div class="row">
         <div class="col-md-6">
-            <a href="javascript:void(0)" class="btn btn-info up" onclick="setMaterialLike(@Model.Id, @((int)Model.ModelCoreType), '@Session.SessionID', '', 1, this)"><i class="fa fa-thumbs-o-up"></i>Это интересно! <span class="badge">@Model.LikeUpCount</span></a>
-            <a href="javascript:void(0)" class="btn btn-info down" onclick="setMaterialLike(@Model.Id, @((int)Model.ModelCoreType), '@Session.SessionID', '', 0, this)"><i class="fa fa-thumbs-o-down"></i>Это не то, что я искал <span class="badge">@Model.LikeDownCount</span></a>
+            <ul class="list-unstyled list-inline likes">
+                <li>
+                    @using (Ajax.BeginForm("click", "userclicks", new AjaxOptions
+                    {
+                        HttpMethod = "post",
+                        UpdateTargetId = "matlikesup"
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="mid" value="@Model.Id" />
+                        <input type="hidden" name="mct" value="@Model.ModelCoreType" />
+                        <input type="hidden" name="uct" value="@SX.WebCore.Enums.UserClickType.Like" />
+                        <input type="hidden" name="likeDirection" value="@SX.WebCore.Enums.LikeDirection.Up" />
+                        <button type="submit" class="btn btn-info up"><i class="fa fa-thumbs-o-up"></i> Это интересно! <span class="badge" id="matlikesup">@Model.LikeUpCount</span></button>
+                    }
+                </li>
+                <li>
+                    @using (Ajax.BeginForm("click", "userclicks", new AjaxOptions
+                    {
+                        HttpMethod = "post",
+                        UpdateTargetId = "matlikesdown"
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="mid" value="@Model.Id" />
+                        <input type="hidden" name="mct" value="@Model.ModelCoreType" />
+                        <input type="hidden" name="uct" value="@SX.WebCore.Enums.UserClickType.Like" />
+                        <input type="hidden" name="likeDirection" value="@SX.WebCore.Enums.LikeDirection.Down" />
+                        <button type="submit" class="btn btn-info down"><i class="fa fa-thumbs-o-down"></i> Это не то, что я искал ( <span class="badge" id="matlikesdown">@Model.LikeDownCount</span></button>
+                    }
+                </li>
+            </ul>
         </div>
         <div class="col-md-6">
             <div class="text-right">

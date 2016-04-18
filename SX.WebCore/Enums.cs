@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SX.WebCore
+﻿namespace SX.WebCore
 {
     public static class Enums
     {
@@ -14,7 +8,52 @@ namespace SX.WebCore
             Article = 1,
             News = 2,
             ForumTheme = 3,
-            Manual= 4
+            Manual = 4
+        }
+
+        public enum UserClickType : byte
+        {
+            Unknown = 0,
+
+            /// <summary>
+            /// Клик по ссылке поделиться
+            /// </summary>
+            Share = 1,
+
+            /// <summary>
+            /// Лайк по материалу
+            /// </summary>
+            Like = 2
+        }
+
+        public enum UserClickResult : byte
+        {
+            Unknown = 0,
+
+            /// <summary>
+            /// Уже кликнул
+            /// </summary>
+            Already = 1,
+
+            /// <summary>
+            /// Клик успешно проведен
+            /// </summary>
+            Ok = 2
+        }
+
+        public enum LikeDirection : byte
+        {
+            Unknown = 0,
+
+            /// <summary>
+            /// Положительный лайк
+            /// </summary>
+            Up = 1,
+
+            /// <summary>
+            /// Отрицательный лайк
+            /// </summary>
+            Down = 2
         }
     }
 }

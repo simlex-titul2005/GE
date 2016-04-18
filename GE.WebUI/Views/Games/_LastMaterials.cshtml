@@ -2,16 +2,15 @@
 @{
     Layout = null;
 }
-
-<div class="glm">
-    @if (Model.Any())
-    {
+@if (Model.Any())
+{
+    <div class="glm">
         <ul>
             @for (int i = 0; i < Model.Length; i++)
             {
                 var item = Model[i];
                 string url = string.Empty;
-                switch(item.ModelCoreType)
+                switch (item.ModelCoreType)
                 {
                     case SX.WebCore.Enums.ModelCoreType.News:
                         url = Url.Action(MVC.News.Details(year: item.DateCreate.Year, month: item.DateCreate.Month.ToString("00"), day: item.DateCreate.Day.ToString("00"), titleUrl: item.TitleUrl));
@@ -21,9 +20,10 @@
                         break;
                 }
                 <li>
+                    <time>@item.DateOfPublication.ToString("dd.MM.yyyy")</time><br />
                     <a href="@url">@item.Title</a>
                 </li>
-                }
+            }
         </ul>
-    }
-</div>
+    </div>
+}

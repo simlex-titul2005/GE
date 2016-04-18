@@ -29,11 +29,7 @@ namespace SX.WebCore
 
         public DbSet<SxComment> Comments { get; set; }
 
-        public DbSet<SxClick> Clicks { get; set; }
-
         public DbSet<SxForumPart> ForumParts { get; set; }
-
-        public DbSet<SxLike> Likes { get; set; }
 
         public DbSet<SxMenu> Menues { get; set; }
 
@@ -55,40 +51,23 @@ namespace SX.WebCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<SxMaterial>()
-                .HasKey(x => new { x.Id, x.ModelCoreType });
+            modelBuilder.Entity<SxMaterial>().HasKey(x => new { x.Id, x.ModelCoreType });
 
-            modelBuilder.Entity<SxSiteSetting>()
-                .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<SxSiteSetting>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-            modelBuilder.Entity<SxLike>()
-                .HasRequired(x => x.Material)
-                .WithMany()
-                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
-                .WillCascadeOnDelete();
+            modelBuilder.Entity<SxComment>().HasRequired(x => x.Material).WithMany().HasForeignKey(x => new { x.MaterialId, x.ModelCoreType }).WillCascadeOnDelete();
 
-            modelBuilder.Entity<SxComment>()
-               .HasRequired(x => x.Material)
-               .WithMany()
-               .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
-               .WillCascadeOnDelete();
+            modelBuilder.Entity<SxMaterialTag>().HasKey(x=> new { x.Id, x.MaterialId, x.ModelCoreType }).HasRequired(x => x.Material).WithMany().HasForeignKey(x => new { x.MaterialId, x.ModelCoreType }).WillCascadeOnDelete();
+            modelBuilder.Entity<SxMaterialTag>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-            modelBuilder.Entity<SxMaterialTag>()
-                .HasKey(x=> new { x.Id, x.MaterialId, x.ModelCoreType })
-                .HasRequired(x => x.Material)
-                .WithMany()
-                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType })
-                .WillCascadeOnDelete();
-            modelBuilder.Entity<SxMaterialTag>()
-                .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<SxSeoInfo>().HasOptional(x => x.Material).WithMany().HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
 
-            modelBuilder.Entity<SxSeoInfo>()
-                .HasOptional(x => x.Material)
-                .WithMany()
-                .HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
+            modelBuilder.Entity<SxMaterialCategory>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-            modelBuilder.Entity<SxMaterialCategory>()
-               .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<SxUserClick>().HasOptional(x => x.User).WithMany().HasForeignKey(x => new { x.UserId });
+            modelBuilder.Entity<SxUserClick>().HasRequired(x => x.Material).WithMany().HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
+
+            modelBuilder.Entity<SxLike>().HasRequired(x => x.UserClick).WithMany().HasForeignKey(x => new { x.UserClickId });
         }
     }
 }

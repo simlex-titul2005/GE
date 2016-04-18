@@ -165,6 +165,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UserClicksController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Content Include="Content\dist\css\error-page.min.css" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
@@ -203,12 +206,12 @@
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\user-clicks-engine.js" />
     <Content Include="Scripts\find-engine.js" />
     <Content Include="Scripts\ge-for-gamers-block.js" />
     <Content Include="Scripts\ge-game-menu.js" />
     <Content Include="Scripts\ge-last-news-block.js" />
     <None Include="Scripts\_references.js" />
-    <Content Include="Scripts\like-engine.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="share42\icons.png" />
     <Content Include="share42\share42.js" />
@@ -225,22 +228,17 @@
     <Compile Include="ArticlesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ClicksController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="CommentsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\ClicksController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LikesController.cs" />
     <Compile Include="Controllers\MaterialsController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -250,6 +248,7 @@
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SeoController.cs" />
+    <Compile Include="Controllers\UserClicksController.cs" />
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -272,9 +271,6 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\SiteMapProvider.cs" />
-    <Compile Include="LikesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="MaterialTagsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -391,6 +387,7 @@
   <ItemGroup>
     <Folder Include="Content\dist\i\temp\" />
     <Folder Include="Views\Seo\" />
+    <Folder Include="Views\UserClicks\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">

@@ -15,8 +15,8 @@
             Columns = new SxExtantions.SxGridViewColumn<VMNews>[]{
             new SxExtantions.SxGridViewColumn<VMNews>{FieldName="DateCreate", Caption="Дата создания"},
             new SxExtantions.SxGridViewColumn<VMNews>{FieldName="Title", Caption="Заголовок"},
-            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="SeoInfoId", Caption="Инфо", Template=(si)=> {
-                return si==null? "<i class=\"text-danger\">не заданы теги seo</i>":null;
+            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="SeoInfoId", Caption="Инфо", Template=(m)=> {
+                return !m.SeoInfoId.HasValue? "<i class=\"text-danger\">не заданы теги seo</i>":null;
             } },
         },
             PagerInfo=pagerInfo,

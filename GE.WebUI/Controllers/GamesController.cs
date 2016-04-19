@@ -34,7 +34,7 @@ namespace GE.WebUI.Controllers
             ViewBag.ControllerName = controller;
             if (ViewBag.ControllerName == "error") return null;
             ViewBag.ActionName = routes["action"];
-            var gameName = routes["gameTitle"];
+            var gameName = routes["gameTitle"] ?? this.ControllerContext.ParentActionViewContext.ViewBag.GameName;
             ViewBag.GameName = gameName;
             if (ViewBag.ActionName == "details")
                 ViewBag.GameName = ControllerContext.ParentActionViewContext.ViewBag.GameName;

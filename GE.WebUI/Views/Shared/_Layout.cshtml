@@ -1,7 +1,8 @@
 ﻿@using SX.WebCore;
 @{
-    Layout = null;
-    var bgUrl = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
+        Layout = null;
+        var bgUrl = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
+        var bg = string.IsNullOrEmpty(bgUrl) ? null : string.Format("style=background:url('{0}');background-size:cover;background-position:center", bgUrl);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +26,7 @@
     }
     <meta property="og:url" content="@Request.Url" />
     <title>@ViewBag.Title</title>
-    <meta property="og:title" content="@ViewBag.Title"/>
+    <meta property="og:title" content="@ViewBag.Title" />
     <meta property="og:image" content="@Url.ContentAbsUrl(ViewBag.PageImage!=null?(string)ViewBag.PageImage: "~/content/dist/i/faveicon.png")" />
 
     <link rel="shortcut icon" href="@("/content/dist/i/faveicon.png")" type="image/png" />
@@ -38,12 +39,12 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    @if(ViewBag.VKScript!=null)
+    @if (ViewBag.VKScript != null)
     {
         @Html.Raw(ViewBag.VKScript)
     }
 </head>
-<body @(bgUrl != null ? "style=background-image:url(" + bgUrl + ")" : null)>
+<body @(bg != null ? bg : null)>
     @if (ViewBag.FBScript != null)
     {
         @Html.Raw(ViewBag.FBScript)

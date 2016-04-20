@@ -8,9 +8,9 @@
     ViewBag.H1CssClass = "hidden";
 }
 
-@Html.Action(MVC.News.LastGamesNewsBlock())
+@Html.Action(MVC.News.LastGamesNewsBlock(lnc: 5))
 
-@Html.Action(MVC.News.NewsCategories())
+@Html.Action(MVC.News.NewsCategories(lnc: 5))
 
 <div class="text-center all-news-btn">
     <a href="@Url.Action(MVC.News.List())" class="btn btn-default btn-transparent dark-blue">Все новости</a>

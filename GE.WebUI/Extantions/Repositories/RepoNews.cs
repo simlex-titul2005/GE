@@ -115,7 +115,7 @@ GROUP BY
             return model;
         }
 
-        public static VMLCNB LastCategoryBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc)
+        public static VMLCNB LastCategoryBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc, int clnc)
         {
             var queryForCategory = @"SELECT dmc.Title, dmc.Id
 FROM   D_MATERIAL_CATEGORY  AS dmc
@@ -124,6 +124,26 @@ FROM   D_MATERIAL_CATEGORY  AS dmc
 WHERE  dmc.ParentCategoryId IS NULL
 GROUP BY
        dmc.Title, dmc.Id";
+
+            var queryForSubCategories = @"SELECT dmc.Id,
+       dmc.Title,
+       dmc.FrontPictureId
+FROM   D_MATERIAL_CATEGORY AS dmc
+WHERE  dmc.ParentCategoryId = @cat_id
+ORDER BY dmc.Title";
+
+            var queryForSubCategoryNews = @"SELECT TOP(@clnc)
+       dm.DateOfPublication,
+       dm.DateCreate,
+       dm.Title,
+       dm.TitleUrl,
+       dm.FrontPictureId
+FROM   DV_MATERIAL AS dm
+WHERE  dm.CategoryId = @cat_id
+       AND dm.Show = 1
+       AND dm.DateOfPublication <= GETDATE()
+ORDER BY
+       dm.DateOfPublication DESC";
 
             var queryForLastNews = @"WITH tree(ModelCoreType, Id, ParentCategoryId, Title, [Level]) AS
      (
@@ -181,6 +201,18 @@ ORDER BY
                     for (int i = 0; i < data.Categories.Length; i++)
                     {
                         var category = data.Categories[i];
+
+                        category.SubCategories = connection.Query<VMLCNBCategory>(queryForSubCategories, new { cat_id = category.Id }).ToArray();
+
+                        if(category.SubCategories.Any())
+                        {
+                            for (int y = 0; y < category.SubCategories.Length; y++)
+                            {
+                                var subCategory = category.SubCategories[y];
+                                subCategory.News = connection.Query<VMLCNBNews>(queryForSubCategoryNews, new { cat_id = subCategory.Id, clnc = clnc }).ToArray();
+                            }
+                        }
+
                         category.News = connection.Query<VMLCNBNews>(queryForLastNews, new { lnc=lnc, mct=ModelCoreType.News, cat_id=category.Id }).ToArray();
                     }
                 }

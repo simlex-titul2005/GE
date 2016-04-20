@@ -118,6 +118,7 @@ namespace GE.WebUI.Controllers
         public class ActionParamsClass_NewsCategories
         {
             public readonly string lnc = "lnc";
+            public readonly string clnc = "clnc";
         }
         static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -192,14 +193,15 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void NewsCategoriesOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int lnc);
+        partial void NewsCategoriesOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int lnc, int clnc);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult NewsCategories(int lnc)
+        public override System.Web.Mvc.PartialViewResult NewsCategories(int lnc, int clnc)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.NewsCategories);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lnc", lnc);
-            NewsCategoriesOverride(callInfo, lnc);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "clnc", clnc);
+            NewsCategoriesOverride(callInfo, lnc, clnc);
             return callInfo;
         }
 

@@ -24,9 +24,9 @@ namespace GE.WebUI.Controllers
         [OutputCache(Duration =900)]
 #endif
         [ChildActionOnly]
-        public virtual PartialViewResult NewsCategories(int lnc=5)
+        public virtual PartialViewResult NewsCategories(int lnc=5, int clnc=3)
         {
-            var data = (Repository as RepoNews).LastCategoryBlock(lnc);
+            var data = (Repository as RepoNews).LastCategoryBlock(lnc, clnc);
             return PartialView(MVC.News.Views._NewsCategories, data);
         }
     }

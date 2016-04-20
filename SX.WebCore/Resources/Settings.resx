@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="adminPanelName" xml:space="preserve">
+    <value>SX Admin</value>
+    <comment>Наименование админ панели</comment>
+  </data>
+  <data name="adminPanelVersion" xml:space="preserve">
+    <value>v. 1.0.0.3</value>
+    <comment>Версия админ панели</comment>
+  </data>
   <data name="emptyGameBadImagePath" xml:space="preserve">
     <value>emptyGameBadImagePath</value>
     <comment>Путь к отрицательному изображению игры по-умолчанию</comment>

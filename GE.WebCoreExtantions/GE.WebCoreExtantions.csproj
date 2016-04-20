@@ -64,6 +64,10 @@
   <ItemGroup>
     <Compile Include="Abstract\IHasGame.cs" />
     <Compile Include="Filter.cs" />
+    <Compile Include="Migrations\201604200525307_1.cs" />
+    <Compile Include="Migrations\201604200525307_1.Designer.cs">
+      <DependentUpon>201604200525307_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="News.cs" />
     <Compile Include="Article.cs" />
@@ -98,6 +102,11 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604200525307_1.resx">
+      <DependentUpon>201604200525307_1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

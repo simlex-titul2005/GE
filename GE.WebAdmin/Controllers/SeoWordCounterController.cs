@@ -68,7 +68,7 @@ namespace GE.WebAdmin.Controllers
             }
             int pageCode = 1251;
             Encoding encoding = Encoding.GetEncoding(pageCode);
-            Byte[] encodedBytes = encoding.GetBytes(sb.ToString());
+            byte[] encodedBytes = encoding.GetBytes(sb.ToString());
             return File(encodedBytes, "text/csv", "seo-words-count.csv");
         }
 

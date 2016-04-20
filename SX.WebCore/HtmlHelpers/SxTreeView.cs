@@ -23,6 +23,7 @@ namespace SX.WebCore.HtmlHelpers
             public Func<string> FuncCreateUrl { get; set; }
             public Func<TModel, TModel[]> FuncChildren { get; set; }
             public Func<string> FuncSearchUrl { get; set; }
+            public Func<string> FuncRowClick { get; set; }
             public string UpdateTargetId { get; set; }
             public bool EnableEditing { get; set; }
             public bool EnableFiltering { get; set; }
@@ -64,7 +65,10 @@ namespace SX.WebCore.HtmlHelpers
         {
             var tr = new TagBuilder("tr");
             if (settings.FuncModelId != null)
+            {
                 tr.MergeAttribute("data-id", settings.FuncModelId(node).ToString());
+                tr.MergeAttribute("onclick", settings.FuncRowClick());
+            }
 
             writeTreeViewRow(tr, node, settings);
             tb.InnerHtml += tr;

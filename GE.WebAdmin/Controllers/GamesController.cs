@@ -72,24 +72,19 @@ namespace GE.WebAdmin.Controllers
                 return View(model);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public virtual ViewResult FindTable(int page = 1, int pageSize = 10)
+        [HttpPost]
+        public virtual PartialViewResult FindGridView(VMGame filterModel, int page = 1, int pageSize = 10)
         {
-            var viewModel = new SxExtantions.SxPagedCollection<VMGame>
-            {
-                Collection = _repo.All
-                .OrderBy(x=>x.Title)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Select(x => Mapper.Map<Game, VMGame>(x)).ToArray(),
-                PagerInfo = new SxExtantions.SxPagerInfo(page, pageSize)
-                {
-                    TotalItems = _repo.All.Count(),
-                    PagerSize = 4
-                }
-            };
+            ViewBag.Filter = filterModel;
+            var filter = new WebCoreExtantions.Filter(page, pageSize);
+            filter.WhereExpressionObject = filterModel;
+            var totalItems = (_repo as RepoGame).FilterCount(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
 
-            return View(viewModel);
+            var viewModel = (_repo as RepoGame).QueryForAdmin(filter);
+
+            return PartialView(MVC.Games.Views._FindGridView, viewModel);
         }
     }
 }

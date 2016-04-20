@@ -4,6 +4,7 @@ using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using SX.WebCore.Resources;
+using System.Text;
 using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
@@ -197,6 +198,18 @@ namespace GE.WebAdmin.Controllers
             }
 
             return View(model);
+        }
+        #endregion
+
+        #region ReleaseNotes.txt
+        public virtual FileResult ReleaseNotes()
+        {
+            int pageCode = 1251;
+            Encoding encoding = Encoding.GetEncoding(pageCode);
+            var file = SX.WebCore.Resources.Files.ReleaseNotes;
+            byte[] encodedBytes = encoding.GetBytes(file);
+            
+            return File(encodedBytes, "txt");
         }
         #endregion
     }

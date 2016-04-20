@@ -91,25 +91,20 @@ namespace GE.WebAdmin.Controllers
             return View(picture);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public virtual ViewResult FindTable(int page = 1, int pageSize = 10)
+        [HttpPost]
+        public virtual PartialViewResult FindGridView(VMPicture filterModel, int page = 1, int pageSize=10)
         {
-            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            ViewBag.Filter = filterModel;
+            var filter = new WebCoreExtantions.Filter(page, pageSize);
+            filter.WhereExpressionObject = filterModel;
             var totalItems = (_repo as RepoPicture).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
+            filter.PagerInfo.PagerSize = 5;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = new SxExtantions.SxPagedCollection<VMPicture>
-            {
-                Collection = (_repo as RepoPicture).QueryForAdmin(filter).ToArray(),
-                PagerInfo = new SxExtantions.SxPagerInfo(page, pageSize)
-                {
-                    TotalItems = _repo.All.Count(),
-                    PagerSize = 4
-                }
-            };
+            var viewModel = (_repo as RepoPicture).QueryForAdmin(filter);
 
-            return View(viewModel);
+            return PartialView(MVC.Pictures.Views._FindGridView, viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]

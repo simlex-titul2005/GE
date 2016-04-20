@@ -75,6 +75,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string EditEmptyGame = "EditEmptyGame";
             public readonly string EditSite = "EditSite";
             public readonly string EditRobotsFile = "EditRobotsFile";
+            public readonly string ReleaseNotes = "ReleaseNotes";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -83,6 +84,7 @@ namespace GE.WebAdmin.Controllers
             public const string EditEmptyGame = "EditEmptyGame";
             public const string EditSite = "EditSite";
             public const string EditRobotsFile = "EditRobotsFile";
+            public const string ReleaseNotes = "ReleaseNotes";
         }
 
 
@@ -201,6 +203,17 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditRobotsFile);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditRobotsFileOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ReleaseNotesOverride(T4MVC_System_Web_Mvc_FileResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.FileResult ReleaseNotes()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_FileResult(Area, Name, ActionNames.ReleaseNotes);
+            ReleaseNotesOverride(callInfo);
             return callInfo;
         }
 

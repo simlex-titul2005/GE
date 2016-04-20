@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GE.WebAdmin.Resources {
+namespace SX.WebCore.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace GE.WebAdmin.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Constants {
+    public class Files {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Constants() {
+        internal Files() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace GE.WebAdmin.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GE.WebAdmin.Resources.Constants", typeof(Constants).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SX.WebCore.Resources.Files", typeof(Files).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,19 @@ namespace GE.WebAdmin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SX Admin v. 1.0.0.2.
+        ///   Looks up a localized string similar to SX Admin v. 1.0.0.3
+        ///1. Для выпадающих списков модернизированы и унифицированы гриды. Гриды поддерживают поиск и пагинацию.
+        ///
+        ///SX Admin v. 1.0.0.2
+        ///1. Для материалов сайта реализовано динамическое формирование древовидных категорий
+        ///
+        ///SX Admin v 1.0.0.1
+        ///1. На главной странице панели управления отображаются пользователи, находящиеся на данный момент в панеле управления;
+        ///2. Добавлен функционал динамического формирования групп справочной системы. Группы формируются в виде дерева с бесконечным уровнем вложенн [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string AppName {
+        public static string ReleaseNotes {
             get {
-                return ResourceManager.GetString("AppName", resourceCulture);
+                return ResourceManager.GetString("ReleaseNotes", resourceCulture);
             }
         }
     }

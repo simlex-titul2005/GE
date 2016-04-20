@@ -47,6 +47,20 @@
         </div>
     </div>
     <br />
+    @if (Model.FrontPictureId.HasValue)
+            {
+        <img style="max-width:300px;" alt="@Model.Id" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))" />
+        <br />
+    }
+    <div class="row">
+        <div class="col-md-12">
+
+            @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
+            @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Выберите изображение" } })
+            @Html.ValidationMessageFor(x => x.FrontPictureId)
+        </div>
+    </div>
+    <br />
     <div class="row">
         <div class="col-md-12">
             <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>

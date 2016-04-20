@@ -1,9 +1,5 @@
-﻿using Dapper;
-using GE.WebCoreExtantions;
-using System.Configuration;
-using System.Data.SqlClient;
+﻿using GE.WebCoreExtantions;
 using System.Web.Mvc;
-using System.Linq;
 
 namespace GE.WebAdmin.Controllers
 {

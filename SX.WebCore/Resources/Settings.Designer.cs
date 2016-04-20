@@ -61,6 +61,24 @@ namespace SX.WebCore.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SX Admin.
+        /// </summary>
+        public static string adminPanelName {
+            get {
+                return ResourceManager.GetString("adminPanelName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v. 1.0.0.3.
+        /// </summary>
+        public static string adminPanelVersion {
+            get {
+                return ResourceManager.GetString("adminPanelVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to emptyGameBadImagePath.
         /// </summary>
         public static string emptyGameBadImagePath {

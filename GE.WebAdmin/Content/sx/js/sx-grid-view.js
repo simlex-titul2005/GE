@@ -1,4 +1,6 @@
-﻿function fillGridViewForm(guid) {
+﻿/// <reference path="../../../bower_components/jquery/dist/jquery.min.js" />
+
+function fillGridViewForm(guid) {
     var gridView = $('.sx-gv[id="' + guid + '"]');
     var form = $('#grid-view-form-' + guid);
     var filterRow = gridView.find('.filter-row');
@@ -25,6 +27,19 @@
     }
 }
 
+function fillGridViewFormLookup(guid, page, filter)
+{
+    var dataUrl = $('#' + guid).data('data-url');
+    $.ajax({
+        url: dataUrl,
+        method: 'post',
+        data: { page: page, filterModel: filter },
+        success: function (data) {
+            $('#' + guid).closest('.dropdown').html(data);
+        }
+    });
+}
+
 function pressGridViewColumn(e) {
     var guid = $(e).closest('table').attr('id');
     var gridView = $('.sx-gv[id="' + guid + '"]');
@@ -42,6 +57,7 @@ function pressGridViewColumn(e) {
     $('#grid-view-form-' + guid).submit();
 }
 
+//reset filter
 function resetGridViewFilter(e) {
     var guid = $(e).closest('table').attr('id');
     var gridView = $('.sx-grid-view[id="' + guid + '"]');
@@ -49,15 +65,36 @@ function resetGridViewFilter(e) {
     $('#grid-view-form-' + guid).submit();
 }
 
+function resetGridViewLookupFilter(e) {
+    var guid = $(e).closest('table').attr('id');
+    fillGridViewFormLookup(guid, 1, null);
+}
+
+
+//press filter
 function pressGridViewFilter(e) {
     var keyCode = (window.event) ? e.which : e.keyCode;
     if (keyCode == 13) {
         var guid = $(e.target).closest('table').attr('id');
         fillGridViewForm(guid);
         $('#grid-view-form-' + guid).submit();
+        
     }
 }
 
+function pressGridViewLookupFilter(e) {
+    var keyCode = (window.event) ? e.which : e.keyCode;
+    if (keyCode == 13) {
+        var guid = $(e.target).closest('table').attr('id');
+        var $tr = $(e.target).closest('tr');
+        var filter = getLookupFilter($tr);
+
+        fillGridViewFormLookup(guid, 1, filter);
+        e.preventDefault();
+    }
+}
+
+//click pager
 function clickPager(e) {
     var guid = $(e).closest('table').attr('id');
     var page = $(e).attr('data-page');
@@ -67,4 +104,40 @@ function clickPager(e) {
     var form = $('#grid-view-form-' + guid);
     form.find('input[name=\"page\"]').val(page);
     form.submit();
+}
+
+function clickLookupPager(e) {
+    var guid = $(e).closest('table').attr('id');
+    var $tr = $(e).closest('table').find('.filter-row');
+    var filter = getLookupFilter($tr);
+    var page = $(e).attr('data-page');
+    var $footer = $(e).closest('tfoot');
+    $('<i></i>').addClass('fa fa-spin fa-spinner').appendTo('tfoot td:first-child');
+    fillGridViewFormLookup(guid, page, filter);
+}
+
+//click row
+function clickLookupRow(e) {
+    var $tr = $(e);
+    var id = $tr.data('id');
+    var $txtFieldCell = $tr.children('[data-text-field]');
+    var $dropdown = $tr.closest('.dropdown');
+    var $input = $dropdown.parent().find('input[type="hidden"]').val(id);
+    var $text = $dropdown.parent().find('.input-group input[type="text"]').val($txtFieldCell.text());
+    $dropdown.hide();
+}
+
+function getLookupFilter(tr)
+{
+    var $tr = $(tr);
+    var filter = {};
+    $tr.find('input').each(function () {
+        var propName = $(this).attr('name');
+        var propValue = $(this).val();
+        if (propValue != "") {
+            filter[propName] = propValue;
+        }
+    });
+
+    return filter;
 }

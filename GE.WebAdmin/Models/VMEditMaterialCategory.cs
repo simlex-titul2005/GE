@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
@@ -15,5 +16,8 @@ namespace GE.WebAdmin.Models
 
         public VMMaterialCategory ParentCategory { get; set; }
         public string ParentCategoryId { get; set; }
+
+        [Display(Name = "Изображение"), UIHint("EditImage")]
+        public Guid? FrontPictureId { get; set; }
     }
 }

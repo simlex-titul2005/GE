@@ -64,6 +64,12 @@ namespace GE.WebAdmin.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult FindGridView()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindGridView);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.FileResult Picture()
         {
             return new T4MVC_System_Web_Mvc_FileResult(Area, Name, ActionNames.Picture);
@@ -92,7 +98,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
-            public readonly string FindTable = "FindTable";
+            public readonly string FindGridView = "FindGridView";
             public readonly string Picture = "Picture";
             public readonly string Delete = "Delete";
         }
@@ -102,7 +108,7 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
-            public const string FindTable = "FindTable";
+            public const string FindGridView = "FindGridView";
             public const string Picture = "Picture";
             public const string Delete = "Delete";
         }
@@ -128,12 +134,13 @@ namespace GE.WebAdmin.Controllers
             public readonly string picture = "picture";
             public readonly string file = "file";
         }
-        static readonly ActionParamsClass_FindTable s_params_FindTable = new ActionParamsClass_FindTable();
+        static readonly ActionParamsClass_FindGridView s_params_FindGridView = new ActionParamsClass_FindGridView();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_FindTable FindTableParams { get { return s_params_FindTable; } }
+        public ActionParamsClass_FindGridView FindGridViewParams { get { return s_params_FindGridView; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_FindTable
+        public class ActionParamsClass_FindGridView
         {
+            public readonly string filterModel = "filterModel";
             public readonly string page = "page";
             public readonly string pageSize = "pageSize";
         }
@@ -165,14 +172,14 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _FindGridView = "_FindGridView";
                 public readonly string _GridView = "_GridView";
                 public readonly string Edit = "Edit";
-                public readonly string FindTable = "FindTable";
                 public readonly string Index = "Index";
             }
+            public readonly string _FindGridView = "~/Views/Pictures/_FindGridView.cshtml";
             public readonly string _GridView = "~/Views/Pictures/_GridView.cshtml";
             public readonly string Edit = "~/Views/Pictures/Edit.cshtml";
-            public readonly string FindTable = "~/Views/Pictures/FindTable.cshtml";
             public readonly string Index = "~/Views/Pictures/Index.cshtml";
         }
     }
@@ -234,15 +241,16 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void FindTableOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page, int pageSize);
+        partial void FindGridViewOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMPicture filterModel, int page, int pageSize);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult FindTable(int page, int pageSize)
+        public override System.Web.Mvc.PartialViewResult FindGridView(GE.WebAdmin.Models.VMPicture filterModel, int page, int pageSize)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.FindTable);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindGridView);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
-            FindTableOverride(callInfo, page, pageSize);
+            FindGridViewOverride(callInfo, filterModel, page, pageSize);
             return callInfo;
         }
 

@@ -19,15 +19,20 @@ namespace SX.WebCore.HtmlHelpers
     {
         public static MvcHtmlString SxGridView<TModel>(this HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings = null, object htmlAttributes = null)
         {
+            Check(settings);
+
             var guid = Guid.NewGuid().ToString().ToLower();
 
-            if (settings != null && settings.ShowFilterRowMenu)
+            if (settings != null && settings.ShowFilterRowMenu && settings.Mode==SxGridViewMode.View)
             {
                 htmlHelper.ViewContext.Writer.Write(getForm(htmlHelper, settings, guid));
             }
 
             var table = new TagBuilder("table");
             table.MergeAttribute("id", guid);
+            if(settings.Mode==SxGridViewMode.Lookup)
+                table.MergeAttribute("data-data-url", settings.FuncDataUrl());
+
             if (htmlAttributes != null)
             {
                 var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
@@ -52,10 +57,21 @@ namespace SX.WebCore.HtmlHelpers
             return MvcHtmlString.Create(table.ToString());
         }
 
+        private static void Check<TModel>(SxGridViewSettings<TModel> settings)
+        {
+            if(settings.Mode==SxGridViewMode.Lookup)
+            {
+                if (settings.FuncDataUrl == null) throw new ArgumentException("Для GridView не определён url получения данных для режима Lookup");
+                if (settings.FuncGetId == null) throw new ArgumentException("Для GridView не определена функция получения Id строки для режима Lookup");
+                if (settings.FuncTextField == null) throw new ArgumentException("Для GridView не определена функция обозначения текстового поля для режима Lookup");
+            }
+        }
+
         public class SxGridViewSettings<TModel>
         {
             public SxGridViewSettings()
             {
+                Mode = SxGridViewMode.View;
                 KeyFieldsName = new string[] { "Id" };
                 ShowFilterRowMenu = true;
                 EnableSorting = true;
@@ -102,6 +118,12 @@ namespace SX.WebCore.HtmlHelpers
             public TModel Filter { get; set; }
             public SxPagerInfo PagerInfo { get; set; }
             public string PagerLink { get; set; }
+
+            public SxGridViewMode Mode { get; set; }
+
+            public Func<TModel, object> FuncGetId { get; set; }
+            public Func<string> FuncTextField { get; set; }
+            public Func<string> FuncDataUrl { get; set; }
         }
         public class SxGridViewColumn<TModel>
         {
@@ -233,6 +255,14 @@ namespace SX.WebCore.HtmlHelpers
         private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings, HtmlHelper htmlHelper)
         {
             var tr = new TagBuilder("tr");
+
+            if (settings.FuncGetId != null)
+            {
+                tr.MergeAttribute("data-id", settings.FuncGetId(model).ToString());
+                tr.MergeAttribute("onclick", "clickLookupRow(this)");
+
+            }
+
             if (settings.ShowFilterRowMenu || settings.EnableEditing)
             {
                 var td = new TagBuilder("td");
@@ -282,6 +312,8 @@ namespace SX.WebCore.HtmlHelpers
             {
                 var column = settings.Columns[i];
                 var td = new TagBuilder("td");
+                if (settings.FuncTextField != null && column.FieldName.ToLowerInvariant()== settings.FuncTextField().ToLowerInvariant())
+                    td.MergeAttribute("data-text-field", null);
 
                 var val=props.First(x => x.Name == column.FieldName).GetValue(model);
                 var value = column.Template != null
@@ -308,7 +340,7 @@ namespace SX.WebCore.HtmlHelpers
                     var span = new TagBuilder("span");
                     span.AddCssClass("fa fa-refresh");
                     span.MergeAttributes(new Dictionary<string, object>{
-                        {"onclick", "resetGridViewFilter(this)"},
+                        {"onclick", settings.Mode==SxGridViewMode.View? "resetGridViewFilter(this)":"resetGridViewLookupFilter(this)"},
                         {"style", "cursor:pointer;"}
                     });
                     td.InnerHtml += span;
@@ -337,7 +369,7 @@ namespace SX.WebCore.HtmlHelpers
 
             var editor = new TagBuilder("input");
             editor.MergeAttribute("name", propertyInfo.Name);
-            editor.MergeAttribute("onkeypress", "pressGridViewFilter(event)");
+            editor.MergeAttribute("onkeypress", settings.Mode==SxGridViewMode.View? "pressGridViewFilter(event)": "pressGridViewLookupFilter(event)");
 
             object value = null;
             if (settings.Filter != null)
@@ -407,7 +439,12 @@ namespace SX.WebCore.HtmlHelpers
             if (settings.PagerInfo.TotalPages != 0)
             {
                 if (settings.PagerInfo.TotalPages > 1)
+                {
+                    if (settings.Mode == SxGridViewMode.Lookup)
+                        settings.PagerInfo.FuncClick = ()=> "clickLookupPager(this)";
+
                     td.InnerHtml += htmlHelper.SxPager(settings.PagerInfo);
+                }
             }
             else
             {
@@ -430,6 +467,13 @@ namespace SX.WebCore.HtmlHelpers
             Unknown=0,
             Asc=1,
             Desc=2
+        }
+
+        public enum SxGridViewMode : byte
+        {
+            Unknown = 0,
+            View = 1,
+            Lookup = 2
         }
     }
 }

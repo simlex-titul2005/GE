@@ -51,8 +51,6 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.SeoWordCounterController SeoWordCounter = new GE.WebAdmin.Controllers.T4MVC_SeoWordCounterController();
     public static GE.WebAdmin.Controllers.SettingsController Settings = new GE.WebAdmin.Controllers.T4MVC_SettingsController();
     public static GE.WebAdmin.Controllers.UsersController Users = new GE.WebAdmin.Controllers.T4MVC_UsersController();
-    public static T4MVC.ClicksController Clicks = new T4MVC.ClicksController();
-    public static T4MVC.ClickTypesController ClickTypes = new T4MVC.ClickTypesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -206,6 +204,7 @@ namespace Links
             private const string URLPATH = "~/Content/i";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string background_jpg = Url("background.jpg");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -218,7 +217,7 @@ namespace Links
                 private const string URLPATH = "~/Content/sx/js";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string sx_find_table_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/sx-find-table.min.js") ? Url("sx-find-table.min.js") : Url("sx-find-table.js");
+                public static readonly string sx_find_gv_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/sx-find-gv.min.js") ? Url("sx-find-gv.min.js") : Url("sx-find-gv.js");
                 public static readonly string sx_grid_view_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/sx-grid-view.min.js") ? Url("sx-grid-view.min.js") : Url("sx-grid-view.js");
             }
         
@@ -285,7 +284,7 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string sx_find_table_js = "~/Content/sx/js/sx-find-table.js"; 
+                        public const string sx_find_gv_js = "~/Content/sx/js/sx-find-gv.js"; 
                         public const string sx_grid_view_js = "~/Content/sx/js/sx-grid-view.js"; 
                     }
                 }

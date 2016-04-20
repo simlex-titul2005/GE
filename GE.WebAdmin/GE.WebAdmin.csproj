@@ -154,10 +154,10 @@
     <Content Include="Content\dist\js\routes.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
     <Content Include="Content\i\background.jpg" />
+    <Content Include="Content\sx\js\sx-find-gv.js" />
     <Content Include="img\alpha.png" />
     <Content Include="img\hue.png" />
     <Content Include="img\saturation.png" />
-    <Content Include="Content\sx\js\sx-find-table.js" />
     <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="faveicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -171,7 +171,6 @@
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\dist\fonts\FontAwesome.otf" />
-    <Content Include="ReleaseNotes.txt" />
     <Content Include="robots.txt" />
     <None Include="Properties\PublishProfiles\admin-game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
@@ -199,12 +198,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="ArticlesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClicksController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClickTypesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="CommentsController.generated.cs">
@@ -336,11 +329,6 @@
     <Compile Include="RequestController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Constants.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Constants.resx</DependentUpon>
-    </Compile>
     <Compile Include="RolesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -399,13 +387,11 @@
     <Content Include="Views\RouteValues\Edit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditImage.cshtml" />
-    <Content Include="Views\Pictures\FindTable.cshtml" />
     <Content Include="Views\Settings\EditEmptyGame.cshtml" />
     <Content Include="Views\News\_GridView.cshtml" />
     <Content Include="Views\News\Edit.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditGame.cshtml" />
-    <Content Include="Views\Games\FindTable.cshtml" />
     <Content Include="Views\Settings\EditSite.cshtml" />
     <Content Include="Views\SeoInfo\Index.cshtml" />
     <Content Include="Views\SeoInfo\_GridView.cshtml" />
@@ -443,6 +429,8 @@
     <Content Include="Views\MaterialCategories\_TreeView.cshtml" />
     <Content Include="Views\SeoWordCounter\Index.cshtml" />
     <Content Include="Views\SeoWordCounter\_Table.cshtml" />
+    <Content Include="Views\Pictures\_FindGridView.cshtml" />
+    <Content Include="Views\Games\_FindGridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -466,12 +454,6 @@
       <Project>{daf1a092-ded8-4c43-b08d-20e55c6f03a2}</Project>
       <Name>SX.WebCore</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Constants.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Constants.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

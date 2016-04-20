@@ -88,16 +88,16 @@ namespace GE.WebAdmin.Controllers
 
             if (ModelState.IsValid)
             {
-                var existModel = _repo.GetByKey(model.Id);
-                if (existModel != null)
-                {
-                    ModelState.AddModelError("Id", "Элемент с таким ключем уже существует");
-                    model.Id = null;
-                    return View(model);
-                }
+                //var existModel = _repo.GetByKey(model.Id);
+                //if (existModel != null)
+                //{
+                //    ModelState.AddModelError("Id", "Элемент с таким ключем уже существует");
+                //    model.Id = null;
+                //    return View(model);
+                //}
 
                 SxMaterialCategory newModel = null;
-                newModel = _repo.Update(redactModel, "Title");
+                newModel = _repo.Update(redactModel, "Title", "FrontPictureId");
 
                 return RedirectToAction(MVC.MaterialCategories.Index(mct: model.ModelCoreType));
             }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
@@ -23,5 +24,6 @@ namespace GE.WebAdmin.Models
             }
         }
         public int Level { get; set; }
+        public Guid? FrontPictureId { get; set; }
     }
 }

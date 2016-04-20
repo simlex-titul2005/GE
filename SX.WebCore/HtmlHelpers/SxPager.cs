@@ -89,11 +89,14 @@ namespace SX.WebCore.HtmlHelpers
             var a = new TagBuilder("a");
 
             if (isAjax)
+            {
                 a.MergeAttributes(new Dictionary<string, object>() {
                         { "href", "javascript:void(0)" },
-                        { "data-page", page },
-                        { "onclick", "clickPager(this)" },
+                        { "data-page", page }
                     });
+                if (pagerinfo.Page != page)
+                    a.MergeAttribute("onclick", pagerinfo.FuncClick != null ? pagerinfo.FuncClick() : "clickPager(this)");
+            }
             else
             {
                 var href = pageUrl(page);
@@ -162,6 +165,8 @@ namespace SX.WebCore.HtmlHelpers
                     return (int)Math.Ceiling((decimal)Page / PagerSize);
                 }
             }
+
+            public Func<string> FuncClick { get; set; }
         }
 
         private enum SxPagerItemType : byte
@@ -182,7 +187,7 @@ namespace SX.WebCore.HtmlHelpers
             }
 
             public TModel[] Collection { get; set; }
-            public SX.WebCore.HtmlHelpers.SxExtantions.SxPagerInfo PagerInfo { get; set; }
+            public SxPagerInfo PagerInfo { get; set; }
             public int Length
             {
                 get

@@ -20,7 +20,8 @@
         UpdateTargetId = "matcat-tv",
         EnableEditing = false,
         EnableFiltering = false,
-        FuncModelId= x => x.Id
+        FuncModelId= x => x.Id,
+        FuncRowClick=()=> "clickLookupRow(this)"
     },
     htmlAttributes: new { @class = "sx-tv table table-condensed table-bordered table-responsive" }
     )

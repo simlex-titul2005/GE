@@ -268,7 +268,7 @@
                         @if (User.IsInRole("admin"))
                         {
                             <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Система доступа<span class="fa arrow"></span></a>
+                                <a href="javascript:void(0)"><i class="fa fa-fw fa-user"></i> Система доступа<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="@Url.Action(MVC.Roles.Index())"><i class="fa fa-fw fa-street-view"></i> Роли</a>
@@ -282,14 +282,19 @@
                         @if (User.IsInRole("architect"))
                         {
                             <li>
-                                <a href="@Url.Action(MVC.Routes.Index())"><i class="fa fa-road fa-fw"></i> Маршруты</a>
+                                <a href="javascript:void(0)"><i class="fa fa-bars fa-fw"></i> Меню сайта <span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action(MVC.Menues.Index())"> Список меню</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action(MVC.Routes.Index())"> Маршруты</a>
+                                    </li>
+                                </ul>
                             </li>
                         }
                         <li>
-                            <a href="@Url.Action(MVC.Menues.Index())"><i class="fa fa-bars fa-fw"></i> Меню сайта</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-crop fa-fw"></i> Мультимедиа<span class="fa arrow"></span></a>
+                            <a href="javascript:void(0)"><i class="fa fa-crop fa-fw"></i> Мультимедиа<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="@Url.Action(MVC.Pictures.Index())"><i class="fa fa-image fa-fw"></i> Фото-контент</a>
@@ -447,6 +452,8 @@
             });
 
             $().alert();
+
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
     @RenderSection("scripts", false)

@@ -3,8 +3,16 @@
     ViewBag.Title = "Фото-контент";
 }
 
+@section styles{
+    <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
+}
+
 <h2>@ViewBag.Title</h2>
 <br />
 <div id="grid-pictures">
     @Html.Partial(MVC.Pictures.Views._GridView, Model)
 </div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
+}

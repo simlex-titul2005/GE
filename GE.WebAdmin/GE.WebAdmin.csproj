@@ -145,11 +145,17 @@
   <ItemGroup>
     <Content Include="Content\dist\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\dist\css\colorpicker.min.css" />
+    <Content Include="Content\dist\css\lightbox.min.css" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\dist\images\close.png" />
+    <Content Include="Content\dist\images\loading.gif" />
+    <Content Include="Content\dist\images\next.png" />
+    <Content Include="Content\dist\images\prev.png" />
     <Content Include="Content\dist\js\bootstrap-colorpicker.min.js" />
     <Content Include="Content\dist\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\dist\js\ckeditor.min.js" />
+    <Content Include="Content\dist\js\lightbox.min.js" />
     <Content Include="Content\dist\js\menues.min.js" />
     <Content Include="Content\dist\js\routes.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
@@ -440,7 +446,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="bower_components\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

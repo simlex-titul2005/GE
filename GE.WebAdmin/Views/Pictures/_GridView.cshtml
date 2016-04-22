@@ -9,19 +9,22 @@
 
 @Html.SxGridView(
         new SxExtantions.SxGridViewSettings<VMPicture>
-    {
-        UpdateTargetId = "grid-pictures",
-        Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn<VMPicture>[]{
+        {
+            UpdateTargetId = "grid-pictures",
+            Data = Model,
+            Columns = new SxExtantions.SxGridViewColumn<VMPicture>[]{
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Id", Caption="Идентификатор"},
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Caption", Caption="Название"},
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Description", Caption="Описание"},
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Width", Caption="Ширина, px"},
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Height", Caption="Высота, px"},
+            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Id", Caption="#", Template=(p)=> {
+                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Помотреть картинку\" href=\"{0}\"><i class=\"fa fa-picture-o\"></i></a>", Url.Action(MVC.Pictures.Picture(p.Id)), p.Caption);
+            } }
         },
-        PagerInfo=pagerInfo,
-        Filter = filter,
-        SortDirections = sortDirections,
-    },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            PagerInfo=pagerInfo,
+            Filter = filter,
+            SortDirections = sortDirections,
+        },
+            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
     )

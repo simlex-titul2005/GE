@@ -26,5 +26,6 @@ namespace GE.WebAdmin.Models
                 return sb.ToString();
             }
         }
+        public bool IsOnline { get; set; }
     }
 }

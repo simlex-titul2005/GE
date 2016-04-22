@@ -49,14 +49,17 @@ namespace GE.WebAdmin.Controllers
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
             var users = UserManager.Users;
             var roles = RoleManager.Roles.Select(x=> new { RoleId=x.Id, RoleName=x.Name }).ToArray();
+            var usersOnline = MvcApplication.UsersOnSite;
 
             var data = users.OrderByDescending(x=>x.DateCreate).Skip((page - 1) * _pageSize).Take(_pageSize).ToArray()
                 .Select(x => new VMUser {
                     Id=x.Id,
                     Email=x.Email,
                     NikName=x.NikName,
-                    Roles= x.Roles.Select(r=>new VMRole { Id=r.RoleId }).ToArray()
+                    Roles= x.Roles.Select(r=>new VMRole { Id=r.RoleId }).ToArray(),
+                    IsOnline= usersOnline.ContainsValue(x.Email)
                 }).ToArray();
+
             for (int i = 0; i < data.Length; i++)
             {
                 for (int y = 0; y < data[i].Roles.Length; y++)

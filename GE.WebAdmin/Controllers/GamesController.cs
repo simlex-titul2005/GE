@@ -73,6 +73,7 @@ namespace GE.WebAdmin.Controllers
                 return View(model);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public virtual PartialViewResult FindGridView(VMGame filterModel, int page = 1, int pageSize = 10)
         {

@@ -41,13 +41,6 @@ namespace GE.WebAdmin.Controllers
                 _roleManager = value;
             }
         }
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
 
         private static int _pageSize = 10;
         [AcceptVerbs(HttpVerbs.Get)]
@@ -175,6 +168,26 @@ namespace GE.WebAdmin.Controllers
             return PartialView(MVC.Users.Views._UserRoles, viewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual PartialViewResult EditUserInfo(VMEditUser user)
+        {
+            if(ModelState.IsValid)
+            {
+                var oldUser = UserManager.FindById(user.Id);
+                oldUser.NikName = user.NikName;
+                oldUser.AvatarId = user.AvatarId;
+                UserManager.Update(oldUser);
+
+                var allRoles = RoleManager.Roles.Where(x => x.Name != _architectRole).ToArray();
+                var viewModel = getEditUser(oldUser, allRoles);
+                TempData["UserInfoMessage"] = "Информация обновлена";
+                return PartialView(MVC.Users.Views._UserInfo, viewModel);
+            }
+            else
+                return PartialView(MVC.Users.Views._UserInfo, user);
+        }
+
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditRole model)
@@ -220,6 +233,7 @@ namespace GE.WebAdmin.Controllers
                 NikName = data.NikName,
                 IsOnline = MvcApplication.UsersOnSite.ContainsValue(data.UserName)
             };
+            
             editUser.Roles = data.Roles.Join(allRoles, u => u.RoleId, r => r.Id, (u, r) => new VMRole
             {
                 Id = u.RoleId,

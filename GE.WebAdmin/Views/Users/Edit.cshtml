@@ -43,20 +43,8 @@
                 @Html.Partial(MVC.Users.Views._UserRoles, Model)
             </section>
 
-            <section>
-                <h3>Инфо</h3>
-                <form method="post" action="@Url.Action(MVC.Users.Edit())">
-                    @Html.AntiForgeryToken()
-                    @Html.HiddenFor(x => x.Id)
-
-                    @Html.LabelFor(x => x.NikName)
-                    @Html.EditorFor(x => x.NikName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(x => x.NikName)
-                    <br />
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
-                    </div>
-                </form>
+            <section id="info">
+                @Html.Partial(MVC.Users.Views._UserInfo, Model)
             </section>
         </div>
 

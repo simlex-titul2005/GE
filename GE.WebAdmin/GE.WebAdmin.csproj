@@ -440,6 +440,7 @@
     <Content Include="Views\Games\_FindGridView.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\_UserRoles.cshtml" />
+    <Content Include="Views\Users\_UserInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

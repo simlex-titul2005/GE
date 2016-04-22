@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace GE.WebAdmin.Models
@@ -14,7 +15,7 @@ namespace GE.WebAdmin.Models
         {
             get
             {
-                if (this.Roles == null) return null;
+                if (!Roles.Any()) return null;
 
                 var sb=new StringBuilder();
                 for (int i = 0; i < this.Roles.Length; i++)

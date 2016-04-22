@@ -1,0 +1,33 @@
+﻿@model VMEditUser
+@{
+    Layout = null;
+    var message = TempData["UserInfoMessage"];
+}
+
+@if (message != null)
+{
+    <h3>Инфо <span class="pull-right small" id="mes-user-info">@message</span></h3>
+}
+else
+{
+    <h3>Инфо</h3>
+}
+@using (Ajax.BeginForm(MVC.Users.EditUserInfo(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "info", OnBegin = "$(this).closest('section').find('button[type=\"submit\"]').prepend('<i class=\"fa fa-spin fa-spinner\"></i>&nbsp;')", OnComplete = "removeMessage('#mes-user-info')" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+
+    @Html.LabelFor(x => x.NikName)
+    @Html.EditorFor(x => x.NikName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(x => x.NikName)
+    <br />
+
+    @Html.LabelFor(x => x.AvatarId)
+    @Html.EditorFor(x => x.AvatarId, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(x => x.AvatarId)
+
+    <br />
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+}

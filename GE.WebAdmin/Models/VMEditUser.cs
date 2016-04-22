@@ -11,7 +11,10 @@ namespace GE.WebAdmin.Models
         }
 
         public string Id { get; set; }
+
+        [Display(Name = "Аватар"), UIHint("EditImage")]
         public Guid? AvatarId { get; set; }
+
         public string Email { get; set; }
 
         [Display(Name ="Никнейм"), MaxLength(50)]

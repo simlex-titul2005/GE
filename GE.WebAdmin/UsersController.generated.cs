@@ -67,6 +67,12 @@ namespace GE.WebAdmin.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult EditUserInfo()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditUserInfo);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult Delete()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
@@ -90,6 +96,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
             public readonly string EditRoles = "EditRoles";
+            public readonly string EditUserInfo = "EditUserInfo";
             public readonly string Delete = "Delete";
             public readonly string UsersOnSite = "UsersOnSite";
         }
@@ -100,6 +107,7 @@ namespace GE.WebAdmin.Controllers
             public const string Index = "Index";
             public const string Edit = "Edit";
             public const string EditRoles = "EditRoles";
+            public const string EditUserInfo = "EditUserInfo";
             public const string Delete = "Delete";
             public const string UsersOnSite = "UsersOnSite";
         }
@@ -131,6 +139,14 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string userId = "userId";
         }
+        static readonly ActionParamsClass_EditUserInfo s_params_EditUserInfo = new ActionParamsClass_EditUserInfo();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_EditUserInfo EditUserInfoParams { get { return s_params_EditUserInfo; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_EditUserInfo
+        {
+            public readonly string user = "user";
+        }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
@@ -150,12 +166,14 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _GridView = "_GridView";
+                public readonly string _UserInfo = "_UserInfo";
                 public readonly string _UserRoles = "_UserRoles";
                 public readonly string _UsersOnSite = "_UsersOnSite";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
             public readonly string _GridView = "~/Views/Users/_GridView.cshtml";
+            public readonly string _UserInfo = "~/Views/Users/_UserInfo.cshtml";
             public readonly string _UserRoles = "~/Views/Users/_UserRoles.cshtml";
             public readonly string _UsersOnSite = "~/Views/Users/_UsersOnSite.cshtml";
             public readonly string Edit = "~/Views/Users/Edit.cshtml";
@@ -215,6 +233,18 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditRoles);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
             EditRolesOverride(callInfo, userId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditUserInfoOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMEditUser user);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult EditUserInfo(GE.WebAdmin.Models.VMEditUser user)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditUserInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "user", user);
+            EditUserInfoOverride(callInfo, user);
             return callInfo;
         }
 

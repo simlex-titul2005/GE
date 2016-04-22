@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
+    [Authorize(Roles ="admin")]
     public partial class GamesController : BaseController
     {
         SX.WebCore.Abstract.SxDbRepository<int, Game, DbContext> _repo;

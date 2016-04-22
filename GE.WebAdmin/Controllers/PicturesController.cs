@@ -25,6 +25,7 @@ namespace GE.WebAdmin.Controllers
 
         private static int _pageSize = 20;
 
+        [Authorize(Roles = "photo-redactor")]
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
@@ -37,6 +38,7 @@ namespace GE.WebAdmin.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "photo-redactor")]
         [AcceptVerbs(HttpVerbs.Post)]
         public virtual PartialViewResult Index(VMPicture filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
@@ -53,6 +55,7 @@ namespace GE.WebAdmin.Controllers
             return PartialView("_GridView", viewModel);
         }
 
+        [Authorize(Roles = "photo-redactor")]
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Edit(Guid? id)
         {
@@ -60,6 +63,7 @@ namespace GE.WebAdmin.Controllers
             return View(Mapper.Map<SxPicture, VMEditPicture>(model));
         }
 
+        [Authorize(Roles = "photo-redactor")]
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditPicture picture, HttpPostedFileBase file)
@@ -91,6 +95,7 @@ namespace GE.WebAdmin.Controllers
             return View(picture);
         }
 
+        [Authorize(Roles = "photo-redactor")]
         [HttpPost]
         public virtual PartialViewResult FindGridView(VMPicture filterModel, int page = 1, int pageSize=10)
         {
@@ -108,9 +113,9 @@ namespace GE.WebAdmin.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        //#if !DEBUG
+        #if !DEBUG
         [OutputCache(Duration = 300, VaryByParam = "id;width;height")]
-        //#endif
+        #endif
         public virtual FileResult Picture(Guid id, int? width = null, int? height = null)
         {
             if (_repo == null)
@@ -130,6 +135,7 @@ namespace GE.WebAdmin.Controllers
             return new FileStreamResult(new System.IO.MemoryStream(byteArray), viewModel.ImgFormat);
         }
 
+        [Authorize(Roles = "photo-redactor")]
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(Guid id)

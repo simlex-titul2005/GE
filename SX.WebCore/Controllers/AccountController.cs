@@ -155,10 +155,12 @@ namespace SX.WebCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new SxAppUser { UserName = model.Email, Email = model.Email };
+                var date = DateTime.Now;
+                var user = new SxAppUser { UserName = model.Email, Email = model.Email, DateCreate= date, DateUpdate=date };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id, "user");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

@@ -115,7 +115,7 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\T4MVCExtensions.3.17.3\lib\net40\T4MVCExtensions.dll</HintPath>
+      <HintPath>..\packages\T4MVCExtensions.3.17.4\lib\net40\T4MVCExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -178,6 +178,7 @@
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\dist\fonts\FontAwesome.otf" />
     <Content Include="robots.txt" />
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\admin-game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
@@ -437,6 +438,8 @@
     <Content Include="Views\SeoWordCounter\_Table.cshtml" />
     <Content Include="Views\Pictures\_FindGridView.cshtml" />
     <Content Include="Views\Games\_FindGridView.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\_UserRoles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -446,6 +449,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="Content\less\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

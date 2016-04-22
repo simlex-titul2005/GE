@@ -12,6 +12,7 @@ using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Controllers
 {
+    [Authorize(Roles ="seo")]
     public partial class SeoInfoController : BaseController
     {
         private SxDbRepository<int, SxSeoInfo, DbContext> _repo;

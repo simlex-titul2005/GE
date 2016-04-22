@@ -8,6 +8,7 @@ using System;
 
 namespace GE.WebAdmin.Controllers
 {
+    [Authorize(Roles = "seo")]
     public partial class SeoWordCounterController : BaseController
     {
         private ISxSeoWordCounter _counter;

@@ -19,6 +19,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         #region Начальная иконка
+        [Authorize(Roles = "admin")]
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult EditEmptyGame()
         {
@@ -39,6 +40,7 @@ namespace GE.WebAdmin.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "admin")]
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual ActionResult EditEmptyGame(VMEditEmptyGameSettings model)
@@ -83,6 +85,7 @@ namespace GE.WebAdmin.Controllers
         #endregion
 
         #region Настройки сайта
+        [Authorize(Roles = "admin")]
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult EditSite()
         {
@@ -104,6 +107,7 @@ namespace GE.WebAdmin.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "admin")]
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual ActionResult EditSite(VMSiteSettings model)
@@ -150,6 +154,7 @@ namespace GE.WebAdmin.Controllers
         #endregion
 
         #region Robots.txt
+        [Authorize(Roles = "seo")]
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult EditRobotsFile()
         {
@@ -162,6 +167,7 @@ namespace GE.WebAdmin.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "seo")]
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual ActionResult EditRobotsFile(VMRobotsFile model)

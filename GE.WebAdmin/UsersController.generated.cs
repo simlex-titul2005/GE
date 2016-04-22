@@ -61,9 +61,9 @@ namespace GE.WebAdmin.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Edit()
+        public virtual System.Web.Mvc.PartialViewResult EditRoles()
         {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditRoles);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -89,6 +89,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
+            public readonly string EditRoles = "EditRoles";
             public readonly string Delete = "Delete";
             public readonly string UsersOnSite = "UsersOnSite";
         }
@@ -98,6 +99,7 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
+            public const string EditRoles = "EditRoles";
             public const string Delete = "Delete";
             public const string UsersOnSite = "UsersOnSite";
         }
@@ -121,6 +123,14 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string id = "id";
         }
+        static readonly ActionParamsClass_EditRoles s_params_EditRoles = new ActionParamsClass_EditRoles();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_EditRoles EditRolesParams { get { return s_params_EditRoles; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_EditRoles
+        {
+            public readonly string userId = "userId";
+        }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
@@ -140,11 +150,15 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _GridView = "_GridView";
+                public readonly string _UserRoles = "_UserRoles";
                 public readonly string _UsersOnSite = "_UsersOnSite";
+                public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
             public readonly string _GridView = "~/Views/Users/_GridView.cshtml";
+            public readonly string _UserRoles = "~/Views/Users/_UserRoles.cshtml";
             public readonly string _UsersOnSite = "~/Views/Users/_UsersOnSite.cshtml";
+            public readonly string Edit = "~/Views/Users/Edit.cshtml";
             public readonly string Index = "~/Views/Users/Index.cshtml";
         }
     }
@@ -189,6 +203,18 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             EditOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditRolesOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, string userId);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult EditRoles(string userId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditRoles);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
+            EditRolesOverride(callInfo, userId);
             return callInfo;
         }
 

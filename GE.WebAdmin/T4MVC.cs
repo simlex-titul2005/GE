@@ -168,6 +168,7 @@ namespace Links
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 public static readonly string bootstrap_datepicker_min_css = Url("bootstrap-datepicker.min.css");
                 public static readonly string colorpicker_min_css = Url("colorpicker.min.css");
+                public static readonly string lightbox_min_css = Url("lightbox.min.css");
                 public static readonly string site_min_css = Url("site.min.css");
             }
         
@@ -185,6 +186,17 @@ namespace Links
             }
         
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class images {
+                private const string URLPATH = "~/Content/dist/images";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string close_png = Url("close.png");
+                public static readonly string loading_gif = Url("loading.gif");
+                public static readonly string next_png = Url("next.png");
+                public static readonly string prev_png = Url("prev.png");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class js {
                 private const string URLPATH = "~/Content/dist/js";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -192,6 +204,7 @@ namespace Links
                 public static readonly string bootstrap_colorpicker_min_js = Url("bootstrap-colorpicker.min.js");
                 public static readonly string bootstrap_datepicker_min_js = Url("bootstrap-datepicker.min.js");
                 public static readonly string ckeditor_min_js = Url("ckeditor.min.js");
+                public static readonly string lightbox_min_js = Url("lightbox.min.js");
                 public static readonly string menues_min_js = Url("menues.min.js");
                 public static readonly string routes_min_js = Url("routes.min.js");
                 public static readonly string site_min_js = Url("site.min.js");
@@ -205,6 +218,13 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string background_jpg = Url("background.jpg");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class less {
+            private const string URLPATH = "~/Content/less";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -247,10 +267,17 @@ namespace Links
                     {
                         public const string bootstrap_datepicker_min_css = "~/Content/dist/css/bootstrap-datepicker.min.css";
                         public const string colorpicker_min_css = "~/Content/dist/css/colorpicker.min.css";
+                        public const string lightbox_min_css = "~/Content/dist/css/lightbox.min.css";
                         public const string site_min_css = "~/Content/dist/css/site.min.css";
                     }
                 }
                 public static partial class fonts 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class images 
                 {
                     public static class Assets
                     {
@@ -263,6 +290,7 @@ namespace Links
                         public const string bootstrap_colorpicker_min_js = "~/Content/dist/js/bootstrap-colorpicker.min.js"; 
                         public const string bootstrap_datepicker_min_js = "~/Content/dist/js/bootstrap-datepicker.min.js"; 
                         public const string ckeditor_min_js = "~/Content/dist/js/ckeditor.min.js"; 
+                        public const string lightbox_min_js = "~/Content/dist/js/lightbox.min.js"; 
                         public const string menues_min_js = "~/Content/dist/js/menues.min.js"; 
                         public const string routes_min_js = "~/Content/dist/js/routes.min.js"; 
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
@@ -273,6 +301,12 @@ namespace Links
                 }
             }
             public static partial class i 
+            {
+                public static class Assets
+                {
+                }
+            }
+            public static partial class less 
             {
                 public static class Assets
                 {

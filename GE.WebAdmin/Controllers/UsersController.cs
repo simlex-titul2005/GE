@@ -7,15 +7,19 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using System;
+using Microsoft.AspNet.Identity;
+using SX.WebCore;
+using Microsoft.Owin.Security;
 
 namespace GE.WebAdmin.Controllers
 {
     [Authorize(Roles = "admin")]
     public partial class UsersController : BaseController
     {
+        private static readonly string _architectRole = "architect";
         private SxAppUserManager _userManager;
         private SxAppRoleManager _roleManager;
-        private SxAppUserManager UsereManager
+        private SxAppUserManager UserManager
         {
             get
             {
@@ -37,13 +41,20 @@ namespace GE.WebAdmin.Controllers
                 _roleManager = value;
             }
         }
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
 
         private static int _pageSize = 10;
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var users = UsereManager.Users;
+            var users = UserManager.Users;
             var roles = RoleManager.Roles.Select(x=> new { RoleId=x.Id, RoleName=x.Name }).ToArray();
 
             var data = users.OrderByDescending(x=>x.DateCreate).Skip((page - 1) * _pageSize).Take(_pageSize).ToArray()
@@ -107,12 +118,61 @@ namespace GE.WebAdmin.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Edit(string id)
+        public virtual ViewResult Edit(string id=null)
         {
-            //var model = !string.IsNullOrEmpty(id) ? RoleManager.Roles.FirstOrDefault(x => x.Id == id) : new SxAppRole { Id = null };
-            //var viewModel = Mapper.Map<SxAppRole, VMEditRole>(model);
-            //return View(viewModel);
-            throw new NotImplementedException();
+            var data = UserManager.FindById(id);
+            var allRoles = RoleManager.Roles.Where(x=>x.Name!=_architectRole).ToArray();
+            ViewBag.Roles = allRoles;
+            var viewModel = getEditUser(data, allRoles);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual PartialViewResult EditRoles(string userId)
+        {
+            var allRoles = RoleManager.Roles.Where(x => x.Name != _architectRole).ToArray();
+            ViewBag.Roles = allRoles;
+
+            var roles = Request.Form.GetValues("role");
+            var data = UserManager.FindById(userId);
+            var userRoles = data.Roles.Join(allRoles, r1 => r1.RoleId, r2 => r2.Id, (r1, r2) => new { Id = r1.RoleId, Name = r2.Name })
+                .Where(x => x.Name != _architectRole).ToArray();
+            List<string> rolesForDelete = new List<string>();
+            List<string> rolesForAdd = new List<string>();
+            for (int i = 0; i < userRoles.Length; i++)
+            {
+                var userRole = userRoles[i];
+                if (roles.SingleOrDefault(x => x == userRole.Name) == null)
+                    rolesForDelete.Add(userRole.Name);
+            }
+
+            for (int i = 0; i < roles.Length; i++)
+            {
+                var role = roles[i];
+                if (userRoles.SingleOrDefault(x => x.Name == role) == null)
+                    rolesForAdd.Add(role);
+            }
+
+            if (rolesForDelete.Any())
+            {
+                UserManager.RemoveFromRoles(userId, rolesForDelete.ToArray());
+            }
+
+            if (rolesForAdd.Any())
+            {
+                UserManager.AddToRoles(userId, rolesForAdd.ToArray());
+            }
+
+            if (rolesForDelete.Any() || rolesForAdd.Any())
+            {
+                TempData["UserRoleMessage"] = "Роли успешно заданы";
+                data = UserManager.FindById(userId);
+            }
+
+            var viewModel = getEditUser(data, allRoles);
+            return PartialView(MVC.Users.Views._UserRoles, viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -129,7 +189,7 @@ namespace GE.WebAdmin.Controllers
         {
             var usersOnSite = MvcApplication.UsersOnSite;
             var emails = usersOnSite.Select(x => x.Value).ToArray();
-            var users = UsereManager.Users.Where(x => emails.Contains(x.Email)).ToArray();
+            var users = UserManager.Users.Where(x => emails.Contains(x.Email)).ToArray();
             var roles = RoleManager.Roles.ToArray();
             var viewModel = new List<VMUser>();
             foreach (var user in users)
@@ -148,6 +208,26 @@ namespace GE.WebAdmin.Controllers
             }
 
             return PartialView(MVC.Users.Views._UsersOnSite, viewModel.ToArray());
+        }
+
+        private static VMEditUser getEditUser(SxAppUser data, SxAppRole[] allRoles)
+        {
+            var editUser = new VMEditUser
+            {
+                Id = data.Id,
+                AvatarId = data.AvatarId,
+                Email = data.Email,
+                NikName = data.NikName,
+                IsOnline = MvcApplication.UsersOnSite.ContainsValue(data.UserName)
+            };
+            editUser.Roles = data.Roles.Join(allRoles, u => u.RoleId, r => r.Id, (u, r) => new VMRole
+            {
+                Id = u.RoleId,
+                Name = r.Name,
+                Description = r.Description
+            }).ToArray();
+
+            return editUser;
         }
     }
 }

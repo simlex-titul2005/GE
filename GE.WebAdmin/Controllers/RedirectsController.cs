@@ -6,12 +6,12 @@ using SX.WebCore.Abstract;
 using SX.WebCore.HtmlHelpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
+    [Authorize(Roles = "seo")]
     public partial class RedirectsController : BaseController
     {
         SxDbRepository<Guid, SxRedirect, DbContext> _repo;

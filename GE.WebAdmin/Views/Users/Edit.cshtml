@@ -1,43 +1,78 @@
-﻿@model VMEditRole
+﻿@model VMEditUser
 @{
     var isNew = string.IsNullOrEmpty(Model.Id);
-    ViewBag.Title = isNew ? "Добавить роль" : "Редактировать роль \"" + Model.Name + "\"";
+    var userName = Model.NikName ?? Model.Email;
+    ViewBag.Title = isNew ? "Добавить пользователя" : "Редактировать пользователя \"" + userName + "\"";
 }
+
+<div>
+    <a class="btn btn-default" href="@Url.Action(MVC.Users.Index())">Назад</a>
+</div>
 
 <h2>@ViewBag.Title</h2>
-@if (!isNew)
-{
-    <form method="post" action="@Url.Action(MVC.Roles.Delete())">
-        @Html.HiddenFor(x => x.Id)
-        @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-danger pull-right">Удалить роль</button>
-    </form>
-}
-<br />
-<form method="post" action="@Url.Action(MVC.Roles.Edit())">
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(x => x.Id)
 
+<div class="user">
     <div class="row">
-        <div class="col-md-12">
-            @Html.LabelFor(x => x.Name, new { @class = "control-label" })
-            @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите наименование роли" } })
-            @Html.ValidationMessageFor(x => x.Name)
+        <div class="col-md-4">
+            @if (Model.AvatarId.HasValue)
+            {
+                <div>
+                    <img class="img-circle" alt="@userName" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.AvatarId))" />
+                </div>
+            }
+            <section>
+                <h3>Статус</h3>
+                <table class="table table-striped table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>Онлайн</td>
+                            <td class="is-online">
+                                @if (Model.IsOnline)
+                                {<span class="badge">Да</span>}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><a href="mailto:@Model.Email">@Model.Email</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="roles">
+                @Html.Partial(MVC.Users.Views._UserRoles, Model)
+            </section>
+
+            <section>
+                <h3>Инфо</h3>
+                <form method="post" action="@Url.Action(MVC.Users.Edit())">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Id)
+
+                    @Html.LabelFor(x => x.NikName)
+                    @Html.EditorFor(x => x.NikName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.NikName)
+                    <br />
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <div class="col-md-8">
+
         </div>
     </div>
-    <br />
-    <div class="row">
-        <div class="col-md-12">
-            @Html.LabelFor(x => x.Description, new { @class = "control-label" })
-            @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание роли" } })
-            @Html.ValidationMessageFor(x => x.Description)
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
-            @Html.ActionLink("Назад", MVC.Roles.Index(), new { @class = "btn btn-default" })
-        </div>
-    </div>
-</form>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        function removeMessage(id)
+        {
+            setTimeout(function () {
+                $(id).fadeOut('fast');
+            }, 1000);
+        }
+    </script>
+}

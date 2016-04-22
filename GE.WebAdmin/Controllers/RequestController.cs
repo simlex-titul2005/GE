@@ -11,6 +11,7 @@ using SX.WebCore.HtmlHelpers;
 
 namespace GE.WebAdmin.Controllers
 {
+    [Authorize(Roles ="seo")]
     public partial class RequestController : BaseController
     {
         private SxDbRepository<Guid, SxRequest, DbContext> _repo;

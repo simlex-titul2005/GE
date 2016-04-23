@@ -8,6 +8,7 @@ namespace GE.WebUI.Models.Abstract
         public int Id { get; set; }
         public DateTime DateCreate { get; set; }
         public string GameTitleUrl { get; set; }
+        public string CategoryId { get; set; }
         public Enums.ModelCoreType ModelCoreType { get; set; }
         public Guid? FrontPictureId { get; set; }
         public bool ShowFrontPictureOnDetailPage { get; set; }
@@ -36,5 +37,6 @@ namespace GE.WebUI.Models.Abstract
             }
         }
         public VMSeoInfo SeoInfo { get; set; }
+        public VMLastMaterial[] ByDateMaterials { get; set; }
     }
 }

@@ -24,6 +24,8 @@
     </div>
 
     @Html.Partial(MVC.Shared.Views._MaterialInfo, Model)
+
+    @Html.Partial(MVC.Shared.Views._ByDateMaterial, Model.ByDateMaterials)
     
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
     @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount=9 })

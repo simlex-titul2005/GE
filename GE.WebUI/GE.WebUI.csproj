@@ -193,6 +193,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Abstract\VMLastMaterial.cs" />
+    <Compile Include="Models\VMLastNews.cs" />
     <Compile Include="Models\VMLCNB.cs" />
     <Compile Include="Models\VMLCNBCategory.cs" />
     <Compile Include="Models\VMLCNBNews.cs" />
@@ -385,6 +386,7 @@
     <Content Include="Views\Games\_LastMaterials.cshtml" />
     <Content Include="Views\News\_LastCategoryBlock.cshtml" />
     <Content Include="Views\News\_NewsCategories.cshtml" />
+    <Content Include="Views\Shared\_ByDateMaterial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -394,6 +396,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\dist\i\temp\" />
+    <Folder Include="Content\less\" />
     <Folder Include="Views\Seo\" />
     <Folder Include="Views\UserClicks\" />
   </ItemGroup>

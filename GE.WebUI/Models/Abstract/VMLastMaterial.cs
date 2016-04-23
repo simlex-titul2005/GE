@@ -11,5 +11,6 @@ namespace GE.WebUI.Models.Abstract
         public string Title { get; set; }
         public string TitleUrl { get; set; }
         public Guid? FrontPictureId { get; set; }
+        public string Foreword { get; set; }
     }
 }

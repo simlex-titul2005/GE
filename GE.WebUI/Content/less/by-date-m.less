@@ -1,0 +1,26 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "../../bower_components/bootstrap/less/variables.less";
+
+.by-date-m {
+    margin-top: @def-pad*2;
+}
+
+.by-date-m > .row{
+    display:table;
+}
+
+.by-date-m > .row > div{
+    display:table-cell;
+    float:none;
+    vertical-align:top;
+    height:100%;
+}
+
+.by-date-m .content {
+    background-color: @color-white;
+    padding: @def-pad;
+    height:100%;
+    width:100%;
+    display:inline-table;
+}

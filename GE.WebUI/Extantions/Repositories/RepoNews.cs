@@ -259,9 +259,7 @@ GROUP BY
 
         public static VMDetailNews GetByTitleUrl(this GE.WebCoreExtantions.Repositories.RepoNews repo, string titleUrl)
         {
-            using (var conn = new SqlConnection(repo.ConnectionString))
-            {
-                var query = @"SELECT dn.*,
+            var query = @"SELECT dn.*,
        dm.*,
        dg.TitleUrl       AS GameTitleUrl,
        CASE 
@@ -304,7 +302,45 @@ FROM   D_NEWS            AS dn
             ON  anu.Id = dm.UserId
 WHERE  dm.TitleUrl = @title_url";
 
-                return conn.Query<VMDetailNews>(query, new { title_url = titleUrl }).SingleOrDefault();
+            var queryForByDateMaterials = @"SELECT
+	x.DateOfPublication,
+	x.DateCreate,
+	x.Title,
+	x.TitleUrl,
+	x.FrontPictureId,
+	x.GameId,
+	x.CategoryId,
+	CASE WHEN x.DateOfPublication=@date THEN 0
+	WHEN x.DateOfPublication<@date THEN -1
+	WHEN x.DateOfPublication>@date THEN 1 END AS IsCurrent,
+    CASE 
+            WHEN x.Foreword IS NOT NULL THEN x.Foreword
+            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(x.Html), 0, 200) +
+                 '...'
+       END               AS Foreword
+FROM(
+SELECT dm.*, dn.GameId FROM DV_MATERIAL AS dm
+JOIN D_NEWS AS dn ON dn.Id = dm.Id AND dn.ModelCoreType = dm.ModelCoreType
+LEFT JOIN D_GAME AS dg ON dg.Id = dn.GameId
+WHERE dm.DateOfPublication=@date
+UNION ALL
+SELECT TOP(1) dm.*, dn.GameId FROM DV_MATERIAL AS dm
+JOIN D_NEWS AS dn ON dn.Id = dm.Id AND dn.ModelCoreType = dm.ModelCoreType
+LEFT JOIN D_GAME AS dg ON dg.Id = dn.GameId
+WHERE dm.DateOfPublication>@date  AND (@g_turl IS NULL OR dg.TitleUrl=@g_turl) OR (@cat_id IS NOT NULL AND dm.CategoryId=@cat_id)
+UNION ALL
+SELECT TOP(1) dm.*, dn.GameId FROM DV_MATERIAL AS dm
+JOIN D_NEWS AS dn ON dn.Id = dm.Id AND dn.ModelCoreType = dm.ModelCoreType
+LEFT JOIN D_GAME AS dg ON dg.Id = dn.GameId
+WHERE dm.DateOfPublication<@date AND (@g_turl IS NULL OR dg.TitleUrl=@g_turl) OR (@cat_id IS NOT NULL AND dm.CategoryId=@cat_id)
+) x
+ORDER BY x.DateOfPublication";
+
+            using (var connection = new SqlConnection(repo.ConnectionString))
+            {
+                var data=connection.Query<VMDetailNews>(query, new { title_url = titleUrl }).SingleOrDefault();
+                data.ByDateMaterials = connection.Query<VMLastNews>(queryForByDateMaterials, new { date=data.DateOfPublication, g_turl=data.GameTitleUrl, cat_id=data.CategoryId}).ToArray();
+                return data;
             }
         }
     }

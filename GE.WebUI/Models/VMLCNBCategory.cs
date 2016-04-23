@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SX.WebCore.ViewModels;
+using System;
 
 namespace GE.WebUI.Models
 {
@@ -8,6 +9,7 @@ namespace GE.WebUI.Models
         {
             News = new VMLCNBNews[0];
             SubCategories = new VMLCNBCategory[0];
+            Tags = new SxVMMaterialTag[0];
         }
 
         public string Id { get; set; }
@@ -16,5 +18,6 @@ namespace GE.WebUI.Models
 
         public VMLCNBNews[] News { get; set; }
         public VMLCNBCategory[] SubCategories { get; set; }
+        public SxVMMaterialTag[] Tags { get; set; }
     }
 }

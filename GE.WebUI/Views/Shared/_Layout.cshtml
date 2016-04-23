@@ -2,7 +2,7 @@
 @{
         Layout = null;
         var bgUrl = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
-        var bg = string.IsNullOrEmpty(bgUrl) ? null : string.Format("style=background:url('{0}');background-size:cover;background-position:center", bgUrl);
+        var bg = string.IsNullOrEmpty(bgUrl) ? null : string.Format("style=background:url('{0}');", bgUrl);
 }
 <!DOCTYPE html>
 <html lang="en">

@@ -141,6 +141,7 @@ namespace Links
         public static readonly string find_engine_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/find-engine.min.js") ? Url("find-engine.min.js") : Url("find-engine.js");
         public static readonly string ge_for_gamers_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-for-gamers-block.min.js") ? Url("ge-for-gamers-block.min.js") : Url("ge-for-gamers-block.js");
         public static readonly string ge_game_menu_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-game-menu.min.js") ? Url("ge-game-menu.min.js") : Url("ge-game-menu.js");
+        public static readonly string ge_last_category_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-last-category-block.min.js") ? Url("ge-last-category-block.min.js") : Url("ge-last-category-block.js");
         public static readonly string ge_last_news_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-last-news-block.min.js") ? Url("ge-last-news-block.min.js") : Url("ge-last-news-block.js");
         public static readonly string site_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.js") ? Url("site.min.js") : Url("site.js");
         public static readonly string user_clicks_engine_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/user-clicks-engine.min.js") ? Url("user-clicks-engine.min.js") : Url("user-clicks-engine.js");
@@ -204,6 +205,7 @@ namespace Links
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 public static readonly string ge_for_gamers_block_min_js = Url("ge-for-gamers-block.min.js");
+                public static readonly string ge_last_category_block_min_js = Url("ge-last-category-block.min.js");
                 public static readonly string ge_last_news_block_min_js = Url("ge-last-news-block.min.js");
                 public static readonly string jquery_validate_min_js = Url("jquery.validate.min.js");
                 public static readonly string jquery_validate_unobtrusive_min_js = Url("jquery.validate.unobtrusive.min.js");
@@ -226,6 +228,7 @@ namespace Links
                 public const string find_engine_js = "~/Scripts/find-engine.js"; 
                 public const string ge_for_gamers_block_js = "~/Scripts/ge-for-gamers-block.js"; 
                 public const string ge_game_menu_js = "~/Scripts/ge-game-menu.js"; 
+                public const string ge_last_category_block_js = "~/Scripts/ge-last-category-block.js"; 
                 public const string ge_last_news_block_js = "~/Scripts/ge-last-news-block.js"; 
                 public const string site_js = "~/Scripts/site.js"; 
                 public const string user_clicks_engine_js = "~/Scripts/user-clicks-engine.js"; 
@@ -266,6 +269,7 @@ namespace Links
                     public static class Assets
                     {
                         public const string ge_for_gamers_block_min_js = "~/Content/dist/js/ge-for-gamers-block.min.js"; 
+                        public const string ge_last_category_block_min_js = "~/Content/dist/js/ge-last-category-block.min.js"; 
                         public const string ge_last_news_block_min_js = "~/Content/dist/js/ge-last-news-block.min.js"; 
                         public const string jquery_validate_min_js = "~/Content/dist/js/jquery.validate.min.js"; 
                         public const string jquery_validate_unobtrusive_min_js = "~/Content/dist/js/jquery.validate.unobtrusive.min.js"; 

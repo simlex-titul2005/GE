@@ -9,6 +9,15 @@ namespace GE.WebUI.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
+        /// <summary>
+        /// Последние новости игр
+        /// </summary>
+        /// <param name="repo">Репозиотрий</param>
+        /// <param name="lnc">Кол-во последних новостей в левом блоке</param>
+        /// <param name="gc">Кол-во отображаемых игр в правом блоке</param>
+        /// <param name="glnc">Кол-во последних новостей для игр в правом блоке</param>
+        /// <param name="gtc">Кол-во тегов для игры</param>
+        /// <returns></returns>
         public static VMLGNB LastGameNewsBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc, int gc, int glnc, int gtc)
         {
             var model = new VMLGNB(lnc, gc, glnc);
@@ -115,7 +124,15 @@ GROUP BY
             return model;
         }
 
-        public static VMLCNB LastCategoryBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc, int clnc)
+        /// <summary>
+        /// Последние новости категорий
+        /// </summary>
+        /// <param name="repo">Репозиотрий</param>
+        /// <param name="lnc">Кол-во последних новостей в левом блоке</param>
+        /// <param name="clnc">Кол-во последних новостей подкатегорий</param>
+        /// <param name="ctc">Кол-во тегов пордкатегории</param>
+        /// <returns></returns>
+        public static VMLCNB LastCategoryBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc, int clnc, int ctc)
         {
             var queryForCategory = @"SELECT dmc.Title, dmc.Id
 FROM   D_MATERIAL_CATEGORY  AS dmc
@@ -173,7 +190,8 @@ ORDER BY
 SELECT TOP(@lnc) dm.DateOfPublication,
        dm.DateCreate,
        dm.Title,
-       dm.TitleUrl
+       dm.TitleUrl,
+       dm.CategoryId
 FROM   DV_MATERIAL           AS dm
        JOIN (
                 SELECT t.Id,
@@ -190,6 +208,23 @@ WHERE  dm.Show = 1
        AND dm.DateOfPublication <= GETDATE()
 ORDER BY
        dm.DateOfPublication     DESC";
+
+            var queryForTags = @"SELECT TOP(@amount)
+       dmt.Id            AS Title,
+       COUNT(dmt.Id)     AS [Count],
+       1                 AS IsCurrent
+FROM   D_MATERIAL_TAG    AS dmt
+       JOIN D_NEWS       AS dn
+            ON  dn.Id = dmt.MaterialId
+            AND dn.ModelCoreType = dmt.ModelCoreType
+       JOIN DV_MATERIAL  AS dm
+            ON  dm.Id = dmt.MaterialId
+            AND dm.ModelCoreType = dmt.ModelCoreType
+            AND dm.Show = 1
+            AND dm.DateOfPublication <= GETDATE()
+WHERE  dm.CategoryId = @cat_id
+GROUP BY
+       dmt.Id";
 
             var data = new VMLCNB();
 
@@ -210,6 +245,7 @@ ORDER BY
                             {
                                 var subCategory = category.SubCategories[y];
                                 subCategory.News = connection.Query<VMLCNBNews>(queryForSubCategoryNews, new { cat_id = subCategory.Id, clnc = clnc }).ToArray();
+                                subCategory.Tags = connection.Query<SxVMMaterialTag>(queryForTags, new { amount = ctc, cat_id = subCategory.Id }).ToArray();
                             }
                         }
 

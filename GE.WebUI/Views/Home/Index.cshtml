@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     ViewBag.Title = ViewBag.Title ?? "Новости, статьи игровой индустрии";
     if (ViewBag.GameTitle != null)
     {
@@ -13,7 +13,7 @@
 @Html.Action(MVC.News.NewsCategories(lnc: 5))
 
 <div class="text-center all-news-btn">
-    <a href="@Url.Action(MVC.News.List())" class="btn btn-default btn-transparent dark-blue">Все новости</a>
+    <a href="@Url.Action(MVC.News.List())" class="btn btn-default btn-transparent white">Все новости</a>
 </div>
 
 @Html.Action(MVC.Articles.ForGamersBlock())
@@ -21,9 +21,11 @@
 @section scripts{
     <script type="text/javascript" src="~/Content/dist/js/ge-last-news-block.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/ge-for-gamers-block.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/ge-last-category-block.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $('.l-n-b').geLastNewsBlock();
+            $('.l-c-n-b').geLastCategoryBlock();
             $('.f-g-b').geFGB(400);
         });
     </script>

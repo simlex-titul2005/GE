@@ -17,7 +17,7 @@
                             {
                                 var news = Model.News[i];
                                 <li>
-                                    <a href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))">
+                                    <a @(news.CategoryId != null?string.Format("data-category-id={0}", news.CategoryId):null) data-category-id="@news.CategoryId" href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))">
                                         <span class="date">@news.DateCreate.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
                                     </a>
                                 </li>
@@ -29,7 +29,7 @@
                     @if (Model.SubCategories.Any())
                     {
                         <div class="category-wrapper">
-                            <ul>
+                            <ul class="sub-gategories">
                                 @for (int i = 0; i < Model.SubCategories.Length; i++)
                                 {
                                     var subCategory = Model.SubCategories[i];
@@ -38,7 +38,7 @@
                                         : Guid.Empty;
                                     <li>
                                         <a href="#">
-                                            <figure style="background:url(@Url.Action(MVC.Pictures.Picture((Guid)pictureId))) center / cover">
+                                            <figure data-category-id="@subCategory.Id" style="background:url(@Url.Action(MVC.Pictures.Picture((Guid)pictureId))) center / cover">
 
                                             </figure>
                                         </a>
@@ -54,16 +54,19 @@
                                                 }
                                             </ul>
                                         }
-                                        @*@if (game.Tags.Any())
+                                        @if (subCategory.Tags.Any())
                                         {
                                             <div class="tags">
-                                                <h4>@game.Title</h4>
-                                                @Html.Partial(MVC.MaterialTags.Views._TagsCloud, game.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action(MVC.News.List()) } })
+                                                <h4>@subCategory.Title</h4>
+                                                @Html.Partial(MVC.MaterialTags.Views._TagsCloud, subCategory.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action(MVC.News.List()) } })
                                             </div>
-                                        }*@
+                                        }
                                     </li>
                                 }
                             </ul>
+                            <div class="lgnb-tags">
+
+                            </div>
                         </div>
                     }
                 </div>

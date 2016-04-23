@@ -99,6 +99,7 @@ function createJs() {
     gulp.src([
         'scripts/ge-for-gamers-block.js',
         'scripts/ge-last-news-block.js',
+        'scripts/ge-last-category-block.js',
         'bower_components/jquery-validation/dist/jquery.validate.js',
         'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js'
     ])

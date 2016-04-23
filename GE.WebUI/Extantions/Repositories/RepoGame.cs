@@ -40,30 +40,32 @@ FROM   DV_MATERIAL  AS dm
                        JOIN DV_MATERIAL  AS dm2
                             ON  dm2.Id = dn.Id
                             AND dm2.ModelCoreType = dn.ModelCoreType
-                       JOIN D_GAME  AS dg1
+                       JOIN D_GAME       AS dg1
                             ON  dg1.Id = dn.GameId
                             AND (dg1.TitleUrl = @gturl OR @gturl IS NULL)
-                   WHERE dm2.Show = 1
-                AND dm2.DateOfPublication <= GETDATE()
-                    ORDER BY
-                    dm2.DateCreate DESC
-                    UNION
-                    SELECT TOP(@amount) da.Id,
-                           da.ModelCoreType
-                    FROM   D_ARTICLE AS da
-                           JOIN DV_MATERIAL AS dm3
-                                ON  dm3.Id = da.Id
-                                AND dm3.ModelCoreType = da.ModelCoreType
-                           JOIN D_GAME AS dg2
-                                ON  dg2.Id = da.GameId
-                                AND (dg2.TitleUrl = @gturl OR @gturl IS NULL)
-                   WHERE dm3.Show = 1
-                AND dm3.DateOfPublication <= GETDATE()
-                    ORDER BY
-                    dm3.DateCreate DESC
+                WHERE  dm2.Show = 1
+                       AND dm2.DateOfPublication <= GETDATE()
+                ORDER BY
+                       dm2.DateCreate DESC
+                UNION
+                SELECT TOP(@amount) da.Id,
+                       da.ModelCoreType
+                FROM   D_ARTICLE         AS da
+                       JOIN DV_MATERIAL  AS dm3
+                            ON  dm3.Id = da.Id
+                            AND dm3.ModelCoreType = da.ModelCoreType
+                       JOIN D_GAME       AS dg2
+                            ON  dg2.Id = da.GameId
+                            AND (dg2.TitleUrl = @gturl OR @gturl IS NULL)
+                WHERE  dm3.Show = 1
+                       AND dm3.DateOfPublication <= GETDATE()
+                ORDER BY
+                       dm3.DateCreate DESC
             )       AS x
             ON  x.Id = dm.Id
-            AND x.ModelCoreType = dm.ModelCoreType";
+            AND x.ModelCoreType = dm.ModelCoreType
+ORDER BY
+       dm.DateCreate DESC";
 
             var model = new VMGameMenu(iw, ih);
 

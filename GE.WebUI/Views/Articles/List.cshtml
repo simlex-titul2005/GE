@@ -2,13 +2,14 @@
 @{
     var title = ViewBag.Title;
     var h1 = ViewBag.H1;
-    ViewBag.Title = title ?? (ViewBag.Tag != null ? "Статьи c тегом " + (string)ViewBag.Tag : "Статьи");
+    ViewBag.Title = title ?? (ViewBag.Tag != null ? "Последние статьи c тегом " + (string)ViewBag.Tag : "Статьи");
     if (title == null && ViewBag.GameTitle != null)
     {
         ViewBag.Title += " " + ViewBag.GameTitle;
     }
-    ViewBag.H1 = h1 ?? ViewBag.Title;
+    ViewBag.H1 = h1 ?? ViewBag.Tag != null ? "Статьи тега " + (string)ViewBag.Tag : ViewBag.Title;
     ViewBag.H1CssClass = "header";
+    ViewBag.Description = ViewBag.Description ?? ViewBag.Tag != null ? "На данной странице вы сможете найти абсолютно все новости и статьи, которые были написаны авторами нашего сайта по запросу " + (string)ViewBag.Tag : null;
 }
 
 @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)

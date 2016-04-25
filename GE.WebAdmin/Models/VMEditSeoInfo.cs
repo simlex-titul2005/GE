@@ -29,7 +29,7 @@ namespace GE.WebAdmin.Models
         [MaxLength(20), Display(Name = "Css стиль тега h1")]
         public string H1CssClass { get; set; }
 
-        public int MaterialId { get; set; }
-        public ModelCoreType ModelCoreType { get; set; }
+        public int? MaterialId { get; set; }
+        public ModelCoreType? ModelCoreType { get; set; }
     }
 }

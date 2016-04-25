@@ -65,6 +65,7 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult Edit(VMEditSeoInfo model)
         {
             var redactModel = Mapper.Map<VMEditSeoInfo, SxSeoInfo>(model);
+            redactModel.Check(ModelState);
             if (ModelState.IsValid)
             {
                 SxSeoInfo newModel = null;
@@ -102,14 +103,16 @@ namespace GE.WebAdmin.Controllers
         public virtual PartialViewResult EditForMaterial(VMEditSeoInfo model)
         {
             SxSeoInfo newModel = null;
+            var redactModel = Mapper.Map<VMEditSeoInfo, SxSeoInfo>(model);
+            redactModel.Check(ModelState);
             if (ModelState.IsValid)
             {
                 var isNew = model.Id == 0;
-                var redactModel = Mapper.Map<VMEditSeoInfo, SxSeoInfo>(model);
+                
                 if (isNew)
                 {
                     newModel = _repo.Create(redactModel);
-                    updateMaterialSeoInfo(model.MaterialId, model.ModelCoreType, newModel.Id);
+                    updateMaterialSeoInfo((int)model.MaterialId, (Enums.ModelCoreType)model.ModelCoreType, newModel.Id);
                     TempData["ModelSeoInfoRedactInfo"] = "Успешно добавлено";
                 }
                 else
@@ -125,11 +128,12 @@ namespace GE.WebAdmin.Controllers
                 return PartialView(MVC.SeoInfo.Views._EditForMaterial, model);
         }
 
+
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual PartialViewResult DeleteForMaterial(VMEditSeoInfo model)
         {
-            updateMaterialSeoInfo(model.MaterialId, model.ModelCoreType, null);
+            updateMaterialSeoInfo((int)model.MaterialId, (Enums.ModelCoreType)model.ModelCoreType, null);
 
             _repo.Delete(model.Id);
             TempData["ModelSeoInfoRedactInfo"] = "Успешно удалено";

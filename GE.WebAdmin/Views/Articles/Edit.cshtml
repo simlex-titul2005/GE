@@ -3,7 +3,7 @@
     var isNew = Model.Id == 0;
     ViewBag.Title = isNew ? "Добавить статью" : "Редактировать статью \"" + Model.Title + "\"";
     ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
-    ViewBag.MaterialCategoryTitle = isNew || Model.CategoryId==null ? null : Model.Category.Title;
+    ViewBag.MaterialCategoryTitle = isNew || Model.CategoryId == null ? null : Model.Category.Title;
 }
 
 @section styles{
@@ -11,7 +11,7 @@
 }
 
 <h2>@ViewBag.Title</h2>
-@if (Model.Id != 0)
+@if (Model.Id != 0 && User.IsInRole("admin"))
 {
     <div class="text-right">
         <form method="post" action="delete">
@@ -26,8 +26,11 @@
 
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
-    <li role="presentation"><a href="#tags-cloud" aria-controls="tags-cloud" role="tab" data-toggle="tab">Облако тегов</a></li>
-    <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Seo</a></li>
+    @if (User.IsInRole("seo"))
+    {
+        <li role="presentation"><a href="#tags-cloud" aria-controls="tags-cloud" role="tab" data-toggle="tab">Облако тегов</a></li>
+        <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Seo</a></li>
+    }
 </ul>
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="params">
@@ -40,7 +43,7 @@
             @Html.HiddenFor(x => x.OldTitleUrl)
             @if (!isNew)
             {
-                @Html.HiddenFor(x => x.UserId)
+            @Html.HiddenFor(x => x.UserId)
             }
 
             <div class="row">
@@ -57,25 +60,25 @@
 
                 @if (!isNew)
                 {
-                    <div class="col-md-3">
-                        @Html.LabelFor(x => x.DateOfPublication, new { @class = "control-label" })
-                        @Html.EditorFor(x => x.DateOfPublication, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите дату публикации" } })
-                        @Html.ValidationMessageFor(x => x.DateOfPublication)
-                    </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.DateOfPublication, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.DateOfPublication, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите дату публикации" } })
+                    @Html.ValidationMessageFor(x => x.DateOfPublication)
+                </div>
                 }
             </div>
             <br />
             @if (!isNew && !string.IsNullOrEmpty(Model.TitleUrl) && User.IsInRole("architect"))
             {
-                <div class="row">
-                    <div class="col-md-12">
-                        @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
-                        <span class="text-info"> (применяется для уникальной идентификации материала)</span>
-                        @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(x => x.TitleUrl)
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+                    <span class="text-info"> (применяется для уникальной идентификации материала)</span>
+                    @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.TitleUrl)
                 </div>
-                <br />
+            </div>
+            <br />
             }
             <div class="row">
                 <div class="col-md-3">
@@ -92,8 +95,8 @@
                     @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
                     @if (!isNew && Model.FrontPictureId.HasValue)
                     {
-                        @:&nbsp;
-                        <a href="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))">Показать</a>
+                    @:&nbsp;
+                    <a href="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))">Показать</a>
                     }
                     @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.FrontPictureId)
@@ -131,30 +134,34 @@
             </div>
         </form>
     </div>
-    <div role="tabpanel" class="tab-pane" id="tags-cloud">
-        @if (!isNew)
-        {
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="grid-mat-tags">
-                        @Html.Action(MVC.MaterialTags.Index(mid: Model.Id, mct: Model.ModelCoreType))
+    @if (User.IsInRole("seo"))
+    {
+        <div role="tabpanel" class="tab-pane" id="tags-cloud">
+            @if (!isNew)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="grid-mat-tags">
+                            @Html.Action(MVC.MaterialTags.Index(mid: Model.Id, mct: Model.ModelCoreType))
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-    <div role="tabpanel" class="tab-pane" id="seo">
-        @if (!isNew)
-        {
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="grid-mat-tags">
-                        @Html.Action(MVC.SeoInfo.EditForMaterial(mid: Model.Id, mct: Model.ModelCoreType, id: Model.SeoInfoId))
+            }
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="seo">
+            @if (!isNew)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="grid-mat-tags">
+                            @Html.Action(MVC.SeoInfo.EditForMaterial(mid: Model.Id, mct: Model.ModelCoreType, id: Model.SeoInfoId))
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+    }
 </div>
 
 @section scripts{

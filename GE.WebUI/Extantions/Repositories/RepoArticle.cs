@@ -3,6 +3,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using GE.WebUI.Models.Abstract;
+using static SX.WebCore.Enums;
+using System;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -213,6 +215,99 @@ WHERE  dm.TitleUrl = @title_url";
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 return conn.Query<VMDetailArticle>(query, new { title_url = titleUrl }).FirstOrDefault();
+            }
+        }
+
+        public static VMLastNews[] GetByDateMaterial(this WebCoreExtantions.Repositories.RepoArticle repo, ModelCoreType mct, DateTime date)
+        {
+            var queryForByDateMaterials = @"SELECT x.DateCreate,
+       x.DateOfPublication,
+       x.ModelCoreType,
+       x.Title,
+       x.TitleUrl,
+       x.Foreword,
+       x.UserId,
+       anu.AvatarId,
+       CASE 
+            WHEN anu.NikName IS NULL THEN anu.UserName
+            ELSE anu.NikName
+       END               AS NikName
+FROM   (
+           SELECT TOP(1) dm.*,
+                  IsCurrent = 1
+           FROM   DV_MATERIAL AS dm
+           WHERE  dm.ModelCoreType = @mct
+                  AND dm.DateOfPublication > @date
+                  AND dm.Show = 1
+                  AND dm.DateOfPublication <= GETDATE()
+           ORDER BY
+                  dm.DateOfPublication DESC
+           UNION ALL
+           SELECT TOP(2) dm.*,
+                  IsCurrent = -1
+           FROM   DV_MATERIAL AS dm
+           WHERE  dm.ModelCoreType = @mct
+                  AND dm.DateOfPublication < @date
+                  AND dm.Show = 1
+                  AND dm.DateOfPublication <= GETDATE()
+           ORDER BY
+                  dm.DateOfPublication DESC
+       ) x
+       JOIN AspNetUsers  AS anu
+            ON  anu.Id = x.UserId
+ORDER BY
+       x.IsCurrent";
+
+            using (var connection = new SqlConnection(repo.ConnectionString))
+            {
+                var data = connection.Query<VMLastNews, VMUser, VMLastNews>(queryForByDateMaterials, (m, u) => {
+                    m.Author = u;
+                    return m;
+                }, new { date = date, mct = mct }, splitOn: "UserId").ToArray();
+                return data;
+            }
+        }
+
+        public static VMLastNews[] GetPopular(this WebCoreExtantions.Repositories.RepoArticle repo, ModelCoreType mct, int mid, int amount)
+        {
+            var queryForByDateMaterials = @"SELECT TOP(@amount)
+       dm.DateCreate,
+       dm.DateOfPublication,
+       dm.Title,
+       dm.TitleUrl,
+       dm.ModelCoreType,
+       COUNT(dc.Id)            AS CommentsCount,
+       COUNT(dl.Id)            AS LikesCount,
+       SUM(dm.ViewsCount)         ViewsCount
+FROM   DV_MATERIAL             AS dm
+       LEFT JOIN D_COMMENT     AS dc
+            ON  dc.ModelCoreType = dm.ModelCoreType
+            AND dc.MaterialId = dm.Id
+       LEFT JOIN D_USER_CLICK  AS duc
+            ON  duc.MaterialId = dm.Id
+            AND duc.ModelCoreType = dm.ModelCoreType
+       LEFT JOIN D_LIKE        AS dl
+            ON  dl.UserClickId = duc.Id
+WHERE  dm.ModelCoreType = @mct
+       AND dm.Show = 1
+       AND dm.DateOfPublication <= GETDATE()
+       AND dm.Id NOT IN (@mid)
+GROUP BY
+       dm.DateCreate,
+       dm.DateOfPublication,
+       dm.Title,
+       dm.TitleUrl,
+       dm.ModelCoreType
+HAVING COUNT(dc.Id) > 0 OR COUNT(dl.Id) > 0 OR COUNT(dm.ViewsCount) > 0
+ORDER BY
+       CommentsCount DESC,
+       LikesCount DESC,
+       ViewsCount DESC";
+
+            using (var connection = new SqlConnection(repo.ConnectionString))
+            {
+                var data = connection.Query<VMLastNews>(queryForByDateMaterials, new { mct = mct, mid = mid, amount = amount }).ToArray();
+                return data;
             }
         }
     }

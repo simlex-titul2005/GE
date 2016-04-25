@@ -397,7 +397,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\dist\i\temp\" />
-    <Folder Include="Content\less\" />
     <Folder Include="Views\Seo\" />
     <Folder Include="Views\UserClicks\" />
   </ItemGroup>

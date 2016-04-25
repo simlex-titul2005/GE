@@ -200,7 +200,7 @@ namespace GE.WebUI.Controllers
             switch(mct)
             {
                 case ModelCoreType.Article:
-                    data = null;
+                    data = new RepoArticle().GetByDateMaterial(mct, date);
                     break;
                 case ModelCoreType.News:
                     data = new RepoNews().GetByDateMaterial(mct, date);
@@ -221,7 +221,7 @@ namespace GE.WebUI.Controllers
             switch (mct)
             {
                 case ModelCoreType.Article:
-                    data = null;
+                    data = new RepoArticle().GetPopular(mct, mid, amount); ;
                     break;
                 case ModelCoreType.News:
                     data = new RepoNews().GetPopular(mct, mid, amount);

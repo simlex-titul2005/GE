@@ -24,6 +24,10 @@
     {
         <meta name="keywords" content="@ViewBag.Keywords" />
     }
+    @if(ViewBag.LastModified != null)
+    {
+        <meta http-equiv="last-modified" content="@ViewBag.LastModified" />
+    }
     <meta property="og:url" content="@Request.Url" />
     <title>@ViewBag.Title</title>
     <meta property="og:title" content="@ViewBag.Title" />

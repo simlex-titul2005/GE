@@ -102,6 +102,12 @@ namespace GE.WebUI
 
             routes.MapRoute(
                 name: null,
+                url: "news/bydatematerial",
+                defaults: new { controller = "news", action = "bydatematerial", area = "" },
+                namespaces: _defNamespace
+            );
+            routes.MapRoute(
+                name: null,
                 url: "news",
                 defaults: new { controller = "news", action = "list", gameTitle = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace

@@ -1,19 +1,33 @@
 ﻿@model GE.WebUI.Models.Abstract.VMLastMaterial[]
 @{
     Layout = null;
+    var itemsCount = 3;
 }
 
 <div class="by-date-m">
+    <h3>Другие новости</h3>
     <div class="row">
-        @for (int i = 0; i < Model.Length; i++)
+        @for (int i = 0; i < itemsCount; i++)
         {
-            var item = Model[i];
             <div class="col-md-4">
-                <div class="content">
-                    <div><time>@item.DateOfPublication</time></div>
-                    <h4>@item.Title</h4>
-                    <div>@item.Foreword</div>
-                </div>
+                @if (i < Model.Length)
+                {
+                    var item = Model[i];
+                    <div class="content @(i==0?"first":i==itemsCount-1?"last":null)">
+                        @if(i==0 || i== itemsCount - 1)
+                        {
+                            <div class="arrow">
+                                <a href="javscript:void(0)" data-ajax-url="@Url.Action(MVC.News.ByDateMaterial(item.ModelCoreType, item.DateOfPublication))" data-ajax="true" data-ajax-update="#by-date-mat" data-ajax-method="get"><i class="fa @(i==0?"fa-arrow-left":"fa-arrow-right")"></i></a>
+                            </div>
+                        }
+                        <div class="date">@item.DateOfPublication</div>
+                        <h4 class="title"><a href="@item.Url(Url)">@item.Title</a></h4>
+                        <div class="fw">@item.Foreword</div>
+                        <div class="author">
+                            Автор: <strong>@item.Author.NikName</strong>
+                        </div>
+                    </div>
+                }
             </div>
         }
     </div>

@@ -70,9 +70,21 @@ namespace GE.WebUI.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult LikeMaterials()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.LikeMaterials);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ViewResult Details()
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult ByDateMaterial()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.ByDateMaterial);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -94,7 +106,9 @@ namespace GE.WebUI.Controllers
             public readonly string Preview = "Preview";
             public readonly string Last = "Last";
             public readonly string List = "List";
+            public readonly string LikeMaterials = "LikeMaterials";
             public readonly string Details = "Details";
+            public readonly string ByDateMaterial = "ByDateMaterial";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -104,7 +118,9 @@ namespace GE.WebUI.Controllers
             public const string Preview = "Preview";
             public const string Last = "Last";
             public const string List = "List";
+            public const string LikeMaterials = "LikeMaterials";
             public const string Details = "Details";
+            public const string ByDateMaterial = "ByDateMaterial";
         }
 
 
@@ -134,6 +150,15 @@ namespace GE.WebUI.Controllers
         {
             public readonly string filter = "filter";
         }
+        static readonly ActionParamsClass_LikeMaterials s_params_LikeMaterials = new ActionParamsClass_LikeMaterials();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_LikeMaterials LikeMaterialsParams { get { return s_params_LikeMaterials; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_LikeMaterials
+        {
+            public readonly string filter = "filter";
+            public readonly string amount = "amount";
+        }
         static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
@@ -144,6 +169,15 @@ namespace GE.WebUI.Controllers
             public readonly string month = "month";
             public readonly string day = "day";
             public readonly string titleUrl = "titleUrl";
+        }
+        static readonly ActionParamsClass_ByDateMaterial s_params_ByDateMaterial = new ActionParamsClass_ByDateMaterial();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ByDateMaterial ByDateMaterialParams { get { return s_params_ByDateMaterial; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ByDateMaterial
+        {
+            public readonly string mct = "mct";
+            public readonly string date = "date";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -233,6 +267,19 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
+        partial void LikeMaterialsOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebCoreExtantions.Filter filter, int amount);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult LikeMaterials(GE.WebCoreExtantions.Filter filter, int amount)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.LikeMaterials);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filter", filter);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "amount", amount);
+            LikeMaterialsOverride(callInfo, filter, amount);
+            return callInfo;
+        }
+
+        [NonAction]
         partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int year, string month, string day, string titleUrl);
 
         [NonAction]
@@ -244,6 +291,19 @@ namespace GE.WebUI.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "day", day);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
             DetailsOverride(callInfo, year, month, day, titleUrl);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ByDateMaterialOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, SX.WebCore.Enums.ModelCoreType mct, System.DateTime date);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult ByDateMaterial(SX.WebCore.Enums.ModelCoreType mct, System.DateTime date)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.ByDateMaterial);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "date", date);
+            ByDateMaterialOverride(callInfo, mct, date);
             return callInfo;
         }
 

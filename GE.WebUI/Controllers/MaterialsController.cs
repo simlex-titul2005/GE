@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using static SX.WebCore.Enums;
+using System.Globalization;
 
 namespace GE.WebUI.Controllers
 {
@@ -98,7 +99,7 @@ namespace GE.WebUI.Controllers
 #endif
         [AcceptVerbs(HttpVerbs.Get)]
         [ChildActionOnly]
-        public PartialViewResult LikeMaterials(WebCoreExtantions.Filter filter, int amount=10)
+        public virtual PartialViewResult LikeMaterials(WebCoreExtantions.Filter filter, int amount=10)
         {
             dynamic[] viewModel = null;
             switch(filter.ModelCoreType)
@@ -150,6 +151,9 @@ namespace GE.WebUI.Controllers
                 ViewBag.Keywords = ViewBag.Keywords ?? (matSeoInfo != null ? matSeoInfo.KeywordsString : null);
                 ViewBag.H1= ViewBag.H1 ?? (matSeoInfo != null ? matSeoInfo.H1 : null) ?? model.Title;
 
+                CultureInfo ci = new CultureInfo("en-US");
+                ViewBag.LastModified = model.DateUpdate.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'", ci);
+
                 if (model.GameTitleUrl != null)
                     ViewBag.GameName = model.GameTitleUrl.ToLowerInvariant();
 
@@ -184,6 +188,23 @@ namespace GE.WebUI.Controllers
 
                 return View(model);
             }
+        }
+
+        [HttpGet]
+        public virtual PartialViewResult ByDateMaterial(ModelCoreType mct, DateTime date)
+        {
+            VMLastMaterial[] data = null;
+            switch(mct)
+            {
+                case ModelCoreType.Article:
+                    data = null;
+                    break;
+                case ModelCoreType.News:
+                    data = new RepoNews().GetByDateMaterial(mct, date);
+                    break;
+            }
+
+            return PartialView(MVC.Shared.Views._ByDateMaterial, data);
         }
     }
 }

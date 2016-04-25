@@ -4,6 +4,7 @@ using System.Linq;
 using Dapper;
 using SX.WebCore.ViewModels;
 using static SX.WebCore.Enums;
+using System;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -257,7 +258,7 @@ GROUP BY
             return data;
         }
 
-        public static VMDetailNews GetByTitleUrl(this GE.WebCoreExtantions.Repositories.RepoNews repo, string titleUrl)
+        public static VMDetailNews GetByTitleUrl(this WebCoreExtantions.Repositories.RepoNews repo, string titleUrl)
         {
             var query = @"SELECT dn.*,
        dm.*,
@@ -302,44 +303,59 @@ FROM   D_NEWS            AS dn
             ON  anu.Id = dm.UserId
 WHERE  dm.TitleUrl = @title_url";
 
-            var queryForByDateMaterials = @"SELECT
-	x.DateOfPublication,
-	x.DateCreate,
-	x.Title,
-	x.TitleUrl,
-	x.FrontPictureId,
-	x.GameId,
-	x.CategoryId,
-	CASE WHEN x.DateOfPublication=@date THEN 0
-	WHEN x.DateOfPublication<@date THEN -1
-	WHEN x.DateOfPublication>@date THEN 1 END AS IsCurrent,
-    CASE 
-            WHEN x.Foreword IS NOT NULL THEN x.Foreword
-            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(x.Html), 0, 200) +
-                 '...'
-       END               AS Foreword
-FROM(
-SELECT dm.*, dn.GameId FROM DV_MATERIAL AS dm
-JOIN D_NEWS AS dn ON dn.Id = dm.Id AND dn.ModelCoreType = dm.ModelCoreType
-LEFT JOIN D_GAME AS dg ON dg.Id = dn.GameId
-WHERE dm.DateOfPublication=@date
-UNION ALL
-SELECT TOP(1) dm.*, dn.GameId FROM DV_MATERIAL AS dm
-JOIN D_NEWS AS dn ON dn.Id = dm.Id AND dn.ModelCoreType = dm.ModelCoreType
-LEFT JOIN D_GAME AS dg ON dg.Id = dn.GameId
-WHERE dm.DateOfPublication>@date  AND (@g_turl IS NULL OR dg.TitleUrl=@g_turl) OR (@cat_id IS NOT NULL AND dm.CategoryId=@cat_id)
-UNION ALL
-SELECT TOP(1) dm.*, dn.GameId FROM DV_MATERIAL AS dm
-JOIN D_NEWS AS dn ON dn.Id = dm.Id AND dn.ModelCoreType = dm.ModelCoreType
-LEFT JOIN D_GAME AS dg ON dg.Id = dn.GameId
-WHERE dm.DateOfPublication<@date AND (@g_turl IS NULL OR dg.TitleUrl=@g_turl) OR (@cat_id IS NOT NULL AND dm.CategoryId=@cat_id)
-) x
-ORDER BY x.DateOfPublication";
-
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
                 var data=connection.Query<VMDetailNews>(query, new { title_url = titleUrl }).SingleOrDefault();
-                data.ByDateMaterials = connection.Query<VMLastNews>(queryForByDateMaterials, new { date=data.DateOfPublication, g_turl=data.GameTitleUrl, cat_id=data.CategoryId}).ToArray();
+                return data;
+            }
+        }
+
+        public static VMLastNews[] GetByDateMaterial(this WebCoreExtantions.Repositories.RepoNews repo, ModelCoreType mct, DateTime date)
+        {
+            var queryForByDateMaterials = @"SELECT x.DateCreate,
+       x.DateOfPublication,
+       x.ModelCoreType,
+       x.Title,
+       x.TitleUrl,
+       x.Foreword,
+       x.UserId,
+       anu.AvatarId,
+       CASE 
+            WHEN anu.NikName IS NULL THEN anu.UserName
+            ELSE anu.NikName
+       END               AS NikName
+FROM   (
+           SELECT TOP(1) dm.*,
+                  IsCurrent = 1
+           FROM   DV_MATERIAL AS dm
+           WHERE  dm.ModelCoreType = @mct
+                  AND dm.DateOfPublication > @date
+                  AND dm.Show = 1
+                  AND dm.DateOfPublication <= GETDATE()
+           ORDER BY
+                  dm.DateOfPublication DESC
+           UNION ALL
+           SELECT TOP(2) dm.*,
+                  IsCurrent = -1
+           FROM   DV_MATERIAL AS dm
+           WHERE  dm.ModelCoreType = @mct
+                  AND dm.DateOfPublication < @date
+                  AND dm.Show = 1
+                  AND dm.DateOfPublication <= GETDATE()
+           ORDER BY
+                  dm.DateOfPublication DESC
+       ) x
+       JOIN AspNetUsers  AS anu
+            ON  anu.Id = x.UserId
+ORDER BY
+       x.IsCurrent";
+
+            using (var connection = new SqlConnection(repo.ConnectionString))
+            {
+                var data = connection.Query<VMLastNews, VMUser, VMLastNews>(queryForByDateMaterials, (m, u) => {
+                    m.Author = u;
+                    return m;
+                }, new { date = date, mct = mct }, splitOn: "UserId").ToArray();
                 return data;
             }
         }

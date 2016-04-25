@@ -4,6 +4,13 @@
 
 .by-date-m {
     margin-top: @def-pad*2;
+    background-color: @color-white;
+    padding:@def-pad;
+    font-size: 0.9em;
+}
+
+.by-date-m > h3{
+    margin-bottom:@def-pad;
 }
 
 .by-date-m > .row{
@@ -18,9 +25,67 @@
 }
 
 .by-date-m .content {
-    background-color: @color-white;
-    padding: @def-pad;
     height:100%;
     width:100%;
     display:inline-table;
+    padding-bottom:@def-pad*2;
+}
+
+.by-date-m .content.first{
+    padding-left:@def-pad*3;
+}
+
+.by-date-m .content.last{
+    padding-right:@def-pad*3;
+    padding-left:@def-pad*2;
+    border-left:1px solid @gray-lighter;
+}
+
+.by-date-m .content .arrow {
+    position: absolute;
+    width: @def-pad*3;
+    left: 0;
+    text-align: center;
+    height: 100%;
+    top: 0;
+}
+
+.by-date-m .content .arrow > a{
+    display:table;
+    width:100%;
+    height:100%;
+    color:inherit;
+    text-decoration:none;
+}
+
+.by-date-m .content .arrow > a:focus{
+    background-color:rgba(0,0,0,.05);
+}
+
+.by-date-m .content .arrow > a > i{
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.by-date-m .content.last .arrow{
+    left:unset;
+    right:0;
+}
+
+.by-date-m .content > .title, .by-date-m .content > .fw{
+    margin-top:10px;
+}
+
+.by-date-m .content > .title > a{
+    color:@color-dark-blue;
+    font-weight:700;
+}
+
+.by-date-m .content > .author{
+    position:absolute;
+    bottom:0;
+}
+
+.by-date-m .content > .author > img{
+    max-width:30px;
 }

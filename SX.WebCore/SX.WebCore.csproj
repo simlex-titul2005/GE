@@ -162,6 +162,7 @@
     <Compile Include="SxAppRole.cs" />
     <Compile Include="SxAppUser.cs" />
     <Compile Include="SxArticle.cs" />
+    <Compile Include="SxBBCodeParser.cs" />
     <Compile Include="SxComment.cs" />
     <Compile Include="SxDbContext.cs" />
     <Compile Include="Enums.cs" />

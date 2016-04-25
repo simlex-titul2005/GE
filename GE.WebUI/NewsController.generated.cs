@@ -189,6 +189,7 @@ namespace GE.WebUI.Controllers
         public class ActionParamsClass_Popular
         {
             public readonly string mct = "mct";
+            public readonly string mid = "mid";
             public readonly string amount = "amount";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -312,15 +313,16 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void PopularOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, SX.WebCore.Enums.ModelCoreType mct, int amount);
+        partial void PopularOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, SX.WebCore.Enums.ModelCoreType mct, int mid, int amount);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Popular(SX.WebCore.Enums.ModelCoreType mct, int amount)
+        public override System.Web.Mvc.PartialViewResult Popular(SX.WebCore.Enums.ModelCoreType mct, int mid, int amount)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Popular);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "amount", amount);
-            PopularOverride(callInfo, mct, amount);
+            PopularOverride(callInfo, mct, mid, amount);
             return callInfo;
         }
 

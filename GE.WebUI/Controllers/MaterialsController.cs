@@ -190,6 +190,9 @@ namespace GE.WebUI.Controllers
             }
         }
 
+#if !DEBUG
+        [OutputCache(Duration =900, VaryByParam ="mct;date")]
+#endif
         [HttpGet]
         public virtual PartialViewResult ByDateMaterial(ModelCoreType mct, DateTime date)
         {
@@ -207,9 +210,12 @@ namespace GE.WebUI.Controllers
             return PartialView(MVC.Shared.Views._ByDateMaterial, data);
         }
 
+#if !DEBUG
+        [OutputCache(Duration =900, VaryByParam ="mct;mid;amount")]
+#endif
         [HttpGet]
         [ChildActionOnly]
-        public virtual PartialViewResult Popular(ModelCoreType mct, int amount=4)
+        public virtual PartialViewResult Popular(ModelCoreType mct, int mid, int amount=4)
         {
             VMLastMaterial[] data = null;
             switch (mct)
@@ -218,7 +224,7 @@ namespace GE.WebUI.Controllers
                     data = null;
                     break;
                 case ModelCoreType.News:
-                    data = new RepoNews().GetPopular(mct, amount);
+                    data = new RepoNews().GetPopular(mct, mid, amount);
                     break;
             }
             ViewData["ModelCoreType"] = mct;

@@ -360,7 +360,7 @@ ORDER BY
             }
         }
 
-        public static VMLastNews[] GetPopular(this WebCoreExtantions.Repositories.RepoNews repo, ModelCoreType mct, int amount)
+        public static VMLastNews[] GetPopular(this WebCoreExtantions.Repositories.RepoNews repo, ModelCoreType mct, int mid, int amount)
         {
             var queryForByDateMaterials = @"SELECT TOP(@amount)
        dm.DateCreate,
@@ -383,6 +383,7 @@ FROM   DV_MATERIAL             AS dm
 WHERE  dm.ModelCoreType = @mct
        AND dm.Show = 1
        AND dm.DateOfPublication <= GETDATE()
+       AND dm.Id NOT IN (@mid)
 GROUP BY
        dm.DateCreate,
        dm.DateOfPublication,
@@ -397,7 +398,7 @@ ORDER BY
 
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                var data = connection.Query<VMLastNews>(queryForByDateMaterials, new { mct = mct, amount=amount }).ToArray();
+                var data = connection.Query<VMLastNews>(queryForByDateMaterials, new { mct = mct, mid=mid, amount =amount }).ToArray();
                 return data;
             }
         }

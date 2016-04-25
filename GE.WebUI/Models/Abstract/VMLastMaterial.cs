@@ -28,5 +28,8 @@ namespace GE.WebUI.Models.Abstract
             }
             return url;
         }
+        public int CommentsCount { get; set; }
+        public int LikesCount { get; set; }
+        public int ViewsCount { get; set; }
     }
 }

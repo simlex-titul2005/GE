@@ -1,0 +1,100 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "positioned.less";
+@import (reference) "../../bower_components/bootstrap/less/variables.less";
+
+.pop-mat{
+    padding:@def-pad;
+    font-size:13px;
+    display:table;
+    @media (max-width: @screen-xs-max) {
+        padding:0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        padding:0;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.pop-mat .row{
+    display:table;
+    @media (max-width: @screen-xs-max) {
+        display:block;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        display:block;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.pop-mat .row > div{
+    display:table-cell;
+    float:none;
+    vertical-align:top;
+    height:100%;
+    @media (max-width: @screen-xs-max) {
+        display:unset;
+        float:left;
+        vertical-align:unset;
+        height:auto;
+        width: 100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        display:unset;
+        float:left;
+        vertical-align:unset;
+        height:auto;
+        width: 100%;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.pop-mat .content{
+    display:inline-table;
+    height:100%;
+    padding-bottom:@def-pad*2;
+    @media (max-width: @screen-xs-max) {
+        margin-top:@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.pop-mat .content a{
+    color:@color-dark-blue;
+    font-weight:700;
+    font-size:14px;
+    line-height:1;
+    display:block;
+}
+
+.pop-mat .content .info{
+    position:absolute;
+    bottom:0;
+    font-size:10px;
+}

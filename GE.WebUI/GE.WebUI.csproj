@@ -387,6 +387,7 @@
     <Content Include="Views\News\_LastCategoryBlock.cshtml" />
     <Content Include="Views\News\_NewsCategories.cshtml" />
     <Content Include="Views\Shared\_ByDateMaterial.cshtml" />
+    <Content Include="Views\Shared\_PopularMaterials.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

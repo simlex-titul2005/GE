@@ -48,6 +48,7 @@ namespace T4MVC
                 public readonly string _LikeMaterial = "_LikeMaterial";
                 public readonly string _MaterialInfo = "_MaterialInfo";
                 public readonly string _NavBar = "_NavBar";
+                public readonly string _PopularMaterials = "_PopularMaterials";
                 public readonly string _Share42 = "_Share42";
                 public readonly string _SocialIconsMenu = "_SocialIconsMenu";
                 public readonly string _SocNetButtons = "_SocNetButtons";
@@ -62,6 +63,7 @@ namespace T4MVC
             public readonly string _LikeMaterial = "~/Views/Shared/_LikeMaterial.cshtml";
             public readonly string _MaterialInfo = "~/Views/Shared/_MaterialInfo.cshtml";
             public readonly string _NavBar = "~/Views/Shared/_NavBar.cshtml";
+            public readonly string _PopularMaterials = "~/Views/Shared/_PopularMaterials.cshtml";
             public readonly string _Share42 = "~/Views/Shared/_Share42.cshtml";
             public readonly string _SocialIconsMenu = "~/Views/Shared/_SocialIconsMenu.cshtml";
             public readonly string _SocNetButtons = "~/Views/Shared/_SocNetButtons.cshtml";

@@ -16,8 +16,11 @@
                     <div class="content @(i==0?"first":i==itemsCount-1?"last":null)">
                         @if(i==0 || i== itemsCount - 1)
                         {
-                            <div class="arrow">
+                            <div class="arrow hidden-xs">
                                 <a href="javscript:void(0)" data-ajax-url="@Url.Action(MVC.News.ByDateMaterial(item.ModelCoreType, item.DateOfPublication))" data-ajax="true" data-ajax-update="#by-date-mat" data-ajax-method="get"><i class="fa @(i==0?"fa-arrow-left":"fa-arrow-right")"></i></a>
+                            </div>
+                            <div class="arrow hidden-lg hidden-sm hidden-md">
+                                <a href="javscript:void(0)" data-ajax-url="@Url.Action(MVC.News.ByDateMaterial(item.ModelCoreType, item.DateOfPublication))" data-ajax="true" data-ajax-update="#by-date-mat" data-ajax-method="get"><i class="fa @(i==0?"fa-arrow-up":"fa-arrow-down")"></i></a>
                             </div>
                         }
                         <div class="date">@item.DateOfPublication</div>

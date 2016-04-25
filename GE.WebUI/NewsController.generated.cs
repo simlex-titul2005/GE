@@ -80,6 +80,12 @@ namespace GE.WebUI.Controllers
         {
             return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.ByDateMaterial);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult Popular()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Popular);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public NewsController Actions { get { return MVC.News; } }
@@ -102,6 +108,7 @@ namespace GE.WebUI.Controllers
             public readonly string LikeMaterials = "LikeMaterials";
             public readonly string Details = "Details";
             public readonly string ByDateMaterial = "ByDateMaterial";
+            public readonly string Popular = "Popular";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -113,6 +120,7 @@ namespace GE.WebUI.Controllers
             public const string LikeMaterials = "LikeMaterials";
             public const string Details = "Details";
             public const string ByDateMaterial = "ByDateMaterial";
+            public const string Popular = "Popular";
         }
 
 
@@ -173,6 +181,15 @@ namespace GE.WebUI.Controllers
         {
             public readonly string mct = "mct";
             public readonly string date = "date";
+        }
+        static readonly ActionParamsClass_Popular s_params_Popular = new ActionParamsClass_Popular();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Popular PopularParams { get { return s_params_Popular; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Popular
+        {
+            public readonly string mct = "mct";
+            public readonly string amount = "amount";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -291,6 +308,19 @@ namespace GE.WebUI.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "date", date);
             ByDateMaterialOverride(callInfo, mct, date);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void PopularOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, SX.WebCore.Enums.ModelCoreType mct, int amount);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult Popular(SX.WebCore.Enums.ModelCoreType mct, int amount)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Popular);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "amount", amount);
+            PopularOverride(callInfo, mct, amount);
             return callInfo;
         }
 

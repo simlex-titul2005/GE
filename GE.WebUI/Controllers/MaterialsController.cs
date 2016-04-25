@@ -206,5 +206,24 @@ namespace GE.WebUI.Controllers
 
             return PartialView(MVC.Shared.Views._ByDateMaterial, data);
         }
+
+        [HttpGet]
+        [ChildActionOnly]
+        public virtual PartialViewResult Popular(ModelCoreType mct, int amount=4)
+        {
+            VMLastMaterial[] data = null;
+            switch (mct)
+            {
+                case ModelCoreType.Article:
+                    data = null;
+                    break;
+                case ModelCoreType.News:
+                    data = new RepoNews().GetPopular(mct, amount);
+                    break;
+            }
+            ViewData["ModelCoreType"] = mct;
+
+            return PartialView(MVC.Shared.Views._PopularMaterials, data);
+        }
     }
 }

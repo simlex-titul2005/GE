@@ -1,0 +1,35 @@
+﻿@model GE.WebUI.Models.Abstract.VMLastMaterial[]
+@{
+    Layout = null;
+    var mct = ViewData["ModelCoreType"] == null ? SX.WebCore.Enums.ModelCoreType.Unknown : (SX.WebCore.Enums.ModelCoreType)ViewData["ModelCoreType"];
+}
+
+@if (Model.Any())
+{
+    <div class="pop-mat">
+        <h3>Полулярные @(ViewData["ModelCoreType"] == null ? "материалы" : mct == SX.WebCore.Enums.ModelCoreType.News ? "новости" : "статьи")</h3>
+        <div class="row">
+            @for (int i = 0; i < Model.Length; i++)
+            {
+                var item = Model[i];
+                <div class="col-md-3">
+                    <div class="content">
+                        <div class="date">@item.DateOfPublication.ToString("dd.MM.yyyy")</div>
+                        <h4 class="title"><a href="@item.Url(Url)">@item.Title</a></h4>
+                        <ul class="list-unstyled list-inline info">
+                            <li>
+                                <i class="fa fa-comments-o"></i>: @item.CommentsCount
+                            </li>
+                            <li>
+                                <i class="fa fa-thumbs-up "></i>: @item.LikesCount
+                            </li>
+                            <li>
+                                <i class="fa fa-eye"></i>: @item.ViewsCount
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

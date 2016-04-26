@@ -43,6 +43,8 @@ namespace SX.WebCore
 
         public DbSet<SxSiteSetting> SiteSettings { get; set; }
 
+        public DbSet<SxStatistic> Statistic { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -64,6 +66,11 @@ namespace SX.WebCore
             modelBuilder.Entity<SxUserClick>().HasRequired(x => x.Material).WithMany().HasForeignKey(x => new { x.MaterialId, x.ModelCoreType });
 
             modelBuilder.Entity<SxLike>().HasRequired(x => x.UserClick).WithMany().HasForeignKey(x => new { x.UserClickId });
+
+            modelBuilder.Entity<SxLoginStatistic>().Ignore(x => x.Id);
+            modelBuilder.Entity<SxLoginStatistic>().HasKey(x => new { x.StatisticId, x.UserId });
+            modelBuilder.Entity<SxLoginStatistic>().HasRequired(x => x.Statistic).WithMany().HasForeignKey(x => new { x.StatisticId });
+            modelBuilder.Entity<SxLoginStatistic>().HasRequired(x => x.User).WithMany().HasForeignKey(x => new { x.UserId });
         }
     }
 }

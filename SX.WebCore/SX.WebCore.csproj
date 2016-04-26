@@ -169,6 +169,7 @@
     <Compile Include="SxForumPart.cs" />
     <Compile Include="SxForumTheme.cs" />
     <Compile Include="SxLike.cs" />
+    <Compile Include="SxLoginStatistic.cs" />
     <Compile Include="SxManual.cs" />
     <Compile Include="SxMaterialCategory.cs" />
     <Compile Include="SxMaterialTag.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="SxSeoPhrase.cs" />
     <Compile Include="SxSiteMapUrl.cs" />
     <Compile Include="SxSiteSetting.cs" />
+    <Compile Include="SxStatistic.cs" />
     <Compile Include="SxUserClick.cs" />
     <Compile Include="SxUserClickResult.cs" />
     <Compile Include="ViewModels\SxVMValute.cs" />

@@ -15,7 +15,11 @@ function getCurrency(s, e) {
         url: '/valutes/getcurcourse',
         data: { cc: charCode },
         method: 'post',
+        beforeSend: function () {
+            $(s).prepend('<i class="fa fa-spinner fa-spin"></i>');
+        },
         success: function (data) {
+            $(s).children('i').remove();
             $(s).html(getCurrencyString(Math.round(data.Value * value, 0)) + ' <i class="fa fa-rub"></i>');
             $(s).tooltip('destroy');
         }

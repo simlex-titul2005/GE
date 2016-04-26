@@ -118,9 +118,11 @@
             <br />
             <div class="row">
                 <div class="col-md-12">
-                    @Html.LabelFor(x => x.Html, new { @class = "control-label" })
+                    <button data-toggle="modal" title="Посмотреть результат" data-target="#matModal" type="button" class="btn btn-default"><i class="fa fa-eye"></i></button>&nbsp;
+                    @Html.LabelFor(x => x.Html, new { @class = "control-label" }) <br /><br />
                     @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.Html)
+                    @Html.Partial(MVC.Shared.Views._MaterialModal, Model)
                 </div>
             </div>
             <br />
@@ -178,6 +180,11 @@
         });
 
         $(function () {
+            $('#matModal').on('show.bs.modal', function (e) {
+                $(this).find('.modal-title').html($('#Title').val());
+                $(this).find('.modal-body').html($('#Html').val());
+            })
+
             $('.edit-game [type="text"]').on('change', function () {
                 var gameId = $('[name="GameId"] ').val();
                 $('#at').load('/articletypes/articletypesbygameId?gameId=' + gameId);

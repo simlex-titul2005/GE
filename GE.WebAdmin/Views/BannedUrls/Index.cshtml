@@ -1,0 +1,10 @@
+﻿@model VMBannedUrl[]
+@{
+    ViewBag.Title = "Забаненные адреса";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-banned-url">
+    @Html.Partial(MVC.BannedUrls.Views._GridView, Model)
+</div>

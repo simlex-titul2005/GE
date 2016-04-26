@@ -39,8 +39,10 @@ namespace T4MVC
             public class _ViewNamesClass
             {
                 public readonly string _Layout = "_Layout";
+                public readonly string _MaterialModal = "_MaterialModal";
             }
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
+            public readonly string _MaterialModal = "~/Views/Shared/_MaterialModal.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

@@ -23,6 +23,11 @@ namespace GE.WebAdmin
                     cfg.CreateMap<Article, VMEditArticle>();
                     cfg.CreateMap<VMEditArticle, Article>();
 
+                    //banned url
+                    cfg.CreateMap<SxBannedUrl, VMBannedUrl>();
+                    cfg.CreateMap<SxBannedUrl, VMEditBannedUrl>();
+                    cfg.CreateMap<VMEditBannedUrl, SxBannedUrl>();
+
                     //forum parts
                     cfg.CreateMap<SxForumPart, VMForumPart>();
                     cfg.CreateMap<SxForumPart, VMEditForumPart>();

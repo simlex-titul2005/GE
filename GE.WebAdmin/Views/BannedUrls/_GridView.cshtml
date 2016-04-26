@@ -1,0 +1,26 @@
+﻿@model VMBannedUrl[]
+@{
+    Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
+    var filter = ViewBag.Filter != null ? (VMBannedUrl)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+}
+
+
+@Html.SxGridView(
+        new SxExtantions.SxGridViewSettings<VMBannedUrl>
+        {
+            UpdateTargetId = "grid-banned-url",
+            Data = Model,
+            Columns = new SxExtantions.SxGridViewColumn<VMBannedUrl>[]{
+                new SxExtantions.SxGridViewColumn<VMBannedUrl>{FieldName="Url", Caption="Адрес", Template=(u)=> {
+                    return string.Format("<a href=\"{0}\" target=\"_blank\">{0}</a>", u.Url);
+                } },
+                new SxExtantions.SxGridViewColumn<VMBannedUrl>{FieldName="Couse", Caption="Причина бана"}
+            },
+            PagerInfo = pagerInfo,
+            Filter = filter,
+            SortDirections = sortDirections
+        },
+            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

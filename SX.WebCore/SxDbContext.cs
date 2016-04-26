@@ -23,6 +23,8 @@ namespace SX.WebCore
 
         public DbSet<SxArticle> Articles { get; set; }
 
+        public DbSet<SxBannedUrl> BannedUrls { get; set; }
+
         public DbSet<SxComment> Comments { get; set; }
 
         public DbSet<SxForumPart> ForumParts { get; set; }

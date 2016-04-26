@@ -29,6 +29,7 @@ public static partial class MVC
 {
     public static GE.WebAdmin.Controllers.AccountController Account = new GE.WebAdmin.Controllers.T4MVC_AccountController();
     public static GE.WebAdmin.Controllers.ArticlesController Articles = new GE.WebAdmin.Controllers.T4MVC_ArticlesController();
+    public static GE.WebAdmin.Controllers.BannedUrlsController BannedUrls = new GE.WebAdmin.Controllers.T4MVC_BannedUrlsController();
     public static GE.WebAdmin.Controllers.CommentsController Comments = new GE.WebAdmin.Controllers.T4MVC_CommentsController();
     public static GE.WebAdmin.Controllers.FAQController FAQ = new GE.WebAdmin.Controllers.T4MVC_FAQController();
     public static GE.WebAdmin.Controllers.ForumPartsController ForumParts = new GE.WebAdmin.Controllers.T4MVC_ForumPartsController();

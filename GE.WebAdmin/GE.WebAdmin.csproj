@@ -208,10 +208,14 @@
     <Compile Include="ArticlesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="BannedUrlsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="CommentsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BannedUrlsController.cs" />
     <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -279,6 +283,8 @@
     <Compile Include="MenuItemsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VMEditBannedUrl.cs" />
+    <Compile Include="Models\VMBannedUrl.cs" />
     <Compile Include="Models\VMEditManual.cs" />
     <Compile Include="Models\VMEditMaterialCategory.cs" />
     <Compile Include="Models\VMManual.cs" />
@@ -448,6 +454,10 @@
     <Content Include="Views\Users\_UserInfo.cshtml" />
     <Content Include="Views\Valutes\Index.cshtml" />
     <Content Include="Views\Valutes\_GridView.cshtml" />
+    <Content Include="Views\BannedUrls\_GridView.cshtml" />
+    <Content Include="Views\BannedUrls\Index.cshtml" />
+    <Content Include="Views\BannedUrls\Edit.cshtml" />
+    <Content Include="Views\Shared\_MaterialModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -457,7 +467,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="Content\less\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

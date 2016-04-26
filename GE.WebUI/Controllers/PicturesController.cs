@@ -3,13 +3,7 @@ using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace GE.WebUI.Controllers
 {
@@ -29,11 +23,11 @@ namespace GE.WebUI.Controllers
             byte[] byteArray = viewModel.OriginalContent;
             if (width.HasValue && viewModel.Width > width)
             {
-                byteArray = SX.WebCore.PictureHandler.ScaleImage(viewModel.OriginalContent, SX.WebCore.PictureHandler.ImageScaleMode.Width, destWidth: width);
+                byteArray = PictureHandler.ScaleImage(viewModel.OriginalContent, PictureHandler.ImageScaleMode.Width, destWidth: width);
             }
             else if(height.HasValue && viewModel.Height>height)
             {
-                byteArray = SX.WebCore.PictureHandler.ScaleImage(viewModel.OriginalContent, SX.WebCore.PictureHandler.ImageScaleMode.Height, destHeight: height);
+                byteArray = PictureHandler.ScaleImage(viewModel.OriginalContent, PictureHandler.ImageScaleMode.Height, destHeight: height);
             }
 
             return new FileStreamResult(new System.IO.MemoryStream(byteArray), viewModel.ImgFormat);

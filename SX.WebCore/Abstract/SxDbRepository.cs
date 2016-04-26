@@ -27,7 +27,7 @@ namespace SX.WebCore.Abstract
 
         public virtual TModel Create(TModel model)
         {
-            if(model is SxDbModel<TKey>)
+            if (model is SxDbModel<TKey>)
                 prepareUpdatedModel(model as SxDbModel<TKey>);
             _dbContext.Configuration.AutoDetectChangesEnabled = false;
             _dbContext.Entry(model).State = EntityState.Added;

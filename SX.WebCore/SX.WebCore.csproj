@@ -188,6 +188,7 @@
     <Compile Include="SxSiteSetting.cs" />
     <Compile Include="SxUserClick.cs" />
     <Compile Include="SxUserClickResult.cs" />
+    <Compile Include="ViewModels\SxVMValute.cs" />
     <Compile Include="ViewModels\SxVMMaterialTag.cs" />
     <Compile Include="UrlHelper.cs" />
     <Compile Include="ViewModels\SxVMExternalLoginConfirmation.cs" />

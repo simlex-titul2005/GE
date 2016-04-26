@@ -41,7 +41,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.SearchController Search = new GE.WebUI.Controllers.T4MVC_SearchController();
     public static GE.WebUI.Controllers.SeoController Seo = new GE.WebUI.Controllers.T4MVC_SeoController();
     public static GE.WebUI.Controllers.UserClicksController UserClicks = new GE.WebUI.Controllers.T4MVC_UserClicksController();
-    public static GE.WebUI.Controllers.ValuteController Valute = new GE.WebUI.Controllers.T4MVC_ValuteController();
+    public static GE.WebUI.Controllers.ValutesController Valutes = new GE.WebUI.Controllers.T4MVC_ValutesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -119,6 +119,19 @@ internal partial class T4MVC_System_Web_Mvc_FileResult : System.Web.Mvc.FileResu
 internal partial class T4MVC_System_Web_Mvc_ContentResult : System.Web.Mvc.ContentResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_ContentResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_JsonResult(string area, string controller, string action, string protocol = null): base()
     {
         this.InitMVCT4Result(area, controller, action, protocol);
     }

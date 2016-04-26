@@ -52,7 +52,8 @@ namespace SX.WebCore.HtmlHelpers
             table.InnerHtml += tbody;
 
             //footer
-            table.InnerHtml += getGridViewFooter(htmlHelper, settings);
+            if(settings.PagerInfo.TotalPages>1)
+                table.InnerHtml += getGridViewFooter(htmlHelper, settings);
 
             return MvcHtmlString.Create(table.ToString());
         }
@@ -424,8 +425,6 @@ namespace SX.WebCore.HtmlHelpers
 
         private static TagBuilder getGridViewFooter<TModel>(HtmlHelper htmlHelper, SxGridViewSettings<TModel> settings)
         {
-            
-
             var tfoot = new TagBuilder("tfoot");
             var tr = new TagBuilder("tr");
             var td = new TagBuilder("td");

@@ -400,6 +400,12 @@
                                 <a href="@Url.Action(MVC.Request.Index())"><i class="fa fa-history fa-fw"></i> Статистика запросов</a>
                             </li>
                         }
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>
+                                <a href="@Url.Action(MVC.Valutes.Index())"><i class="fa fa-rub fa-fw"></i> Курсы валют ЦБ РФ</a>
+                            </li>
+                        }
                         <li>
                             <a href="#"><i class="fa fa-tasks fa-fw"></i> FAQ<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

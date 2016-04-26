@@ -23,15 +23,12 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace GE.WebUI.Controllers
+namespace GE.WebAdmin.Controllers
 {
-    public partial class ValuteController
+    public partial class ValutesController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ValuteController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ValuteController(Dummy d) { }
+        protected ValutesController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -61,13 +58,13 @@ namespace GE.WebUI.Controllers
 
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ValuteController Actions { get { return MVC.Valute; } }
+        public ValutesController Actions { get { return MVC.Valutes; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Valute";
+        public readonly string Name = "Valutes";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Valute";
+        public const string NameConst = "Valutes";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -75,16 +72,25 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string GetCursOnDate = "GetCursOnDate";
+            public readonly string Index = "Index";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string GetCursOnDate = "GetCursOnDate";
+            public const string Index = "Index";
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index
+        {
+            public readonly string page = "page";
+            public readonly string date = "date";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -95,23 +101,29 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _GridView = "_GridView";
+                public readonly string Index = "Index";
             }
+            public readonly string _GridView = "~/Views/Valutes/_GridView.cshtml";
+            public readonly string Index = "~/Views/Valutes/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_ValuteController : GE.WebUI.Controllers.ValuteController
+    public partial class T4MVC_ValutesController : GE.WebAdmin.Controllers.ValutesController
     {
-        public T4MVC_ValuteController() : base(Dummy.Instance) { }
+        public T4MVC_ValutesController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void GetCursOnDateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int page, System.DateTime? date);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult GetCursOnDate()
+        public override System.Web.Mvc.ActionResult Index(int page, System.DateTime? date)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.GetCursOnDate);
-            GetCursOnDateOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "date", date);
+            IndexOverride(callInfo, page, date);
             return callInfo;
         }
 

@@ -100,6 +100,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -235,6 +236,7 @@
     <Compile Include="Controllers\SeoWordCounterController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="Extantions\Repositories\RepoForumPart.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
@@ -368,6 +370,9 @@
     <Compile Include="UsersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ValutesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -441,6 +446,8 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\_UserRoles.cshtml" />
     <Content Include="Views\Users\_UserInfo.cshtml" />
+    <Content Include="Views\Valutes\Index.cshtml" />
+    <Content Include="Views\Valutes\_GridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

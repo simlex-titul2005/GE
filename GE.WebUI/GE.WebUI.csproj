@@ -174,7 +174,7 @@
     <Compile Include="CommentsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\ValuteController.cs" />
+    <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -221,7 +221,7 @@
     <Compile Include="UserClicksController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ValuteController.generated.cs">
+    <Compile Include="ValutesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Content Include="Content\dist\css\error-page.min.css" />
@@ -403,9 +403,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\dist\i\temp\" />
-    <Folder Include="Views\Seo\" />
-    <Folder Include="Views\UserClicks\" />
-    <Folder Include="Views\Valute\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">

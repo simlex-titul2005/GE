@@ -38,21 +38,21 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.ManualsController Manuals = new GE.WebAdmin.Controllers.T4MVC_ManualsController();
     public static GE.WebAdmin.Controllers.MaterialCategoriesController MaterialCategories = new GE.WebAdmin.Controllers.T4MVC_MaterialCategoriesController();
     public static GE.WebAdmin.Controllers.MaterialTagsController MaterialTags = new GE.WebAdmin.Controllers.T4MVC_MaterialTagsController();
-    public static GE.WebAdmin.Controllers.MenuesController Menues = new GE.WebAdmin.Controllers.T4MVC_MenuesController();
-    public static GE.WebAdmin.Controllers.MenuItemsController MenuItems = new GE.WebAdmin.Controllers.T4MVC_MenuItemsController();
     public static GE.WebAdmin.Controllers.NewsController News = new GE.WebAdmin.Controllers.T4MVC_NewsController();
     public static GE.WebAdmin.Controllers.PicturesController Pictures = new GE.WebAdmin.Controllers.T4MVC_PicturesController();
     public static GE.WebAdmin.Controllers.RedirectsController Redirects = new GE.WebAdmin.Controllers.T4MVC_RedirectsController();
     public static GE.WebAdmin.Controllers.RequestController Request = new GE.WebAdmin.Controllers.T4MVC_RequestController();
     public static GE.WebAdmin.Controllers.RolesController Roles = new GE.WebAdmin.Controllers.T4MVC_RolesController();
-    public static GE.WebAdmin.Controllers.RoutesController Routes = new GE.WebAdmin.Controllers.T4MVC_RoutesController();
-    public static GE.WebAdmin.Controllers.RouteValuesController RouteValues = new GE.WebAdmin.Controllers.T4MVC_RouteValuesController();
     public static GE.WebAdmin.Controllers.SeoInfoController SeoInfo = new GE.WebAdmin.Controllers.T4MVC_SeoInfoController();
     public static GE.WebAdmin.Controllers.SeoKeywordsController SeoKeywords = new GE.WebAdmin.Controllers.T4MVC_SeoKeywordsController();
     public static GE.WebAdmin.Controllers.SeoWordCounterController SeoWordCounter = new GE.WebAdmin.Controllers.T4MVC_SeoWordCounterController();
     public static GE.WebAdmin.Controllers.SettingsController Settings = new GE.WebAdmin.Controllers.T4MVC_SettingsController();
     public static GE.WebAdmin.Controllers.UsersController Users = new GE.WebAdmin.Controllers.T4MVC_UsersController();
     public static GE.WebAdmin.Controllers.ValutesController Valutes = new GE.WebAdmin.Controllers.T4MVC_ValutesController();
+    public static T4MVC.MenuesController Menues = new T4MVC.MenuesController();
+    public static T4MVC.MenuItemsController MenuItems = new T4MVC.MenuItemsController();
+    public static T4MVC.RoutesController Routes = new T4MVC.RoutesController();
+    public static T4MVC.RouteValuesController RouteValues = new T4MVC.RouteValuesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -223,13 +223,6 @@ namespace Links
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class less {
-            private const string URLPATH = "~/Content/less";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        }
-    
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class sx {
             private const string URLPATH = "~/Content/sx";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -303,12 +296,6 @@ namespace Links
                 }
             }
             public static partial class i 
-            {
-                public static class Assets
-                {
-                }
-            }
-            public static partial class less 
             {
                 public static class Assets
                 {

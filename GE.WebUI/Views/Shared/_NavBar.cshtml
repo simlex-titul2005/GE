@@ -25,9 +25,33 @@
                         <li><a href="#">Почитать форум</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="@Url.Action(MVC.News.List())">Новости</a>
+                </li>
+                <li>
+                    <a href="@Url.Action(MVC.Articles.List())">Статьи</a>
+                </li>
             </ul>
-            @Html.Action(MVC.Menues.Menu(1, cssClass: "nav navbar-nav site-menu"))
-            @Html.Action(MVC.Menues.Menu(2, "nav navbar-nav navbar-right"))
+            <ul class="nav navbar-nav navbar-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <form method="post" action="@Url.Action(MVC.Account.LogOff())" class="hidden">
+                            @Html.AntiForgeryToken()
+                        </form>
+                        <a href="javascript:void(0)" onclick="$(this).prev('form').submit();">Выход</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="@Url.Action(MVC.Account.Login())">Вход</a>
+                    </li>
+                }
+                <li>
+                    <a href="@Url.Action(MVC.Account.Register())">Регистрация</a>
+                </li>
+            </ul>
             @Html.Partial(MVC.Search.Views._Search)
         </div>
     </div>

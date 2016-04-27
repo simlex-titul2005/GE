@@ -35,13 +35,13 @@ public static partial class MVC
     public static GE.WebUI.Controllers.GamesController Games = new GE.WebUI.Controllers.T4MVC_GamesController();
     public static GE.WebUI.Controllers.HomeController Home = new GE.WebUI.Controllers.T4MVC_HomeController();
     public static GE.WebUI.Controllers.MaterialTagsController MaterialTags = new GE.WebUI.Controllers.T4MVC_MaterialTagsController();
-    public static GE.WebUI.Controllers.MenuesController Menues = new GE.WebUI.Controllers.T4MVC_MenuesController();
     public static GE.WebUI.Controllers.NewsController News = new GE.WebUI.Controllers.T4MVC_NewsController();
     public static GE.WebUI.Controllers.PicturesController Pictures = new GE.WebUI.Controllers.T4MVC_PicturesController();
     public static GE.WebUI.Controllers.SearchController Search = new GE.WebUI.Controllers.T4MVC_SearchController();
     public static GE.WebUI.Controllers.SeoController Seo = new GE.WebUI.Controllers.T4MVC_SeoController();
     public static GE.WebUI.Controllers.UserClicksController UserClicks = new GE.WebUI.Controllers.T4MVC_UserClicksController();
     public static GE.WebUI.Controllers.ValutesController Valutes = new GE.WebUI.Controllers.T4MVC_ValutesController();
+    public static T4MVC.MenuesController Menues = new T4MVC.MenuesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

@@ -277,20 +277,6 @@
                                 </ul>
                             </li>
                         }
-                        @if (User.IsInRole("architect"))
-                        {
-                            <li>
-                                <a href="javascript:void(0)"><i class="fa fa-bars fa-fw"></i> Меню сайта <span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="@Url.Action(MVC.Menues.Index())"> Список меню</a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action(MVC.Routes.Index())"> Маршруты</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        }
                         @if (User.IsInRole("photo-redactor"))
                         {
                             <li>

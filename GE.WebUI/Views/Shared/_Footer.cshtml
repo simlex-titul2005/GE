@@ -7,7 +7,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-6">
-                    @Html.Action(MVC.Menues.Menu(3, cssClass: "menu"))
+                    <ul class="menu">
+                        <li>
+                            <a href="@Url.Action(MVC.Home.Index())">Главная</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action(MVC.News.List())">Новости</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action(MVC.Articles.List())">Статьи</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     @Html.Partial(MVC.Shared.Views._SocialIconsMenu)
@@ -23,10 +33,24 @@
                     @Html.Action(MVC.Articles.Last(3))
                 </div>
                 <div class="col-md-4">
-                    @Html.Action(MVC.Menues.Menu(4, "menu"))
+                    <ul class="menu">
+                        <li>
+                            <a href="@Url.Action(MVC.News.List())">Новости</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action(MVC.Articles.List())">Статьи</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="col-md-4">
-                    @Html.Action(MVC.Menues.Menu(5, "sign-menu"))
+                    <ul class="sign-menu">
+                        <li>
+                            <a href="@Url.Action(MVC.Account.Register())">Регистрация</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action(MVC.Account.Login())">Войти в аккаунт</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

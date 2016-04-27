@@ -55,19 +55,6 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxMaterialTag, VMEditMaterialTag>();
                     cfg.CreateMap<VMEditMaterialTag, SxMaterialTag>();
 
-                    //menu
-                    cfg.CreateMap<SxMenu, VMMenu>();
-                    cfg.CreateMap<SxMenu, VMEditMenu>();
-                    cfg.CreateMap<VMEditMenu, SxMenu>();
-
-                    //menu item
-                    cfg.CreateMap<SxMenuItem, VMMenuItem>()
-                        .ForMember(d => d.Url, d => d.MapFrom(s => s.Route != null ? s.Route.Url : null));
-                    cfg.CreateMap<SxMenuItem, VMEditMenuItem>()
-                    .ForMember(d => d.Show, d => d.MapFrom(s => Convert.ToBoolean(s.Show)));
-                    cfg.CreateMap<VMEditMenuItem, SxMenuItem>()
-                    .ForMember(d => d.Show, d => d.MapFrom(s => Convert.ToByte(s.Show)));
-
                     //news
                     cfg.CreateMap<News, VMNews>();
                     cfg.CreateMap<News, VMEditNews>();
@@ -83,11 +70,6 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxAppRole, VMEditRole>();
                     cfg.CreateMap<VMEditRole, SxAppRole>();
 
-                    //route
-                    cfg.CreateMap<SxRoute, VMRoute>();
-                    cfg.CreateMap<SxRoute, VMEditRoute>();
-                    cfg.CreateMap<VMEditRoute, SxRoute>();
-
                     //redirect
                     cfg.CreateMap<SxRedirect, VMRedirect>();
                     cfg.CreateMap<SxRedirect, VMEditRedirect>();
@@ -95,11 +77,6 @@ namespace GE.WebAdmin
 
                     //request
                     cfg.CreateMap<SxRequest, VMRequest>();
-
-                    //route value
-                    cfg.CreateMap<SxRouteValue, VMRouteValue>();
-                    cfg.CreateMap<SxRouteValue, VMEditRouteValue>();
-                    cfg.CreateMap<VMEditRouteValue, SxRouteValue>();
 
                     //seo info
                     cfg.CreateMap<SxSeoInfo, VMSeoInfo>();

@@ -294,7 +294,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\MaterialTagsController.cs" />
-    <Compile Include="Controllers\MenuesController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />

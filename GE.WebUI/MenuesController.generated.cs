@@ -23,80 +23,11 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace GE.WebUI.Controllers
+namespace T4MVC
 {
-    public partial class MenuesController
+    public class MenuesController
     {
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected MenuesController(Dummy d) { }
 
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoute(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
-        {
-            return RedirectToAction(taskResult.Result);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
-        {
-            return RedirectToActionPermanent(taskResult.Result);
-        }
-
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.PartialViewResult Menu()
-        {
-            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Menu);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public MenuesController Actions { get { return MVC.Menues; } }
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Area = "";
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Menues";
-        [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Menues";
-        [GeneratedCode("T4MVC", "2.0")]
-        static readonly ActionNamesClass s_actions = new ActionNamesClass();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionNamesClass ActionNames { get { return s_actions; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass
-        {
-            public readonly string Menu = "Menu";
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants
-        {
-            public const string Menu = "Menu";
-        }
-
-
-        static readonly ActionParamsClass_Menu s_params_Menu = new ActionParamsClass_Menu();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Menu MenuParams { get { return s_params_Menu; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Menu
-        {
-            public readonly string menuMarker = "menuMarker";
-            public readonly string cssClass = "cssClass";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -113,25 +44,6 @@ namespace GE.WebUI.Controllers
         }
     }
 
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_MenuesController : GE.WebUI.Controllers.MenuesController
-    {
-        public T4MVC_MenuesController() : base(Dummy.Instance) { }
-
-        [NonAction]
-        partial void MenuOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int menuMarker, string cssClass);
-
-        [NonAction]
-        public override System.Web.Mvc.PartialViewResult Menu(int menuMarker, string cssClass)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Menu);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "menuMarker", menuMarker);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cssClass", cssClass);
-            MenuOverride(callInfo, menuMarker, cssClass);
-            return callInfo;
-        }
-
-    }
 }
 
 #endregion T4MVC

@@ -77,14 +77,10 @@
     <Compile Include="Repositories\RepoForumPart.cs" />
     <Compile Include="Repositories\RepoGame.cs" />
     <Compile Include="Repositories\RepoMaterialTag.cs" />
-    <Compile Include="Repositories\RepoMenu.cs" />
-    <Compile Include="Repositories\RepoMenuItem.cs" />
     <Compile Include="Repositories\RepoNews.cs" />
     <Compile Include="Repositories\RepoPicture.cs" />
     <Compile Include="Repositories\RepoRedirect.cs" />
     <Compile Include="Repositories\RepoRequest.cs" />
-    <Compile Include="Repositories\RepoRoute.cs" />
-    <Compile Include="Repositories\RepoRouteValue.cs" />
     <Compile Include="Repositories\RepoSeoInfo.cs" />
     <Compile Include="Repositories\RepoSeoKeywords.cs" />
     <Compile Include="Repositories\RepoSiteSetting.cs" />

@@ -62,6 +62,18 @@ namespace GE.WebAdmin.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult FindGridView()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindGridView);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult GroupBanners()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.GroupBanners);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public BannersController Actions { get { return MVC.Banners; } }
@@ -82,6 +94,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
             public readonly string FindGridView = "FindGridView";
+            public readonly string GroupBanners = "GroupBanners";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -91,6 +104,7 @@ namespace GE.WebAdmin.Controllers
             public const string Edit = "Edit";
             public const string Delete = "Delete";
             public const string FindGridView = "FindGridView";
+            public const string GroupBanners = "GroupBanners";
         }
 
 
@@ -128,9 +142,21 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_FindGridView
         {
             public readonly string bgid = "bgid";
-            public readonly string page = "page";
             public readonly string filterModel = "filterModel";
+            public readonly string page = "page";
             public readonly string pageSize = "pageSize";
+        }
+        static readonly ActionParamsClass_GroupBanners s_params_GroupBanners = new ActionParamsClass_GroupBanners();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_GroupBanners GroupBannersParams { get { return s_params_GroupBanners; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_GroupBanners
+        {
+            public readonly string bgid = "bgid";
+            public readonly string page = "page";
+            public readonly string pageSize = "pageSize";
+            public readonly string filterModel = "filterModel";
+            public readonly string order = "order";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -144,11 +170,13 @@ namespace GE.WebAdmin.Controllers
             {
                 public readonly string _FindGridView = "_FindGridView";
                 public readonly string _GridView = "_GridView";
+                public readonly string _GroupBanners = "_GroupBanners";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
             public readonly string _FindGridView = "~/Views/Banners/_FindGridView.cshtml";
             public readonly string _GridView = "~/Views/Banners/_GridView.cshtml";
+            public readonly string _GroupBanners = "~/Views/Banners/_GroupBanners.cshtml";
             public readonly string Edit = "~/Views/Banners/Edit.cshtml";
             public readonly string Index = "~/Views/Banners/Index.cshtml";
         }
@@ -222,30 +250,47 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void FindGridViewOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, System.Guid? bgid, int page);
+        partial void FindGridViewOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, System.Guid bgid, GE.WebAdmin.Models.VMBanner filterModel, int page, int pageSize);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult FindGridView(System.Guid? bgid, int page)
+        public override System.Web.Mvc.PartialViewResult FindGridView(System.Guid bgid, GE.WebAdmin.Models.VMBanner filterModel, int page, int pageSize)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindGridView);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "bgid", bgid);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            FindGridViewOverride(callInfo, bgid, page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
+            FindGridViewOverride(callInfo, bgid, filterModel, page, pageSize);
             return callInfo;
         }
 
         [NonAction]
-        partial void FindGridViewOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMBanner filterModel, System.Guid? bgid, int page, int pageSize);
+        partial void GroupBannersOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, System.Guid bgid, int page, int pageSize);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult FindGridView(GE.WebAdmin.Models.VMBanner filterModel, System.Guid? bgid, int page, int pageSize)
+        public override System.Web.Mvc.PartialViewResult GroupBanners(System.Guid bgid, int page, int pageSize)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindGridView);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.GroupBanners);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "bgid", bgid);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
-            FindGridViewOverride(callInfo, filterModel, bgid, page, pageSize);
+            GroupBannersOverride(callInfo, bgid, page, pageSize);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void GroupBannersOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, System.Guid bgid, GE.WebAdmin.Models.VMBanner filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page, int pageSize);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult GroupBanners(System.Guid bgid, GE.WebAdmin.Models.VMBanner filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page, int pageSize)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.GroupBanners);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "bgid", bgid);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
+            GroupBannersOverride(callInfo, bgid, filterModel, order, page, pageSize);
             return callInfo;
         }
 

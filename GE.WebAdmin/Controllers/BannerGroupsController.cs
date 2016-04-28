@@ -1,5 +1,6 @@
 ﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
+using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using SX.WebCore.HtmlHelpers;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using GE.WebAdmin.Extantions.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -53,6 +55,8 @@ namespace GE.WebAdmin.Controllers
         {
             var model = id.HasValue ? _repo.GetByKey((Guid)id) : new SxBannerGroup();
             var viewModel = Mapper.Map<SxBannerGroup, VMEditBannerGroup>(model);
+            if (id.HasValue)
+                ViewBag.BannerGroupId = model.Id;
             return View(viewModel);
         }
 
@@ -61,9 +65,6 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult Edit(VMEditBannerGroup model)
         {
             var redactModel = Mapper.Map<VMEditBannerGroup, SxBannerGroup>(model);
-            var bannersId = getBannersId(Request.Form.GetValues("banner"));
-            if (bannersId == null)
-                ModelState.AddModelError("Banners", "Группа должна содержать баннеры");
 
             if (ModelState.IsValid)
             {
@@ -77,8 +78,6 @@ namespace GE.WebAdmin.Controllers
                     newModel = _repo.Update(redactModel, "Title");
                 }
 
-                addBanners(newModel.Id, bannersId);
-
                 return RedirectToAction(MVC.BannerGroups.Index());
             }
             else
@@ -87,30 +86,35 @@ namespace GE.WebAdmin.Controllers
             }
         }
 
-        public void addBanners(Guid bannerGroupId, Guid[] bannersId)
-        {
-            (_repo as RepoBannerGroup<DbContext>).AddBanners(bannerGroupId, bannersId);
-        }
-
-        private static Guid[] getBannersId(string[] bannersId)
-        {
-            if (bannersId==null || !bannersId.Any()) return null;
-
-            var list = new List<Guid>();
-            for (int i = 0; i < bannersId.Length; i++)
-            {
-                list.Add(Guid.Parse(bannersId[i]));
-            }
-
-            return list.ToArray();
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditBannerGroup model)
         {
             _repo.Delete(model.Id);
             return RedirectToAction("index");
+        }
+
+        [HttpPost]
+        public virtual RedirectToRouteResult AddBanner(Guid bgid, Guid bid)
+        {
+            (_repo as RepoBannerGroup<DbContext>).AddBanner(bgid, bid);
+            return RedirectToAction(MVC.BannerGroups.Edit(bgid));
+        }
+
+        [HttpPost]
+        public virtual PartialViewResult DeleteBanner(Guid bgid, Guid bid)
+        {
+            (_repo as RepoBannerGroup<DbContext>).DeleteBanner(bgid, bid);
+
+            var repoBanner = new RepoBanner();
+            var filter = new WebCoreExtantions.Filter(1, 20) { WhereExpressionObject = new VMBanner { BannerGroupId = bgid } };
+            var totalItems = repoBanner.FilterCount(filter, true);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.BannerGroupId = bgid;
+
+            var viewModel = repoBanner.QueryForAdmin(filter, true);
+            return PartialView(MVC.Banners.Views._GroupBanners, viewModel);
         }
     }
 }

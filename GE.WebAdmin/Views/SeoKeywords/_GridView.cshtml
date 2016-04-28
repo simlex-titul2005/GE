@@ -37,7 +37,7 @@
                 EnableEditing = false,
                 EnableDelete = true,
                 EnableCreate = false,
-                DeleteLink = Url.Action("delete", new { controller="seokeywords", SeoInfoId= seoInfoId }),
+                FuncDeleteLink =(skw) => Url.Action("delete", new { controller="seokeywords", SeoInfoId= seoInfoId, Id= skw.Id }),
                 PagerLink = string.Format("/seokeywords/index?seoInfoId={0}", seoInfoId)
             },
         new { @class = "table table-condensed table-bordered table-responsive table-striped" }

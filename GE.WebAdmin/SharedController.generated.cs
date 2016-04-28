@@ -55,6 +55,7 @@ namespace T4MVC
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public partial class _EditorTemplatesClass
             {
+                public readonly string AddBanner = "AddBanner";
                 public readonly string Boolean = "Boolean";
                 public readonly string EditGame = "EditGame";
                 public readonly string EditImage = "EditImage";

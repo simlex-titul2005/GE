@@ -1,0 +1,36 @@
+﻿@model VMBanner[]
+@{
+    Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
+    var filter = ViewBag.Filter != null ? (VMBanner)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+    var bannerGroupId = (Guid)ViewBag.BannerGroupId;
+}
+
+
+@Html.SxGridView(
+        new SxExtantions.SxGridViewSettings<VMBanner>
+        {
+            UpdateTargetId = "grid-banners",
+            Data = Model,
+            Columns = new SxExtantions.SxGridViewColumn<VMBanner>[]{
+                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="Id", Caption="Идентификатор"},
+                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="Url", Caption="Адрес перехода", Template=(b)=> {
+                    return string.Format("<i class=\"fa fa-link\"></i>&nbsp;<a target=\"_blank\" href=\"{0}\">{0}</a>", b.Url);
+                } },
+                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="PictureId", Caption="Картинка", Template=(p)=> {
+                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Помотреть картинку\" href=\"{0}\"><i class=\"fa fa-picture-o\"></i></a>", Url.Action(MVC.Pictures.Picture(p.PictureId)), p.Title);
+            } }
+            },
+            PagerInfo = pagerInfo,
+            Filter = filter,
+            SortDirections = sortDirections,
+            EnableCreate = false,
+            EnableEditing = false,
+            PagerLink = Url.Action(MVC.Banners.GroupBanners(bgid: bannerGroupId)),
+            EnableDelete = true,
+            FuncDeleteLink=(b)=>Url.Action(MVC.BannerGroups.DeleteBanner(bgid: bannerGroupId, bid: b.Id))
+    },
+            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

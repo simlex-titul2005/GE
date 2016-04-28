@@ -62,6 +62,18 @@ namespace GE.WebAdmin.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.RedirectToRouteResult AddBanner()
+        {
+            return new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.AddBanner);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult DeleteBanner()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.DeleteBanner);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public BannerGroupsController Actions { get { return MVC.BannerGroups; } }
@@ -81,6 +93,8 @@ namespace GE.WebAdmin.Controllers
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
+            public readonly string AddBanner = "AddBanner";
+            public readonly string DeleteBanner = "DeleteBanner";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -89,6 +103,8 @@ namespace GE.WebAdmin.Controllers
             public const string Index = "Index";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
+            public const string AddBanner = "AddBanner";
+            public const string DeleteBanner = "DeleteBanner";
         }
 
 
@@ -118,6 +134,24 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_Delete
         {
             public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_AddBanner s_params_AddBanner = new ActionParamsClass_AddBanner();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddBanner AddBannerParams { get { return s_params_AddBanner; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddBanner
+        {
+            public readonly string bgid = "bgid";
+            public readonly string bid = "bid";
+        }
+        static readonly ActionParamsClass_DeleteBanner s_params_DeleteBanner = new ActionParamsClass_DeleteBanner();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DeleteBanner DeleteBannerParams { get { return s_params_DeleteBanner; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DeleteBanner
+        {
+            public readonly string bgid = "bgid";
+            public readonly string bid = "bid";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -203,6 +237,32 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             DeleteOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AddBannerOverride(T4MVC_System_Web_Mvc_RedirectToRouteResult callInfo, System.Guid bgid, System.Guid bid);
+
+        [NonAction]
+        public override System.Web.Mvc.RedirectToRouteResult AddBanner(System.Guid bgid, System.Guid bid)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.AddBanner);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "bgid", bgid);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "bid", bid);
+            AddBannerOverride(callInfo, bgid, bid);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DeleteBannerOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, System.Guid bgid, System.Guid bid);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult DeleteBanner(System.Guid bgid, System.Guid bid)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.DeleteBanner);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "bgid", bgid);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "bid", bid);
+            DeleteBannerOverride(callInfo, bgid, bid);
             return callInfo;
         }
 

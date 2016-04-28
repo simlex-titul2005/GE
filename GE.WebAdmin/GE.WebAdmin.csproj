@@ -162,10 +162,10 @@
     <Content Include="Content\dist\js\site.min.js" />
     <Content Include="Content\i\background.jpg" />
     <Content Include="Content\sx\js\sx-find-gv.js" />
+    <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="img\alpha.png" />
     <Content Include="img\hue.png" />
     <Content Include="img\saturation.png" />
-    <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="faveicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -246,6 +246,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
+    <Compile Include="Extantions\Repositories\RepoBanner.cs" />
     <Compile Include="Extantions\Repositories\RepoForumPart.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
@@ -448,6 +449,8 @@
     <Content Include="Views\BannerGroups\Edit.cshtml" />
     <Content Include="Views\BannerGroups\Index.cshtml" />
     <Content Include="Views\Banners\_FindGridView.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AddBanner.cshtml" />
+    <Content Include="Views\Banners\_GroupBanners.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -63,53 +63,31 @@ namespace SX.WebCore.Repositories
             return query;
         }
 
-        public void AddBanners(Guid bannerGroupId, Guid[] bannersId)
+        public void AddBanner(Guid bannerGroupId, Guid bannerId)
         {
-            var query = @"BEGIN TRANSACTION
+            var query = @"INSERT INTO D_BANNER_GROUP_LINK
+VALUES
+  (
+    @bid,
+    @bgid
+  )";
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Execute(query, new { bid = bannerId, bgid = bannerGroupId });
+            }
+        }
 
-DELETE 
+        public void DeleteBanner(Guid bannerGroupId, Guid bannerId)
+        {
+            var query = @"DELETE 
 FROM   D_BANNER_GROUP_LINK
-WHERE  BannerGroupId = @bgid
-
-INSERT INTO D_BANNER_GROUP_LINK
-SELECT bgid.[GUID],
-       @bgid
-FROM   @bnsid AS bgid
-
-COMMIT TRANSACTION";
-
-            var cmd = new SqlCommand(query);
-            cmd.Parameters.AddWithValue("bgid", bannerGroupId);
-            cmd.Parameters.Add(getGuidTablePar(bannersId));
+WHERE  BannerId = @bid
+       AND BannerGroupId = @bgid";
 
             using (var conn = new SqlConnection(ConnectionString))
             {
-                using (cmd)
-                {
-                    cmd.Connection = conn;
-                    conn.Open();
-                    @cmd.ExecuteNonQuery();
-                    conn.Close();
-                }
+                conn.Execute(query, new { bid = bannerId, bgid = bannerGroupId });
             }
-
-        }
-
-        private static SqlParameter getGuidTablePar(Guid[] bannersId)
-        {
-            var par = new SqlParameter();
-            par.ParameterName = "bnsid";
-            par.SqlDbType = SqlDbType.Structured;
-            par.TypeName = "GUID_LIST";
-            var table = new DataTable();
-            table.Columns.Add(new DataColumn("GUID"));
-            for (int i = 0; i < bannersId.Length; i++)
-            {
-                table.Rows.Add(bannersId[i]);
-            }
-            par.Value = table;
-
-            return par;
         }
     }
 }

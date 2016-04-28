@@ -18,7 +18,7 @@ namespace GE.WebAdmin.Models
         [MaxLength(400), Display(Name = "Описание"), DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        [Display(Name = "Привязанные баннеры")]
+        [Display(Name = "Привязанные баннеры"), UIHint("AddBanner")]
         public VMBanner[] Banners { get; set; }
     }
 }

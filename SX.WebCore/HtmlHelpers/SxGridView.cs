@@ -65,6 +65,10 @@ namespace SX.WebCore.HtmlHelpers
                 if (settings.FunCheckBoxTrue == null) throw new ArgumentNullException("Не определена функция задачи полей выбора");
                 if (settings.FuncGetId == null) throw new ArgumentNullException("Не определена функция выбора идентификатора");
             }
+            if(settings.EnableDelete)
+            {
+                if(settings.FuncDeleteLink==null) throw new ArgumentNullException("Не определена функция удаления");
+            }
         }
 
         public class SxGridViewSettings<TModel>
@@ -115,7 +119,7 @@ namespace SX.WebCore.HtmlHelpers
             public string CreateLink { get; set; }
 
             public bool EnableDelete { get; set; }
-            public string DeleteLink { get; set; }
+            public Func<TModel, string> FuncDeleteLink { get; set; }
 
             public TModel Filter { get; set; }
             public SxPagerInfo PagerInfo { get; set; }
@@ -296,13 +300,13 @@ namespace SX.WebCore.HtmlHelpers
                 //delete link
                 if(settings.EnableDelete)
                 {
-                    td.InnerHtml += string.Format("<form method=\"post\" data-ajax-method=\"post\" action=\"{0}\" data-ajax=\"true\" data-ajax-mode=\"replace\" data-ajax-update=\"#{1}\">", settings.DeleteLink ?? "delete", settings.UpdateTargetId);
+                    td.InnerHtml += string.Format("<form method=\"post\" data-ajax-method=\"post\" action=\"{0}\" data-ajax=\"true\" data-ajax-mode=\"replace\" data-ajax-update=\"#{1}\">", settings.FuncDeleteLink(model) ?? "delete", settings.UpdateTargetId);
                     td.InnerHtml += htmlHelper.AntiForgeryToken();
-                    for (int i = 0; i < settings.KeyFieldsName.Length; i++)
-                    {
-                        var key = settings.KeyFieldsName[i];
-                        td.InnerHtml += string.Format("<input type=\"hidden\" name=\"{0}\" value=\"{1}\" />", key, model.GetType().GetProperty(key).GetValue(model));
-                    }
+                    //for (int i = 0; i < settings.KeyFieldsName.Length; i++)
+                    //{
+                    //    var key = settings.KeyFieldsName[i];
+                    //    td.InnerHtml += string.Format("<input type=\"hidden\" name=\"{0}\" value=\"{1}\" />", key, model.GetType().GetProperty(key).GetValue(model));
+                    //}
                     td.InnerHtml += string.Format("<button title=\"Удалить\" type=\"submit\" onclick=\"if(!confirm('Удалить запись?')){{return false;}}\"><i class=\"fa fa-times\"></i></button>");
                     td.InnerHtml += string.Format("</form>");
                 }

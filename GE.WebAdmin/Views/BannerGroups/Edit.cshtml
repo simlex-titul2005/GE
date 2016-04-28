@@ -5,7 +5,10 @@
 }
 
 @section styles{
-    <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
+    @if (!isNew)
+    {
+        <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
+    }
 }
 
 <h2>@ViewBag.Title</h2>
@@ -32,16 +35,39 @@
     @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание группы" } })
     @Html.ValidationMessageFor(x => x.Description)
     <br />
-    @Html.LabelFor(x => x.Banners)
-    <div id="grid-banners">
-        @Html.Action(MVC.Banners.FindGridView(bgid: Model.Id))
-    </div>
-    @Html.ValidationMessageFor(x => x.Banners)
-    <br />
     <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
     <a class="btn btn-default" href="@Url.Action(MVC.BannerGroups.Index())">Назад</a>
 </form>
 
+@if (!isNew)
+{
+    <br />
+    <div class="panel panel-default">
+        <div class="panel-heading">@Html.LabelFor(x => x.Banners)</div>
+        <div class="panel-body">
+            <span class="text-info">Привязать баннер (в списке отображаются только не привязанные к группе баннеры)</span>
+            @Html.EditorFor(x => x.Banners, new { htmlAttributes = new { @class = "form-control", @placeholder = "Добавьте баннер" } })
+            @Html.ValidationMessageFor(x => x.Banners)
+            <br />
+            <div id="grid-banners">
+                @Html.Action(MVC.Banners.GroupBanners(bgid: Model.Id))
+            </div>
+        </div>
+    </div>
+    <br />
+}
+
 @section scripts{
-    <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
+    @if (!isNew)
+    {
+        <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('#add-banner-btn').click(function () {
+                    var bannerId = $('.add-banner').children('input[name="Id"]').first().val();
+                    $(this).prev('input').val(bannerId);
+                });
+            });
+        </script>
+    }
 }

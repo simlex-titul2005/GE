@@ -122,7 +122,7 @@ function clickLookupRow(e) {
     var id = $tr.data('id');
     var $txtFieldCell = $tr.children('[data-text-field]');
     var $dropdown = $tr.closest('.dropdown');
-    var $input = $dropdown.parent().find('input[type="hidden"]').val(id);
+    var $input = $dropdown.parent().find('input[type="hidden"]').first().val(id);
     var $text = $dropdown.parent().find('.input-group input[type="text"]').val($txtFieldCell.text());
     $dropdown.hide();
 }

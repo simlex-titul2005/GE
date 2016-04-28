@@ -40,6 +40,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.MaterialTagsController MaterialTags = new GE.WebAdmin.Controllers.T4MVC_MaterialTagsController();
     public static GE.WebAdmin.Controllers.NewsController News = new GE.WebAdmin.Controllers.T4MVC_NewsController();
     public static GE.WebAdmin.Controllers.PicturesController Pictures = new GE.WebAdmin.Controllers.T4MVC_PicturesController();
+    public static GE.WebAdmin.Controllers.ProjectStepsController ProjectSteps = new GE.WebAdmin.Controllers.T4MVC_ProjectStepsController();
     public static GE.WebAdmin.Controllers.RedirectsController Redirects = new GE.WebAdmin.Controllers.T4MVC_RedirectsController();
     public static GE.WebAdmin.Controllers.RequestController Request = new GE.WebAdmin.Controllers.T4MVC_RequestController();
     public static GE.WebAdmin.Controllers.RolesController Roles = new GE.WebAdmin.Controllers.T4MVC_RolesController();
@@ -49,10 +50,6 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.SettingsController Settings = new GE.WebAdmin.Controllers.T4MVC_SettingsController();
     public static GE.WebAdmin.Controllers.UsersController Users = new GE.WebAdmin.Controllers.T4MVC_UsersController();
     public static GE.WebAdmin.Controllers.ValutesController Valutes = new GE.WebAdmin.Controllers.T4MVC_ValutesController();
-    public static T4MVC.MenuesController Menues = new T4MVC.MenuesController();
-    public static T4MVC.MenuItemsController MenuItems = new T4MVC.MenuItemsController();
-    public static T4MVC.RoutesController Routes = new T4MVC.RoutesController();
-    public static T4MVC.RouteValuesController RouteValues = new T4MVC.RouteValuesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

@@ -293,7 +293,15 @@
                         @if (User.IsInRole("admin"))
                         {
                             <li>
-                                <a href="@Url.Action(MVC.Games.Index())"><i class="fa fa-space-shuttle fa-fw"></i> Игры</a>
+                                <a href="javascript:void(0)"><i class="fa fa-space-shuttle fa-fw"></i> Игры<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action(MVC.Games.Index())">Список игр</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action(MVC.Settings.EditEmptyGame())">Начальная иконка</a>
+                                    </li>
+                                </ul>
                             </li>
                         }
                         <li>
@@ -377,9 +385,6 @@
                                     <li>
                                         <a href="@Url.Action(MVC.Settings.EditSite())">Настройки сайта</a>
                                     </li>
-                                    <li>
-                                        <a href="@Url.Action(MVC.Settings.EditEmptyGame())">Начальная иконка</a>
-                                    </li>
                                 </ul>
                             </li>
                         }
@@ -389,6 +394,9 @@
                                 <a href="@Url.Action(MVC.Request.Index())"><i class="fa fa-history fa-fw"></i> Статистика запросов</a>
                             </li>
                         }
+                        <li>
+                            <a href="@Url.Action(MVC.ProjectSteps.Index())"><i class="fa fa-calendar fa-fw"></i> Развитие проекта</a>
+                        </li>
                         @if (User.IsInRole("admin"))
                         {
                             <li>

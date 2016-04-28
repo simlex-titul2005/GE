@@ -1,0 +1,24 @@
+﻿@model VMProjectStep[]
+@{
+    ViewBag.Title = "Развитие проекта";
+}
+
+@helper WriteStep(VMProjectStep step)
+{
+
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="text-right">
+    <a class="btn btn-default" href="@Url.Action(MVC.ProjectSteps.Edit())">Создать</a>
+</div>
+<br />
+@if (Model.Any())
+{
+    @Html.SxTree(Model, new SxExtantions.SxTreeSettings<VMProjectStep>
+{
+    FuncChildren = (s) => { return s.Steps; },
+    FuncContent = (s) => { return Html.DisplayFor(x=>s).ToString(); }
+}, new { @class="ps-tree"})
+}
+

@@ -1,0 +1,50 @@
+﻿@model VMEditProjectStep
+@{
+    var isNew = Model.Id == 0;
+    ViewBag.Title = isNew ? "Добавить шаг" : "Редактировать шаг \"" + Model.Title + "\"";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (!isNew)
+{
+    <div class="text-right">
+        <form method="post" action="@Url.Action(MVC.ProjectSteps.Delete())">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.Id)
+            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить</button>
+        </form>
+    </div>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.ProjectSteps.Edit())">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ParentStepId)
+
+    @Html.LabelFor(x => x.Title)
+    @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(x => x.Title)
+    <br />
+
+    @Html.LabelFor(x => x.Foreword)
+    @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(x => x.Foreword)
+    <br />
+
+    @Html.LabelFor(x => x.Html)
+    @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(x => x.Html)
+    <br />
+
+    <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+</form>
+
+@section scripts{
+    <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+        if (CKEDITOR.instances['Html']) {
+            CKEDITOR.remove(CKEDITOR.instances['Html']);
+        }
+        CKEDITOR.replace('Html', { height: 400 });
+    </script>
+}

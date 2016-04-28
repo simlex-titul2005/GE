@@ -226,6 +226,7 @@
     <Compile Include="Controllers\MaterialTagsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="Controllers\ProjectStepsController.cs" />
     <Compile Include="Controllers\RedirectsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -270,16 +271,11 @@
     <Compile Include="MaterialTagsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="MenuesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MenuItemsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\VMEditBannedUrl.cs" />
     <Compile Include="Models\VMBannedUrl.cs" />
     <Compile Include="Models\VMEditManual.cs" />
     <Compile Include="Models\VMEditMaterialCategory.cs" />
+    <Compile Include="Models\VMEditProjectStep.cs" />
     <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMClick.cs" />
     <Compile Include="Models\VMClickType.cs" />
@@ -298,6 +294,7 @@
     <Compile Include="Models\VMMaterialCategory.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMNewsRubric.cs" />
+    <Compile Include="Models\VMProjectStep.cs" />
     <Compile Include="Models\VMRedirect.cs" />
     <Compile Include="Models\VMRequest.cs" />
     <Compile Include="Models\VMRobotsFile.cs" />
@@ -307,19 +304,9 @@
     <Compile Include="Models\VMEditArticle.cs" />
     <Compile Include="Models\VMEditEmptyGameSettings.cs" />
     <Compile Include="Models\VMEditGame.cs" />
-    <Compile Include="Models\VMEditMenuItem.cs" />
-    <Compile Include="Models\VMEditMenu.cs" />
-    <Compile Include="Models\VMEditRoute.cs" />
-    <Compile Include="Models\VMEditRouteValue.cs" />
     <Compile Include="Models\VMGame.cs" />
     <Compile Include="Models\VMEditPicture.cs" />
-    <Compile Include="Models\VMMenuItem.cs" />
-    <Compile Include="Models\VMMenu.cs" />
-    <Compile Include="Models\VMMenuItemList.cs" />
     <Compile Include="Models\VMPicture.cs" />
-    <Compile Include="Models\VMRoute.cs" />
-    <Compile Include="Models\VMRouteValue.cs" />
-    <Compile Include="Models\VMRouteValueList.cs" />
     <Compile Include="Models\VMSeoInfo.cs" />
     <Compile Include="Models\VMSeoKeyword.cs" />
     <Compile Include="Models\VMSiteSettings.cs" />
@@ -330,6 +317,9 @@
     <Compile Include="PicturesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProjectStepsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedirectsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -338,12 +328,6 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="RolesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RoutesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RouteValuesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SeoInfoController.generated.cs">
@@ -442,6 +426,9 @@
     <Content Include="Views\BannedUrls\Index.cshtml" />
     <Content Include="Views\BannedUrls\Edit.cshtml" />
     <Content Include="Views\Shared\_MaterialModal.cshtml" />
+    <Content Include="Views\ProjectSteps\Index.cshtml" />
+    <Content Include="Views\ProjectSteps\DisplayTemplates\VMProjectStep.cshtml" />
+    <Content Include="Views\ProjectSteps\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -33,6 +33,8 @@ namespace SX.WebCore
 
         public DbSet<SxPicture> Pictures { get; set; }
 
+        public DbSet<SxProjectStep> ProjectSteps { get; set; }
+
         public DbSet<SxRedirect> Redirects { get; set; }
 
         public DbSet<SxRequest> Requestes { get; set; }

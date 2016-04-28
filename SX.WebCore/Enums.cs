@@ -8,7 +8,8 @@
             Article = 1,
             News = 2,
             ForumTheme = 3,
-            Manual = 4
+            Manual = 4,
+            ProjectStep=5
         }
 
         public enum UserClickType : byte

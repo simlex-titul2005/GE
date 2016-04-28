@@ -25,6 +25,10 @@ namespace SX.WebCore
 
         public DbSet<SxBannedUrl> BannedUrls { get; set; }
 
+        public DbSet<SxBanner> Banners { get; set; }
+
+        public DbSet<SxBannerGroup> BannerGroups { get; set; }
+
         public DbSet<SxComment> Comments { get; set; }
 
         public DbSet<SxForumPart> ForumParts { get; set; }
@@ -73,6 +77,8 @@ namespace SX.WebCore
             modelBuilder.Entity<SxLoginStatistic>().HasKey(x => new { x.StatisticId, x.UserId });
             modelBuilder.Entity<SxLoginStatistic>().HasRequired(x => x.Statistic).WithMany().HasForeignKey(x => new { x.StatisticId });
             modelBuilder.Entity<SxLoginStatistic>().HasRequired(x => x.User).WithMany().HasForeignKey(x => new { x.UserId });
+
+            modelBuilder.Entity<SxBannerGroupBanner>().HasKey(x => new { x.BannerId, x.BannerGroupId });
         }
     }
 }

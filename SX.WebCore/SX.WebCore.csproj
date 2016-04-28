@@ -146,9 +146,11 @@
     <Compile Include="PictureHandler.cs" />
     <Compile Include="Providers\QueryProvider.cs" />
     <Compile Include="Repositories\RepoBannedUrl.cs" />
+    <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoManual.cs" />
     <Compile Include="Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Repositories\RepoLike.cs" />
+    <Compile Include="Repositories\RepoBanner.cs" />
     <Compile Include="Repositories\RepoProjectStep.cs" />
     <Compile Include="Repositories\RepoUserClick.cs" />
     <Compile Include="Resources\Files.Designer.cs">
@@ -166,6 +168,9 @@
     <Compile Include="SxAppUser.cs" />
     <Compile Include="SxArticle.cs" />
     <Compile Include="SxBannedUrl.cs" />
+    <Compile Include="SxBanner.cs" />
+    <Compile Include="SxBannerGroup.cs" />
+    <Compile Include="SxBannerGroupBanner.cs" />
     <Compile Include="SxBBCodeParser.cs" />
     <Compile Include="SxComment.cs" />
     <Compile Include="SxDbContext.cs" />

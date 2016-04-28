@@ -1,0 +1,47 @@
+﻿@model VMEditBannerGroup
+@{
+    var isNew = Model.Id == Guid.Empty;
+    ViewBag.Title = isNew ? "Добавить группу баннеров" : "Редактировать группу баннеров \"" + Model.Title + "\"";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
+}
+
+<h2>@ViewBag.Title</h2>
+@if (!isNew)
+{
+    <div class="text-right">
+        <form method="post" action="@Url.Action(MVC.BannerGroups.Delete())">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.Id)
+            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить</button>
+        </form>
+    </div>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.BannerGroups.Edit())">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+
+    @Html.LabelFor(x => x.Title)
+    @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите заголовок группы" } })
+    @Html.ValidationMessageFor(x => x.Title)
+    <br />
+    @Html.LabelFor(x => x.Description)
+    @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание группы" } })
+    @Html.ValidationMessageFor(x => x.Description)
+    <br />
+    @Html.LabelFor(x => x.Banners)
+    <div id="grid-banners">
+        @Html.Action(MVC.Banners.FindGridView(bgid: Model.Id))
+    </div>
+    @Html.ValidationMessageFor(x => x.Banners)
+    <br />
+    <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+    <a class="btn btn-default" href="@Url.Action(MVC.BannerGroups.Index())">Назад</a>
+</form>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
+}

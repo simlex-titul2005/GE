@@ -1,17 +1,10 @@
-﻿using SX.WebCore.Abstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
 
 namespace SX.WebCore.HtmlHelpers
 {
@@ -62,9 +55,15 @@ namespace SX.WebCore.HtmlHelpers
         {
             if(settings.Mode==SxGridViewMode.Lookup)
             {
-                if (settings.FuncDataUrl == null) throw new ArgumentException("Для GridView не определён url получения данных для режима Lookup");
-                if (settings.FuncGetId == null) throw new ArgumentException("Для GridView не определена функция получения Id строки для режима Lookup");
-                if (settings.FuncTextField == null) throw new ArgumentException("Для GridView не определена функция обозначения текстового поля для режима Lookup");
+                if (settings.FuncDataUrl == null) throw new ArgumentNullException("Для GridView не определён url получения данных для режима Lookup");
+                if (settings.FuncGetId == null) throw new ArgumentNullException("Для GridView не определена функция получения Id строки для режима Lookup");
+                if (settings.FuncTextField == null) throw new ArgumentNullException("Для GridView не определена функция обозначения текстового поля для режима Lookup");
+            }
+            if(settings.ShowSelectCheckbox)
+            {
+                if (settings.FunCheckBoxName == null) throw new ArgumentNullException("Не определена функция именования полей выбора");
+                if (settings.FunCheckBoxTrue == null) throw new ArgumentNullException("Не определена функция задачи полей выбора");
+                if (settings.FuncGetId == null) throw new ArgumentNullException("Не определена функция выбора идентификатора");
             }
         }
 
@@ -79,6 +78,7 @@ namespace SX.WebCore.HtmlHelpers
                 EnableCreate = true;
                 EnableEditing = true;
                 EnableDelete = false;
+                ShowSelectCheckbox = false;
             }
 
             public string UpdateTargetId { get; set; }
@@ -110,7 +110,8 @@ namespace SX.WebCore.HtmlHelpers
 
             public bool EnableEditing { get; set; }
 
-            
+            public bool ShowSelectCheckbox { get; set; }
+
             public string CreateLink { get; set; }
 
             public bool EnableDelete { get; set; }
@@ -125,6 +126,8 @@ namespace SX.WebCore.HtmlHelpers
             public Func<TModel, object> FuncGetId { get; set; }
             public Func<string> FuncTextField { get; set; }
             public Func<string> FuncDataUrl { get; set; }
+            public Func<TModel, string> FunCheckBoxName { get; set; }
+            public Func<TModel, bool> FunCheckBoxTrue { get; set; }
         }
         public class SxGridViewColumn<TModel>
         {
@@ -257,11 +260,10 @@ namespace SX.WebCore.HtmlHelpers
         {
             var tr = new TagBuilder("tr");
 
-            if (settings.FuncGetId != null)
+            if (settings.FuncGetId != null && !settings.ShowSelectCheckbox)
             {
                 tr.MergeAttribute("data-id", settings.FuncGetId(model).ToString());
                 tr.MergeAttribute("onclick", "clickLookupRow(this)");
-
             }
 
             if (settings.ShowFilterRowMenu || settings.EnableEditing)
@@ -303,6 +305,11 @@ namespace SX.WebCore.HtmlHelpers
                     }
                     td.InnerHtml += string.Format("<button title=\"Удалить\" type=\"submit\" onclick=\"if(!confirm('Удалить запись?')){{return false;}}\"><i class=\"fa fa-times\"></i></button>");
                     td.InnerHtml += string.Format("</form>");
+                }
+                //select checlbox
+                if(settings.ShowSelectCheckbox)
+                {
+                    td.InnerHtml += string.Format("<input type=\"checkbox\" name=\"{0}\" value=\"{1}\" {2} />", settings.FunCheckBoxName(model), settings.FuncGetId(model), settings.FunCheckBoxTrue(model)?"checked":null);
                 }
 
                 tr.InnerHtml += td;

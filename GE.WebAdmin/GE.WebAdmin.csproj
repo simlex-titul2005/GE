@@ -210,10 +210,18 @@
     <Compile Include="BannedUrlsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="BannerGroupsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BannersController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="CommentsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BannerGroupsController.cs" />
+    <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\BannedUrlsController.cs" />
     <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
@@ -271,8 +279,12 @@
     <Compile Include="MaterialTagsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VMBanner.cs" />
+    <Compile Include="Models\VMBannerGroup.cs" />
     <Compile Include="Models\VMEditBannedUrl.cs" />
     <Compile Include="Models\VMBannedUrl.cs" />
+    <Compile Include="Models\VMEditBanner.cs" />
+    <Compile Include="Models\VMEditBannerGroup.cs" />
     <Compile Include="Models\VMEditManual.cs" />
     <Compile Include="Models\VMEditMaterialCategory.cs" />
     <Compile Include="Models\VMEditProjectStep.cs" />
@@ -429,6 +441,13 @@
     <Content Include="Views\ProjectSteps\Index.cshtml" />
     <Content Include="Views\ProjectSteps\DisplayTemplates\VMProjectStep.cshtml" />
     <Content Include="Views\ProjectSteps\Edit.cshtml" />
+    <Content Include="Views\Banners\_GridView.cshtml" />
+    <Content Include="Views\Banners\Edit.cshtml" />
+    <Content Include="Views\Banners\Index.cshtml" />
+    <Content Include="Views\BannerGroups\_GridView.cshtml" />
+    <Content Include="Views\BannerGroups\Edit.cshtml" />
+    <Content Include="Views\BannerGroups\Index.cshtml" />
+    <Content Include="Views\Banners\_FindGridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

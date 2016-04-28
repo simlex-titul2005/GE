@@ -1,0 +1,25 @@
+﻿@model VMBannerGroup[]
+@{
+    Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
+    var filter = ViewBag.Filter != null ? (VMBannerGroup)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+}
+
+
+@Html.SxGridView(
+        new SxExtantions.SxGridViewSettings<VMBannerGroup>
+        {
+            UpdateTargetId = "grid-banner-groups",
+            Data = Model,
+            Columns = new SxExtantions.SxGridViewColumn<VMBannerGroup>[]{
+                new SxExtantions.SxGridViewColumn<VMBannerGroup>{FieldName="Id", Caption="Идентификатор"},
+                new SxExtantions.SxGridViewColumn<VMBannerGroup>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGridViewColumn<VMBannerGroup>{FieldName="Description", Caption="Описание"}
+            },
+            PagerInfo = pagerInfo,
+            Filter = filter,
+            SortDirections = sortDirections
+        },
+            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

@@ -1,0 +1,18 @@
+﻿@model VMBanner[]
+@{
+    ViewBag.Title = "Баннеры";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-banners">
+    @Html.Partial(MVC.Banners.Views._GridView, Model)
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
+}

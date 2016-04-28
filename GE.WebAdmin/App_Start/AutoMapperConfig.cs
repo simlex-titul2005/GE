@@ -28,6 +28,16 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxBannedUrl, VMEditBannedUrl>();
                     cfg.CreateMap<VMEditBannedUrl, SxBannedUrl>();
 
+                    //banner
+                    cfg.CreateMap<SxBanner, VMBanner>();
+                    cfg.CreateMap<SxBanner, VMEditBanner>();
+                    cfg.CreateMap<VMEditBanner, SxBanner>();
+
+                    //banner group
+                    cfg.CreateMap<SxBannerGroup, VMBannerGroup>();
+                    cfg.CreateMap<SxBannerGroup, VMEditBannerGroup>();
+                    cfg.CreateMap<VMEditBannerGroup, SxBannerGroup>();
+
                     //forum parts
                     cfg.CreateMap<SxForumPart, VMForumPart>();
                     cfg.CreateMap<SxForumPart, VMEditForumPart>();

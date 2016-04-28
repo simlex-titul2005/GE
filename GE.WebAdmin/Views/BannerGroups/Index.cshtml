@@ -1,0 +1,10 @@
+﻿@model VMBannerGroup[]
+@{
+    ViewBag.Title = "Группы баннеров";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-banner-groups">
+    @Html.Partial(MVC.BannerGroups.Views._GridView, Model)
+</div>

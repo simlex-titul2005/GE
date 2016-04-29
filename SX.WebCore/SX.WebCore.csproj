@@ -152,6 +152,7 @@
     <Compile Include="Repositories\RepoLike.cs" />
     <Compile Include="Repositories\RepoBanner.cs" />
     <Compile Include="Repositories\RepoProjectStep.cs" />
+    <Compile Include="Repositories\RepoStatistic.cs" />
     <Compile Include="Repositories\RepoUserClick.cs" />
     <Compile Include="Resources\Files.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -178,7 +179,7 @@
     <Compile Include="SxForumPart.cs" />
     <Compile Include="SxForumTheme.cs" />
     <Compile Include="SxLike.cs" />
-    <Compile Include="SxLoginStatistic.cs" />
+    <Compile Include="SxStatisticUserLogin.cs" />
     <Compile Include="SxManual.cs" />
     <Compile Include="SxMaterialCategory.cs" />
     <Compile Include="SxMaterialTag.cs" />

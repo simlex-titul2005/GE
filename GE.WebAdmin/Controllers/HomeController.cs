@@ -8,6 +8,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(DbContext dbContext)
         {
+            var user = User.Identity.Name;
             return View();
         }
     }

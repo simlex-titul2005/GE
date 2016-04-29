@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SX.WebCore
 {
     [Table("D_STAT_LOGIN")]
-    public class SxLoginStatistic : SxDbModel<Guid>
+    public class SxStatisticUserLogin : SxDbModel<Guid>
     {
         public virtual SxStatistic Statistic { get; set; }
         public Guid StatisticId { get; set; }

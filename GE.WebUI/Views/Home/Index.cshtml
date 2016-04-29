@@ -1,11 +1,17 @@
 ﻿@{
     ViewBag.Title = ViewBag.Title ?? "Новости, статьи игровой индустрии";
-    if (ViewBag.GameTitle != null)
+    var gameName = Request.RequestContext.RouteData.Values["gameTitle"];
+    if (gameName != null)
     {
-        ViewBag.Title += " " + ViewBag.GameTitle;
+        ViewBag.Title += " " + gameName;
     }
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.H1CssClass = "hidden";
+    if (ViewBag.Description == null && gameName != null)
+    {
+        ViewBag.Description = "На данной странице вы сможете ознакомиться споследними новостями и статьями, которые были написаны авторами нашего сайта об игре " + gameName;
+    }
+    ViewBag.Keywords = ViewBag.Keywords ?? gameName;
 }
 
 @Html.Action(MVC.News.LastGamesNewsBlock(lnc: 5))

@@ -5,11 +5,16 @@
     ViewBag.Title = title ?? (ViewBag.Tag != null ? "Последние статьи c тегом " + (string)ViewBag.Tag : "Статьи");
     if (title == null && ViewBag.GameTitle != null)
     {
-        ViewBag.Title += " " + ViewBag.GameTitle;
+        ViewBag.Title = "Последние статьи по игре " + ViewBag.GameTitle;
     }
     ViewBag.H1 = h1 ?? (ViewBag.Tag != null ? "Статьи тега " + (string)ViewBag.Tag : ViewBag.Title);
     ViewBag.H1CssClass = "header";
     ViewBag.Description = ViewBag.Description ?? (ViewBag.Tag != null ? "На данной странице вы сможете найти абсолютно все новости и статьи, которые были написаны авторами нашего сайта по запросу " + (string)ViewBag.Tag : null);
+    if (ViewBag.Description == null && ViewBag.GameTitle != null)
+    {
+        ViewBag.Description = "На данной странице вы сможете ознакомиться споследними статьями, которые были написаны авторами нашего сайта об игре " + ViewBag.GameTitle;
+    }
+    ViewBag.Keywords = ViewBag.Keywords ?? ViewBag.GameTitle ?? ViewBag.Tag;
 }
 
 @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)

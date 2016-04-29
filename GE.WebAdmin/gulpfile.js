@@ -77,14 +77,15 @@ function createJs() {
         'bower_components/jquery-validation/dist/jquery.validate.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
         'bower_components/metisMenu/dist/metisMenu.min.js',
-        'content/sx/js/**/*.js'
+        'content/sx/js/**/*.js',
+        'scripts/site.js'
     ])
         .pipe(concat('site.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('content/dist/js'));
 
     gulp.src([
-        'scripts/**/*.js',
+        'scripts/menues.js',
         'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
         'bower_components/bootstrap-colorpicker/js/bootstrap-colorpicker.js',
         'bower_components/lightbox2/dist/js/lightbox.js'

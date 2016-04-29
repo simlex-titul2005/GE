@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using GE.WebCoreExtantions.Repositories;
+using static SX.WebCore.Enums;
+using System.Linq;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -89,7 +91,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost]
-        public virtual PartialViewResult FindGridView(Guid bgid, VMBanner filterModel=null, int page = 1, int pageSize = 10)
+        public virtual PartialViewResult FindGridView(Guid bgid, VMBanner filterModel = null, int page = 1, int pageSize = 10)
         {
             filterModel.BannerGroupId = bgid;
             ViewBag.Filter = filterModel;
@@ -107,7 +109,7 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual PartialViewResult GroupBanners(Guid bgid, int page = 1, int pageSize = 10)
         {
-            var filter = new WebCoreExtantions.Filter(page, pageSize) { WhereExpressionObject=new VMBanner { BannerGroupId= bgid } };
+            var filter = new WebCoreExtantions.Filter(page, pageSize) { WhereExpressionObject = new VMBanner { BannerGroupId = bgid } };
             var totalItems = (_repo as RepoBanner).FilterCount(filter, true);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;

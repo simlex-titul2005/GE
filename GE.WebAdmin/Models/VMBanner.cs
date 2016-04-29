@@ -1,4 +1,5 @@
 ﻿using System;
+using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
 {
@@ -13,5 +14,8 @@ namespace GE.WebAdmin.Models
         public Guid PictureId { get; set; }
 
         public Guid? BannerGroupId { get; set; }
+
+        public int? MaterialId { get; set; }
+        public ModelCoreType? ModelCoreType { get; set; }
     }
 }

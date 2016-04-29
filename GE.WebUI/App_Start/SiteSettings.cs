@@ -1,12 +1,7 @@
 ﻿using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Caching;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace GE.WebUI
 {
@@ -16,7 +11,7 @@ namespace GE.WebUI
         static SiteSettings()
         {
             if(_cache==null)
-                _cache = new MemoryCache("SITE_SETTINGS");
+                _cache = new MemoryCache("CACHE_SITE_SETTINGS");
         }
 
         private static CacheItemPolicy _defaultPolicy

@@ -165,7 +165,7 @@
         $(function () {
             $('#matModal').on('show.bs.modal', function (e) {
                 $(this).find('.modal-title').html($('#Title').val());
-                $(this).find('.modal-body').html($('#Html').val());
+                $(this).find('.modal-body > .container-fluid').html($('#Html').val());
             })
         });
     </script>

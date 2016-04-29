@@ -12,13 +12,13 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMBanner[] QueryForAdmin(this RepoBanner repo, Filter filter, bool? forGroup = null)
+        public static VMBanner[] QueryForAdmin(this RepoBanner repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
         {
             var query = QueryProvider.GetSelectString();
             query += " FROM D_BANNER AS db ";
 
             object param = null;
-            query += getBannerWhereString(filter, out param, forGroup);
+            query += getBannerWhereString(filter, out param, forGroup, forMaterial);
 
             query += QueryProvider.GetOrderString("db.DateCreate", SortDirection.Desc, filter.Orders);
 
@@ -31,12 +31,12 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        public static int FilterCount(this RepoBanner repo, Filter filter, bool? forGroup = null)
+        public static int FilterCount(this RepoBanner repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
         {
             var query = @"SELECT COUNT(1) FROM D_BANNER AS db ";
 
             object param = null;
-            query += getBannerWhereString(filter, out param, forGroup);
+            query += getBannerWhereString(filter, out param, forGroup, forMaterial);
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
@@ -45,7 +45,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        private static string getBannerWhereString(Filter filter, out object param, bool? forGroup = null)
+        private static string getBannerWhereString(Filter filter, out object param, bool? forGroup = null, bool? forMaterial = null)
         {
             param = null;
             string query = null;
@@ -59,6 +59,14 @@ namespace GE.WebAdmin.Extantions.Repositories
                 else if (forGroup == false)
                     query += " AND (db.Id NOT IN (SELECT dbgl.BannerId FROM D_BANNER_GROUP_LINK dbgl WHERE dbgl.BannerGroupId=@bgid)) ";
             }
+            if (forMaterial.HasValue && filter.WhereExpressionObject != null && (filter.WhereExpressionObject.MaterialId != null && filter.WhereExpressionObject.ModelCoreType != null))
+            {
+                //for material banners
+                if (forMaterial == true)
+                    query += " AND (db.Id IN (SELECT dmb.BannerId FROM D_MATERIAL_BANNER AS dmb WHERE dmb.MaterialId=@mid AND dmb.ModelCoreType=@mct)) ";
+                else if (forMaterial == false)
+                    query += " AND (db.Id NOT IN (SELECT dmb.BannerId FROM D_MATERIAL_BANNER AS dmb WHERE dmb.MaterialId=@mid AND dmb.ModelCoreType=@mct)) ";
+            }
 
             var title = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null ? (string)filter.WhereExpressionObject.Title : null;
             var url = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Url != null ? (string)filter.WhereExpressionObject.Url : null;
@@ -67,7 +75,9 @@ namespace GE.WebAdmin.Extantions.Repositories
             {
                 title = title,
                 url = url,
-                bgid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.BannerGroupId != null ? (Guid)filter.WhereExpressionObject.BannerGroupId : (Guid?)null
+                bgid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.BannerGroupId != null ? (Guid)filter.WhereExpressionObject.BannerGroupId : (Guid?)null,
+                mid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.MaterialId != null ? (int)filter.WhereExpressionObject.MaterialId : (int?)null,
+                mct = filter.WhereExpressionObject != null && filter.WhereExpressionObject.ModelCoreType != null ? (int)filter.WhereExpressionObject.ModelCoreType : (int?)null,
             };
 
             return query;

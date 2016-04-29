@@ -53,6 +53,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.UsersController Users = new GE.WebAdmin.Controllers.T4MVC_UsersController();
     public static GE.WebAdmin.Controllers.ValutesController Valutes = new GE.WebAdmin.Controllers.T4MVC_ValutesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
+    public static T4MVC.StatisticsController Statistics = new T4MVC.StatisticsController();
 }
 
 namespace T4MVC
@@ -149,7 +150,7 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string menues_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/menues.min.js") ? Url("menues.min.js") : Url("menues.js");
-        public static readonly string routes_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/routes.min.js") ? Url("routes.min.js") : Url("routes.js");
+        public static readonly string site_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.js") ? Url("site.min.js") : Url("site.js");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -207,7 +208,6 @@ namespace Links
                 public static readonly string ckeditor_min_js = Url("ckeditor.min.js");
                 public static readonly string lightbox_min_js = Url("lightbox.min.js");
                 public static readonly string menues_min_js = Url("menues.min.js");
-                public static readonly string routes_min_js = Url("routes.min.js");
                 public static readonly string site_min_js = Url("site.min.js");
             }
         
@@ -248,7 +248,7 @@ namespace Links
             public static class Assets
             {
                 public const string menues_js = "~/Scripts/menues.js"; 
-                public const string routes_js = "~/Scripts/routes.js"; 
+                public const string site_js = "~/Scripts/site.js"; 
             }
         }
         public static partial class Content 
@@ -286,7 +286,6 @@ namespace Links
                         public const string ckeditor_min_js = "~/Content/dist/js/ckeditor.min.js"; 
                         public const string lightbox_min_js = "~/Content/dist/js/lightbox.min.js"; 
                         public const string menues_min_js = "~/Content/dist/js/menues.min.js"; 
-                        public const string routes_min_js = "~/Content/dist/js/routes.min.js"; 
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }

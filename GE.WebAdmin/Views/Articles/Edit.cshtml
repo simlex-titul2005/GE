@@ -141,26 +141,26 @@
         <div role="tabpanel" class="tab-pane" id="tags-cloud">
             @if (!isNew)
             {
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="grid-mat-tags">
-                            @Html.Action(MVC.MaterialTags.Index(mid: Model.Id, mct: Model.ModelCoreType))
-                        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="grid-mat-tags">
+                        @Html.Action(MVC.MaterialTags.Index(mid: Model.Id, mct: Model.ModelCoreType))
                     </div>
                 </div>
+            </div>
             }
         </div>
 
         <div role="tabpanel" class="tab-pane" id="seo">
             @if (!isNew)
             {
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="grid-mat-tags">
-                            @Html.Action(MVC.SeoInfo.EditForMaterial(mid: Model.Id, mct: Model.ModelCoreType, id: Model.SeoInfoId))
-                        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="grid-mat-tags">
+                        @Html.Action(MVC.SeoInfo.EditForMaterial(mid: Model.Id, mct: Model.ModelCoreType, id: Model.SeoInfoId))
                     </div>
                 </div>
+            </div>
             }
         </div>
     }
@@ -182,7 +182,7 @@
         $(function () {
             $('#matModal').on('show.bs.modal', function (e) {
                 $(this).find('.modal-title').html($('#Title').val());
-                $(this).find('.modal-body').html($('#Html').val());
+                $(this).find('.modal-body > .container-fluid').html($('#Html').val());
             })
 
             $('.edit-game [type="text"]').on('change', function () {

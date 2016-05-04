@@ -1,21 +1,32 @@
 {
-  "name": "bootstrap-colorpicker",
+  "name": "mjolnic-bootstrap-colorpicker",
   "main": [
-    "./js/bootstrap-colorpicker.js",
-    "./css/colorpicker.css"
+    "dist/css/bootstrap-colorpicker.css",
+    "dist/js/bootstrap-colorpicker.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/theblacksmith/bootstrap-colorpicker.git"
+  "dependencies": {
+    "jquery": ">=1.10",
+    "bootstrap": ">=2"
   },
-  "homepage": "https://github.com/theblacksmith/bootstrap-colorpicker",
-  "_release": "cb9cc697a6",
+  "ignore": [
+    "\\.*",
+    "/index.html",
+    "/package.json",
+    "/composer.json",
+    "/Gruntfile.js",
+    "/.travis.yml",
+    "/travis.sh",
+    "/server.js"
+  ],
+  "homepage": "https://github.com/mjolnic/bootstrap-colorpicker",
+  "version": "2.3.3",
+  "_release": "2.3.3",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "cb9cc697a6ec9a87d85f230586871df94b9186f1"
+    "type": "version",
+    "tag": "2.3.3",
+    "commit": "59f06437c86b7c0e074aee8a699819fd1c07a173"
   },
-  "_source": "git://github.com/theblacksmith/bootstrap-colorpicker.git",
-  "_target": "*",
+  "_source": "https://github.com/mjolnic/bootstrap-colorpicker.git",
+  "_target": "2.3.3",
   "_originalSource": "bootstrap-colorpicker"
 }

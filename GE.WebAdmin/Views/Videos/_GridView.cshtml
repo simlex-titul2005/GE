@@ -14,7 +14,10 @@
                 Data = Model,
                 Columns = new SxExtantions.SxGridViewColumn<VMVideo>[]{
             new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Title", Caption="Название видео"},
-            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Url", Caption="Адрес"}
+            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Url", Caption="Адрес"},
+            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="PictureId", Caption="Картинка", Template=(v)=> {
+                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Помотреть картинку\" href=\"{0}\"><i class=\"fa fa-picture-o\"></i></a>", Url.Action(MVC.Pictures.Picture(v.PictureId)), v.Title);
+            } }
         },
                 PagerInfo = pagerInfo,
                 Filter = filter,

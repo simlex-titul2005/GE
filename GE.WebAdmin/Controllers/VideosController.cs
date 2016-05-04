@@ -67,6 +67,8 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult Edit(VMEditVideo model)
         {
             var redactModel = Mapper.Map<VMEditVideo, SxVideo>(model);
+            if (!model.PictureId.HasValue)
+                ModelState.AddModelError("PictureId", "Поле обязательно для заполнения");
             if (ModelState.IsValid)
             {
                 SxVideo newModel = null;

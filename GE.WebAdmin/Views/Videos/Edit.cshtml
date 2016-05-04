@@ -13,6 +13,7 @@
         <button type="submit" class="btn btn-danger pull-right" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить видео</button>
     </form>
 }
+<p class="text-info">Видео обрабатывается и редактируется на основе существующего видео канала youtube.com</p>
 <br />
 <form method="post" action="@Url.Action(MVC.Videos.Edit())">
     @Html.AntiForgeryToken()

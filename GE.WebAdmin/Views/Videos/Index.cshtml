@@ -3,8 +3,16 @@
     ViewBag.Title = "Видео сайта";
 }
 
+@section styles{
+    <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
+}
+
 <h2>@ViewBag.Title</h2>
 <br />
 <div id="grid-videos">
     @Html.Partial(MVC.Videos.Views._GridView, Model)
 </div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
+}

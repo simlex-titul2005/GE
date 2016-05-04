@@ -7,9 +7,6 @@ using Owin;
 using SX.WebCore;
 using SX.WebCore.Managers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 [assembly: OwinStartup(typeof(AspNetIdentityApp.Startup))]
 namespace AspNetIdentityApp

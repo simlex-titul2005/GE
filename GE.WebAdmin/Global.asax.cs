@@ -55,5 +55,10 @@ namespace GE.WebAdmin
             if (!UsersOnSite.ContainsKey(sessionId))
                 UsersOnSite.Remove(sessionId);
         }
+
+        protected void Application_Eror()
+        {
+
+        }
     }
 }

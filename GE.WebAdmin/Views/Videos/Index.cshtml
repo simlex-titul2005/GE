@@ -1,0 +1,10 @@
+﻿@model VMVideo[]
+@{
+    ViewBag.Title = "Видео сайта";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-videos">
+    @Html.Partial(MVC.Videos.Views._GridView, Model)
+</div>

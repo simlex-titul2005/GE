@@ -51,6 +51,8 @@ namespace SX.WebCore
 
         public DbSet<SxStatistic> Statistic { get; set; }
 
+        public DbSet<SxVideo> Videos { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -238,6 +238,7 @@
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Controllers\SeoInfoController.cs" />
     <Compile Include="Controllers\SeoKeywordsController.cs" />
     <Compile Include="Controllers\SeoWordCounterController.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Extantions\Repositories\RepoPicture.cs" />
     <Compile Include="Extantions\Repositories\RepoRedirect.cs" />
+    <Compile Include="Extantions\Repositories\RepoVideo.cs" />
     <Compile Include="Extantions\Repositories\RepoRequest.cs" />
     <Compile Include="Extantions\Repositories\RepoSeoInfo.cs" />
     <Compile Include="Extantions\Repositories\RepoSeoKeywords.cs" />
@@ -289,6 +291,7 @@
     <Compile Include="Models\VMEditManual.cs" />
     <Compile Include="Models\VMEditMaterialCategory.cs" />
     <Compile Include="Models\VMEditProjectStep.cs" />
+    <Compile Include="Models\VMEditVideo.cs" />
     <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMClick.cs" />
     <Compile Include="Models\VMClickType.cs" />
@@ -325,6 +328,7 @@
     <Compile Include="Models\VMSiteSettings.cs" />
     <Compile Include="Models\VMStatisticUserLogin.cs" />
     <Compile Include="Models\VMUser.cs" />
+    <Compile Include="Models\VMVideo.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -371,6 +375,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ValutesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VideosController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -457,6 +464,9 @@
     <Content Include="Views\Banners\_GroupBanners.cshtml" />
     <Content Include="Views\Statistics\_UserLoginsGridView.cshtml" />
     <Content Include="Views\Statistics\UserLogins.cshtml" />
+    <Content Include="Views\Videos\_GridView.cshtml" />
+    <Content Include="Views\Videos\Edit.cshtml" />
+    <Content Include="Views\Videos\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

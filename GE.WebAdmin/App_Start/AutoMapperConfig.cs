@@ -115,6 +115,11 @@ namespace GE.WebAdmin
                     .ForMember(d => d.Roles, d => d.MapFrom(s => s.Roles.Select(r=>new VMRole { Id=r.RoleId, Name=r.UserId}).ToArray()));
                     cfg.CreateMap<SxAppUser, VMEditUser>();
                     cfg.CreateMap<VMEditUser, SxAppUser>();
+
+                    //video
+                    cfg.CreateMap<SxVideo, VMVideo>();
+                    cfg.CreateMap<SxVideo, VMEditVideo>();
+                    cfg.CreateMap<VMEditVideo, SxVideo>();
                 });
             }
         }

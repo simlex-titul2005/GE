@@ -53,6 +53,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.StatisticsController Statistics = new GE.WebAdmin.Controllers.T4MVC_StatisticsController();
     public static GE.WebAdmin.Controllers.UsersController Users = new GE.WebAdmin.Controllers.T4MVC_UsersController();
     public static GE.WebAdmin.Controllers.ValutesController Valutes = new GE.WebAdmin.Controllers.T4MVC_ValutesController();
+    public static GE.WebAdmin.Controllers.VideosController Videos = new GE.WebAdmin.Controllers.T4MVC_VideosController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

@@ -83,6 +83,7 @@
     <Compile Include="Repositories\RepoPicture.cs" />
     <Compile Include="Repositories\RepoRedirect.cs" />
     <Compile Include="Repositories\RepoRequest.cs" />
+    <Compile Include="Repositories\RepoVideo.cs" />
     <Compile Include="Repositories\RepoSeoInfo.cs" />
     <Compile Include="Repositories\RepoSeoKeywords.cs" />
     <Compile Include="Repositories\RepoSiteSetting.cs" />

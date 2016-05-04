@@ -1,0 +1,39 @@
+﻿@model VMEditVideo
+@{
+    var isNew = Model.Id==Guid.Empty;
+    ViewBag.Title = isNew ? "Добавить видео сайта" : "Редактировать видео сайта \"" + Model.Title + "\"";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (!isNew)
+{
+    <form method="post" action="@Url.Action(MVC.Videos.Delete())">
+        @Html.HiddenFor(x => x.Id)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger pull-right" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить видео</button>
+    </form>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.Videos.Edit())">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+
+    @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+    @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название видео" } })
+    @Html.ValidationMessageFor(x => x.Title)
+    <br />
+    @Html.LabelFor(x => x.Url, new { @class = "control-label" })
+    @Html.EditorFor(x => x.Url, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите адрес видео" } })
+    @Html.ValidationMessageFor(x => x.Url)
+    <br />
+    @Html.LabelFor(x => x.PictureId, new { @class = "control-label" })
+    @Html.EditorFor(x => x.PictureId, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(x => x.PictureId)
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+            @Html.ActionLink("Назад", MVC.Videos.Index(), new { @class = "btn btn-default" })
+        </div>
+    </div>
+</form>

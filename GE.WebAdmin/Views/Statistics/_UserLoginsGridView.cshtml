@@ -1,0 +1,28 @@
+﻿@model VMStatisticUserLogin[]
+@{
+    Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
+    var filter = ViewBag.Filter != null ? (VMStatisticUserLogin)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+}
+
+
+@Html.SxGridView(
+        new SxExtantions.SxGridViewSettings<VMStatisticUserLogin>
+        {
+            UpdateTargetId = "grid-user-logins",
+            Data = Model,
+            Columns = new SxExtantions.SxGridViewColumn<VMStatisticUserLogin>[]{
+            new SxExtantions.SxGridViewColumn<VMStatisticUserLogin>{FieldName="DateCreate", Caption="Дата"},
+            new SxExtantions.SxGridViewColumn<VMStatisticUserLogin>{FieldName="NikName", Caption="Ник-нейм"}
+        },
+            PagerInfo = pagerInfo,
+            Filter = filter,
+            SortDirections = sortDirections,
+            EnableEditing = false,
+            EnableDelete = false,
+            EnableCreate = false,
+            PagerLink=Url.Action(MVC.Statistics.StatUserLogins())
+        },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

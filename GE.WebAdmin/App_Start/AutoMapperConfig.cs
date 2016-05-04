@@ -104,6 +104,12 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxSeoKeyword, VMEditSeoKeyword>();
                     cfg.CreateMap<VMEditSeoKeyword, SxSeoKeyword>();
 
+                    //statistic user login
+                    cfg.CreateMap<SxStatisticUserLogin, VMStatisticUserLogin>()
+                    .ForMember(d => d.DateCreate, d => d.MapFrom(s => s.Statistic.DateCreate))
+                    .ForMember(d => d.NikName, d => d.MapFrom(s => s.User.NikName))
+                    .ForMember(d => d.AvatarId, d => d.MapFrom(s => s.User.AvatarId));
+
                     //users
                     cfg.CreateMap<SxAppUser, VMUser>()
                     .ForMember(d => d.Roles, d => d.MapFrom(s => s.Roles.Select(r=>new VMRole { Id=r.RoleId, Name=r.UserId}).ToArray()));

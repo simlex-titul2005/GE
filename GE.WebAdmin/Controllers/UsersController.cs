@@ -43,21 +43,22 @@ namespace GE.WebAdmin.Controllers
         }
 
         private static int _pageSize = 10;
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
             var users = UserManager.Users;
-            var roles = RoleManager.Roles.Select(x=> new { RoleId=x.Id, RoleName=x.Name }).ToArray();
+            var roles = RoleManager.Roles.Select(x => new { RoleId = x.Id, RoleName = x.Name }).ToArray();
             var usersOnline = MvcApplication.UsersOnSite;
 
-            var data = users.OrderByDescending(x=>x.DateCreate).Skip((page - 1) * _pageSize).Take(_pageSize).ToArray()
-                .Select(x => new VMUser {
-                    Id=x.Id,
-                    Email=x.Email,
-                    NikName=x.NikName,
-                    Roles= x.Roles.Select(r=>new VMRole { Id=r.RoleId }).ToArray(),
-                    IsOnline= usersOnline.ContainsValue(x.Email)
+            var data = users.OrderByDescending(x => x.DateCreate).Skip((page - 1) * _pageSize).Take(_pageSize).ToArray()
+                .Select(x => new VMUser
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                    NikName = x.NikName,
+                    Roles = x.Roles.Select(r => new VMRole { Id = r.RoleId }).ToArray(),
+                    IsOnline = usersOnline.ContainsValue(x.Email)
                 }).ToArray();
 
             for (int i = 0; i < data.Length; i++)
@@ -68,13 +69,13 @@ namespace GE.WebAdmin.Controllers
                 }
             }
 
-            filter.PagerInfo.TotalItems= users.Count();
+            filter.PagerInfo.TotalItems = users.Count();
             ViewBag.PagerInfo = filter.PagerInfo;
 
             return View(data);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public virtual PartialViewResult Index(VMUser filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
             //string nikName = filterModel != null ? filterModel.NikName : null;
@@ -113,11 +114,11 @@ namespace GE.WebAdmin.Controllers
             throw new NotImplementedException();
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Edit(string id=null)
+        [HttpGet]
+        public virtual ViewResult Edit(string id = null)
         {
             var data = UserManager.FindById(id);
-            var allRoles = RoleManager.Roles.Where(x=>x.Name!=_architectRole).ToArray();
+            var allRoles = RoleManager.Roles.Where(x => x.Name != _architectRole).ToArray();
             ViewBag.Roles = allRoles;
             var viewModel = getEditUser(data, allRoles);
 
@@ -175,7 +176,7 @@ namespace GE.WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public virtual PartialViewResult EditUserInfo(VMEditUser user)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var oldUser = UserManager.FindById(user.Id);
                 oldUser.NikName = user.NikName;
@@ -191,7 +192,7 @@ namespace GE.WebAdmin.Controllers
                 return PartialView(MVC.Users.Views._UserInfo, user);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditRole model)
         {
@@ -199,8 +200,7 @@ namespace GE.WebAdmin.Controllers
             throw new NotImplementedException();
         }
 
-
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual PartialViewResult UsersOnSite()
         {
             var usersOnSite = MvcApplication.UsersOnSite;
@@ -210,15 +210,17 @@ namespace GE.WebAdmin.Controllers
             var viewModel = new List<VMUser>();
             foreach (var user in users)
             {
-                viewModel.Add(new VMUser {
-                    Id=user.Id,
-                    AvatarId=user.AvatarId,
-                    Email=user.Email,
-                    NikName=user.NikName,
-                    Roles= user.Roles.Join(roles, r=>r.RoleId, u=>u.Id, (r,u)=> new VMRole {
-                        Id=u.Id,
-                        Name=u.Name,
-                        Description=u.Description
+                viewModel.Add(new VMUser
+                {
+                    Id = user.Id,
+                    AvatarId = user.AvatarId,
+                    Email = user.Email,
+                    NikName = user.NikName,
+                    Roles = user.Roles.Join(roles, r => r.RoleId, u => u.Id, (r, u) => new VMRole
+                    {
+                        Id = u.Id,
+                        Name = u.Name,
+                        Description = u.Description
                     }).ToArray()
                 });
             }
@@ -236,7 +238,7 @@ namespace GE.WebAdmin.Controllers
                 NikName = data.NikName,
                 IsOnline = MvcApplication.UsersOnSite.ContainsValue(data.UserName)
             };
-            
+
             editUser.Roles = data.Roles.Join(allRoles, u => u.RoleId, r => r.Id, (u, r) => new VMRole
             {
                 Id = u.RoleId,

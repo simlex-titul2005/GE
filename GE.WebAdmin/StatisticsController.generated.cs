@@ -23,11 +23,75 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace T4MVC
+namespace GE.WebAdmin.Controllers
 {
-    public class StatisticsController
+    public partial class StatisticsController
     {
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected StatisticsController(Dummy d) { }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoute(callInfo.RouteValueDictionary);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
+        }
+
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public StatisticsController Actions { get { return MVC.Statistics; } }
+        [GeneratedCode("T4MVC", "2.0")]
+        public readonly string Area = "";
+        [GeneratedCode("T4MVC", "2.0")]
+        public readonly string Name = "Statistics";
+        [GeneratedCode("T4MVC", "2.0")]
+        public const string NameConst = "Statistics";
+        [GeneratedCode("T4MVC", "2.0")]
+        static readonly ActionNamesClass s_actions = new ActionNamesClass();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionNamesClass ActionNames { get { return s_actions; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNamesClass
+        {
+            public readonly string StatUserLogins = "StatUserLogins";
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNameConstants
+        {
+            public const string StatUserLogins = "StatUserLogins";
+        }
+
+
+        static readonly ActionParamsClass_StatUserLogins s_params_StatUserLogins = new ActionParamsClass_StatUserLogins();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_StatUserLogins StatUserLoginsParams { get { return s_params_StatUserLogins; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_StatUserLogins
+        {
+            public readonly string page = "page";
+            public readonly string filterModel = "filterModel";
+            public readonly string order = "order";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -38,10 +102,46 @@ namespace T4MVC
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _UserLoginsGridView = "_UserLoginsGridView";
+                public readonly string UserLogins = "UserLogins";
             }
+            public readonly string _UserLoginsGridView = "~/Views/Statistics/_UserLoginsGridView.cshtml";
+            public readonly string UserLogins = "~/Views/Statistics/UserLogins.cshtml";
         }
     }
 
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public partial class T4MVC_StatisticsController : GE.WebAdmin.Controllers.StatisticsController
+    {
+        public T4MVC_StatisticsController() : base(Dummy.Instance) { }
+
+        [NonAction]
+        partial void StatUserLoginsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int page);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult StatUserLogins(int page)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.StatUserLogins);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            StatUserLoginsOverride(callInfo, page);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void StatUserLoginsOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMStatisticUserLogin filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult StatUserLogins(GE.WebAdmin.Models.VMStatisticUserLogin filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.StatUserLogins);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            StatUserLoginsOverride(callInfo, filterModel, order, page);
+            return callInfo;
+        }
+
+    }
 }
 
 #endregion T4MVC

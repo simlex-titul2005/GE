@@ -182,10 +182,10 @@
     <None Include="Properties\PublishProfiles\admin-game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
-    <None Include="T4MVC.tt">
+    <Content Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
+    </Content>
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\menues.js" />
@@ -242,6 +242,7 @@
     <Compile Include="Controllers\SeoKeywordsController.cs" />
     <Compile Include="Controllers\SeoWordCounterController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
@@ -322,6 +323,7 @@
     <Compile Include="Models\VMSeoInfo.cs" />
     <Compile Include="Models\VMSeoKeyword.cs" />
     <Compile Include="Models\VMSiteSettings.cs" />
+    <Compile Include="Models\VMStatisticUserLogin.cs" />
     <Compile Include="Models\VMUser.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -361,9 +363,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="T4MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="UsersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -453,6 +455,8 @@
     <Content Include="Views\Banners\_FindGridView.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AddBanner.cshtml" />
     <Content Include="Views\Banners\_GroupBanners.cshtml" />
+    <Content Include="Views\Statistics\_UserLoginsGridView.cshtml" />
+    <Content Include="Views\Statistics\UserLogins.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -462,7 +466,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="Views\Statistics\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

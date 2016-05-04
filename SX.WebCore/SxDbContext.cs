@@ -74,7 +74,6 @@ namespace SX.WebCore
             modelBuilder.Entity<SxLike>().HasRequired(x => x.UserClick).WithMany().HasForeignKey(x => new { x.UserClickId });
 
             modelBuilder.Entity<SxStatisticUserLogin>().HasKey(x => new { x.StatisticId, x.UserId });
-            modelBuilder.Entity<SxStatisticUserLogin>().Ignore(x => x.Id);
 
             modelBuilder.Entity<SxBannerGroupBanner>().HasKey(x => new { x.BannerId, x.BannerGroupId });
         }

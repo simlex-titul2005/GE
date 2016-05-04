@@ -1,0 +1,10 @@
+﻿@model VMStatisticUserLogin[]
+@{
+    ViewBag.Title = "Статистика входов";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-user-logins">
+    @Html.Partial(MVC.Statistics.Views._UserLoginsGridView, Model)
+</div>

@@ -275,20 +275,21 @@ namespace SX.WebCore.HtmlHelpers
                 var td = new TagBuilder("td");
                 td.AddCssClass("sx-gv-edit-column");
 
-                var routes = HttpContext.Current.Request.RequestContext.RouteData.Values;
-                var controller = routes["controller"].ToString().ToLower();
-                controller = settings.GeneralControllerName != null ? settings.GeneralControllerName.ToLowerInvariant() : controller;
-                var queryString = new StringBuilder();
-                queryString.Append("?");
-                for (int i = 0; i < settings.KeyFieldsName.Length; i++)
-                {
-                    var key = settings.KeyFieldsName[i];
-                    queryString.Append(key + "=" + model.GetType().GetProperty(key).GetValue(model) + "&");
-                }
-                var qs = queryString.ToString().Substring(0, queryString.Length - 1);
+
                 //edit link
                 if (settings.EnableEditing)
                 {
+                    var routes = HttpContext.Current.Request.RequestContext.RouteData.Values;
+                    var controller = routes["controller"].ToString().ToLower();
+                    controller = settings.GeneralControllerName != null ? settings.GeneralControllerName.ToLowerInvariant() : controller;
+                    var queryString = new StringBuilder();
+                    queryString.Append("?");
+                    for (int i = 0; i < settings.KeyFieldsName.Length; i++)
+                    {
+                        var key = settings.KeyFieldsName[i];
+                        queryString.Append(key + "=" + model.GetType().GetProperty(key).GetValue(model) + "&");
+                    }
+                    var qs = queryString.ToString().Substring(0, queryString.Length - 1);
                     var a = new TagBuilder("a");
                     var type = typeof(TModel);
 
@@ -298,7 +299,7 @@ namespace SX.WebCore.HtmlHelpers
                     td.InnerHtml += a;
                 }
                 //delete link
-                if(settings.EnableDelete)
+                if (settings.EnableDelete)
                 {
                     td.InnerHtml += string.Format("<form method=\"post\" data-ajax-method=\"post\" action=\"{0}\" data-ajax=\"true\" data-ajax-mode=\"replace\" data-ajax-update=\"#{1}\">", settings.FuncDeleteLink(model) ?? "delete", settings.UpdateTargetId);
                     td.InnerHtml += htmlHelper.AntiForgeryToken();

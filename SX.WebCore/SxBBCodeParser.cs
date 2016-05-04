@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Linq;
-using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace SX.WebCore
 {
@@ -18,25 +18,124 @@ namespace SX.WebCore
             return res;
         }
 
-        public static string ReplaceBanners(string inputHtml, SxBanner[] banners, Func<SxBanner, string> template)
+        public static string ReplaceBanners(
+            string inputHtml,
+            SxBannerCollection banners,
+            Func<SxBanner, string> bannerPictureUrl,
+            Func<SxBanner, Func<SxBanner, string>, string> bannerTemplate = null,
+            Func<SxBannerGroup, Func<SxBanner, string>, string> bannerGroupTemplate = null
+            )
         {
-            Regex re = new Regex(@"\[BANNER\](.*?)\[\/BANNER\]");
-            var matches = Regex.Matches(inputHtml, re.ToString());
-            var list = new List<Guid>();
-            foreach (Match match in matches)
+            var reBanner = new Regex(@"\[BANNER\](.*?)\[\/BANNER\]");
+            var reBannerGroup = new Regex(@"\[BANNERG\](.*?)\[\/BANNERG\]");
+            var matchesBanners = Regex.Matches(inputHtml, reBanner.ToString());
+            var matchesBannerGroups = Regex.Matches(inputHtml, reBannerGroup.ToString());
+
+            //replace banners
+            foreach (Match matchBanner in matchesBanners)
             {
-                var id = Guid.Parse(match.Groups[1].Value);
-                list.Add(id);
+                var id = Guid.Parse(matchBanner.Groups[1].Value);
+                var banner = banners.Banners.SingleOrDefault(x => x.Id == id);
+                if (banner != null)
+                    inputHtml = inputHtml.Replace(string.Format("[BANNER]{0}[/BANNER]", banner.Id), bannerTemplate != null ? bannerTemplate(banner, bannerPictureUrl) : getBannerTemplate(banner, bannerPictureUrl));
+                else
+                    inputHtml = inputHtml.Replace(string.Format("[BANNER]{0}[/BANNER]", id), null);
             }
 
-            var ban = banners.Where(x => list.Contains(x.Id)).ToArray();
-            for (int i = 0; i < ban.Length; i++)
+            //replace banner groups
+            foreach (Match matchBannerGroup in matchesBannerGroups)
             {
-                var banner = ban[i];
-                inputHtml=inputHtml.Replace(string.Format("[BANNER]{0}[/BANNER]", banner.Id), template(banner));
+                var id = Guid.Parse(matchBannerGroup.Groups[1].Value);
+                var bannerGroup = banners.BannerGroups.SingleOrDefault(x => x.Id == id);
+                if (bannerGroup != null && bannerGroup.BannerLinks.Any())
+                {
+                    inputHtml = inputHtml.Replace(string.Format("[BANNERG]{0}[/BANNERG]", id), bannerGroupTemplate != null ? bannerGroupTemplate(bannerGroup, bannerPictureUrl) : getBannerGroupTemplate(bannerGroup, bannerPictureUrl));
+                }
+                else
+                    inputHtml = inputHtml.Replace(string.Format("[BANNERG]{0}[/BANNERG]", id), null);
             }
 
             return inputHtml;
+        }
+
+        private static string getBannerTemplate(SxBanner banner, Func<SxBanner, string> bannerPictureUrl)
+        {
+            var figure = new TagBuilder("figure");
+            figure.AddCssClass("banner");
+
+            var a = new TagBuilder("a");
+            a.MergeAttribute("href", banner.Url);
+
+            var img = new TagBuilder("img");
+            img.MergeAttribute("alt", banner.Title);
+            img.MergeAttribute("src", bannerPictureUrl(banner));
+            a.InnerHtml += img;
+            figure.InnerHtml += a;
+
+
+            var figcaption = new TagBuilder("figcaption");
+            figcaption.InnerHtml += banner.Title;
+            figure.InnerHtml += figcaption;
+
+            return figure.ToString();
+        }
+
+        private static string getBannerGroupTemplate(SxBannerGroup banner, Func<SxBanner, string> bannerPictureUrl)
+        {
+            var id = Guid.NewGuid().ToString().ToLowerInvariant();
+            var bannerLinks = banner.BannerLinks.ToArray();
+
+            var div = new TagBuilder("div");
+            div.AddCssClass("carousel slide");
+            div.MergeAttribute("data-ride", "carousel");
+            div.MergeAttribute("id", id);
+
+            //var ol = new TagBuilder("ol");
+            //ol.AddCssClass("carousel-indicators");
+
+            var wrapper = new TagBuilder("div");
+            wrapper.AddCssClass("carousel-inner");
+            wrapper.MergeAttribute("role", "listbox");
+            
+            for (int i = 0; i < bannerLinks.Length; i++)
+            {
+                var b = bannerLinks[i].Banner;
+
+                //var li = new TagBuilder("li");
+                //li.MergeAttribute("data-target", id);
+                //li.MergeAttribute("data-slide-to", i.ToString());
+                //if (i == 0)
+                //    li.AddCssClass("active");
+                //ol.InnerHtml += li;
+
+
+                //slider
+                var item = new TagBuilder("div");
+                item.AddCssClass("item");
+                if (i == 0)
+                    item.AddCssClass("active");
+
+                var a = new TagBuilder("a");
+                a.MergeAttribute("href", b.Url);
+
+                var img = new TagBuilder("img");
+                img.MergeAttribute("alt", b.Title);
+                img.MergeAttribute("src", bannerPictureUrl(b));
+                a.InnerHtml += img;
+                item.InnerHtml += a;
+
+                var caption = new TagBuilder("div");
+                caption.AddCssClass("carousel-caption");
+                caption.InnerHtml += b.Title;
+                item.InnerHtml += caption;
+
+                wrapper.InnerHtml += item;
+            }
+
+            //div.InnerHtml += ol;
+            div.InnerHtml += wrapper;
+
+            return div.ToString();
         }
     }
 }

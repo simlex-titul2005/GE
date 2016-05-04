@@ -12,7 +12,7 @@ namespace GE.WebUI
         private static MemoryCache _cache;
         static SiteBanners()
         {
-            if(_cache==null)
+            if (_cache == null)
                 _cache = new MemoryCache("CACHE_SITE_BANNERS");
         }
 
@@ -27,19 +27,25 @@ namespace GE.WebUI
             }
         }
 
-        public static SxBanner[] Banners()
+        public static SxBannerCollection Collection
         {
-            var cacheBanners = _cache.Get(_cacheBannersKey);
-            if(cacheBanners==null)
+            get
             {
-                var repo = new RepoBanner();
-                var banners = repo.All.ToArray();
-                _cache.Add(new CacheItem(_cacheBannersKey, banners), _defaultPolicy);
-                return banners;
-            }
-            else
-            {
-                return (SxBanner[])_cache[_cacheBannersKey];
+                var cacheBanners = _cache.Get(_cacheBannersKey);
+                if (cacheBanners == null)
+                {
+                    var collection = new SxBannerCollection();
+                    collection.Banners = new RepoBanner().All.ToArray();
+
+                    collection.BannerGroups = new RepoBannerGroup().All.ToArray();
+
+                    _cache.Add(new CacheItem(_cacheBannersKey, collection), _defaultPolicy);
+                    return collection;
+                }
+                else
+                {
+                    return (SxBannerCollection)_cache[_cacheBannersKey];
+                }
             }
         }
     }

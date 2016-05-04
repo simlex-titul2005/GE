@@ -170,6 +170,7 @@
     <Compile Include="SxArticle.cs" />
     <Compile Include="SxBannedUrl.cs" />
     <Compile Include="SxBanner.cs" />
+    <Compile Include="SxBannerCollection.cs" />
     <Compile Include="SxBannerGroup.cs" />
     <Compile Include="SxBannerGroupBanner.cs" />
     <Compile Include="SxBBCodeParser.cs" />

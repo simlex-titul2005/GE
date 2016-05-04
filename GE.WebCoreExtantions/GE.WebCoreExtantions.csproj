@@ -73,6 +73,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\RepoArticle.cs" />
+    <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoBanner.cs" />
     <Compile Include="Repositories\RepoComment.cs" />
     <Compile Include="Repositories\RepoForumPart.cs" />

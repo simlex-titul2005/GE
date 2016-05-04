@@ -6,6 +6,18 @@
 
 .l-c-n-b {
     margin-top: @def-pad*2;
+    @media (max-width: @screen-xs-max) {
+        margin-top: 0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
 }
 
 .l-c-n-b .row {
@@ -15,6 +27,8 @@
     @media (max-width: @screen-xs-max) {
         display: block;
         width: unset;
+        margin:0;
+        padding:0;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -52,7 +66,8 @@
     padding-right: 0;
 
     @media (max-width: @screen-xs-max) {
-        padding-right: @def-pad;
+        margin:0;
+        padding:0;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {

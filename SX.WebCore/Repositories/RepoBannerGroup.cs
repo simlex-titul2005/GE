@@ -2,7 +2,6 @@
 using SX.WebCore.Abstract;
 using SX.WebCore.Providers;
 using System;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using static SX.WebCore.HtmlHelpers.SxExtantions;

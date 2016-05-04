@@ -137,11 +137,9 @@ namespace GE.WebUI.Controllers
             else
             {
                 var html=SxBBCodeParser.GetHtml(model.Html);
-                html = SxBBCodeParser.ReplaceBanners(
-                    html,
-                    SiteBanners.Banners(),
-                    (b)=> string.Format("<figure class=\"banner\"><a href=\"{2}\"><img alt=\"{0}\" src=\"{1}\" /></a><figcaption>{0}</figcaption></figure>", b.Title, Url.Action(MVC.Pictures.Picture(b.PictureId)), b.Url));
+                html = SxBBCodeParser.ReplaceBanners(html, SiteBanners.Collection, (b)=>Url.Action(MVC.Pictures.Picture(b.PictureId)));
                 model.Html = html;
+
                 if (!Request.IsLocal)
                 {
                     /*ViewBag.VKScript = "<script type=\"text/javascript\" src=\"//vk.com/js/api/openapi.js?121\"></script><script type=\"text/javascript\"> VK.init({ apiId: 5387252, onlyWidgets: true}); </script> ";

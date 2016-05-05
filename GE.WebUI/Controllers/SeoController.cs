@@ -33,13 +33,29 @@ namespace GE.WebUI.Controllers
 #endif
         public virtual ContentResult Sitemap()
         {
-            var query = @"SELECT
-	dm.TitleUrl,
-	dm.DateCreate,
-	dm.DateUpdate,
-	dm.ModelCoreType
-FROM DV_MATERIAL AS dm
-ORDER BY dm.DateUpdate DESC";
+            var query = @"SELECT dm.TitleUrl,
+       dm.DateCreate,
+       dm.DateUpdate,
+       dm.ModelCoreType
+FROM   DV_MATERIAL  AS dm
+       JOIN D_NEWS  AS dn
+            ON  dn.Id = dm.Id
+            AND dn.ModelCoreType = dm.ModelCoreType
+WHERE  dm.Show = 1
+       AND dm.DateOfPublication <= GETDATE()
+UNION ALL
+SELECT dm.TitleUrl,
+       dm.DateCreate,
+       dm.DateUpdate,
+       dm.ModelCoreType
+FROM   DV_MATERIAL     AS dm
+       JOIN D_ARTICLE  AS da
+            ON  da.Id = dm.Id
+            AND da.ModelCoreType = dm.ModelCoreType
+WHERE  dm.Show = 1
+       AND dm.DateOfPublication <= GETDATE()
+ORDER BY
+       dm.DateUpdate DESC";
 
             SxSiteMapUrl[] data = null;
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DbContext"].ConnectionString))

@@ -59,7 +59,6 @@ function createCss() {
 
     gulp.src([
        'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
-       'bower_components/bootstrap-colorpicker/css/colorpicker.css',
        'bower_components/lightbox2/dist/css/lightbox.css'
     ])
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
@@ -87,7 +86,6 @@ function createJs() {
     gulp.src([
         'scripts/menues.js',
         'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
-        'bower_components/bootstrap-colorpicker/js/bootstrap-colorpicker.js',
         'bower_components/lightbox2/dist/js/lightbox.js'
     ])
         .pipe(uglify())

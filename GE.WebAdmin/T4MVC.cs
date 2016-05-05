@@ -169,8 +169,8 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/css";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string bootstrap_colorpicker_min_css = Url("bootstrap-colorpicker.min.css");
                 public static readonly string bootstrap_datepicker_min_css = Url("bootstrap-datepicker.min.css");
-                public static readonly string colorpicker_min_css = Url("colorpicker.min.css");
                 public static readonly string lightbox_min_css = Url("lightbox.min.css");
                 public static readonly string site_min_css = Url("site.min.css");
             }
@@ -223,6 +223,13 @@ namespace Links
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class less {
+            private const string URLPATH = "~/Content/less";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class sx {
             private const string URLPATH = "~/Content/sx";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -260,8 +267,8 @@ namespace Links
                 {
                     public static class Assets
                     {
+                        public const string bootstrap_colorpicker_min_css = "~/Content/dist/css/bootstrap-colorpicker.min.css";
                         public const string bootstrap_datepicker_min_css = "~/Content/dist/css/bootstrap-datepicker.min.css";
-                        public const string colorpicker_min_css = "~/Content/dist/css/colorpicker.min.css";
                         public const string lightbox_min_css = "~/Content/dist/css/lightbox.min.css";
                         public const string site_min_css = "~/Content/dist/css/site.min.css";
                     }
@@ -295,6 +302,12 @@ namespace Links
                 }
             }
             public static partial class i 
+            {
+                public static class Assets
+                {
+                }
+            }
+            public static partial class less 
             {
                 public static class Assets
                 {

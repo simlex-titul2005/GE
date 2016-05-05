@@ -64,6 +64,7 @@ namespace SX.WebCore.HtmlHelpers
                 if (settings.FunCheckBoxName == null) throw new ArgumentNullException("Не определена функция именования полей выбора");
                 if (settings.FunCheckBoxTrue == null) throw new ArgumentNullException("Не определена функция задачи полей выбора");
                 if (settings.FuncGetId == null) throw new ArgumentNullException("Не определена функция выбора идентификатора");
+                if (settings.FunCheckBoxChange == null) throw new ArgumentNullException("Не определена функция изменения полей выбора");
             }
             if(settings.EnableDelete)
             {
@@ -117,6 +118,7 @@ namespace SX.WebCore.HtmlHelpers
             public bool ShowSelectCheckbox { get; set; }
 
             public string CreateLink { get; set; }
+            public string CreateJsLink { get; set; }
 
             public bool EnableDelete { get; set; }
             public Func<TModel, string> FuncDeleteLink { get; set; }
@@ -132,6 +134,7 @@ namespace SX.WebCore.HtmlHelpers
             public Func<string> FuncDataUrl { get; set; }
             public Func<TModel, string> FunCheckBoxName { get; set; }
             public Func<TModel, bool> FunCheckBoxTrue { get; set; }
+            public Func<TModel, string> FunCheckBoxChange { get; set; }
         }
         public class SxGridViewColumn<TModel>
         {
@@ -207,7 +210,9 @@ namespace SX.WebCore.HtmlHelpers
                 var controller= values["controller"].ToString().ToLower();
                 var th = new TagBuilder("th");
                 th.AddCssClass("sx-gv-add-column");
-                var createUrl = settings.CreateLink!=null
+                var createUrl = settings.CreateJsLink!=null
+                    ? string.Format("<a href=\"javascript:void(0)\" onclick=\"{0}\"><i class=\"fa fa-plus-circle\"></i></a>", settings.CreateJsLink)
+                    : settings.CreateLink!=null
                     ? string.Format("<a href=\"{0}\"><i class=\"fa fa-plus-circle\"></i></a>", settings.CreateLink)
                     : string.Format("<a href=\"/{0}/edit\"><i class=\"fa fa-plus-circle\"></i></a>", controller);
                 th.InnerHtml += settings.EnableCreate ? createUrl : "#";
@@ -311,10 +316,10 @@ namespace SX.WebCore.HtmlHelpers
                     td.InnerHtml += string.Format("<button title=\"Удалить\" type=\"submit\" onclick=\"if(!confirm('Удалить запись?')){{return false;}}\"><i class=\"fa fa-times\"></i></button>");
                     td.InnerHtml += string.Format("</form>");
                 }
-                //select checlbox
+                //select checkbox
                 if(settings.ShowSelectCheckbox)
                 {
-                    td.InnerHtml += string.Format("<input type=\"checkbox\" name=\"{0}\" value=\"{1}\" {2} />", settings.FunCheckBoxName(model), settings.FuncGetId(model), settings.FunCheckBoxTrue(model)?"checked":null);
+                    td.InnerHtml += string.Format("<input type=\"checkbox\" name=\"{0}\" value=\"{1}\" {2} onchange=\"{3}\" />", settings.FunCheckBoxName(model), settings.FuncGetId(model), settings.FunCheckBoxTrue(model)?"checked":null, settings.FunCheckBoxChange(model));
                 }
 
                 tr.InnerHtml += td;

@@ -235,6 +235,7 @@
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\VideoLinksController.cs" />
     <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Controllers\SeoInfoController.cs" />
     <Compile Include="Controllers\SeoKeywordsController.cs" />
@@ -374,6 +375,9 @@
     <Compile Include="ValutesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="VideoLinksController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="VideosController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -464,6 +468,9 @@
     <Content Include="Views\Videos\_GridView.cshtml" />
     <Content Include="Views\Videos\Edit.cshtml" />
     <Content Include="Views\Videos\Index.cshtml" />
+    <Content Include="Views\VideoLinks\_GridView.cshtml" />
+    <Content Include="Views\Shared\_NotMaterialVideos.cshtml" />
+    <Content Include="Views\VideoLinks\_GridViewNotLinked.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

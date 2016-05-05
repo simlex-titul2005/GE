@@ -4,7 +4,14 @@
     ViewBag.Title = isNew ? "Добавить новость" : "Редактировать новость \"" + Model.Title + "\"";
     ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
     ViewBag.MaterialCategoryTitle = isNew || Model.CategoryId == null ? null : Model.Category.Title;
+    var uriFragmet = Request.QueryString.GetValues("fragment") != null ? Request.QueryString.GetValues("fragment")[0] : null;
 }
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/dist/css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
+}
+
 <h2>@ViewBag.Title</h2>
 @if (!isNew)
 {
@@ -20,13 +27,20 @@
 <br />
 
 <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
-    <li role="presentation"><a href="#tags-cloud" aria-controls="tags-cloud" role="tab" data-toggle="tab">Облако тегов</a></li>
-    <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Seo</a></li>
+    <li role="presentation" class="@(uriFragmet==null || uriFragmet=="params"? "active":null)"><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
+    @if (User.IsInRole("seo") && !isNew)
+    {
+        <li role="presentation" class="@(uriFragmet=="tags-cloud"? "active":null)"><a href="#tags-cloud" aria-controls="tags-cloud" role="tab" data-toggle="tab">Облако тегов</a></li>
+        <li role="presentation" class="@(uriFragmet=="seo"? "active":null)"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Seo</a></li>
+    }
+    @if (User.IsInRole("admin") && !isNew)
+    {
+        <li role="presentation" class="@(uriFragmet=="videos"? "active":null)"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Видео</a></li>
+    }
 </ul>
 
 <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="params">
+    <div role="tabpanel" class="tab-pane @(uriFragmet==null || uriFragmet=="params"? "active":null)" id="params">
         <h2>Основные параметры материала</h2>
         <form method="post" action="@Url.Action(MVC.News.Edit())">
             @Html.AntiForgeryToken()
@@ -36,7 +50,7 @@
             @Html.HiddenFor(x => x.OldTitleUrl)
             @if (!isNew)
             {
-                @Html.HiddenFor(x => x.UserId)
+            @Html.HiddenFor(x => x.UserId)
             }
 
             <div class="row">
@@ -52,25 +66,25 @@
                 </div>
                 @if (!isNew)
                 {
-                    <div class="col-md-3">
-                        @Html.LabelFor(x => x.DateOfPublication, new { @class = "control-label" })
-                        @Html.EditorFor(x => x.DateOfPublication, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите дату публикации" } })
-                        @Html.ValidationMessageFor(x => x.DateOfPublication)
-                    </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.DateOfPublication, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.DateOfPublication, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите дату публикации" } })
+                    @Html.ValidationMessageFor(x => x.DateOfPublication)
+                </div>
                 }
             </div>
             <br />
             @if (!isNew && !string.IsNullOrEmpty(Model.TitleUrl) && User.IsInRole("architect"))
             {
-                <div class="row">
-                    <div class="col-md-12">
-                        @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
-                        <span class="text-info"> (применяется для уникальной идентификации материала)</span>
-                        @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(x => x.TitleUrl)
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+                    <span class="text-info"> (применяется для уникальной идентификации материала)</span>
+                    @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.TitleUrl)
                 </div>
-                <br />
+            </div>
+            <br />
             }
             <div class="row">
                 <div class="col-md-3">
@@ -87,8 +101,8 @@
                     @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
                     @if (!isNew && Model.FrontPictureId.HasValue)
                     {
-                        @:&nbsp;
-                        <a href="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))">Показать</a>
+                    @:&nbsp;
+                    <a href="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))">Показать</a>
                     }
                     @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.FrontPictureId)
@@ -128,9 +142,9 @@
             </div>
         </form>
     </div>
-    <div role="tabpanel" class="tab-pane" id="tags-cloud">
-        @if (!isNew)
-        {
+    @if (User.IsInRole("seo") && !isNew)
+    {
+        <div role="tabpanel" class="tab-pane" id="tags-cloud">
             <div class="row">
                 <div class="col-md-12">
                     <div id="grid-mat-tags">
@@ -138,11 +152,8 @@
                     </div>
                 </div>
             </div>
-        }
-    </div>
-    <div role="tabpanel" class="tab-pane" id="seo">
-        @if (!isNew)
-        {
+        </div>
+        <div role="tabpanel" class="tab-pane" id="seo">
             <div class="row">
                 <div class="col-md-12">
                     <div id="grid-mat-tags">
@@ -150,12 +161,25 @@
                     </div>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
+    @if (User.IsInRole("admin") && !isNew)
+    {
+        <div role="tabpanel" id="videos" class="tab-pane @(uriFragmet=="videos"? "active":null)">
+            @Html.Partial(MVC.Shared.Views._NotMaterialVideos, Model)
+            <h3>Видео контент материала</h3>
+            <p class="text-info">Для добавления доступны только видеоролики, зарегистрированные на сайте. Для регистрации видеоролика его необходимо занести в базу данных <a href="@Url.Action(MVC.Videos.Index())" style="text-decoration:underline;" target="_blank">здесь</a></p>
+            <div id="grid-videos">
+                @Html.Action(MVC.VideoLinks.Index(mid: Model.Id, mct: Model.ModelCoreType))
+            </div>
+        </div>
+    }
 </div>
 
 @section scripts{
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
     <script type="text/javascript">
         if (CKEDITOR.instances['Html']) {
             CKEDITOR.remove(CKEDITOR.instances['Html']);
@@ -163,9 +187,24 @@
         CKEDITOR.replace('Html', { height: 400 });
 
         $(function () {
+            $('#DateOfPublication').datepicker({
+                format: 'dd.mm.yyyy',
+            });
+
             $('#matModal').on('show.bs.modal', function (e) {
                 $(this).find('.modal-title').html($('#Title').val());
                 $(this).find('.modal-body > .container-fluid').html($('#Html').val());
+            })
+
+            $('#not-mat-videos').on('show.bs.modal', function (event) {
+                var modal = $(this);
+                $.ajax({
+                    method: 'get',
+                    url: '/videolinks/indexnotlinked?mid=' + @Model.Id + '&mct=' + '@Model.ModelCoreType' + '&fm=false',
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                    }
+                });
             })
         });
     </script>

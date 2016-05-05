@@ -1,0 +1,34 @@
+﻿@model VMVideo[]
+@{
+    Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
+    var filter = ViewBag.Filter != null ? (VMVideo)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+    var mid = (int)ViewBag.MaterialId;
+    var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
+}
+
+
+@Html.SxGridView(
+            new SxExtantions.SxGridViewSettings<VMVideo>
+            {
+                UpdateTargetId = "grid-videos",
+                Data = Model,
+                Columns = new SxExtantions.SxGridViewColumn<VMVideo>[]{
+            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Title", Caption="Название видео"},
+            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Url", Caption="Адрес"},
+            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="PictureId", Caption="Картинка", Template=(v)=> {
+                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Помотреть картинку\" href=\"{0}\"><i class=\"fa fa-picture-o\"></i></a>", Url.Action(MVC.Pictures.Picture(v.PictureId)), v.Title);
+            } }
+        },
+                PagerInfo = pagerInfo,
+                Filter = filter,
+                SortDirections = sortDirections,
+                EnableEditing=false,
+                PagerLink=Url.Action(MVC.VideoLinks.Index(mid:mid, mct: mct, fm: true)),
+                CreateJsLink= "showNotMaterialVideos()",
+                EnableDelete=true,
+                FuncDeleteLink=(v)=>Url.Action(MVC.VideoLinks.DeleteMaterialVideo(mid: mid, mct: mct, vid: v.Id ))
+            },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

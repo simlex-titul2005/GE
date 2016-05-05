@@ -78,6 +78,10 @@ namespace SX.WebCore
             modelBuilder.Entity<SxStatisticUserLogin>().HasKey(x => new { x.StatisticId, x.UserId });
 
             modelBuilder.Entity<SxBannerGroupBanner>().HasKey(x => new { x.BannerId, x.BannerGroupId });
+
+            modelBuilder.Entity<SxVideoLink>().HasKey(x => new { x.MaterialId, x.ModelCoreType, x.VideoId });
+            modelBuilder.Entity<SxVideoLink>().HasRequired(x => x.Material).WithMany(x => x.VideoLinks).HasForeignKey(x => new { x.MaterialId, x.ModelCoreType }).WillCascadeOnDelete(true);
+            modelBuilder.Entity<SxVideoLink>().HasRequired(x => x.Video).WithMany().HasForeignKey(x => new { x.VideoId }).WillCascadeOnDelete(true);
         }
     }
 }

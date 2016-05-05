@@ -53,6 +53,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.StatisticsController Statistics = new GE.WebAdmin.Controllers.T4MVC_StatisticsController();
     public static GE.WebAdmin.Controllers.UsersController Users = new GE.WebAdmin.Controllers.T4MVC_UsersController();
     public static GE.WebAdmin.Controllers.ValutesController Valutes = new GE.WebAdmin.Controllers.T4MVC_ValutesController();
+    public static GE.WebAdmin.Controllers.VideoLinksController VideoLinks = new GE.WebAdmin.Controllers.T4MVC_VideoLinksController();
     public static GE.WebAdmin.Controllers.VideosController Videos = new GE.WebAdmin.Controllers.T4MVC_VideosController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
@@ -140,6 +141,19 @@ internal partial class T4MVC_System_Web_Mvc_FileResult : System.Web.Mvc.FileResu
     public string Protocol { get; set; }
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_RedirectResult : System.Web.Mvc.RedirectResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_RedirectResult(string area, string controller, string action, string protocol = null): base(" ")
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
 
 
 
@@ -169,7 +183,6 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/css";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string bootstrap_colorpicker_min_css = Url("bootstrap-colorpicker.min.css");
                 public static readonly string bootstrap_datepicker_min_css = Url("bootstrap-datepicker.min.css");
                 public static readonly string lightbox_min_css = Url("lightbox.min.css");
                 public static readonly string site_min_css = Url("site.min.css");
@@ -204,7 +217,6 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/js";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string bootstrap_colorpicker_min_js = Url("bootstrap-colorpicker.min.js");
                 public static readonly string bootstrap_datepicker_min_js = Url("bootstrap-datepicker.min.js");
                 public static readonly string ckeditor_min_js = Url("ckeditor.min.js");
                 public static readonly string lightbox_min_js = Url("lightbox.min.js");
@@ -267,7 +279,6 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string bootstrap_colorpicker_min_css = "~/Content/dist/css/bootstrap-colorpicker.min.css";
                         public const string bootstrap_datepicker_min_css = "~/Content/dist/css/bootstrap-datepicker.min.css";
                         public const string lightbox_min_css = "~/Content/dist/css/lightbox.min.css";
                         public const string site_min_css = "~/Content/dist/css/site.min.css";
@@ -289,7 +300,6 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string bootstrap_colorpicker_min_js = "~/Content/dist/js/bootstrap-colorpicker.min.js"; 
                         public const string bootstrap_datepicker_min_js = "~/Content/dist/js/bootstrap-datepicker.min.js"; 
                         public const string ckeditor_min_js = "~/Content/dist/js/ckeditor.min.js"; 
                         public const string lightbox_min_js = "~/Content/dist/js/lightbox.min.js"; 

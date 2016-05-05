@@ -76,12 +76,9 @@ namespace GE.WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public virtual RedirectToRouteResult Delete(VMMaterialTag model)
         {
-            var mid = model.MaterialId;
-            var mct = model.ModelCoreType;
+            _repo.Delete(model.Id, model.MaterialId, model.ModelCoreType);
 
-            _repo.Delete(model.Id, mid, mct);
-
-            return RedirectToAction(MVC.MaterialTags.Index(mid, mct));
+            return RedirectToAction(MVC.MaterialTags.Index(model.MaterialId, model.ModelCoreType));
         }
     }
 }

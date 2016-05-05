@@ -72,7 +72,7 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, "Url", "Couse");
+                    newModel = _repo.Update(redactModel, true, "Url", "Couse");
 
                 return RedirectToAction(MVC.BannedUrls.Index());
             }

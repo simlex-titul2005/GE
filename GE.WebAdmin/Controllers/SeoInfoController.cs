@@ -80,7 +80,7 @@ namespace GE.WebAdmin.Controllers
                     newModel = _repo.Create(redactModel);
                 }
                 else
-                    newModel = _repo.Update(redactModel, "RawUrl", "SeoTitle", "SeoDescription", "H1", "H1CssClass");
+                    newModel = _repo.Update(redactModel, true, "RawUrl", "SeoTitle", "SeoDescription", "H1", "H1CssClass");
 
                 return RedirectToAction(MVC.SeoInfo.Index());
             }
@@ -117,7 +117,7 @@ namespace GE.WebAdmin.Controllers
                 }
                 else
                 {
-                    newModel = _repo.Update(redactModel, "SeoTitle", "SeoDescription", "H1", "H1CssClass");
+                    newModel = _repo.Update(redactModel, true, "SeoTitle", "SeoDescription", "H1", "H1CssClass");
                     TempData["ModelSeoInfoRedactInfo"] = "Успешно обновлено";
                 }
 
@@ -157,13 +157,13 @@ namespace GE.WebAdmin.Controllers
                     var repoA = new RepoArticle();
                     var art = repoA.GetByKey(mid, mct);
                     art.SeoInfoId = siid;
-                    repoA.Update(art, "SeoInfoId");
+                    repoA.Update(art, true, "SeoInfoId");
                     break;
                 case ModelCoreType.News:
                     var repoN = new RepoNews();
                     var news = repoN.GetByKey(mid, mct);
                     news.SeoInfoId = siid;
-                    repoN.Update(news, "SeoInfoId");
+                    repoN.Update(news, true, "SeoInfoId");
                     break;
             }
         }

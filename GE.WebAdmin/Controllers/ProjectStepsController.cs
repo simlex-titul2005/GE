@@ -66,7 +66,7 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     _repo.Create(redactModel);
                 else
-                    _repo.Update(redactModel, "Title", "Foreword", "Html", "ParentStepId");
+                    _repo.Update(redactModel, true, "Title", "Foreword", "Html", "ParentStepId");
                 return Redirect("/projectsteps/index#pstep-" + model.Id);
             }
             else

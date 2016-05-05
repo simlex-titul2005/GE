@@ -97,7 +97,7 @@ namespace GE.WebAdmin.Controllers
                 //}
 
                 SxMaterialCategory newModel = null;
-                newModel = _repo.Update(redactModel, "Title", "FrontPictureId");
+                newModel = _repo.Update(redactModel, true, "Title", "FrontPictureId");
 
                 return RedirectToAction(MVC.MaterialCategories.Index(mct: model.ModelCoreType));
             }

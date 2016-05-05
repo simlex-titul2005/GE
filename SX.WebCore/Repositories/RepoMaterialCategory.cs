@@ -43,7 +43,7 @@ namespace SX.WebCore.Repositories
             return query;
         }
 
-        public sealed override SxMaterialCategory Update(SxMaterialCategory model, params string[] propertiesForChange)
+        public sealed override SxMaterialCategory  Update(SxMaterialCategory model, bool changeDateUpdate = true, params string[] propertiesForChange)
         {
             var oldModel = GetByKey(model.Id);
             if (oldModel == null)
@@ -52,7 +52,7 @@ namespace SX.WebCore.Repositories
             }
             else
             {
-                return base.Update(model, propertiesForChange);
+                return base.Update(model, changeDateUpdate, propertiesForChange);
             }
         }
 

@@ -52,7 +52,7 @@ namespace SX.WebCore.Abstract
             
         }
 
-        public virtual TModel Update(TModel model, params string[] propertiesForChange)
+        public virtual TModel Update(TModel model, bool changeDateUpdate=true, params string[] propertiesForChange)
         {
             var modelType = typeof(TModel);
             var keys = getEntityKeys(_dbContext, modelType, model);
@@ -68,7 +68,7 @@ namespace SX.WebCore.Abstract
                 oldProp.SetValue(oldModel, prop.Value);
             }
 
-            if (oldModel is SxDbUpdatedModel<TKey>)
+            if (changeDateUpdate && oldModel is SxDbUpdatedModel<TKey>)
                 (oldModel as SxDbUpdatedModel<TKey>).DateUpdate = DateTime.Now;
 
             _dbContext.Configuration.AutoDetectChangesEnabled = false;

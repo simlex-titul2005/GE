@@ -69,7 +69,7 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id==Guid.Empty)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, "OldUrl", "NewUrl");
+                    newModel = _repo.Update(redactModel, true, "OldUrl", "NewUrl");
                 return RedirectToAction(MVC.Redirects.Index());
             }
             else

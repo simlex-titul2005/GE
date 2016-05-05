@@ -67,9 +67,9 @@ namespace GE.WebAdmin.Controllers
                 }
                 else if (isExists && isModified)
                 {
-                    _repo.Update(new SxSiteSetting { Id = Settings.emptyGameIconPath, Value = model.IconPath }, "Value");
-                    _repo.Update(new SxSiteSetting { Id = Settings.emptyGameGoodImagePath, Value = model.GoodImagePath }, "Value");
-                    _repo.Update(new SxSiteSetting { Id = Settings.emptyGameBadImagePath, Value = model.BadImagePath }, "Value");
+                    _repo.Update(new SxSiteSetting { Id = Settings.emptyGameIconPath, Value = model.IconPath }, true, "Value");
+                    _repo.Update(new SxSiteSetting { Id = Settings.emptyGameGoodImagePath, Value = model.GoodImagePath }, true, "Value");
+                    _repo.Update(new SxSiteSetting { Id = Settings.emptyGameBadImagePath, Value = model.BadImagePath }, true, "Value");
                     TempData["EditEmptyGameMessage"] = "Настройки успешно обновлены";
                     return RedirectToAction(MVC.Settings.EditEmptyGame());
                 }
@@ -135,10 +135,10 @@ namespace GE.WebAdmin.Controllers
                 }
                 else if (isExists && isModified)
                 {
-                    _repo.Update(new SxSiteSetting { Id = Settings.siteLogoPath, Value = model.LogoPath }, "Value");
-                    _repo.Update(new SxSiteSetting { Id = Settings.siteName, Value = model.SiteName }, "Value");
-                    _repo.Update(new SxSiteSetting { Id = Settings.siteBgPath, Value = model.SiteBgPath }, "Value");
-                    _repo.Update(new SxSiteSetting { Id = Settings.siteFaveiconPath, Value = model.SiteFaveiconPath }, "Value");
+                    _repo.Update(new SxSiteSetting { Id = Settings.siteLogoPath, Value = model.LogoPath }, true, "Value");
+                    _repo.Update(new SxSiteSetting { Id = Settings.siteName, Value = model.SiteName }, true, "Value");
+                    _repo.Update(new SxSiteSetting { Id = Settings.siteBgPath, Value = model.SiteBgPath }, true, "Value");
+                    _repo.Update(new SxSiteSetting { Id = Settings.siteFaveiconPath, Value = model.SiteFaveiconPath }, true, "Value");
                     TempData["EditEmptyGameMessage"] = "Настройки успешно обновлены";
                     return RedirectToAction(MVC.Settings.EditSite());
                 }
@@ -192,7 +192,7 @@ namespace GE.WebAdmin.Controllers
                 }
                 else if (isExists && isModified)
                 {
-                    _repo.Update(new SxSiteSetting { Id = Settings.robotsFileSetting, Value = model.FileContent }, "Value");
+                    _repo.Update(new SxSiteSetting { Id = Settings.robotsFileSetting, Value = model.FileContent }, true, "Value");
                     TempData["EditEmptyGameMessage"] = "Настройки успешно обновлены";
                     return RedirectToAction(MVC.Settings.EditRobotsFile());
                 }

@@ -179,10 +179,10 @@ namespace GE.WebUI.Controllers
                         switch (_modelCoreType)
                         {
                             case Enums.ModelCoreType.Article:
-                                (_repo as RepoArticle).Update(new Article { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, "ViewsCount");
+                                (_repo as RepoArticle).Update(new Article { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, false, "ViewsCount");
                                 break;
                             case Enums.ModelCoreType.News:
-                                (_repo as RepoNews).Update(new News { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, "ViewsCount");
+                                (_repo as RepoNews).Update(new News { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, false, "ViewsCount");
                                 break;
                         }
                     });

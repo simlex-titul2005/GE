@@ -75,7 +75,7 @@ namespace GE.WebAdmin.Controllers
                 }
                 else
                 {
-                    newModel = _repo.Update(redactModel, "Title");
+                    newModel = _repo.Update(redactModel, true, "Title");
                 }
 
                 return RedirectToAction(MVC.BannerGroups.Index());

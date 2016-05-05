@@ -69,7 +69,7 @@ namespace GE.WebAdmin.Controllers
                         newModel = _repo.Create(redactModel);
                 }
                 else
-                    newModel = _repo.Update(redactModel, "SeoInfoId", "Value");
+                    newModel = _repo.Update(redactModel, true, "SeoInfoId", "Value");
             }
 
             return RedirectToAction(MVC.SeoKeywords.Index(seoInfoId: model.SeoInfoId));

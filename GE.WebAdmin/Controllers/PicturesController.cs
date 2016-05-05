@@ -87,7 +87,7 @@ namespace GE.WebAdmin.Controllers
                 }
                 else
                 {
-                    _repo.Update(redactModel, "Caption", "Description");
+                    _repo.Update(redactModel, true, "Caption", "Description");
                 }
                 return RedirectToAction(MVC.Pictures.Index());
             }

@@ -21,3 +21,36 @@ function changeLocation(element) {
     var href = $(element).find('a').attr('href');
     window.location = href;
 }
+
+function playVideo(s)
+{
+    $a = $(s);
+    $container = $a.closest('.video');
+    $wrapper = $container.children('.wrapper');
+    var guid = $container.attr("id");
+    var src = $a.data('src');
+    $frame = '<div class="embed-responsive embed-responsive-16by9"><iframe id="video-' + guid + '" class="embed-responsive-item"  src="' + src + '?autoplay=1" /></div>';
+    removeOtherVideo();
+    $wrapper.hide();
+    $container.append($frame);
+    addVideoView(guid);
+}
+
+function addVideoView(guid)
+{
+    $.ajax({
+        method: 'post',
+        url: '/videos/addview',
+        data: { videoId: guid },
+        success:function()
+        {
+
+        }
+    });
+}
+
+function removeOtherVideo()
+{
+    $('.video .embed-responsive').remove();
+    $('.video .wrapper').show();
+}

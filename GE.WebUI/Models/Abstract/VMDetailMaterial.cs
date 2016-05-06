@@ -38,5 +38,6 @@ namespace GE.WebUI.Models.Abstract
             }
         }
         public VMSeoInfo SeoInfo { get; set; }
+        public SxVideo[] Videos { get; set; }
     }
 }

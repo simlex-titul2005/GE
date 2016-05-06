@@ -30,6 +30,10 @@ UPDATE AspNetUsers
 SET    AvatarId = NULL
 WHERE  AvatarId = @picture_id
 
+UPDATE D_VIDEO
+SET    PictureId = NULL
+WHERE  PictureId = @picture_id
+
 DELETE FROM D_PICTURE WHERE Id=@picture_id
 
 COMMIT TRANSACTION";

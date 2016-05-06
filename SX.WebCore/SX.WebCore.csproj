@@ -146,6 +146,7 @@
     <Compile Include="PictureHandler.cs" />
     <Compile Include="Providers\QueryProvider.cs" />
     <Compile Include="Repositories\RepoBannedUrl.cs" />
+    <Compile Include="Repositories\RepoVideo.cs" />
     <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoManual.cs" />
     <Compile Include="Repositories\RepoMaterialCategory.cs" />

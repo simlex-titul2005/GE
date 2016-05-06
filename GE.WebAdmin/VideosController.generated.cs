@@ -201,10 +201,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditSeoInfo model);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditVideo model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(GE.WebAdmin.Models.VMEditSeoInfo model)
+        public override System.Web.Mvc.ActionResult Delete(GE.WebAdmin.Models.VMEditVideo model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

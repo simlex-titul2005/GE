@@ -5,6 +5,7 @@ using Dapper;
 using GE.WebUI.Models.Abstract;
 using static SX.WebCore.Enums;
 using System;
+using SX.WebCore;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -212,9 +213,15 @@ FROM   D_ARTICLE         AS da
             ON  anu.Id = dm.UserId
 WHERE  dm.TitleUrl = @title_url";
 
+            var queryForVideo = @"SELECT dv.* FROM D_VIDEO_LINK AS dvl
+JOIN D_VIDEO AS dv ON dv.Id = dvl.VideoId
+JOIN D_ARTICLE AS da ON da.ModelCoreType = dvl.ModelCoreType AND da.Id=@mid";
+
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                return conn.Query<VMDetailArticle>(query, new { title_url = titleUrl }).FirstOrDefault();
+                var data=conn.Query<VMDetailArticle>(query, new { title_url = titleUrl }).SingleOrDefault();
+                data.Videos = conn.Query<SxVideo>(queryForVideo, new { mid = data.Id }).ToArray();
+                return data;
             }
         }
 

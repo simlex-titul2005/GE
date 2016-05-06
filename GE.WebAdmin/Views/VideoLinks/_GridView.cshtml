@@ -15,6 +15,7 @@
                 UpdateTargetId = "grid-videos",
                 Data = Model,
                 Columns = new SxExtantions.SxGridViewColumn<VMVideo>[]{
+            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Id", Caption="Идентификатор"},
             new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Title", Caption="Название видео"},
             new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Url", Caption="Адрес"},
             new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="PictureId", Caption="Картинка", Template=(v)=> {

@@ -15,5 +15,8 @@ namespace GE.WebAdmin.Models
 
         [Display(Name ="Изображение"), UIHint("EditImage")]
         public Guid? PictureId { get; set; }
+
+        [MaxLength(255), DataType(DataType.Url), Display(Name = "Источник видео")]
+        public string SourceUrl { get; set; }
     }
 }

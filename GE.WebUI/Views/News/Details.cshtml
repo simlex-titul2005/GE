@@ -23,16 +23,16 @@
         @*@Html.Partial(MVC.Shared.Views._SocNetButtons)*@
         @Html.Partial(MVC.Shared.Views._Share42, Model)
     </div>
-    
+
 
     @Html.Partial(MVC.Shared.Views._MaterialInfo, Model)
 
     <div id="by-date-mat">
         @Html.Action(MVC.News.ByDateMaterial(mct: Model.ModelCoreType, date: Model.DateOfPublication))
     </div>
-    
+
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
-    @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount=9 })
+    @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
 
     @*comments*@
     <div class="comments">
@@ -51,7 +51,7 @@
 
 
 @section scripts{
-    <script type="text/javascript" src="~/share42/share42.js"></script> 
+    <script type="text/javascript" src="~/share42/share42.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
 }

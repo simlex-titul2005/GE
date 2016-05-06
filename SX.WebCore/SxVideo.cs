@@ -2,7 +2,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static SX.WebCore.Enums;
 
 namespace SX.WebCore
 {
@@ -16,6 +15,11 @@ namespace SX.WebCore
         public string Url { get; set; }
 
         public virtual SxPicture Picture { get; set; }
-        public Guid PictureId { get; set; }
+        public Guid? PictureId { get; set; }
+
+        [MaxLength(255)]
+        public string SourceUrl { get; set; }
+
+        public int ViewsCount { get; set; }
     }
 }

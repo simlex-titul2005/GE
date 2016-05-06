@@ -57,7 +57,8 @@ function createCss() {
         'content/less/share42init.less',
         'content/less/pop-mat.less',
         'content/less/banners.less',
-        'content/less/identity-page.less'
+        'content/less/identity-page.less',
+        'content/less/video.less'
     ])
         .pipe(less())
         .pipe(concat('less-files.less'));

@@ -60,6 +60,27 @@ namespace SX.WebCore
             return inputHtml;
         }
 
+        public static string ReplaceVideo(string inputHtml, SxVideo[] videos, Func<SxVideo, string> videoImgSrc, Func<SxVideo, string> videoTemplate=null)
+        {
+            var reVideo = new Regex(@"\[VIDEO\](.*?)\[\/VIDEO\]");
+            var matchesVideo = Regex.Matches(inputHtml, reVideo.ToString());
+            foreach (Match matchVideo in matchesVideo)
+            {
+                var id = Guid.Parse(matchVideo.Groups[1].Value);
+                var video = videos.SingleOrDefault(x => x.Id == id);
+                if(video != null)
+                {
+                    inputHtml = inputHtml.Replace(string.Format("[VIDEO]{0}[/VIDEO]", id), videoTemplate != null ? videoTemplate(video) : getVideoTemplate(video, videoImgSrc));
+                }
+                else
+                {
+                    inputHtml = inputHtml.Replace(string.Format("[VIDEO]{0}[/VIDEO]", id), null);
+                }
+            }
+
+            return inputHtml;
+        }
+
         private static string getBannerTemplate(SxBanner banner, Func<SxBanner, string> bannerPictureUrl)
         {
             var figure = new TagBuilder("figure");
@@ -135,6 +156,75 @@ namespace SX.WebCore
             }
 
             //div.InnerHtml += ol;
+            div.InnerHtml += wrapper;
+
+            return div.ToString();
+        }
+
+        private static string getVideoTemplate(SxVideo video, Func<SxVideo, string> videoImgSrc)
+        {
+            var div = new TagBuilder("div");
+            div.AddCssClass("video");
+            div.MergeAttribute("id", video.Id.ToString().ToLowerInvariant());
+
+            var wrapper = new TagBuilder("div");
+            wrapper.AddCssClass("wrapper");
+
+            var figure = new TagBuilder("figure");
+
+            var buttonWrapper = new TagBuilder("div");
+            buttonWrapper.AddCssClass("button-wrapper");
+
+            var buttonContainer = new TagBuilder("div");
+            buttonContainer.AddCssClass("button-container");
+
+            var buttonCell = new TagBuilder("div");
+            buttonCell.AddCssClass("button-cell");
+
+            var a = new TagBuilder("a");
+            a.MergeAttribute("href", "javascript:void(0)");
+            a.MergeAttribute("data-src", video.Url);
+            a.MergeAttribute("onclick", "playVideo(this)");
+            a.AddCssClass("button");
+
+            var i = new TagBuilder("i");
+            i.AddCssClass("fa fa-youtube-play");
+            a.InnerHtml += i;
+
+            buttonCell.InnerHtml += a;
+            buttonContainer.InnerHtml += buttonCell;
+            buttonWrapper.InnerHtml += buttonContainer;
+
+            figure.InnerHtml += buttonWrapper;
+
+            var img = new TagBuilder("img");
+            img.MergeAttribute("alt", video.Title);
+            img.MergeAttribute("src", videoImgSrc(video));
+            figure.InnerHtml += img;
+
+            var figcaption = new TagBuilder("figcaption");
+            figcaption.InnerHtml += video.Title;
+            if(video.ViewsCount!=0)
+            {
+                var count = new TagBuilder("div");
+                count.AddCssClass("count");
+                count.InnerHtml += "Просмотров: <b>" + video.ViewsCount+"</b>";
+                figcaption.InnerHtml += count;
+            }
+            if(video.SourceUrl!=null)
+            {
+                var source = new TagBuilder("div");
+                source.AddCssClass("source");
+                var aSource = new TagBuilder("a");
+                aSource.MergeAttribute("href", video.SourceUrl);
+                aSource.InnerHtml += video.SourceUrl;
+                source.InnerHtml += "Источник: " + aSource;
+                figcaption.InnerHtml += source;
+            }
+            figure.InnerHtml += figcaption;
+
+            wrapper.InnerHtml += figure;
+
             div.InnerHtml += wrapper;
 
             return div.ToString();

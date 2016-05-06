@@ -176,6 +176,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ValutesController.cs" />
+    <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -403,6 +404,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\dist\i\temp\" />
+    <Folder Include="Views\Videos\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">

@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
-using Microsoft.AspNet.Identity.EntityFramework;
 using SX.WebCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace GE.WebAdmin
 {
@@ -22,6 +18,11 @@ namespace GE.WebAdmin
                     cfg.CreateMap<Article, VMArticle>();
                     cfg.CreateMap<Article, VMEditArticle>();
                     cfg.CreateMap<VMEditArticle, Article>();
+
+                    //aphorism
+                    cfg.CreateMap<Aphorism, VMAphorism>();
+                    cfg.CreateMap<Aphorism, VMEditAphorism>();
+                    cfg.CreateMap<VMEditAphorism, Aphorism>();
 
                     //banned url
                     cfg.CreateMap<SxBannedUrl, VMBannedUrl>();

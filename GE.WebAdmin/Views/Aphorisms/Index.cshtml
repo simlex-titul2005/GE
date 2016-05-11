@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Афоризмы";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div class="text-left">
+    <a href="@Url.Action(MVC.Aphorisms.Edit())" class="btn btn-sm btn-default">Добавить афоризм</a>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        @Html.Action(MVC.Aphorisms.Categories())
+    </div>
+    <div class="col-md-9"></div>
+</div>
+

@@ -311,6 +311,12 @@
                         <li>
                             <a href="#"><i class="fa fa-archive fa-fw"></i> Материалы<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                                @if (User.IsInRole("admin"))
+                                {
+                                    <li>
+                                        <a href="@Url.Action(MVC.Aphorisms.Index())">Афоризмы</a>
+                                    </li>
+                                }
                                 <li>
                                     <a href="#"><i class="fa fa-book"></i> Статьи <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">

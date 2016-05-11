@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 
 namespace GE.WebCoreExtantions
 {
@@ -8,6 +7,8 @@ namespace GE.WebCoreExtantions
         public DbContext() : base("DbContext") { }
 
         public new DbSet<Article> Articles { get; set; }
+
+        public DbSet<Aphorism> Aphorisms { get; set; }
 
         public DbSet<Contest> Contests { get; set; }
 

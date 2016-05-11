@@ -28,6 +28,7 @@ using T4MVC;
 public static partial class MVC
 {
     public static GE.WebAdmin.Controllers.AccountController Account = new GE.WebAdmin.Controllers.T4MVC_AccountController();
+    public static GE.WebAdmin.Controllers.AphorismsController Aphorisms = new GE.WebAdmin.Controllers.T4MVC_AphorismsController();
     public static GE.WebAdmin.Controllers.ArticlesController Articles = new GE.WebAdmin.Controllers.T4MVC_ArticlesController();
     public static GE.WebAdmin.Controllers.BannedUrlsController BannedUrls = new GE.WebAdmin.Controllers.T4MVC_BannedUrlsController();
     public static GE.WebAdmin.Controllers.BannerGroupsController BannerGroups = new GE.WebAdmin.Controllers.T4MVC_BannerGroupsController();
@@ -88,9 +89,9 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_System_Web_Mvc_ViewResult : System.Web.Mvc.ViewResult, IT4MVCActionResult
+internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
 {
-    public T4MVC_System_Web_Mvc_ViewResult(string area, string controller, string action, string protocol = null): base()
+    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
     {
         this.InitMVCT4Result(area, controller, action, protocol);
     }
@@ -101,9 +102,9 @@ internal partial class T4MVC_System_Web_Mvc_ViewResult : System.Web.Mvc.ViewResu
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
+internal partial class T4MVC_System_Web_Mvc_ViewResult : System.Web.Mvc.ViewResult, IT4MVCActionResult
 {
-    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
+    public T4MVC_System_Web_Mvc_ViewResult(string area, string controller, string action, string protocol = null): base()
     {
         this.InitMVCT4Result(area, controller, action, protocol);
     }

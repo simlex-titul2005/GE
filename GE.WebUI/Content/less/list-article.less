@@ -2,14 +2,20 @@
 @import (reference) "sizes.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
-.list-article-container .sx-list.t-mode > .row > div{
+.list-article {
+    display: inline-table;
+    height: 100%;
+    background-color: @color-white;
+    width:100%;
+    padding-bottom:@def-pad*4;
+
     @media (max-width: @screen-xs-max) {
-       
+        margin-top: @def-pad*2;
+        padding-bottom:0;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-        width:50%;
-        float:left;
+        padding-bottom:0;
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
@@ -19,24 +25,15 @@
     }
 }
 
-.list-article {
-    display: inline-table;
-    height: 100%;
-    background-color: @color-white;
-    width:100%;
+.list-article .video figure{
+    height:150px;
+    background-position:center center;
+    background-size:cover;
+}
 
-    @media (max-width: @screen-xs-max) {
-        margin-top: @def-pad*2;
-    }
-
-    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-    }
-
-    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-    }
-
-    @media (min-width: @screen-lg-min) {
-    }
+.list-article .video figure figcaption{
+    text-align:left;
+    padding:5px;
 }
 
 .list-article > .content {
@@ -77,13 +74,19 @@
 }
 
 .list-article .info {
-    position: relative;
-    margin-top: @def-pad*2;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+
     @media (max-width: @screen-xs-max) {
         margin-top: @def-pad;
+        position:relative;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        position:relative;
+        display:none;
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
@@ -116,12 +119,15 @@
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        max-width:107px;
     }
 
     @media (min-width: @screen-lg-min) {
+        max-width:140px;
     }
 }
 
@@ -180,6 +186,22 @@
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article-container .sx-list.t-mode > .row > div{
+    @media (max-width: @screen-xs-max) {
+       
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {

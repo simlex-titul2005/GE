@@ -60,7 +60,7 @@
         <div class="container">
             @if (ViewBag.H1 != null)
             {
-                <h1 @(ViewBag.H1CssClass != null ? "class=" + ViewBag.H1CssClass : null)>@ViewBag.H1</h1>
+                <h1 @(ViewBag.H1CssClass != null ? "class=" + ViewBag.H1CssClass : "class=header")>@ViewBag.H1</h1>
             }
             @RenderBody()
         </div>

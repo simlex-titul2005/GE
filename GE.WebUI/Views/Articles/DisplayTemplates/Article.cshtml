@@ -12,21 +12,43 @@
     var month = Model.DateCreate.Month.ToString("00");
     var day = Model.DateCreate.Day.ToString("00");
     var titleUrl = Model.TitleUrl;
-    var picureId = Model.FrontPictureId!=null ? Model.FrontPictureId:(Model.Game != null && Model.Game.BadPictureId.HasValue) ? Model.Game.BadPictureId : null;
+    var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null && Model.Game.BadPictureId.HasValue) ? Model.Game.BadPictureId : null;
 }
 
 <figure class="mat-f-p">
     @if (picureId.HasValue)
     {
-        <img alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)picureId, width: 570))" />
+        <img alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)picureId, width: 300))" />
     }
     else
     {
         <img alt="@Model.Title" src="~/Content/dist/i/article-empty.png" />
     }
+    <i class="text-muted small hidden-sm">Инфорграфика по статистике для статьи в разработке</i><br />
 </figure>
+
 <div class="content">
-    <i class="text-muted small">Инфорграфика по статистике для статьи в разработке</i><br />
+    @if (Model.VideoLinks.Count > 0)
+    {
+        var video = Model.VideoLinks.First().Video;
+        <div class="video" id="@video.Id">
+            <div class="wrapper">
+                <figure style="background-image:url(@(Url.Action(MVC.Pictures.Picture((Guid)video.PictureId, height:150))))">
+                    <div class="button-wrapper">
+                        <div class="button-container">
+                            <div class="button-cell">
+                                <a class="button" data-src="@video.Url" href="javascript:void(0)" onclick="playVideo(this)"><i class="fa fa-youtube-play"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <figcaption>
+                        Оценка рынка под Oculus Rift<div class="count">Просмотров: <b>@video.ViewsCount</b></div>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    }
+
     <a class="link" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))" title="@Model.Title">@Model.Title</a>
     <p class="foreword">
         @Model.Foreword
@@ -43,14 +65,10 @@
             <i>Игра: <strong>@Model.Game.Title</strong></i>
         </div>
     }
-    <div class="info">
-        <div class="row">
-            <div class="col-md-6">
-                @Html.DisplayFor(x => info)
-            </div>
-            <div class="col-md-6">
-                <a class="btn btn-default btn-transparent dark-blue" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))">Подробнее</a>
-            </div>
-        </div>
+</div>
+<div class="info">
+    <div class="row">
+        <div class="col-md-6">@Html.DisplayFor(x => info)</div>
+        <div class="col-md-6"><a class="btn btn-default btn-transparent dark-blue" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))">Подробнее</a></div>
     </div>
 </div>

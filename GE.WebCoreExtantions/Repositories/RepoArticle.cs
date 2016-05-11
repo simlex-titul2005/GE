@@ -39,7 +39,16 @@ ORDER BY dm.DateCreate DESC";
            0,
            400
        ))                 AS Foreword",
-                "dm.DateCreate", "dm.DateOfPublication", "dm.ViewsCount", "dm.CommentsCount", "dm.UserId", "anu.NikName", "da.GameId", "dg.Title", "dg.TitleUrl", "dg.BadPictureId"
+                "dm.DateCreate",
+                "dm.DateOfPublication",
+                "dm.ViewsCount",
+                "(SELECT COUNT(1) FROM D_COMMENT dc WHERE dc.MaterialId=dm.Id AND dc.ModelCoreType=dm.ModelCoreType ) AS CommentsCount",
+                "dm.UserId",
+                "anu.NikName",
+                "da.GameId",
+                "dg.Title",
+                "dg.TitleUrl",
+                "dg.BadPictureId",
             });
             query +=  @" FROM D_ARTICLE AS da
        JOIN DV_MATERIAL  AS dm
@@ -48,6 +57,14 @@ ORDER BY dm.DateCreate DESC";
        LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = da.GameId";
+
+            var queryForVideos = @"SELECT TOP(1) * 
+FROM   D_VIDEO_LINK  AS dvl
+       JOIN D_VIDEO  AS dv
+            ON  dv.Id = dvl.VideoId
+WHERE  dvl.MaterialId = @mid
+       AND dvl.ModelCoreType = @mct
+ORDER BY dv.DateCreate DESC";
 
             object param = null;
             query += getArticleWhereString(f, out param);
@@ -63,6 +80,18 @@ ORDER BY dm.DateCreate DESC";
                     da.User = anu;
                     return da;
                 }, param: param, splitOn:"UserId, GameId");
+
+                if (data.Any())
+                {
+                    foreach (var item in data)
+                    {
+                        item.VideoLinks = conn.Query<SxVideoLink, SxVideo, SxVideoLink>(queryForVideos, (vl, v)=> {
+                            vl.Video = v;
+                            return vl;
+                        }, new { mid = item.Id, mct = SX.WebCore.Enums.ModelCoreType.Article }).ToArray();
+                    }
+                }
+
 
                 return data.AsQueryable();
             }

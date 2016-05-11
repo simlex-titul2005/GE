@@ -95,5 +95,12 @@ namespace GE.WebAdmin.Controllers
             (_repo as RepoProjectStep<DbContext>).ReplaceDone(id, done);
             return Redirect("/projectsteps/index#pstep-" + id);
         }
+
+        [HttpPost]
+        public string FillHtml(int id)
+        {
+            var html = _repo.GetByKey(id).Html;
+            return html;
+        }
     }
 }

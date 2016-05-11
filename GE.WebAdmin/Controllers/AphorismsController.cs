@@ -46,7 +46,7 @@ namespace GE.WebAdmin.Controllers
                     _repo.Create(Mapper.Map<VMEditAphorism, Aphorism>(model));
                 else
                     _repo.Update(Mapper.Map<VMEditAphorism, Aphorism>(model), true, "Category", "Author", "Html");
-                RedirectToAction(MVC.Aphorisms.Index());
+                return RedirectToAction(MVC.Aphorisms.Index());
             }
             return View(model);
         }

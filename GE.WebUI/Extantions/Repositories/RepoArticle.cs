@@ -29,6 +29,7 @@ FROM   D_ARTICLE              AS da
        JOIN DV_MATERIAL       AS dm
             ON  dm.Id = da.Id
             AND dm.ModelCoreType = da.ModelCoreType
+            AND (dm.Show = 1 AND dm.DateOfPublication <= GETDATE())
        LEFT JOIN AspNetUsers  AS anu
             ON  anu.Id = dm.UserId
        LEFT JOIN D_GAME       AS dg
@@ -220,7 +221,8 @@ JOIN D_ARTICLE AS da ON da.ModelCoreType = dvl.ModelCoreType AND da.Id=@mid";
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 var data=conn.Query<VMDetailArticle>(query, new { title_url = titleUrl }).SingleOrDefault();
-                data.Videos = conn.Query<SxVideo>(queryForVideo, new { mid = data.Id }).ToArray();
+                if(data!=null)
+                    data.Videos = conn.Query<SxVideo>(queryForVideo, new { mid = data.Id }).ToArray();
                 return data;
             }
         }

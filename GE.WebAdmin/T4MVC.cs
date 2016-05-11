@@ -249,13 +249,6 @@ namespace Links
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class less {
-            private const string URLPATH = "~/Content/less";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        }
-    
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class sx {
             private const string URLPATH = "~/Content/sx";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -326,12 +319,6 @@ namespace Links
                 }
             }
             public static partial class i 
-            {
-                public static class Assets
-                {
-                }
-            }
-            public static partial class less 
             {
                 public static class Assets
                 {

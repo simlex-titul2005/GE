@@ -61,6 +61,25 @@
                 }
             });
         }
+
+        function fillProjectStepHtml(s)
+        {
+            $a = $(s);
+            var id = $a.data("id");
+            $.ajax({
+                method: 'post',
+                url: '/projectsteps/fillhtml',
+                data: { id: id },
+                beforeSend: function () {
+                    $('.ps-tree .html').remove();
+                },
+                success:function(data)
+                {
+                    var html=$('<div class="html"></div>').append(data);
+                    $a.closest('div').append(html);
+                }
+            });
+        }
     </script>
 }
 

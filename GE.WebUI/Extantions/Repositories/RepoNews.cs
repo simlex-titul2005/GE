@@ -311,7 +311,8 @@ JOIN D_NEWS AS dn ON dn.ModelCoreType = dvl.ModelCoreType AND dn.Id=@mid";
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
                 var data=connection.Query<VMDetailNews>(query, new { title_url = titleUrl }).SingleOrDefault();
-                data.Videos = connection.Query<SxVideo>(queryForVideo, new { mid = data.Id }).ToArray();
+                if(data!=null)
+                    data.Videos = connection.Query<SxVideo>(queryForVideo, new { mid = data.Id }).ToArray();
                 return data;
             }
         }

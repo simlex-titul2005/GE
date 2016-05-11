@@ -14,5 +14,8 @@ namespace GE.WebAdmin.Models
         public string Title { get; set; }
         public string Foreword { get; set; }
         public DateTime DateCreate { get; set; }
+        public DateTime DateUpdate{ get; set; }
+        public int Order { get; set; }
+        public bool IsDone { get; set; }
     }
 }

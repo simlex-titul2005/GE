@@ -21,5 +21,9 @@ namespace SX.WebCore
 
         public virtual SxProjectStep ParentStep { get; set; }
         public int? ParentStepId { get; set; }
+
+        public int Order { get; set; }
+
+        public bool IsDone { get; set; }
     }
 }

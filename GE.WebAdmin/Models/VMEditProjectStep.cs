@@ -16,5 +16,8 @@ namespace GE.WebAdmin.Models
 
         [Required, AllowHtml, Display(Name ="Содержание"), DataType(DataType.MultilineText)]
         public string Html { get; set; }
+
+        [Display(Name = "Порядок")]
+        public int Order { get; set; }
     }
 }

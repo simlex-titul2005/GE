@@ -62,6 +62,18 @@ namespace GE.WebAdmin.Controllers
         {
             return new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.EmptyResult ReplaceOrder()
+        {
+            return new T4MVC_System_Web_Mvc_EmptyResult(Area, Name, ActionNames.ReplaceOrder);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.RedirectResult ReplaceDone()
+        {
+            return new T4MVC_System_Web_Mvc_RedirectResult(Area, Name, ActionNames.ReplaceDone);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ProjectStepsController Actions { get { return MVC.ProjectSteps; } }
@@ -81,6 +93,8 @@ namespace GE.WebAdmin.Controllers
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
+            public readonly string ReplaceOrder = "ReplaceOrder";
+            public readonly string ReplaceDone = "ReplaceDone";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -89,6 +103,8 @@ namespace GE.WebAdmin.Controllers
             public const string Index = "Index";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
+            public const string ReplaceOrder = "ReplaceOrder";
+            public const string ReplaceDone = "ReplaceDone";
         }
 
 
@@ -109,6 +125,25 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_Delete
         {
             public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_ReplaceOrder s_params_ReplaceOrder = new ActionParamsClass_ReplaceOrder();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ReplaceOrder ReplaceOrderParams { get { return s_params_ReplaceOrder; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ReplaceOrder
+        {
+            public readonly string id = "id";
+            public readonly string dir = "dir";
+            public readonly string osid = "osid";
+        }
+        static readonly ActionParamsClass_ReplaceDone s_params_ReplaceDone = new ActionParamsClass_ReplaceDone();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ReplaceDone ReplaceDoneParams { get { return s_params_ReplaceDone; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ReplaceDone
+        {
+            public readonly string id = "id";
+            public readonly string done = "done";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -185,6 +220,33 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             DeleteOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ReplaceOrderOverride(T4MVC_System_Web_Mvc_EmptyResult callInfo, int id, bool dir, int? osid);
+
+        [NonAction]
+        public override System.Web.Mvc.EmptyResult ReplaceOrder(int id, bool dir, int? osid)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_EmptyResult(Area, Name, ActionNames.ReplaceOrder);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "dir", dir);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "osid", osid);
+            ReplaceOrderOverride(callInfo, id, dir, osid);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ReplaceDoneOverride(T4MVC_System_Web_Mvc_RedirectResult callInfo, int id, bool done);
+
+        [NonAction]
+        public override System.Web.Mvc.RedirectResult ReplaceDone(int id, bool done)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_RedirectResult(Area, Name, ActionNames.ReplaceDone);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "done", done);
+            ReplaceDoneOverride(callInfo, id, done);
             return callInfo;
         }
 

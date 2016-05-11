@@ -80,5 +80,20 @@ namespace GE.WebAdmin.Controllers
             _repo.Delete(model.Id);
             return RedirectToAction(MVC.ProjectSteps.Index());
         }
+
+        [HttpPost]
+        public virtual EmptyResult ReplaceOrder(int id, bool dir, int? osid=null)
+        {
+            (_repo as RepoProjectStep<DbContext>).ReplaceOrder(id, dir, osid);
+            return null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual RedirectResult ReplaceDone(int id, bool done)
+        {
+            (_repo as RepoProjectStep<DbContext>).ReplaceDone(id, done);
+            return Redirect("/projectsteps/index#pstep-" + id);
+        }
     }
 }

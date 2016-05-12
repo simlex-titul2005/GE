@@ -80,6 +80,12 @@ namespace GE.WebAdmin.Controllers
         {
             return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindTable);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult TreeViewMenu()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.TreeViewMenu);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public MaterialCategoriesController Actions { get { return MVC.MaterialCategories; } }
@@ -100,6 +106,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
             public readonly string FindTable = "FindTable";
+            public readonly string TreeViewMenu = "TreeViewMenu";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -109,6 +116,7 @@ namespace GE.WebAdmin.Controllers
             public const string Edit = "Edit";
             public const string Delete = "Delete";
             public const string FindTable = "FindTable";
+            public const string TreeViewMenu = "TreeViewMenu";
         }
 
 
@@ -147,6 +155,15 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string mct = "mct";
         }
+        static readonly ActionParamsClass_TreeViewMenu s_params_TreeViewMenu = new ActionParamsClass_TreeViewMenu();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_TreeViewMenu TreeViewMenuParams { get { return s_params_TreeViewMenu; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_TreeViewMenu
+        {
+            public readonly string mct = "mct";
+            public readonly string cur = "cur";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -159,11 +176,13 @@ namespace GE.WebAdmin.Controllers
             {
                 public readonly string _TreeView = "_TreeView";
                 public readonly string _TreeViewEditable = "_TreeViewEditable";
+                public readonly string _TreeViewMenu = "_TreeViewMenu";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
             public readonly string _TreeView = "~/Views/MaterialCategories/_TreeView.cshtml";
             public readonly string _TreeViewEditable = "~/Views/MaterialCategories/_TreeViewEditable.cshtml";
+            public readonly string _TreeViewMenu = "~/Views/MaterialCategories/_TreeViewMenu.cshtml";
             public readonly string Edit = "~/Views/MaterialCategories/Edit.cshtml";
             public readonly string Index = "~/Views/MaterialCategories/Index.cshtml";
         }
@@ -233,6 +252,19 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindTable);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
             FindTableOverride(callInfo, mct);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void TreeViewMenuOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, SX.WebCore.Enums.ModelCoreType mct, string cur);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult TreeViewMenu(SX.WebCore.Enums.ModelCoreType mct, string cur)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.TreeViewMenu);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cur", cur);
+            TreeViewMenuOverride(callInfo, mct, cur);
             return callInfo;
         }
 

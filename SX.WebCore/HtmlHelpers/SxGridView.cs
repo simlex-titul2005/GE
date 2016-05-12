@@ -114,6 +114,7 @@ namespace SX.WebCore.HtmlHelpers
             public bool EnableCreate { get; set; }
 
             public bool EnableEditing { get; set; }
+            public Func<TModel, string> FuncEditLink { get; set; }
 
             public bool ShowSelectCheckbox { get; set; }
 
@@ -298,7 +299,7 @@ namespace SX.WebCore.HtmlHelpers
                     var a = new TagBuilder("a");
                     var type = typeof(TModel);
 
-                    a.MergeAttribute("href", string.Format("/{0}/edit{1}", controller, qs));
+                    a.MergeAttribute("href", settings.FuncEditLink!=null? settings.FuncEditLink(model) : string.Format("/{0}/edit{1}", controller, qs));
                     a.InnerHtml += "<i class=\"fa fa-pencil\"></i>";
 
                     td.InnerHtml += a;

@@ -43,17 +43,42 @@ namespace SX.WebCore.Repositories
             return query;
         }
 
-        public sealed override SxMaterialCategory  Update(SxMaterialCategory model, bool changeDateUpdate = true, params string[] propertiesForChange)
+        public sealed override SxMaterialCategory Update(SxMaterialCategory model, object[] additionalData, bool changeDateUpdate = true, params string[] propertiesForChange)
         {
-            var oldModel = GetByKey(model.Id);
-            if (oldModel == null)
+            var exist = GetByKey(model.Id);
+            var isRedactedId = exist == null;
+            if(isRedactedId)
             {
-                return Create(model);
+                var oldId = additionalData[0];
+                var query = @"BEGIN TRANSACTION
+UPDATE DV_MATERIAL
+SET CategoryId = @id
+WHERE CategoryId = @oldid
+
+UPDATE D_MATERIAL_CATEGORY
+SET Id = @id,
+       Title = @title,
+       ModelCoreType = @mct,
+       FrontPictureId = @fpid
+WHERE Id = @oldid
+
+COMMIT TRANSACTION";
+
+                using (var conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Execute(query, new {
+                        id=model.Id,
+                        oldid= oldId,
+                        title=model.Title,
+                        mct=model.ModelCoreType,
+                        fpid=model.FrontPictureId
+                    });
+                }
+
+                return GetByKey(model.Id);
             }
             else
-            {
                 return base.Update(model, changeDateUpdate, propertiesForChange);
-            }
         }
 
         public sealed override void Delete(params object[] id)

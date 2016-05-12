@@ -1,0 +1,28 @@
+﻿@model VMAphorism[]
+@{
+    Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
+    var filter = ViewBag.Filter != null ? (VMAphorism)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+    string categoryId = ViewBag.CategoryId;
+}
+
+@if (categoryId != null)
+{
+@Html.SxGridView(
+                new SxExtantions.SxGridViewSettings<VMAphorism>
+                {
+                    UpdateTargetId = "grid-aphorisms",
+                    Data = Model,
+                    Columns = new SxExtantions.SxGridViewColumn<VMAphorism>[]{
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"}
+            },
+                    PagerInfo = pagerInfo,
+                    Filter = filter,
+                    SortDirections = sortDirections,
+                    CreateLink = Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism)),
+                    FuncEditLink=x=>Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism, id: x.Id))
+                },
+            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+        )
+}

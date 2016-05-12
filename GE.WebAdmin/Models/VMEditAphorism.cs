@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
 namespace GE.WebAdmin.Models
 {
@@ -7,13 +10,18 @@ namespace GE.WebAdmin.Models
     {
         public int Id { get; set; }
 
-        [Display(Name="Автор"), MaxLength(100)]
-        public string Author { get; set; }
+        [Display(Name ="Заголовок"), Required, MaxLength(150)]
+        public string Title { get; set; }
 
-        [Display(Name = "Контент"), MaxLength(600), DataType(DataType.MultilineText), AllowHtml, Required]
+        [Display(Name = "Содержание"), Required, DataType(DataType.MultilineText)]
         public string Html { get; set; }
 
-        [MaxLength, Display(Name = "Категория"), Required]
-        public string Category { get; set; }
+        public VMMaterialCategory Category { get; set; }
+
+        [Required]
+        public string CategoryId { get; set; }
+
+        [Required, MaxLength(255)]
+        public string TitleUrl { get; set; }
     }
 }

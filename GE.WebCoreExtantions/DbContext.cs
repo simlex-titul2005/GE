@@ -8,7 +8,7 @@ namespace GE.WebCoreExtantions
 
         public new DbSet<Article> Articles { get; set; }
 
-        public DbSet<Aphorism> Aphorisms { get; set; }
+        //public DbSet<Aphorism> Aphorisms { get; set; }
 
         public DbSet<Contest> Contests { get; set; }
 

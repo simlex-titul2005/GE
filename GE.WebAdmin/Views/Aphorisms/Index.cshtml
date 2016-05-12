@@ -1,18 +1,23 @@
-﻿
+﻿@model VMAphorism[]
 @{
     ViewBag.Title = "Афоризмы";
 }
 
 <h2>@ViewBag.Title</h2>
 <br />
-<div class="text-left">
-    <a href="@Url.Action(MVC.Aphorisms.Edit())" class="btn btn-sm btn-default">Добавить афоризм</a>
-</div>
-<br />
-<div class="row">
-    <div class="col-md-3">
-        @Html.Action(MVC.Aphorisms.Categories())
+
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>Категории афоризмов</h4></div>
+    <div class="panel-body" style="max-height:200px; overflow:hidden; overflow-y:auto;">
+        @Html.Action(MVC.MaterialCategories.TreeViewMenu(mct: SX.WebCore.Enums.ModelCoreType.Aphorism))
     </div>
-    <div class="col-md-9"></div>
+    <div class="panel-footer">
+        <div class="text-right">
+            <a href="@Url.Action(MVC.MaterialCategories.Index(mct: SX.WebCore.Enums.ModelCoreType.Aphorism))">К списку категорий афоризмов</a>
+        </div>
+    </div>
 </div>
 
+<div id="grid-aphorisms">
+    @Html.Partial(MVC.Aphorisms.Views._GridView, Model)
+</div>

@@ -79,6 +79,11 @@ namespace SX.WebCore.Abstract
             return oldModel;
         }
 
+        public virtual TModel Update(TModel model, object[] additionalData, bool changeDateUpdate = true, params string[] propertiesForChange)
+        {
+            return Update(model, changeDateUpdate, propertiesForChange);
+        }
+
         public virtual void Delete(params object[] id)
         {
             var model = GetByKey(id);

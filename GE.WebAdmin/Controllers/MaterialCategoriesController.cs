@@ -2,6 +2,7 @@
 using GE.WebCoreExtantions;
 using SX.WebCore;
 using SX.WebCore.Abstract;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;
@@ -66,6 +67,8 @@ namespace GE.WebAdmin.Controllers
                     return "Категории новостей";
                 case ModelCoreType.Manual:
                     return "Справочные категории";
+                case ModelCoreType.Aphorism:
+                    return "Категории афоризмов";
                 default:
                     return "Категоря материалов не определена";
             }
@@ -84,26 +87,42 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult Edit(VMEditMaterialCategory model)
         {
             ViewBag.ModelCoreType = model.ModelCoreType;
+
+            var oldId = Request.Form["OldId"];
+            var isNew = model.Id == null && oldId==null;
+            var id=StringHelper.SeoFriendlyUrl(model.Title);
+
+            if (isNew || oldId!=model.Id)
+            {
+                model.Id = id;
+                ModelState["Id"].Errors.Clear();
+
+                if (isNew)
+                {
+                    var exist = _repo.GetByKey(id);
+                    if (exist != null)
+                        ModelState.AddModelError("Id", "Категория с таким ключем уже существует");
+                }
+            }
+
             var redactModel = Mapper.Map<VMEditMaterialCategory, SxMaterialCategory>(model);
 
             if (ModelState.IsValid)
             {
-                //var existModel = _repo.GetByKey(model.Id);
-                //if (existModel != null)
-                //{
-                //    ModelState.AddModelError("Id", "Элемент с таким ключем уже существует");
-                //    model.Id = null;
-                //    return View(model);
-                //}
-
                 SxMaterialCategory newModel = null;
-                newModel = _repo.Update(redactModel, true, "Title", "FrontPictureId");
-
+                if (isNew)
+                    newModel = _repo.Create(redactModel);
+                else
+                {
+                    if (User.IsInRole("architect"))
+                        newModel = _repo.Update(redactModel, new object[] { oldId }, true, "Id", "Title", "FrontPictureId", "ModelCoreType");
+                    else
+                        newModel = _repo.Update(redactModel, true, "Title", "FrontPictureId", "ModelCoreType");
+                }
                 return RedirectToAction(MVC.MaterialCategories.Index(mct: model.ModelCoreType));
             }
             else
             {
-                model.Id = null;
                 return View(model);
             }
         }
@@ -134,6 +153,29 @@ namespace GE.WebAdmin.Controllers
             ViewBag.PageTitle = getPageTitle(mct);
 
             return PartialView(MVC.MaterialCategories.Views._TreeView, parents);
+        }
+
+        [HttpGet]
+        public virtual PartialViewResult TreeViewMenu(ModelCoreType mct, string cur=null)
+        {
+            ViewBag.CurrentCategory = cur;
+
+            var filter = new WebCoreExtantions.Filter { ModelCoreType = mct };
+            var data = _repo.Query(filter).Select(x => Mapper.Map<SxMaterialCategory, VMMaterialCategory>(x)).ToArray();
+            var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
+            for (int i = 0; i < parents.Length; i++)
+            {
+                var parent = parents[i];
+                parent.Level = 1;
+                updateTreeNodeLevel(parent.Id, data, 1);
+                fillMaterialCategory(parent, null, data);
+            }
+
+            ViewBag.MaxTreeViewLevel = data.Any() ? data.Max(x => x.Level) : 1;
+            ViewBag.ModelCoreType = mct;
+            ViewBag.PageTitle = getPageTitle(mct);
+
+            return PartialView(MVC.MaterialCategories.Views._TreeViewMenu, parents);
         }
     }
 }

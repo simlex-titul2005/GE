@@ -248,6 +248,7 @@
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
+    <Compile Include="Extantions\Repositories\RepoAphorizm.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="Extantions\Repositories\RepoBanner.cs" />
     <Compile Include="Extantions\Repositories\RepoForumPart.cs" />
@@ -477,8 +478,9 @@
     <Content Include="Views\VideoLinks\_GridView.cshtml" />
     <Content Include="Views\Shared\_NotMaterialVideos.cshtml" />
     <Content Include="Views\VideoLinks\_GridViewNotLinked.cshtml" />
-    <Content Include="Views\Aphorisms\_Categories.cshtml" />
     <Content Include="Views\Aphorisms\Index.cshtml" />
+    <Content Include="Views\MaterialCategories\_TreeViewMenu.cshtml" />
+    <Content Include="Views\Aphorisms\_GridView.cshtml" />
     <Content Include="Views\Aphorisms\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

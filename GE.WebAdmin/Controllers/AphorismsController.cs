@@ -1,54 +1,102 @@
-﻿using GE.WebAdmin.Models;
-using GE.WebCoreExtantions;
+﻿using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore.Abstract;
-using System.Linq;
 using System.Web.Mvc;
+using System.Linq;
+using GE.WebAdmin.Models;
+using System.Collections.Generic;
+using SX.WebCore.HtmlHelpers;
+using Microsoft.AspNet.Identity;
+using SX.WebCore;
+using GE.WebAdmin.Extantions.Repositories;
+using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Controllers
 {
     [Authorize(Roles = "admin")]
     public partial class AphorismsController : BaseController
     {
+        private static int _pageSize = 10;
         private SxDbRepository<int, Aphorism, DbContext> _repo;
         public AphorismsController()
         {
             _repo = new RepoAphorism();
         }
 
-        [HttpGet, ChildActionOnly]
-        public virtual PartialViewResult Categories()
+        [HttpGet]
+        public virtual ViewResult Index(int page = 1, string curCat=null)
         {
-            var viewModel = (_repo as RepoAphorism).Categories;
-            return PartialView(MVC.Aphorisms.Views._Categories, viewModel);
+            ViewBag.CategoryId = curCat;
+            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var totalItems = (_repo as RepoAphorism).Count(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
+
+            var viewModel = (_repo as RepoAphorism).Query(filter).ToArray().Select(x=>Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public virtual PartialViewResult Index(string curCat, VMRedirect filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        {
+            ViewBag.Filter = filterModel;
+            ViewBag.Order = order;
+            ViewBag.CategoryId = curCat;
+
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var totalItems = (_repo as RepoAphorism).Count(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
+
+            var viewModel = (_repo as RepoAphorism).Query(filter);
+
+            return PartialView(MVC.Aphorisms.Views._GridView, viewModel);
         }
 
         [HttpGet]
-        public virtual ViewResult Index()
+        public virtual ViewResult Edit(string cat, ModelCoreType mct, int? id = null)
         {
-            return View();
-        }
-
-        [HttpGet]
-        public virtual ViewResult Edit(int? id = null)
-        {
-            var model = id.HasValue ? _repo.GetByKey(id) : new Aphorism();
-            var viewModel = Mapper.Map<Aphorism, VMEditAphorism>(model);
+            var data = id.HasValue ? _repo.GetByKey(id, mct) : new Aphorism { CategoryId = cat };
+            var viewModel = Mapper.Map<Aphorism, VMEditAphorism>(data);
             return View(viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditAphorism model)
         {
-            if(ModelState.IsValid)
+            if (string.IsNullOrEmpty(model.TitleUrl))
             {
-                if (model.Id == 0)
-                    _repo.Create(Mapper.Map<VMEditAphorism, Aphorism>(model));
+                var titleUrl = StringHelper.SeoFriendlyUrl(model.Title);
+                var existModel = (_repo as RepoAphorism).GetByTitleUrl(titleUrl);
+                if (existModel != null && existModel.Id != model.Id)
+                    ModelState.AddModelError("Title", "Строковый ключ должен быть уникальным");
                 else
-                    _repo.Update(Mapper.Map<VMEditAphorism, Aphorism>(model), true, "Category", "Author", "Html");
-                return RedirectToAction(MVC.Aphorisms.Index());
+                {
+                    model.TitleUrl = titleUrl;
+                    ModelState.Remove("TitleUrl");
+                }
+            }
+
+            var isNew = model.Id == 0;
+            var redactModel = Mapper.Map<VMEditAphorism, Aphorism>(model);
+            redactModel.ModelCoreType = ModelCoreType.Aphorism;
+            redactModel.UserId = User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                if (isNew)
+                    _repo.Create(redactModel);
+                else
+                    _repo.Update(redactModel, true, "Title", "Html");
+                return RedirectToAction(MVC.Aphorisms.Index(curCat: model.CategoryId));
             }
             return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual PartialViewResult Delete(string cat, int id)
+        {
+            return null;
         }
     }
 }

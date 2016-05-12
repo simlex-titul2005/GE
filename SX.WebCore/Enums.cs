@@ -9,7 +9,9 @@
             News = 2,
             ForumTheme = 3,
             Manual = 4,
-            ProjectStep=5
+            ProjectStep = 5,
+            //custom, not for core
+            Aphorism
         }
 
         public enum UserClickType : byte

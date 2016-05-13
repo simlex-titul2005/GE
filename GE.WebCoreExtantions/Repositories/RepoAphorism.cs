@@ -14,7 +14,7 @@ namespace GE.WebCoreExtantions.Repositories
         public override IQueryable<Aphorism> Query(SxFilter filter)
         {
             var f = (Filter)filter;
-            var query = QueryProvider.GetSelectString(new string[] { "dm.*" });
+            var query = QueryProvider.GetSelectString(new string[] { "da.Author", "dm.*" });
             query += @" FROM D_APHORISM AS da
 JOIN DV_MATERIAL AS dm ON dm.Id = da.Id AND dm.ModelCoreType = da.ModelCoreType
 JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId";
@@ -28,7 +28,8 @@ JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId";
 
             using (var conn = new SqlConnection(base.ConnectionString))
             {
-                var data = conn.Query<Aphorism, SxMaterialCategory, Aphorism>(query, (a, c) => {
+                var data = conn.Query<Aphorism, SxMaterialCategory, Aphorism>(query, (a, c) =>
+                {
                     a.Category = c;
                     return a;
                 }, param: param, splitOn: "CategoryId");
@@ -60,14 +61,20 @@ JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId ";
             string query = null;
             query += " WHERE (dm.CategoryId=@cid OR @cid IS NULL) ";
             query += " AND (dm.Title LIKE '%'+@title+'%' OR @title IS NULL) ";
+            query += " AND (da.Author LIKE '%'+@author+'%' OR @author IS NULL) ";
+            query += " AND (dm.Html LIKE '%'+@html+'%' OR @html IS NULL) ";
 
             var cid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.CategoryId != null ? (string)filter.WhereExpressionObject.CategoryId : null;
-            var title= filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null ? (string)filter.WhereExpressionObject.Title : null;
+            var title = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null ? (string)filter.WhereExpressionObject.Title : null;
+            var author = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Author != null ? (string)filter.WhereExpressionObject.Author : null;
+            var html = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Html != null ? (string)filter.WhereExpressionObject.Html : null;
 
             param = new
             {
                 cid = cid,
-                title=title
+                title = title,
+                author = author,
+                html = html
             };
 
             return query;

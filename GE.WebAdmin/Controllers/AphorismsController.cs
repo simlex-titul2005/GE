@@ -7,7 +7,7 @@ using GE.WebAdmin.Models;
 using System.Collections.Generic;
 using SX.WebCore.HtmlHelpers;
 using Microsoft.AspNet.Identity;
-using SX.WebCore;
+using static SX.WebCore.UrlHelperExtensions;
 using GE.WebAdmin.Extantions.Repositories;
 using static SX.WebCore.Enums;
 using SX.WebCore.Repositories;
@@ -75,7 +75,7 @@ namespace GE.WebAdmin.Controllers
         {
             if (string.IsNullOrEmpty(model.TitleUrl))
             {
-                var titleUrl = StringHelper.SeoFriendlyUrl(model.Title);
+                var titleUrl = Url.SeoFriendlyUrl(model.Title);
                 var existModel = (_repo as RepoAphorism).GetByTitleUrl(titleUrl);
                 if (existModel != null && existModel.Id != model.Id)
                     ModelState.AddModelError("Title", "Строковый ключ должен быть уникальным");
@@ -95,7 +95,7 @@ namespace GE.WebAdmin.Controllers
                 if (isNew)
                     _repo.Create(redactModel);
                 else
-                    _repo.Update(redactModel, true, "Title", "Html");
+                    _repo.Update(redactModel, true, "Title", "Html", "Author");
                 return RedirectToAction(MVC.Aphorisms.Index(curCat: model.CategoryId));
             }
             return View(model);

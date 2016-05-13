@@ -43,6 +43,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.ValutesController Valutes = new GE.WebUI.Controllers.T4MVC_ValutesController();
     public static T4MVC.MenuesController Menues = new T4MVC.MenuesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
+    public static T4MVC.VideosController Videos = new T4MVC.VideosController();
 }
 
 namespace T4MVC

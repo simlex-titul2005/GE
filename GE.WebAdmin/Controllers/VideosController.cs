@@ -56,10 +56,8 @@ namespace GE.WebAdmin.Controllers
         {
             var isNew = !id.HasValue;
             var model = isNew ? new SxVideo() : _repo.GetByKey(id);
-            var seoInfo = Mapper.Map<SxVideo, VMEditVideo>(model);
-            if (isNew)
-                seoInfo.PictureId = null;
-            return View(seoInfo);
+            var viewModel = Mapper.Map<SxVideo, VMEditVideo>(model);
+            return View(viewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -67,15 +65,15 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult Edit(VMEditVideo model)
         {
             var redactModel = Mapper.Map<VMEditVideo, SxVideo>(model);
-            if (!model.PictureId.HasValue)
-                ModelState.AddModelError("PictureId", "Поле обязательно для заполнения");
+
+            
             if (ModelState.IsValid)
             {
                 SxVideo newModel = null;
                 if (model.Id == Guid.Empty)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, true, "Title", "Url", "PictureId", "SourceUrl");
+                    newModel = _repo.Update(redactModel, true, "Title", "VideoId", "SourceUrl");
 
                 return RedirectToAction("Index");
             }

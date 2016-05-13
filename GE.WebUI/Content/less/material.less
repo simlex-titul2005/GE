@@ -24,7 +24,24 @@
     padding: @def-pad;
     display: inline-block;
     width: 100%;
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 2;
+    @media (max-width: @screen-xs-max) {
+        font-size:16px;
+        line-height:1.5;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+       
+    }
 }
 
 .m-html hr{

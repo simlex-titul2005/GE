@@ -52,15 +52,15 @@ namespace GE.WebAdmin.Extantions.Repositories
             param = null;
             string query = null;
             query += " WHERE (dv.Title LIKE '%'+@title+'%' OR @title IS NULL) ";
-            query += " AND (dv.Url LIKE '%'+@url+'%' OR @url IS NULL) ";
+            query += " AND (dv.VideoId LIKE '%'+@vid+'%' OR @vid IS NULL) ";
 
             var title = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null ? (string)filter.WhereExpressionObject.Title : null;
-            var url = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Url != null ? (string)filter.WhereExpressionObject.Url : null;
+            var vid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.VideoId != null ? (string)filter.WhereExpressionObject.VideoId : null;
 
             param = new
             {
                 title = title,
-                url=url
+                vid = vid
             };
 
             return query;
@@ -68,7 +68,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 
         public static VMVideo[] LinkedVideos(this RepoVideo repo, Filter filter, bool forMaterial)
         {
-            var query = QueryProvider.GetSelectString();
+            var query = QueryProvider.GetSelectString(new string[] { "dv.*"});
             query += @" FROM D_VIDEO AS dv " + (forMaterial?"":@"LEFT")+ @" JOIN D_VIDEO_LINK AS dvl ON dvl.VideoId = dv.Id ";
 
             object param = null;
@@ -80,7 +80,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var data = conn.Query<VMVideo>(query, param: param).ToArray();
+                var data = conn.Query<VMVideo>(sql: query, param: param).ToArray();
                 return data.ToArray();
             }
         }
@@ -115,7 +115,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             param = null;
             string query = null;
             query += " WHERE (dv.Title LIKE '%'+@title+'%' OR @title IS NULL) ";
-            query += " AND (dv.Url LIKE '%'+@url+'%' OR @url IS NULL) ";
+            query += " AND (dv.VideoId LIKE '%'+@vid+'%' OR @vid IS NULL) ";
             if (forMaterial)
             {
                 query += " AND (dvl.ModelCoreType = @mct) ";
@@ -126,12 +126,12 @@ namespace GE.WebAdmin.Extantions.Repositories
 
 
             var title = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null ? (string)filter.WhereExpressionObject.Title : null;
-            var url = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Url != null ? (string)filter.WhereExpressionObject.Url : null;
+            var vid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.VideoId != null ? (string)filter.WhereExpressionObject.VideoId : null;
 
             param = new
             {
                 title = title,
-                url = url,
+                vid = vid,
                 mid=filter.MaterialId,
                 mct=(byte)filter.ModelCoreType
             };

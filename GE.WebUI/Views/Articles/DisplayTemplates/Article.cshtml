@@ -31,22 +31,7 @@
     @if (Model.VideoLinks.Count > 0)
     {
         var video = Model.VideoLinks.First().Video;
-        <div class="video" id="@video.Id">
-            <div class="wrapper">
-                <figure style="background-image:url(@(Url.Action(MVC.Pictures.Picture((Guid)video.PictureId, height:150))))">
-                    <div class="button-wrapper">
-                        <div class="button-container">
-                            <div class="button-cell">
-                                <a class="button" data-src="@video.Url" href="javascript:void(0)" onclick="playVideo(this)"><i class="fa fa-youtube-play"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <figcaption>
-                        Оценка рынка под Oculus Rift<div class="count">Просмотров: <b>@video.ViewsCount</b></div>
-                    </figcaption>
-                </figure>
-            </div>
-        </div>
+        @Html.Partial(MVC.Videos.Views._VideoInList, video)
     }
 
     <a class="link" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))" title="@Model.Title">@Model.Title</a>

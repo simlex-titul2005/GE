@@ -24,6 +24,7 @@ namespace SX.WebCore.HtmlHelpers
             public Func<TModel, TModel[]> FuncChildren { get; set; }
             public Func<string> FuncSearchUrl { get; set; }
             public Func<string> FuncRowClick { get; set; }
+            public Func<TModel, bool> FunActiveRow { get; set; }
             public string UpdateTargetId { get; set; }
             public bool EnableEditing { get; set; }
             public bool EnableFiltering { get; set; }
@@ -69,6 +70,8 @@ namespace SX.WebCore.HtmlHelpers
                 tr.MergeAttribute("data-id", settings.FuncModelId(node).ToString());
                 tr.MergeAttribute("onclick", settings.FuncRowClick());
             }
+            if (settings.FunActiveRow != null && settings.FunActiveRow(node))
+                tr.AddCssClass("active");
 
             writeTreeViewRow(tr, node, settings);
             tb.InnerHtml += tr;

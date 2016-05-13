@@ -11,11 +11,8 @@ namespace SX.WebCore
         [Required, MaxLength(255)]
         public string Title { get; set; }
 
-        [Required, MaxLength(255)]
-        public string Url { get; set; }
-
-        public virtual SxPicture Picture { get; set; }
-        public Guid? PictureId { get; set; }
+        [MaxLength(20), Required]
+        public string VideoId { get; set; }
 
         [MaxLength(255)]
         public string SourceUrl { get; set; }

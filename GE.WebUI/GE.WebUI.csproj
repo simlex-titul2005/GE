@@ -176,7 +176,6 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ValutesController.cs" />
-    <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -224,6 +223,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ValutesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VideosController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Content Include="Content\dist\css\error-page.min.css" />
@@ -395,6 +397,7 @@
     <Content Include="Views\News\_NewsCategories.cshtml" />
     <Content Include="Views\Shared\_ByDateMaterial.cshtml" />
     <Content Include="Views\Shared\_PopularMaterials.cshtml" />
+    <Content Include="Views\Videos\_VideoInList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -404,7 +407,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\dist\i\temp\" />
-    <Folder Include="Views\Videos\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">

@@ -10,11 +10,8 @@ namespace GE.WebAdmin.Models
         [Required, MaxLength(255), Display(Name ="Название видео")]
         public string Title { get; set; }
 
-        [Required, MaxLength(255), DataType(DataType.Url), Display(Name ="Адрес видео")]
-        public string Url { get; set; }
-
-        [Display(Name ="Изображение"), UIHint("EditImage")]
-        public Guid? PictureId { get; set; }
+        [Required, MaxLength(20), Display(Name = "Идентификатор видео")]
+        public string VideoId { get; set; }
 
         [MaxLength(255), DataType(DataType.Url), Display(Name = "Источник видео")]
         public string SourceUrl { get; set; }

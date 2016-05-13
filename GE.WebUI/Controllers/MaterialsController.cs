@@ -138,7 +138,7 @@ namespace GE.WebUI.Controllers
             {
                 var html=SxBBCodeParser.GetHtml(model.Html);
                 html = SxBBCodeParser.ReplaceBanners(html, SiteBanners.Collection, (b)=>Url.Action(MVC.Pictures.Picture(b.PictureId)));
-                html = SxBBCodeParser.ReplaceVideo(html, model.Videos, (v)=>Url.Action(MVC.Pictures.Picture((Guid)v.PictureId)));
+                html = SxBBCodeParser.ReplaceVideo(html, model.Videos);
                 model.Html = html;
 
                 if (!Request.IsLocal)

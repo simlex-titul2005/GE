@@ -8,5 +8,7 @@ namespace GE.WebAdmin.Models
         public ModelCoreType ModelCoreType { get; set; }
         public string Title { get; set; }
         public string CategoryId { get; set; }
+        public string Author { get; set; }
+        public string Html { get; set; }
     }
 }

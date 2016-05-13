@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using Microsoft.AspNet.Identity;
-using System.Threading.Tasks;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -65,7 +64,7 @@ namespace GE.WebAdmin.Controllers
         {
             if(string.IsNullOrEmpty(model.TitleUrl))
             {
-                var titleUrl = StringHelper.SeoFriendlyUrl(model.Title);
+                var titleUrl = Url.SeoFriendlyUrl(model.Title);
                 var existModel = (_repo as RepoArticle).GetByTitleUrl(titleUrl);
                 if (existModel != null && existModel.Id != model.Id)
                     ModelState.AddModelError("Title", "Строковый ключ должен быть уникальным");

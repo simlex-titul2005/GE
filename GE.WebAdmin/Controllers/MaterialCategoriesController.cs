@@ -90,7 +90,7 @@ namespace GE.WebAdmin.Controllers
 
             var oldId = Request.Form["OldId"];
             var isNew = model.Id == null && oldId==null;
-            var id=StringHelper.SeoFriendlyUrl(model.Title);
+            var id= Url.SeoFriendlyUrl(model.Title);
 
             if (isNew || oldId!=model.Id)
             {

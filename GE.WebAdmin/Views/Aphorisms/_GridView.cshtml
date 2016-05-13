@@ -9,20 +9,22 @@
 
 @if (categoryId != null)
 {
-@Html.SxGridView(
+    @Html.SxGridView(
                 new SxExtantions.SxGridViewSettings<VMAphorism>
                 {
                     UpdateTargetId = "grid-aphorisms",
                     Data = Model,
                     Columns = new SxExtantions.SxGridViewColumn<VMAphorism>[]{
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"}
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"},
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Author", Caption="Автор"},
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
             },
                     PagerInfo = pagerInfo,
                     Filter = filter,
                     SortDirections = sortDirections,
                     CreateLink = Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism)),
-                    FuncEditLink=x=>Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism, id: x.Id)),
-                    PagerLink=Url.Action(MVC.Aphorisms.Index(curCat: categoryId))
+                    FuncEditLink = x => Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism, id: x.Id)),
+                    PagerLink = Url.Action(MVC.Aphorisms.Index(curCat: categoryId))
                 },
             new { @class = "table table-condensed table-bordered table-responsive table-striped" }
         )

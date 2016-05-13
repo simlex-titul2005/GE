@@ -71,7 +71,7 @@ namespace GE.WebAdmin.Controllers
 
                 if (isNew)
                 {
-                    var titleUrl = StringHelper.SeoFriendlyUrl(model.Title);
+                    var titleUrl = Url.SeoFriendlyUrl(model.Title);
                     redactModel.UserId = User.Identity.GetUserId();
                     redactModel.TitleUrl = titleUrl;
                     newModel = _repo.Create(redactModel);

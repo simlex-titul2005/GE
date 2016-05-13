@@ -23,5 +23,8 @@ namespace GE.WebAdmin.Models
 
         [Required, MaxLength(255)]
         public string TitleUrl { get; set; }
+
+        [MaxLength(50), Display(Name ="Автор")]
+        public string Author { get; set; }
     }
 }

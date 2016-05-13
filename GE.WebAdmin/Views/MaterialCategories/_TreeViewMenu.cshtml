@@ -3,7 +3,7 @@
     Layout = null;
     var maxLevel = (int)ViewBag.MaxTreeViewLevel;
     var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
-    string cur = ViewBag.CurrentCategory;
+    string cur = ViewBag.CurrentCategory ?? ViewContext.ParentActionViewContext.ViewBag.CategoryId;
 }
 
 @Html.SxTreeView(
@@ -20,7 +20,8 @@
         FuncSearchUrl = () => Url.Action(MVC.MaterialCategories.Index()),
         UpdateTargetId = "matcat-tv",
         EnableEditing = false,
-        EnableFiltering = false
+        EnableFiltering = false,
+        FunActiveRow = x => String.Compare(x.Id, cur, true) == 0
     },
     htmlAttributes: new { @class = "sx-tv table table-condensed table-bordered table-responsive" }
     )

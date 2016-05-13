@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using SX.WebCore;
 using GE.WebAdmin.Extantions.Repositories;
 using static SX.WebCore.Enums;
+using SX.WebCore.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -26,8 +27,14 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual ViewResult Index(int page = 1, string curCat=null)
         {
+            if(curCat!=null)
+            {
+                var category = new RepoMaterialCategory<DbContext>().GetByKey(curCat);
+                ViewBag.Category = category;
+            }
+
             ViewBag.CategoryId = curCat;
-            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { WhereExpressionObject=new VMAphorism { CategoryId=curCat } };
             var totalItems = (_repo as RepoAphorism).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
@@ -38,10 +45,11 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost]
-        public virtual PartialViewResult Index(string curCat, VMRedirect filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(string curCat, VMAphorism filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
+            filterModel.CategoryId = curCat;
             ViewBag.CategoryId = curCat;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
@@ -49,7 +57,7 @@ namespace GE.WebAdmin.Controllers
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoAphorism).Query(filter);
+            var viewModel = (_repo as RepoAphorism).Query(filter).ToArray().Select(x => Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
 
             return PartialView(MVC.Aphorisms.Views._GridView, viewModel);
         }
@@ -94,9 +102,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual PartialViewResult Delete(string cat, int id)
+        public virtual RedirectToRouteResult Delete(string cat, int id, ModelCoreType mct)
         {
-            return null;
+            _repo.Delete(id, mct);
+            return RedirectToAction(MVC.Aphorisms.Index(curCat: cat));
         }
     }
 }

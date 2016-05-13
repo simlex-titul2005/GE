@@ -7,9 +7,9 @@
 <h2>@ViewBag.Title</h2>
 @if (!isNew)
 {
-    <form method="post" action="@Url.Action(MVC.Aphorisms.Delete(cat: Model.CategoryId, id: Model.Id))">
+    <form method="post" action="@Url.Action(MVC.Aphorisms.Delete(cat: Model.CategoryId, id: Model.Id, mct: SX.WebCore.Enums.ModelCoreType.Aphorism))">
         @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-danger pull-right">Удалить афоризм</button>
+        <button type="submit" class="btn btn-danger pull-right" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить афоризм</button>
     </form>
 }
 <br />

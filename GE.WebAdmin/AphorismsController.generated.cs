@@ -64,9 +64,9 @@ namespace GE.WebAdmin.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.PartialViewResult Delete()
+        public virtual System.Web.Mvc.RedirectToRouteResult Delete()
         {
-            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Delete);
+            return new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -128,6 +128,7 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string cat = "cat";
             public readonly string id = "id";
+            public readonly string mct = "mct";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -168,10 +169,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, string curCat, GE.WebAdmin.Models.VMRedirect filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, string curCat, GE.WebAdmin.Models.VMAphorism filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Index(string curCat, GE.WebAdmin.Models.VMRedirect filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        public override System.Web.Mvc.PartialViewResult Index(string curCat, GE.WebAdmin.Models.VMAphorism filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "curCat", curCat);
@@ -209,15 +210,16 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, string cat, int id);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_RedirectToRouteResult callInfo, string cat, int id, SX.WebCore.Enums.ModelCoreType mct);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Delete(string cat, int id)
+        public override System.Web.Mvc.RedirectToRouteResult Delete(string cat, int id, SX.WebCore.Enums.ModelCoreType mct)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Delete);
+            var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cat", cat);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            DeleteOverride(callInfo, cat, id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
+            DeleteOverride(callInfo, cat, id, mct);
             return callInfo;
         }
 

@@ -1,6 +1,7 @@
 ﻿@model VMAphorism[]
 @{
     ViewBag.Title = "Афоризмы";
+    SX.WebCore.SxMaterialCategory category = ViewBag.Category;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -17,6 +18,11 @@
         </div>
     </div>
 </div>
+
+@if(category!=null)
+{
+    <h4>@category.Title</h4>
+}
 
 <div id="grid-aphorisms">
     @Html.Partial(MVC.Aphorisms.Views._GridView, Model)

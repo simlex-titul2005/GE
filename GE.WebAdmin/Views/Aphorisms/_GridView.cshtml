@@ -21,7 +21,8 @@
                     Filter = filter,
                     SortDirections = sortDirections,
                     CreateLink = Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism)),
-                    FuncEditLink=x=>Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism, id: x.Id))
+                    FuncEditLink=x=>Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism, id: x.Id)),
+                    PagerLink=Url.Action(MVC.Aphorisms.Index(curCat: categoryId))
                 },
             new { @class = "table table-condensed table-bordered table-responsive table-striped" }
         )

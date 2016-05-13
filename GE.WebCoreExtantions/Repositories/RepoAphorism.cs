@@ -22,7 +22,7 @@ JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId";
             object param = null;
             query += getAphorismsWhereString(f, out param);
 
-            query += QueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc);
+            query += QueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
@@ -58,13 +58,16 @@ JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId ";
         {
             param = null;
             string query = null;
-            query += " WHERE dm.CategoryId=@cid OR @cid IS NULL ";
+            query += " WHERE (dm.CategoryId=@cid OR @cid IS NULL) ";
+            query += " AND (dm.Title LIKE '%'+@title+'%' OR @title IS NULL) ";
 
             var cid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.CategoryId != null ? (string)filter.WhereExpressionObject.CategoryId : null;
+            var title= filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null ? (string)filter.WhereExpressionObject.Title : null;
 
             param = new
             {
-                cid = cid
+                cid = cid,
+                title=title
             };
 
             return query;

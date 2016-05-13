@@ -31,7 +31,10 @@
     @if (Model.VideoLinks.Count > 0)
     {
         var video = Model.VideoLinks.First().Video;
-        @Html.Partial(MVC.Videos.Views._VideoInList, video)
+        <div class="list-video">
+            @Html.SxVideo(video)
+        </div>
+        @*@Html.Partial(MVC.Videos.Views._VideoInList, video)*@
     }
 
     <a class="link" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))" title="@Model.Title">@Model.Title</a>

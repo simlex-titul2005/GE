@@ -20,3 +20,29 @@
 @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
 
 @Html.Partial(MVC.Articles.Views._Collection, Model)
+
+@section scripts{
+    <script type="text/javascript">
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        function playVideoById(id, videoId) {
+            player = new YT.Player(id, {
+                videoId: videoId,
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+    </script>
+}

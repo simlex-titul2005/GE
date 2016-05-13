@@ -274,6 +274,7 @@
     <Content Include="Scripts\ge-last-news-block.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\video-engine.js" />
     <Content Include="share42\icons.png" />
     <Content Include="share42\share42.js" />
     <Content Include="Views\Articles\List.cshtml">

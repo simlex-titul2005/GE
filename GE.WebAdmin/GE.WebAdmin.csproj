@@ -297,6 +297,7 @@
     <Compile Include="Models\VMEditMaterialCategory.cs" />
     <Compile Include="Models\VMEditProjectStep.cs" />
     <Compile Include="Models\VMEditVideo.cs" />
+    <Compile Include="Models\VMFAQ.cs" />
     <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMClick.cs" />
     <Compile Include="Models\VMClickType.cs" />
@@ -421,7 +422,6 @@
     <Content Include="Views\Redirects\Edit.cshtml" />
     <Content Include="Views\Settings\EditRobotsFile.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\FAQ\Index.cshtml" />
     <Content Include="Views\Roles\_GridView.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
@@ -482,6 +482,8 @@
     <Content Include="Views\MaterialCategories\_TreeViewMenu.cshtml" />
     <Content Include="Views\Aphorisms\_GridView.cshtml" />
     <Content Include="Views\Aphorisms\Edit.cshtml" />
+    <Content Include="Views\FAQ\Index.cshtml" />
+    <Content Include="Views\FAQ\DisplayTemplates\VMFAQ.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

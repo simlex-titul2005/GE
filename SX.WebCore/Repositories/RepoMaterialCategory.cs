@@ -51,16 +51,22 @@ namespace SX.WebCore.Repositories
             {
                 var oldId = additionalData[0];
                 var query = @"BEGIN TRANSACTION
+
 UPDATE DV_MATERIAL
 SET CategoryId = @id
 WHERE CategoryId = @oldid
 
+ALTER TABLE D_MATERIAL_CATEGORY NOCHECK CONSTRAINT [FK_dbo.D_MATERIAL_CATEGORY_dbo.D_MATERIAL_CATEGORY_ParentCategoryId]
+
 UPDATE D_MATERIAL_CATEGORY
-SET Id = @id,
-       Title = @title,
-       ModelCoreType = @mct,
-       FrontPictureId = @fpid
-WHERE Id = @oldid
+SET    Id = @id
+WHERE  Id = @oldid
+
+UPDATE D_MATERIAL_CATEGORY
+SET    ParentCategoryId = @id
+WHERE  ParentCategoryId = @oldid
+
+ALTER TABLE [dbo].[D_MATERIAL_CATEGORY] CHECK CONSTRAINT [FK_dbo.D_MATERIAL_CATEGORY_dbo.D_MATERIAL_CATEGORY_ParentCategoryId]
 
 COMMIT TRANSACTION";
 

@@ -33,7 +33,7 @@
         <li role="presentation" class="@(uriFragmet=="tags-cloud"? "active":null)"><a href="#tags-cloud" aria-controls="tags-cloud" role="tab" data-toggle="tab">Облако тегов</a></li>
         <li role="presentation" class="@(uriFragmet=="seo"? "active":null)"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Seo</a></li>
     }
-    @if (User.IsInRole("admin") && !isNew)
+    @if (User.IsInRole("video-redactor") && !isNew)
     {
         <li role="presentation" class="@(uriFragmet=="videos"? "active":null)"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Видео</a></li>
     }
@@ -163,7 +163,7 @@
             </div>
         </div>
     }
-    @if (User.IsInRole("admin") && !isNew)
+    @if (User.IsInRole("video-redactor") && !isNew)
     {
         <div role="tabpanel" id="videos" class="tab-pane @(uriFragmet=="videos"? "active":null)">
             @Html.Partial(MVC.Shared.Views._NotMaterialVideos, Model)

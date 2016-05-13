@@ -50,14 +50,6 @@
             <br />
             <div class="row">
                 <div class="col-md-12">
-                    @Html.LabelFor(x => x.Foreword, new { @class = "control-label" })
-                    @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание материала" } })
-                    @Html.ValidationMessageFor(x => x.Foreword)
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-12">
                     @Html.LabelFor(x => x.Html, new { @class = "control-label" })
                     @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.Html)

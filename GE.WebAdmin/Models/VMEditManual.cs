@@ -19,8 +19,5 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Контент"), Required, DataType(DataType.MultilineText), AllowHtml]
         public string Html { get; set; }
-
-        [Display(Name = "Вступление"), DataType(DataType.MultilineText)]
-        public string Foreword { get; set; }
     }
 }

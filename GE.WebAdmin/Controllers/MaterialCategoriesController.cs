@@ -2,7 +2,7 @@
 using GE.WebCoreExtantions;
 using SX.WebCore;
 using SX.WebCore.Abstract;
-using System.Globalization;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;
@@ -76,7 +76,7 @@ namespace GE.WebAdmin.Controllers
 
         public virtual ActionResult Edit(ModelCoreType mct, string pcid = null, string id = null)
         {
-            var data = string.IsNullOrEmpty(id) ? new SxMaterialCategory { ModelCoreType= mct, ParentCategoryId= pcid } : _repo.GetByKey(id);
+            var data = string.IsNullOrEmpty(id) ? new SxMaterialCategory { ModelCoreType = mct, ParentCategoryId = pcid } : _repo.GetByKey(id);
             var viewModel = Mapper.Map<SxMaterialCategory, VMEditMaterialCategory>(data);
             ViewBag.ModelCoreType = mct;
             return View(viewModel);
@@ -89,10 +89,10 @@ namespace GE.WebAdmin.Controllers
             ViewBag.ModelCoreType = model.ModelCoreType;
 
             var oldId = Request.Form["OldId"];
-            var isNew = model.Id == null && oldId==null;
-            var id= Url.SeoFriendlyUrl(model.Title);
+            var isNew = model.Id == null && oldId == null;
+            var id = Url.SeoFriendlyUrl(model.Title);
 
-            if (isNew || oldId!=model.Id)
+            if (isNew || oldId != model.Id)
             {
                 model.Id = id;
                 ModelState["Id"].Errors.Clear();
@@ -156,7 +156,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpGet]
-        public virtual PartialViewResult TreeViewMenu(ModelCoreType mct, string cur=null)
+        public virtual PartialViewResult TreeViewMenu(ModelCoreType mct, string cur = null)
         {
             ViewBag.CurrentCategory = cur;
 
@@ -174,8 +174,22 @@ namespace GE.WebAdmin.Controllers
             ViewBag.MaxTreeViewLevel = data.Any() ? data.Max(x => x.Level) : 1;
             ViewBag.ModelCoreType = mct;
             ViewBag.PageTitle = getPageTitle(mct);
+            ViewBag.TreeViewMenuFuncContent = TreeViewMenuFuncContent(mct);
 
             return PartialView(MVC.MaterialCategories.Views._TreeViewMenu, parents);
+        }
+
+        private Func<VMMaterialCategory, string> TreeViewMenuFuncContent(ModelCoreType mct)
+        {
+            switch (mct)
+            {
+                case ModelCoreType.Aphorism:
+                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action(MVC.Aphorisms.Index(curCat: x.Id)), x.Title);
+                case ModelCoreType.Manual:
+                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action(MVC.FAQ.Index(curCat: x.Id)), x.Title);
+                default:
+                    return null;
+            }
         }
     }
 }

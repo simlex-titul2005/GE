@@ -1,0 +1,8 @@
+﻿@model VMFAQ
+@{ 
+    Layout = null;
+}
+
+<section id="faq-@Model.Id">
+    @Html.Raw(Model.Html)
+</section>

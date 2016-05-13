@@ -57,5 +57,21 @@ namespace SX.WebCore.Repositories
 
             return query;
         }
+
+        public SxManual[] GetManualsByCategoryId(string categoryId)
+        {
+            var query = @"SELECT * FROM D_MANUAL AS dm
+JOIN DV_MATERIAL AS dm2 ON dm2.Id = dm.Id AND dm2.ModelCoreType = dm.ModelCoreType
+JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm2.CategoryId
+WHERE dm2.CategoryId=@cat OR dmc.ParentCategoryId=@cat";
+
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                var data = conn.Query<SxManual, SxMaterialCategory, SxManual>(query, (m, c)=> {
+                    return m;
+                }, param: new { cat= categoryId });
+                return data.ToArray();
+            }
+        }
     }
 }

@@ -39,6 +39,9 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxBannerGroup, VMEditBannerGroup>();
                     cfg.CreateMap<VMEditBannerGroup, SxBannerGroup>();
 
+                    //faq
+                    cfg.CreateMap<SxManual, VMFAQ>();
+
                     //forum parts
                     cfg.CreateMap<SxForumPart, VMForumPart>();
                     cfg.CreateMap<SxForumPart, VMEditForumPart>();

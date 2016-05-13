@@ -282,17 +282,23 @@
                                 </ul>
                             </li>
                         }
-                        @if (User.IsInRole("photo-redactor"))
+                        @if (User.IsInRole("photo-redactor") || User.IsInRole("video-redactor"))
                         {
                             <li>
                                 <a href="javascript:void(0)"><i class="fa fa-crop fa-fw"></i> Мультимедиа<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="@Url.Action(MVC.Pictures.Index())"><i class="fa fa-image fa-fw"></i> Фото-контент</a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action(MVC.Videos.Index())"><i class="fa fa-youtube fa-fw"></i> Видео сайта</a>
-                                    </li>
+                                    @if (User.IsInRole("photo-redactor"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action(MVC.Pictures.Index())"><i class="fa fa-image fa-fw"></i> Фото-контент</a>
+                                        </li>
+                                    }
+                                    @if (User.IsInRole("video-redactor"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action(MVC.Videos.Index())"><i class="fa fa-youtube fa-fw"></i> Видео сайта</a>
+                                        </li>
+                                    }
                                 </ul>
                             </li>
                         }
@@ -441,7 +447,7 @@
                             <a href="#"><i class="fa fa-tasks fa-fw"></i> FAQ<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="@Url.Action(MVC.FAQ.Index())">Справочная система</a>
+                                    <a href="@Url.Action(MVC.FAQ.Index())">Справка</a>
                                 </li>
                                 @if (User.IsInRole("architect"))
                                 {

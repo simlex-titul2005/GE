@@ -4,16 +4,14 @@ using SX.WebCore;
 using SX.WebCore.Abstract;
 using SX.WebCore.HtmlHelpers;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
-using static SX.WebCore.Enums;
 using System;
 using GE.WebCoreExtantions.Repositories;
 using GE.WebAdmin.Extantions.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
-    [Authorize(Roles ="admin")]
+    [Authorize(Roles = "video-redactor")]
     public partial class VideosController : BaseController
     {
         private SxDbRepository<Guid, SxVideo, DbContext> _repo;

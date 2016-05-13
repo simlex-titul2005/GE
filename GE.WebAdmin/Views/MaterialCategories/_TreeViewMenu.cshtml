@@ -4,6 +4,7 @@
     var maxLevel = (int)ViewBag.MaxTreeViewLevel;
     var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
     string cur = ViewBag.CurrentCategory ?? ViewContext.ParentActionViewContext.ViewBag.CategoryId;
+    Func<VMMaterialCategory, string> funcContent = ViewBag.TreeViewMenuFuncContent;
 }
 
 @Html.SxTreeView(
@@ -11,7 +12,8 @@
     settings: new SxExtantions.SxTreeViewTreeViewSettings<VMMaterialCategory>
     {
         FuncChildren = x => x.ChildCategories,
-        FuncContent = x => string.Format("<a href=\"{0}\">{1}</a>", Url.Action(MVC.Aphorisms.Index(curCat: x.Id)), x.Title),
+        FuncContent = funcContent,
+        //FuncContent = x => string.Format("<a href=\"{0}\">{1}</a>", Url.Action(MVC.Aphorisms.Index(curCat: x.Id)), x.Title),
         FuncCreateUrl = () => Url.Action(MVC.MaterialCategories.Edit(mct: mct)),
         FuncCurLevel = x => x.Level,
         FuncEditUrl = x => Url.Action(MVC.MaterialCategories.Edit(mct: x.ModelCoreType, id: x.Id)),

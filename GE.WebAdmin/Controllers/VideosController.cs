@@ -29,7 +29,7 @@ namespace GE.WebAdmin.Controllers
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoVideo).QueryForAdmin(filter);
+            var viewModel = (_repo as RepoVideo).QueryForAdmin(filter); 
             return View(viewModel);
         }
 

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using static SX.WebCore.Enums;
 using System.Linq;
 using SX.WebCore.Repositories;
+using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {

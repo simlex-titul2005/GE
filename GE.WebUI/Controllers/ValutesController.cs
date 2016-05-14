@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Mvc;
+using System.Web.SessionState;
 using System.Xml.Linq;
 
 namespace GE.WebUI.Controllers

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using SX.WebCore;
+using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {

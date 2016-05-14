@@ -8,6 +8,7 @@ using static SX.WebCore.Enums;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using GE.WebUI.Infrastructure;
+using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {

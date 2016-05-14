@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using static SX.WebCore.Enums;
 using System.Globalization;
+using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {

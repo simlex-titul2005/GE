@@ -3,9 +3,9 @@ using GE.WebCoreExtantions.Repositories;
 using GE.WebUI.Models;
 using SX.WebCore;
 using SX.WebCore.Abstract;
-using System.Linq;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
+using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {

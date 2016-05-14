@@ -20,7 +20,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         private int _pageSize = 10;
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet, ChildActionOnly]
         public virtual PartialViewResult Index(int mid, ModelCoreType mct, int page = 1)
         {
             ViewBag.MaterialId = mid;
@@ -36,7 +36,7 @@ namespace GE.WebAdmin.Controllers
             return PartialView(MVC.MaterialTags.Views._GridView, viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public virtual PartialViewResult Index(int mid, ModelCoreType mct, VMMaterialTag filterModel, IDictionary<string, SortDirection> order, int page = 1)
         {
             ViewBag.MaterialId = mid;
@@ -55,8 +55,7 @@ namespace GE.WebAdmin.Controllers
             return PartialView(MVC.MaterialTags.Views._GridView, viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual RedirectToRouteResult Edit(VMEditMaterialTag model)
         {
             var id = model.Id.Trim();
@@ -72,8 +71,7 @@ namespace GE.WebAdmin.Controllers
             return RedirectToAction(MVC.MaterialTags.Index(model.MaterialId, model.ModelCoreType));
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual RedirectToRouteResult Delete(VMMaterialTag model)
         {
             _repo.Delete(model.Id, model.MaterialId, model.ModelCoreType);

@@ -5,6 +5,7 @@
     ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
     ViewBag.MaterialCategoryTitle = isNew || Model.CategoryId == null ? null : Model.Category.Title;
     var uriFragmet = Request.QueryString.GetValues("fragment") != null ? Request.QueryString.GetValues("fragment")[0] : null;
+    var hasError = Convert.ToBoolean(ViewBag.HasError);
 }
 
 @section styles{
@@ -46,6 +47,7 @@
 
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.ModelCoreType)
+            @Html.HiddenFor(x=>x.GameId)
             @Html.HiddenFor(x => x.OldTitleUrl)
             @if (!isNew)
             {
@@ -85,6 +87,10 @@
                     </div>
                 </div>
                 <br />
+            }
+            else
+            {
+                @Html.HiddenFor(x=>x.TitleUrl)
             }
             <div class="row">
                 <div class="col-md-3">
@@ -142,9 +148,9 @@
             </div>
         </form>
     </div>
-    @if (User.IsInRole("seo") && !isNew)
+    @if (User.IsInRole("seo") && !isNew && !hasError)
     {
-        <div role="tabpanel" class="tab-pane @(uriFragmet=="tags-cloud"? "active":null)" id="tags-cloud">
+        <div role="tabpanel" class="tab-pane @(uriFragmet == "tags-cloud" ? "active" : null)" id="tags-cloud">
             <div class="row">
                 <div class="col-md-12">
                     <div id="grid-mat-tags">
@@ -164,7 +170,7 @@
             </div>
         </div>
     }
-    @if (User.IsInRole("video-redactor") && !isNew)
+    @if (User.IsInRole("video-redactor") && !isNew && !hasError)
     {
         <div role="tabpanel" id="videos" class="tab-pane @(uriFragmet=="videos"? "active":null)">
             @Html.Partial(MVC.Shared.Views._NotMaterialVideos, Model)

@@ -6,7 +6,6 @@ using GE.WebCoreExtantions.Repositories;
 using SX.WebCore.HtmlHelpers;
 using SX.WebCore.Providers;
 using GE.WebAdmin.Models;
-using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Extantions.Repositories
 {

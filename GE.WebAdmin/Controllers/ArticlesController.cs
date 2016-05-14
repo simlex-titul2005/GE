@@ -21,7 +21,7 @@ namespace GE.WebAdmin.Controllers
 
         private static int _pageSize = 20;
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
@@ -33,7 +33,7 @@ namespace GE.WebAdmin.Controllers
             return View(viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public virtual PartialViewResult Index(VMArticle filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
             ViewBag.Filter = filterModel;
@@ -49,7 +49,7 @@ namespace GE.WebAdmin.Controllers
             return PartialView("_GridView", viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id, Enums.ModelCoreType.Article) : new Article { ModelCoreType = Enums.ModelCoreType.Article };
@@ -58,8 +58,7 @@ namespace GE.WebAdmin.Controllers
             return View(viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditArticle model)
         {
             if(string.IsNullOrEmpty(model.TitleUrl))
@@ -77,6 +76,15 @@ namespace GE.WebAdmin.Controllers
             
             if (ModelState.IsValid)
             {
+                var titleWordsCount = model.Title.Split(' ');
+                if(titleWordsCount.Length<7)
+                {
+                    ViewBag.HasError = true;
+                    model = getPreparedArticle(model);
+                    ModelState.AddModelError("Title", "Название не может содержать менее 7 слов");
+                    return View(model);
+                }
+
                 var isNew = model.Id == 0;
                 var redactModel = Mapper.Map<VMEditArticle, Article>(model);
                 
@@ -94,6 +102,8 @@ namespace GE.WebAdmin.Controllers
                         var existModel = (_repo as RepoArticle).GetByTitleUrl(model.TitleUrl);
                         if (existModel != null)
                         {
+                            ViewBag.HasError = true;
+                            model = getPreparedArticle(model);
                             ModelState.AddModelError("TitleUrl", "Строковый ключ должен быть уникальным");
                             return View(model);
                         }
@@ -105,11 +115,23 @@ namespace GE.WebAdmin.Controllers
                 return RedirectToAction(MVC.Articles.Index());
             }
             else
+            {
+                ViewBag.HasError = true;
+                model = getPreparedArticle(model);
                 return View(model);
+            }
+                
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        private VMEditArticle getPreparedArticle(VMEditArticle newModel)
+        {
+            var old=_repo.GetByKey(newModel.Id, newModel.ModelCoreType);
+            newModel.Category = old.Category;
+            newModel.Game = old.Game;
+            return newModel;
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditNews model)
         {
             var repoSeoInfo = new RepoSeoInfo();

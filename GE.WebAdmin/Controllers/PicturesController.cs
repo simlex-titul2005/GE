@@ -26,7 +26,7 @@ namespace GE.WebAdmin.Controllers
         private static int _pageSize = 20;
 
         [Authorize(Roles = "photo-redactor")]
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
@@ -39,7 +39,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [Authorize(Roles = "photo-redactor")]
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public virtual PartialViewResult Index(VMPicture filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
             ViewBag.Filter = filterModel;
@@ -56,43 +56,70 @@ namespace GE.WebAdmin.Controllers
         }
 
         [Authorize(Roles = "photo-redactor")]
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult Edit(Guid? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id) : new SxPicture();
             return View(Mapper.Map<SxPicture, VMEditPicture>(model));
         }
 
+        private static int maxSize = 307200;
         [Authorize(Roles = "photo-redactor")]
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditPicture picture, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                var isNew = picture.Id == Guid.Empty;
                 var redactModel = Mapper.Map<VMEditPicture, SxPicture>(picture);
-                if (picture.Id == Guid.Empty)
+                if (isNew)
                 {
-                    byte[] imageData = null;
-                    Image image = null;
-                    using (var binaryReader = new BinaryReader(file.InputStream))
+                    redactModel = getImage(redactModel, file);
+                    if(redactModel.Size> maxSize)
                     {
-                        imageData = binaryReader.ReadBytes(file.ContentLength);
-                        image = Image.FromStream(file.InputStream);
+                        ModelState.AddModelError("Title", string.Format("Размер файла не должен превышать {0} kB", maxSize));
+                        return View(picture);
                     }
-                    redactModel.OriginalContent = imageData;
-                    redactModel.Width = image.Width;
-                    redactModel.Height = image.Height;
                     _repo.Create(redactModel);
                 }
                 else
                 {
-                    _repo.Update(redactModel, true, "Caption", "Description");
+                    if (file != null)
+                    {
+                        redactModel = getImage(redactModel, file);
+                        if (redactModel.Size > maxSize)
+                        {
+                            ModelState.AddModelError("Title", string.Format("Размер файла не должен превышать {0} kB", maxSize));
+                            return View(picture);
+                        }
+                        _repo.Update(redactModel, true, "Caption", "Description", "OriginalContent", "Width", "Height", "Size");
+                    }
+                    else
+                    {
+                        _repo.Update(redactModel, true, "Caption", "Description");
+                    }
                 }
                 return RedirectToAction(MVC.Pictures.Index());
             }
 
             return View(picture);
+        }
+
+        private static SxPicture getImage(SxPicture redactModel, HttpPostedFileBase file)
+        {
+            byte[] imageData = null;
+            Image image = null;
+            using (var binaryReader = new BinaryReader(file.InputStream))
+            {
+                imageData = binaryReader.ReadBytes(file.ContentLength);
+                image = Image.FromStream(file.InputStream);
+            }
+            redactModel.OriginalContent = imageData;
+            redactModel.Width = image.Width;
+            redactModel.Height = image.Height;
+            redactModel.Size = imageData.Length;
+
+            return redactModel;
         }
 
         [Authorize(Roles = "photo-redactor")]
@@ -112,7 +139,7 @@ namespace GE.WebAdmin.Controllers
             return PartialView(MVC.Pictures.Views._FindGridView, viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         #if !DEBUG
         [OutputCache(Duration = 300, VaryByParam = "id;width;height")]
         #endif
@@ -136,8 +163,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [Authorize(Roles = "photo-redactor")]
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Delete(Guid id)
         {
             _repo.Delete(id);

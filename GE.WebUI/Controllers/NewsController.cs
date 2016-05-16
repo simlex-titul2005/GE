@@ -3,7 +3,6 @@ using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
-using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {

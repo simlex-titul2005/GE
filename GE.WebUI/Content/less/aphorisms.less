@@ -1,0 +1,57 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "positioned.less";
+@import (reference) "../../bower_components/bootstrap/less/variables.less";
+
+.aphorisms {
+    background-color: @color-white;
+    margin-top: @def-pad*2;
+    min-height: 120px;
+}
+
+.aphorism {
+    position: relative;
+    padding: @def-pad;
+}
+
+.aphorism > .aph-progress {
+    height: 4px;
+    padding: 1px;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.aphorism > .aph-progress > div {
+    height: 2px;
+    background-color: @color-red;
+}
+
+//ap-author-list
+.ap-page{
+    margin-top:@def-pad*2;
+    margin-bottom:@def-pad*2;
+}
+.ap-author-list, .ap-category-list {
+    margin-top: @def-pad*4;
+}
+
+.ap-author-list ul, .ap-category-list ul {
+    list-style: none;
+    color: @color-white;
+    padding: 0;
+    margin: 0;
+}
+
+.ap-author-list ul > li, .ap-category-list > ul > li {
+    margin-top: @def-pad*2;
+}
+
+.ap-author-list h3, .ap-category-list h3 {
+    font-size: 16px;
+}
+
+.ap-author-list ul > li a, .ap-category-list > ul > li a {
+    color: @colr-muted-blue;
+}

@@ -1,0 +1,19 @@
+﻿@model VMAphorism
+@{
+    Layout = null;
+    int lettersCount = ViewBag.AphorismLettersCount;
+}
+
+<div class="aphorism" data-mid="@Model.Id" data-lc="@lettersCount">
+    <div class="aph-progress">
+        <div></div>
+    </div>
+    <div><strong>@Model.Author</strong></div>
+    <div class="aph-html">
+        @Html.Raw(Model.Html)
+    </div>
+    <div class="text-right">
+        <br />
+        <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Aphorisms.Details(categoryId: Model.CategoryId, titleUrl: Model.TitleUrl))">Подробнее</a>
+    </div>
+</div>

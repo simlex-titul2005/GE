@@ -168,6 +168,9 @@
     <Compile Include="AccountController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="AphorismsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\SiteBanners.cs" />
     <Compile Include="ArticlesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -175,10 +178,12 @@
     <Compile Include="CommentsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AphorismsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extantions\Repositories\RepoAphorism.cs" />
     <Compile Include="ForumController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -195,6 +200,8 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Abstract\VMLastMaterial.cs" />
+    <Compile Include="Models\VMDetailAphorism.cs" />
+    <Compile Include="Models\VMAphorism.cs" />
     <Compile Include="Models\VMLastNews.cs" />
     <Compile Include="Models\VMLCNB.cs" />
     <Compile Include="Models\VMLCNBCategory.cs" />
@@ -238,6 +245,7 @@
     <Content Include="Content\dist\i\footer-bg-sm.jpg" />
     <Content Include="Content\dist\i\footer-bg-xs.jpg" />
     <Content Include="Content\dist\js\currency-provider.min.js" />
+    <Content Include="Content\dist\js\ge-aphorisms.min.js" />
     <Content Include="Content\dist\js\ge-for-gamers-block.min.js" />
     <Content Include="Content\dist\js\ge-last-category-block.min.js" />
     <Content Include="Content\dist\js\ge-last-news-block.min.js" />
@@ -265,15 +273,7 @@
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="packages.config" />
-    <Content Include="Scripts\currency-provider.js" />
-    <Content Include="Scripts\ge-last-category-block.js" />
-    <Content Include="Scripts\user-clicks-engine.js" />
-    <Content Include="Scripts\find-engine.js" />
-    <Content Include="Scripts\ge-for-gamers-block.js" />
-    <Content Include="Scripts\ge-game-menu.js" />
-    <Content Include="Scripts\ge-last-news-block.js" />
     <None Include="Scripts\_references.js" />
-    <Content Include="Scripts\site.js" />
     <Content Include="share42\icons.png" />
     <Content Include="share42\share42.js" />
     <Content Include="Views\Articles\List.cshtml">
@@ -398,6 +398,9 @@
     <Content Include="Views\Shared\_ByDateMaterial.cshtml" />
     <Content Include="Views\Shared\_PopularMaterials.cshtml" />
     <Content Include="Views\Videos\_VideoInList.cshtml" />
+    <Content Include="Views\Aphorisms\_Random.cshtml" />
+    <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
+    <Content Include="Views\Aphorisms\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

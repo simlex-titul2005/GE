@@ -50,8 +50,11 @@
         </div>
     </div>
     <br />
-    <img alt="@Model.Caption" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Id))" />
-    <br />
+    @if (!isNew)
+    {
+        <img alt="@Model.Caption" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Id))" />
+        <br />
+    }
     <br />
     <div class="row">
         <div class="col-md-12">

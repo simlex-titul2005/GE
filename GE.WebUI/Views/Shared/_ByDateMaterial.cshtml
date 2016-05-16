@@ -2,10 +2,11 @@
 @{
     Layout = null;
     var itemsCount = 3;
+    SX.WebCore.Enums.ModelCoreType mct = ViewBag.ModelCoreType;
 }
 
 <div class="by-date-m">
-    <h3>Другие новости</h3>
+    <h3>Другие @(mct==SX.WebCore.Enums.ModelCoreType.Article? "статьи":"новости")</h3>
     <div class="row">
         @for (int i = 0; i < itemsCount; i++)
         {

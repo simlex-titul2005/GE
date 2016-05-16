@@ -27,6 +27,15 @@ namespace GE.WebUI
                 namespaces: _defNamespace
             );
 
+            #region aphorisms
+            routes.MapRoute(
+                name: null,
+                url: "aphorisms/{categoryId}/{titleUrl}",
+                defaults: new { controller = "aphorisms", action = "details", area = "" },
+                namespaces: _defNamespace
+            );
+            #endregion
+
             #region forum
             routes.MapRoute(
                 name: null,

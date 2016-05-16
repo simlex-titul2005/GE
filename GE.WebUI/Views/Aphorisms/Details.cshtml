@@ -1,0 +1,54 @@
+﻿@model VMDetailAphorism
+@{
+    var title = ViewBag.Title;
+    var h1 = ViewBag.H1;
+    ViewBag.Title = title ?? Model.Aphorism.Title;
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.Description = ViewBag.Description ?? "Афоризмы, короткие изречения великих людей, коротко о главном";
+}
+
+<div class="ap-page">
+    <blockquote style="color:white;">
+        @Model.Aphorism.Html
+        <h4 class="small">@(Model.Aphorism.Author ?? "Аноним")</h4>
+    </blockquote>
+
+    @*author*@
+    @if (Model.TopForAuthor.Any())
+    {
+        <div class="ap-author-list">
+            <h2 class="header">@(Model.Aphorism.Author ?? "Аноним"). Другие высказывания</h2>
+
+            <ul>
+                @for (int i = 0; i < Model.TopForAuthor.Length; i++)
+            {
+                var a = Model.TopForAuthor[i];
+            <li>
+                <h3><a href="@Url.Action(MVC.Aphorisms.Details(categoryId: a.CategoryId, titleUrl: a.TitleUrl))">@a.Title</a></h3>
+                <div>@a.Html</div>
+            </li>
+            }
+            </ul>
+
+        </div>
+    }
+
+    @*category*@
+    @if (Model.TopForCategory.Any())
+    {
+        <div class="ap-category-list">
+            <h2 class="header">Другие высказывания в категории @Model.Aphorism.Category.Title</h2>
+
+            <ul>
+                @for (int i = 0; i < Model.TopForCategory.Length; i++)
+            {
+                var a = Model.TopForCategory[i];
+            <li>
+                <h3><a href="@Url.Action(MVC.Aphorisms.Details(categoryId: a.CategoryId, titleUrl: a.TitleUrl))">@a.Title</a></h3>
+                <div>@a.Html</div>
+            </li>
+            }
+            </ul>
+        </div>
+    }
+</div>

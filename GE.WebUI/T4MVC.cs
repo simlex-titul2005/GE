@@ -28,6 +28,7 @@ using T4MVC;
 public static partial class MVC
 {
     public static GE.WebUI.Controllers.AccountController Account = new GE.WebUI.Controllers.T4MVC_AccountController();
+    public static GE.WebUI.Controllers.AphorismsController Aphorisms = new GE.WebUI.Controllers.T4MVC_AphorismsController();
     public static GE.WebUI.Controllers.ArticlesController Articles = new GE.WebUI.Controllers.T4MVC_ArticlesController();
     public static GE.WebUI.Controllers.CommentsController Comments = new GE.WebUI.Controllers.T4MVC_CommentsController();
     public static GE.WebUI.Controllers.ErrorController Error = new GE.WebUI.Controllers.T4MVC_ErrorController();
@@ -153,14 +154,6 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
-        public static readonly string currency_provider_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/currency-provider.min.js") ? Url("currency-provider.min.js") : Url("currency-provider.js");
-        public static readonly string find_engine_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/find-engine.min.js") ? Url("find-engine.min.js") : Url("find-engine.js");
-        public static readonly string ge_for_gamers_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-for-gamers-block.min.js") ? Url("ge-for-gamers-block.min.js") : Url("ge-for-gamers-block.js");
-        public static readonly string ge_game_menu_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-game-menu.min.js") ? Url("ge-game-menu.min.js") : Url("ge-game-menu.js");
-        public static readonly string ge_last_category_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-last-category-block.min.js") ? Url("ge-last-category-block.min.js") : Url("ge-last-category-block.js");
-        public static readonly string ge_last_news_block_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ge-last-news-block.min.js") ? Url("ge-last-news-block.min.js") : Url("ge-last-news-block.js");
-        public static readonly string site_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.js") ? Url("site.min.js") : Url("site.js");
-        public static readonly string user_clicks_engine_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/user-clicks-engine.min.js") ? Url("user-clicks-engine.min.js") : Url("user-clicks-engine.js");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -221,6 +214,7 @@ namespace Links
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 public static readonly string currency_provider_min_js = Url("currency-provider.min.js");
+                public static readonly string ge_aphorisms_min_js = Url("ge-aphorisms.min.js");
                 public static readonly string ge_for_gamers_block_min_js = Url("ge-for-gamers-block.min.js");
                 public static readonly string ge_last_category_block_min_js = Url("ge-last-category-block.min.js");
                 public static readonly string ge_last_news_block_min_js = Url("ge-last-news-block.min.js");
@@ -242,14 +236,6 @@ namespace Links
             public static class Assets
             {
                 public const string _references_js = "~/Scripts/_references.js"; 
-                public const string currency_provider_js = "~/Scripts/currency-provider.js"; 
-                public const string find_engine_js = "~/Scripts/find-engine.js"; 
-                public const string ge_for_gamers_block_js = "~/Scripts/ge-for-gamers-block.js"; 
-                public const string ge_game_menu_js = "~/Scripts/ge-game-menu.js"; 
-                public const string ge_last_category_block_js = "~/Scripts/ge-last-category-block.js"; 
-                public const string ge_last_news_block_js = "~/Scripts/ge-last-news-block.js"; 
-                public const string site_js = "~/Scripts/site.js"; 
-                public const string user_clicks_engine_js = "~/Scripts/user-clicks-engine.js"; 
             }
         }
         public static partial class Content 
@@ -287,6 +273,7 @@ namespace Links
                     public static class Assets
                     {
                         public const string currency_provider_min_js = "~/Content/dist/js/currency-provider.min.js"; 
+                        public const string ge_aphorisms_min_js = "~/Content/dist/js/ge-aphorisms.min.js"; 
                         public const string ge_for_gamers_block_min_js = "~/Content/dist/js/ge-for-gamers-block.min.js"; 
                         public const string ge_last_category_block_min_js = "~/Content/dist/js/ge-last-category-block.min.js"; 
                         public const string ge_last_news_block_min_js = "~/Content/dist/js/ge-last-news-block.min.js"; 

@@ -2,10 +2,6 @@
 using GE.WebCoreExtantions;
 using GE.WebUI.Models;
 using SX.WebCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace GE.WebUI
 {
@@ -17,6 +13,10 @@ namespace GE.WebUI
             {
                 return new MapperConfiguration(cfg =>
                 {
+                    //aphorism
+                    cfg.CreateMap<Aphorism, VMAphorism>()
+                    .ForMember(d => d.Author, d => d.MapFrom(s => s.Author ?? "Аноним"));
+
                     //articles
                     cfg.CreateMap<Article, VMDetailArticle>();
 
@@ -25,6 +25,9 @@ namespace GE.WebUI
 
                     // comments
                     cfg.CreateMap<VMEditComment, SxComment>();
+
+                    // material category
+                    cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
 
                     //games
                     cfg.CreateMap<Game, VMGame>();

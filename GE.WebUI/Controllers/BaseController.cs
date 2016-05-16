@@ -2,6 +2,8 @@
 using System.Runtime.Caching;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Controllers;
+using System.Linq;
+using SX.WebCore.Attrubutes;
 
 namespace GE.WebUI.Controllers
 {
@@ -34,7 +36,9 @@ namespace GE.WebUI.Controllers
         {
             base.OnActionExecuting(filterContext);
 
-            if (filterContext.IsChildAction) return;
+            var notLogRequest = filterContext.ActionDescriptor.GetCustomAttributes(true).FirstOrDefault(x => x.GetType() == typeof(NotLogRequestAttribute)) != null;
+
+            if (filterContext.IsChildAction || notLogRequest) return;
 
             var redirect = this.GetRedirectUrl(_redirectsCache);
             if (redirect != null && redirect.NewUrl!=null)

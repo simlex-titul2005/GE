@@ -48,6 +48,12 @@
 
     @Html.Partial(MVC.Shared.Views._MaterialInfo, Model)
 
+    @*aphorisms*@
+    <div id="aphorisms">
+        @{Html.RenderAction("random", new { controller = "aphorisms" }); }
+        @*@Html.Action(MVC.Aphorisms.Random())*@
+    </div>
+
     <div id="by-date-mat">
         @Html.Action(MVC.Articles.ByDateMaterial(mct: Model.ModelCoreType, date: Model.DateOfPublication))
     </div>
@@ -76,7 +82,11 @@
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/currency-provider.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/ge-aphorisms.min.js"></script>
     <script type="text/javascript">
         loadScriptOnce('https://www.youtube.com/iframe_api');
+        $(function () {
+            $('#aphorisms').geAphorisms();
+        });
     </script>
 }

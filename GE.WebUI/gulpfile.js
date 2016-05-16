@@ -58,7 +58,8 @@ function createCss() {
         'content/less/pop-mat.less',
         'content/less/banners.less',
         'content/less/identity-page.less',
-        'content/less/video.less'
+        'content/less/video.less',
+        'content/less/aphorisms.less'
     ])
         .pipe(less())
         .pipe(concat('less-files.less'));
@@ -106,6 +107,7 @@ function createJs() {
         'scripts/ge-last-news-block.js',
         'scripts/ge-last-category-block.js',
         'scripts/currency-provider.js',
+        'scripts/ge-aphorisms.js',
         'bower_components/jquery-validation/dist/jquery.validate.js',
         'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js'
     ])

@@ -202,6 +202,7 @@ namespace GE.WebUI.Controllers
         [HttpGet]
         public virtual PartialViewResult ByDateMaterial(ModelCoreType mct, DateTime date)
         {
+            ViewBag.ModelCoreType = mct;
             VMLastMaterial[] data = null;
             switch(mct)
             {

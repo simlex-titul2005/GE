@@ -79,5 +79,23 @@ JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId ";
 
             return query;
         }
+
+        public Aphorism GetRandom(int? id=null)
+        {
+            var query = @"SELECT TOP(1) *FROM D_APHORISM AS da
+JOIN DV_MATERIAL AS dm ON dm.Id = da.Id AND dm.ModelCoreType = da.ModelCoreType
+JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId
+WHERE (@mid IS NULL) OR (@mid IS NOT NULL AND da.Id NOT IN (@mid))
+ORDER BY NEWID()";
+
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                var data = conn.Query<Aphorism, SxMaterialCategory, Aphorism>(query, (a, c)=> {
+                    a.Category = c;
+                    return a;
+                }, new { mid=id}).SingleOrDefault();
+                return data;
+            }
+        }
     }
 }

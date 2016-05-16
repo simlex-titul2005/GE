@@ -73,19 +73,23 @@ namespace GE.WebAdmin.Controllers
                     ModelState.Remove("TitleUrl");
                 }
             }
+
+            var isNew = model.Id == 0;
             
             if (ModelState.IsValid)
             {
+                
+
                 var titleWordsCount = model.Title.Split(' ');
                 if(titleWordsCount.Length<7)
                 {
                     ViewBag.HasError = true;
-                    model = getPreparedArticle(model);
+                    model = isNew?model : getPreparedArticle(model);
                     ModelState.AddModelError("Title", "Название не может содержать менее 7 слов");
                     return View(model);
                 }
 
-                var isNew = model.Id == 0;
+                
                 var redactModel = Mapper.Map<VMEditArticle, Article>(model);
                 
                 Article newModel = null;
@@ -103,7 +107,7 @@ namespace GE.WebAdmin.Controllers
                         if (existModel != null)
                         {
                             ViewBag.HasError = true;
-                            model = getPreparedArticle(model);
+                            model = isNew? model: getPreparedArticle(model);
                             ModelState.AddModelError("TitleUrl", "Строковый ключ должен быть уникальным");
                             return View(model);
                         }
@@ -117,7 +121,7 @@ namespace GE.WebAdmin.Controllers
             else
             {
                 ViewBag.HasError = true;
-                model = getPreparedArticle(model);
+                model = isNew?model: getPreparedArticle(model);
                 return View(model);
             }
                 

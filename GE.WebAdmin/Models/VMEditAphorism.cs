@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GE.WebAdmin.Models
 {
@@ -24,7 +20,8 @@ namespace GE.WebAdmin.Models
         [Required, MaxLength(255)]
         public string TitleUrl { get; set; }
 
-        [MaxLength(50), Display(Name ="Автор")]
-        public string Author { get; set; }
+        public VMAuthorAphorism Author { get; set; }
+        [Display(Name = "Автор"), UIHint("EditAuthorAphorism")]
+        public int AuthorId { get; set; }
     }
 }

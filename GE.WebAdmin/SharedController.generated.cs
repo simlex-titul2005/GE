@@ -59,6 +59,7 @@ namespace T4MVC
             {
                 public readonly string AddBanner = "AddBanner";
                 public readonly string Boolean = "Boolean";
+                public readonly string EditAuthorAphorism = "EditAuthorAphorism";
                 public readonly string EditGame = "EditGame";
                 public readonly string EditImage = "EditImage";
                 public readonly string EditMaterialCategory = "EditMaterialCategory";

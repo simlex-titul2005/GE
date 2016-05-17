@@ -22,10 +22,10 @@
             SortDirections = sortDirections,
             EnableEditing = false,
             EnableCreate = false,
-            Mode=SxExtantions.SxGridViewMode.Lookup,
-            FuncDataUrl=()=>Url.Action(MVC.Pictures.FindGridView()),
-            FuncGetId=(x)=>x.Id,
-            FuncTextField=()=>"Caption"
+            Mode = SxExtantions.SxGridViewMode.Lookup,
+            FuncDataUrl = () => Url.Action(MVC.Pictures.FindGridView()),
+            FuncGetId = (x) => x.Id,
+            FuncTextField = () => "Caption"
         },
             new { @class = "table table-condensed table-bordered table-responsive table-striped" }
     )

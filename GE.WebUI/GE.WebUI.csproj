@@ -200,6 +200,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Abstract\VMLastMaterial.cs" />
+    <Compile Include="Models\VMAuthorAphorism.cs" />
     <Compile Include="Models\VMDetailAphorism.cs" />
     <Compile Include="Models\VMAphorism.cs" />
     <Compile Include="Models\VMLastNews.cs" />
@@ -401,6 +402,7 @@
     <Content Include="Views\Aphorisms\_Random.cshtml" />
     <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
     <Content Include="Views\Aphorisms\Details.cshtml" />
+    <Content Include="Views\Aphorisms\_List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

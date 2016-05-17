@@ -206,6 +206,9 @@
     <Compile Include="ArticlesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="AuthorAphorismsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="BannedUrlsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -220,6 +223,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
+    <Compile Include="Controllers\AuthorAphorismsController.cs" />
     <Compile Include="Controllers\BannerGroupsController.cs" />
     <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\BannedUrlsController.cs" />
@@ -286,9 +290,11 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VMAphorism.cs" />
+    <Compile Include="Models\VMAuthorAphorism.cs" />
     <Compile Include="Models\VMBanner.cs" />
     <Compile Include="Models\VMBannerGroup.cs" />
     <Compile Include="Models\VMEditAphorism.cs" />
+    <Compile Include="Models\VMEditAuthorAphorism.cs" />
     <Compile Include="Models\VMEditBannedUrl.cs" />
     <Compile Include="Models\VMBannedUrl.cs" />
     <Compile Include="Models\VMEditBanner.cs" />
@@ -484,6 +490,11 @@
     <Content Include="Views\Aphorisms\Edit.cshtml" />
     <Content Include="Views\FAQ\Index.cshtml" />
     <Content Include="Views\FAQ\DisplayTemplates\VMFAQ.cshtml" />
+    <Content Include="Views\AuthorAphorisms\_GridView.cshtml" />
+    <Content Include="Views\AuthorAphorisms\Edit.cshtml" />
+    <Content Include="Views\AuthorAphorisms\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditAuthorAphorism.cshtml" />
+    <Content Include="Views\AuthorAphorisms\_FindGridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,50 @@
+﻿@model VMEditAuthorAphorism
+@{
+    var isNew = Model.Id == 0;
+    ViewBag.Title = isNew ? "Добавить автора афоризмов" : "Редактировать автора афоризмов \"" + Model.Name + "\"";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (!isNew)
+{
+    <div class="text-right">
+        <form method="post" action="@Url.Action(MVC.AuthorAphorisms.Delete())">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.Id)
+            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить</button>
+        </form>
+    </div>
+}
+<br />
+<form method="post" action="@Url.Action(MVC.AuthorAphorisms.Edit())">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Name)
+        @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите имя автора" } })
+        @Html.ValidationMessageFor(x => x.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Description)
+        @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание автора" } })
+        @Html.ValidationMessageFor(x => x.Description)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.PictureId, new { @class = "control-label" })
+        @if (!isNew && Model.PictureId.HasValue)
+            {
+            @:&nbsp;
+            <a href="@Url.Action(MVC.Pictures.Picture((Guid)Model.PictureId))">Показать</a>
+        }
+        @Html.EditorFor(x => x.PictureId, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.PictureId)
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+        <a href="@Url.Action(MVC.AuthorAphorisms.Index())" class="btn btn-default">Назад</a>
+    </div>
+</form>

@@ -14,8 +14,10 @@ namespace GE.WebUI
                 return new MapperConfiguration(cfg =>
                 {
                     //aphorism
-                    cfg.CreateMap<Aphorism, VMAphorism>()
-                    .ForMember(d => d.Author, d => d.MapFrom(s => s.Author ?? "Аноним"));
+                    cfg.CreateMap<Aphorism, VMAphorism>();
+
+                    //author aphorism
+                    cfg.CreateMap<AuthorAphorism, VMAuthorAphorism>();
 
                     //articles
                     cfg.CreateMap<Article, VMDetailArticle>();

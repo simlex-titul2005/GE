@@ -39,7 +39,8 @@ namespace GE.WebAdmin.Controllers
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoAphorism).Query(filter).ToArray().Select(x=>Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
+            var data = (_repo as RepoAphorism).Query(filter).ToArray();
+            var viewModel = data.Select(x=>Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
 
             return View(viewModel);
         }
@@ -95,7 +96,7 @@ namespace GE.WebAdmin.Controllers
                 if (isNew)
                     _repo.Create(redactModel);
                 else
-                    _repo.Update(redactModel, true, "Title", "Html", "Author");
+                    _repo.Update(redactModel, true, "Title", "Html", "AuthorId");
                 return RedirectToAction(MVC.Aphorisms.Index(curCat: model.CategoryId));
             }
             return View(model);

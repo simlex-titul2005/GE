@@ -30,6 +30,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.AccountController Account = new GE.WebAdmin.Controllers.T4MVC_AccountController();
     public static GE.WebAdmin.Controllers.AphorismsController Aphorisms = new GE.WebAdmin.Controllers.T4MVC_AphorismsController();
     public static GE.WebAdmin.Controllers.ArticlesController Articles = new GE.WebAdmin.Controllers.T4MVC_ArticlesController();
+    public static GE.WebAdmin.Controllers.AuthorAphorismsController AuthorAphorisms = new GE.WebAdmin.Controllers.T4MVC_AuthorAphorismsController();
     public static GE.WebAdmin.Controllers.BannedUrlsController BannedUrls = new GE.WebAdmin.Controllers.T4MVC_BannedUrlsController();
     public static GE.WebAdmin.Controllers.BannerGroupsController BannerGroups = new GE.WebAdmin.Controllers.T4MVC_BannerGroupsController();
     public static GE.WebAdmin.Controllers.BannersController Banners = new GE.WebAdmin.Controllers.T4MVC_BannersController();

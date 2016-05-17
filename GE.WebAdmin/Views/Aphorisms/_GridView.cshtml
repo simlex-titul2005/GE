@@ -16,7 +16,9 @@
                     Data = Model,
                     Columns = new SxExtantions.SxGridViewColumn<VMAphorism>[]{
             new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"},
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Author", Caption="Автор"},
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Name", Caption="Автор",Template=(a)=> {
+                return a.Author!=null? a.Author.Name:null;
+            } },
             new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
             },
                     PagerInfo = pagerInfo,
@@ -26,6 +28,6 @@
                     FuncEditLink = x => Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism, id: x.Id)),
                     PagerLink = Url.Action(MVC.Aphorisms.Index(curCat: categoryId))
                 },
-            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+                    new { @class = "table table-condensed table-bordered table-responsive table-striped" }
         )
 }

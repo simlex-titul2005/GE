@@ -24,6 +24,12 @@ namespace GE.WebAdmin
                     cfg.CreateMap<Aphorism, VMEditAphorism>();
                     cfg.CreateMap<VMEditAphorism, Aphorism>();
 
+                    //author aphorism
+                    cfg.CreateMap<AuthorAphorism, VMAuthorAphorism>();
+                    cfg.CreateMap<VMAuthorAphorism, AuthorAphorism>();
+                    cfg.CreateMap<AuthorAphorism, VMEditAuthorAphorism>();
+                    cfg.CreateMap<VMEditAuthorAphorism, AuthorAphorism>();
+
                     //banned url
                     cfg.CreateMap<SxBannedUrl, VMBannedUrl>();
                     cfg.CreateMap<SxBannedUrl, VMEditBannedUrl>();

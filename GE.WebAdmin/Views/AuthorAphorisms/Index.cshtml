@@ -1,0 +1,10 @@
+﻿@model VMAuthorAphorism[]
+@{
+    ViewBag.Title = "Авторы афоризмов";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-author-ap">
+    @Html.Partial(MVC.AuthorAphorisms.Views._GridView, Model)
+</div>

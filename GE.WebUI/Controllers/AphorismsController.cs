@@ -28,7 +28,7 @@ namespace GE.WebUI.Controllers
         [HttpGet]
         public virtual ViewResult Details(string categoryId, string titleUrl)
         {
-            var vierwModel = (_repo as RepoAphorism).GetByTitleUrl(titleUrl);
+            var vierwModel = (_repo as RepoAphorism).GetByTitleUrl(categoryId, titleUrl);
             return View(vierwModel);
         }
     }

@@ -34,6 +34,10 @@ UPDATE D_MATERIAL_CATEGORY
 SET    FrontPictureId = NULL
 WHERE FrontPictureId= @picture_id
 
+UPDATE D_AUTHOR_APHORISM
+SET   PictureId = NULL
+WHERE PictureId= @picture_id
+
 DELETE FROM D_PICTURE WHERE Id=@picture_id
 
 COMMIT TRANSACTION";

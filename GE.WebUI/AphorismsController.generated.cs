@@ -117,9 +117,13 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _List = "_List";
                 public readonly string _Random = "_Random";
+                public readonly string Details = "Details";
             }
+            public readonly string _List = "~/Views/Aphorisms/_List.cshtml";
             public readonly string _Random = "~/Views/Aphorisms/_Random.cshtml";
+            public readonly string Details = "~/Views/Aphorisms/Details.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

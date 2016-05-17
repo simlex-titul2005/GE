@@ -6,6 +6,7 @@ namespace GE.WebUI.Models.Abstract
 {
     public abstract class VMLastMaterial
     {
+        public int Id { get; set; }
         public DateTime DateOfPublication { get; set; }
         public ModelCoreType ModelCoreType { get; set; }
         public DateTime DateCreate { get; set; }

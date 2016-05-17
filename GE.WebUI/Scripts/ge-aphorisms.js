@@ -30,7 +30,7 @@
                 if (!mouseInBlock) {
                     $.ajax({
                         method: 'get',
-                        url: '/aphorisms/random?id=' + mid,
+                        url: '/aphorism/random?id=' + mid,
                         success: function (data) {
                             var html = $(data).find('.aph-html').html();
                             $this.fadeOut('fast', function () {

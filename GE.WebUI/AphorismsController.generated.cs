@@ -84,7 +84,6 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Random = "Random";
             public readonly string Details = "Details";
             public readonly string Categories = "Categories";
             public readonly string List = "List";
@@ -94,7 +93,6 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Random = "Random";
             public const string Details = "Details";
             public const string Categories = "Categories";
             public const string List = "List";
@@ -102,14 +100,6 @@ namespace GE.WebUI.Controllers
         }
 
 
-        static readonly ActionParamsClass_Random s_params_Random = new ActionParamsClass_Random();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Random RandomParams { get { return s_params_Random; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Random
-        {
-            public readonly string id = "id";
-        }
         static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
@@ -158,22 +148,13 @@ namespace GE.WebUI.Controllers
             {
                 public readonly string _Categories = "_Categories";
                 public readonly string _List = "_List";
-                public readonly string _Random = "_Random";
                 public readonly string Details = "Details";
                 public readonly string List = "List";
             }
             public readonly string _Categories = "~/Views/Aphorisms/_Categories.cshtml";
             public readonly string _List = "~/Views/Aphorisms/_List.cshtml";
-            public readonly string _Random = "~/Views/Aphorisms/_Random.cshtml";
             public readonly string Details = "~/Views/Aphorisms/Details.cshtml";
             public readonly string List = "~/Views/Aphorisms/List.cshtml";
-            static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
-            public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
-            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-            public partial class _DisplayTemplatesClass
-            {
-                public readonly string VMAphorism = "VMAphorism";
-            }
         }
     }
 
@@ -181,18 +162,6 @@ namespace GE.WebUI.Controllers
     public partial class T4MVC_AphorismsController : GE.WebUI.Controllers.AphorismsController
     {
         public T4MVC_AphorismsController() : base(Dummy.Instance) { }
-
-        [NonAction]
-        partial void RandomOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int? id);
-
-        [NonAction]
-        public override System.Web.Mvc.PartialViewResult Random(int? id)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Random);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            RandomOverride(callInfo, id);
-            return callInfo;
-        }
 
         [NonAction]
         partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string categoryId, string titleUrl);

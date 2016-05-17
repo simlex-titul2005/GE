@@ -168,6 +168,9 @@
     <Compile Include="AccountController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="AphorismController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="AphorismsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -178,6 +181,7 @@
     <Compile Include="CommentsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AphorismController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="ErrorController.generated.cs">
@@ -400,8 +404,8 @@
     <Content Include="Views\Shared\_ByDateMaterial.cshtml" />
     <Content Include="Views\Shared\_PopularMaterials.cshtml" />
     <Content Include="Views\Videos\_VideoInList.cshtml" />
-    <Content Include="Views\Aphorisms\_Random.cshtml" />
-    <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
+    <Content Include="Views\Aphorism\_Random.cshtml" />
+    <Content Include="Views\Aphorism\DisplayTemplates\VMAphorism.cshtml" />
     <Content Include="Views\Aphorisms\Details.cshtml" />
     <Content Include="Views\Aphorisms\_List.cshtml" />
     <Content Include="Views\Aphorisms\_Categories.cshtml" />

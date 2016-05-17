@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 17.05.2016 14:07:59
+ * Time: 17.05.2016 17:01:58
  ************************************************************/
 
 /*******************************************
@@ -85,7 +85,6 @@ BEGIN
 	                       AND dm.ModelCoreType = da.ModelCoreType
 	           WHERE  dm.CategoryId IN (@catId)
 	                  AND dm.TitleUrl NOT IN (@title_url)
-	                  AND da.AuthorId NOT IN (@authorId)
 	       ) x
 	       LEFT JOIN D_COMMENT          AS dc
 	            ON  dc.MaterialId = x.Id
@@ -109,6 +108,16 @@ BEGIN
 	RETURN
 END
 GO
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -152,6 +161,16 @@ GO
 
 
 
+
+
+
+
+
+
+
+
+
+
 /*******************************************
 * получить афоризмы
 *******************************************/
@@ -178,6 +197,92 @@ BEGIN
 	            ON  dmc.Id = dm.CategoryId
 	       LEFT JOIN D_AUTHOR_APHORISM  AS daa
 	            ON  daa.Id = da.AuthorId
+	
+	RETURN
+END
+GO
+
+
+
+
+
+
+
+
+
+
+
+/*******************************************
+* другие материалы
+*******************************************/
+IF OBJECT_ID(N'get_other_materials', N'TF') IS NOT NULL
+    DROP FUNCTION get_other_materials;
+GO
+CREATE FUNCTION get_other_materials
+(
+	@mid        INT,
+	@mct        INT,
+	@dir        BIT,
+	@amount     INT = 3
+)
+RETURNS @result TABLE(
+            Id INT,
+            DateCreate DATETIME,
+            DateOfPublication DATETIME,
+            Title NVARCHAR(255),
+            TitleUrl NVARCHAR(255),
+            Foreword NVARCHAR(400),
+            ModelCoreType INT,
+            UserId NVARCHAR(128),
+            AvatarId UNIQUEIDENTIFIER
+        )
+AS
+BEGIN
+	DECLARE @date DATETIME
+	SELECT @date = dm.DateOfPublication
+	FROM   DV_MATERIAL AS dm
+	WHERE  dm.Id = @mid
+	       AND dm.ModelCoreType = @mct
+	
+	IF (@dir = 1)
+	    INSERT INTO @result
+	    SELECT TOP(@amount) dm.Id,
+	           dm.DateCreate,
+	           dm.DateOfPublication,
+	           dm.Title,
+	           dm.TitleUrl,
+	           dm.Foreword,
+	           dm.ModelCoreType,
+	           dm.UserId,
+	           anu.AvatarId
+	    FROM   DV_MATERIAL       AS dm
+	           JOIN AspNetUsers  AS anu
+	                ON  anu.Id = dm.UserId
+	    WHERE  dm.ModelCoreType = @mct
+	           AND (dm.Id IN (@mid)
+	           OR  (dm.Id NOT IN (@mid) AND dm.DateOfPublication > @date))
+	    ORDER BY
+	           dm.DateOfPublication DESC
+	ELSE 
+	IF (@dir = 0)
+	    INSERT INTO @result
+	    SELECT TOP(@amount) dm.Id,
+	           dm.DateCreate,
+	           dm.DateOfPublication,
+	           dm.Title,
+	           dm.TitleUrl,
+	           dm.Foreword,
+	           dm.ModelCoreType,
+	           dm.UserId,
+	           anu.AvatarId
+	    FROM   DV_MATERIAL       AS dm
+	           JOIN AspNetUsers  AS anu
+	                ON  anu.Id = dm.UserId
+	    WHERE  dm.ModelCoreType = @mct
+	           AND (dm.Id IN (@mid)
+	           OR  (dm.Id NOT IN (@mid) AND dm.DateOfPublication < @date))
+	    ORDER BY
+	           dm.DateOfPublication DESC
 	
 	RETURN
 END

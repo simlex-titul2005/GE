@@ -29,28 +29,29 @@ namespace GE.WebUI
             );
 
             #region aphorisms
-            
-
 
             routes.MapRoute(
                 name: null,
                 url: "aphorisms",
                 defaults: new { controller = "aphorisms", action = "list", categoryId = (string)null, page = 1, area = "" },
-                namespaces: _defNamespace
+                namespaces: _defNamespace,
+                constraints: new { action = "^List" }
             );
 
             routes.MapRoute(
                 name: null,
                 url: "aphorisms/page{page}",
                 defaults: new { controller = "aphorisms", action = "list", categoryId=(string)null, page = 1, area = "" },
-                namespaces: _defNamespace
+                namespaces: _defNamespace,
+                constraints: new { action = "^List" }
             );
 
             routes.MapRoute(
                 name: null,
                 url: "aphorisms/{categoryId}",
                 defaults: new { controller = "aphorisms", action = "list", page=1, area = "" },
-                namespaces: _defNamespace
+                namespaces: _defNamespace,
+                constraints: new { action = "^List" }
             );
 
             routes.MapRoute(
@@ -68,7 +69,9 @@ namespace GE.WebUI
                 namespaces: _defNamespace,
                 constraints: new { action= "^Details" }
             );
+
             
+
             #endregion
 
             #region forum
@@ -101,6 +104,13 @@ namespace GE.WebUI
 
             #region articles
             routes.IgnoreRoute("articles/details/{id}");
+
+            routes.MapRoute(
+                name: null,
+                url: "articles/bydatematerial",
+                defaults: new { controller = "articles", action = "bydatematerial", area = "" },
+                namespaces: _defNamespace
+            );
 
             routes.MapRoute(
                 name: null,

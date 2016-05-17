@@ -1,10 +1,12 @@
 ﻿@model VMAphorism[]
 @{
+    var searchAuthor = Request.QueryString["author"];
+    var authorName = searchAuthor != null ? searchAuthor == "no" ? "Аноним" : searchAuthor.ToString() : null;
     var pagerInfo = (SxExtantions.SxPagerInfo)ViewBag.PagerInfo;
     var category = ViewBag.CurrentAphorismCategory != null ? ((VMMaterialCategory)ViewBag.CurrentAphorismCategory) : null;
     var categoryId = category != null ? category.Id : null;
     var curName = category != null ? category.Title : null;
-    var title= curName == null ? "Афоризмы, короткие высказывания, шутки" : string.Format("{0}. Афоризмы, короткие высказывания, шутки", curName);
+    var title = curName == null && authorName == null ? "Афоризмы, короткие высказывания, шутки" : string.Format("{0}. Афоризмы, короткие высказывания, шутки", curName ?? authorName);
     ViewBag.Title = title;
 
     ViewBag.H1 = ViewBag.H1 ?? title;
@@ -15,29 +17,11 @@
         <div class="col-md-9">
             @Html.Partial(MVC.Aphorisms.Views._List, Model)
             <div class="text-center">
-                @Html.SxPager(pagerInfo, pageUrl: (x) => Url.Action(MVC.Aphorisms.List(categoryId: categoryId, page: x)), htmlAttributes: new { @class = "pagination" }, isAjax: false)
+                @Html.SxPager(pagerInfo, pageUrl: (x) => Url.Action("list", new { categoryId = categoryId, page = x, author = ViewBag.AuthorName }), htmlAttributes: new { @class = "pagination" }, isAjax: false)
             </div>
         </div>
         <div class="col-md-3">
             @Html.Action(MVC.Aphorisms.Categories(curCat: curName, onlyNotCurrent: false))
-            @*<div class="ap-search">
-                <h4>Найти</h4>
-                <br />
-                <form method="post" action="seach">
-                    @Html.AntiForgeryToken()
-                    <div class="form-group form-group-sm">
-                        <label class="small" for="Author">Автор</label>
-                        <input type="text" name="Author" class="form-control" id="Author" />
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <label class="small" for="Html">Содержание</label>
-                        <input type="text" name="Html" class="form-control" id="Html" />
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <button type="submit" class="btn btn-sm btn-default">Поиск</button>
-                    </div>
-                </form>
-            </div>*@
         </div>
     </div>
 </div>

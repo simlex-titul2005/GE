@@ -50,12 +50,11 @@
 
     @*aphorisms*@
     <div id="aphorisms">
-        @{Html.RenderAction("random", new { controller = "aphorisms" }); }
-        @*@Html.Action(MVC.Aphorisms.Random())*@
+        @{Html.RenderAction("random", new { controller = "aphorism" }); }
     </div>
 
     <div id="by-date-mat">
-        @Html.Action(MVC.Articles.ByDateMaterial(mct: Model.ModelCoreType, date: Model.DateOfPublication))
+        @Html.Action(MVC.Articles.ByDateMaterial(mid: Model.Id, mct: Model.ModelCoreType))
     </div>
 
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))

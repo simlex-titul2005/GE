@@ -14,6 +14,7 @@ using GE.WebUI.Extantions.Repositories;
 using static SX.WebCore.Enums;
 using System.Globalization;
 using System.Web.SessionState;
+using SX.WebCore.Attrubutes;
 
 namespace GE.WebUI.Controllers
 {
@@ -197,20 +198,20 @@ namespace GE.WebUI.Controllers
         }
 
 #if !DEBUG
-        [OutputCache(Duration =900, VaryByParam ="mct;date")]
+                [OutputCache(Duration =900, VaryByParam ="mid;mct;dir;amount")]
 #endif
-        [HttpGet]
-        public virtual PartialViewResult ByDateMaterial(ModelCoreType mct, DateTime date)
+        [HttpGet, NotLogRequest]
+        public virtual PartialViewResult ByDateMaterial(int mid, ModelCoreType mct, bool dir=false, int amount=3)
         {
             ViewBag.ModelCoreType = mct;
             VMLastMaterial[] data = null;
             switch(mct)
             {
                 case ModelCoreType.Article:
-                    data = new RepoArticle().GetByDateMaterial(mct, date);
+                    data = new RepoArticle().GetByDateMaterial(mid, mct, dir, amount);
                     break;
                 case ModelCoreType.News:
-                    data = new RepoNews().GetByDateMaterial(mct, date);
+                    data = new RepoNews().GetByDateMaterial(mid, mct, dir, amount);
                     break;
             }
 

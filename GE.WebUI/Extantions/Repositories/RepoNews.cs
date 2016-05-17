@@ -317,52 +317,14 @@ JOIN D_NEWS AS dn ON dn.ModelCoreType = dvl.ModelCoreType AND dn.Id=@mid";
             }
         }
 
-        public static VMLastNews[] GetByDateMaterial(this WebCoreExtantions.Repositories.RepoNews repo, ModelCoreType mct, DateTime date)
+        public static VMLastNews[] GetByDateMaterial(this WebCoreExtantions.Repositories.RepoNews repo, int mid, ModelCoreType mct, bool dir, int amount)
         {
-            var queryForByDateMaterials = @"SELECT x.DateCreate,
-       x.DateOfPublication,
-       x.ModelCoreType,
-       x.Title,
-       x.TitleUrl,
-       x.Foreword,
-       x.UserId,
-       anu.AvatarId,
-       CASE 
-            WHEN anu.NikName IS NULL THEN anu.UserName
-            ELSE anu.NikName
-       END               AS NikName
-FROM   (
-           SELECT TOP(1) dm.*,
-                  IsCurrent = 1
-           FROM   DV_MATERIAL AS dm
-           WHERE  dm.ModelCoreType = @mct
-                  AND dm.DateOfPublication > @date
-                  AND dm.Show = 1
-                  AND dm.DateOfPublication <= GETDATE()
-           ORDER BY
-                  dm.DateOfPublication DESC
-           UNION ALL
-           SELECT TOP(2) dm.*,
-                  IsCurrent = -1
-           FROM   DV_MATERIAL AS dm
-           WHERE  dm.ModelCoreType = @mct
-                  AND dm.DateOfPublication < @date
-                  AND dm.Show = 1
-                  AND dm.DateOfPublication <= GETDATE()
-           ORDER BY
-                  dm.DateOfPublication DESC
-       ) x
-       JOIN AspNetUsers  AS anu
-            ON  anu.Id = x.UserId
-ORDER BY
-       x.IsCurrent";
-
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                var data = connection.Query<VMLastNews, VMUser, VMLastNews>(queryForByDateMaterials, (m, u) => {
+                var data = connection.Query<VMLastNews, VMUser, VMLastNews>("select * from get_other_materials(@mid, @mct, @dir, @amount) ORDER BY DateCreate", (m, u) => {
                     m.Author = u;
                     return m;
-                }, new { date = date, mct = mct }, splitOn: "UserId").ToArray();
+                }, new { mid = mid, mct = mct, dir = dir, amount = amount }, splitOn: "UserId").ToArray();
                 return data;
             }
         }

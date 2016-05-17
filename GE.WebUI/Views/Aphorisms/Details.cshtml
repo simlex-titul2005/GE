@@ -24,12 +24,18 @@
             @if (Model.TopForAuthor.Any())
             {
                 @Html.Partial(MVC.Aphorisms.Views._List, Model.TopForAuthor, new ViewDataDictionary { { "Author", author } })
+                <div class="text-center">
+                    <a href="@Url.Action("list", new { author=author=="Аноним"? "no":author})" class="btn btn-default btn-transparent white">Все афоризмы автора</a>
+                </div>
             }
 
             @*category*@
             @if (Model.TopForCategory.Any())
             {
                 @Html.Partial(MVC.Aphorisms.Views._List, Model.TopForCategory, new ViewDataDictionary { { "Category", Model.Aphorism.Category.Title } })
+                <div class="text-center">
+                    <a href="@Url.Action(MVC.Aphorisms.List(categoryId: Model.Aphorism.CategoryId))" class="btn btn-default btn-transparent white">Все афоризмы категории</a>
+                </div>
             }
         </div>
         <div class="col-md-3">

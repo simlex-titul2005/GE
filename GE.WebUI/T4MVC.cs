@@ -28,6 +28,7 @@ using T4MVC;
 public static partial class MVC
 {
     public static GE.WebUI.Controllers.AccountController Account = new GE.WebUI.Controllers.T4MVC_AccountController();
+    public static GE.WebUI.Controllers.AphorismController Aphorism = new GE.WebUI.Controllers.T4MVC_AphorismController();
     public static GE.WebUI.Controllers.AphorismsController Aphorisms = new GE.WebUI.Controllers.T4MVC_AphorismsController();
     public static GE.WebUI.Controllers.ArticlesController Articles = new GE.WebUI.Controllers.T4MVC_ArticlesController();
     public static GE.WebUI.Controllers.CommentsController Comments = new GE.WebUI.Controllers.T4MVC_CommentsController();

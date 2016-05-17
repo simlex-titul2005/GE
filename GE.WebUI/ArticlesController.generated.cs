@@ -184,8 +184,10 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_ByDateMaterial
         {
+            public readonly string mid = "mid";
             public readonly string mct = "mct";
-            public readonly string date = "date";
+            public readonly string dir = "dir";
+            public readonly string amount = "amount";
         }
         static readonly ActionParamsClass_Popular s_params_Popular = new ActionParamsClass_Popular();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -313,15 +315,17 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void ByDateMaterialOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, SX.WebCore.Enums.ModelCoreType mct, System.DateTime date);
+        partial void ByDateMaterialOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct, bool dir, int amount);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult ByDateMaterial(SX.WebCore.Enums.ModelCoreType mct, System.DateTime date)
+        public override System.Web.Mvc.PartialViewResult ByDateMaterial(int mid, SX.WebCore.Enums.ModelCoreType mct, bool dir, int amount)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.ByDateMaterial);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "date", date);
-            ByDateMaterialOverride(callInfo, mct, date);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "dir", dir);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "amount", amount);
+            ByDateMaterialOverride(callInfo, mid, mct, dir, amount);
             return callInfo;
         }
 

@@ -28,7 +28,7 @@
     @Html.Partial(MVC.Shared.Views._MaterialInfo, Model)
 
     <div id="by-date-mat">
-        @Html.Action(MVC.News.ByDateMaterial(mct: Model.ModelCoreType, date: Model.DateOfPublication))
+        @Html.Action(MVC.News.ByDateMaterial(mid:Model.Id, mct: Model.ModelCoreType))
     </div>
 
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))

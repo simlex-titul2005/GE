@@ -146,6 +146,7 @@
     <Compile Include="Managers\SxAppUserManager.cs" />
     <Compile Include="Managers\SxSeoWordCounter.cs" />
     <Compile Include="PictureHandler.cs" />
+    <Compile Include="Providers\ErrorProvider.cs" />
     <Compile Include="Providers\QueryProvider.cs" />
     <Compile Include="Providers\VideoProvider.cs" />
     <Compile Include="Repositories\RepoBannedUrl.cs" />

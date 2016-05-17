@@ -39,6 +39,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.ForumPartsController ForumParts = new GE.WebAdmin.Controllers.T4MVC_ForumPartsController();
     public static GE.WebAdmin.Controllers.GamesController Games = new GE.WebAdmin.Controllers.T4MVC_GamesController();
     public static GE.WebAdmin.Controllers.HomeController Home = new GE.WebAdmin.Controllers.T4MVC_HomeController();
+    public static GE.WebAdmin.Controllers.LogsController Logs = new GE.WebAdmin.Controllers.T4MVC_LogsController();
     public static GE.WebAdmin.Controllers.ManualsController Manuals = new GE.WebAdmin.Controllers.T4MVC_ManualsController();
     public static GE.WebAdmin.Controllers.MaterialCategoriesController MaterialCategories = new GE.WebAdmin.Controllers.T4MVC_MaterialCategoriesController();
     public static GE.WebAdmin.Controllers.MaterialTagsController MaterialTags = new GE.WebAdmin.Controllers.T4MVC_MaterialTagsController();

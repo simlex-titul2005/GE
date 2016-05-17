@@ -79,15 +79,22 @@ namespace GE.WebAdmin.Controllers
             if (ModelState.IsValid)
             {
                 var titleWordsCount = model.Title.Split(' ');
-                if (titleWordsCount.Length < 7)
+                if (titleWordsCount.Length > 8)
                 {
                     ViewBag.HasError = true;
                     model = isNew? model : getPreparedNews(model);
-                    ModelState.AddModelError("Title", "Название не может содержать менее 7 слов");
+                    ModelState.AddModelError("Title", "Название не может содержать более 8 слов");
+                    return View(model);
+                }
+                else if (titleWordsCount.Length < 2)
+                {
+                    ViewBag.HasError = true;
+                    model = isNew ? model : getPreparedNews(model);
+                    ModelState.AddModelError("Title", "Название не может содержать менее 2 слов");
                     return View(model);
                 }
 
-                
+
                 var redactModel = Mapper.Map<VMEditNews, News>(model);
                 
                 News newModel = null;

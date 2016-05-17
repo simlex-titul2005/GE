@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Web.Mvc;
@@ -24,6 +25,7 @@ namespace GE.WebAdmin
         private static MapperConfiguration _mapperConfiguration;
         protected void Application_Start()
         {
+            ErrorProvider.Configure(Server.MapPath("~/Logs"));
             Database.SetInitializer<WebCoreExtantions.DbContext>(null);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -56,9 +58,10 @@ namespace GE.WebAdmin
                 UsersOnSite.Remove(sessionId);
         }
 
-        protected void Application_Eror()
+        protected void Application_Error()
         {
-
+            var ex = Server.GetLastError();
+            ErrorProvider.WriteMessage(ex);
         }
     }
 }

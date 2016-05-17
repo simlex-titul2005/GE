@@ -17,13 +17,13 @@ CREATE FUNCTION get_aphorism_page_model
 )
 RETURNS @result TABLE(
             Id INT,
-            Title VARCHAR(255),
-            TitleUrl VARCHAR(255),
-            Html VARCHAR(MAX),
-            CategoryId VARCHAR(100),
-            CategoryTitle VARCHAR(100),
+            Title NVARCHAR(255),
+            TitleUrl NVARCHAR(255),
+            Html NVARCHAR(MAX),
+            CategoryId NVARCHAR(100),
+            CategoryTitle NVARCHAR(100),
             AuthorId INT,
-            AuthorName VARCHAR(100),
+            AuthorName NVARCHAR(100),
             AuthorPictureId UNIQUEIDENTIFIER,
             Flag INT,
             CommentsCount INT

@@ -5,27 +5,35 @@
     ViewBag.Title = title ?? Model.Aphorism.Title;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? "Афоризмы, короткие изречения великих людей, коротко о главном";
+    var author = Model.Aphorism.Author != null && Model.Aphorism.Author.Name != null ? Model.Aphorism.Author.Name : "Аноним";
 }
 
 <div class="ap-page">
-    <blockquote style="color:white;">
-        @if(Model.Aphorism.Author!=null && Model.Aphorism.Author.PictureId.HasValue)
-        {
-            <img class="author-img img-circle" alt="@Model.Aphorism.Author.Name" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Aphorism.Author.PictureId))"/>
-        }
-        @Model.Aphorism.Html
-        <h4 class="small">@(Model.Aphorism.Author!=null ? Model.Aphorism.Author.Name: "Аноним")</h4>
-    </blockquote>
+    <div class="row">
+        <div class="col-md-9">
+            <blockquote style="color:white;">
+                @if (Model.Aphorism.Author != null && Model.Aphorism.Author.PictureId.HasValue)
+                {
+                    <img class="author-img img-circle" alt="@Model.Aphorism.Author.Name" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Aphorism.Author.PictureId))" />
+                }
+                @Model.Aphorism.Html
+                <h4 class="small">@(author)</h4>
+            </blockquote>
 
-    @*author*@
-    @if (Model.TopForAuthor.Any())
-    {
-        @Html.Partial(MVC.Aphorisms.Views._List, Model.TopForAuthor, new ViewDataDictionary { { "Author", Model.Aphorism.Author } })
-    }
+            @*author*@
+            @if (Model.TopForAuthor.Any())
+            {
+                @Html.Partial(MVC.Aphorisms.Views._List, Model.TopForAuthor, new ViewDataDictionary { { "Author", author } })
+            }
 
-    @*category*@
-    @if (Model.TopForCategory.Any())
-    {
-        @Html.Partial(MVC.Aphorisms.Views._List, Model.TopForCategory, new ViewDataDictionary { { "Category", Model.Aphorism.Category.Title } })
-    }
+            @*category*@
+            @if (Model.TopForCategory.Any())
+            {
+                @Html.Partial(MVC.Aphorisms.Views._List, Model.TopForCategory, new ViewDataDictionary { { "Category", Model.Aphorism.Category.Title } })
+            }
+        </div>
+        <div class="col-md-3">
+            @Html.Action(MVC.Aphorisms.Categories(curCat: Model.Aphorism.CategoryId))
+        </div>
+    </div>
 </div>

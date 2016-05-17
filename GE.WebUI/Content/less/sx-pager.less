@@ -5,14 +5,19 @@
 .sx-pager > li > a {
     margin-left: 5px;
     border-radius: 0 !important;
-    color: inherit;
+    color:rgba(255,255,255, 0.5);
+    background-color:unset !important;
+    padding: 3px 10px;
+    border: 1px solid rgba(255,255,255, 0.1);
+    transition:all 0.1s;
 }
 
 .sx-pager > li > a:hover{
-    color:inherit;
+    color:rgba(255,255,255, 1);
 }
 
 .sx-pager > li.active > a, .sx-pager > li.active > a:hover {
-    background-color:@color-dark-blue;
-    border-color:@color-dark-blue;
+    background-color:unset !important;
+    color:@color-white !important;
+    border-color:@color-dark-blue !important;
 }

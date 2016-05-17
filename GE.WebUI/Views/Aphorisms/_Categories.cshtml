@@ -1,0 +1,19 @@
+﻿@model VMAphorismCategory[]
+@{
+    Layout = null;
+    var cat = ViewBag.CurrentAphorismCategory ?? ViewContext.ParentActionViewContext.ViewBag.CurrentAphorismCategory;
+    var curCat = (VMMaterialCategory)cat;
+}
+
+@if (Model.Any())
+{
+    <div class="list-group ap-cat">
+        @for (int i = 0; i < Model.Length; i++)
+        {
+            var item = Model[i];
+            <a class="list-group-item @(curCat != null && item.Id == curCat.Id ? "active" : null)" href="@Url.Action(MVC.Aphorisms.List(categoryId: item.Id))">
+            @item.Title
+            </a>
+        }
+    </div>
+}

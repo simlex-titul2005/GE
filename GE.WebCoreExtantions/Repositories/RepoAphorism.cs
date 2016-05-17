@@ -14,11 +14,11 @@ namespace GE.WebCoreExtantions.Repositories
         public override IQueryable<Aphorism> Query(SxFilter filter)
         {
             var f = (Filter)filter;
-            var query = QueryProvider.GetSelectString(new string[] { "dm.*", "da.AuthorId", "daa.Id", "daa.Name" });
+            var query = QueryProvider.GetSelectString(new string[] { "dm.*", "dmc.Id", "dmc.Title", "da.AuthorId", "daa.Id", "daa.Name" });
             query += @" FROM D_APHORISM AS da
 JOIN DV_MATERIAL AS dm ON dm.Id = da.Id AND dm.ModelCoreType = da.ModelCoreType
 JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId
-JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
+LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
 
             object param = null;
             query += getAphorismsWhereString(f, out param);
@@ -31,6 +31,7 @@ JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
             {
                 var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>(query, (a, c, aa) =>
                 {
+                    a.CategoryId = c.Id;
                     a.AuthorId = aa.Id;
                     a.Category = c;
                     a.Author = aa;
@@ -86,15 +87,24 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
 
         public Aphorism GetRandom(int? id=null)
         {
-            var query = @"SELECT TOP(1) *FROM D_APHORISM AS da
-JOIN DV_MATERIAL AS dm ON dm.Id = da.Id AND dm.ModelCoreType = da.ModelCoreType
-JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId
-WHERE (@mid IS NULL) OR (@mid IS NOT NULL AND da.Id NOT IN (@mid))
-ORDER BY NEWID()";
+            var query = @"SELECT TOP(1) * 
+FROM   D_APHORISM                   AS da
+       JOIN DV_MATERIAL             AS dm
+            ON  dm.Id = da.Id
+            AND dm.ModelCoreType = da.ModelCoreType
+       JOIN D_MATERIAL_CATEGORY     AS dmc
+            ON  dmc.Id = dm.CategoryId
+       LEFT JOIN D_AUTHOR_APHORISM  AS daa
+            ON  daa.Id = da.AuthorId
+WHERE  (@mid IS NULL)
+       OR  (@mid IS NOT NULL AND da.Id NOT IN (@mid))
+ORDER BY
+       NEWID()";
 
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<Aphorism, SxMaterialCategory, Aphorism>(query, (a, c)=> {
+                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>(query, (a, c, aa)=> {
+                    a.Author = aa;
                     a.Category = c;
                     return a;
                 }, new { mid=id}).SingleOrDefault();

@@ -62,6 +62,12 @@ namespace GE.WebUI.Controllers
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.RedirectToRouteResult Search()
+        {
+            return new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Search);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AphorismsController Actions { get { return MVC.Aphorisms; } }
@@ -80,6 +86,9 @@ namespace GE.WebUI.Controllers
         {
             public readonly string Random = "Random";
             public readonly string Details = "Details";
+            public readonly string Categories = "Categories";
+            public readonly string List = "List";
+            public readonly string Search = "Search";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -87,6 +96,9 @@ namespace GE.WebUI.Controllers
         {
             public const string Random = "Random";
             public const string Details = "Details";
+            public const string Categories = "Categories";
+            public const string List = "List";
+            public const string Search = "Search";
         }
 
 
@@ -107,6 +119,33 @@ namespace GE.WebUI.Controllers
             public readonly string categoryId = "categoryId";
             public readonly string titleUrl = "titleUrl";
         }
+        static readonly ActionParamsClass_Categories s_params_Categories = new ActionParamsClass_Categories();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Categories CategoriesParams { get { return s_params_Categories; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Categories
+        {
+            public readonly string curCat = "curCat";
+            public readonly string onlyNotCurrent = "onlyNotCurrent";
+        }
+        static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_List ListParams { get { return s_params_List; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_List
+        {
+            public readonly string categoryId = "categoryId";
+            public readonly string page = "page";
+        }
+        static readonly ActionParamsClass_Search s_params_Search = new ActionParamsClass_Search();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Search SearchParams { get { return s_params_Search; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Search
+        {
+            public readonly string author = "author";
+            public readonly string html = "html";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -117,13 +156,17 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _Categories = "_Categories";
                 public readonly string _List = "_List";
                 public readonly string _Random = "_Random";
                 public readonly string Details = "Details";
+                public readonly string List = "List";
             }
+            public readonly string _Categories = "~/Views/Aphorisms/_Categories.cshtml";
             public readonly string _List = "~/Views/Aphorisms/_List.cshtml";
             public readonly string _Random = "~/Views/Aphorisms/_Random.cshtml";
             public readonly string Details = "~/Views/Aphorisms/Details.cshtml";
+            public readonly string List = "~/Views/Aphorisms/List.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -161,6 +204,45 @@ namespace GE.WebUI.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "categoryId", categoryId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
             DetailsOverride(callInfo, categoryId, titleUrl);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void CategoriesOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, string curCat, bool onlyNotCurrent);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult Categories(string curCat, bool onlyNotCurrent)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Categories);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "curCat", curCat);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "onlyNotCurrent", onlyNotCurrent);
+            CategoriesOverride(callInfo, curCat, onlyNotCurrent);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ListOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string categoryId, int page);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult List(string categoryId, int page)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.List);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "categoryId", categoryId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ListOverride(callInfo, categoryId, page);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void SearchOverride(T4MVC_System_Web_Mvc_RedirectToRouteResult callInfo, string author, string html);
+
+        [NonAction]
+        public override System.Web.Mvc.RedirectToRouteResult Search(string author, string html)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Search);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "author", author);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "html", html);
+            SearchOverride(callInfo, author, html);
             return callInfo;
         }
 

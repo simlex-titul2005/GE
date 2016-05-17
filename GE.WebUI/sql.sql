@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 17.05.2016 2:33:31
+ * Time: 17.05.2016 14:07:59
  ************************************************************/
 
 /*******************************************
@@ -11,7 +11,7 @@ IF OBJECT_ID(N'get_aphorism_page_model', N'TF') IS NOT NULL
 GO
 CREATE FUNCTION get_aphorism_page_model
 (
-	@title_url         VARCHAR(255),
+	@title_url         NVARCHAR(255),
 	@author_amount     INT,
 	@cat_amount        INT
 )
@@ -31,7 +31,7 @@ RETURNS @result TABLE(
 AS
 BEGIN
 	DECLARE @authorId     INT,
-	        @catId        VARCHAR(100)
+	        @catId        NVARCHAR(100)
 	
 	SELECT @authorId = da.AuthorId,
 	       @catId = dm.CategoryId
@@ -105,6 +105,79 @@ BEGIN
 	       dmc.Title,
 	       daa.Name,
 	       daa.PictureId
+	
+	RETURN
+END
+GO
+
+
+
+
+/*******************************************
+* получить категории афоризмов
+*******************************************/
+
+
+IF OBJECT_ID(N'get_aphorism_categories', N'TF') IS NOT NULL
+    DROP FUNCTION get_aphorism_categories;
+GO
+CREATE FUNCTION get_aphorism_categories
+(
+	@curCat NVARCHAR(255)
+)
+RETURNS @result TABLE (Id NVARCHAR(255), Title NVARCHAR(255), IsCurrent BIT)
+AS
+BEGIN
+	INSERT INTO @result
+	SELECT dmc.Id,
+	       dmc.Title,
+	       CASE 
+	            WHEN dmc.Id = @curCat THEN 1
+	            ELSE 0
+	       END                       AS IsCurrent
+	FROM   D_APHORISM                AS da
+	       JOIN DV_MATERIAL          AS dm
+	            ON  dm.Id = da.Id
+	            AND dm.ModelCoreType = da.ModelCoreType
+	       JOIN D_MATERIAL_CATEGORY  AS dmc
+	            ON  dmc.Id = dm.CategoryId
+	GROUP BY
+	       dmc.Id,
+	       dmc.Title
+	
+	RETURN
+END
+GO
+
+
+
+
+/*******************************************
+* получить афоризмы
+*******************************************/
+IF OBJECT_ID(N'get_aphorisms', N'TF') IS NOT NULL
+    DROP FUNCTION get_aphorisms;
+GO
+CREATE FUNCTION get_aphorisms
+(
+	@curCat NVARCHAR(255)
+)
+RETURNS @result TABLE
+        (Id INT, Title NVARCHAR(255), TitleUtl NVARCHAR(255))
+AS
+BEGIN
+	INSERT INTO @result
+	SELECT da.Id,
+	       dm.Title,
+	       dm.TitleUrl
+	FROM   D_APHORISM                   AS da
+	       JOIN DV_MATERIAL             AS dm
+	            ON  dm.Id = da.Id
+	            AND dm.ModelCoreType = da.ModelCoreType
+	       JOIN D_MATERIAL_CATEGORY     AS dmc
+	            ON  dmc.Id = dm.CategoryId
+	       LEFT JOIN D_AUTHOR_APHORISM  AS daa
+	            ON  daa.Id = da.AuthorId
 	
 	RETURN
 END

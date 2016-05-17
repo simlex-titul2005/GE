@@ -8,7 +8,7 @@
     <div class="aph-progress">
         <div></div>
     </div>
-    <div><strong>@Model.Author</strong></div>
+    <div><strong>@(Model.Author != null ? Model.Author.Name : "Аноним")</strong></div>
     <div class="aph-html">
         @Html.Raw(Model.Html)
     </div>

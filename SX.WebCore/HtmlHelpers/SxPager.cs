@@ -6,7 +6,7 @@ namespace SX.WebCore.HtmlHelpers
 {
     public static partial class SxExtantions
     {
-        public static MvcHtmlString SxPager(this HtmlHelper htmlHelper, SxPagerInfo pagerinfo, Func<int, string> pageUrl=null, bool isAjax = true, object htmlAttributes = null)
+        public static MvcHtmlString SxPager(this HtmlHelper htmlHelper, SxPagerInfo pagerinfo, Func<int, string> pageUrl = null, bool isAjax = true, object htmlAttributes = null)
         {
             if (pagerinfo.TotalPages == 1) return null;
 
@@ -101,7 +101,7 @@ namespace SX.WebCore.HtmlHelpers
             {
                 var href = pageUrl(page);
                 a.MergeAttributes(new Dictionary<string, object>() {
-                        { "href", href }
+                        { "href", pagerinfo.Page==page?"javascript:void(0)":href }
                     });
             }
 
@@ -134,8 +134,8 @@ namespace SX.WebCore.HtmlHelpers
             {
                 get
                 {
-                    var skip=((Page-1)*PageSize);
-                    return skip<0? 0 : skip;
+                    var skip = ((Page - 1) * PageSize);
+                    return skip < 0 ? 0 : skip;
                 }
             }
             public int TotalItems { get; set; }

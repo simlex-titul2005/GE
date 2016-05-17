@@ -1,28 +1,31 @@
 ﻿@model VMAphorism[]
 @{
     Layout = null;
-    var author = (VMAuthorAphorism)ViewData["Author"];
+    var author = (string)ViewData["Author"];
     var category = (string)ViewData["Category"];
-    string heder = null;
+    string header = null;
     if (category != null)
     {
-        heder = string.Format("Другие высказывания в категории {0}", category);
+        header = string.Format("Другие высказывания в категории {0}", category);
     }
-    else
+    else if (category == null && author != null)
     {
-        heder = string.Format("{0}. Другие высказывания", author != null ? author.Name : "Аноним");
+        header = string.Format("{0}. Другие высказывания", author);
     }
 }
 <div class="ap-list">
-    <h2 class="header">@heder</h2>
+    @if (header != null)
+    {
+        <h2 class="header">@header</h2>
+    }
 
     <ul>
         @for (int i = 0; i < Model.Length; i++)
             {
                 var a = Model[i];
             <li>
-                <h3><a href="@Url.Action(MVC.Aphorisms.Details(categoryId: a.CategoryId, titleUrl: a.TitleUrl))">@a.Title</a></h3>
-                <div>@a.Html</div>
+                <h3><a href="@Url.Action(MVC.Aphorisms.Details(categoryId: a.CategoryId, titleUrl: a.TitleUrl))">@a.Html</a></h3>
+                <div class="author">@(a.Author!=null && a.Author.Name!=null?a.Author.Name:"Аноним")</div>
             </li>
         }
     </ul>

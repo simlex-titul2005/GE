@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace GE.WebUI
@@ -28,12 +29,46 @@ namespace GE.WebUI
             );
 
             #region aphorisms
+            
+
+
+            routes.MapRoute(
+                name: null,
+                url: "aphorisms",
+                defaults: new { controller = "aphorisms", action = "list", categoryId = (string)null, page = 1, area = "" },
+                namespaces: _defNamespace
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "aphorisms/page{page}",
+                defaults: new { controller = "aphorisms", action = "list", categoryId=(string)null, page = 1, area = "" },
+                namespaces: _defNamespace
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "aphorisms/{categoryId}",
+                defaults: new { controller = "aphorisms", action = "list", page=1, area = "" },
+                namespaces: _defNamespace
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "aphorisms/{categoryId}/page{page}",
+                defaults: new { controller = "aphorisms", action = "list", page = 1, area = "" },
+                namespaces: _defNamespace,
+                constraints: new { action = "^List" }
+            );
+
             routes.MapRoute(
                 name: null,
                 url: "aphorisms/{categoryId}/{titleUrl}",
                 defaults: new { controller = "aphorisms", action = "details", area = "" },
-                namespaces: _defNamespace
+                namespaces: _defNamespace,
+                constraints: new { action= "^Details" }
             );
+            
             #endregion
 
             #region forum
@@ -161,6 +196,19 @@ namespace GE.WebUI
                 defaults: new { controller = "home", action = "index", id = UrlParameter.Optional, area = "" },
                 namespaces: _defNamespace
             );
+        }
+
+        public class AphorismConstraint : IRouteConstraint
+        {
+            private string titleUrl;
+            public AphorismConstraint(string titleUrl)
+            {
+                this.titleUrl = titleUrl;
+            }
+            public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
+            {
+                return !titleUrl.Contains("page");
+            }
         }
     }
 }

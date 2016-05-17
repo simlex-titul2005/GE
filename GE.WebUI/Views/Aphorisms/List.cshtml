@@ -10,7 +10,11 @@
     ViewBag.Title = title;
 
     ViewBag.H1 = ViewBag.H1 ?? title;
+    ViewBag.Description = ViewBag.Description ?? title;
+    ViewBag.Keywords = ViewBag.Keywords ?? title;
 }
+
+@Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
 
 <div class="ap-list-page">
     <div class="row">

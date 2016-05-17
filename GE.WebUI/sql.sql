@@ -234,7 +234,8 @@ RETURNS @result TABLE(
             Foreword NVARCHAR(400),
             ModelCoreType INT,
             UserId NVARCHAR(128),
-            AvatarId UNIQUEIDENTIFIER
+            AvatarId UNIQUEIDENTIFIER,
+            NikName NVARCHAR(100)
         )
 AS
 BEGIN
@@ -254,7 +255,8 @@ BEGIN
 	           dm.Foreword,
 	           dm.ModelCoreType,
 	           dm.UserId,
-	           anu.AvatarId
+	           anu.AvatarId,
+	           anu.NikName
 	    FROM   DV_MATERIAL       AS dm
 	           JOIN AspNetUsers  AS anu
 	                ON  anu.Id = dm.UserId
@@ -274,7 +276,8 @@ BEGIN
 	           dm.Foreword,
 	           dm.ModelCoreType,
 	           dm.UserId,
-	           anu.AvatarId
+	           anu.AvatarId,
+	           anu.NikName
 	    FROM   DV_MATERIAL       AS dm
 	           JOIN AspNetUsers  AS anu
 	                ON  anu.Id = dm.UserId

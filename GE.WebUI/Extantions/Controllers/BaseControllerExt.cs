@@ -104,7 +104,14 @@ namespace GE.WebUI.Extantions.Controllers
 
             var breadcrumbs = new List<VMBreadcrumb>();
             breadcrumbs.Add(new VMBreadcrumb { Title = "Главная", Url = "/" });
-            if (controllerName == "articles")
+            if(controllerName=="aphorisms")
+            {
+                if (actionName == "list" || actionName == "details")
+                {
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Афоризмы", Url = controller.Url.Action(MVC.Aphorisms.List()) });
+                }
+            }
+            else if (controllerName == "articles")
             {
                 if (actionName == "list")
                 {

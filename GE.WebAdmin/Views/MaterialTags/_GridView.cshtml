@@ -12,14 +12,14 @@
 <blockquote>
     Теги должны содержать основные слова, которые могут содержаться в облаке тегов сайта.
 </blockquote>
-@using (Ajax.BeginForm(MVC.MaterialTags.Edit(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "tags-cloud" }))
+@using (Ajax.BeginForm(MVC.MaterialTags.Edit(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "grid-mat-tags" }, new { @autocomplete="off"}))
 {
     @Html.AntiForgeryToken()
-    <input type="hidden" id="MaterialId" name="MaterialId" value="@mid" autocomplete="off" />
-    <input type="hidden" id="ModelCoreType" name="ModelCoreType" value="@mct" autocomplete="off" />
-    <label for="Value">Новый тег облака</label>
+    <input type="hidden" id="MaterialId" name="MaterialId" value="@mid" />
+    <input type="hidden" id="ModelCoreType" name="ModelCoreType" value="@mct" />
+    <label for="Value">Новый тег облака</label> <span class="text-info">(максимально 4 слова)</span>
     <div class="input-group">
-        <input type="text" id="Id" name="Id" class="form-control" placeholder="Введите значение тега" autocomplete="off" />
+        <input type="text" id="Id" name="Id" class="form-control" placeholder="Введите значение тега" />
         <span class="input-group-btn">
             <button class="btn btn-default" type="submit">Добавить</button>
         </span>

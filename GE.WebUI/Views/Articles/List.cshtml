@@ -7,7 +7,7 @@
     {
         ViewBag.Title = "Последние статьи по игре " + ViewBag.GameTitle;
     }
-    ViewBag.H1 = h1 ?? (ViewBag.Tag != null ? "Статьи тега " + (string)ViewBag.Tag : ViewBag.Title);
+    ViewBag.H1 = h1 ?? (ViewBag.Tag != null ? "Статьи про " + (string)ViewBag.Tag : ViewBag.Title);
     ViewBag.H1CssClass = "header";
     ViewBag.Description = ViewBag.Description ?? (ViewBag.Tag != null ? "На данной странице вы сможете найти абсолютно все новости и статьи, которые были написаны авторами нашего сайта по запросу " + (string)ViewBag.Tag : null);
     if (ViewBag.Description == null && ViewBag.GameTitle != null)

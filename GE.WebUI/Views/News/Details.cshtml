@@ -28,7 +28,7 @@
     @Html.Partial(MVC.Shared.Views._MaterialInfo, Model)
 
     <div id="by-date-mat">
-        @Html.Action(MVC.News.ByDateMaterial(mid:Model.Id, mct: Model.ModelCoreType))
+        @Html.Action(MVC.News.ByDateMaterial(mid: Model.Id, mct: Model.ModelCoreType))
     </div>
 
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
@@ -54,4 +54,8 @@
     <script type="text/javascript" src="~/share42/share42.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/currency-provider.min.js"></script>
+    <script type="text/javascript">
+        loadScriptOnce('https://www.youtube.com/iframe_api');
+    </script>
 }

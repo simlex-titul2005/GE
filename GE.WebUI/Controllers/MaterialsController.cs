@@ -124,10 +124,10 @@ namespace GE.WebUI.Controllers
             switch (_modelCoreType)
             {
                 case Enums.ModelCoreType.Article:
-                    model = (_repo as RepoArticle).GetByTitleUrl(titleUrl);
+                    model = (_repo as RepoArticle).GetByTitleUrl(year, month, day,titleUrl);
                     break;
                 case Enums.ModelCoreType.News:
-                    model = (_repo as RepoNews).GetByTitleUrl(titleUrl);
+                    model = (_repo as RepoNews).GetByTitleUrl(year, month, day, titleUrl);
                     break;
             }
             if (model == null)

@@ -1,5 +1,6 @@
 ﻿using GE.WebCoreExtantions;
 using SX.WebCore.Abstract;
+using SX.WebCore.Attrubutes;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -20,7 +21,7 @@ namespace GE.WebAdmin.Models
 
     sealed class VMEditNewsMetadata
     {
-        [Display(Name="Название новости"), MaxLength(255), Required]
+        [Display(Name="Название новости"), MaxLength(255), Required, MaxWordsCount(8), MinWordsCount(2)]
         public string Title { get; set; }
 
         [Display(Name = "Контент"), Required, DataType(DataType.MultilineText), AllowHtml]

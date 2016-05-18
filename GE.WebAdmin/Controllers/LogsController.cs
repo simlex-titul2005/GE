@@ -17,7 +17,7 @@ namespace GE.WebAdmin.Controllers
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
-            var zipname = string.Format("game-exe-logs-{0}", DateTime.Now.ToString("yyyy-MM-dd"));
+            var zipname = string.Format("game-exe-logs-{0}.zip", DateTime.Now.ToString("yyyy-MM-dd"));
 
             var ms = new MemoryStream();
             var zipStream = new ZipOutputStream(ms);

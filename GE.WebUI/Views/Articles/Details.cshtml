@@ -4,31 +4,8 @@
     var h1 = ViewBag.H1;
     ViewBag.Title = title ?? Model.Title;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
-    ViewBag.H1CssClass = ViewBag.H1CssClass ?? Model.ArticleTypeName;
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
     ViewBag.PageImage = Model.FrontPictureId.HasValue ? Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId)) : null;
-}
-@section styles{
-    @if (Model.ThemeColor != null)
-    {
-        <style type="text/css">
-        .@Model.ArticleTypeName{
-            color:@Model.ThemeColor;
-        }
-
-        .m-html{
-            border-top:6px solid @Model.ThemeColor;
-        }
-
-            .m-html hr{
-                border-top:1px solid @Model.ThemeColor;
-            }
-
-            .m-fwd{
-                border-left-color:@Model.ThemeColor;
-            }
-        </style>
-    }
 }
 
 <div class="detail-article">

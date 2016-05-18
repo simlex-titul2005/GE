@@ -1,9 +1,11 @@
 ﻿using GE.WebCoreExtantions;
 using SX.WebCore.Abstract;
+using SX.WebCore.Attrubutes;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;
+
 
 namespace GE.WebAdmin.Models
 {
@@ -23,7 +25,7 @@ namespace GE.WebAdmin.Models
 
     sealed class VMEditArticleMetadata
     {
-        [Display(Name = "Название статьи"), MaxLength(255), Required]
+        [Display(Name = "Название статьи"), MaxLength(255), Required, MaxWordsCount(8), MinWordsCount(2)]
         public string Title { get; set; }
 
         [Display(Name = "Контент"), Required, DataType(DataType.MultilineText), AllowHtml]

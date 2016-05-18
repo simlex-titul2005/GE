@@ -20,13 +20,13 @@ namespace GE.WebAdmin.Controllers
         }
 
         private int _pageSize = 10;
-        [HttpGet, ChildActionOnly]
+        [HttpGet]
         public virtual PartialViewResult Index(int mid, ModelCoreType mct, int page = 1)
         {
             ViewBag.MaterialId = mid;
             ViewBag.ModelCoreType = mct;
 
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { MaterialId= mid, ModelCoreType= mct };
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { MaterialId = mid, ModelCoreType = mct };
             var totalItems = (_repo as RepoMaterialTag).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
@@ -45,7 +45,7 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel, MaterialId= mid, ModelCoreType= mct };
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel, MaterialId = mid, ModelCoreType = mct };
             var totalItems = (_repo as RepoMaterialTag).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
@@ -58,12 +58,16 @@ namespace GE.WebAdmin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public virtual RedirectToRouteResult Edit(VMEditMaterialTag model)
         {
-            var id = model.Id.Trim();
-            model.Id = id;
-            if (_repo.GetByKey(model.Id, model.MaterialId, model.ModelCoreType) != null)
-                ModelState.AddModelError("Id", "Такой тег уже добавлен для материала");
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                var id = model.Id.Trim();
+                model.Id = id;
+                if (_repo.GetByKey(model.Id, model.MaterialId, model.ModelCoreType) != null)
+                {
+                    ModelState.AddModelError("Id", "Такой тег уже добавлен для материала");
+                    return RedirectToAction(MVC.MaterialTags.Index(model.MaterialId, model.ModelCoreType));
+                }
+
                 var redactModel = Mapper.Map<VMEditMaterialTag, SxMaterialTag>(model);
                 _repo.Create(redactModel);
             }

@@ -1,11 +1,97 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 17.05.2016 17:01:58
+ * Time: 18.05.2016 9:31:37
  ************************************************************/
 
 /*******************************************
- * получить страницу афоризма
+ * получить материал
  *******************************************/
+IF OBJECT_ID(N'get_material_by_url', N'P') IS NOT NULL
+    DROP PROCEDURE get_material_by_url;
+GO
+CREATE PROCEDURE get_material_by_url(
+    @year          INT,
+    @month         INT,
+    @day           INT,
+    @title_url     NVARCHAR(255),
+    @mct           INT
+)
+AS
+BEGIN
+	SELECT dm.*,
+	       dg.TitleUrl          AS GameTitleUrl,
+	       CASE 
+	            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
+	            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, 200) +
+	                 '...'
+	       END                  AS Foreword,
+	       (
+	           SELECT ISNULL(SUM(1), 0)
+	           FROM   D_USER_CLICK  AS duc
+	                  JOIN D_LIKE   AS dl
+	                       ON  dl.UserClickId = duc.Id
+	           WHERE  duc.MaterialId = dm.Id
+	                  AND duc.ModelCoreType = dm.ModelCoreType
+	                  AND dl.Direction = 1
+	       )                    AS LikeUpCount,
+	       (
+	           SELECT ISNULL(SUM(1), 0)
+	           FROM   D_USER_CLICK  AS duc
+	                  JOIN D_LIKE   AS dl
+	                       ON  dl.UserClickId = duc.Id
+	           WHERE  duc.MaterialId = dm.Id
+	                  AND duc.ModelCoreType = dm.ModelCoreType
+	                  AND dl.Direction = 2
+	       )                    AS LikeDownCount,
+	       (
+	           SELECT COUNT(1)
+	           FROM   D_COMMENT AS dc
+	           WHERE  dc.MaterialId = dm.Id
+	                  AND dc.ModelCoreType = dm.ModelCoreType
+	       )                    AS CommentsCount,
+	       anu.NikName          AS UserNikName
+	FROM   DV_MATERIAL          AS dm
+	       LEFT JOIN D_ARTICLE  AS da
+	            ON  da.ModelCoreType = dm.ModelCoreType
+	            AND da.Id = dm.Id
+	       LEFT JOIN D_NEWS     AS dn
+	            ON  dn.Id = dm.Id
+	            AND dn.ModelCoreType = dm.ModelCoreType
+	       LEFT JOIN D_GAME     AS dg
+	            ON  (dg.Id = da.GameId OR dg.Id = dn.GameId)
+	       JOIN AspNetUsers     AS anu
+	            ON  anu.Id = dm.UserId
+	WHERE  dm.TitleUrl = @title_url
+	       AND dm.ModelCoreType = @mct
+	       AND (
+	               YEAR(dm.DateCreate) = @year
+	               AND MONTH(dm.DateCreate) = @month
+	               AND DAY(dm.DateCreate) = @day
+	           )
+END
+GO
+
+/*******************************************
+ * получить видео материал
+ *******************************************/
+IF OBJECT_ID(N'get_material_videos', N'P') IS NOT NULL
+    DROP PROCEDURE get_material_videos;
+GO
+CREATE PROCEDURE get_material_videos(@mid INT)
+AS
+BEGIN
+	SELECT dv.*
+	FROM   D_VIDEO_LINK    AS dvl
+	       JOIN D_VIDEO    AS dv
+	            ON  dv.Id = dvl.VideoId
+	       JOIN D_ARTICLE  AS da
+	            ON  da.ModelCoreType = dvl.ModelCoreType
+	            AND da.Id = @mid
+END
+GO
+/*******************************************
+* получить страницу афоризма
+*******************************************/
 IF OBJECT_ID(N'get_aphorism_page_model', N'TF') IS NOT NULL
     DROP FUNCTION get_aphorism_page_model;
 GO
@@ -122,6 +208,11 @@ GO
 
 
 
+
+
+
+
+
 /*******************************************
 * получить категории афоризмов
 *******************************************/
@@ -171,6 +262,11 @@ GO
 
 
 
+
+
+
+
+
 /*******************************************
 * получить афоризмы
 *******************************************/
@@ -201,6 +297,11 @@ BEGIN
 	RETURN
 END
 GO
+
+
+
+
+
 
 
 
@@ -261,8 +362,10 @@ BEGIN
 	           JOIN AspNetUsers  AS anu
 	                ON  anu.Id = dm.UserId
 	    WHERE  dm.ModelCoreType = @mct
-	           AND (dm.Id IN (@mid)
-	           OR  (dm.Id NOT IN (@mid) AND dm.DateOfPublication > @date))
+	           AND (
+	                   dm.Id IN (@mid)
+	                   OR (dm.Id NOT IN (@mid) AND dm.DateOfPublication > @date)
+	               )
 	    ORDER BY
 	           dm.DateOfPublication DESC
 	ELSE 
@@ -282,8 +385,10 @@ BEGIN
 	           JOIN AspNetUsers  AS anu
 	                ON  anu.Id = dm.UserId
 	    WHERE  dm.ModelCoreType = @mct
-	           AND (dm.Id IN (@mid)
-	           OR  (dm.Id NOT IN (@mid) AND dm.DateOfPublication < @date))
+	           AND (
+	                   dm.Id IN (@mid)
+	                   OR (dm.Id NOT IN (@mid) AND dm.DateOfPublication < @date)
+	               )
 	    ORDER BY
 	           dm.DateOfPublication DESC
 	

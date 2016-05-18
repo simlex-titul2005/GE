@@ -72,8 +72,8 @@ function createCss() {
 function createJs() {
     gulp.src([
         'bower_components/jquery/dist/jquery.min.js',
-        'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
         'bower_components/jquery-validation/dist/jquery.validate.min.js',
+        'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
         'bower_components/metisMenu/dist/metisMenu.min.js',
         'content/sx/js/**/*.js',

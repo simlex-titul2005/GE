@@ -132,6 +132,8 @@
     <Compile Include="Abstract\SxDbUpdatedModel.cs" />
     <Compile Include="Abstract\SxFilter.cs" />
     <Compile Include="Abstract\SxMaterial.cs" />
+    <Compile Include="Attrubutes\MinWordsCountAttribute.cs" />
+    <Compile Include="Attrubutes\MaxWordsCountAttribute.cs" />
     <Compile Include="Attrubutes\NotLogRequestAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="HtmlHelpers\SxGridView.cs" />

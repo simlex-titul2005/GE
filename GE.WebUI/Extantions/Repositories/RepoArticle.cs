@@ -169,60 +169,13 @@ ORDER BY
             }
         }
 
-        public static VMDetailArticle GetByTitleUrl(this WebCoreExtantions.Repositories.RepoArticle repo, string titleUrl)
+        public static VMDetailArticle GetByTitleUrl(this WebCoreExtantions.Repositories.RepoArticle repo, int year, string month, string day, string titleUrl)
         {
-            var query = @"SELECT da.*,
-       dm.*,
-       dg.TitleUrl       AS GameTitleUrl,
-       CASE 
-            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
-            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, 200) +
-                 '...'
-       END               AS Foreword,
-       (
-           SELECT ISNULL(SUM(1), 0)
-           FROM   D_USER_CLICK  AS duc
-                  JOIN D_LIKE   AS dl
-                       ON  dl.UserClickId = duc.Id
-           WHERE  duc.MaterialId = dm.Id
-                  AND duc.ModelCoreType = dm.ModelCoreType
-                  AND dl.Direction = 1
-       )                 AS LikeUpCount,
-       (
-           SELECT ISNULL(SUM(1), 0)
-           FROM   D_USER_CLICK  AS duc
-                  JOIN D_LIKE   AS dl
-                       ON  dl.UserClickId = duc.Id
-           WHERE  duc.MaterialId = dm.Id
-                  AND duc.ModelCoreType = dm.ModelCoreType
-                  AND dl.Direction = 2
-       )                 AS LikeDownCount,
-       (
-           SELECT COUNT(1)
-           FROM   D_COMMENT AS dc
-           WHERE  dc.MaterialId = dm.Id
-                  AND dc.ModelCoreType = dm.ModelCoreType
-       )                 AS CommentsCount,
-       anu.NikName       AS UserNikName
-FROM   D_ARTICLE         AS da
-       JOIN DV_MATERIAL  AS dm
-            ON  dm.Id = da.Id
-            AND dm.ModelCoreType = da.ModelCoreType
-       LEFT JOIN D_GAME  AS dg
-            ON  dg.Id = da.GameId
-       JOIN AspNetUsers  AS anu
-            ON  anu.Id = dm.UserId
-WHERE  dm.TitleUrl = @title_url";
-
-            var queryForVideo = @"SELECT dv.* FROM D_VIDEO_LINK AS dvl
-JOIN D_VIDEO AS dv ON dv.Id = dvl.VideoId
-JOIN D_ARTICLE AS da ON da.ModelCoreType = dvl.ModelCoreType AND da.Id=@mid";
-
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var data=conn.Query<VMDetailArticle>(query, new { title_url = titleUrl }).SingleOrDefault();
+                var data=conn.Query<VMDetailArticle>("get_material_by_url @year, @month, @day, @title_url, @mct", new { year=year, month=month, day=day, title_url = titleUrl, mct=ModelCoreType.Article }).SingleOrDefault();
                 if(data!=null)
-                    data.Videos = conn.Query<SxVideo>(queryForVideo, new { mid = data.Id }).ToArray();
+                    data.Videos = conn.Query<SxVideo>("get_material_videos @mid", new { mid = data.Id }).ToArray();
                 return data;
             }
         }

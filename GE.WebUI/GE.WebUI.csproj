@@ -311,7 +311,6 @@
     <Compile Include="Controllers\UserClicksController.cs" />
     <Compile Include="Extantions\Controllers\BaseControllerExt.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
-    <Compile Include="Extantions\Repositories\RepoComment.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
@@ -376,9 +375,6 @@
     <Content Include="Views\Search\_Search.cshtml" />
     <Content Include="Views\Shared\_Analytics.cshtml" />
     <Content Include="Views\Forum\List.cshtml" />
-    <Content Include="Views\Comments\_Create.cshtml" />
-    <Content Include="Views\Comments\_List.cshtml" />
-    <Content Include="Views\Comments\DisplayTemplates\VMComment.cshtml" />
     <Content Include="Views\Shared\_Errors.cshtml" />
     <Content Include="Views\Shared\_SocNetButtons.cshtml" />
     <Content Include="Views\Shared\_Foreword.cshtml" />
@@ -410,6 +406,9 @@
     <Content Include="Views\Aphorisms\_List.cshtml" />
     <Content Include="Views\Aphorisms\_Categories.cshtml" />
     <Content Include="Views\Aphorisms\List.cshtml" />
+    <Content Include="Views\Comments\_Edit.cshtml" />
+    <Content Include="Views\Comments\_List.cshtml" />
+    <Content Include="Views\Comments\DisplayTemplates\VMComment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

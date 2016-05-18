@@ -17,6 +17,5 @@ namespace GE.WebCoreExtantions
         public int? Day { get; set; }
         public string GameTitle { get; set; }
         public string TitleUrl { get; set; }
-        public int? MaterialId { get; set; }
     }
 }

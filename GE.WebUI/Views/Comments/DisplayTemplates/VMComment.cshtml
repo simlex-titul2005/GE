@@ -1,52 +1,54 @@
-﻿@model VMComment
+﻿@using Microsoft.AspNet.Identity
+@model VMComment
 @{
     Layout = null;
-    var uName = Model.User != null && Model.User.NikName!=null ? Model.User.NikName : Model.UserName;
+    var userId = User.Identity.GetUserId();
+    var isAuth = User.Identity.IsAuthenticated;
 }
 
 <div class="comment">
-    <div class="row">
+    <div class="row content">
         <div class="col-md-3">
-            <div class="c-u-info">
-                <div>
-                    <img class="img-circle c-u-avatar" alt="@uName" src="@((Model.User!=null && Model.User.AvatarId.HasValue)?Url.Action(MVC.Pictures.Picture((Guid)Model.User.AvatarId)):"/Content/dist/i/temp/avatar.jpg")" />
-                    <div class="c-u-name"><strong>@uName</strong></div>
-                </div>
-                <div class="c-u-details">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="c-u-rang">Старожил</span><br />
-                            <span>Рейтинг: 2348 баллов</span>
-                        </div>
-                        <div class="col-md-6">
-                            Регистрация:<br />
-                            25.11.2015
-                        </div>
-                    </div>
-                </div>
+            <div class="author">
+                @if (Model.User != null && Model.User.AvatarId.HasValue)
+                {
+                    <img class="img-circle" alt="@Model.User.NikName" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.User.AvatarId))" />
+                }
+                <div class="nik">@Model.User.NikName</div>
             </div>
         </div>
         <div class="col-md-9">
-            <div class="c-content">
-                <div class="c-time">@Model.DateCreate</div>
-                <p class="c-txt">@Model.Html</p>
+            <div class="text">
+                <div class="date">@Model.DateCreate.ToString("hh: mm") &nbsp;&nbsp;&nbsp; @Model.DateCreate.ToString("dd MM yyyy")</div>
+                @Model.Html
             </div>
         </div>
     </div>
-    <div class="c-func">
-        <ul>
-            <li>
-                <a href="#">Редактировать</a>
-            </li>
-            <li>
-                <a href="#">Ответить</a>
-            </li>
-            <li>
-                <a href="#">Цитата</a>
-            </li>
-            <li>
-                <a href="#">Удалить</a>
-            </li>
-        </ul>
-    </div>
+    @if (isAuth)
+    {
+        <div class="func">
+            <div class="text-right">
+                <ul class="list-unstyled list-inline">
+                    @if (Model.User.Id == userId)
+                    {
+                        <li>
+                            <a href="#">Редактировать</a>
+                        </li>
+                    }
+                    <li>
+                        <a href="#">Цитата</a>
+                    </li>
+                    <li>
+                        <a href="#">Ответить</a>
+                    </li>
+                    @if (Model.User.Id == userId)
+                    {
+                        <li>
+                            <a href="#">Удалить</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
 </div>

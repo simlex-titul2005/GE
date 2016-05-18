@@ -152,6 +152,7 @@
     <Compile Include="Providers\QueryProvider.cs" />
     <Compile Include="Providers\VideoProvider.cs" />
     <Compile Include="Repositories\RepoBannedUrl.cs" />
+    <Compile Include="Repositories\RepoComment.cs" />
     <Compile Include="Repositories\RepoVideo.cs" />
     <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoManual.cs" />

@@ -20,6 +20,8 @@
                 <h4 class="small">@(author)</h4>
             </blockquote>
 
+            @Html.Action(MVC.Comments.Edit(mid: Model.Aphorism.Id, mct: SX.WebCore.Enums.ModelCoreType.Aphorism))
+
             @*author*@
             @if (Model.TopForAuthor.Any())
             {
@@ -43,3 +45,13 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Aphorism.Id +'&mct=' + '@SX.WebCore.Enums.ModelCoreType.Aphorism');
+        });
+    </script>
+}

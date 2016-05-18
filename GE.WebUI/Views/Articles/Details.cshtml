@@ -37,20 +37,6 @@
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
     @Html.Action("likematerials", new { controller = "articles", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
 
-    @*comments*@
-    <div class="comments">
-        <h5 class="text-uppercase">Оставить комментарий</h5>
-        <br />
-        <div id="new-comment">
-            @Html.Action(MVC.Comments.Create(mid: Model.Id, mct: Model.ModelCoreType))
-        </div>
-        <br />
-        <h5 class="text-uppercase">Последние комментарии</h5>
-        <div id="comments-list">
-            @Html.Action(MVC.Comments.List(mid: Model.Id, mct: Model.ModelCoreType))
-        </div>
-    </div>
-
 </div>
 
 @section scripts{

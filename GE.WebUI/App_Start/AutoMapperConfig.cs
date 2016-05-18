@@ -25,17 +25,21 @@ namespace GE.WebUI
                     //articles
                     cfg.CreateMap<SxForumPart, VMForumPart>();
 
-                    // comments
+                    //comments
+                    cfg.CreateMap<SxComment, VMComment>();
                     cfg.CreateMap<VMEditComment, SxComment>();
-
-                    // material category
-                    cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
-
+                    
                     //games
                     cfg.CreateMap<Game, VMGame>();
-                    
+
+                    //material category
+                    cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
+
                     //seo info
                     cfg.CreateMap<SxSeoInfo, VMSeoInfo>();
+
+                    //seo info
+                    cfg.CreateMap<SxAppUser, VMUser>();
                 });
             }
         }

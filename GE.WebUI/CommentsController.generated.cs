@@ -64,9 +64,9 @@ namespace GE.WebUI.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.PartialViewResult Create()
+        public virtual System.Web.Mvc.PartialViewResult Edit()
         {
-            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Create);
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Edit);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -85,14 +85,14 @@ namespace GE.WebUI.Controllers
         public class ActionNamesClass
         {
             public readonly string List = "List";
-            public readonly string Create = "Create";
+            public readonly string Edit = "Edit";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string List = "List";
-            public const string Create = "Create";
+            public const string Edit = "Edit";
         }
 
 
@@ -104,12 +104,13 @@ namespace GE.WebUI.Controllers
         {
             public readonly string mid = "mid";
             public readonly string mct = "mct";
+            public readonly string page = "page";
         }
-        static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
+        static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Create CreateParams { get { return s_params_Create; } }
+        public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Create
+        public class ActionParamsClass_Edit
         {
             public readonly string mid = "mid";
             public readonly string mct = "mct";
@@ -125,10 +126,10 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _Create = "_Create";
+                public readonly string _Edit = "_Edit";
                 public readonly string _List = "_List";
             }
-            public readonly string _Create = "~/Views/Comments/_Create.cshtml";
+            public readonly string _Edit = "~/Views/Comments/_Edit.cshtml";
             public readonly string _List = "~/Views/Comments/_List.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
@@ -146,40 +147,41 @@ namespace GE.WebUI.Controllers
         public T4MVC_CommentsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void ListOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct);
+        partial void ListOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct, int page);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult List(int mid, SX.WebCore.Enums.ModelCoreType mct)
+        public override System.Web.Mvc.PartialViewResult List(int mid, SX.WebCore.Enums.ModelCoreType mct, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.List);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
-            ListOverride(callInfo, mid, mct);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ListOverride(callInfo, mid, mct, page);
             return callInfo;
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct);
+        partial void EditOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int mid, SX.WebCore.Enums.ModelCoreType mct);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Create(int mid, SX.WebCore.Enums.ModelCoreType mct)
+        public override System.Web.Mvc.PartialViewResult Edit(int mid, SX.WebCore.Enums.ModelCoreType mct)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Create);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mid", mid);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "mct", mct);
-            CreateOverride(callInfo, mid, mct);
+            EditOverride(callInfo, mid, mct);
             return callInfo;
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebUI.Models.VMEditComment model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebUI.Models.VMEditComment model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(GE.WebUI.Models.VMEditComment model)
+        public override System.Web.Mvc.PartialViewResult Edit(GE.WebUI.Models.VMEditComment model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            CreateOverride(callInfo, model);
+            EditOverride(callInfo, model);
             return callInfo;
         }
 

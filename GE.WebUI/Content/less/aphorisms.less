@@ -40,7 +40,7 @@
 
 .ap-page .author-img {
     max-height: 70px;
-    border: 3px solid @colr-muted-blue;
+    border: 3px solid @color-muted-blue;
     margin-right: @def-pad*2;
     margin-bottom: @def-pad*2;
     float: left;
@@ -54,11 +54,12 @@
     margin-top: 0;
 }
 
-.ap-list ul {
+.ap-list > ul {
     list-style: none;
     color: @color-white;
     padding: 0;
     margin: 0;
+    margin-top:@def-pad*2;
 }
 
 .ap-list ul > li {
@@ -74,7 +75,7 @@
 }
 
 .ap-list ul > li .author {
-    color: @colr-muted-blue;
+    color: @color-muted-blue;
 }
 
 .ap-cat {
@@ -83,6 +84,7 @@
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        margin-top: @def-pad*2;
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
@@ -99,11 +101,11 @@
 
 .ap-cat > .list-group-item:hover {
     background-color: unset;
-    color: @colr-muted-blue;
+    color: @color-muted-blue;
 }
 
 .ap-cat > .list-group-item.active {
-    border-color: @colr-muted-blue;
+    border-color: @color-muted-blue;
     background-color: rgba(255,255,255, 0.1);
 }
 

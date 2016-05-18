@@ -20,5 +20,8 @@ namespace SX.WebCore
         public string UserName { get; set; }
 
         public string Html { get; set; }
+
+        [MaxLength(50), Index]
+        public string Email { get; set; }
     }
 }

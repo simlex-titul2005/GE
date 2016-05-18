@@ -3,100 +3,84 @@
 @import (reference) "positioned.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
-@avatar-size:100px;
-@cm-dark-color:#dce0e5;
-
-.comments{
-    background-color:@color-white;
-    margin-top:@def-pad*2;
-    padding:@def-pad;
+.new-comment {
+    color: @color-white;
 }
+
+.new-comment .form-control {
+    background: none;
+    color: @color-white;
+    border:1px solid @color-white-tr-light;
+    resize: none;
+}
+
+//comment
 .comment{
-    margin-top:@def-pad;
+    margin-bottom:@def-pad*2;
 }
 
-.comment .c-u-info{
-    text-align:center;
-    background-color:@cm-dark-color;
-    padding: 10px;
+.comment > .content {
+    display: table;
+    width: 100%;
+    margin-left: 0;
 }
 
-.comment .c-u-info .c-u-avatar{
-    width:@avatar-size;
-    height:@avatar-size;
-    border:4px solid #b6bac8;
-}
-
-.comment .c-u-info .c-u-name{
-    font-size:18px;
-    margin-top:10px;
-}
-
-.comment .c-u-info .c-u-details{
-    color:#7a7a7a;
-    font-size:11px;
-    font-style:italic;
-    text-align:left;
-    margin-top:10px;
-}
-
-.comment .c-u-info .c-u-details .row > div:last-child{
-   text-align:right;
-}
-
-.comment .c-u-info .c-u-details .c-u-rang{
-    color:@color-dark-blue;
-    font-size:15px;
-}
-
-.comment .c-content{
-    color:#7a7a7a;
-    @media (max-width: @screen-xs-max) {
-        border-left:1px solid @cm-dark-color;
-        border-right:1px solid @cm-dark-color;
-        padding:@def-pad;
-    }
-
-    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-        border-left:1px solid @cm-dark-color;
-        border-right:1px solid @cm-dark-color;
-        padding:@def-pad;
-    }
-
-    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-        
-    }
-
-    @media (min-width: @screen-lg-min) {
-        
-    }
-}
-
-.comment .c-content .c-txt{
-    margin-top:@def-pad;
-}
-
-.comment > .c-func{
-    background-color:@cm-dark-color;
-    text-align:right;
-}
-
-.comment > .c-func > ul{
-    list-style:none;
-    padding:0;
-    margin:0;
-    display:inline-block;
-    color:#727f8d;
-    font-style:italic;
-    line-height:30px;
-}
-
-.comment > .c-func > ul > li{
+.comment > .content > div{
     display:table-cell;
+    float:none;
+    height:100%;
+    vertical-align: top;
+    padding:0;
 }
 
-.comment > .c-func > ul > li > a{
-    color:inherit;
-    text-decoration:underline;
-    padding:0 10px;
+.comment .author, .comment .text
+{
+    display: table;
+    width: 100%;
+    height:100%;
+    padding:10px;
+}
+
+.comment .author{
+    text-align:center;
+    background-color:@color-light-blue;
+}
+
+.comment .author > .nik{
+    color:@color-black;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.comment .text {
+    background-color: @color-white;
+    color: @color-comment-txt;
+}
+
+.comment .text > .date{
+    font-size:.9em;
+    margin-bottom:@def-pad;
+}
+
+.comment .author img{
+    width:50px;
+    height:50px;
+    border:3px solid @color-img-border;
+}
+
+.comment > .func{
+    background-color:@color-light-blue;
+    min-height:10px;
+}
+
+.comment > .func a{
+    font-style:italic;
+    color:@color-dark-blue;
+    font-size:.9em;
+}
+
+//comments
+.comments{
+    color: @color-white;
+    margin-top:@def-pad*2;
 }

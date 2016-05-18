@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 18.05.2016 9:31:37
+ * Time: 18.05.2016 14:26:44
  ************************************************************/
 
 /*******************************************
@@ -89,6 +89,80 @@ BEGIN
 	            AND da.Id = @mid
 END
 GO
+
+/*******************************************
+ * получить комментарии материала
+ *******************************************/
+IF OBJECT_ID(N'get_material_comments', N'P') IS NOT NULL
+    DROP PROCEDURE get_material_comments;
+GO
+CREATE PROCEDURE get_material_comments(@mid INT, @mct INT)
+AS
+BEGIN
+	SELECT dc.Id,
+	       dc.MaterialId,
+	       dc.ModelCoreType,
+	       dc.UserId,
+	       dc.Html,
+	       dc.DateCreate,
+	       dc.UserName,
+	       anu.Id,
+	       anu.AvatarId,
+	       anu.NikName
+	FROM   D_COMMENT              AS dc
+	       LEFT JOIN AspNetUsers  AS anu
+	            ON  anu.Id = dc.UserId
+	WHERE  dc.MaterialId = @mid
+	       AND dc.ModelCoreType = @mct
+	ORDER BY
+	       dc.DateCreate DESC
+END
+GO
+
+/*******************************************
+ * добавить комментарии материала
+ *******************************************/
+IF OBJECT_ID(N'add_material_comment', N'P') IS NOT NULL
+    DROP PROCEDURE add_material_comment;
+GO
+CREATE PROCEDURE add_material_comment(
+    @mid      INT,
+    @mct      INT,
+    @uid      NVARCHAR(128),
+    @html     NVARCHAR(MAX),
+    @un       NVARCHAR(50)
+)
+AS
+BEGIN
+	INSERT INTO D_COMMENT
+	  (
+	    MaterialId,
+	    ModelCoreType,
+	    UserId,
+	    Html,
+	    DateUpdate,
+	    DateCreate,
+	    UserName
+	  )
+	VALUES
+	  (
+	    @mid,
+	    @mct,
+	    @uid,
+	    @html,
+	    GETDATE(),
+	    GETDATE(),
+	    @un
+	  )
+	  
+	DECLARE @id INT
+	SELECT @id = @@identity
+	SELECT *
+	FROM   D_COMMENT AS dc
+	WHERE  dc.Id = @id
+END
+GO
+   
 /*******************************************
 * получить страницу афоризма
 *******************************************/
@@ -213,6 +287,9 @@ GO
 
 
 
+
+
+
 /*******************************************
 * получить категории афоризмов
 *******************************************/
@@ -267,6 +344,9 @@ GO
 
 
 
+
+
+
 /*******************************************
 * получить афоризмы
 *******************************************/
@@ -297,6 +377,9 @@ BEGIN
 	RETURN
 END
 GO
+
+
+
 
 
 

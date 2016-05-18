@@ -79,7 +79,6 @@
     <Compile Include="Repositories\RepoArticle.cs" />
     <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoBanner.cs" />
-    <Compile Include="Repositories\RepoComment.cs" />
     <Compile Include="Repositories\RepoForumPart.cs" />
     <Compile Include="Repositories\RepoGame.cs" />
     <Compile Include="Repositories\RepoMaterialTag.cs" />

@@ -1,0 +1,62 @@
+﻿@model VMEditComment
+@{
+    Layout = null;
+    var guid = Guid.NewGuid().ToString().ToLower();
+}
+
+<div class="new-comment">
+    <form method="post" action="@Url.Action(MVC.Comments.Edit())" autocomplete="off" data-ajax="true" data-ajax-method="post" data-ajax-update="#comments-@guid">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.MaterialId)
+        @Html.HiddenFor(x => x.ModelCoreType)
+        @Html.HiddenFor(x => x.SecretCode)
+
+        <div class="form-group">
+            <label class="control-label" for="Html">@ViewBag.NewCommentTitle*</label>
+            @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите текст комментария..." } })
+            @Html.ValidationMessageFor(x => x.Html)
+        </div>
+
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.UserName)
+                        @Html.EditorFor(x => x.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Представьтесь, пожалуйста..." } })
+                        @Html.ValidationMessageFor(x => x.UserName)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Email)
+                        @Html.EditorFor(x => x.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите адрес электронной почты..." } })
+                        @Html.ValidationMessageFor(x => x.Email)
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-6">
+                <i class="small text-muted">* - Поля обязательны для заполнения</i>
+            </div>
+            <div class="col-md-6">
+                <div class="text-right">
+                    <a href="#" class="small text-muted"><u><i>Правила отправки сообщений</i></u></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="text-center">
+                <button class="btn btn-default btn-transparent white" type="submit">Отправить</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<section id="comments-@guid" class="comments">
+    @*@Html.Action(MVC.Comments.List(mid: Model.MaterialId, mct: Model.ModelCoreType))*@
+</section>

@@ -46,5 +46,7 @@ namespace SX.WebCore.Abstract
         public string CategoryId { get; set; }
 
         public ICollection<SxVideoLink> VideoLinks { get; set; }
+
+        public bool IsTop { get; set; }
     }
 }

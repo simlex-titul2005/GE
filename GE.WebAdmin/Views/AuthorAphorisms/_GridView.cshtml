@@ -13,10 +13,10 @@
             UpdateTargetId = "grid-author-ap",
             Data = Model,
             Columns = new SxExtantions.SxGridViewColumn<VMAuthorAphorism>[]{
-                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя"},
                 new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="PictureId", Caption="Фото", Template=(a)=> {
                     return a.PictureId.HasValue? string.Format("<img class=\"img-circle\" alt=\"{0}\" src=\"{1}\" />", a.Name, Url.Action(MVC.Pictures.Picture((Guid)a.PictureId))):null;
                 } },
+                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя"}
             },
             PagerInfo = pagerInfo,
             Filter = filter,

@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 19.05.2016 9:24:21
+ * Time: 19.05.2016 10:47:08
  ************************************************************/
 
 /*******************************************
@@ -294,6 +294,8 @@ GO
 
 
 
+
+
 /*******************************************
 * получить категории афоризмов
 *******************************************/
@@ -353,6 +355,8 @@ GO
 
 
 
+
+
 /*******************************************
 * получить афоризмы
 *******************************************/
@@ -385,24 +389,52 @@ END
 GO
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*******************************************
+ * Популярные материалы
+ *******************************************/
+IF OBJECT_ID(N'get_popular_materials', N'P') IS NOT NULL
+    DROP PROCEDURE get_popular_materials;
+GO
+CREATE PROCEDURE get_popular_materials(@mid INT, @mct INT, @amount INT)
+AS
+BEGIN
+	SELECT TOP(@amount)
+	       dm.DateCreate,
+	       dm.DateOfPublication,
+	       dm.Title,
+	       dm.TitleUrl,
+	       dm.ModelCoreType,
+	       COUNT(dc.Id)            AS CommentsCount,
+	       COUNT(dl.Id)            AS LikesCount,
+	       SUM(dm.ViewsCount)         ViewsCount
+	FROM   DV_MATERIAL             AS dm
+	       LEFT JOIN D_COMMENT     AS dc
+	            ON  dc.ModelCoreType = dm.ModelCoreType
+	            AND dc.MaterialId = dm.Id
+	       LEFT JOIN D_USER_CLICK  AS duc
+	            ON  duc.MaterialId = dm.Id
+	            AND duc.ModelCoreType = dm.ModelCoreType
+	       LEFT JOIN D_LIKE        AS dl
+	            ON  dl.UserClickId = duc.Id
+	WHERE  dm.ModelCoreType = @mct
+	       AND dm.Show = 1
+	       AND dm.DateOfPublication <= GETDATE()
+	       AND dm.Id NOT IN (@mid)
+	GROUP BY
+	       dm.IsTop,
+	       dm.DateCreate,
+	       dm.DateOfPublication,
+	       dm.Title,
+	       dm.TitleUrl,
+	       dm.ModelCoreType
+	HAVING COUNT(dc.Id) > 0 OR COUNT(dl.Id) > 0 OR COUNT(dm.ViewsCount) > 0
+	ORDER BY
+	       dm.IsTop DESC,
+	       CommentsCount DESC,
+	       LikesCount DESC,
+	       ViewsCount DESC
+END
+GO
 
 /*******************************************
 * другие материалы
@@ -484,4 +516,20 @@ BEGIN
 	           dm.DateOfPublication DESC
 	
 	RETURN
+END
+GO
+
+
+
+/*******************************************
+ * Получить список забаненных адресов
+ *******************************************/
+IF OBJECT_ID(N'get_banned_urls', N'P') IS NOT NULL
+    DROP PROCEDURE get_banned_urls;
+GO
+CREATE PROCEDURE get_banned_urls
+AS
+BEGIN
+	SELECT dbu.[Url]
+	FROM   D_BANNED_URL AS dbu
 END

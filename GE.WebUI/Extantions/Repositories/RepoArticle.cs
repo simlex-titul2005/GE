@@ -194,43 +194,9 @@ ORDER BY
 
         public static VMLastNews[] GetPopular(this WebCoreExtantions.Repositories.RepoArticle repo, ModelCoreType mct, int mid, int amount)
         {
-            var queryForByDateMaterials = @"SELECT TOP(@amount)
-       dm.DateCreate,
-       dm.DateOfPublication,
-       dm.Title,
-       dm.TitleUrl,
-       dm.ModelCoreType,
-       COUNT(dc.Id)            AS CommentsCount,
-       COUNT(dl.Id)            AS LikesCount,
-       SUM(dm.ViewsCount)         ViewsCount
-FROM   DV_MATERIAL             AS dm
-       LEFT JOIN D_COMMENT     AS dc
-            ON  dc.ModelCoreType = dm.ModelCoreType
-            AND dc.MaterialId = dm.Id
-       LEFT JOIN D_USER_CLICK  AS duc
-            ON  duc.MaterialId = dm.Id
-            AND duc.ModelCoreType = dm.ModelCoreType
-       LEFT JOIN D_LIKE        AS dl
-            ON  dl.UserClickId = duc.Id
-WHERE  dm.ModelCoreType = @mct
-       AND dm.Show = 1
-       AND dm.DateOfPublication <= GETDATE()
-       AND dm.Id NOT IN (@mid)
-GROUP BY
-       dm.DateCreate,
-       dm.DateOfPublication,
-       dm.Title,
-       dm.TitleUrl,
-       dm.ModelCoreType
-HAVING COUNT(dc.Id) > 0 OR COUNT(dl.Id) > 0 OR COUNT(dm.ViewsCount) > 0
-ORDER BY
-       CommentsCount DESC,
-       LikesCount DESC,
-       ViewsCount DESC";
-
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                var data = connection.Query<VMLastNews>(queryForByDateMaterials, new { mct = mct, mid = mid, amount = amount }).ToArray();
+                var data = connection.Query<VMLastNews>("get_popular_materials @mid, @mct, @amount", new { mct = mct, mid = mid, amount = amount }).ToArray();
                 return data;
             }
         }

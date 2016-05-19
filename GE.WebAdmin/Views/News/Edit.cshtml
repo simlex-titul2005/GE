@@ -51,45 +51,51 @@
             @Html.HiddenFor(x => x.OldTitleUrl)
             @if (!isNew)
             {
-            @Html.HiddenFor(x => x.UserId)
+                @Html.HiddenFor(x => x.UserId)
             }
 
             <div class="row">
-                <div class="col-md-@(isNew?9:6)">
+                <div class="col-md-@(isNew?8:6)">
                     @Html.LabelFor(x => x.Title, new { @class = "control-label" })
-                    @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название статьи" } })
                     @Html.ValidationMessageFor(x => x.Title)
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     @Html.LabelFor(x => x.Show, new { @class = "control-label" })
-                    @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название статьи" } })
+                    @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.Show)
                 </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(x => x.IsTop, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.IsTop, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.IsTop)
+                </div>
+
                 @if (!isNew)
                 {
-                <div class="col-md-3">
-                    @Html.LabelFor(x => x.DateOfPublication, new { @class = "control-label" })
-                    @Html.EditorFor(x => x.DateOfPublication, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите дату публикации" } })
-                    @Html.ValidationMessageFor(x => x.DateOfPublication)
-                </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(x => x.DateOfPublication, new { @class = "control-label" })
+                        @Html.EditorFor(x => x.DateOfPublication, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите дату публикации" } })
+                        @Html.ValidationMessageFor(x => x.DateOfPublication)
+                    </div>
                 }
             </div>
             <br />
             @if (!isNew && !string.IsNullOrEmpty(Model.TitleUrl) && User.IsInRole("architect"))
             {
-            <div class="row">
-                <div class="col-md-12">
-                    @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
-                    <span class="text-info"> (применяется для уникальной идентификации материала)</span>
-                    @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(x => x.TitleUrl)
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+                        <span class="text-info"> (применяется для уникальной идентификации материала)</span>
+                        @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(x => x.TitleUrl)
+                    </div>
                 </div>
-            </div>
-            <br />
+                <br />
             }
             else
             {
-                @Html.HiddenFor(x=>x.TitleUrl)
+                @Html.HiddenFor(x => x.TitleUrl)
             }
             <div class="row">
                 <div class="col-md-3">
@@ -106,8 +112,8 @@
                     @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
                     @if (!isNew && Model.FrontPictureId.HasValue)
                     {
-                    @:&nbsp;
-                    <a href="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))">Показать</a>
+                        @:&nbsp;
+                        <a href="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))">Показать</a>
                     }
                     @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.FrontPictureId)

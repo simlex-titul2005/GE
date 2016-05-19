@@ -47,5 +47,8 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Категория"), UIHint("EditMaterialCategory"), AdditionalMetadata("mct", ModelCoreType.News)]
         public string CategoryId { get; set; }
+
+        [Display(Name = "Показывать в избранных")]
+        public bool IsTop { get; set; }
     }
 }

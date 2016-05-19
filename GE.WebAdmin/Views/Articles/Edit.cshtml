@@ -54,20 +54,25 @@
             }
 
             <div class="row">
-                <div class="col-md-@(isNew?9:6)">
+                <div class="col-md-@(isNew?8:6)">
                     @Html.LabelFor(x => x.Title, new { @class = "control-label" })
                     @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название статьи" } })
                     @Html.ValidationMessageFor(x => x.Title)
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     @Html.LabelFor(x => x.Show, new { @class = "control-label" })
-                    @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название статьи" } })
+                    @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.Show)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(x => x.IsTop, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.IsTop, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.IsTop)
                 </div>
 
                 @if (!isNew)
                 {
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         @Html.LabelFor(x => x.DateOfPublication, new { @class = "control-label" })
                         @Html.EditorFor(x => x.DateOfPublication, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите дату публикации" } })
                         @Html.ValidationMessageFor(x => x.DateOfPublication)

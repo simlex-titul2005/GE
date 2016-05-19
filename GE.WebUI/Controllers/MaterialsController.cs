@@ -221,8 +221,7 @@ namespace GE.WebUI.Controllers
 #if !DEBUG
         [OutputCache(Duration =900, VaryByParam ="mct;mid;amount")]
 #endif
-        [HttpGet]
-        [ChildActionOnly]
+        [HttpGet, ChildActionOnly]
         public virtual PartialViewResult Popular(ModelCoreType mct, int mid, int amount=4)
         {
             VMLastMaterial[] data = null;

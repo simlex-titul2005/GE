@@ -7,11 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using SX.WebCore.Abstract;
+using SX.WebCore.Providers;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -152,11 +152,11 @@ namespace GE.WebAdmin.Controllers
             byte[] byteArray = viewModel.OriginalContent;
             if (width.HasValue && viewModel.Width > width)
             {
-                byteArray = PictureHandler.ScaleImage(viewModel.OriginalContent, PictureHandler.ImageScaleMode.Width, destWidth: width);
+                byteArray = PictureProvider.ScaleImage(viewModel.OriginalContent, PictureProvider.ImageScaleMode.Width, destWidth: width);
             }
             else if (height.HasValue && viewModel.Height > height)
             {
-                byteArray = PictureHandler.ScaleImage(viewModel.OriginalContent, PictureHandler.ImageScaleMode.Height, destHeight: height);
+                byteArray = PictureProvider.ScaleImage(viewModel.OriginalContent, PictureProvider.ImageScaleMode.Height, destHeight: height);
             }
 
             return new FileStreamResult(new System.IO.MemoryStream(byteArray), viewModel.ImgFormat);

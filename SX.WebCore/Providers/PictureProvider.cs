@@ -3,25 +3,15 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace SX.WebCore
+namespace SX.WebCore.Providers
 {
-    public static class PictureHandler
+    public static class PictureProvider
     {
-        private static Image imageFromByteArray(byte[] bytes)
-        {
-            Image image = null;
-            using (var ms = new MemoryStream(bytes))
-            {
-                image = Image.FromStream(ms);
-            }
-            return image;
-        }
-
-        public static byte[] ScaleImage(byte[] inputByteArray, ImageScaleMode scaleMode = ImageScaleMode.Width, int? destWidth=null, int? destHeight=null)
+        public static byte[] ScaleImage(byte[] inputByteArray, ImageScaleMode scaleMode = ImageScaleMode.Width, int? destWidth = null, int? destHeight = null)
         {
             var originalImage = imageFromByteArray(inputByteArray);
-            
-            switch(scaleMode)
+
+            switch (scaleMode)
             {
                 case ImageScaleMode.Width:
                     if (!destWidth.HasValue)
@@ -36,7 +26,7 @@ namespace SX.WebCore
                 default:
                     throw new NotImplementedException("Такое приведение недопустимо");
             }
-            
+
             var bitmap = new Bitmap(originalImage, (int)destWidth, (int)destHeight);
             byte[] resultByteArray = null;
             using (MemoryStream stream = new MemoryStream())
@@ -47,11 +37,19 @@ namespace SX.WebCore
             return resultByteArray;
         }
 
+        private static Image imageFromByteArray(byte[] bytes)
+        {
+            using (var ms = new MemoryStream(bytes))
+            {
+                return Image.FromStream(ms);
+            }
+        }
+
         public enum ImageScaleMode : byte
         {
-            Unknown=0,
-            Width=1,
-            Height=2
+            Unknown = 0,
+            Width = 1,
+            Height = 2
         }
     }
 }

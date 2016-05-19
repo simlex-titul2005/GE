@@ -5,7 +5,7 @@
 }
 
 <div class="new-comment">
-    <form method="post" action="@Url.Action(MVC.Comments.Edit())" autocomplete="off" data-ajax="true" data-ajax-method="post" data-ajax-update="#comments-@guid">
+    <form class="transparent" method="post" action="@Url.Action(MVC.Comments.Edit())" autocomplete="off" data-ajax="true" data-ajax-method="post" data-ajax-update="#comments-@guid">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.Id)
         @Html.HiddenFor(x => x.MaterialId)

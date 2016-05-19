@@ -21,8 +21,8 @@
                         <li><a href="#">Выбрать игру</a></li>
                         <li><a href="@Url.Action(MVC.News.List())">Почитать новости</a></li>
                         <li><a href="@Url.Action(MVC.Articles.List())">Почитать статьи</a></li>
-                        @*<li><a href="#">Посмотреть результаты/ самому поучаствовать в конкурсах</a></li>
-                        <li><a href="#">Почитать форум</a></li>*@
+                        <li><a href="@Url.Action(MVC.SiteQuetions.Edit())">Обратная связь</a></li>
+                        @*<li><a href="#">Почитать форум</a></li>*@
                     </ul>
                 </li>
                 <li>
@@ -48,11 +48,11 @@
                 else
                 {
                     <li>
-                        <a href="@Url.Action(MVC.Account.Login())">Вход</a>
+                        <a href="@Url.Action(MVC.Account.Login())" rel="nofollow">Вход</a>
                     </li>
                 }
                 <li>
-                    <a href="@Url.Action(MVC.Account.Register())">Регистрация</a>
+                    <a href="@Url.Action(MVC.Account.Register())" rel="nofollow">Регистрация</a>
                 </li>
             </ul>
             @Html.Partial(MVC.Search.Views._Search)

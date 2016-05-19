@@ -4,12 +4,12 @@ namespace SX.WebCore.ViewModels
 {
     public class SxVMLogin
     {
-        [Required]
+        [Required(ErrorMessage ="Требуется Email")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Требуется пароль")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

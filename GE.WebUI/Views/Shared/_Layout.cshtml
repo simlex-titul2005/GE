@@ -33,6 +33,8 @@
     <meta property="og:title" content="@ViewBag.Title" />
     <meta property="og:image" content="@Url.ContentAbsUrl(ViewBag.PageImage!=null?(string)ViewBag.PageImage: "~/content/dist/i/faveicon.png")" />
 
+    @RenderSection("head", false)
+
     <link rel="shortcut icon" href="@("/content/dist/i/faveicon.png")" type="image/png" />
 
     <link href="~/Content/dist/css/site.min.css" rel="stylesheet" async />

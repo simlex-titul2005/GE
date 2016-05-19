@@ -3,11 +3,15 @@
     ViewBag.Title = "Регистрация нового аккаунта";
 }
 
+@section head{
+    <meta name="robots" content="noindex" />
+}
+
 <div class="identity-page">
     <div class="wrapper">
         <h2>@ViewBag.Title</h2>
         <br />
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal transparent", role = "form" }))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary("", new { @class = "text-danger" })

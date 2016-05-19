@@ -43,7 +43,7 @@
             EnableEditing = false,
             EnableDelete = true,
             EnableCreate = false,
-            FuncDeleteLink =(mt) =>Url.Action("delete", "materialtags", new { Id= mt.Id, MaterialId = mid, ModelCoreType=mct }),
+            FuncDeleteLink =(mt) =>Url.Action("delete", "materialtags", new { Id= mt.Id.Replace(".", "^"), MaterialId = mid, ModelCoreType=mct }),
             PagerLink=string.Format("/materialtags/index?mid={0}&mct={1}", mid, mct)
         },
         new { @class = "table table-condensed table-bordered table-responsive table-striped" }

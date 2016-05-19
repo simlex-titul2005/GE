@@ -41,6 +41,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.PicturesController Pictures = new GE.WebUI.Controllers.T4MVC_PicturesController();
     public static GE.WebUI.Controllers.SearchController Search = new GE.WebUI.Controllers.T4MVC_SearchController();
     public static GE.WebUI.Controllers.SeoController Seo = new GE.WebUI.Controllers.T4MVC_SeoController();
+    public static GE.WebUI.Controllers.SiteQuetionsController SiteQuetions = new GE.WebUI.Controllers.T4MVC_SiteQuetionsController();
     public static GE.WebUI.Controllers.UserClicksController UserClicks = new GE.WebUI.Controllers.T4MVC_UserClicksController();
     public static GE.WebUI.Controllers.ValutesController Valutes = new GE.WebUI.Controllers.T4MVC_ValutesController();
     public static T4MVC.MenuesController Menues = new T4MVC.MenuesController();

@@ -25,7 +25,7 @@ namespace GE.WebAdmin.Models
 
     sealed class VMEditArticleMetadata
     {
-        [Display(Name = "Название статьи"), MaxLength(255), Required, MaxWordsCount(8), MinWordsCount(2)]
+        [Display(Name = "Название статьи"), MaxLength(255), Required, MaxWordsCount(15), MinWordsCount(7)]
         public string Title { get; set; }
 
         [Display(Name = "Контент"), Required, DataType(DataType.MultilineText), AllowHtml]

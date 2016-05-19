@@ -3,37 +3,17 @@
 @import (reference) "positioned.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
-.identity-page{
-    color:@color-white;
+.sq-page #Text
+{
+    min-height:200px;
 }
 
-.identity-page > .wrapper{
+.sq-page > .wrapper{
     height:100%;
     margin:0 auto;
-    max-width:600px;
-    margin-top:150px;
     @media (max-width: @screen-xs-max) {
         min-width:unset;
         margin-top:@def-pad*3;
-    }
-
-    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-        
-    }
-
-    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-        
-    }
-
-    @media (min-width: @screen-lg-min) {
-        
-    }
-}
-
-.identity-page .btn-transparent
-{
-    @media (max-width: @screen-xs-max) {
-        width:100%;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {

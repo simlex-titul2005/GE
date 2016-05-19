@@ -183,6 +183,7 @@
     </Compile>
     <Compile Include="Controllers\AphorismController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
+    <Compile Include="Controllers\SiteQuetionsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -208,6 +209,7 @@
     <Compile Include="Models\VMAuthorAphorism.cs" />
     <Compile Include="Models\VMDetailAphorism.cs" />
     <Compile Include="Models\VMAphorism.cs" />
+    <Compile Include="Models\VMEditSiteQuetion.cs" />
     <Compile Include="Models\VMLastNews.cs" />
     <Compile Include="Models\VMLCNB.cs" />
     <Compile Include="Models\VMLCNBCategory.cs" />
@@ -225,6 +227,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SiteQuetionsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="T4MVC.cs">
@@ -409,6 +414,7 @@
     <Content Include="Views\Comments\_Edit.cshtml" />
     <Content Include="Views\Comments\_List.cshtml" />
     <Content Include="Views\Comments\DisplayTemplates\VMComment.cshtml" />
+    <Content Include="Views\SiteQuetions\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

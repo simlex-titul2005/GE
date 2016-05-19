@@ -143,6 +143,7 @@
     <Compile Include="HtmlHelpers\SxTree.cs" />
     <Compile Include="HtmlHelpers\SxTreeView.cs" />
     <Compile Include="HtmlHelpers\SxVideo.cs" />
+    <Compile Include="Managers\SxAppMailManager.cs" />
     <Compile Include="Managers\SxAppRoleManager.cs" />
     <Compile Include="Managers\SxAppSignInManager.cs" />
     <Compile Include="Managers\SxAppUserManager.cs" />

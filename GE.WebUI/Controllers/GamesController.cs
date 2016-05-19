@@ -5,7 +5,6 @@ using SX.WebCore;
 using SX.WebCore.Abstract;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
-using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {
@@ -28,7 +27,7 @@ namespace GE.WebUI.Controllers
             var routes = Request.RequestContext.RouteData.Values;
             var controller = routes["controller"].ToString().ToLowerInvariant();
 
-            if (controller == "account")
+            if (controller == "account" || controller=="sitequetions")
                 return null;
 
             ViewBag.ControllerName = controller;

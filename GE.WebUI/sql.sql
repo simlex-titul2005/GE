@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 18.05.2016 14:26:44
+ * Time: 19.05.2016 9:24:21
  ************************************************************/
 
 /*******************************************
@@ -62,6 +62,8 @@ BEGIN
 	       JOIN AspNetUsers     AS anu
 	            ON  anu.Id = dm.UserId
 	WHERE  dm.TitleUrl = @title_url
+	       AND dm.Show = 1
+	       AND dm.DateOfPublication <= GETDATE()
 	       AND dm.ModelCoreType = @mct
 	       AND (
 	               YEAR(dm.DateCreate) = @year
@@ -154,7 +156,7 @@ BEGIN
 	    GETDATE(),
 	    @un
 	  )
-	  
+	
 	DECLARE @id INT
 	SELECT @id = @@identity
 	SELECT *
@@ -290,6 +292,8 @@ GO
 
 
 
+
+
 /*******************************************
 * получить категории афоризмов
 *******************************************/
@@ -347,6 +351,8 @@ GO
 
 
 
+
+
 /*******************************************
 * получить афоризмы
 *******************************************/
@@ -377,6 +383,8 @@ BEGIN
 	RETURN
 END
 GO
+
+
 
 
 

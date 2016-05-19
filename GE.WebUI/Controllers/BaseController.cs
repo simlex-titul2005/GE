@@ -34,6 +34,13 @@ namespace GE.WebUI.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            var urlRef = Request.UrlReferrer;
+            if(urlRef!=null)
+            {
+                if (this.GetBannedUrls().Contains(urlRef.ToString()))
+                    filterContext.Result = new HttpStatusCodeResult(403);
+            }
+
             base.OnActionExecuting(filterContext);
 
             var notLogRequest = filterContext.ActionDescriptor.GetCustomAttributes(true).FirstOrDefault(x => x.GetType() == typeof(NotLogRequestAttribute)) != null;

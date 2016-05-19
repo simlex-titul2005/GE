@@ -18,10 +18,16 @@
             new SxExtantions.SxGridViewColumn<VMArticle>{FieldName="SeoInfoId", Caption="Инфо", Template=(m)=> {
                 return !m.SeoInfoId.HasValue? "<i class=\"text-danger\">не заданы теги seo</i>":null;
             } },
+            new SxExtantions.SxGridViewColumn<VMArticle>{FieldName="Show", Caption="Показывать", Template=(m)=> {
+                return m.Show? "Да":"Нет";
+            } }
         },
         PagerInfo = pagerInfo,
         Filter = filter,
-        SortDirections = sortDirections
+        SortDirections = sortDirections,
+        FuncRowCssClass = (a) => {
+            return a.Show ? null : "warning";
+        }
     },
         new { @class = "table table-condensed table-bordered table-responsive table-striped" }
     )

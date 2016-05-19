@@ -42,6 +42,15 @@ namespace SX.WebCore.Repositories
             }
         }
 
+        public string[] GetAllUrls()
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                var data = conn.Query<string>("get_banned_urls").ToArray();
+                return data;
+            }
+        }
+
         private static string getBannedUrlWhereString(SxFilter filter, out object param)
         {
             param = null;

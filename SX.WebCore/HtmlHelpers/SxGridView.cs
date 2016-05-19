@@ -136,6 +136,7 @@ namespace SX.WebCore.HtmlHelpers
             public Func<TModel, string> FunCheckBoxName { get; set; }
             public Func<TModel, bool> FunCheckBoxTrue { get; set; }
             public Func<TModel, string> FunCheckBoxChange { get; set; }
+            public Func<TModel, string> FuncRowCssClass { get; set; }
         }
         public class SxGridViewColumn<TModel>
         {
@@ -269,6 +270,9 @@ namespace SX.WebCore.HtmlHelpers
         private static TagBuilder getGridViewRow<TModel>(TModel model, SxGridViewSettings<TModel> settings, HtmlHelper htmlHelper)
         {
             var tr = new TagBuilder("tr");
+
+            if(settings.FuncRowCssClass!=null)
+                tr.AddCssClass(settings.FuncRowCssClass(model));
 
             if (settings.FuncGetId != null && !settings.ShowSelectCheckbox)
             {

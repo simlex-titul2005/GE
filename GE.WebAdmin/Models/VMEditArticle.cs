@@ -46,7 +46,7 @@ namespace GE.WebAdmin.Models
         [Display(Name = "Строковый ключ"), MaxLength(255), Required]
         public string TitleUrl { get; set; }
 
-        [Display(Name = "Дата публикации")]
+        [Display(Name = "Дата публикации"), UIHint("EditDate")]
         public DateTime DateOfPublication { get; set; }
 
         [Display(Name = "Категория"), UIHint("EditMaterialCategory"), AdditionalMetadata("mct", ModelCoreType.Article)]

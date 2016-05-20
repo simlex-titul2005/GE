@@ -1,0 +1,10 @@
+﻿@model DateTime
+@{
+    Layout = null;
+}
+<div class="input-group date">
+    <input type="datetime" class="form-control" id="@Html.NameForModel()" name="@Html.NameForModel()" value="@Html.ValueForModel()" />
+    <span class="input-group-addon">
+        <i class="fa fa-calendar"></i>
+    </span>
+</div>

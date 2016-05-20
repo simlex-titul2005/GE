@@ -9,7 +9,7 @@
 }
 
 @section styles{
-    <link rel="stylesheet" href="~/Content/dist/css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="~/Content/dist/css/bootstrap-datetimepicker.min.css" />
     <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
 }
 
@@ -189,7 +189,8 @@
 
 @section scripts{
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
     <script type="text/javascript">
         if (CKEDITOR.instances['Html']) {
@@ -198,8 +199,19 @@
         CKEDITOR.replace('Html', { height: 400 });
 
         $(function () {
-            $('#DateOfPublication').datepicker({
-                format: 'dd.mm.yyyy',
+            $('#DateOfPublication').closest('.date').datetimepicker({
+                locale: 'ru',
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down',
+                    previous: 'fa fa-arrow-left',
+                    next: 'fa fa-arrow-right',
+                    today: '',
+                    clear: '',
+                    close: ''
+                }
             });
 
             $('#matModal').on('show.bs.modal', function (e) {

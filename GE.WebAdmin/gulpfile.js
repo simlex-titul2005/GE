@@ -57,15 +57,20 @@ function createCss() {
         .pipe(minifyCss())
         .pipe(gulp.dest('content/dist/css'));
 
+    //gulp.src([
+    //   'bower_components/lightbox2/dist/css/lightbox.css'
+    //])
+    //    .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
+    //    .pipe(minifyCss())
+    //    .pipe(rename({
+    //        suffix: '.min'
+    //    }))
+    //    .pipe(gulp.dest('content/dist/css'));
+
     gulp.src([
-       'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
-       'bower_components/lightbox2/dist/css/lightbox.css'
+        'bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+        'bower_components/lightbox2/dist/css/lightbox.min.css'
     ])
-        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(minifyCss())
-        .pipe(rename({
-            suffix: '.min'
-        }))
         .pipe(gulp.dest('content/dist/css'));
 }
 
@@ -83,23 +88,20 @@ function createJs() {
         .pipe(uglify())
         .pipe(gulp.dest('content/dist/js'));
 
-    gulp.src([
-        'scripts/menues.js',
-        'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
-        'bower_components/lightbox2/dist/js/lightbox.js'
-    ])
-        .pipe(uglify())
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(gulp.dest('content/dist/js'));
+    //gulp.src([
+    //    'bower_components/lightbox2/dist/js/lightbox.js'
+    //])
+    //    .pipe(uglify())
+    //    .pipe(rename({
+    //        suffix: '.min'
+    //    }))
+    //    .pipe(gulp.dest('content/dist/js'));
 
     gulp.src([
-        'bower_components/ckeditor/ckeditor.js'
+        'bower_components/moment/min/moment-with-locales.min.js',
+        'bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+        'bower_components/lightbox2/dist/js/lightbox.min.js'
     ])
-        .pipe(rename({
-            suffix: '.min'
-        }))
         .pipe(gulp.dest('content/dist/js'));
 }
 

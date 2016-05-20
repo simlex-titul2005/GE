@@ -148,7 +148,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\dist\css\bootstrap-datepicker.min.css" />
+    <Content Include="Content\dist\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\dist\css\lightbox.min.css" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
@@ -156,10 +156,9 @@
     <Content Include="Content\dist\images\loading.gif" />
     <Content Include="Content\dist\images\next.png" />
     <Content Include="Content\dist\images\prev.png" />
-    <Content Include="Content\dist\js\bootstrap-datepicker.min.js" />
-    <Content Include="Content\dist\js\ckeditor.min.js" />
+    <Content Include="Content\dist\js\bootstrap-datetimepicker.min.js" />
     <Content Include="Content\dist\js\lightbox.min.js" />
-    <Content Include="Content\dist\js\menues.min.js" />
+    <Content Include="Content\dist\js\moment-with-locales.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
     <Content Include="Content\i\background.jpg" />
     <Content Include="Content\sx\js\sx-find-gv.js" />
@@ -189,8 +188,6 @@
     </Content>
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt.settings.xml" />
-    <Content Include="Scripts\menues.js" />
-    <Content Include="Scripts\site.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -504,6 +501,7 @@
     <Content Include="Views\AuthorAphorisms\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditAuthorAphorism.cshtml" />
     <Content Include="Views\AuthorAphorisms\_FindGridView.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditDate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

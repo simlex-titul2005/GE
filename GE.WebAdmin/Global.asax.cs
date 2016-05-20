@@ -54,7 +54,7 @@ namespace GE.WebAdmin
         protected void Session_End()
         {
             var sessionId = Session.SessionID;
-            if (!UsersOnSite.ContainsKey(sessionId))
+            if (UsersOnSite.ContainsKey(sessionId))
                 UsersOnSite.Remove(sessionId);
         }
 

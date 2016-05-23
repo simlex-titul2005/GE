@@ -2,7 +2,7 @@
 @{
     var isNew = Model.Id == 0;
     ViewBag.Title = isNew ? "Добавить афоризм" : "Редактировать афоризм \"" + Model.Title + "\"";
-    ViewBag.AuthorAphorism = isNew || Model.AuthorId==0 ? null : Model.Author.Name;
+    ViewBag.AuthorAphorism = isNew || !Model.AuthorId.HasValue ? null : Model.Author.Name;
 }
 
 <h2>@ViewBag.Title</h2>

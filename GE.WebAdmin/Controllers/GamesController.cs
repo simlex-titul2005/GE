@@ -4,7 +4,6 @@ using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore.HtmlHelpers;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
@@ -20,7 +19,7 @@ namespace GE.WebAdmin.Controllers
 
         private static int _pageSize = 20;
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
@@ -32,7 +31,7 @@ namespace GE.WebAdmin.Controllers
             return View(viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public virtual PartialViewResult Index(VMGame filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
         {
             ViewBag.Filter = filterModel;
@@ -48,15 +47,14 @@ namespace GE.WebAdmin.Controllers
             return PartialView("_GridView", viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id) : new Game();
             return View(Mapper.Map<Game, VMEditGame>(model));
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditGame model)
         {
             var redactModel = Mapper.Map<VMEditGame, Game>(model);
@@ -66,15 +64,14 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, true, "Title", "TitleAbbr", "Description", "Show", "FrontPictureId", "GoodPictureId", "BadPictureId", "TitleUrl");
+                    newModel = _repo.Update(redactModel, true, "Title", "TitleAbbr", "Description", "Show", "FrontPictureId", "GoodPictureId", "BadPictureId", "TitleUrl", "FullDescription");
                 return RedirectToAction(MVC.Games.Index());
             }
             else
                 return View(model);
         }
 
-        [AllowAnonymous]
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public virtual PartialViewResult FindGridView(VMGame filterModel, int page = 1, int pageSize = 10)
         {
             ViewBag.Filter = filterModel;

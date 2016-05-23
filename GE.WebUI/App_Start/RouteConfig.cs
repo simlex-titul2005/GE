@@ -70,36 +70,8 @@ namespace GE.WebUI
                 constraints: new { action= "^Details" }
             );
 
-            
 
-            #endregion
 
-            #region forum
-            routes.MapRoute(
-                name: null,
-                url: "forum",
-                defaults: new { controller = "forum", action = "list", gameTitle = (string)null, page = 1, area = "" },
-                namespaces: _defNamespace
-            );
-
-            routes.MapRoute(
-                name: null,
-                url: "forum/page{page}",
-                defaults: new { controller = "forum", action = "list", gameTitle = (string)null, page = 1, area = "" },
-                namespaces: _defNamespace
-            );
-            routes.MapRoute(
-                name: null,
-                url: "forum/{gameTitle}",
-                defaults: new { controller = "forum", action = "list", page = 1, area = "" },
-                namespaces: _defNamespace
-            );
-            routes.MapRoute(
-                name: null,
-                url: "forum/{gameTitle}/page{page}",
-                defaults: new { controller = "forum", action = "list", page = 1, area = "" },
-                namespaces: _defNamespace
-            );
             #endregion
 
             #region articles
@@ -147,6 +119,43 @@ namespace GE.WebUI
                 url: "articles/{year}/{month}/{day}/{titleUrl}",
                 defaults: new { controller = "articles", action = "details", area = "" },
                 constraints: new { year = @"\d{4}" },
+                namespaces: _defNamespace
+            );
+            #endregion
+
+            #region forum
+            routes.MapRoute(
+                name: null,
+                url: "forum",
+                defaults: new { controller = "forum", action = "list", gameTitle = (string)null, page = 1, area = "" },
+                namespaces: _defNamespace
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "forum/page{page}",
+                defaults: new { controller = "forum", action = "list", gameTitle = (string)null, page = 1, area = "" },
+                namespaces: _defNamespace
+            );
+            routes.MapRoute(
+                name: null,
+                url: "forum/{gameTitle}",
+                defaults: new { controller = "forum", action = "list", page = 1, area = "" },
+                namespaces: _defNamespace
+            );
+            routes.MapRoute(
+                name: null,
+                url: "forum/{gameTitle}/page{page}",
+                defaults: new { controller = "forum", action = "list", page = 1, area = "" },
+                namespaces: _defNamespace
+            );
+            #endregion
+
+            #region games
+            routes.MapRoute(
+                name: null,
+                url: "games/{titleUrl}",
+                defaults: new { controller = "games", action = "details", area = "" },
                 namespaces: _defNamespace
             );
             #endregion

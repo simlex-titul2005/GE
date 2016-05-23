@@ -1,0 +1,19 @@
+﻿@model VMDetailGame
+@{
+    ViewBag.Title = ViewBag.Title ?? Model.Title;
+    ViewBag.H1 = ViewBag.H1 ?? Model.Title;
+    ViewBag.Description = ViewBag.Description ?? "Последние новости, статьи, афоризмы " + Model.Title;
+    ViewBag.Keywords = ViewBag.Keywords ?? string.Format("Новости {0}, статьи {0}, афоризмы {0}", Model.Title);
+}
+
+<div class="game-datails details">
+    <div class="html">
+        @Html.Raw(Model.FullDescription)
+    </div>
+    <div class="news">
+        @Html.Partial(MVC.Games.Views._DetailGameMaterials, Model.GetMaterialsByCoreType(SX.WebCore.Enums.ModelCoreType.News), new ViewDataDictionary { { "ModelCoreType", SX.WebCore.Enums.ModelCoreType.News } })
+    </div>
+    <div class="articles">
+        @Html.Partial(MVC.Games.Views._DetailGameMaterials, Model.GetMaterialsByCoreType(SX.WebCore.Enums.ModelCoreType.Article), new ViewDataDictionary { { "ModelCoreType", SX.WebCore.Enums.ModelCoreType.Article } })
+    </div>
+</div>

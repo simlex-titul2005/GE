@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using GE.WebUI.Models;
-using static SX.WebCore.Enums;
+using SX.WebCore;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -76,6 +76,23 @@ ORDER BY
             }
 
             return model;
+        }
+
+        public static VMDetailGame GetGameDetails(this RepoGame repo, string titleUrl, int amount=10)
+        {
+            var viewModel = new VMDetailGame();
+            using (var conn = new SqlConnection(repo.ConnectionString))
+            {
+                viewModel = conn.Query<VMDetailGame>("get_game_by_url @titleUrl", new { titleUrl=titleUrl}).SingleOrDefault();
+                viewModel.Materials = conn.Query<VMDetailGameMaterial>("get_game_materials @titleUrl, @amount", new { titleUrl = titleUrl, amount = amount }).ToArray();
+                viewModel.Videos = conn.Query<SxVideo>("get_game_videos @titleUrl", new { titleUrl = titleUrl }).ToArray();
+                if(viewModel.Videos.Any())
+                {
+                    viewModel.FullDescription = SxBBCodeParser.ReplaceVideo(viewModel.FullDescription, viewModel.Videos);
+                }
+
+                return viewModel;
+            }
         }
     }
 }

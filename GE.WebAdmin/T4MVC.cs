@@ -176,15 +176,6 @@ internal partial class T4MVC_System_Web_Mvc_RedirectResult : System.Web.Mvc.Redi
 namespace Links
 {
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public static class Scripts {
-        private const string URLPATH = "~/Scripts";
-        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string menues_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/menues.min.js") ? Url("menues.min.js") : Url("menues.js");
-        public static readonly string site_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.js") ? Url("site.min.js") : Url("site.js");
-    }
-
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static class Content {
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -199,7 +190,7 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/css";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string bootstrap_datepicker_min_css = Url("bootstrap-datepicker.min.css");
+                public static readonly string bootstrap_datetimepicker_min_css = Url("bootstrap-datetimepicker.min.css");
                 public static readonly string lightbox_min_css = Url("lightbox.min.css");
                 public static readonly string site_min_css = Url("site.min.css");
             }
@@ -233,10 +224,9 @@ namespace Links
                 private const string URLPATH = "~/Content/dist/js";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string bootstrap_datepicker_min_js = Url("bootstrap-datepicker.min.js");
-                public static readonly string ckeditor_min_js = Url("ckeditor.min.js");
+                public static readonly string bootstrap_datetimepicker_min_js = Url("bootstrap-datetimepicker.min.js");
                 public static readonly string lightbox_min_js = Url("lightbox.min.js");
-                public static readonly string menues_min_js = Url("menues.min.js");
+                public static readonly string moment_with_locales_min_js = Url("moment-with-locales.min.js");
                 public static readonly string site_min_js = Url("site.min.js");
             }
         
@@ -272,14 +262,6 @@ namespace Links
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static partial class Bundles
     {
-        public static partial class Scripts 
-        {
-            public static class Assets
-            {
-                public const string menues_js = "~/Scripts/menues.js"; 
-                public const string site_js = "~/Scripts/site.js"; 
-            }
-        }
         public static partial class Content 
         {
             public static partial class dist 
@@ -288,7 +270,7 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string bootstrap_datepicker_min_css = "~/Content/dist/css/bootstrap-datepicker.min.css";
+                        public const string bootstrap_datetimepicker_min_css = "~/Content/dist/css/bootstrap-datetimepicker.min.css";
                         public const string lightbox_min_css = "~/Content/dist/css/lightbox.min.css";
                         public const string site_min_css = "~/Content/dist/css/site.min.css";
                     }
@@ -309,10 +291,9 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string bootstrap_datepicker_min_js = "~/Content/dist/js/bootstrap-datepicker.min.js"; 
-                        public const string ckeditor_min_js = "~/Content/dist/js/ckeditor.min.js"; 
+                        public const string bootstrap_datetimepicker_min_js = "~/Content/dist/js/bootstrap-datetimepicker.min.js"; 
                         public const string lightbox_min_js = "~/Content/dist/js/lightbox.min.js"; 
-                        public const string menues_min_js = "~/Content/dist/js/menues.min.js"; 
+                        public const string moment_with_locales_min_js = "~/Content/dist/js/moment-with-locales.min.js"; 
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }

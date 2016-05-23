@@ -31,6 +31,7 @@ namespace GE.WebUI
                     
                     //games
                     cfg.CreateMap<Game, VMGame>();
+                    cfg.CreateMap<Game, VMDetailGame>();
 
                     //material category
                     cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();

@@ -61,7 +61,8 @@ function createCss() {
         'content/less/video.less',
         'content/less/aphorisms.less',
         'content/less/site-quetions.less',
-        'content/less/form-transparent.less'
+        'content/less/form-transparent.less',
+        'content/less/game-details.less'
     ])
         .pipe(less())
         .pipe(concat('less-files.less'));

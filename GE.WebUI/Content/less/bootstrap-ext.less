@@ -56,12 +56,18 @@ a{
 .breadcrumb{
     margin-top:20px;
     margin-bottom:0;
-    border-radius:0;
+    border-radius:3px;
+    background: linear-gradient(to bottom,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    /*border: 1px solid rgba(255,255,255,.1);*/
 }
 
 .breadcrumb a, .breadcrumb span{
-    color:#888;
+    color:@color-muted-blue;
     font-size:12px;
+}
+
+.breadcrumb li:last-child a, .breadcrumb li:last-child span{
+    color:@color-white;
 }
 
 //.dropdown-menu

@@ -188,6 +188,8 @@
     </Content>
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Views\VideoLinks\_GridView.cshtml" />
+    <Content Include="Views\VideoLinks\_GridViewNotLinked.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -487,9 +489,7 @@
     <Content Include="Views\Videos\_GridView.cshtml" />
     <Content Include="Views\Videos\Edit.cshtml" />
     <Content Include="Views\Videos\Index.cshtml" />
-    <Content Include="Views\VideoLinks\_GridView.cshtml" />
     <Content Include="Views\Shared\_NotMaterialVideos.cshtml" />
-    <Content Include="Views\VideoLinks\_GridViewNotLinked.cshtml" />
     <Content Include="Views\Aphorisms\Index.cshtml" />
     <Content Include="Views\MaterialCategories\_TreeViewMenu.cshtml" />
     <Content Include="Views\Aphorisms\_GridView.cshtml" />

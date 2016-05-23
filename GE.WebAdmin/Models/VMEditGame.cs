@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
 {
@@ -18,6 +20,9 @@ namespace GE.WebAdmin.Models
 
         [DataType(DataType.MultilineText), Display(Name="Описание")]
         public string Description { get; set; }
+
+        [AllowHtml, Display(Name = "Полное описание"), DataType(DataType.MultilineText)]
+        public string FullDescription { get; set; }
 
         [Display(Name = "Показывать")]
         public bool Show { get; set; }

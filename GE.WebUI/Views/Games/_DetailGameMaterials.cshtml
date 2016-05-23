@@ -1,0 +1,38 @@
+﻿@model VMDetailGameMaterial[]
+@{
+    Layout = null;
+    var mct = (SX.WebCore.Enums.ModelCoreType)ViewData["ModelCoreType"];
+    var materialsTitle = string.Empty;
+    var allUrl = string.Empty;
+    switch (mct)
+    {
+        case SX.WebCore.Enums.ModelCoreType.News:
+            materialsTitle = "Последние новости";
+            allUrl = Url.Action(MVC.News.List());
+            break;
+        case SX.WebCore.Enums.ModelCoreType.Article:
+            materialsTitle = "Последние статьи";
+            allUrl = Url.Action(MVC.Articles.List());
+            break;
+        default:
+            materialsTitle = "Последние материалы";
+            allUrl = "#";
+            break;
+    }
+}
+
+@if (Model.Any())
+{
+    <section>
+        <h3>@materialsTitle</h3>
+        @for (int i = 0; i < Model.Length; i++)
+        {
+            var item = Model[i];
+            @Html.DisplayFor(x => item)
+        }
+        <div class="text-center">
+            <br />
+            <a href="@allUrl" class="btn btn-default btn-transparent white">Все записи</a>
+        </div>
+    </section>
+}

@@ -12,7 +12,7 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoNews : SX.WebCore.Abstract.SxDbRepository<int, News, DbContext>
+    public sealed class RepoNews : SxDbRepository<int, News, DbContext>
     {
         public override IQueryable<News> All
         {

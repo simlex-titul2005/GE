@@ -3,44 +3,17 @@
 @import (reference) "positioned.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
-/*.like{
-    @media (max-width: @screen-xs-max) {
-        margin-bottom:@def-pad;
-    }
-
-    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-        margin-bottom:@def-pad;
-    }
-
-    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-        display:inline-block;
-        margin-right:@def-pad*2;
-        top: 2px;
-        position: relative;
-    }
-
-    @media (min-width: @screen-lg-min) {
-        margin-right:@def-pad*2;
-        display:inline-block;
-        top: 2px;
-        position: relative;
-    }
-}*/
-
 .like-mats{
-    background-color:@color-white;
-    padding:@def-pad;
     margin-top:@def-pad*2;
 }
 .like-mats .like-mat {
     font-size: 14px;
     height: 100%;
     display: inline-table;
-    background-color: @color-white;
-    padding: 10px 10px 30px;
+    color: @color-white;
     width: 100%;
     position: relative;
-    box-shadow: -1px 1px 5px rgba(0,0,0,0.2);
+    padding-bottom:@def-pad*2;
 
     @media (max-width: @screen-xs-max) {
         display: block;
@@ -65,7 +38,7 @@
 
 .like-mats .like-mat a {
     font-size: 18px;
-    color: @color-dark-blue;
+    color: @color-muted-blue;
     font-weight: 700;
     line-height: 1;
     display: block;
@@ -76,7 +49,6 @@
     position:absolute;
     bottom:0;
     left:0;
-    padding: 0 10px 10px;
 }
 
 .like-mats .row {

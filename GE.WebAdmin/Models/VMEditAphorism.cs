@@ -22,6 +22,6 @@ namespace GE.WebAdmin.Models
 
         public VMAuthorAphorism Author { get; set; }
         [Display(Name = "Автор"), UIHint("EditAuthorAphorism")]
-        public int AuthorId { get; set; }
+        public int? AuthorId { get; set; }
     }
 }

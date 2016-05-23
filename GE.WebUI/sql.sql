@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 19.05.2016 10:47:08
+ * Time: 23.05.2016 16:41:07
  ************************************************************/
 
 /*******************************************
@@ -164,6 +164,74 @@ BEGIN
 	WHERE  dc.Id = @id
 END
 GO
+
+/*******************************************
+ * Удалить категорию материалов
+ *******************************************/
+IF OBJECT_ID(N'del_material_category', N'P') IS NOT NULL
+    DROP PROCEDURE del_material_category;
+GO
+CREATE PROCEDURE del_material_category(@catId VARCHAR(100))
+AS
+BEGIN
+	BEGIN TRANSACTION
+	
+	DECLARE @idForDel TABLE (Id VARCHAR(100));
+	WITH j(Id, ParentCategoryId) AS
+	     (
+	         SELECT dmc1.Id,
+	                dmc1.ParentCategoryId
+	         FROM   D_MATERIAL_CATEGORY AS dmc1
+	         WHERE  dmc1.Id = @catId
+	         UNION ALL
+	         SELECT dmc2.Id,
+	                dmc2.ParentCategoryId
+	         FROM   D_MATERIAL_CATEGORY AS dmc2
+	                JOIN j
+	                     ON  dmc2.ParentCategoryId = j.Id
+	     )
+	
+	INSERT INTO @idForDel
+	SELECT j.Id
+	FROM   j AS j
+	
+	--Удалить афоризмы категории
+	DELETE 
+	FROM   D_APHORISM
+	WHERE  Id IN (SELECT dm.Id
+	              FROM   DV_MATERIAL      AS dm
+	                     JOIN D_APHORISM  AS da
+	                          ON  da.Id = dm.Id
+	                          AND da.ModelCoreType = dm.ModelCoreType
+	              WHERE  dm.CategoryId IN (SELECT fd.Id
+	                                       FROM   @idForDel fd))
+	
+	DELETE 
+	FROM   DV_MATERIAL
+	WHERE  TitleUrl IN (SELECT dm.TitleUrl
+	                    FROM   DV_MATERIAL AS dm
+	                           JOIN D_APHORISM AS da
+	                                ON  da.Id = dm.Id
+	                                AND da.ModelCoreType = dm.ModelCoreType
+	                    WHERE  dm.CategoryId IN (SELECT fd.Id
+	                                             FROM   @idForDel fd))
+	
+	
+	--Обновить статьи и новости
+	UPDATE DV_MATERIAL
+	SET    CategoryId = NULL
+	WHERE  CategoryId IN (SELECT fd.Id
+	                      FROM   @idForDel fd) 
+	
+	--Удалить категорию	         
+	DELETE 
+	FROM   D_MATERIAL_CATEGORY
+	WHERE  Id IN (SELECT fd.Id
+	              FROM   @idForDel fd) 
+	
+	COMMIT TRANSACTION
+END
+GO
    
 /*******************************************
 * получить страницу афоризма
@@ -279,21 +347,31 @@ GO
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*******************************************
+* Получить случайный афоризм
+*******************************************/
+IF OBJECT_ID(N'get_random_aphorism', N'P') IS NOT NULL
+    DROP PROCEDURE get_random_aphorism;
+GO
+CREATE PROCEDURE get_random_aphorism(@mid INT)
+AS
+BEGIN
+	SELECT TOP(1) *
+	FROM   D_APHORISM                   AS da
+	       JOIN DV_MATERIAL             AS dm
+	            ON  dm.Id = da.Id
+	            AND dm.ModelCoreType = da.ModelCoreType
+	       JOIN D_MATERIAL_CATEGORY     AS dmc
+	            ON  dmc.Id = dm.CategoryId
+	       LEFT JOIN D_AUTHOR_APHORISM  AS daa
+	            ON  daa.Id = da.AuthorId
+	WHERE  (@mid IS NULL)
+	       OR  (@mid IS NOT NULL AND da.Id NOT IN (@mid))
+	       AND dm.CategoryId IS NOT NULL
+	ORDER BY
+	       NEWID()
+END
+GO
 
 
 /*******************************************
@@ -340,23 +418,6 @@ GO
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*******************************************
 * получить афоризмы
 *******************************************/
@@ -387,6 +448,14 @@ BEGIN
 	RETURN
 END
 GO
+
+
+
+
+
+
+
+
 
 
 /*******************************************
@@ -521,6 +590,11 @@ GO
 
 
 
+
+
+
+
+
 /*******************************************
  * Получить список забаненных адресов
  *******************************************/
@@ -533,3 +607,89 @@ BEGIN
 	SELECT dbu.[Url]
 	FROM   D_BANNED_URL AS dbu
 END
+GO
+
+/*******************************************
+ * Детализированная страница по игре
+ *******************************************/
+IF OBJECT_ID(N'get_game_by_url', N'P') IS NOT NULL
+    DROP PROCEDURE get_game_by_url;
+GO
+CREATE PROCEDURE get_game_by_url(@titleUrl VARCHAR(50))
+AS
+BEGIN
+	SELECT *
+	FROM   D_GAME AS dg
+	WHERE  dg.TitleUrl = @titleUrl
+	       AND dg.Show = 1
+END
+GO
+
+/*******************************************
+ * Последние материалы по игре
+ *******************************************/
+IF OBJECT_ID(N'get_game_materials', N'P') IS NOT NULL
+    DROP PROCEDURE get_game_materials;
+GO
+CREATE PROCEDURE get_game_materials(@titleUrl VARCHAR(50), @amount INT)
+AS
+BEGIN
+	SELECT TOP(@amount) dm.*
+	FROM   D_NEWS            AS dn
+	       JOIN DV_MATERIAL  AS dm
+	            ON  dm.Id = dn.Id
+	            AND dm.ModelCoreType = dn.ModelCoreType
+	       JOIN D_GAME       AS dg
+	            ON  dg.Id = dn.GameId
+	            AND dg.TitleUrl = @titleUrl
+	WHERE  dg.Show = 1
+	       AND dm.Show = 1
+	       AND dm.DateOfPublication <= GETDATE()
+	UNION ALL
+	SELECT TOP(@amount) dm.*
+	FROM   D_ARTICLE         AS da
+	       JOIN DV_MATERIAL  AS dm
+	            ON  dm.Id = da.Id
+	            AND dm.ModelCoreType = da.ModelCoreType
+	       JOIN D_GAME       AS dg
+	            ON  dg.Id = da.GameId
+	            AND dg.TitleUrl = @titleUrl
+	WHERE  dg.Show = 1
+	       AND dm.Show = 1
+	       AND dm.DateOfPublication <= GETDATE()
+	ORDER BY
+	       dm.DateOfPublication DESC
+END
+GO
+
+/*******************************************
+ * Получить видео для игры
+ *******************************************/
+IF OBJECT_ID(N'get_game_videos', N'P') IS NOT NULL
+    DROP PROCEDURE get_game_videos;
+GO
+CREATE PROCEDURE get_game_videos(@titleUrl VARCHAR(50))
+AS
+BEGIN
+	SELECT dv.* 
+	FROM   D_VIDEO                AS dv
+	       JOIN D_VIDEO_LINK      AS dvl
+	            ON  dvl.VideoId = dv.Id
+	       LEFT JOIN DV_MATERIAL  AS dm
+	            ON  dm.Id = dvl.MaterialId
+	            AND dm.ModelCoreType = dvl.ModelCoreType
+	            AND dm.Show = 1
+	            AND dm.DateOfPublication <= GETDATE()
+	       LEFT JOIN D_NEWS       AS dn
+	            ON  dn.Id = dm.Id
+	            AND dn.ModelCoreType = dm.ModelCoreType
+	       LEFT JOIN D_ARTICLE    AS da
+	            ON  da.Id = dm.Id
+	            AND da.ModelCoreType = dm.ModelCoreType
+	       LEFT JOIN D_GAME       AS dg
+	            ON  (dg.Id = dn.GameId OR dg.Id = da.GameId)
+	            AND dg.Show = 1
+	WHERE  (dn.GameId IS NOT NULL OR da.GameId IS NOT NULL)
+	       AND dg.TitleUrl = @titleUrl
+END
+GO

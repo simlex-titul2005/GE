@@ -56,6 +56,12 @@ namespace GE.WebUI.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Details()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public GamesController Actions { get { return MVC.Games; } }
@@ -73,12 +79,14 @@ namespace GE.WebUI.Controllers
         public class ActionNamesClass
         {
             public readonly string GameList = "GameList";
+            public readonly string Details = "Details";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string GameList = "GameList";
+            public const string Details = "Details";
         }
 
 
@@ -92,6 +100,14 @@ namespace GE.WebUI.Controllers
             public readonly string iconHeight = "iconHeight";
             public readonly string gnc = "gnc";
         }
+        static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Details
+        {
+            public readonly string titleUrl = "titleUrl";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -102,11 +118,15 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _DetailGameMaterials = "_DetailGameMaterials";
                 public readonly string _GameList = "_GameList";
                 public readonly string _LastMaterials = "_LastMaterials";
+                public readonly string Details = "Details";
             }
+            public readonly string _DetailGameMaterials = "~/Views/Games/_DetailGameMaterials.cshtml";
             public readonly string _GameList = "~/Views/Games/_GameList.cshtml";
             public readonly string _LastMaterials = "~/Views/Games/_LastMaterials.cshtml";
+            public readonly string Details = "~/Views/Games/Details.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -133,6 +153,18 @@ namespace GE.WebUI.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "iconHeight", iconHeight);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gnc", gnc);
             GameListOverride(callInfo, imgWidth, iconHeight, gnc);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string titleUrl);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Details(string titleUrl)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
+            DetailsOverride(callInfo, titleUrl);
             return callInfo;
         }
 

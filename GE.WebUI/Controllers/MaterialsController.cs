@@ -118,7 +118,7 @@ namespace GE.WebUI.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Details(int year, string month, string day, string titleUrl)
+        public virtual ActionResult Details(int year, string month, string day, string titleUrl)
         {
             VMDetailMaterial model = null;
             switch (_modelCoreType)
@@ -132,9 +132,7 @@ namespace GE.WebUI.Controllers
             }
             if (model == null)
             {
-                Response.StatusCode = 404;
-                Response.Clear();
-                return null;
+                return new HttpStatusCodeResult(404);
             }
             else
             {

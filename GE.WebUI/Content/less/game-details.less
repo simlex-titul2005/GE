@@ -1,0 +1,77 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "positioned.less";
+@import (reference) "../../bower_components/bootstrap/less/variables.less";
+
+.game-datails.details {
+    color: @color-white;
+}
+
+.game-datails .html {
+    font-size: 15px;
+    line-height: 2;
+}
+
+.game-datails .news, .game-datails .articles {
+    margin-top: @def-pad*3;
+}
+
+.game-datails .dg-lm {
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
+    padding:@def-pad;
+    border-radius:3px;
+    margin-top:@def-pad*2;
+    cursor:pointer;
+    @media (max-width: @screen-xs-max) {
+        
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        transition:all .2s;
+    }
+}
+
+.game-datails .dg-lm:hover{
+    @media (max-width: @screen-xs-max) {
+        
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        box-shadow:1px 1px 8px rgba(255,255,255,1);
+    }
+}
+
+.game-datails .dg-lm .date{
+    font-size:0.9em;
+}
+
+.game-datails .dg-lm .title{
+    color:@color-muted-blue;
+}
+
+.game-datails .dg-lm .title a{
+    color:inherit;
+}
+
+
+
+.game-datails .details{
+    display:none;
+}

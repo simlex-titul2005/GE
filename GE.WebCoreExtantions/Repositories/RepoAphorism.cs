@@ -87,23 +87,9 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
 
         public Aphorism GetRandom(int? id=null)
         {
-            var query = @"SELECT TOP(1) * 
-FROM   D_APHORISM                   AS da
-       JOIN DV_MATERIAL             AS dm
-            ON  dm.Id = da.Id
-            AND dm.ModelCoreType = da.ModelCoreType
-       JOIN D_MATERIAL_CATEGORY     AS dmc
-            ON  dmc.Id = dm.CategoryId
-       LEFT JOIN D_AUTHOR_APHORISM  AS daa
-            ON  daa.Id = da.AuthorId
-WHERE  (@mid IS NULL)
-       OR  (@mid IS NOT NULL AND da.Id NOT IN (@mid))
-ORDER BY
-       NEWID()";
-
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>(query, (a, c, aa)=> {
+                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>("get_random_aphorism @mid", (a, c, aa)=> {
                     a.Author = aa;
                     a.Category = c;
                     return a;

@@ -4,8 +4,6 @@
 
 .by-date-m {
     margin-top: @def-pad*2;
-    background-color: @color-white;
-    padding:@def-pad;
     font-size: 0.9em;
 }
 
@@ -67,7 +65,14 @@
     height:100%;
     width:100%;
     display:inline-table;
+    padding:@def-pad;
     padding-bottom:@def-pad*2;
+    color:@color-white;
+    border-radius:3px;
+
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+border: 1px solid rgba(255,255,255,.1);
+
     @media (max-width: @screen-xs-max) {
         margin-top:@def-pad*2;
         padding-bottom:0;
@@ -122,7 +127,7 @@
 .by-date-m .content .arrow {
     position: absolute;
     width: @def-pad*3;
-    left: 0;
+    left: @def-pad;
     text-align: center;
     height: 100%;
     top: 0;
@@ -177,7 +182,7 @@
 }
 
 .by-date-m .content .arrow > a:focus, .by-date-m .content .arrow > a:hover{
-    background-color:rgba(0,0,0,.05);
+    background-color:rgba(255,255,255,.05);
 }
 
 .by-date-m .content .arrow > a > i{
@@ -187,7 +192,7 @@
 
 .by-date-m .content.last .arrow{
     left:unset;
-    right:0;
+    right:@def-pad;
 }
 
 .by-date-m .content > .title, .by-date-m .content > .fw{
@@ -207,13 +212,14 @@
 }
 
 .by-date-m .content > .title > a{
-    color:@color-dark-blue;
+    color: @color-muted-blue;;
     font-weight:700;
 }
 
 .by-date-m .content > .author{
     position:absolute;
     bottom:0;
+    padding-bottom:10px;
     @media (max-width: @screen-xs-max) {
         position:unset;
         margin-top:5px;

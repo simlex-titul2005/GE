@@ -1,17 +1,13 @@
 ﻿using SX.WebCore;
 using SX.WebCore.Abstract;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GE.WebCoreExtantions
 {
     [Table("D_GAME")]
-    public class Game : SX.WebCore.Abstract.SxDbUpdatedModel<int>, ISxHasFrontPicture
+    public class Game : SxDbUpdatedModel<int>, ISxHasFrontPicture
     {
         [MaxLength(100), Required]
         public string Title { get; set; }
@@ -26,6 +22,8 @@ namespace GE.WebCoreExtantions
 
         [MaxLength(255)]
         public string Description { get; set; }
+
+        public string FullDescription { get; set; }
 
         public Guid? FrontPictureId { get; set; }
         public virtual SxPicture FrontPicture { get; set; }

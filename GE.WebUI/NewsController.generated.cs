@@ -70,9 +70,9 @@ namespace GE.WebUI.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Details()
+        public virtual System.Web.Mvc.ActionResult Details()
         {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -287,12 +287,12 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int year, string month, string day, string titleUrl);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int year, string month, string day, string titleUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Details(int year, string month, string day, string titleUrl)
+        public override System.Web.Mvc.ActionResult Details(int year, string month, string day, string titleUrl)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "year", year);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "month", month);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "day", day);

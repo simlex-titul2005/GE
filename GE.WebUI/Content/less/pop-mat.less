@@ -5,7 +5,7 @@
 
 .pop-mat{
     font-size:13px;
-    display:table;
+    margin-bottom:@def-pad*2;
 }
 
 .pop-mat .row{
@@ -56,7 +56,11 @@
 .pop-mat .content{
     display:inline-table;
     height:100%;
-    padding-bottom:@def-pad*2;
+    padding:5px 5px @def-pad*2 5px;
+    border-radius:3px;
+    background:linear-gradient(to left, rgba(255,255,255,.3),rgba(255,255,255,.2), rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
+    width:100%;
     @media (max-width: @screen-xs-max) {
         margin-top:@def-pad;
     }
@@ -72,7 +76,7 @@
 }
 
 .pop-mat .content a{
-    color:@color-dark-blue;
+    color:@color-muted-blue;
     font-weight:700;
     font-size:14px;
     line-height:1;

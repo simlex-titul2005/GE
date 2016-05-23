@@ -9,18 +9,24 @@
 
 @Html.SxGridView(
         new SxExtantions.SxGridViewSettings<VMGame>
-    {
-        UpdateTargetId = "grid-games",
-        Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn<VMGame>[]{
+        {
+            UpdateTargetId = "grid-games",
+            Data = Model,
+            Columns = new SxExtantions.SxGridViewColumn<VMGame>[]{
             new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Title", Caption="Наименование игры"},
             new SxExtantions.SxGridViewColumn<VMGame>{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
             new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Description", Caption="Описание"},
-            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Show", Caption="Показывать"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Show", Caption="Показывать", Template=(m)=> {
+                return m.Show? "Да":"Нет";
+            } }
         },
-        PagerInfo=pagerInfo,
-        Filter = filter,
-        SortDirections = sortDirections
-    },
+            PagerInfo=pagerInfo,
+            Filter = filter,
+            SortDirections = sortDirections,
+            FuncRowCssClass = (g) =>
+            {
+                return g.Show ? null : "warning";
+            }
+        },
         new { @class = "table table-condensed table-bordered table-responsive table-striped" }
     )

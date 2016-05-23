@@ -27,7 +27,7 @@ namespace GE.WebCoreExtantions
                 .WithMany(x=>x.Prizes)
                 .HasForeignKey(x => new { x.ContestId, x.MaterialCoreType });
 
-            modelBuilder.Entity<Aphorism>().HasOptional(x => x.Author).WithMany(x => x.Aphorisms).HasForeignKey(x => new { x.AuthorId }).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Aphorism>().HasOptional(x => x.Author).WithMany(x => x.Aphorisms).HasForeignKey(x => new { x.AuthorId }).WillCascadeOnDelete(false);
         }
     }
 }

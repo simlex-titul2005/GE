@@ -1,0 +1,18 @@
+﻿@model VMDetailGameMaterial
+@{
+    Layout = null;
+}
+<div class="dg-lm" onclick="changeLocation(this)">
+    <div class="date">@Model.DateOfPublication</div>
+    <div class="title">
+        <h4>
+            <a href="@Model.GetUrl(Url)">@Model.Title</a>
+        </h4>
+    </div>
+    <div class="fwd">
+        @Model.Foreword
+    </div>
+    <div class="details">
+        <a href="@Model.GetUrl(Url)" class="btn btn-default">Подробнее</a>
+    </div>
+</div>

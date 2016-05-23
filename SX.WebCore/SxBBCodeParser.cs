@@ -62,6 +62,8 @@ namespace SX.WebCore
 
         public static string ReplaceVideo(string inputHtml, SxVideo[] videos, Func<SxVideo, string> videoTemplate=null)
         {
+            if (inputHtml == null) return null;
+
             var reVideo = new Regex(@"\[VIDEO\](.*?)\[\/VIDEO\]");
             var matchesVideo = Regex.Matches(inputHtml, reVideo.ToString());
             foreach (Match matchVideo in matchesVideo)

@@ -52,5 +52,16 @@ namespace GE.WebUI.Controllers
 
             return PartialView(MVC.Games.Views._GameList, viewModel);
         }
+
+        [HttpGet]
+        public virtual ActionResult Details(string titleUrl)
+        {
+            var viewModel = (_repo as RepoGame).GetGameDetails(titleUrl);
+
+            if (viewModel == null) return new HttpStatusCodeResult(404);
+
+            ViewBag.GameName = titleUrl.ToLowerInvariant();
+            return View(viewModel);
+        }
     }
 }

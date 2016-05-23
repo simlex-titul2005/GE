@@ -11,7 +11,7 @@
             Manual = 4,
             ProjectStep = 5,
             //custom, not for core
-            Aphorism
+            Aphorism = 6
         }
 
         public enum UserClickType : byte

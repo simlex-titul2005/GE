@@ -20,23 +20,3 @@
 @Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
 
 @Html.Partial(MVC.News.Views._Collection, Model)
-
-@section scripts{
-    <script type="text/javascript">
-        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-        $(function () {
-            if (width >= 768) {
-                alignNews();
-            }
-        });
-
-        function alignNews() {
-            $('.list-news figure').each(function () {
-                var $figure = $(this);
-                var $news = $figure.closest('.list-news');
-                var h = $news.height();
-                $figure.height(h);
-            });
-        }
-    </script>
-}

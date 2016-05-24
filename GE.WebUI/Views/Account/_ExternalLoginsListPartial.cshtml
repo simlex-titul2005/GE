@@ -1,8 +1,8 @@
 ﻿@model VMExternalLoginList
 @using Microsoft.Owin.Security
 
-<h4>Use another service to log in.</h4>
-<hr />
+<h2>Другие способы входа</h2>
+<br />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
     if (loginProviders.Count() == 0) {

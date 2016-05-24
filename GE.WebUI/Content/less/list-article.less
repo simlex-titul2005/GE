@@ -5,7 +5,10 @@
 .list-article {
     display: inline-table;
     height: 100%;
-    background-color: @color-white;
+    border-radius:3px;
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
+    color:@color-white;
     width:100%;
     padding-bottom:@def-pad*4;
 
@@ -133,7 +136,7 @@
 
 .list-article .link {
     font-size: 22px;
-    color: #2d3e50;
+    color: @color-muted-blue;
     font-weight: 700;
     line-height: 1;
     display: block;

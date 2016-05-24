@@ -4,7 +4,6 @@ using System.Linq;
 using Dapper;
 using GE.WebUI.Models.Abstract;
 using static SX.WebCore.Enums;
-using System;
 using SX.WebCore;
 
 namespace GE.WebUI.Extantions.Repositories

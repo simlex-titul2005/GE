@@ -2,9 +2,6 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using GE.WebAdmin.Models;
-using SX.WebCore.Providers;
-using static SX.WebCore.HtmlHelpers.SxExtantions;
 using GE.WebCoreExtantions.Repositories;
 
 namespace GE.WebAdmin.Extantions.Repositories

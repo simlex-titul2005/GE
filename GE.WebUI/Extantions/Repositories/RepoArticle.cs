@@ -174,7 +174,7 @@ ORDER BY
             {
                 var data=conn.Query<VMDetailArticle>("get_material_by_url @year, @month, @day, @title_url, @mct", new { year=year, month=month, day=day, title_url = titleUrl, mct=ModelCoreType.Article }).SingleOrDefault();
                 if(data!=null)
-                    data.Videos = conn.Query<SxVideo>("get_material_videos @mid", new { mid = data.Id }).ToArray();
+                    data.Videos = conn.Query<SxVideo>("get_material_videos @mid, @mct", new { mid = data.Id,  mct=data.ModelCoreType}).ToArray();
                 return data;
             }
         }

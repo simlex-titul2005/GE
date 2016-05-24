@@ -8,9 +8,9 @@ using System.Collections.Generic;
 
 namespace SX.WebCore.Repositories
 {
-    public sealed class RepoMaterialCategory<TDbContext> : SxDbRepository<string, SxMaterialCategory, TDbContext> where TDbContext : SxDbContext
+    public class RepoMaterialCategory<TDbContext> : SxDbRepository<string, SxMaterialCategory, TDbContext> where TDbContext : SxDbContext
     {
-        public sealed override IQueryable<SxMaterialCategory> Query(SxFilter filter)
+        public override IQueryable<SxMaterialCategory> Query(SxFilter filter)
         {
             var query = QueryProvider.GetSelectString(new string[] { "dmc.*" });
             query += " FROM D_MATERIAL_CATEGORY AS dmc ";
@@ -43,7 +43,7 @@ namespace SX.WebCore.Repositories
             return query;
         }
 
-        public sealed override SxMaterialCategory Update(SxMaterialCategory model, object[] additionalData, bool changeDateUpdate = true, params string[] propertiesForChange)
+        public override SxMaterialCategory Update(SxMaterialCategory model, object[] additionalData, bool changeDateUpdate = true, params string[] propertiesForChange)
         {
             var exist = GetByKey(model.Id);
             var isRedactedId = exist == null;
@@ -87,7 +87,7 @@ COMMIT TRANSACTION";
                 return base.Update(model, changeDateUpdate, propertiesForChange);
         }
 
-        public sealed override void Delete(params object[] id)
+        public override void Delete(params object[] id)
         {
             var key = (string)id[0];
 

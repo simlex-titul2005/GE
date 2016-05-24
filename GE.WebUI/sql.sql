@@ -269,21 +269,26 @@ END
 GO
 
 /*******************************************
- * получить видео материал
+ * получить видео материала
  *******************************************/
 IF OBJECT_ID(N'dbo.get_material_videos', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_material_videos;
 GO
-CREATE PROCEDURE dbo.get_material_videos(@mid INT)
+CREATE PROCEDURE dbo.get_material_videos(@mid INT, @mct INT)
 AS
 BEGIN
 	SELECT dv.*
-	FROM   D_VIDEO_LINK    AS dvl
-	       JOIN D_VIDEO    AS dv
+	FROM   D_VIDEO_LINK         AS dvl
+	       JOIN D_VIDEO         AS dv
 	            ON  dv.Id = dvl.VideoId
-	       JOIN D_ARTICLE  AS da
+	       LEFT JOIN D_ARTICLE  AS da
 	            ON  da.ModelCoreType = dvl.ModelCoreType
 	            AND da.Id = @mid
+	       LEFT JOIN D_NEWS     AS dn
+	            ON  dn.ModelCoreType = dvl.ModelCoreType
+	            AND dn.Id = @mid
+	WHERE  dvl.ModelCoreType = @mct
+	       AND dvl.MaterialId = @mid
 END
 GO
 
@@ -795,31 +800,40 @@ GO
 CREATE PROCEDURE dbo.get_game_materials(@titleUrl VARCHAR(50), @amount INT)
 AS
 BEGIN
-	SELECT TOP(@amount) dm.*
-	FROM   D_NEWS            AS dn
-	       JOIN DV_MATERIAL  AS dm
-	            ON  dm.Id = dn.Id
-	            AND dm.ModelCoreType = dn.ModelCoreType
-	       JOIN D_GAME       AS dg
-	            ON  dg.Id = dn.GameId
-	            AND dg.TitleUrl = @titleUrl
-	WHERE  dg.Show = 1
-	       AND dm.Show = 1
-	       AND dm.DateOfPublication <= GETDATE()
-	UNION ALL
-	SELECT TOP(@amount) dm.*
-	FROM   D_ARTICLE         AS da
-	       JOIN DV_MATERIAL  AS dm
-	            ON  dm.Id = da.Id
-	            AND dm.ModelCoreType = da.ModelCoreType
-	       JOIN D_GAME       AS dg
-	            ON  dg.Id = da.GameId
-	            AND dg.TitleUrl = @titleUrl
-	WHERE  dg.Show = 1
-	       AND dm.Show = 1
-	       AND dm.DateOfPublication <= GETDATE()
-	ORDER BY
-	       dm.DateOfPublication DESC
+	SELECT x.*,
+	       (
+	           SELECT TOP(1) dvl.VideoId
+	           FROM   D_VIDEO_LINK AS dvl
+	           WHERE  dvl.MaterialId = x.Id
+	                  AND dvl.ModelCoreType = x.ModelCoreType
+	       )  AS TopVideoId
+	FROM   (
+	           SELECT TOP(@amount) dm.*
+	           FROM   D_NEWS            AS dn
+	                  JOIN DV_MATERIAL  AS dm
+	                       ON  dm.Id = dn.Id
+	                       AND dm.ModelCoreType = dn.ModelCoreType
+	                  JOIN D_GAME       AS dg
+	                       ON  dg.Id = dn.GameId
+	                       AND dg.TitleUrl = @titleUrl
+	           WHERE  dg.Show = 1
+	                  AND dm.Show = 1
+	                  AND dm.DateOfPublication <= GETDATE()
+	           UNION ALL
+	           SELECT TOP(@amount) dm.*
+	           FROM   D_ARTICLE         AS da
+	                  JOIN DV_MATERIAL  AS dm
+	                       ON  dm.Id = da.Id
+	                       AND dm.ModelCoreType = da.ModelCoreType
+	                  JOIN D_GAME       AS dg
+	                       ON  dg.Id = da.GameId
+	                       AND dg.TitleUrl = @titleUrl
+	           WHERE  dg.Show = 1
+	                  AND dm.Show = 1
+	                  AND dm.DateOfPublication <= GETDATE()
+	           ORDER BY
+	                  dm.DateOfPublication DESC
+	       )  AS x
 END
 GO
 

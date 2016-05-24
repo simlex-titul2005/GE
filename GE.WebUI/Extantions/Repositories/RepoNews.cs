@@ -265,7 +265,7 @@ GROUP BY
             {
                 var data = connection.Query<VMDetailNews>("get_material_by_url @year, @month, @day, @title_url, @mct", new { year = year, month = month, day = day, title_url = titleUrl, mct = ModelCoreType.News }).SingleOrDefault();
                 if (data != null)
-                    data.Videos = connection.Query<SxVideo>("get_material_videos @mid", new { mid = data.Id }).ToArray();
+                    data.Videos = connection.Query<SxVideo>("get_material_videos @mid, @mct", new { mid = data.Id, mct=data.ModelCoreType }).ToArray();
                 return data;
             }
         }

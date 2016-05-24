@@ -17,3 +17,9 @@
         @Html.Partial(MVC.Games.Views._DetailGameMaterials, Model.GetMaterialsByCoreType(SX.WebCore.Enums.ModelCoreType.Article), new ViewDataDictionary { { "ModelCoreType", SX.WebCore.Enums.ModelCoreType.Article } })
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+        loadScriptOnce('https://www.youtube.com/iframe_api');
+    </script>
+}

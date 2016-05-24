@@ -132,6 +132,7 @@ namespace GE.WebUI.Controllers
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public partial class _DisplayTemplatesClass
             {
+                public readonly string VMDetailGameMaterial = "VMDetailGameMaterial";
                 public readonly string VMImgGame = "VMImgGame";
             }
         }

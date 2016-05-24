@@ -70,6 +70,9 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxMaterialCategory, VMEditMaterialCategory>();
                     cfg.CreateMap<VMEditMaterialCategory, SxMaterialCategory>();
 
+                    cfg.CreateMap<MaterialCategory, VMEditMaterialCategory>();
+                    cfg.CreateMap<VMEditMaterialCategory, MaterialCategory>();
+
                     //material tags
                     cfg.CreateMap<SxMaterialTag, VMMaterialTag>();
                     cfg.CreateMap<SxMaterialTag, VMEditMaterialTag>();

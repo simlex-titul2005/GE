@@ -58,10 +58,10 @@ namespace GE.WebUI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Threading.Tasks.Task<System.Web.Mvc.FileResult> Picture()
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Picture()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_FileResult(Area, Name, ActionNames.Picture);
-            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.FileResult);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Picture);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -119,17 +119,17 @@ namespace GE.WebUI.Controllers
         public T4MVC_PicturesController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void PictureOverride(T4MVC_System_Web_Mvc_FileResult callInfo, System.Guid id, int? width, int? height);
+        partial void PictureOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Guid id, int? width, int? height);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.FileResult> Picture(System.Guid id, int? width, int? height)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Picture(System.Guid id, int? width, int? height)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_FileResult(Area, Name, ActionNames.Picture);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Picture);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "width", width);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "height", height);
             PictureOverride(callInfo, id, width, height);
-            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.FileResult);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
     }

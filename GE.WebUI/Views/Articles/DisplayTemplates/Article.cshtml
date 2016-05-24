@@ -32,9 +32,8 @@
     {
         var video = Model.VideoLinks.First().Video;
         <div class="list-video">
-            @Html.SxVideo(video)
+            @Html.SxVideo(video, SX.WebCore.Providers.VideoProvider.VideoQuality.Medium)
         </div>
-        @*@Html.Partial(MVC.Videos.Views._VideoInList, video)*@
     }
 
     <a class="link" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))" title="@Model.Title">@Model.Title</a>

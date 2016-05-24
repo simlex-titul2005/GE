@@ -6,6 +6,8 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;
+using GE.WebAdmin.Extantions.Repositories;
+using GE.WebCoreExtantions.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -14,14 +16,14 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<string, SxMaterialCategory, DbContext> _repo;
         public MaterialCategoriesController()
         {
-            _repo = new SX.WebCore.Repositories.RepoMaterialCategory<DbContext>();
+            _repo = new RepoMaterialCategory();
         }
 
         [HttpGet]
         public virtual ActionResult Index(ModelCoreType mct)
         {
             var filter = new WebCoreExtantions.Filter { ModelCoreType = mct };
-            var data = _repo.Query(filter).Select(x => Mapper.Map<SxMaterialCategory, VMMaterialCategory>(x)).ToArray();
+            var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
             var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
             for (int i = 0; i < parents.Length; i++)
             {
@@ -74,11 +76,14 @@ namespace GE.WebAdmin.Controllers
             }
         }
 
+        [HttpGet]
         public virtual ActionResult Edit(ModelCoreType mct, string pcid = null, string id = null)
         {
-            var data = string.IsNullOrEmpty(id) ? new SxMaterialCategory { ModelCoreType = mct, ParentCategoryId = pcid } : _repo.GetByKey(id);
-            var viewModel = Mapper.Map<SxMaterialCategory, VMEditMaterialCategory>(data);
+            var data = string.IsNullOrEmpty(id) ? new MaterialCategory { ModelCoreType = mct, ParentCategoryId = pcid } : (_repo as RepoMaterialCategory).GetByKey(id);
+            var viewModel = Mapper.Map<MaterialCategory, VMEditMaterialCategory>(data);
             ViewBag.ModelCoreType = mct;
+            if (data.FrontPictureId.HasValue)
+                ViewBag.PictureCaption = data.FrontPicture.Caption;
             return View(viewModel);
         }
 
@@ -94,7 +99,9 @@ namespace GE.WebAdmin.Controllers
 
             if (isNew || oldId != model.Id)
             {
-                model.Id = id;
+                if (isNew || model.Id == null)
+                    model.Id = id;
+
                 ModelState["Id"].Errors.Clear();
 
                 if (isNew)
@@ -105,7 +112,8 @@ namespace GE.WebAdmin.Controllers
                 }
             }
 
-            var redactModel = Mapper.Map<VMEditMaterialCategory, SxMaterialCategory>(model);
+            var redactModel = Mapper.Map<VMEditMaterialCategory, MaterialCategory>(model);
+            redactModel.GameId = redactModel.GameId == 0 ? (int?)null : redactModel.GameId;
 
             if (ModelState.IsValid)
             {
@@ -115,9 +123,9 @@ namespace GE.WebAdmin.Controllers
                 else
                 {
                     if (User.IsInRole("architect"))
-                        newModel = _repo.Update(redactModel, new object[] { oldId }, true, "Id", "Title", "FrontPictureId", "ModelCoreType");
+                        newModel = (_repo as RepoMaterialCategory).Update(redactModel, new object[] { oldId }, true, "Id", "Title", "FrontPictureId", "ModelCoreType", "GameId");
                     else
-                        newModel = _repo.Update(redactModel, true, "Title", "FrontPictureId", "ModelCoreType");
+                        newModel = (_repo as RepoMaterialCategory).Update(redactModel, true, "Title", "FrontPictureId", "ModelCoreType", "GameId");
                 }
                 return RedirectToAction(MVC.MaterialCategories.Index(mct: model.ModelCoreType));
             }
@@ -138,7 +146,7 @@ namespace GE.WebAdmin.Controllers
         public virtual PartialViewResult FindTable(ModelCoreType mct)
         {
             var filter = new WebCoreExtantions.Filter { ModelCoreType = mct };
-            var data = _repo.Query(filter).Select(x => Mapper.Map<SxMaterialCategory, VMMaterialCategory>(x)).ToArray();
+            var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
             var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
             for (int i = 0; i < parents.Length; i++)
             {
@@ -161,7 +169,7 @@ namespace GE.WebAdmin.Controllers
             ViewBag.CurrentCategory = cur;
 
             var filter = new WebCoreExtantions.Filter { ModelCoreType = mct };
-            var data = _repo.Query(filter).Select(x => Mapper.Map<SxMaterialCategory, VMMaterialCategory>(x)).ToArray();
+            var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
             var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
             for (int i = 0; i < parents.Length; i++)
             {

@@ -3,6 +3,8 @@
     var isNew = Model.Id == null;
     var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
     ViewBag.Title = isNew ? "Добавить категорию" : "Редактировать категорию \"" + Model.Title + "\"";
+    ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
+    var forAphorism = Model.ModelCoreType == SX.WebCore.Enums.ModelCoreType.Aphorism;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -29,43 +31,51 @@
 
     @if (!isNew && User.IsInRole("architect"))
     {
-        <input type="hidden" name="OldId" value="@Model.Id"/>
-        <div class="row">
-            <div class="col-md-12">
-                @Html.LabelFor(x => x.Id, new { @class = "control-label" })
-                <span class="text-info"> (не должен содержать кириллицы и любых знаков, кроме тире)</span>
-                @Html.EditorFor(x => x.Id, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите идентификатор категории" } })
-                @Html.ValidationMessageFor(x => x.Id)
+        <input type="hidden" name="OldId" value="@Model.Id" />
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Id, new { @class = "control-label" })
+            <span class="text-info"> (не должен содержать кириллицы и любых знаков, кроме тире)</span>
+            @Html.EditorFor(x => x.Id, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите идентификатор категории" } })
+            @Html.ValidationMessageFor(x => x.Id)
+        </div>
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+        @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название категории" } })
+        @Html.ValidationMessageFor(x => x.Title)
+    </div>
+
+    <div class="row">
+        <div class="col-md-@(forAphorism?6:12)">
+            <div class="form-group">
+                @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
+                @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Выберите изображение" } })
+                @Html.ValidationMessageFor(x => x.FrontPictureId)
             </div>
         </div>
-        <br />
-    }
-    <div class="row">
-        <div class="col-md-12">
-            @Html.LabelFor(x => x.Title, new { @class = "control-label" })
-            @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название категории" } })
-            @Html.ValidationMessageFor(x => x.Title)
-        </div>
+        @if (forAphorism)
+        {
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.GameId, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.GameId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Выберите игру" } })
+                    @Html.ValidationMessageFor(x => x.GameId)
+                </div>
+            </div>
+        }
     </div>
-    <br />
-    @if (Model.FrontPictureId.HasValue)
-            {
-        <img style="max-width:300px;" alt="@Model.Id" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))" />
-        <br />
-    }
-    <div class="row">
-        <div class="col-md-12">
 
-            @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
-            @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Выберите изображение" } })
-            @Html.ValidationMessageFor(x => x.FrontPictureId)
+    @if (Model.FrontPictureId.HasValue)
+    {
+        <div class="form-group">
+            <img alt="@ViewBag.GameTitle" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId, width: 150))" style="max-width:150px;" />
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
-            @Html.ActionLink("Назад", MVC.MaterialCategories.Index(mct: mct), new { @class = "btn btn-default" })
-        </div>
+    }
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+        @Html.ActionLink("Назад", MVC.MaterialCategories.Index(mct: mct), new { @class = "btn btn-default" })
     </div>
 </form>

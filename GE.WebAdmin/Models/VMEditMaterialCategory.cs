@@ -19,5 +19,9 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Изображение"), UIHint("EditImage")]
         public Guid? FrontPictureId { get; set; }
+
+        public VMGame Game { get; set; }
+        [Display(Name ="Игра"), UIHint("EditGame")]
+        public int? GameId { get; set; }
     }
 }

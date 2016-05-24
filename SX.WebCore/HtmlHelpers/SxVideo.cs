@@ -5,17 +5,17 @@ namespace SX.WebCore.HtmlHelpers
 {
     public static partial class SxExtantions
     {
-        public static MvcHtmlString SxVideo(this HtmlHelper htmlHelper, SxVideo video)
+        public static MvcHtmlString SxVideo(this HtmlHelper htmlHelper, SxVideo video, VideoProvider.VideoQuality quality= VideoProvider.VideoQuality.Max)
         {
-            return MvcHtmlString.Create(GetVideoTemplate(video));
+            return MvcHtmlString.Create(GetVideoTemplate(video, quality));
         }
 
-        public static string GetVideoTemplate(SxVideo video)
+        public static string GetVideoTemplate(SxVideo video, VideoProvider.VideoQuality quality = VideoProvider.VideoQuality.Max)
         {
             var id = video.Id.ToString().ToLower();
             var figure = new TagBuilder("figure");
             figure.AddCssClass("video");
-            figure.MergeAttribute("style", string.Concat("background-image:url(", VideoProvider.GetVideoImageUrl(video.VideoId), ");"));
+            figure.MergeAttribute("style", string.Concat("background-image:url(", VideoProvider.GetVideoImageUrl(video.VideoId, quality), ");"));
             figure.MergeAttribute("id", id);
 
             var playWrapper = new TagBuilder("div");

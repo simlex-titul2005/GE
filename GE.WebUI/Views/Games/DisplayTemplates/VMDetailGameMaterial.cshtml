@@ -1,18 +1,50 @@
 ﻿@model VMDetailGameMaterial
 @{
     Layout = null;
+    var hasVideo = Model.Videos.Any();
 }
-<div class="dg-lm" onclick="changeLocation(this)">
-    <div class="date">@Model.DateOfPublication</div>
-    <div class="title">
-        <h4>
-            <a href="@Model.GetUrl(Url)">@Model.Title</a>
-        </h4>
-    </div>
-    <div class="fwd">
-        @Model.Foreword
-    </div>
-    <div class="details">
-        <a href="@Model.GetUrl(Url)" class="btn btn-default">Подробнее</a>
+<div class="dg-lm">
+    <div class="row">
+
+        @*image*@
+        <div class="col-md-2">
+            @if (Model.FrontPictureId.HasValue)
+            {
+                <figure style="background-image:url(@(Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId, width: 300))))" onclick="changeLocation($(this).closest('.dg-lm'))">
+
+                </figure>
+            }
+        </div>
+
+        @*content*@
+        <div class="col-md-@(hasVideo?8:10)">
+            <div class="content">
+                <div class="date">@Model.DateOfPublication</div>
+                <div class="title">
+                    <h4>
+                        <a href="@Model.GetUrl(Url)">@Model.Title</a>
+                    </h4>
+                </div>
+                <div class="fwd">
+                    @Model.Foreword
+                </div>
+                <div class="details">
+                    <a href="@Model.GetUrl(Url)" class="btn btn-default">Подробнее</a>
+                </div>
+                <div class="info">
+                    @Html.DisplayFor(x => Model.Info)
+                </div>
+            </div>
+        </div>
+
+        @*video*@
+        @if (hasVideo)
+        {
+            <div class="col-md-2">
+                <div class="video-container">
+                    @Html.SxVideo(Model.Videos[0], SX.WebCore.Providers.VideoProvider.VideoQuality.Medium)
+                </div>
+            </div>
+        }
     </div>
 </div>

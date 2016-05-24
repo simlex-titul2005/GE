@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IHasGame.cs" />
     <Compile Include="Aphorism.cs" />
+    <Compile Include="MaterialCategory.cs" />
     <Compile Include="AuthorAphorism.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Repositories\RepoBanner.cs" />
     <Compile Include="Repositories\RepoForumPart.cs" />
     <Compile Include="Repositories\RepoGame.cs" />
+    <Compile Include="Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Repositories\RepoMaterialTag.cs" />
     <Compile Include="Repositories\RepoNews.cs" />
     <Compile Include="Repositories\RepoPicture.cs" />

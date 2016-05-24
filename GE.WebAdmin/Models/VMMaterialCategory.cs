@@ -25,5 +25,8 @@ namespace GE.WebAdmin.Models
         }
         public int Level { get; set; }
         public Guid? FrontPictureId { get; set; }
+
+        public VMGame Game { get; set; }
+        public int? GameId { get; set; }
     }
 }

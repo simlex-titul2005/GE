@@ -261,6 +261,7 @@
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="Extantions\Repositories\RepoBanner.cs" />
     <Compile Include="Extantions\Repositories\RepoForumPart.cs" />
+    <Compile Include="Extantions\Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />

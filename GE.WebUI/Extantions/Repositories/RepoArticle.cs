@@ -20,7 +20,7 @@ namespace GE.WebUI.Extantions.Repositories
        dm.CommentsCount,
        CASE 
             WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
-            ELSE SUBSTRING(dbo.FUNC_STRIP_HTML(dm.Html), 0, @lettersCount) +
+            ELSE SUBSTRING(dbo.func_strip_html(dm.Html), 0, @lettersCount) +
                  '...'
        END                    AS Foreword,
        anu.NikName            AS UserName,

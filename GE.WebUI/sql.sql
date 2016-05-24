@@ -1,15 +1,210 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 23.05.2016 16:41:07
+ * Time: 23.05.2016 19:35:36
  ************************************************************/
+
+/*******************************************
+ * функция обрезки html тегов
+ *******************************************/
+IF OBJECT_ID(N'dbo.func_strip_html', N'FN') IS NOT NULL
+    DROP FUNCTION dbo.func_strip_html;
+GO 
+CREATE FUNCTION dbo.func_strip_html
+(
+	@HTMLText NVARCHAR(MAX)
+)
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN
+	DECLARE @Start INT
+	DECLARE @End INT
+	DECLARE @Length INT
+	
+	-- Replace the HTML entity &amp; with the '&' character (this needs to be done first, as
+	-- '&' might be double encoded as '&amp;amp;')
+	SET @Start = CHARINDEX('&amp;', @HTMLText)
+	SET @End = @Start + 4
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, '&')
+	    SET @Start = CHARINDEX('&amp;', @HTMLText)
+	    SET @End = @Start + 4
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace the HTML entity &ndash; with the ' - ' character
+	SET @Start = CHARINDEX('&ndash;', @HTMLText)
+	SET @End = @Start + 6
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, ' - ')
+	    SET @Start = CHARINDEX('&ndash;', @HTMLText)
+	    SET @End = @Start + 6
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace the HTML entity &laquo; with the ' " ' character
+	SET @Start = CHARINDEX('&laquo;', @HTMLText)
+	SET @End = @Start + 6
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, '"')
+	    SET @Start = CHARINDEX('&laquo;', @HTMLText)
+	    SET @End = @Start + 6
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace the HTML entity &raquo; with the ' " ' character
+	SET @Start = CHARINDEX('&raquo;', @HTMLText)
+	SET @End = @Start + 6
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, '"')
+	    SET @Start = CHARINDEX('&raquo;', @HTMLText)
+	    SET @End = @Start + 6
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace the HTML entity &lt; with the '<' character
+	SET @Start = CHARINDEX('&lt;', @HTMLText)
+	SET @End = @Start + 3
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, '<')
+	    SET @Start = CHARINDEX('&lt;', @HTMLText)
+	    SET @End = @Start + 3
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace the HTML entity &gt; with the '>' character
+	SET @Start = CHARINDEX('&gt;', @HTMLText)
+	SET @End = @Start + 3
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, '>')
+	    SET @Start = CHARINDEX('&gt;', @HTMLText)
+	    SET @End = @Start + 3
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace the HTML entity &amp; with the '&' character
+	SET @Start = CHARINDEX('&amp;amp;', @HTMLText)
+	SET @End = @Start + 4
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, '&')
+	    SET @Start = CHARINDEX('&amp;amp;', @HTMLText)
+	    SET @End = @Start + 4
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace the HTML entity &nbsp; with the ' ' character
+	SET @Start = CHARINDEX('&nbsp;', @HTMLText)
+	SET @End = @Start + 5
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, ' ')
+	    SET @Start = CHARINDEX('&nbsp;', @HTMLText)
+	    SET @End = @Start + 5
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace the HTML entity &quot; with the '"' character
+	SET @Start = CHARINDEX('&quot;', @HTMLText)
+	SET @End = @Start + 5
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, '"')
+	    SET @Start = CHARINDEX('&quot;', @HTMLText)
+	    SET @End = @Start + 5
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace any <br> tags with a newline
+	SET @Start = CHARINDEX('<br>', @HTMLText)
+	SET @End = @Start + 3
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, CHAR(13) + CHAR(10))
+	    --CHAR(13) + CHAR(10)
+	    SET @Start = CHARINDEX('<br>', @HTMLText)
+	    SET @End = @Start + 3
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace any <br/> tags with a newline
+	SET @Start = CHARINDEX('<br/>', @HTMLText)
+	SET @End = @Start + 4
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, CHAR(13) + CHAR(10))
+	    --CHAR(13) + CHAR(10)
+	    SET @Start = CHARINDEX('<br/>', @HTMLText)
+	    SET @End = @Start + 4
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Replace any <br /> tags with a newline
+	SET @Start = CHARINDEX('<br />', @HTMLText)
+	SET @End = @Start + 5
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, CHAR(13) + CHAR(10))
+	    --CHAR(13) + CHAR(10)
+	    SET @Start = CHARINDEX('<br />', @HTMLText)
+	    SET @End = @Start + 5
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	-- Remove anything between <whatever> tags
+	SET @Start = CHARINDEX('<', @HTMLText)
+	SET @End = CHARINDEX('>', @HTMLText, CHARINDEX('<', @HTMLText))
+	SET @Length = (@End - @Start) + 1
+	
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0)
+	BEGIN
+	    SET @HTMLText = STUFF(@HTMLText, @Start, @Length, '')
+	    SET @Start = CHARINDEX('<', @HTMLText)
+	    SET @End = CHARINDEX('>', @HTMLText, CHARINDEX('<', @HTMLText))
+	    SET @Length = (@End - @Start) + 1
+	END
+	
+	RETURN LTRIM(RTRIM(@HTMLText))
+END
+GO
+
 
 /*******************************************
  * получить материал
  *******************************************/
-IF OBJECT_ID(N'get_material_by_url', N'P') IS NOT NULL
-    DROP PROCEDURE get_material_by_url;
+IF OBJECT_ID(N'dbo.get_material_by_url', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_material_by_url;
 GO
-CREATE PROCEDURE get_material_by_url(
+CREATE PROCEDURE dbo.get_material_by_url(
     @year          INT,
     @month         INT,
     @day           INT,
@@ -76,10 +271,10 @@ GO
 /*******************************************
  * получить видео материал
  *******************************************/
-IF OBJECT_ID(N'get_material_videos', N'P') IS NOT NULL
-    DROP PROCEDURE get_material_videos;
+IF OBJECT_ID(N'dbo.get_material_videos', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_material_videos;
 GO
-CREATE PROCEDURE get_material_videos(@mid INT)
+CREATE PROCEDURE dbo.get_material_videos(@mid INT)
 AS
 BEGIN
 	SELECT dv.*
@@ -95,10 +290,10 @@ GO
 /*******************************************
  * получить комментарии материала
  *******************************************/
-IF OBJECT_ID(N'get_material_comments', N'P') IS NOT NULL
-    DROP PROCEDURE get_material_comments;
+IF OBJECT_ID(N'dbo.get_material_comments', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_material_comments;
 GO
-CREATE PROCEDURE get_material_comments(@mid INT, @mct INT)
+CREATE PROCEDURE dbo.get_material_comments(@mid INT, @mct INT)
 AS
 BEGIN
 	SELECT dc.Id,
@@ -124,10 +319,10 @@ GO
 /*******************************************
  * добавить комментарии материала
  *******************************************/
-IF OBJECT_ID(N'add_material_comment', N'P') IS NOT NULL
-    DROP PROCEDURE add_material_comment;
+IF OBJECT_ID(N'dbo.add_material_comment', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_material_comment;
 GO
-CREATE PROCEDURE add_material_comment(
+CREATE PROCEDURE dbo.add_material_comment(
     @mid      INT,
     @mct      INT,
     @uid      NVARCHAR(128),
@@ -168,10 +363,10 @@ GO
 /*******************************************
  * Удалить категорию материалов
  *******************************************/
-IF OBJECT_ID(N'del_material_category', N'P') IS NOT NULL
-    DROP PROCEDURE del_material_category;
+IF OBJECT_ID(N'dbo.del_material_category', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.del_material_category;
 GO
-CREATE PROCEDURE del_material_category(@catId VARCHAR(100))
+CREATE PROCEDURE dbo.del_material_category(@catId VARCHAR(100))
 AS
 BEGIN
 	BEGIN TRANSACTION
@@ -236,10 +431,10 @@ GO
 /*******************************************
 * получить страницу афоризма
 *******************************************/
-IF OBJECT_ID(N'get_aphorism_page_model', N'TF') IS NOT NULL
-    DROP FUNCTION get_aphorism_page_model;
+IF OBJECT_ID(N'dbo.get_aphorism_page_model', N'TF') IS NOT NULL
+    DROP FUNCTION dbo.get_aphorism_page_model;
 GO
-CREATE FUNCTION get_aphorism_page_model
+CREATE FUNCTION dbo.get_aphorism_page_model
 (
 	@title_url         NVARCHAR(255),
 	@author_amount     INT,
@@ -339,21 +534,13 @@ BEGIN
 END
 GO
 
-
-
-
-
-
-
-
-
 /*******************************************
 * Получить случайный афоризм
 *******************************************/
-IF OBJECT_ID(N'get_random_aphorism', N'P') IS NOT NULL
-    DROP PROCEDURE get_random_aphorism;
+IF OBJECT_ID(N'dbo.get_random_aphorism', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_random_aphorism;
 GO
-CREATE PROCEDURE get_random_aphorism(@mid INT)
+CREATE PROCEDURE dbo.get_random_aphorism(@mid INT)
 AS
 BEGIN
 	SELECT TOP(1) *
@@ -377,12 +564,10 @@ GO
 /*******************************************
 * получить категории афоризмов
 *******************************************/
-
-
-IF OBJECT_ID(N'get_aphorism_categories', N'TF') IS NOT NULL
-    DROP FUNCTION get_aphorism_categories;
+IF OBJECT_ID(N'dbo.get_aphorism_categories', N'TF') IS NOT NULL
+    DROP FUNCTION dbo.get_aphorism_categories;
 GO
-CREATE FUNCTION get_aphorism_categories
+CREATE FUNCTION dbo.get_aphorism_categories
 (
 	@curCat NVARCHAR(255)
 )
@@ -410,21 +595,13 @@ BEGIN
 END
 GO
 
-
-
-
-
-
-
-
-
 /*******************************************
 * получить афоризмы
 *******************************************/
-IF OBJECT_ID(N'get_aphorisms', N'TF') IS NOT NULL
-    DROP FUNCTION get_aphorisms;
+IF OBJECT_ID(N'dbo.get_aphorisms', N'TF') IS NOT NULL
+    DROP FUNCTION dbo.get_aphorisms;
 GO
-CREATE FUNCTION get_aphorisms
+CREATE FUNCTION dbo.get_aphorisms
 (
 	@curCat NVARCHAR(255)
 )
@@ -449,22 +626,13 @@ BEGIN
 END
 GO
 
-
-
-
-
-
-
-
-
-
 /*******************************************
  * Популярные материалы
  *******************************************/
-IF OBJECT_ID(N'get_popular_materials', N'P') IS NOT NULL
-    DROP PROCEDURE get_popular_materials;
+IF OBJECT_ID(N'dbo.get_popular_materials', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_popular_materials;
 GO
-CREATE PROCEDURE get_popular_materials(@mid INT, @mct INT, @amount INT)
+CREATE PROCEDURE dbo.get_popular_materials(@mid INT, @mct INT, @amount INT)
 AS
 BEGIN
 	SELECT TOP(@amount)
@@ -508,10 +676,10 @@ GO
 /*******************************************
 * другие материалы
 *******************************************/
-IF OBJECT_ID(N'get_other_materials', N'TF') IS NOT NULL
-    DROP FUNCTION get_other_materials;
+IF OBJECT_ID(N'dbo.get_other_materials', N'TF') IS NOT NULL
+    DROP FUNCTION dbo.get_other_materials;
 GO
-CREATE FUNCTION get_other_materials
+CREATE FUNCTION dbo.get_other_materials
 (
 	@mid        INT,
 	@mct        INT,
@@ -588,20 +756,13 @@ BEGIN
 END
 GO
 
-
-
-
-
-
-
-
 /*******************************************
  * Получить список забаненных адресов
  *******************************************/
-IF OBJECT_ID(N'get_banned_urls', N'P') IS NOT NULL
-    DROP PROCEDURE get_banned_urls;
+IF OBJECT_ID(N'dbo.get_banned_urls', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_banned_urls;
 GO
-CREATE PROCEDURE get_banned_urls
+CREATE PROCEDURE dbo.get_banned_urls
 AS
 BEGIN
 	SELECT dbu.[Url]
@@ -612,10 +773,10 @@ GO
 /*******************************************
  * Детализированная страница по игре
  *******************************************/
-IF OBJECT_ID(N'get_game_by_url', N'P') IS NOT NULL
-    DROP PROCEDURE get_game_by_url;
+IF OBJECT_ID(N'dbo.get_game_by_url', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_game_by_url;
 GO
-CREATE PROCEDURE get_game_by_url(@titleUrl VARCHAR(50))
+CREATE PROCEDURE dbo.get_game_by_url(@titleUrl VARCHAR(50))
 AS
 BEGIN
 	SELECT *
@@ -628,10 +789,10 @@ GO
 /*******************************************
  * Последние материалы по игре
  *******************************************/
-IF OBJECT_ID(N'get_game_materials', N'P') IS NOT NULL
-    DROP PROCEDURE get_game_materials;
+IF OBJECT_ID(N'dbo.get_game_materials', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_game_materials;
 GO
-CREATE PROCEDURE get_game_materials(@titleUrl VARCHAR(50), @amount INT)
+CREATE PROCEDURE dbo.get_game_materials(@titleUrl VARCHAR(50), @amount INT)
 AS
 BEGIN
 	SELECT TOP(@amount) dm.*
@@ -665,13 +826,13 @@ GO
 /*******************************************
  * Получить видео для игры
  *******************************************/
-IF OBJECT_ID(N'get_game_videos', N'P') IS NOT NULL
-    DROP PROCEDURE get_game_videos;
+IF OBJECT_ID(N'dbo.get_game_videos', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_game_videos;
 GO
-CREATE PROCEDURE get_game_videos(@titleUrl VARCHAR(50))
+CREATE PROCEDURE dbo.get_game_videos(@titleUrl VARCHAR(50))
 AS
 BEGIN
-	SELECT dv.* 
+	SELECT dv.*
 	FROM   D_VIDEO                AS dv
 	       JOIN D_VIDEO_LINK      AS dvl
 	            ON  dvl.VideoId = dv.Id

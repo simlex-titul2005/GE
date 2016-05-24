@@ -34,7 +34,7 @@ ORDER BY dm.DateCreate DESC";
        SUBSTRING(
            CASE 
                 WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
-                ELSE dbo.FUNC_STRIP_HTML(dm.HTML)
+                ELSE dbo.func_strip_html(dm.HTML)
            END,
            0,
            400

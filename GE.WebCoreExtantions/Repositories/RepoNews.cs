@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using SX.WebCore.Abstract;
 using SX.WebCore;
@@ -38,7 +34,7 @@ ORDER BY dm.DateCreate DESC";
        SUBSTRING(
            CASE 
                 WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
-                ELSE dbo.FUNC_STRIP_HTML(dm.HTML)
+                ELSE dbo.func_strip_html(dm.HTML)
            END,
            0,
            200

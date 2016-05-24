@@ -71,11 +71,12 @@
     border-radius:3px;
 
     background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
-border: 1px solid rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.1);
 
     @media (max-width: @screen-xs-max) {
         margin-top:@def-pad*2;
         padding-bottom:0;
+        position:relative;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -91,8 +92,8 @@ border: 1px solid rgba(255,255,255,.1);
 .by-date-m .content.first{
     padding-left:@def-pad*3;
     @media (max-width: @screen-xs-max) {
-        padding-left:0;
-        padding-top: @def-pad;
+        padding:@def-pad;
+        padding-top:@def-pad*3;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -109,8 +110,7 @@ border: 1px solid rgba(255,255,255,.1);
     padding-right:@def-pad*3;
     padding-left:@def-pad*2;
     @media (max-width: @screen-xs-max) {
-        padding-right:0;
-        padding-left:0;
+        padding:@def-pad;
         padding-bottom:@def-pad*3;
     }
 
@@ -135,12 +135,10 @@ border: 1px solid rgba(255,255,255,.1);
 
 .by-date-m .content .arrow.hidden-lg{
     @media (max-width: @screen-xs-max) {
-        left:unset;
-        right:unset;
+        height:@def-pad*3;
         top:0;
         width:100%;
-        height:@def-pad*3;
-        padding-right:@def-pad*2;
+        margin-left:-@def-pad;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -155,12 +153,9 @@ border: 1px solid rgba(255,255,255,.1);
 
 .by-date-m .content.last .arrow.hidden-lg{
     @media (max-width: @screen-xs-max) {
-        left:unset;
-        right:unset;
+        margin-right:-@def-pad;
+        top:auto;
         bottom:0;
-        top:unset;
-        width:100%;
-        height:@def-pad*3;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -179,6 +174,18 @@ border: 1px solid rgba(255,255,255,.1);
     height:100%;
     color:inherit;
     text-decoration:none;
+    @media (max-width: @screen-xs-max) {
+        background-color:rgba(255,255,255,.05);
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
 }
 
 .by-date-m .content .arrow > a:focus, .by-date-m .content .arrow > a:hover{
@@ -212,7 +219,7 @@ border: 1px solid rgba(255,255,255,.1);
 }
 
 .by-date-m .content > .title > a{
-    color: @color-muted-blue;;
+    color: @color-muted-blue;
     font-weight:700;
 }
 
@@ -233,8 +240,4 @@ border: 1px solid rgba(255,255,255,.1);
 
     @media (min-width: @screen-lg-min) {
     }
-}
-
-.by-date-m .content > .author > img{
-    max-width:30px;
 }

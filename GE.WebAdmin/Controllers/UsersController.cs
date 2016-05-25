@@ -9,7 +9,8 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using Microsoft.AspNet.Identity;
 using SX.WebCore;
-using Microsoft.Owin.Security;
+using SX.WebCore.Abstract;
+using GE.WebCoreExtantions;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -41,8 +42,14 @@ namespace GE.WebAdmin.Controllers
                 _roleManager = value;
             }
         }
-
+        private SxDbRepository<string, SxEmployee, DbContext> _repoEmployee;
         private static int _pageSize = 10;
+
+        public UsersController()
+        {
+            _repoEmployee = new SX.WebCore.Repositories.RepoEmployee<DbContext>();
+        }
+
         [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
@@ -125,8 +132,7 @@ namespace GE.WebAdmin.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual PartialViewResult EditRoles(string userId)
         {
             var allRoles = RoleManager.Roles.Where(x => x.Name != _architectRole).ToArray();
@@ -172,8 +178,7 @@ namespace GE.WebAdmin.Controllers
             return PartialView(MVC.Users.Views._UserRoles, viewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual PartialViewResult EditUserInfo(VMEditUser user)
         {
             if (ModelState.IsValid)
@@ -182,6 +187,11 @@ namespace GE.WebAdmin.Controllers
                 oldUser.NikName = user.NikName;
                 oldUser.AvatarId = user.AvatarId;
                 UserManager.Update(oldUser);
+
+                if (user.IsEmployee)
+                    addEmployee(user);
+                else if (!user.IsEmployee)
+                    delEmployee(user);
 
                 var allRoles = RoleManager.Roles.Where(x => x.Name != _architectRole).ToArray();
                 var viewModel = getEditUser(oldUser, allRoles);
@@ -192,8 +202,7 @@ namespace GE.WebAdmin.Controllers
                 return PartialView(MVC.Users.Views._UserInfo, user);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditRole model)
         {
             return RedirectToAction(MVC.Roles.Index());
@@ -228,7 +237,7 @@ namespace GE.WebAdmin.Controllers
             return PartialView(MVC.Users.Views._UsersOnSite, viewModel.ToArray());
         }
 
-        private static VMEditUser getEditUser(SxAppUser data, SxAppRole[] allRoles)
+        private VMEditUser getEditUser(SxAppUser data, SxAppRole[] allRoles)
         {
             var editUser = new VMEditUser
             {
@@ -236,7 +245,8 @@ namespace GE.WebAdmin.Controllers
                 AvatarId = data.AvatarId,
                 Email = data.Email,
                 NikName = data.NikName,
-                IsOnline = MvcApplication.UsersOnSite.ContainsValue(data.UserName)
+                IsOnline = MvcApplication.UsersOnSite.ContainsValue(data.UserName),
+                IsEmployee=_repoEmployee.GetByKey(data.Id)!=null
             };
 
             editUser.Roles = data.Roles.Join(allRoles, u => u.RoleId, r => r.Id, (u, r) => new VMRole
@@ -247,6 +257,17 @@ namespace GE.WebAdmin.Controllers
             }).ToArray();
 
             return editUser;
+        }
+
+        private void addEmployee(VMEditUser model)
+        {
+            var redactModel = Mapper.Map<VMEditUser, SxEmployee>(model);
+            var data=_repoEmployee.Create(redactModel);
+        }
+
+        public void delEmployee(VMEditUser model)
+        {
+            _repoEmployee.Delete(model.Id);
         }
     }
 }

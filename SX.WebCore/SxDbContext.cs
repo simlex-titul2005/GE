@@ -31,6 +31,8 @@ namespace SX.WebCore
 
         public DbSet<SxComment> Comments { get; set; }
 
+        public DbSet<SxEmployee> Employees { get; set; }
+
         public DbSet<SxForumPart> ForumParts { get; set; }
 
         public DbSet<SxNews> News { get; set; }
@@ -82,6 +84,8 @@ namespace SX.WebCore
             modelBuilder.Entity<SxVideoLink>().HasKey(x => new { x.MaterialId, x.ModelCoreType, x.VideoId });
             modelBuilder.Entity<SxVideoLink>().HasRequired(x => x.Material).WithMany(x => x.VideoLinks).HasForeignKey(x => new { x.MaterialId, x.ModelCoreType }).WillCascadeOnDelete(true);
             modelBuilder.Entity<SxVideoLink>().HasRequired(x => x.Video).WithMany().HasForeignKey(x => new { x.VideoId }).WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<SxEmployee>().HasKey(x => x.Id).HasRequired(x=>x.User).WithOptional().WillCascadeOnDelete(true);
         }
     }
 }

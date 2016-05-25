@@ -22,5 +22,8 @@ namespace GE.WebAdmin.Models
 
         public VMRole[] Roles { get; set; }
         public bool IsOnline { get; set; }
+
+        [Display(Name = "Сотрудник сайта")]
+        public bool IsEmployee { get; set; }
     }
 }

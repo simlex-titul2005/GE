@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Controllers\AphorismController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\SiteQuetionsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="ErrorController.generated.cs">
@@ -210,6 +211,7 @@
     <Compile Include="Models\VMDetailGame.cs" />
     <Compile Include="Models\VMDetailGameMaterial.cs" />
     <Compile Include="Models\VMEditSiteQuetion.cs" />
+    <Compile Include="Models\VMEmployee.cs" />
     <Compile Include="Models\VMLastNews.cs" />
     <Compile Include="Models\VMLCNB.cs" />
     <Compile Include="Models\VMLCNBCategory.cs" />
@@ -416,6 +418,7 @@
     <Content Include="Views\Games\Details.cshtml" />
     <Content Include="Views\Games\_DetailGameMaterials.cshtml" />
     <Content Include="Views\Games\DisplayTemplates\VMDetailGameMaterial.cshtml" />
+    <Content Include="Views\Contacts\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

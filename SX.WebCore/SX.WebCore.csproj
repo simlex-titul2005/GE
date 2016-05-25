@@ -132,6 +132,7 @@
     <Compile Include="Abstract\SxDbUpdatedModel.cs" />
     <Compile Include="Abstract\SxFilter.cs" />
     <Compile Include="Abstract\SxMaterial.cs" />
+    <Compile Include="Abstract\SxPerson.cs" />
     <Compile Include="Attrubutes\MinWordsCountAttribute.cs" />
     <Compile Include="Attrubutes\MaxWordsCountAttribute.cs" />
     <Compile Include="Attrubutes\NotLogRequestAttribute.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Providers\VideoProvider.cs" />
     <Compile Include="Repositories\RepoBannedUrl.cs" />
     <Compile Include="Repositories\RepoComment.cs" />
+    <Compile Include="Repositories\RepoEmployee.cs" />
     <Compile Include="Repositories\RepoVideo.cs" />
     <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoManual.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="SxComment.cs" />
     <Compile Include="SxDbContext.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="SxEmployee.cs" />
     <Compile Include="SxForumPart.cs" />
     <Compile Include="SxForumTheme.cs" />
     <Compile Include="SxLike.cs" />

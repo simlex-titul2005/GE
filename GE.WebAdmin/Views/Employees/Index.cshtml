@@ -1,0 +1,10 @@
+﻿@model VMEmployee[]
+@{
+    ViewBag.Title = "Сотрудники сайта";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-employees">
+    @Html.Partial(MVC.Employees.Views._GridView, Model)
+</div>

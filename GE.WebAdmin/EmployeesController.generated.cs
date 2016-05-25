@@ -25,10 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebAdmin.Controllers
 {
-    public partial class UsersController
+    public partial class EmployeesController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected UsersController(Dummy d) { }
+        protected EmployeesController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -56,33 +56,15 @@ namespace GE.WebAdmin.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.PartialViewResult EditRoles()
-        {
-            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditRoles);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.PartialViewResult EditUserInfo()
-        {
-            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditUserInfo);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Delete()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public UsersController Actions { get { return MVC.Users; } }
+        public EmployeesController Actions { get { return MVC.Employees; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Users";
+        public readonly string Name = "Employees";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Users";
+        public const string NameConst = "Employees";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -92,10 +74,6 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
-            public readonly string EditRoles = "EditRoles";
-            public readonly string EditUserInfo = "EditUserInfo";
-            public readonly string Delete = "Delete";
-            public readonly string UsersOnSite = "UsersOnSite";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -103,10 +81,6 @@ namespace GE.WebAdmin.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
-            public const string EditRoles = "EditRoles";
-            public const string EditUserInfo = "EditUserInfo";
-            public const string Delete = "Delete";
-            public const string UsersOnSite = "UsersOnSite";
         }
 
 
@@ -127,29 +101,6 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string id = "id";
-        }
-        static readonly ActionParamsClass_EditRoles s_params_EditRoles = new ActionParamsClass_EditRoles();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_EditRoles EditRolesParams { get { return s_params_EditRoles; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_EditRoles
-        {
-            public readonly string userId = "userId";
-        }
-        static readonly ActionParamsClass_EditUserInfo s_params_EditUserInfo = new ActionParamsClass_EditUserInfo();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_EditUserInfo EditUserInfoParams { get { return s_params_EditUserInfo; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_EditUserInfo
-        {
-            public readonly string user = "user";
-        }
-        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Delete
-        {
             public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -163,25 +114,19 @@ namespace GE.WebAdmin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _GridView = "_GridView";
-                public readonly string _UserInfo = "_UserInfo";
-                public readonly string _UserRoles = "_UserRoles";
-                public readonly string _UsersOnSite = "_UsersOnSite";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
-            public readonly string _GridView = "~/Views/Users/_GridView.cshtml";
-            public readonly string _UserInfo = "~/Views/Users/_UserInfo.cshtml";
-            public readonly string _UserRoles = "~/Views/Users/_UserRoles.cshtml";
-            public readonly string _UsersOnSite = "~/Views/Users/_UsersOnSite.cshtml";
-            public readonly string Edit = "~/Views/Users/Edit.cshtml";
-            public readonly string Index = "~/Views/Users/Index.cshtml";
+            public readonly string _GridView = "~/Views/Employees/_GridView.cshtml";
+            public readonly string Edit = "~/Views/Employees/Edit.cshtml";
+            public readonly string Index = "~/Views/Employees/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_UsersController : GE.WebAdmin.Controllers.UsersController
+    public partial class T4MVC_EmployeesController : GE.WebAdmin.Controllers.EmployeesController
     {
-        public T4MVC_UsersController() : base(Dummy.Instance) { }
+        public T4MVC_EmployeesController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
@@ -196,10 +141,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMUser filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMEmployee filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMUser filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMEmployee filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
@@ -222,49 +167,14 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void EditRolesOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, string userId);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditEmployee model);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult EditRoles(string userId)
+        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditEmployee model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditRoles);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
-            EditRolesOverride(callInfo, userId);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void EditUserInfoOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMEditUser user);
-
-        [NonAction]
-        public override System.Web.Mvc.PartialViewResult EditUserInfo(GE.WebAdmin.Models.VMEditUser user)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditUserInfo);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "user", user);
-            EditUserInfoOverride(callInfo, user);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditRole model);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(GE.WebAdmin.Models.VMEditRole model)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            DeleteOverride(callInfo, model);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void UsersOnSiteOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.PartialViewResult UsersOnSite()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.UsersOnSite);
-            UsersOnSiteOverride(callInfo);
+            EditOverride(callInfo, model);
             return callInfo;
         }
 

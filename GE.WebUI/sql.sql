@@ -565,7 +565,7 @@ GO
 IF OBJECT_ID(N'dbo.get_aphorism_categories', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_aphorism_categories;
 GO
-CREATE PROCEDURE dbo.get_aphorism_categories(@curCat NVARCHAR(100))
+CREATE PROCEDURE dbo.get_aphorism_categories(@curCat VARCHAR(100))
 AS
 BEGIN
 	SELECT dmc.Id,
@@ -857,5 +857,54 @@ BEGIN
 	            AND dg.Show = 1
 	WHERE  (dn.GameId IS NOT NULL OR da.GameId IS NOT NULL)
 	       AND dg.TitleUrl = @titleUrl
+END
+GO
+
+/*******************************************
+ * Добавить сотрудника
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_employee', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_employee;
+GO
+CREATE PROCEDURE dbo.add_employee(@uid VARCHAR(128))
+AS
+BEGIN
+	INSERT INTO D_EMPLOYEE
+	  (
+	    Id,
+	    DateCreate
+	  )
+	VALUES
+	  (
+	    @uid,
+	    GETDATE()
+	  )
+END
+GO
+
+/*******************************************
+ * Удалить сотрудника
+ *******************************************/
+IF OBJECT_ID(N'dbo.del_employee', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.del_employee;
+GO
+CREATE PROCEDURE dbo.del_employee(@uid VARCHAR(128))
+AS
+BEGIN
+	DELETE 
+	FROM   D_EMPLOYEE
+	WHERE  Id = @uid
+END
+GO
+
+/*******************************************
+ * Список пользователей
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_users', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_users;
+GO
+CREATE PROCEDURE dbo.get_users
+AS BEGIN
+   	SELECT*FROM AspNetUsers AS anu
 END
 GO

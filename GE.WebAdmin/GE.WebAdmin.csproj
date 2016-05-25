@@ -231,6 +231,7 @@
     <Compile Include="Controllers\BannerGroupsController.cs" />
     <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\BannedUrlsController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
@@ -257,10 +258,14 @@
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
+    <Compile Include="EmployeesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Extantions\Repositories\RepoAphorizm.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="Extantions\Repositories\RepoBanner.cs" />
     <Compile Include="Extantions\Repositories\RepoForumPart.cs" />
+    <Compile Include="Extantions\Repositories\RepoEmployee.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
@@ -308,10 +313,12 @@
     <Compile Include="Models\VMBannedUrl.cs" />
     <Compile Include="Models\VMEditBanner.cs" />
     <Compile Include="Models\VMEditBannerGroup.cs" />
+    <Compile Include="Models\VMEditEmployee.cs" />
     <Compile Include="Models\VMEditManual.cs" />
     <Compile Include="Models\VMEditMaterialCategory.cs" />
     <Compile Include="Models\VMEditProjectStep.cs" />
     <Compile Include="Models\VMEditVideo.cs" />
+    <Compile Include="Models\VMEmployee.cs" />
     <Compile Include="Models\VMFAQ.cs" />
     <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMClick.cs" />
@@ -503,6 +510,9 @@
     <Content Include="Views\Shared\EditorTemplates\EditAuthorAphorism.cshtml" />
     <Content Include="Views\AuthorAphorisms\_FindGridView.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditDate.cshtml" />
+    <Content Include="Views\Employees\_GridView.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

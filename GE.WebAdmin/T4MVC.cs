@@ -35,6 +35,7 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.BannerGroupsController BannerGroups = new GE.WebAdmin.Controllers.T4MVC_BannerGroupsController();
     public static GE.WebAdmin.Controllers.BannersController Banners = new GE.WebAdmin.Controllers.T4MVC_BannersController();
     public static GE.WebAdmin.Controllers.CommentsController Comments = new GE.WebAdmin.Controllers.T4MVC_CommentsController();
+    public static GE.WebAdmin.Controllers.EmployeesController Employees = new GE.WebAdmin.Controllers.T4MVC_EmployeesController();
     public static GE.WebAdmin.Controllers.FAQController FAQ = new GE.WebAdmin.Controllers.T4MVC_FAQController();
     public static GE.WebAdmin.Controllers.ForumPartsController ForumParts = new GE.WebAdmin.Controllers.T4MVC_ForumPartsController();
     public static GE.WebAdmin.Controllers.GamesController Games = new GE.WebAdmin.Controllers.T4MVC_GamesController();

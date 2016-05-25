@@ -5,6 +5,7 @@ using SX.WebCore;
 using SX.WebCore.Abstract;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
+using System.Linq;
 
 namespace GE.WebUI.Controllers
 {
@@ -26,8 +27,9 @@ namespace GE.WebUI.Controllers
         {
             var routes = Request.RequestContext.RouteData.Values;
             var controller = routes["controller"].ToString().ToLowerInvariant();
+            var blackList = new string[] { "account", "sitequetions", "contacts"};
 
-            if (controller == "account" || controller=="sitequetions")
+            if (blackList.Contains(controller))
                 return null;
 
             ViewBag.ControllerName = controller;

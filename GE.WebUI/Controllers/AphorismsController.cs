@@ -2,7 +2,6 @@
 using GE.WebCoreExtantions.Repositories;
 using GE.WebUI.Models;
 using SX.WebCore.Abstract;
-using SX.WebCore.Attrubutes;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using System.Linq;
@@ -25,7 +24,7 @@ namespace GE.WebUI.Controllers
             return View(vierwModel);
         }
 
-        [OutputCache(Duration = 900, VaryByParam = "curCat;onlyNotCurrent")]
+        //[OutputCache(Duration = 900, VaryByParam = "curCat;onlyNotCurrent")]
         [HttpGet, ChildActionOnly]
         public virtual PartialViewResult Categories(string curCat = null, bool onlyNotCurrent = true)
         {
@@ -46,10 +45,10 @@ namespace GE.WebUI.Controllers
             filter.PagerInfo.PagerSize = 5;
             ViewBag.PagerInfo = filter.PagerInfo;
             ViewBag.AuthorName = author;
+            ViewBag.CurrentAphorismCategory = getCurrentCategory(categoryId);
 
             var data = (_repo as RepoAphorism).Query(filter).ToArray();
             var viewModel = data.Select(x => Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
-            ViewBag.CurrentAphorismCategory = categoryId == null ? null : Mapper.Map<SxMaterialCategory, VMMaterialCategory>(_repo.All.FirstOrDefault(x => x.CategoryId == categoryId).Category);
             return View(viewModel);
         }
 
@@ -57,6 +56,14 @@ namespace GE.WebUI.Controllers
         public virtual RedirectToRouteResult Search(string author, string html)
         {
             return RedirectToAction("list", new { author = author, html = html });
+        }
+
+        private VMMaterialCategory getCurrentCategory(string categoryId=null)
+        {
+            if (categoryId == null) return null;
+
+            var data = new RepoMaterialCategory().GetByKey(categoryId);
+            return Mapper.Map<MaterialCategory, VMMaterialCategory>(data);
         }
     }
 }

@@ -28,22 +28,6 @@ namespace GE.WebUI.Extantions.Repositories
 
             return viewModel;
         }
-        //private static VMAphorism getAphorism(dynamic model)
-        //{
-        //    var data=new VMAphorism
-        //    {
-        //        AuthorId = model.AuthorId != null ? (int)model.AuthorId : 0,
-        //        Author = model.AuthorId != null ? new VMAuthorAphorism { Id = model.AuthorId, Name = model.AuthorName, PictureId = model.PictureId } : null,
-        //        Category = new VMMaterialCategory { Title = model.CategoryTitle },
-        //        CategoryId = model.CategoryId,
-        //        Flag = 0,
-        //        Html = model.Html,
-        //        Id = model.Id,
-        //        Title = model.Title,
-        //        TitleUrl = model.TitleUrl
-        //    };
-        //    return data;
-        //}
 
         public static VMAphorismCategory[] GetAphorismCategories(this RepoAphorism repo, string curCategoryId=null)
         {

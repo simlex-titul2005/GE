@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using SX.WebCore.Abstract;
 using GE.WebAdmin.Models;
-using SX.WebCore.HtmlHelpers;
 using GE.WebCoreExtantions.Repositories;
 using GE.WebCoreExtantions;
 using SX.WebCore.Providers;

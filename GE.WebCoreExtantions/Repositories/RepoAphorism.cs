@@ -68,7 +68,8 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
             query += " AND (dm.Title LIKE '%'+@title+'%' OR @title IS NULL) ";
             query += " AND ((@author IS NOT NULL AND @author NOT IN('no') AND daa.Name LIKE '%'+@author+'%') OR (@author IS NOT NULL AND @author IN('no') AND daa.Name IS NULL) OR (@author IS NULL)) ";
             query += " AND (dm.Html LIKE '%'+@html+'%' OR @html IS NULL) ";
-            query += " AND (dm.Show=1) ";
+            if(filter.OnlyShow)
+                query += " AND (dm.Show=1) ";
 
             var cid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.CategoryId != null ? (string)filter.WhereExpressionObject.CategoryId : null;
             var title = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null ? (string)filter.WhereExpressionObject.Title : null;

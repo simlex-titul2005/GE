@@ -53,6 +53,8 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id, Enums.ModelCoreType.Article) : new Article { ModelCoreType = Enums.ModelCoreType.Article };
+            if (id.HasValue && model != null)
+                model.Category = new RepoMaterialCategory().GetByKey(model.CategoryId);
             var viewModel = Mapper.Map<Article, VMEditArticle>(model);
             viewModel.OldTitleUrl = viewModel.TitleUrl;
             return View(viewModel);

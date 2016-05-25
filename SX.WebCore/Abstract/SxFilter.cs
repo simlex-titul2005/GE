@@ -21,5 +21,6 @@ namespace SX.WebCore.Abstract
         public ModelCoreType ModelCoreType { get; set; }
         public dynamic WhereExpressionObject { get; set; }
         public IDictionary<string, SortDirection> Orders { get; set; }
+        public bool OnlyShow { get; set; }
     }
 }

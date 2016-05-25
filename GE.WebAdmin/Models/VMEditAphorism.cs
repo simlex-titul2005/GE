@@ -9,6 +9,9 @@ namespace GE.WebAdmin.Models
         [Display(Name ="Заголовок"), Required, MaxLength(150)]
         public string Title { get; set; }
 
+        [Display(Name = "Показывать на сайте"), Required]
+        public bool Show { get; set; }
+
         [Display(Name = "Содержание"), Required, DataType(DataType.MultilineText)]
         public string Html { get; set; }
 

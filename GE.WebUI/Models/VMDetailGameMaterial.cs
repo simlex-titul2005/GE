@@ -13,9 +13,13 @@ namespace GE.WebUI.Models
                     return urlHelper.Action(MVC.News.Details(DateCreate.Year, DateCreate.Month.ToString("00"), DateCreate.Day.ToString("00"), TitleUrl));
                 case SX.WebCore.Enums.ModelCoreType.Article:
                     return urlHelper.Action(MVC.Articles.Details(DateCreate.Year, DateCreate.Month.ToString("00"), DateCreate.Day.ToString("00"), TitleUrl));
+                case SX.WebCore.Enums.ModelCoreType.Aphorism:
+                    return urlHelper.Action(MVC.Aphorisms.Details(categoryId: CategoryId, titleUrl: TitleUrl));
                 default:
                     return "#";
             }
         }
+
+        public int GameId { get; set; }
     }
 }

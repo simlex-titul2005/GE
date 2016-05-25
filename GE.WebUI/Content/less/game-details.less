@@ -59,6 +59,21 @@
 
 .game-datails .dg-lm > .row{
     display:table;
+    @media (max-width: @screen-xs-max) {
+        display:block;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .game-datails .dg-lm > .row > div{
@@ -66,6 +81,24 @@
     float:none;
     vertical-align:top;
     height:100%;
+    @media (max-width: @screen-xs-max) {
+        display:block;
+        float:left;
+        height:auto;
+        width:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .game-datails .dg-lm figure{
@@ -74,10 +107,66 @@
     height:100%;
     background-size:cover;
     background-position: center center;
+    @media (max-width: @screen-xs-max) {
+        position:unset;
+        width:100%;
+        height:auto;
+        min-height:170px;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
+}
+
+.game-datails .dg-lm figure.img-circle{
+    position:unset;
+    width:100px !important;
+    height:100px !important;
+    border:3px solid @color-muted-blue;
+    @media (max-width: @screen-xs-max) {
+        min-height:unset;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .game-datails .dg-lm .content{
     padding: 0 @def-pad;
+    @media (max-width: @screen-xs-max) {
+        padding:0;
+        margin-top:@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .game-datails .dg-lm .date{
@@ -111,4 +200,40 @@
     height:100%;
     position:absolute;
     right: @def-pad;
+    @media (max-width: @screen-xs-max) {
+        width:auto;
+        height:170px;
+        position:unset;
+        margin-top:@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
+}
+
+.game-datails .dg-lm .video-container > figure{
+    @media (max-width: @screen-xs-max) {
+        height:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }

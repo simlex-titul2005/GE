@@ -20,14 +20,18 @@
                 return a.Author!=null? a.Author.Name:null;
             } },
             new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Show", Caption="Показывать", Template=(a)=> {
+                return a.Show?"Да":"Нет";
+            } }
             },
                     PagerInfo = pagerInfo,
                     Filter = filter,
                     SortDirections = sortDirections,
                     CreateLink = Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism)),
                     FuncEditLink = x => Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism, id: x.Id)),
-                    PagerLink = Url.Action(MVC.Aphorisms.Index(curCat: categoryId))
-                },
+                    PagerLink = Url.Action(MVC.Aphorisms.Index(curCat: categoryId)),
+                    FuncRowCssClass = (x) => !x.Show ? "warning" : null
+    },
                     new { @class = "table table-condensed table-bordered table-responsive table-striped" }
         )
 }

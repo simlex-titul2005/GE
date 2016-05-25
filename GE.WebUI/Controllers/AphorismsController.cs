@@ -40,7 +40,7 @@ namespace GE.WebUI.Controllers
         public virtual ViewResult List(string categoryId = null, int page = 1)
         {
             var author = Request.QueryString["author"];
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { WhereExpressionObject = new VMAphorism { CategoryId = categoryId, Name = author } };
+            var filter = new WebCoreExtantions.Filter(page, _pageSize) { WhereExpressionObject = new VMAphorism { CategoryId = categoryId, Author=new VMAuthorAphorism { Name=author} } };
             var totalItems = (_repo as RepoAphorism).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             filter.PagerInfo.PagerSize = 5;

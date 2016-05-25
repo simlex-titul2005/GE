@@ -1,5 +1,5 @@
 ﻿@model VMDetailGameMaterial[]
-@{
+@{ 
     Layout = null;
     var mct = (SX.WebCore.Enums.ModelCoreType)ViewData["ModelCoreType"];
     var materialsTitle = string.Empty;
@@ -13,6 +13,10 @@
         case SX.WebCore.Enums.ModelCoreType.Article:
             materialsTitle = "Последние статьи";
             allUrl = Url.Action(MVC.Articles.List());
+            break;
+        case SX.WebCore.Enums.ModelCoreType.Aphorism:
+            materialsTitle = "Последние афоризмы к игре "+ ViewBag.GameTitle;
+            allUrl = Url.Action(MVC.Aphorisms.List());
             break;
         default:
             materialsTitle = "Последние материалы";

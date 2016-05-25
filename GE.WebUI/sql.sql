@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 23.05.2016 19:35:36
+ * Time: 25.05.2016 10:49:24
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,10 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
+
+
 
 
 /*******************************************
@@ -436,28 +440,15 @@ GO
 /*******************************************
 * получить страницу афоризма
 *******************************************/
-IF OBJECT_ID(N'dbo.get_aphorism_page_model', N'TF') IS NOT NULL
-    DROP FUNCTION dbo.get_aphorism_page_model;
+IF OBJECT_ID(N'dbo.get_aphorism_page_model', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_aphorism_page_model;
 GO
-CREATE FUNCTION dbo.get_aphorism_page_model
+CREATE PROCEDURE dbo.get_aphorism_page_model
 (
-	@title_url         NVARCHAR(255),
-	@author_amount     INT,
-	@cat_amount        INT
+    @title_url         NVARCHAR(255),
+    @author_amount     INT,
+    @cat_amount        INT
 )
-RETURNS @result TABLE(
-            Id INT,
-            Title NVARCHAR(255),
-            TitleUrl NVARCHAR(255),
-            Html NVARCHAR(MAX),
-            CategoryId NVARCHAR(100),
-            CategoryTitle NVARCHAR(100),
-            AuthorId INT,
-            AuthorName NVARCHAR(100),
-            AuthorPictureId UNIQUEIDENTIFIER,
-            Flag INT,
-            CommentsCount INT
-        )
 AS
 BEGIN
 	DECLARE @authorId     INT,
@@ -471,17 +462,17 @@ BEGIN
 	            AND dm.ModelCoreType = da.ModelCoreType
 	WHERE  dm.TitleUrl = @title_url
 	
-	INSERT INTO @result
 	SELECT x.Id,
+	       x.Flag,
 	       x.Title,
 	       x.TitleUrl,
 	       x.Html,
 	       x.CategoryId,
 	       dmc.Title,
+	       dmc.Id,
 	       x.AuthorId,
 	       daa.Name,
 	       daa.PictureId,
-	       x.Flag,
 	       COUNT(dc.Id)                 AS CommentsCount
 	FROM   (
 	           SELECT dm.*,
@@ -492,6 +483,7 @@ BEGIN
 	                       ON  dm.Id = da.Id
 	                       AND dm.ModelCoreType = da.ModelCoreType
 	           WHERE  dm.TitleUrl = @title_url
+	                  AND dm.Show = 1
 	           UNION ALL
 	           SELECT TOP(@author_amount) dm.*,
 	                  da.AuthorId,
@@ -504,7 +496,8 @@ BEGIN
 	                      (@authorId IS NULL AND da.AuthorId IS NULL)
 	                      OR (@authorId IS NOT NULL AND da.AuthorId IN (@authorId))
 	                  )
-	                  AND dm.TitleUrl NOT IN (@title_url)
+	                  AND (dm.TitleUrl NOT IN (@title_url))
+	                  AND dm.Show = 1
 	           UNION ALL
 	           SELECT TOP(@cat_amount) dm.*,
 	                  da.AuthorId,
@@ -514,7 +507,8 @@ BEGIN
 	                       ON  dm.Id = da.Id
 	                       AND dm.ModelCoreType = da.ModelCoreType
 	           WHERE  dm.CategoryId IN (@catId)
-	                  AND dm.TitleUrl NOT IN (@title_url)
+	                  AND (dm.TitleUrl NOT IN (@title_url))
+	                  AND dm.Show = 1
 	       ) x
 	       LEFT JOIN D_COMMENT          AS dc
 	            ON  dc.MaterialId = x.Id
@@ -533,9 +527,8 @@ BEGIN
 	       x.Flag,
 	       dmc.Title,
 	       daa.Name,
-	       daa.PictureId
-	
-	RETURN
+	       daa.PictureId,
+	       dmc.Id
 END
 GO
 
@@ -569,17 +562,12 @@ GO
 /*******************************************
 * получить категории афоризмов
 *******************************************/
-IF OBJECT_ID(N'dbo.get_aphorism_categories', N'TF') IS NOT NULL
-    DROP FUNCTION dbo.get_aphorism_categories;
+IF OBJECT_ID(N'dbo.get_aphorism_categories', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_aphorism_categories;
 GO
-CREATE FUNCTION dbo.get_aphorism_categories
-(
-	@curCat NVARCHAR(255)
-)
-RETURNS @result TABLE (Id NVARCHAR(255), Title NVARCHAR(255), IsCurrent BIT)
+CREATE PROCEDURE dbo.get_aphorism_categories(@curCat NVARCHAR(100))
 AS
 BEGIN
-	INSERT INTO @result
 	SELECT dmc.Id,
 	       dmc.Title,
 	       CASE 
@@ -595,39 +583,6 @@ BEGIN
 	GROUP BY
 	       dmc.Id,
 	       dmc.Title
-	
-	RETURN
-END
-GO
-
-/*******************************************
-* получить афоризмы
-*******************************************/
-IF OBJECT_ID(N'dbo.get_aphorisms', N'TF') IS NOT NULL
-    DROP FUNCTION dbo.get_aphorisms;
-GO
-CREATE FUNCTION dbo.get_aphorisms
-(
-	@curCat NVARCHAR(255)
-)
-RETURNS @result TABLE
-        (Id INT, Title NVARCHAR(255), TitleUtl NVARCHAR(255))
-AS
-BEGIN
-	INSERT INTO @result
-	SELECT da.Id,
-	       dm.Title,
-	       dm.TitleUrl
-	FROM   D_APHORISM                   AS da
-	       JOIN DV_MATERIAL             AS dm
-	            ON  dm.Id = da.Id
-	            AND dm.ModelCoreType = da.ModelCoreType
-	       JOIN D_MATERIAL_CATEGORY     AS dmc
-	            ON  dmc.Id = dm.CategoryId
-	       LEFT JOIN D_AUTHOR_APHORISM  AS daa
-	            ON  daa.Id = da.AuthorId
-	
-	RETURN
 END
 GO
 
@@ -800,15 +755,31 @@ GO
 CREATE PROCEDURE dbo.get_game_materials(@titleUrl VARCHAR(50), @amount INT)
 AS
 BEGIN
-	SELECT x.*,
+	SELECT x.Id,
+		   x.ModelCoreType,
+	       x.Title,
+	       x.TitleUrl,
+	       x.DateCreate,
+	       x.DateOfPublication,
+	       CASE 
+	            WHEN x.ModelCoreType = 6 THEN x.Html
+	            ELSE x.Foreword
+	       END  AS Foreword,
+	       CASE 
+	            WHEN x.ModelCoreType = 6 THEN x.PictureId
+	            ELSE x.FrontPictureId
+	       END  AS FrontPictureId,
+	       x.CategoryId,
 	       (
 	           SELECT TOP(1) dvl.VideoId
 	           FROM   D_VIDEO_LINK AS dvl
 	           WHERE  dvl.MaterialId = x.Id
 	                  AND dvl.ModelCoreType = x.ModelCoreType
-	       )  AS TopVideoId
+	       )    AS TopVideoId
 	FROM   (
-	           SELECT TOP(@amount) dm.*
+	           SELECT TOP(@amount) dm.*,
+	                  NULL              AS PictureId,
+	                  dn.GameId
 	           FROM   D_NEWS            AS dn
 	                  JOIN DV_MATERIAL  AS dm
 	                       ON  dm.Id = dn.Id
@@ -816,11 +787,13 @@ BEGIN
 	                  JOIN D_GAME       AS dg
 	                       ON  dg.Id = dn.GameId
 	                       AND dg.TitleUrl = @titleUrl
-	           WHERE  dg.Show = 1
-	                  AND dm.Show = 1
+	                       AND dg.Show = 1
+	           WHERE  dm.Show = 1
 	                  AND dm.DateOfPublication <= GETDATE()
 	           UNION ALL
-	           SELECT TOP(@amount) dm.*
+	           SELECT TOP(@amount) dm.*,
+	                  NULL              AS PictureId,
+	                  da.GameId
 	           FROM   D_ARTICLE         AS da
 	                  JOIN DV_MATERIAL  AS dm
 	                       ON  dm.Id = da.Id
@@ -828,12 +801,30 @@ BEGIN
 	                  JOIN D_GAME       AS dg
 	                       ON  dg.Id = da.GameId
 	                       AND dg.TitleUrl = @titleUrl
-	           WHERE  dg.Show = 1
-	                  AND dm.Show = 1
+	                       AND dg.Show = 1
+	           WHERE  dm.Show = 1
+	                  AND dm.DateOfPublication <= GETDATE()
+	           UNION ALL
+	           SELECT TOP(@amount) dm.*,
+	                  daa.PictureId,
+	                  dmc.GameId
+	           FROM   D_APHORISM        AS da2
+	                  LEFT JOIN D_AUTHOR_APHORISM AS daa
+	                       ON  daa.Id = da2.AuthorId
+	                  JOIN DV_MATERIAL  AS dm
+	                       ON  dm.Id = da2.Id
+	                       AND dm.ModelCoreType = da2.ModelCoreType
+	                  JOIN D_MATERIAL_CATEGORY AS dmc
+	                       ON  dmc.Id = dm.CategoryId
+	                  JOIN D_GAME       AS dg
+	                       ON  dg.Id = dmc.GameId
+	                       AND dg.Show = 1
+	                       AND dg.TitleUrl = @titleUrl
+	           WHERE  dm.Show = 1
 	                  AND dm.DateOfPublication <= GETDATE()
 	           ORDER BY
 	                  dm.DateOfPublication DESC
-	       )  AS x
+	       )    AS x
 END
 GO
 

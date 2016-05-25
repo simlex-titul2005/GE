@@ -66,7 +66,7 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual ViewResult Edit(string cat, ModelCoreType mct, int? id = null)
         {
-            var data = id.HasValue ? _repo.GetByKey(id, mct) : new Aphorism { CategoryId = cat };
+            var data = id.HasValue ? _repo.GetByKey(id, mct) : new Aphorism { CategoryId = cat, Show=true };
             var viewModel = Mapper.Map<Aphorism, VMEditAphorism>(data);
             return View(viewModel);
         }
@@ -96,7 +96,7 @@ namespace GE.WebAdmin.Controllers
                 if (isNew)
                     _repo.Create(redactModel);
                 else
-                    _repo.Update(redactModel, true, "Title", "Html", "AuthorId");
+                    _repo.Update(redactModel, true, "Title", "Html", "AuthorId", "Show");
                 return RedirectToAction(MVC.Aphorisms.Index(curCat: model.CategoryId));
             }
             return View(model);

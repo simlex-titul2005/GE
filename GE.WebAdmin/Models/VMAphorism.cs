@@ -7,6 +7,7 @@ namespace GE.WebAdmin.Models
         public int Id { get; set; }
         public ModelCoreType ModelCoreType { get; set; }
         public string Title { get; set; }
+        public bool Show { get; set; }
         public string CategoryId { get; set; }
         public int AuthorId { get; set; }
         public VMAuthorAphorism Author { get; set; }

@@ -28,7 +28,7 @@
                     <div>
                         @Html.Raw(a.Html)
                     </div>
-                    <div class="author">@(a.Author != null && a.Author.Name != null ? a.Author.Name : "Аноним")</div>
+                    <div class="author">@(a.Author != null && a.Author.Name != null ? a.Author.Name : "Аноним")@(a.Category!=null?". "+a.Category.Title:null)</div>
                     <div>
                         <a href="@Url.Action(MVC.Aphorisms.Details(categoryId: a.CategoryId, titleUrl: a.TitleUrl))"><i>Комментировать</i></a>
                     </div>

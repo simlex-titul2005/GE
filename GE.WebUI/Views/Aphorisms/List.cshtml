@@ -6,7 +6,7 @@
     var category = ViewBag.CurrentAphorismCategory != null ? ((VMMaterialCategory)ViewBag.CurrentAphorismCategory) : null;
     var categoryId = category != null ? category.Id : null;
     var curName = category != null ? category.Title : null;
-    var title = curName == null && authorName == null ? "Афоризмы, короткие высказывания, шутки" : string.Format("{0}. Афоризмы, короткие высказывания, шутки", curName ?? authorName);
+    var title = curName == null && authorName == null ? "Афоризмы и цитаты, короткие высказывания, шутки" : string.Format("{0}. Афоризмы и цитаты, короткие высказывания, шутки", curName ?? authorName);
     ViewBag.Title = title;
 
     ViewBag.H1 = ViewBag.H1 ?? title;

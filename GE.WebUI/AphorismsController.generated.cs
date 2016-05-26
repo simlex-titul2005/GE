@@ -58,9 +58,9 @@ namespace GE.WebUI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Details()
+        public virtual System.Web.Mvc.ActionResult Details()
         {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -155,6 +155,13 @@ namespace GE.WebUI.Controllers
             public readonly string _List = "~/Views/Aphorisms/_List.cshtml";
             public readonly string Details = "~/Views/Aphorisms/Details.cshtml";
             public readonly string List = "~/Views/Aphorisms/List.cshtml";
+            static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
+            public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _DisplayTemplatesClass
+            {
+                public readonly string VMAphorism = "VMAphorism";
+            }
         }
     }
 
@@ -164,12 +171,12 @@ namespace GE.WebUI.Controllers
         public T4MVC_AphorismsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string categoryId, string titleUrl);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string categoryId, string titleUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Details(string categoryId, string titleUrl)
+        public override System.Web.Mvc.ActionResult Details(string categoryId, string titleUrl)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "categoryId", categoryId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
             DetailsOverride(callInfo, categoryId, titleUrl);

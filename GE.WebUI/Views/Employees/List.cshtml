@@ -1,0 +1,39 @@
+﻿@model VMEmployee[]
+@{
+    ViewBag.Title = ViewBag.Title ?? "Контакты";
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.H1CssClass = "hidden";
+    ViewBag.Description = ViewBag.Description ?? "Контакты руководства и сотрудников сайта";
+    ViewBag.Keywords = ViewBag.Keywords ?? "Контакты руководства game-exe.com, Контакты сотрудников game-exe.com";
+}
+
+<div class="identity-page employees">
+    <h2 class="header">@ViewBag.Title</h2>
+
+    @if(Model.Any())
+    {
+        for (int i = 0; i < Model.Length; i++)
+        {
+            var item = Model[i];
+            <div class="employee">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="text-left">
+                            <figure class="emp-avatar img-circle" style="background-image:url(@Url.Action(MVC.Pictures.Picture((Guid)item.User.AvatarId)))"></figure>
+                            <div class="nik">@item.User.NikName</div>
+                            <a href="mailto:@item.User.Email">@item.User.Email</a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="desc">
+                            <h2>@item.Surname @item.Name @item.Patronymic</h2>
+                            @Html.Raw(item.Description)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+    
+

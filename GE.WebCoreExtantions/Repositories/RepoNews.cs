@@ -5,6 +5,7 @@ using SX.WebCore.Abstract;
 using SX.WebCore;
 using SX.WebCore.Providers;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
+using static SX.WebCore.Enums;
 
 namespace GE.WebCoreExtantions.Repositories
 {
@@ -148,6 +149,14 @@ ORDER BY
                     return m;
                 }, new { mid = filter.MaterialId, mct = filter.ModelCoreType, amount = amount }, splitOn:"UserId");
                 return data.ToArray();
+            }
+        }
+
+        public void AddUserView(int mid, ModelCoreType mct)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Execute("add_material_view @mid, @mct", new { mid = mid, mct = mct });
             }
         }
     }

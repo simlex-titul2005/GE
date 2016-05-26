@@ -7,6 +7,6 @@ namespace SX.WebCore.Abstract
         public virtual SxAppUser User { get; set; }
 
         [Required, MaxLength(128)]
-        public new string Id { get; set; }
+        public override string Id { get; set; }
     }
 }

@@ -184,9 +184,12 @@
     </Compile>
     <Compile Include="Controllers\AphorismController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
-    <Compile Include="Controllers\ContactsController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\SiteQuetionsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
+    <Compile Include="EmployeesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -418,7 +421,7 @@
     <Content Include="Views\Games\Details.cshtml" />
     <Content Include="Views\Games\_DetailGameMaterials.cshtml" />
     <Content Include="Views\Games\DisplayTemplates\VMDetailGameMaterial.cshtml" />
-    <Content Include="Views\Contacts\List.cshtml" />
+    <Content Include="Views\Employees\List.cshtml" />
     <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

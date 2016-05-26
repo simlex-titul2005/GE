@@ -535,6 +535,7 @@ BEGIN
 	WHERE  dm.TitleUrl = @title_url
 	
 	SELECT x.Id,
+		   x.ViewsCount,
 	       x.Flag,
 	       x.Title,
 	       x.TitleUrl,
@@ -591,6 +592,7 @@ BEGIN
 	            ON  daa.Id = x.AuthorId
 	GROUP BY
 	       x.Id,
+	       x.ViewsCount,
 	       x.Title,
 	       x.TitleUrl,
 	       x.Html,
@@ -957,13 +959,40 @@ END
 GO
 
 /*******************************************
- * Список пользователей
+ * Сотрудники
  *******************************************/
-IF OBJECT_ID(N'dbo.get_users', N'P') IS NOT NULL
-    DROP PROCEDURE dbo.get_users;
+IF OBJECT_ID(N'dbo.get_employees', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_employees;
 GO
-CREATE PROCEDURE dbo.get_users
-AS BEGIN
-   	SELECT*FROM AspNetUsers AS anu
+CREATE PROCEDURE dbo.get_employees(@id VARCHAR(128))
+AS
+BEGIN
+	SELECT *
+	FROM   D_EMPLOYEE        AS de
+	       JOIN AspNetUsers  AS anu
+	            ON  anu.Id = de.Id
+	WHERE  (@id IS NULL OR de.Id = @id)
+END
+GO
+
+/*******************************************
+ * Увеличить количество просмотров
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_material_view', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_material_view;
+GO
+CREATE PROCEDURE dbo.add_material_view(@mid INT, @mct INT)
+AS
+BEGIN
+	DECLARE @oldCount INT
+	SELECT @oldCount = dm.ViewsCount
+	FROM   DV_MATERIAL AS dm
+	WHERE  dm.Id = @mid
+	       AND dm.ModelCoreType = @mct
+	
+	UPDATE DV_MATERIAL
+	SET    ViewsCount            = @oldCount + 1
+	WHERE  Id                    = @mid
+	       AND ModelCoreType     = @mct
 END
 GO

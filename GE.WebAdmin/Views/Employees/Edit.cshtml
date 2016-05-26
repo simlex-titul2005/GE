@@ -1,102 +1,57 @@
-﻿@model VMEditGame
-@{ 
-    var isNew = Model.Id == 0;
-    var uriFragmet = Request.QueryString.GetValues("fragment") != null ? Request.QueryString.GetValues("fragment")[0] : null;
-    var hasError = Convert.ToBoolean(ViewBag.HasError);
+﻿@model VMEditEmployee
+@{
+    ViewBag.Title = "Редактировать информацию о сотруднике";
 }
 
-<h2>
-    @(Model.Id == 0 ? "Добавить игру" : "Редактировать игру")
-</h2>
+@if (Model.User != null && Model.User.AvatarId.HasValue)
+{
+    <img style="width:70px; height:70px" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.User.AvatarId))" />
+    <span>@Model.User.NikName</span>
+}
+<h2>@ViewBag.Title</h2>
 <br />
-<ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="@(uriFragmet==null || uriFragmet=="params"? "active":null)"><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
-</ul>
-<div class="tab-content">
-    <div role="tabpanel" class="tab-pane @(uriFragmet==null || uriFragmet=="params"? "active":null)" id="params">
-        <h2>Основные параметры игры</h2>
-        <form method="post" action="edit" enctype="multipart/form-data">
-            @Html.AntiForgeryToken()
+<form method="post" action="edit">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
 
-            @Html.HiddenFor(x => x.Id)
-
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-9">
-                        @Html.LabelFor(x => x.Title, new { @class = "control-label" })
-                        @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(x => x.Title)
-                    </div>
-                    <div class="col-md-2">
-                        @Html.LabelFor(x => x.TitleAbbr, new { @class = "control-label" })
-                        @Html.EditorFor(x => x.TitleAbbr, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(x => x.TitleAbbr)
-                    </div>
-                    <div class="col-md-1">
-                        @Html.LabelFor(x => x.Show, new { @class = "control-label" })
-                        @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(x => x.Show)
-                    </div>
-                </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.Surname, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.Surname)
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
-                @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.TitleUrl)
-                <div class="text-info">Ключ учавствует при формировании ссылок сайта. По-умолчанию задается равным наименованию игры.</div>
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.Name)
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(x => x.Description, new { @class = "control-label" })
-                @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.Description)
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.Patronymic, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Patronymic, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.Patronymic)
             </div>
-
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-4">
-                        @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
-                        @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(x => x.FrontPictureId)
-                    </div>
-                    <div class="col-md-4">
-                        @Html.LabelFor(x => x.GoodPictureId, new { @class = "control-label" })
-                        @Html.EditorFor(x => x.GoodPictureId, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(x => x.GoodPictureId)
-                    </div>
-                    <div class="col-md-4">
-                        @Html.LabelFor(x => x.BadPictureId, new { @class = "control-label" })
-                        @Html.EditorFor(x => x.BadPictureId, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(x => x.BadPictureId)
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(x => x.FullDescription, new { @class = "control-label" })
-                @Html.EditorFor(x => x.FullDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.FullDescription)
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
-                @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
-                @if (Model.Id != 0)
-                {
-                    <button type="button" class="btn btn-danger pull-right" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить игру</button>
-                }
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Description, new { @class = "control-label" })
+        @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.Description)
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="@Url.Action(MVC.Employees.Index())" class="btn btn-default">Назад</a>
+    </div>
+</form>
 
 @section scripts{
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
     <script type="text/javascript">
-        if (CKEDITOR.instances['FullDescription']) {
-            CKEDITOR.remove(CKEDITOR.instances['FullDescription']);
+        if (CKEDITOR.instances['Description']) {
+            CKEDITOR.remove(CKEDITOR.instances['Description']);
         }
-        CKEDITOR.replace('FullDescription', { height: 400 });
+        CKEDITOR.replace('Description', { height: 400 });
     </script>
 }

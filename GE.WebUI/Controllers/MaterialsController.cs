@@ -137,10 +137,10 @@ namespace GE.WebUI.Controllers
             VMDetailMaterial model = null;
             switch (_modelCoreType)
             {
-                case Enums.ModelCoreType.Article:
+                case ModelCoreType.Article:
                     model = (_repo as RepoArticle).GetByTitleUrl(year, month, day,titleUrl);
                     break;
-                case Enums.ModelCoreType.News:
+                case ModelCoreType.News:
                     model = (_repo as RepoNews).GetByTitleUrl(year, month, day, titleUrl);
                     break;
             }
@@ -154,13 +154,6 @@ namespace GE.WebUI.Controllers
                 html = SxBBCodeParser.ReplaceBanners(html, SiteBanners.Collection, (b)=>Url.Action(MVC.Pictures.Picture(b.PictureId)));
                 html = SxBBCodeParser.ReplaceVideo(html, model.Videos);
                 model.Html = html;
-
-                if (!Request.IsLocal)
-                {
-                    /*ViewBag.VKScript = "<script type=\"text/javascript\" src=\"//vk.com/js/api/openapi.js?121\"></script><script type=\"text/javascript\"> VK.init({ apiId: 5387252, onlyWidgets: true}); </script> ";
-
-                    ViewBag.FBScript = "<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.5\"; fjs.parentNode.insertBefore(js, fjs); } (document, 'script', 'facebook-jssdk'));</script>";*/
-                }
 
                 var seoInfoRepo = new RepoSeoInfo();
                 var matSeoInfo = Mapper.Map<SxSeoInfo, VMSeoInfo>(seoInfoRepo.GetSeoInfo(model.Id, model.ModelCoreType));
@@ -194,10 +187,10 @@ namespace GE.WebUI.Controllers
                         switch (_modelCoreType)
                         {
                             case Enums.ModelCoreType.Article:
-                                (_repo as RepoArticle).Update(new Article { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, false, "ViewsCount");
+                                (_repo as RepoArticle).AddUserView(model.Id, model.ModelCoreType);
                                 break;
                             case Enums.ModelCoreType.News:
-                                (_repo as RepoNews).Update(new News { Id = model.Id, ModelCoreType = model.ModelCoreType, ViewsCount = viewsCount + 1 }, false, "ViewsCount");
+                                (_repo as RepoNews).AddUserView(model.Id, model.ModelCoreType);
                                 break;
                         }
                     });

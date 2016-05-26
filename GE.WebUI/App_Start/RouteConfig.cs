@@ -123,6 +123,15 @@ namespace GE.WebUI
             );
             #endregion
 
+            #region employees
+            routes.MapRoute(
+                name: null,
+                url: "employees",
+                defaults: new { controller = "employees", action = "list", area = "" },
+                namespaces: _defNamespace
+            );
+            #endregion
+
             #region forum
             routes.MapRoute(
                 name: null,

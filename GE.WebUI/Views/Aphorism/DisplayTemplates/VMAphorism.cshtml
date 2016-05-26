@@ -10,6 +10,10 @@
     </div>
     <div><strong>@(Model.Author != null ? Model.Author.Name : "Аноним")</strong></div>
     <div class="aph-html">
+        @if(Model.Author!=null && Model.Author.PictureId.HasValue)
+        {
+            <figure style="background-image:url(@Url.Action(MVC.Pictures.Picture((Guid)Model.Author.PictureId))"></figure>
+        }
         @Html.Raw(Model.Html)
     </div>
     <div class="text-left">

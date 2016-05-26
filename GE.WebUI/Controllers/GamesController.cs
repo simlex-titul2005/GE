@@ -27,7 +27,7 @@ namespace GE.WebUI.Controllers
         {
             var routes = Request.RequestContext.RouteData.Values;
             var controller = routes["controller"].ToString().ToLowerInvariant();
-            var blackList = new string[] { "account", "sitequetions", "contacts"};
+            var blackList = new string[] { "account", "sitequetions", "employees" };
 
             if (blackList.Contains(controller))
                 return null;

@@ -133,7 +133,8 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxAppUser, VMUser>()
                     .ForMember(d => d.Roles, d => d.MapFrom(s => s.Roles.Select(r=>new VMRole { Id=r.RoleId, Name=r.UserId}).ToArray()));
                     cfg.CreateMap<SxAppUser, VMEditUser>();
-                    
+                    cfg.CreateMap<VMUser, SxAppUser>();
+
 
                     cfg.CreateMap<VMEditUser, SxEmployee>();
 

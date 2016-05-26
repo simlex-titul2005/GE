@@ -16,7 +16,7 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpGet, NotLogRequest]
-        public virtual PartialViewResult Random(int? id = null)
+        public virtual ActionResult Random(int? id = null)
         {
             var data = (_repo as RepoAphorism).GetRandom(id);
             ViewBag.AphorismLettersCount = data.Html.Length;

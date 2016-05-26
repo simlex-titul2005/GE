@@ -22,6 +22,9 @@ namespace GE.WebUI
                     //articles
                     cfg.CreateMap<Article, VMDetailArticle>();
 
+                    //employees
+                    cfg.CreateMap<SxEmployee, VMEmployee>();
+
                     //articles
                     cfg.CreateMap<SxForumPart, VMForumPart>();
 

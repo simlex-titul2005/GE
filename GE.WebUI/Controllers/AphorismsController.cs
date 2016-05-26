@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using System.Linq;
 using SX.WebCore;
+using System.Threading.Tasks;
 
 namespace GE.WebUI.Controllers
 {
@@ -18,10 +19,21 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpGet]
-        public virtual ViewResult Details(string categoryId, string titleUrl)
+        public virtual ActionResult Details(string categoryId, string titleUrl)
         {
-            var vierwModel = (_repo as RepoAphorism).GetByTitleUrl(categoryId, titleUrl);
-            return View(vierwModel);
+            var viewModel = (_repo as RepoAphorism).GetByTitleUrl(categoryId, titleUrl);
+            if (viewModel == null || viewModel.Aphorism == null)
+                return new HttpStatusCodeResult(404);
+
+            //update views count
+            if (!Request.IsLocal)
+            {
+                Task.Run(() =>
+                {
+                    (_repo as RepoAphorism).AddUserView(viewModel.Aphorism.Id, Enums.ModelCoreType.Aphorism);
+                });
+            }
+            return View(viewModel);
         }
 
         //[OutputCache(Duration = 900, VaryByParam = "curCat;onlyNotCurrent")]

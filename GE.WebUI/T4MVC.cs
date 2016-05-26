@@ -32,6 +32,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.AphorismsController Aphorisms = new GE.WebUI.Controllers.T4MVC_AphorismsController();
     public static GE.WebUI.Controllers.ArticlesController Articles = new GE.WebUI.Controllers.T4MVC_ArticlesController();
     public static GE.WebUI.Controllers.CommentsController Comments = new GE.WebUI.Controllers.T4MVC_CommentsController();
+    public static GE.WebUI.Controllers.EmployeesController Employees = new GE.WebUI.Controllers.T4MVC_EmployeesController();
     public static GE.WebUI.Controllers.ErrorController Error = new GE.WebUI.Controllers.T4MVC_ErrorController();
     public static GE.WebUI.Controllers.ForumController Forum = new GE.WebUI.Controllers.T4MVC_ForumController();
     public static GE.WebUI.Controllers.GamesController Games = new GE.WebUI.Controllers.T4MVC_GamesController();

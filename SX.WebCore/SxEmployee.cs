@@ -15,5 +15,7 @@ namespace SX.WebCore
 
         [MaxLength(50)]
         public string Patronymic { get; set; }
+
+        public string Description { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using SX.WebCore.Abstract;
 using SX.WebCore.Providers;
 using System.Data.SqlClient;
 using System.Linq;
+using static SX.WebCore.Enums;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebCoreExtantions.Repositories
@@ -14,7 +15,7 @@ namespace GE.WebCoreExtantions.Repositories
         public override IQueryable<Aphorism> Query(SxFilter filter)
         {
             var f = (Filter)filter;
-            var query = QueryProvider.GetSelectString(new string[] { "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount","dm.*", "dmc.Id", "dmc.Title", "da.AuthorId", "daa.Id", "daa.Name" });
+            var query = QueryProvider.GetSelectString(new string[] { "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount", "dm.*", "dmc.Id", "dmc.Title", "da.AuthorId", "daa.Id", "daa.Name" });
             query += @" FROM D_APHORISM AS da
 JOIN DV_MATERIAL AS dm ON dm.Id = da.Id AND dm.ModelCoreType = da.ModelCoreType
 JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId
@@ -68,7 +69,7 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
             query += " AND (dm.Title LIKE '%'+@title+'%' OR @title IS NULL) ";
             query += " AND ((@author IS NOT NULL AND @author NOT IN('no') AND daa.Name LIKE '%'+@author+'%') OR (@author IS NOT NULL AND @author IN('no') AND daa.Name IS NULL) OR (@author IS NULL)) ";
             query += " AND (dm.Html LIKE '%'+@html+'%' OR @html IS NULL) ";
-            if(filter.OnlyShow)
+            if (filter.OnlyShow)
                 query += " AND (dm.Show=1) ";
 
             var cid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.CategoryId != null ? (string)filter.WhereExpressionObject.CategoryId : null;
@@ -87,16 +88,25 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
             return query;
         }
 
-        public Aphorism GetRandom(int? id=null)
+        public Aphorism GetRandom(int? id = null)
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>("get_random_aphorism @mid", (a, c, aa)=> {
+                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>("get_random_aphorism @mid", (a, c, aa) =>
+                {
                     a.Author = aa;
                     a.Category = c;
                     return a;
-                }, new { mid=id}).SingleOrDefault();
+                }, new { mid = id }).SingleOrDefault();
                 return data;
+            }
+        }
+
+        public void AddUserView(int mid, ModelCoreType mct)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Execute("add_material_view @mid, @mct", new { mid = mid, mct = mct });
             }
         }
     }

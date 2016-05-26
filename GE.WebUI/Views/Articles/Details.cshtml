@@ -38,6 +38,9 @@
         @Html.Action(MVC.Articles.ByDateMaterial(mid: Model.Id, mct: Model.ModelCoreType))
     </div>
 
+    <br />
+    @Html.Action(MVC.Comments.Edit(mid: Model.Id, mct: Model.ModelCoreType))
+
 </div>
 
 @section scripts{
@@ -50,6 +53,7 @@
         loadScriptOnce('https://www.youtube.com/iframe_api');
         $(function () {
             $('#aphorisms').geAphorisms();
+            $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Id +'&mct=' + '@Model.ModelCoreType');
         });
     </script>
 }

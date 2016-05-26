@@ -9,7 +9,7 @@
     };
 
     var url = Url.Action(MVC.News.Details(Model.DateCreate.Year, Model.DateCreate.Month.ToString("00"), Model.DateCreate.Day.ToString("00"), Model.TitleUrl));
-    var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null && Model.Game.GoodPictureId.HasValue) ? Model.Game.GoodPictureId : null;
+    var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.GoodPictureId : Guid.Empty);
 }
 
 <div class="row">

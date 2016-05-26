@@ -27,14 +27,22 @@
 
     @Html.Partial(MVC.Shared.Views._MaterialInfo, Model)
 
+    @*aphorisms*@
+    <div id="aphorisms">
+        @{Html.RenderAction("random", new { controller = "aphorism" }); }
+    </div>
+
     @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
-    
+
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
-    
+
     <div id="by-date-mat">
         @Html.Action(MVC.News.ByDateMaterial(mid: Model.Id, mct: Model.ModelCoreType))
     </div>
-    
+
+    <br />
+    @Html.Action(MVC.Comments.Edit(mid: Model.Id, mct: Model.ModelCoreType))
+
 </div>
 
 
@@ -42,8 +50,13 @@
     <script type="text/javascript" src="~/share42/share42.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/ge-aphorisms.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/currency-provider.min.js"></script>
     <script type="text/javascript">
         loadScriptOnce('https://www.youtube.com/iframe_api');
+        $(function () {
+            $('#aphorisms').geAphorisms();
+            $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Id +'&mct=' + '@Model.ModelCoreType');
+        });
     </script>
 }

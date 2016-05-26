@@ -419,6 +419,7 @@
     <Content Include="Views\Games\_DetailGameMaterials.cshtml" />
     <Content Include="Views\Games\DisplayTemplates\VMDetailGameMaterial.cshtml" />
     <Content Include="Views\Contacts\List.cshtml" />
+    <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

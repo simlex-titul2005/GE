@@ -30,6 +30,7 @@ ORDER BY dm.DateCreate DESC";
             var f = (Filter)filter;
             var query = QueryProvider.GetSelectString(new string[] {
                 "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title",
+                "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount",
                 @"(SELECT
        SUBSTRING(
            CASE 
@@ -39,7 +40,7 @@ ORDER BY dm.DateCreate DESC";
            0,
            200
        ))                 AS Foreword",
-                "dm.DateCreate", "dm.DateOfPublication", "dm.ViewsCount", "dm.CommentsCount", "dm.UserId", "anu.NikName", "da.GameId", "dg.Title", "dg.TitleUrl", "dg.BadPictureId"
+                "dm.DateCreate", "dm.DateOfPublication", "dm.ViewsCount", "dm.UserId", "anu.NikName", "da.GameId", "dg.Title", "dg.TitleUrl", "dg.BadPictureId"
             });
             query += @" FROM D_NEWS AS da
        JOIN DV_MATERIAL  AS dm

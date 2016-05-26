@@ -8,5 +8,8 @@ namespace GE.WebCoreExtantions
     {
         public virtual Game Game { get; set; }
         public int? GameId { get; set; }
+
+        [NotMapped]
+        public int CommentsCount { get; set; }
     }
 }

@@ -10,43 +10,7 @@ namespace GE.WebUI.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        private static readonly string _queryPreviewMaterials = @"SELECT TOP(8) da.Id,
-       dm.Title,
-       dm.TitleUrl,
-       dm.DateCreate,
-       dm.DateOfPublication,
-       dm.ViewsCount,
-       dm.CommentsCount,
-       CASE 
-            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
-            ELSE SUBSTRING(dbo.func_strip_html(dm.Html), 0, @lettersCount) +
-                 '...'
-       END                    AS Foreword,
-       anu.NikName            AS UserName,
-       dg.Title               AS GameTitle
-FROM   D_ARTICLE              AS da
-       JOIN DV_MATERIAL       AS dm
-            ON  dm.Id = da.Id
-            AND dm.ModelCoreType = da.ModelCoreType
-            AND (dm.Show = 1 AND dm.DateOfPublication <= GETDATE())
-       LEFT JOIN AspNetUsers  AS anu
-            ON  anu.Id = dm.UserId
-       LEFT JOIN D_GAME       AS dg
-            ON  dg.Id = da.GameId
-WHERE  (@gameTitle IS NULL)
-       OR  (
-               @gameTitle IS NOT NULL
-               AND @categoryId IS NULL
-               AND dg.TitleUrl = @gameTitle
-           )
-       OR  (
-               @gameTitle IS NOT NULL
-               AND @categoryId IS NOT NULL
-               AND dg.TitleUrl = @gameTitle
-               AND dm.CategoryId = @categoryId
-           )
-ORDER BY
-       dm.DateCreate DESC";
+        private static readonly string _queryPreviewMaterials = @"get_preview_materials @lettersCount, @gameTitle, @categoryId";
 
         public static VMFGBlock ForGamersBlock(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle=null)
         {
@@ -58,7 +22,8 @@ ORDER BY
        dg.TitleUrl,
        dg.[Description],
        dm.CategoryId,
-       dmc.Title                 AS CategoryTitle
+       dmc.Title                 AS CategoryTitle,
+       dbo.get_comments_count(dm.Id, dm.ModelCoreType) as CommentsCount
 FROM   DV_MATERIAL               AS dm
        JOIN D_ARTICLE            AS da
             ON  da.Id = dm.Id
@@ -72,6 +37,8 @@ FROM   DV_MATERIAL               AS dm
 WHERE  dm.Show = 1
        AND dm.DateOfPublication <= GETDATE()
 GROUP BY
+       dm.Id,
+       dm.ModelCoreType,
        da.GameId,
        dg.FrontPictureId,
        dg.Title,
@@ -98,6 +65,7 @@ GROUP BY
             for (int i = 0; i < games.Length; i++)
             {
                 var game = games[i];
+                var categories = result.Where(x => x.GameId == game.Id).Select(x => new { Id = x.CategoryId, Title = x.CategoryTitle }).Distinct().OrderBy(x=>x.Title);
                 viewModel.Games[i] = new VMFGBGame
                 {
                     Id = game.Id,
@@ -105,8 +73,7 @@ GROUP BY
                     FrontPictureId = game.FrontPictureId,
                     Title = game.Title,
                     TitleUrl=game.TitleUrl,
-                    MaterialCategories=result.Where(t=>t.GameId == game.Id)
-                    .Select(t=>new VMMaterialCategory { Id=t.CategoryId, Title=t.CategoryTitle }).ToArray()
+                    MaterialCategories= categories.Select(x=>new VMMaterialCategory { Id=x.Id, Title=x.Title}).ToArray()
                 };
             }
 

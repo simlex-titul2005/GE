@@ -33,8 +33,6 @@ namespace SX.WebCore.Abstract
 
         public int ViewsCount { get; set; }
 
-        public int CommentsCount { get; set; }
-
         public virtual SxAppUser User { get; set; }
         [MaxLength(128)]
         public string UserId { get; set; }

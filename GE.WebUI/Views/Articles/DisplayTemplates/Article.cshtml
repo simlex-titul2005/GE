@@ -12,7 +12,7 @@
     var month = Model.DateCreate.Month.ToString("00");
     var day = Model.DateCreate.Day.ToString("00");
     var titleUrl = Model.TitleUrl;
-    var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null && Model.Game.BadPictureId.HasValue) ? Model.Game.BadPictureId : null;
+    var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.BadPictureId : Guid.Empty);
 }
 
 <figure class="mat-f-p">

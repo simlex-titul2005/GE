@@ -14,7 +14,7 @@ namespace GE.WebCoreExtantions.Repositories
         public override IQueryable<Aphorism> Query(SxFilter filter)
         {
             var f = (Filter)filter;
-            var query = QueryProvider.GetSelectString(new string[] { "dm.*", "dmc.Id", "dmc.Title", "da.AuthorId", "daa.Id", "daa.Name" });
+            var query = QueryProvider.GetSelectString(new string[] { "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount","dm.*", "dmc.Id", "dmc.Title", "da.AuthorId", "daa.Id", "daa.Name" });
             query += @" FROM D_APHORISM AS da
 JOIN DV_MATERIAL AS dm ON dm.Id = da.Id AND dm.ModelCoreType = da.ModelCoreType
 JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId

@@ -8,5 +8,8 @@ namespace GE.WebCoreExtantions
     {
         public virtual AuthorAphorism Author { get; set; }
         public int? AuthorId { get; set; }
+
+        [NotMapped]
+        public int CommentsCount { get; set; }
     }
 }

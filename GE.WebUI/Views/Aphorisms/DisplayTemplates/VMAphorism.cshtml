@@ -1,0 +1,24 @@
+﻿@model VMAphorism
+@{
+    Layout = null;
+}
+
+<div class="content">
+    <div class="info">
+        @Html.DisplayFor(x => Model.Info)
+    </div>
+    @if (!string.IsNullOrEmpty(Model.SourceUrl))
+    {
+        <div class="source">
+            <a href="@Model.SourceUrl">Источник: @Model.SourceUrl</a>
+        </div>
+    }
+    <div>
+        @Html.Raw(Model.Html)
+    </div>
+    <div class="author">@(Model.Author != null && Model.Author.Name != null ? Model.Author.Name : "Аноним")@(Model.Category != null ? ". " + Model.Category.Title : null)</div>
+    <div>
+        <a href="@Url.Action(MVC.Aphorisms.Details(categoryId: Model.CategoryId, titleUrl: Model.TitleUrl))"><i>Комментировать</i></a>
+    </div>
+
+</div>

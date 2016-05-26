@@ -197,10 +197,58 @@ BEGIN
 END
 GO
 
-
-
-
-
+/*******************************************
+ * Превью материалов
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_preview_materials', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_preview_materials;
+GO
+CREATE PROCEDURE dbo.get_preview_materials(
+    @lettersCount     INT,
+    @gameTitle        VARCHAR(100),
+    @categoryId       VARCHAR(100)
+)
+AS
+BEGIN
+	SELECT TOP(8) da.Id,
+	       dm.Title,
+	       dm.TitleUrl,
+	       dm.DateCreate,
+	       dm.DateOfPublication,
+	       dm.ViewsCount,
+	       dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount,
+	       CASE 
+	            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
+	            ELSE SUBSTRING(dbo.func_strip_html(dm.Html), 0, @lettersCount) +
+	                 '...'
+	       END                    AS Foreword,
+	       anu.NikName            AS UserName,
+	       dg.Title               AS GameTitle
+	FROM   D_ARTICLE              AS da
+	       JOIN DV_MATERIAL       AS dm
+	            ON  dm.Id = da.Id
+	            AND dm.ModelCoreType = da.ModelCoreType
+	            AND (dm.Show = 1 AND dm.DateOfPublication <= GETDATE())
+	       LEFT JOIN AspNetUsers  AS anu
+	            ON  anu.Id = dm.UserId
+	       LEFT JOIN D_GAME       AS dg
+	            ON  dg.Id = da.GameId
+	WHERE  (@gameTitle IS NULL)
+	       OR  (
+	               @gameTitle IS NOT NULL
+	               AND @categoryId IS NULL
+	               AND dg.TitleUrl = @gameTitle
+	           )
+	       OR  (
+	               @gameTitle IS NOT NULL
+	               AND @categoryId IS NOT NULL
+	               AND dg.TitleUrl = @gameTitle
+	               AND dm.CategoryId = @categoryId
+	           )
+	ORDER BY
+	       dm.DateCreate DESC
+END
+GO
 
 /*******************************************
  * получить материал
@@ -322,6 +370,30 @@ BEGIN
 	       AND dc.ModelCoreType = @mct
 	ORDER BY
 	       dc.DateCreate DESC
+END
+GO
+
+/*******************************************
+ * Функция получения кол-ва комментариев материала
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_comments_count', N'FN') IS NOT NULL
+    DROP FUNCTION dbo.get_comments_count;
+GO
+CREATE FUNCTION dbo.get_comments_count
+(
+	@mid     INT,
+	@mct     INT
+)
+RETURNS INT
+AS
+BEGIN
+	DECLARE @res INT
+	SELECT @res = COUNT(1)
+	FROM   D_COMMENT AS dc
+	WHERE  dc.MaterialId = @mid
+	       AND dc.ModelCoreType = @mct
+	
+	RETURN @res
 END
 GO
 
@@ -636,28 +708,16 @@ GO
 /*******************************************
 * другие материалы
 *******************************************/
-IF OBJECT_ID(N'dbo.get_other_materials', N'TF') IS NOT NULL
-    DROP FUNCTION dbo.get_other_materials;
+IF OBJECT_ID(N'dbo.get_other_materials', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_other_materials;
 GO
-CREATE FUNCTION dbo.get_other_materials
+CREATE PROCEDURE dbo.get_other_materials
 (
 	@mid        INT,
 	@mct        INT,
 	@dir        BIT,
 	@amount     INT = 3
 )
-RETURNS @result TABLE(
-            Id INT,
-            DateCreate DATETIME,
-            DateOfPublication DATETIME,
-            Title NVARCHAR(255),
-            TitleUrl NVARCHAR(255),
-            Foreword NVARCHAR(400),
-            ModelCoreType INT,
-            UserId NVARCHAR(128),
-            AvatarId UNIQUEIDENTIFIER,
-            NikName NVARCHAR(100)
-        )
 AS
 BEGIN
 	DECLARE @date DATETIME
@@ -667,7 +727,6 @@ BEGIN
 	       AND dm.ModelCoreType = @mct
 	
 	IF (@dir = 1)
-	    INSERT INTO @result
 	    SELECT TOP(@amount) dm.Id,
 	           dm.DateCreate,
 	           dm.DateOfPublication,
@@ -690,7 +749,6 @@ BEGIN
 	           dm.DateOfPublication DESC
 	ELSE 
 	IF (@dir = 0)
-	    INSERT INTO @result
 	    SELECT TOP(@amount) dm.Id,
 	           dm.DateCreate,
 	           dm.DateOfPublication,
@@ -775,7 +833,8 @@ BEGIN
 	           FROM   D_VIDEO_LINK AS dvl
 	           WHERE  dvl.MaterialId = x.Id
 	                  AND dvl.ModelCoreType = x.ModelCoreType
-	       )    AS TopVideoId
+	       )    AS TopVideoId,
+	       dbo.get_comments_count(x.Id, x.ModelCoreType) AS CommentsCount
 	FROM   (
 	           SELECT TOP(@amount) dm.*,
 	                  NULL              AS PictureId,

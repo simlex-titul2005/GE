@@ -8,7 +8,7 @@
 @if (Model.Any())
 {
     <div class="like-mats">
-        <h3 class="header">Похожие материалы</h3>
+        <h3 class="header">@ViewBag.LikeMatTitle</h3>
         <br />
         @for (int r = 0; r < rowsCount; r++)
                 {
@@ -16,7 +16,7 @@
             <div class="row">
                 @for (int c = 0; c < colCount; c++)
                 {
-                    if (c< items.Length)
+                    if (c < items.Length)
                     {
                         var item = items[c];
                         var date = (DateTime)item.DateCreate;
@@ -33,7 +33,7 @@
                                 break;
                         }
                         <div class="col-md-4">
-                            <div class="like-mat" onclick="changeLocation(this)" title="@item.Title" >
+                            <div class="like-mat" onclick="changeLocation(this)" title="@item.Title">
                                 <div><time>@item.DateCreate</time></div>
                                 <div><a href="@url">@item.Title</a></div>
                                 <p>@item.Foreword</p>

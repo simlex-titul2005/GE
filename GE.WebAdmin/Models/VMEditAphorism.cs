@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace GE.WebAdmin.Models
 {
@@ -12,7 +13,7 @@ namespace GE.WebAdmin.Models
         [Display(Name = "Показывать на сайте"), Required]
         public bool Show { get; set; }
 
-        [Display(Name = "Содержание"), Required, DataType(DataType.MultilineText)]
+        [Display(Name = "Содержание"), Required, DataType(DataType.MultilineText), AllowHtml]
         public string Html { get; set; }
 
         public VMMaterialCategory Category { get; set; }
@@ -26,5 +27,8 @@ namespace GE.WebAdmin.Models
         public VMAuthorAphorism Author { get; set; }
         [Display(Name = "Автор"), UIHint("EditAuthorAphorism")]
         public int? AuthorId { get; set; }
+
+        [Display(Name ="Источник"), MaxLength(255), DataType(DataType.Url)]
+        public string SourceUrl { get; set; }
     }
 }

@@ -24,8 +24,15 @@
             {
                 var a = Model[i];
             <li>
-                <h3><a href="@Url.Action(MVC.Aphorisms.Details(categoryId: a.CategoryId, titleUrl: a.TitleUrl))">@a.Html</a></h3>
-                <div class="author">@(a.Author!=null && a.Author.Name!=null?a.Author.Name:"Аноним")</div>
+                <div class="content">
+                    <div>
+                        @Html.Raw(a.Html)
+                    </div>
+                    <div class="author">@(a.Author != null && a.Author.Name != null ? a.Author.Name : "Аноним")</div>
+                    <div>
+                        <a href="@Url.Action(MVC.Aphorisms.Details(categoryId: a.CategoryId, titleUrl: a.TitleUrl))"><i>Комментировать</i></a>
+                    </div>
+                </div>
             </li>
         }
     </ul>

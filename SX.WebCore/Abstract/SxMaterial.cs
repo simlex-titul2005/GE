@@ -48,5 +48,8 @@ namespace SX.WebCore.Abstract
         public ICollection<SxVideoLink> VideoLinks { get; set; }
 
         public bool IsTop { get; set; }
+
+        [MaxLength(255)]
+        public string SourceUrl { get; set; }
     }
 }

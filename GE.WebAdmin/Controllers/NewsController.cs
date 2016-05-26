@@ -55,6 +55,8 @@ namespace GE.WebAdmin.Controllers
             var model = id.HasValue ? _repo.GetByKey(id, Enums.ModelCoreType.News) : new News { ModelCoreType = Enums.ModelCoreType.News };
             var viewModel = Mapper.Map<News, VMEditNews>(model);
             viewModel.OldTitleUrl = viewModel.TitleUrl;
+            if (model.FrontPictureId.HasValue)
+                ViewBag.PictureCaption = model.FrontPicture.Caption;
             return View(viewModel);
         }
 

@@ -113,8 +113,22 @@ namespace GE.WebUI.Controllers
                     viewModel = (_repo as RepoNews).GetLikeMaterial(filter, amount);
                     break;
             }
+            ViewBag.LikeMatTitle = getLikeMatTitle(filter.ModelCoreType);
 
             return PartialView(MVC.Shared.Views._LikeMaterial, viewModel);
+        }
+
+        private static string getLikeMatTitle(SX.WebCore.Enums.ModelCoreType mct)
+        {
+            switch (mct)
+            {
+                case ModelCoreType.News:
+                    return "Эту новость хорошо дополняют";
+                case ModelCoreType.Article:
+                    return "Эту статью хорошо дополняют";
+                default:
+                    return "Похожие материалы";
+            }
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
@@ -215,6 +229,7 @@ namespace GE.WebUI.Controllers
 
             return PartialView(MVC.Shared.Views._ByDateMaterial, data);
         }
+
 
 #if !DEBUG
         [OutputCache(Duration =900, VaryByParam ="mct;mid;amount")]

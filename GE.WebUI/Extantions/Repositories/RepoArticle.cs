@@ -183,7 +183,7 @@ ORDER BY
         {
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                var data = connection.Query<VMLastNews, VMUser, VMLastNews>("select* from get_other_materials(@mid, @mct, @dir, @amount) ORDER BY DateCreate", (m, u) => {
+                var data = connection.Query<VMLastNews, VMUser, VMLastNews>("get_other_materials @mid, @mct, @dir, @amount", (m, u) => {
                     m.Author = u;
                     return m;
                 }, new { mid = mid, mct = mct, dir= dir, amount= amount }, splitOn: "UserId").ToArray();

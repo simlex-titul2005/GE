@@ -27,12 +27,14 @@
 
     @Html.Partial(MVC.Shared.Views._MaterialInfo, Model)
 
+    @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
+    
+    @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
+    
     <div id="by-date-mat">
         @Html.Action(MVC.News.ByDateMaterial(mid: Model.Id, mct: Model.ModelCoreType))
     </div>
-
-    @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
-    @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
+    
 </div>
 
 

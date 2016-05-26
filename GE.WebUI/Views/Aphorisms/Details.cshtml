@@ -14,7 +14,10 @@
             <blockquote style="color:white;">
                 @if (Model.Aphorism.Author != null && Model.Aphorism.Author.PictureId.HasValue)
                 {
-                    <img class="author-img img-circle" alt="@Model.Aphorism.Author.Name" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Aphorism.Author.PictureId))" />
+                    <figure class="author-img img-circle" style="background-image:url(@Url.Action(MVC.Pictures.Picture((Guid)Model.Aphorism.Author.PictureId)));">
+
+                    </figure>
+                    @*<img class="author-img img-circle" alt="@Model.Aphorism.Author.Name" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Aphorism.Author.PictureId))" />*@
                 }
                 @Model.Aphorism.Html
                 <h4 class="small">@(author)</h4>

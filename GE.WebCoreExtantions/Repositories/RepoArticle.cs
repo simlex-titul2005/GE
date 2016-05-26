@@ -5,6 +5,8 @@ using SX.WebCore.Abstract;
 using SX.WebCore;
 using SX.WebCore.Providers;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
+using System.Data.Entity;
+using static SX.WebCore.Enums;
 
 namespace GE.WebCoreExtantions.Repositories
 {

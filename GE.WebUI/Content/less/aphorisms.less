@@ -35,19 +35,34 @@
 }
 
 .ap-page blockquote {
-    min-height: 100px;
+    min-height: 90px;
+    display: inline-block;
+    width: 100%;
 }
 
+@aut_img-size:90px;
 .ap-page .author-img {
-    max-height: 70px;
+    height: 90px;
+    width:90px;
     border: 3px solid @color-muted-blue;
     margin-right: @def-pad*2;
     margin-bottom: @def-pad*2;
     float: left;
+    background-size:cover;
+    background-position:center center;
 }
 
 .ap-list {
     margin-top: @def-pad*4;
+}
+
+.ap-list .content {
+    padding:@def-pad;
+    border-radius:3px;
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
+    font-size: 16px;
+    line-height:1.2;
 }
 
 .ap-list-page .ap-list {
@@ -66,16 +81,15 @@
     margin-bottom: @def-pad*2;
 }
 
-.ap-list h3 {
-    font-size: 16px;
-}
-
-.ap-list ul > li a {
-    color: @color-white;
-}
-
 .ap-list ul > li .author {
     color: @color-muted-blue;
+    margin-top:@def-pad;
+    font-size:14px;
+}
+
+.ap-list ul > li a{
+    font-size:12px;
+    color:inherit;
 }
 
 .ap-cat {

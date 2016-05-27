@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 25.05.2016 10:49:24
+ * Time: 27.05.2016 14:04:15
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,8 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
 
 /*******************************************
  * Превью материалов
@@ -397,6 +399,8 @@ BEGIN
 END
 GO
 
+
+
 /*******************************************
  * добавить комментарии материала
  *******************************************/
@@ -535,7 +539,8 @@ BEGIN
 	WHERE  dm.TitleUrl = @title_url
 	
 	SELECT x.Id,
-		   x.ViewsCount,
+	       x.DateOfPublication,
+	       x.ViewsCount,
 	       x.Flag,
 	       x.Title,
 	       x.TitleUrl,
@@ -592,6 +597,7 @@ BEGIN
 	            ON  daa.Id = x.AuthorId
 	GROUP BY
 	       x.Id,
+	       x.DateOfPublication,
 	       x.ViewsCount,
 	       x.Title,
 	       x.TitleUrl,
@@ -714,12 +720,7 @@ IF OBJECT_ID(N'dbo.get_other_materials', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_other_materials;
 GO
 CREATE PROCEDURE dbo.get_other_materials
-(
-	@mid        INT,
-	@mct        INT,
-	@dir        BIT,
-	@amount     INT = 3
-)
+(@mid INT, @mct INT, @dir BIT, @amount INT = 3)
 AS
 BEGIN
 	DECLARE @date DATETIME
@@ -816,7 +817,7 @@ CREATE PROCEDURE dbo.get_game_materials(@titleUrl VARCHAR(50), @amount INT)
 AS
 BEGIN
 	SELECT x.Id,
-		   x.ModelCoreType,
+	       x.ModelCoreType,
 	       x.Title,
 	       x.TitleUrl,
 	       x.DateCreate,
@@ -994,5 +995,54 @@ BEGIN
 	SET    ViewsCount            = @oldCount + 1
 	WHERE  Id                    = @mid
 	       AND ModelCoreType     = @mct
+END
+GO
+
+/*******************************************
+ * Баннеры
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_banners', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_banners;
+GO
+CREATE PROCEDURE dbo.get_banners(@id UNIQUEIDENTIFIER, @place INT)
+AS
+BEGIN
+	SELECT db.*,
+	       dp.Id,
+	       dp.Caption
+	FROM   D_BANNER             AS db
+	       LEFT JOIN D_PICTURE  AS dp
+	            ON  dp.Id = db.PictureId
+	WHERE  (@id IS NULL OR db.Id = @id)
+	       AND (@place IS NULL OR db.Place = @place)
+END
+GO
+
+/*******************************************
+ * Обновить баннер
+ *******************************************/
+IF OBJECT_ID(N'dbo.update_banner', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.update_banner;
+GO
+CREATE PROCEDURE dbo.update_banner(
+    @id             UNIQUEIDENTIFIER,
+    @url            VARCHAR(255),
+    @pid            UNIQUEIDENTIFIER,
+    @title          NVARCHAR(100),
+    @place          INT,
+    @controller     NVARCHAR(50),
+    @action         NVARCHAR(50)
+)
+AS
+BEGIN
+	UPDATE D_BANNER
+	SET    Title              = @title,
+	       PictureId          = @pid,
+	       [Url]              = @url,
+	       DateUpdate         = GETDATE(),
+	       ControllerName     = @controller,
+	       ActionName         = @action,
+	       Place              = @place
+	WHERE  Id                 = @id
 END
 GO

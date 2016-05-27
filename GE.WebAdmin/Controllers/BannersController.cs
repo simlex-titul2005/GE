@@ -7,8 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
-using GE.WebCoreExtantions.Repositories;
-using static SX.WebCore.Enums;
+using SX.WebCore.Repositories;
 using System.Linq;
 
 namespace GE.WebAdmin.Controllers
@@ -19,18 +18,18 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<Guid, SxBanner, DbContext> _repo;
         public BannersController()
         {
-            _repo = new RepoBanner();
+            _repo = new RepoBanner<DbContext>();
         }
 
         [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (_repo as RepoBanner).FilterCount(filter);
+            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoBanner).QueryForAdmin(filter);
+            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter);
             return View(viewModel);
         }
 
@@ -41,11 +40,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoBanner).FilterCount(filter);
+            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoBanner).QueryForAdmin(filter);
+            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter);
 
             return PartialView("_GridView", viewModel);
         }
@@ -55,8 +54,12 @@ namespace GE.WebAdmin.Controllers
         {
             var model = id.HasValue ? _repo.GetByKey((Guid)id) : new SxBanner();
             var viewModel = Mapper.Map<SxBanner, VMEditBanner>(model);
+            viewModel.Place = viewModel.Place == SxBanner.BannerPlace.Unknown ? null : viewModel.Place;
             if (!id.HasValue)
                 viewModel.PictureId = null;
+            else
+                ViewBag.PictureCaption = model.Picture.Caption;
+
             return View(viewModel);
         }
 
@@ -65,6 +68,7 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult Edit(VMEditBanner model)
         {
             var redactModel = Mapper.Map<VMEditBanner, SxBanner>(model);
+            checkError(model, ModelState);
 
             if (ModelState.IsValid)
             {
@@ -72,13 +76,44 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == Guid.Empty)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, true, "Title", "PictureId", "Url");
+                    newModel = _repo.Update(redactModel, true, "Title", "PictureId", "Url", "Place", "ControllerName", "ActionName");
 
                 return RedirectToAction(MVC.Banners.Index());
             }
             else
             {
                 return View(model);
+            }
+        }
+
+        private void checkError(VMEditBanner banner, ModelStateDictionary modelState)
+        {
+            if (banner.ControllerName == null && banner.ActionName == null)
+            {
+                var exist = _repo.All.FirstOrDefault(x => x.Place == banner.Place && x.Id!=banner.Id);
+                if (exist != null)
+                {
+                    modelState.AddModelError("Place", "Баннер для данного места уже задан");
+                }
+            }
+            else if (banner.ControllerName != null && banner.ActionName == null)
+            {
+                var exist = _repo.All.FirstOrDefault(x => x.Place == banner.Place && x.ControllerName == banner.ControllerName && x.Id != banner.Id);
+                if (exist != null)
+                {
+                    modelState.AddModelError("Place", "Баннер для данного места уже задан");
+                    modelState.AddModelError("ControllerName", "Баннер для данного места уже задан");
+                }
+            }
+            else if (banner.ControllerName != null && banner.ActionName != null)
+            {
+                var exist = _repo.All.FirstOrDefault(x => x.Place == banner.Place && x.ControllerName == banner.ControllerName && banner.ActionName == banner.ActionName && x.Id != banner.Id);
+                if (exist != null)
+                {
+                    modelState.AddModelError("Place", "Баннер для данного места уже задан");
+                    modelState.AddModelError("ControllerName", "Баннер для данного места уже задан");
+                    modelState.AddModelError("ActionName", "Баннер для данного места уже задан");
+                }
             }
         }
 
@@ -96,12 +131,12 @@ namespace GE.WebAdmin.Controllers
             filterModel.BannerGroupId = bgid;
             ViewBag.Filter = filterModel;
             var filter = new WebCoreExtantions.Filter(page, pageSize) { WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoBanner).FilterCount(filter, false);
+            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter, false);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
             ViewBag.BannerGroupId = bgid;
 
-            var viewModel = (_repo as RepoBanner).QueryForAdmin(filter, false);
+            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter, false);
 
             return PartialView(MVC.Banners.Views._FindGridView, viewModel);
         }
@@ -110,12 +145,12 @@ namespace GE.WebAdmin.Controllers
         public virtual PartialViewResult GroupBanners(Guid bgid, int page = 1, int pageSize = 10)
         {
             var filter = new WebCoreExtantions.Filter(page, pageSize) { WhereExpressionObject = new VMBanner { BannerGroupId = bgid } };
-            var totalItems = (_repo as RepoBanner).FilterCount(filter, true);
+            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter, true);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
             ViewBag.BannerGroupId = bgid;
 
-            var viewModel = (_repo as RepoBanner).QueryForAdmin(filter, true);
+            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter, true);
             return PartialView(MVC.Banners.Views._GroupBanners, viewModel);
         }
 
@@ -127,12 +162,12 @@ namespace GE.WebAdmin.Controllers
 
             filterModel.BannerGroupId = bgid;
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoBanner).FilterCount(filter, true);
+            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter, true);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
             ViewBag.BannerGroupId = bgid;
 
-            var viewModel = (_repo as RepoBanner).QueryForAdmin(filter, true);
+            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter, true);
 
             return PartialView(MVC.Banners.Views._GroupBanners, viewModel);
         }

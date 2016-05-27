@@ -1,8 +1,8 @@
 ﻿using Dapper;
 using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
 using SX.WebCore.Providers;
+using SX.WebCore.Repositories;
 using System;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMBanner[] QueryForAdmin(this RepoBanner repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
+        public static VMBanner[] QueryForAdmin(this RepoBanner<DbContext> repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
         {
             var query = QueryProvider.GetSelectString();
             query += " FROM D_BANNER AS db ";
@@ -31,7 +31,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        public static int FilterCount(this RepoBanner repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
+        public static int FilterCount(this RepoBanner<DbContext> repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
         {
             var query = @"SELECT COUNT(1) FROM D_BANNER AS db ";
 

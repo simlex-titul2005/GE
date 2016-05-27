@@ -106,7 +106,7 @@ namespace GE.WebAdmin.Controllers
         {
             (_repo as RepoBannerGroup<DbContext>).DeleteBanner(bgid, bid);
 
-            var repoBanner = new RepoBanner();
+            var repoBanner = new RepoBanner<DbContext>();
             var filter = new WebCoreExtantions.Filter(1, 20) { WhereExpressionObject = new VMBanner { BannerGroupId = bgid } };
             var totalItems = repoBanner.FilterCount(filter, true);
             filter.PagerInfo.TotalItems = totalItems;

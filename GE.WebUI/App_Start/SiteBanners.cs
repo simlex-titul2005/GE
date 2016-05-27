@@ -1,5 +1,7 @@
-﻿using GE.WebCoreExtantions.Repositories;
+﻿using GE.WebCoreExtantions;
+using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
+using SX.WebCore.Repositories;
 using System;
 using System.Linq;
 using System.Runtime.Caching;
@@ -35,7 +37,7 @@ namespace GE.WebUI
                 if (cacheBanners == null)
                 {
                     var collection = new SxBannerCollection();
-                    collection.Banners = new RepoBanner().All.ToArray();
+                    collection.Banners = new RepoBanner<DbContext>().All.ToArray();
 
                     collection.BannerGroups = new RepoBannerGroup().All.ToArray();
 

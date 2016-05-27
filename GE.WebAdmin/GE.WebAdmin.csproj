@@ -161,6 +161,7 @@
     <Content Include="Content\dist\js\moment-with-locales.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
     <Content Include="Content\i\background.jpg" />
+    <Content Include="Content\i\bannerPlaces.jpg" />
     <Content Include="Content\sx\js\sx-find-gv.js" />
     <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="faveicon.png" />

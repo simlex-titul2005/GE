@@ -10,14 +10,16 @@
     </div>
     <div><strong>@(Model.Author != null ? Model.Author.Name : "Аноним")</strong></div>
     <div class="aph-html">
-        @if(Model.Author!=null && Model.Author.PictureId.HasValue)
+        @if (Model.Author != null && Model.Author.PictureId.HasValue)
         {
-            <figure style="background-image:url(@Url.Action(MVC.Pictures.Picture((Guid)Model.Author.PictureId))"></figure>
+            <figure class="img-circle" style="background-image:url(@Url.Action(MVC.Pictures.Picture((Guid)Model.Author.PictureId))">
+
+            </figure>
         }
-        @Html.Raw(Model.Html)
-    </div>
-    <div class="text-left">
-        <br />
-        <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Aphorisms.Details(categoryId: Model.CategoryId, titleUrl: Model.TitleUrl))">Подробнее</a>
+        <div class="html">
+            @Html.Raw(Model.Html)
+            <br />
+            <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Aphorisms.Details(categoryId: Model.CategoryId, titleUrl: Model.TitleUrl))">Подробнее <i class="fa fa fa-angle-double-right"></i></a>
+        </div>
     </div>
 </div>

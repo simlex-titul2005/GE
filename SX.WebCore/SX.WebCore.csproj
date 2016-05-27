@@ -141,6 +141,7 @@
     <Compile Include="HtmlHelpers\SxList.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
     <Compile Include="HtmlHelpers\SxTagsCloud.cs" />
+    <Compile Include="HtmlHelpers\SxThroughBanner.cs" />
     <Compile Include="HtmlHelpers\SxTree.cs" />
     <Compile Include="HtmlHelpers\SxTreeView.cs" />
     <Compile Include="HtmlHelpers\SxVideo.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Providers\ErrorProvider.cs" />
     <Compile Include="Providers\PictureProvider.cs" />
     <Compile Include="Providers\QueryProvider.cs" />
+    <Compile Include="Providers\SxBannerProvider.cs" />
     <Compile Include="Providers\VideoProvider.cs" />
     <Compile Include="Repositories\RepoBannedUrl.cs" />
     <Compile Include="Repositories\RepoComment.cs" />

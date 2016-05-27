@@ -37,6 +37,7 @@ namespace GE.WebAdmin
 
                     //banner
                     cfg.CreateMap<SxBanner, VMBanner>();
+                    cfg.CreateMap<VMBanner, SxBanner>();
                     cfg.CreateMap<SxBanner, VMEditBanner>();
                     cfg.CreateMap<VMEditBanner, SxBanner>();
 
@@ -91,6 +92,7 @@ namespace GE.WebAdmin
 
                     //picture
                     cfg.CreateMap<SxPicture, VMPicture>();
+                    cfg.CreateMap<VMPicture, SxPicture>();
                     cfg.CreateMap<SxPicture, VMEditPicture>();
                     cfg.CreateMap<VMEditPicture, SxPicture>();
 

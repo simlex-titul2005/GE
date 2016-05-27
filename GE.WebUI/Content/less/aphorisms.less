@@ -28,6 +28,27 @@
     background-color: @color-red;
 }
 
+@aph-html-img-size:70px;
+.aphorism .aph-html{
+    min-height:@aph-html-img-size;
+    margin-top:@def-pad;
+}
+
+.aphorism .aph-html > figure{
+    width:@aph-html-img-size;
+    height:@aph-html-img-size;
+    background-size:cover;
+    background-position:center center;
+    border:3px solid @color-muted-blue;
+    display:inline-block;
+    float:left;
+    margin-right:@def-pad*3;
+}
+
+.aphorism .aph-html > .html > .btn{
+    margin-top:@def-pad;
+}
+
 //ap-author-list
 .ap-page {
     margin-top: @def-pad*2;
@@ -92,8 +113,36 @@
     margin: 0;
 }
 
-.ap-list ul > li {
+.ap-list > ul > li {
     margin-bottom: @def-pad*2;
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        cursor:pointer;
+        transition:all .2s;
+    }
+}
+
+.ap-list > ul > li:hover{
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        box-shadow:-1px 1px 4px rgba(255,255,255, 0.5);
+    }
 }
 
 .ap-list ul > li .author {

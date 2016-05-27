@@ -36,7 +36,7 @@ namespace GE.WebUI.Controllers
             return View(viewModel);
         }
 
-        //[OutputCache(Duration = 900, VaryByParam = "curCat;onlyNotCurrent")]
+        [OutputCache(Duration = 900, VaryByParam = "curCat;onlyNotCurrent")]
         [HttpGet, ChildActionOnly]
         public virtual PartialViewResult Categories(string curCat = null, bool onlyNotCurrent = true)
         {

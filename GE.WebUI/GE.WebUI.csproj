@@ -203,6 +203,7 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\BannerProvider.cs" />
     <Compile Include="MaterialTagsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

@@ -16,5 +16,46 @@ namespace SX.WebCore
 
         [Required, MaxLength(255)]
         public string Url { get; set; }
+
+        [MaxLength(50)]
+        public string ControllerName { get; set; }
+
+        [MaxLength(50)]
+        public string ActionName { get; set; }
+
+        public BannerPlace Place { get; set; }
+
+        public enum BannerPlace : byte
+        {
+            Unknown=0,
+
+            Brand = 1,
+
+            Top=2,
+
+            TopR=3,
+
+            Left=4,
+
+            LeftB=5,
+
+            TopB=6,
+
+            Right=7,
+
+            RightB=8,
+
+            BottomT=9,
+
+            Bottom=10,
+
+            T=11,
+
+            R=12,
+
+            B=13,
+
+            L=14
+        }
     }
 }

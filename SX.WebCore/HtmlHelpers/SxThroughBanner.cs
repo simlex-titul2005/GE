@@ -10,7 +10,17 @@ namespace SX.WebCore.HtmlHelpers
             if (banner == null) return null;
             var figure = new TagBuilder("figure");
             figure.AddCssClass(string.Concat("th-banner ", banner.Place.ToString().ToLower()));
-            figure.MergeAttribute("style", string.Concat("background-image:url(", FuncBannerImgUrl(banner), ")"));
+
+            var a = new TagBuilder("a");
+            a.MergeAttribute("href", banner.Url);
+            a.MergeAttribute("target", "_blank");
+
+            var img = new TagBuilder("img");
+            img.MergeAttribute("src", FuncBannerImgUrl(banner));
+            img.MergeAttribute("alt", banner.Title);
+            a.InnerHtml += img;
+
+            figure.InnerHtml += a;
 
             return MvcHtmlString.Create(figure.ToString());
         }

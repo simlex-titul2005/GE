@@ -1,0 +1,28 @@
+﻿@using GE.WebUI.Infrastructure;
+@using SX.WebCore;
+@{
+    Layout = null;
+    var values = Request.RequestContext.RouteData.Values;
+    var controllerName = (string)values["controller"];
+    var actionName = (string)values["action"];
+    var brand = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.Brand, controllerName, actionName);
+    var top = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.Top, controllerName, actionName);
+    var right = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.TopR, controllerName, actionName);
+}
+
+@if (brand != null || top != null || right != null)
+{
+    <div class="container-fluid th-top-block">
+        <div class="row">
+            <div class="col-md-2">
+                @Html.SxThroughBanner(brand, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+            </div>
+            <div class="col-md-8">
+                @Html.SxThroughBanner(top, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+            </div>
+            <div class="col-md-2">
+                @Html.SxThroughBanner(right, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+            </div>
+        </div>
+    </div>
+}

@@ -14,7 +14,7 @@ namespace GE.WebUI.Controllers
         private static MemoryCache _redirectsCache;
         static BaseController()
         {
-            if(_mapper==null)
+            if (_mapper == null)
                 _mapper = MvcApplication.MapperConfiguration.CreateMapper();
 
             if (_seoInfoCache == null)
@@ -35,7 +35,7 @@ namespace GE.WebUI.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var urlRef = Request.UrlReferrer;
-            if(urlRef!=null)
+            if (urlRef != null)
             {
                 if (this.GetBannedUrls().Contains(urlRef.ToString()))
                     filterContext.Result = new HttpStatusCodeResult(403);
@@ -48,7 +48,7 @@ namespace GE.WebUI.Controllers
             if (filterContext.IsChildAction || notLogRequest) return;
 
             var redirect = this.GetRedirectUrl(_redirectsCache);
-            if (redirect != null && redirect.NewUrl!=null)
+            if (redirect != null && redirect.NewUrl != null)
             {
                 filterContext.Result = new RedirectResult(redirect.NewUrl);
                 return;

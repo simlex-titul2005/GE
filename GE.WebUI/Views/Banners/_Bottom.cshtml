@@ -1,0 +1,15 @@
+﻿@using GE.WebUI.Infrastructure;
+@using SX.WebCore;
+@{
+    Layout = null;
+    var controllerName = (string)ViewData["controller"];
+    var actionName = (string)ViewData["action"];
+    var banner = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.Bottom, controllerName, actionName);
+}
+
+@if (banner != null)
+{
+    <div class="th-bottom-block">
+        @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+    </div>
+}

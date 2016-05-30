@@ -1,11 +1,12 @@
 ﻿@using SX.WebCore;
+@using GE.WebUI.Infrastructure;
 @{
     Layout = null;
     var bgUrl = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
     var bg = string.IsNullOrEmpty(bgUrl) ? null : string.Format("style=background:url('{0}');", bgUrl);
     var values = Request.RequestContext.RouteData.Values;
-    var controllerName = values["controller"].ToString().ToLower();
-    var actionName = values["action"].ToString().ToLower();
+    var controllerName = (string)values["controller"];
+    var actionName = (string)values["action"];
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +28,7 @@
     {
         <meta name="keywords" content="@ViewBag.Keywords" />
     }
-    @if(ViewBag.LastModified != null)
+    @if (ViewBag.LastModified != null)
     {
         <meta http-equiv="last-modified" content="@ViewBag.LastModified" />
     }
@@ -49,32 +50,37 @@
     <![endif]-->
 </head>
 <body @(bg != null ? bg : null)>
-    <div class="container-fluid th-top-block">
-        <div class="row">
-            <div class="col-md-2">
-                @Html.SxThroughBanner(GE.WebUI.Infrastructure.BannerProvider.Provider.GetPlaceBanner(SxBanner.BannerPlace.Brand, controllerName, actionName), (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
-            </div>
-            <div class="col-md-8">
-                @Html.SxThroughBanner(GE.WebUI.Infrastructure.BannerProvider.Provider.GetPlaceBanner(SxBanner.BannerPlace.Top, controllerName, actionName), (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
-            </div>
-            <div class="col-md-2">
-                @Html.SxThroughBanner(GE.WebUI.Infrastructure.BannerProvider.Provider.GetPlaceBanner(SxBanner.BannerPlace.TopR, controllerName, actionName), (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
-            </div>
-        </div>
-    </div>
+    @Html.Partial(MVC.Banners.Views._Top)
     @Html.Partial(MVC.Shared.Views._NavBar)
     <div class="wrapper">
 
         @Html.Action(MVC.Games.GameList())
 
         <div class="container">
-            @Html.SxThroughBanner(GE.WebUI.Infrastructure.BannerProvider.Provider.GetPlaceBanner(SxBanner.BannerPlace.TopB, controllerName, actionName), (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+            @{
+                var banner = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.T, controllerName, actionName);
+                if (banner != null)
+                {
+                    @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+                    <br>
+                }
+            }
+
 
             @if (ViewBag.H1 != null)
             {
                 <h1 @(ViewBag.H1CssClass != null ? "class=" + ViewBag.H1CssClass : "class=header")>@ViewBag.H1</h1>
             }
             @RenderBody()
+
+            @{
+                banner = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.B, controllerName, actionName);
+                if (banner != null)
+                {
+                    <br />
+                    @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+                }
+            }
         </div>
     </div>
     @Html.Partial(MVC.Shared.Views._Footer)

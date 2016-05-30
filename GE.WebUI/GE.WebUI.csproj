@@ -179,6 +179,9 @@
     <Compile Include="ArticlesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="BannersController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="CommentsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -424,6 +427,8 @@
     <Content Include="Views\Games\DisplayTemplates\VMDetailGameMaterial.cshtml" />
     <Content Include="Views\Employees\List.cshtml" />
     <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
+    <Content Include="Views\Banners\_Top.cshtml" />
+    <Content Include="Views\Banners\_Bottom.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

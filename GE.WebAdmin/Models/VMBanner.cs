@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SX.WebCore;
+using System;
 using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
@@ -17,5 +18,7 @@ namespace GE.WebAdmin.Models
 
         public int? MaterialId { get; set; }
         public ModelCoreType? ModelCoreType { get; set; }
+
+        public SxBanner.BannerPlace Place { get; set; }
     }
 }

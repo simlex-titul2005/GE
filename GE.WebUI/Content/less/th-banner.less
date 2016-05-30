@@ -2,12 +2,19 @@
 @import (reference) "sizes.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
-.th-top-block {
-    min-height: 90px;
+.th-top-block > .row > div{
+    padding:0;
 }
 
-.th-banner {
-    min-height: 90px;
-    background-size: cover;
-    background-position: center center;
+.th-banner{
+    text-align:center;
+}
+
+.th-bottom-block .th-banner{
+    position:absolute;
+    width:100%;
+}
+
+.th-banner img{
+    max-width:100%;
 }

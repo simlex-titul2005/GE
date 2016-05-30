@@ -97,8 +97,7 @@ namespace GE.WebUI.Extantions.Controllers
 
         public static void WriteBreadcrumbs(this Controller controller)
         {
-            var request = controller.Request;
-            var routes = request.RequestContext.RouteData.Values;
+            var routes = controller.ControllerContext.RequestContext.RouteData.Values;
             var controllerName = routes["controller"].ToString().ToLowerInvariant();
             var actionName = routes["action"].ToString().ToLowerInvariant();
             var gameName = routes["game"] != null && !string.IsNullOrEmpty(routes["game"].ToString()) ? routes["game"].ToString() : null;

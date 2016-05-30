@@ -29,26 +29,29 @@ namespace SX.WebCore
         {
             Unknown=0,
 
+            /// <summary>
+            /// 320 x 90
+            /// </summary>
             Brand = 1,
 
+            /// <summary>
+            /// 1270 x90
+            /// </summary>
             Top=2,
 
-            TopR=3,
+            /// <summary>
+            /// 320 x 90
+            /// </summary>
+            TopR = 3,
 
-            Left=4,
-
-            LeftB=5,
-
-            TopB=6,
-
-            Right=7,
-
-            RightB=8,
-
-            BottomT=9,
-
+            /// <summary>
+            /// 1903 x 90
+            /// </summary>
             Bottom=10,
 
+            /// <summary>
+            /// 1140 x 90
+            /// </summary>
             T=11,
 
             R=12,

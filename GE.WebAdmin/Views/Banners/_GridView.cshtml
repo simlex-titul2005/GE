@@ -18,6 +18,7 @@
                     return string.Format("<i class=\"fa fa-link\"></i>&nbsp;<a target=\"_blank\" href=\"{0}\">{0}</a>", b.Url);
                 } },
                 new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="Place", Caption="Позиция"},
                 new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="PictureId", Caption="Картинка", Template=(p)=> {
                 return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Помотреть картинку\" href=\"{0}\"><i class=\"fa fa-picture-o\"></i></a>", Url.Action(MVC.Pictures.Picture(p.PictureId)), p.Title);
             } }

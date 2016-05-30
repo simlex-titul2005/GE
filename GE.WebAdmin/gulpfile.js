@@ -1,6 +1,4 @@
 ﻿/// <reference path="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
-/// <reference path="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
-/// <reference path="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
 
 var promise = require('es6-promise'),
     gulp = require('gulp'),

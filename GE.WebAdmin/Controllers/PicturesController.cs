@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using SX.WebCore.Abstract;
 using SX.WebCore.Providers;
+using System.Linq;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -68,6 +69,17 @@ namespace GE.WebAdmin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditPicture picture, HttpPostedFileBase file)
         {
+            var allowFormats = new string[] {
+                "image/jpeg",
+                "image/png",
+                "image/gif"
+            };
+
+            if(file!=null && file.ContentLength > maxSize)
+                ModelState.AddModelError("Caption", string.Format("Размер файла не должен превышать {0} kB", maxSize/1024));
+            if(file!=null && !allowFormats.Contains(file.ContentType))
+                ModelState.AddModelError("Caption", string.Format("Недопустимый формат файла {0}", file.ContentType));
+
             if (ModelState.IsValid)
             {
                 var isNew = picture.Id == Guid.Empty;
@@ -75,11 +87,6 @@ namespace GE.WebAdmin.Controllers
                 if (isNew)
                 {
                     redactModel = getImage(redactModel, file);
-                    if(redactModel.Size> maxSize)
-                    {
-                        ModelState.AddModelError("Title", string.Format("Размер файла не должен превышать {0} kB", maxSize));
-                        return View(picture);
-                    }
                     _repo.Create(redactModel);
                 }
                 else
@@ -87,11 +94,6 @@ namespace GE.WebAdmin.Controllers
                     if (file != null)
                     {
                         redactModel = getImage(redactModel, file);
-                        if (redactModel.Size > maxSize)
-                        {
-                            ModelState.AddModelError("Title", string.Format("Размер файла не должен превышать {0} kB", maxSize));
-                            return View(picture);
-                        }
                         _repo.Update(redactModel, true, "Caption", "Description", "OriginalContent", "Width", "Height", "Size");
                     }
                     else

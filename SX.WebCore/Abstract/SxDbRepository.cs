@@ -117,7 +117,7 @@ namespace SX.WebCore.Abstract
             return dbSet.Find(id);
         }
 
-        private static object[] getEntityKeys(System.Data.Entity.DbContext dbContext, Type modelType, TModel model)
+        private static object[] getEntityKeys(DbContext dbContext, Type modelType, TModel model)
         {
             var objectContext = ((IObjectContextAdapter)dbContext).ObjectContext;
             var keyNames = ((IEnumerable<System.Data.Entity.Core.Metadata.Edm.EdmMember>)objectContext.MetadataWorkspace

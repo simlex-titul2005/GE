@@ -93,11 +93,7 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _Bottom = "_Bottom";
-                public readonly string _Top = "_Top";
             }
-            public readonly string _Bottom = "~/Views/Banners/_Bottom.cshtml";
-            public readonly string _Top = "~/Views/Banners/_Top.cshtml";
         }
     }
 

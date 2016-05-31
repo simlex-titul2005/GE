@@ -68,7 +68,6 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult Edit(VMEditBanner model)
         {
             var redactModel = Mapper.Map<VMEditBanner, SxBanner>(model);
-            checkError(model, ModelState);
 
             if (ModelState.IsValid)
             {
@@ -83,37 +82,6 @@ namespace GE.WebAdmin.Controllers
             else
             {
                 return View(model);
-            }
-        }
-
-        private void checkError(VMEditBanner banner, ModelStateDictionary modelState)
-        {
-            if (banner.ControllerName == null && banner.ActionName == null)
-            {
-                var exist = _repo.All.FirstOrDefault(x => x.Place == banner.Place && x.Id!=banner.Id);
-                if (exist != null)
-                {
-                    modelState.AddModelError("Place", "Баннер для данного места уже задан");
-                }
-            }
-            else if (banner.ControllerName != null && banner.ActionName == null)
-            {
-                var exist = _repo.All.FirstOrDefault(x => x.Place == banner.Place && x.ControllerName == banner.ControllerName && x.Id != banner.Id);
-                if (exist != null)
-                {
-                    modelState.AddModelError("Place", "Баннер для данного места уже задан");
-                    modelState.AddModelError("ControllerName", "Баннер для данного места уже задан");
-                }
-            }
-            else if (banner.ControllerName != null && banner.ActionName != null)
-            {
-                var exist = _repo.All.FirstOrDefault(x => x.Place == banner.Place && x.ControllerName == banner.ControllerName && banner.ActionName == banner.ActionName && x.Id != banner.Id);
-                if (exist != null)
-                {
-                    modelState.AddModelError("Place", "Баннер для данного места уже задан");
-                    modelState.AddModelError("ControllerName", "Баннер для данного места уже задан");
-                    modelState.AddModelError("ActionName", "Баннер для данного места уже задан");
-                }
             }
         }
 

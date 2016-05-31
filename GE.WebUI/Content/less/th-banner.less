@@ -15,6 +15,17 @@
     width:100%;
 }
 
-.th-banner img{
+.th-banner a{
+    display:inline-block;
+    overflow:hidden;
+    box-shadow:-1px 1px 4px rgba(255,255,255,.3);
+}
+
+.th-banner a:hover > img{
+    transform: scale(1.05);
+}
+
+.th-banner a > img{
     max-width:100%;
+    transition:all .4s;
 }

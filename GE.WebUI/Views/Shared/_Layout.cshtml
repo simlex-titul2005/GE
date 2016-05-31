@@ -7,6 +7,7 @@
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
+    var bannerControllerBlackList = new string[] { "employees", "account" };
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +51,6 @@
     <![endif]-->
 </head>
 <body @(bg != null ? bg : null)>
-    @Html.Partial(MVC.Banners.Views._Top)
     @Html.Partial(MVC.Shared.Views._NavBar)
     <div class="wrapper">
 
@@ -58,8 +58,8 @@
 
         <div class="container">
             @{
-                var banner = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.T, controllerName, actionName);
-                if (banner != null)
+                var banner = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.Top, controllerName, actionName);
+                if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
                     <br>
@@ -74,8 +74,8 @@
             @RenderBody()
 
             @{
-                banner = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.B, controllerName, actionName);
-                if (banner != null)
+                banner = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.Bottom, controllerName, actionName);
+                if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     <br />
                     @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))

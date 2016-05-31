@@ -56,9 +56,18 @@
                         <li>
                             <a href="@Url.Action(MVC.Account.Register())" rel="nofollow">Регистрация</a>
                         </li>
-                        <li>
-                            <a href="@Url.Action(MVC.Account.Login())" rel="nofollow">Войти в аккаунт</a>
-                        </li>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a href="@Url.Action(MVC.Account.Login())" rel="nofollow">Войти в аккаунт</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#" rel="nofollow">Личный кабинет</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -106,5 +115,4 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
             </div>
         </div>
     </div>
-    @Html.Partial(MVC.Banners.Views._Bottom)
 </footer>

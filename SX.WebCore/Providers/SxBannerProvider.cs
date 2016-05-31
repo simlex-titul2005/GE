@@ -12,7 +12,7 @@ namespace SX.WebCore.Providers
             _banners = banners;
         }
 
-        public SxBanner GetBanner(SxBanner.BannerPlace place, string controllerName=null, string actionName=null)
+        public SxBanner GetBanner(SxBanner.BannerPlace place, string controllerName = null, string actionName = null)
         {
             SxBanner banner = null;
             if (controllerName == null && actionName == null)
@@ -27,27 +27,45 @@ namespace SX.WebCore.Providers
 
         private static SxBanner getPlaceBanner(SxBanner.BannerPlace place)
         {
-            var data = _banners().SingleOrDefault(x => x.Place == place && x.ControllerName == null && x.ActionName == null);
-            return data;
+            SxBanner banner = null;
+            var data = _banners().Where(x => x.Place == place && x.ControllerName == null && x.ActionName == null).ToArray();
+            banner = getRandomBanner(data);
+            return banner ?? getPlaceBanner(place);
         }
 
         private static SxBanner getControllerBanner(SxBanner.BannerPlace place, string controllerName)
         {
-            var data = _banners().SingleOrDefault(x => x.Place == place && x.ControllerName == controllerName && x.ActionName == null);
-            return data ?? getPlaceBanner(place);
+            SxBanner banner = null;
+            var data = _banners().Where(x => x.Place == place && x.ControllerName == controllerName && x.ActionName == null).ToArray();
+            banner = getRandomBanner(data);
+            return banner ?? getPlaceBanner(place);
         }
 
         private static SxBanner getActionBanner(SxBanner.BannerPlace place, string controllerName, string actionName)
         {
-            var data = _banners().SingleOrDefault(x => x.Place == place && x.ControllerName == controllerName && x.ActionName == actionName);
-            data = data ?? getControllerBanner(place, controllerName);
-            return data ?? getPlaceBanner(place);
+            SxBanner banner = null;
+            var data = _banners().Where(x => x.Place == place && Equals(x.ControllerName, controllerName) && Equals(x.ActionName, actionName)).ToArray();
+            banner = getRandomBanner(data);
+            return banner ?? getControllerBanner(place, controllerName);
+        }
+
+        private static SxBanner getRandomBanner(SxBanner[] data)
+        {
+            SxBanner banner = null;
+            if (data.Any())
+            {
+                var random = new Random();
+                var randomIndex = random.Next(data.Length);
+                banner = data[randomIndex];
+            }
+
+            return banner;
         }
 
         public SxBanner[] GetPageBanners(string controllerName, string actionName)
         {
             var list = new List<SxBanner>();
-            foreach(var p in Enum.GetValues(typeof(SxBanner.BannerPlace)))
+            foreach (var p in Enum.GetValues(typeof(SxBanner.BannerPlace)))
             {
                 var place = (SxBanner.BannerPlace)p;
                 var banner = GetBanner(place, controllerName, actionName);

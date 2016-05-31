@@ -18,7 +18,7 @@ namespace SX.WebCore
         public string UserId { get; set; }
 
         public virtual SxMaterial Material { get; set; }
-        public int? MaterialId { get; set; }
+        public int MaterialId { get; set; }
         public Enums.ModelCoreType? ModelCoreType { get; set; }
     }
 }

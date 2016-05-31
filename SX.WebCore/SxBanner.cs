@@ -29,36 +29,13 @@ namespace SX.WebCore
         {
             Unknown=0,
 
-            /// <summary>
-            /// 320 x 90
-            /// </summary>
-            Brand = 1,
+            Top=1,
 
-            /// <summary>
-            /// 1270 x90
-            /// </summary>
-            Top=2,
+            Right=2,
 
-            /// <summary>
-            /// 320 x 90
-            /// </summary>
-            TopR = 3,
+            Bottom=3,
 
-            /// <summary>
-            /// 1903 x 90
-            /// </summary>
-            Bottom=10,
-
-            /// <summary>
-            /// 1140 x 90
-            /// </summary>
-            T=11,
-
-            R=12,
-
-            B=13,
-
-            L=14
+            Left=4
         }
 
         public int ClicksCount { get; set; }

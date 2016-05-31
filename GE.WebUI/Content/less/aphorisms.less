@@ -12,14 +12,17 @@
 .aphorism {
     position: relative;
     padding: @def-pad;
+    border-radius: 3px;
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
 }
 
 .aphorism > .aph-progress {
     height: 4px;
-    padding: 1px;
+    padding: @def-pad;
     position: absolute;
     width: 100%;
-    top: 0;
+    top: -@def-pad / 2;
     left: 0;
 }
 

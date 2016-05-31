@@ -27,7 +27,7 @@
                     </h4>
                 </div>
                 <div class="fwd">
-                    @Model.Foreword
+                    @Html.Raw(Model.Foreword)
                 </div>
                 <div class="details">
                     <a href="@Model.GetUrl(Url)" class="btn btn-default">Подробнее</a>

@@ -159,6 +159,7 @@
     <Content Include="Content\dist\js\bootstrap-datetimepicker.min.js" />
     <Content Include="Content\dist\js\lightbox.min.js" />
     <Content Include="Content\dist\js\moment-with-locales.min.js" />
+    <Content Include="Content\dist\js\raphael.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
     <Content Include="Content\i\background.jpg" />
     <Content Include="Content\i\bannerPlaces.jpg" />

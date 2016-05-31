@@ -30,6 +30,7 @@
     "metisMenu": "2.4.3",
     "eonasdan-bootstrap-datetimepicker": "*",
     "jquery": "2.2.3",
-    "lightbox2": "2.8.2"
+    "lightbox2": "2.8.2",
+    "raphael": "2.2.0"
   }
 }

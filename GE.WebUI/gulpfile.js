@@ -67,6 +67,8 @@ function createCss() {
         'content/less/th-banner.less'
     ])
         .pipe(less())
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
+        .pipe(minifyCss())
         .pipe(concat('less-files.less'));
 
     var cssStream = gulp.src([
@@ -77,8 +79,6 @@ function createCss() {
 
     var mergedStream = merge(lessStream, cssStream)
         .pipe(concat('site.min.css'))
-        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(minifyCss())
         .pipe(gulp.dest('content/dist/css'));
 
     gulp.src([

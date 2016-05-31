@@ -4,6 +4,9 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<p class="text-warning" style="max-width:600px;">
+    При добалении изображений не допускайте разрастания базы данных. Размер добавляемого файла не должен превышать 300 kB. Перед добавлением рекомендуется сжать изображение специализированным online-сервисом (например <a href="http://resizepiconline.com" rel="nofollow">http://resizepiconline.com</a>). <b>Рекомедуемый размер изображений для авторов афоризмов - 100 x 100 px</b>
+</p>
 <br />
 <div id="grid-author-ap">
     @Html.Partial(MVC.AuthorAphorisms.Views._GridView, Model)

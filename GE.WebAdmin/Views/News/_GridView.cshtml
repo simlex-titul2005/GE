@@ -14,6 +14,7 @@
             Data = Model,
             Columns = new SxExtantions.SxGridViewColumn<VMNews>[]{
             new SxExtantions.SxGridViewColumn<VMNews>{FieldName="DateCreate", Caption="Дата создания"},
+            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="DateOfPublication", Caption="Дата публикации"},
             new SxExtantions.SxGridViewColumn<VMNews>{FieldName="Title", Caption="Заголовок"},
             new SxExtantions.SxGridViewColumn<VMNews>{FieldName="SeoInfoId", Caption="Инфо", Template=(m)=> {
                 return !m.SeoInfoId.HasValue? "<i class=\"text-danger\">не заданы теги seo</i>":null;

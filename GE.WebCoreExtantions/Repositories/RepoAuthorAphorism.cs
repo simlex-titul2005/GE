@@ -46,6 +46,14 @@ namespace GE.WebCoreExtantions.Repositories
             }
         }
 
+        public override void Delete(params object[] id)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Execute("del_author_aphorism @authorId", new { authorId = id[0] });
+            }
+        }
+
         private static string getAuthorAphorismsWhereString(Filter filter, out object param)
         {
             param = null;

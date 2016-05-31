@@ -14,7 +14,7 @@
             Data = Model,
             Columns = new SxExtantions.SxGridViewColumn<VMAuthorAphorism>[]{
                 new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="PictureId", Caption="Фото", Template=(a)=> {
-                    return a.PictureId.HasValue? string.Format("<img class=\"img-circle\" alt=\"{0}\" src=\"{1}\" />", a.Name, Url.Action(MVC.Pictures.Picture((Guid)a.PictureId))):null;
+                    return a.PictureId.HasValue? string.Format("<figure class=\"img-circle\" style=\"background-image:url({0})\" ></figure>", Url.Action(MVC.Pictures.Picture((Guid)a.PictureId))):null;
                 } },
                 new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя"}
             },

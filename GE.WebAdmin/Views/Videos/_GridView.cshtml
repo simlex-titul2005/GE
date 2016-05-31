@@ -13,14 +13,20 @@
                 UpdateTargetId = "grid-videos",
                 Data = Model,
                 Columns = new SxExtantions.SxGridViewColumn<VMVideo>[]{
-                    //new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Id", Caption="Внутренний идентификатор"},
-            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="VideoId", Caption="Идентификатор"},
+            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Id", Caption="Внутренний идентификатор", Template=(v)=> {
+                return string.Format("<b class=\"text-info\">{0}</b>", v.Id);
+            }},
+            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="VideoId", Caption="Идентификатор", Template=(v)=> {
+                return string.Format("<b class=\"text-warning\">{0}</b>", v.VideoId);
+            } },
             new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Title", Caption="Название видео"},
-            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="SourceUrl", Caption="Источник"}
+            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="SourceUrl", Caption="Источник", Template=(v)=> {
+                return v.SourceUrl!=null?string.Format("<i class=\"fa fa-link\"></i>&nbsp;<a rel=\"nofollow\" href=\"{0}\">{0}</a>", v.SourceUrl):null;
+            } }
         },
                 PagerInfo = pagerInfo,
                 Filter = filter,
                 SortDirections = sortDirections
             },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+                new { @class = "table table-condensed table-bordered table-responsive table-striped" }
     )

@@ -13,7 +13,9 @@
             UpdateTargetId = "grid-pictures",
             Data = Model,
             Columns = new SxExtantions.SxGridViewColumn<VMPicture>[]{
-            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Id", Caption="Идентификатор"},
+            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Id", Caption="Идентификатор", Template=(p)=> {
+                return string.Format("<b class=\"text-info\">{0}</b>", p.Id);
+            } },
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Caption", Caption="Название"},
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Description", Caption="Описание"},
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Width", Caption="Ширина, px"},

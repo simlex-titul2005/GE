@@ -1,4 +1,5 @@
-﻿@model VMRequest[]
+﻿@using System.Text;
+@model VMRequest[]
 @{
     Layout = null;
     var pagerInfo = ViewBag.PagerInfo;
@@ -18,11 +19,13 @@
             new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="Browser", Caption="Браузер"},
             new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="ClientIP", Caption="IP клиента"},
             new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="UserAgent", Caption="Строка агента", Template=(m)=> {
-                return m.UserAgent.Contains("bot") || m.UserAgent.Contains("Yahoo! Slurp") || m.UserAgent.Contains("spider")?string.Format("<i class=\"text-danger\">{0}</i>",m.UserAgent):m.UserAgent;
+                return m.UserAgent.Contains("bot") || m.UserAgent.Contains("Yahoo! Slurp") || m.UserAgent.Contains("spider")
+                    ? string.Format("<i class=\"fa fa-android text-muted\">&nbsp;</i><span class=\"text-muted\">{0}</span>",m.UserAgent)
+                : m.UserAgent;
             } },
             new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="RequestType", Caption="Тип запросв"},
             new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="UrlRef", Caption="UrlRef",Template=(m)=> {
-                return !string.IsNullOrEmpty(m.UrlRef)? string.Format("<a href=\"{0}\" target=\"_blank\" rel=\"nofollow\">{1}</a>", m.UrlRef, m.UrlRef.Length>=300?m.UrlRef.Substring(0,200)+"...":m.UrlRef):null;
+                return !string.IsNullOrEmpty(m.UrlRef)? string.Format("<i class=\"fa fa-link\"></i>&nbsp;<a href=\"{0}\" target=\"_blank\" rel=\"nofollow\">{1}</a>", m.UrlRef, m.UrlRef.Length>=300?m.UrlRef.Substring(0,200)+"...":m.UrlRef):null;
             }},
             new SxExtantions.SxGridViewColumn<VMRequest>{FieldName="RawUrl", Caption="Целевой адрес"}
         },

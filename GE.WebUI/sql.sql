@@ -675,6 +675,25 @@ END
 GO
 
 /*******************************************
+* удалить автора афоризмов
+*******************************************/
+IF OBJECT_ID(N'dbo.del_author_aphorism', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.del_author_aphorism;
+GO
+CREATE PROCEDURE dbo.del_author_aphorism(@authorId INT)
+AS
+BEGIN
+	UPDATE D_APHORISM
+	SET    AuthorId = NULL
+	WHERE  AuthorId = @authorId
+	
+	DELETE 
+	FROM   D_AUTHOR_APHORISM
+	WHERE  Id = @authorId
+END
+GO
+
+/*******************************************
  * Популярные материалы
  *******************************************/
 IF OBJECT_ID(N'dbo.get_popular_materials', N'P') IS NOT NULL

@@ -25,7 +25,7 @@ WHERE dm.TitleUrl=@TITLE_URL";
 
         public static VMArticle[] QueryForAdmin(this RepoArticle repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "da.Id", "dm.DateCreate", "dm.Title", "dm.SeoInfoId", "dm.Show" });
+            var query = QueryProvider.GetSelectString(new string[] { "da.Id", "dm.DateCreate", "dm.DateOfPublication", "dm.Title", "dm.SeoInfoId", "dm.Show" });
             query += " FROM D_ARTICLE AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType LEFT JOIN D_GAME AS dg ON dg.ID = da.GameId ";
 
             object param = null;

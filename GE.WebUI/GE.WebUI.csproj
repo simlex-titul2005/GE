@@ -261,6 +261,7 @@
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\dist\i\article-empty.png" />
     <Content Include="Content\dist\i\faveicon.png" />
+    <Content Include="Content\dist\i\logo.png" />
     <Content Include="Content\dist\js\currency-provider.min.js" />
     <Content Include="Content\dist\js\ge-aphorisms.min.js" />
     <Content Include="Content\dist\js\ge-for-gamers-block.min.js" />

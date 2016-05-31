@@ -14,6 +14,7 @@ namespace SX.WebCore.HtmlHelpers
             var a = new TagBuilder("a");
             a.MergeAttribute("href", banner.Url);
             a.MergeAttribute("target", "_blank");
+            a.MergeAttribute("onclick", "bannerClick('"+ banner.Id+ "')");
 
             var img = new TagBuilder("img");
             img.MergeAttribute("src", FuncBannerImgUrl(banner));

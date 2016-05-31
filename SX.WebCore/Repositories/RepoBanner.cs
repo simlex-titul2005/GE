@@ -64,5 +64,13 @@ namespace SX.WebCore.Repositories
             }
             return GetByKey(model.Id);
         }
+
+        public void AddClick(Guid bannerId)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Execute("add_banner_clicks_count @id", new { id = bannerId });
+            }
+        }
     }
 }

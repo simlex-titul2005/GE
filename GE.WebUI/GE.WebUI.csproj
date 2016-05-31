@@ -187,6 +187,7 @@
     </Compile>
     <Compile Include="Controllers\AphorismController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
+    <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\SiteQuetionsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />

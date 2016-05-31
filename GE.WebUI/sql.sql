@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 27.05.2016 14:04:15
+ * Time: 31.05.2016 10:45:32
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,10 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
+
+
 
 
 
@@ -398,6 +402,10 @@ BEGIN
 	RETURN @res
 END
 GO
+
+
+
+
 
 
 
@@ -1044,5 +1052,25 @@ BEGIN
 	       ActionName         = @action,
 	       Place              = @place
 	WHERE  Id                 = @id
+END
+GO
+
+/*******************************************
+ * Обновить количество кликов баннера
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_banner_clicks_count', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_banner_clicks_count;
+GO
+CREATE PROCEDURE dbo.add_banner_clicks_count(@id UNIQUEIDENTIFIER)
+AS
+BEGIN
+	DECLARE @count INT
+	SELECT TOP(1) @count = db.ClicksCount
+	FROM   D_BANNER AS db
+	WHERE  db.Id = @id
+	
+	UPDATE D_BANNER
+	SET    ClicksCount     = @count + 1
+	WHERE  Id              = @id
 END
 GO

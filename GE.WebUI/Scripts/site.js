@@ -15,6 +15,15 @@ jQuery.fn.swap = function (b) {
     return this.pushStack(stack);
 };
 
+//клик по баннеру
+function bannerClick(bannerId) {
+    $.ajax({
+        method: 'post',
+        url: '/banners/addclick',
+        data: { bannerId: bannerId },
+    });
+}
+
 
 //javascript переход по ссылке
 function changeLocation(element) {
@@ -41,7 +50,7 @@ function loadScriptOnce(src) {
 }
 
 //video
-var players=new Array();
+var players = new Array();
 var player;
 
 function onPlayerReady(event) {

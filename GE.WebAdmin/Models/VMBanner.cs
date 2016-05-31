@@ -20,5 +20,7 @@ namespace GE.WebAdmin.Models
         public ModelCoreType? ModelCoreType { get; set; }
 
         public SxBanner.BannerPlace Place { get; set; }
+
+        public int ClicksCount { get; set; }
     }
 }

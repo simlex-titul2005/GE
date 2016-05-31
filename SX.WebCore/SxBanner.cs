@@ -60,5 +60,7 @@ namespace SX.WebCore
 
             L=14
         }
+
+        public int ClicksCount { get; set; }
     }
 }

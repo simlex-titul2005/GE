@@ -31,6 +31,7 @@ public static partial class MVC
     public static GE.WebUI.Controllers.AphorismController Aphorism = new GE.WebUI.Controllers.T4MVC_AphorismController();
     public static GE.WebUI.Controllers.AphorismsController Aphorisms = new GE.WebUI.Controllers.T4MVC_AphorismsController();
     public static GE.WebUI.Controllers.ArticlesController Articles = new GE.WebUI.Controllers.T4MVC_ArticlesController();
+    public static GE.WebUI.Controllers.BannersController Banners = new GE.WebUI.Controllers.T4MVC_BannersController();
     public static GE.WebUI.Controllers.CommentsController Comments = new GE.WebUI.Controllers.T4MVC_CommentsController();
     public static GE.WebUI.Controllers.EmployeesController Employees = new GE.WebUI.Controllers.T4MVC_EmployeesController();
     public static GE.WebUI.Controllers.ErrorController Error = new GE.WebUI.Controllers.T4MVC_ErrorController();
@@ -45,7 +46,6 @@ public static partial class MVC
     public static GE.WebUI.Controllers.SiteQuetionsController SiteQuetions = new GE.WebUI.Controllers.T4MVC_SiteQuetionsController();
     public static GE.WebUI.Controllers.UserClicksController UserClicks = new GE.WebUI.Controllers.T4MVC_UserClicksController();
     public static GE.WebUI.Controllers.ValutesController Valutes = new GE.WebUI.Controllers.T4MVC_ValutesController();
-    public static T4MVC.BannersController Banners = new T4MVC.BannersController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
     public static T4MVC.VideosController Videos = new T4MVC.VideosController();
 }

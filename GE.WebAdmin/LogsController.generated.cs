@@ -85,6 +85,14 @@ namespace GE.WebAdmin.Controllers
         }
 
 
+        static readonly ActionParamsClass_GetLog s_params_GetLog = new ActionParamsClass_GetLog();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_GetLog GetLogParams { get { return s_params_GetLog; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_GetLog
+        {
+            public readonly string siteName = "siteName";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -105,13 +113,14 @@ namespace GE.WebAdmin.Controllers
         public T4MVC_LogsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void GetLogOverride(T4MVC_System_Web_Mvc_FileResult callInfo);
+        partial void GetLogOverride(T4MVC_System_Web_Mvc_FileResult callInfo, string siteName);
 
         [NonAction]
-        public override System.Web.Mvc.FileResult GetLog()
+        public override System.Web.Mvc.FileResult GetLog(string siteName)
         {
             var callInfo = new T4MVC_System_Web_Mvc_FileResult(Area, Name, ActionNames.GetLog);
-            GetLogOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "siteName", siteName);
+            GetLogOverride(callInfo, siteName);
             return callInfo;
         }
 

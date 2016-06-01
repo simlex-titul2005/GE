@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace SX.WebCore.Providers
 {
-    public class ErrorProvider
+    public class SxErrorProvider
     {
-        private readonly string _dir;
-        public ErrorProvider(string dir)
+        private static string _dir;
+        public SxErrorProvider(string dir)
         {
             _dir = dir;
         }
 
-        public virtual void WriteMessage(string message)
+        private static void WriteMessage(string message)
         {
             Task.Run(() =>
             {
@@ -29,6 +29,14 @@ namespace SX.WebCore.Providers
 
                 File.AppendAllText(filePath, sb.ToString());
             });
+        }
+
+        public virtual void WriteMessage(Exception ex)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Message: " + ex.Message);
+            sb.AppendLine("StackTrace: " + ex.StackTrace);
+            WriteMessage(sb.ToString());
         }
     }
 }

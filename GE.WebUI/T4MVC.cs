@@ -188,10 +188,7 @@ namespace Links
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 public static readonly string article_empty_png = Url("article-empty.png");
                 public static readonly string faveicon_png = Url("faveicon.png");
-                public static readonly string footer_bg_lg_jpg = Url("footer-bg-lg.jpg");
-                public static readonly string footer_bg_md_jpg = Url("footer-bg-md.jpg");
-                public static readonly string footer_bg_sm_jpg = Url("footer-bg-sm.jpg");
-                public static readonly string footer_bg_xs_jpg = Url("footer-bg-xs.jpg");
+                public static readonly string logo_png = Url("logo.png");
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
                 public static class temp {
                     private const string URLPATH = "~/Content/dist/i/temp";

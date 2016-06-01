@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GE.WebAdmin
+namespace GE.WebUI
 {
     public static class ErrorProvider
     {

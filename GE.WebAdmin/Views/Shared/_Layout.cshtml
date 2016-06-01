@@ -386,6 +386,20 @@
                                 </ul>
                             </li>
                         }
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>
+                                <a href="#"><i class="fa fa-university fa-fw"></i> Тесты<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action(MVC.SiteTests.Index())"> Список тестов</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action(MVC.SiteTestBlocks.Index())"> Блоки тестов</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                         @if (User.IsInRole("seo"))
                         {
                             <li>
@@ -434,7 +448,7 @@
                                     @if (User.IsInRole("architect"))
                                     {
                                         <li>
-                                            <a href="@Url.Action(MVC.Logs.GetLog())"> Скачать лог</a>
+                                            <a href="@Url.Action(MVC.Logs.GetLog(siteName:"game-exe"))"> Скачать лог</a>
                                         </li>
                                     }
                                 </ul>

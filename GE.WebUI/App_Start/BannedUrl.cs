@@ -7,14 +7,6 @@ namespace GE.WebUI
 {
     public static class BannedUrl
     {
-        private static readonly string _cacheBannedUrlListKey = "CACHE_BANNED_URL_LIST";
-        private static MemoryCache _cache;
-        static BannedUrl()
-        {
-            if (_cache == null)
-                _cache = new MemoryCache("CACHE_SITE_BANNED_URLS");
-        }
-
         private static CacheItemPolicy _defaultPolicy
         {
             get
@@ -30,16 +22,14 @@ namespace GE.WebUI
         {
             get
             {
-                var _list = _cache.Get(_cacheBannedUrlListKey);
-                if (_list == null)
+                var list = (string[])MvcApplication.AppCache["CACHE_SITE_BANNED_URL"];
+                if (list == null)
                 {
-                    var repo = new RepoBannedUrl<DbContext>();
-                    var data = repo.GetAllUrls();
-                    _cache.Add(new CacheItem(_cacheBannedUrlListKey, data), _defaultPolicy);
-                    return data;
+                    list = new RepoBannedUrl<DbContext>().GetAllUrls();
+                    MvcApplication.AppCache.Add("CACHE_SITE_BANNED_URL", list, _defaultPolicy);
                 }
-                else
-                    return (string[])_list;
+
+                return list;
             }
         }
     }

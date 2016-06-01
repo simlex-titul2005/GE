@@ -28,6 +28,9 @@ namespace GE.WebUI.Controllers
     public partial class ValutesController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ValutesController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected ValutesController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

@@ -6,6 +6,7 @@ using SX.WebCore.Abstract;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using System.Linq;
+using SX.WebCore.Repositories;
 
 namespace GE.WebUI.Controllers
 {
@@ -16,7 +17,7 @@ namespace GE.WebUI.Controllers
         public GamesController()
         {
             _repo = new RepoGame();
-            _repoSetting = new RepoSiteSetting();
+            _repoSetting = new RepoSiteSetting<DbContext>();
         }
 
         private const string __emptyGameIconPath = "emptyGameIconPath";

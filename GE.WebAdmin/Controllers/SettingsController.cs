@@ -1,8 +1,8 @@
 ﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Abstract;
+using SX.WebCore.Repositories;
 using SX.WebCore.Resources;
 using System.Text;
 using System.Web.Mvc;
@@ -15,7 +15,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<string, SxSiteSetting, DbContext> _repo;
         public SettingsController()
         {
-            _repo = new RepoSiteSetting();
+            _repo = new RepoSiteSetting<DbContext>();
         }
 
         #region Начальная иконка
@@ -23,16 +23,19 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult EditEmptyGame()
         {
-            var emptyGameIconPath = _repo.GetByKey(Settings.emptyGameIconPath);
-            var emptyGameGoodImagePath = _repo.GetByKey(Settings.emptyGameGoodImagePath);
-            var emptyGameBadImagePath = _repo.GetByKey(Settings.emptyGameBadImagePath);
+            var settings = (_repo as RepoSiteSetting<DbContext>).GetByKeys(
+                    Settings.emptyGameIconPath,
+                    Settings.emptyGameGoodImagePath,
+                    Settings.emptyGameBadImagePath
+                );
 
             var viewModel = new VMEditEmptyGameSettings
             {
-                IconPath = emptyGameIconPath != null ? emptyGameIconPath.Value : null,
-                GoodImagePath = emptyGameGoodImagePath != null ? emptyGameGoodImagePath.Value : null,
-                BadImagePath = emptyGameBadImagePath != null ? emptyGameBadImagePath.Value : null,
+                IconPath = settings.ContainsKey(Settings.emptyGameIconPath) ? settings[Settings.emptyGameIconPath].Value : null,
+                GoodImagePath = settings.ContainsKey(Settings.emptyGameGoodImagePath) ? settings[Settings.emptyGameGoodImagePath].Value : null,
+                BadImagePath = settings.ContainsKey(Settings.emptyGameBadImagePath) ? settings[Settings.emptyGameBadImagePath].Value : null,
             };
+
             viewModel.OldIconPath = viewModel.IconPath;
             viewModel.OldGoodImagePath = viewModel.GoodImagePath;
             viewModel.OldBadImagePath = viewModel.BadImagePath;
@@ -89,17 +92,22 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult EditSite()
         {
-            var siteLogoPath = _repo.GetByKey(Settings.siteLogoPath);
-            var siteName = _repo.GetByKey(Settings.siteName);
-            var siteBgPath = _repo.GetByKey(Settings.siteBgPath);
-            var siteFaveiconPath = _repo.GetByKey(Settings.siteFaveiconPath);
+
+            var settings = (_repo as RepoSiteSetting<DbContext>).GetByKeys(
+                    Settings.siteLogoPath,
+                    Settings.siteName,
+                    Settings.siteBgPath,
+                    Settings.siteFaveiconPath
+                );
+
             var viewModel = new VMSiteSettings
             {
-                LogoPath = siteLogoPath != null ? siteLogoPath.Value : null,
-                SiteName = siteName != null ? siteName.Value : null,
-                SiteBgPath = siteBgPath != null ? siteBgPath.Value : null,
-                SiteFaveiconPath = siteFaveiconPath != null ? siteFaveiconPath.Value : null
+                LogoPath = settings.ContainsKey(Settings.siteLogoPath) ? settings[Settings.siteLogoPath].Value : null,
+                SiteName = settings.ContainsKey(Settings.siteName) ? settings[Settings.siteName].Value : null,
+                SiteBgPath = settings.ContainsKey(Settings.siteBgPath) ? settings[Settings.siteBgPath].Value : null,
+                SiteFaveiconPath = settings.ContainsKey(Settings.siteFaveiconPath) ? settings[Settings.siteFaveiconPath].Value : null,
             };
+
             viewModel.OldLogoPath = viewModel.LogoPath;
             viewModel.OldSiteName = viewModel.SiteName;
             viewModel.OldSiteBgPath = viewModel.SiteBgPath;
@@ -158,10 +166,13 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult EditRobotsFile()
         {
-            var robotsFileSetting = _repo.GetByKey(Settings.robotsFileSetting);
+            var settings = (_repo as RepoSiteSetting<DbContext>).GetByKeys(
+                    Settings.robotsFileSetting
+                );
+
             var viewModel = new VMRobotsFile
             {
-                FileContent = robotsFileSetting != null ? robotsFileSetting.Value : null
+                FileContent = settings.ContainsKey(Settings.robotsFileSetting) ? settings[Settings.robotsFileSetting].Value : null,
             };
             viewModel.OldFileContent = viewModel.FileContent;
             return View(viewModel);
@@ -212,7 +223,7 @@ namespace GE.WebAdmin.Controllers
         {
             int pageCode = 1251;
             Encoding encoding = Encoding.GetEncoding(pageCode);
-            var file = SX.WebCore.Resources.Files.ReleaseNotes;
+            var file = Files.ReleaseNotes;
             byte[] encodedBytes = encoding.GetBytes(file);
             
             return File(encodedBytes, "txt");

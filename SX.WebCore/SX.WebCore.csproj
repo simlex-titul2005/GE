@@ -43,6 +43,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -137,6 +141,7 @@
     <Compile Include="Attrubutes\MaxWordsCountAttribute.cs" />
     <Compile Include="Attrubutes\NotLogRequestAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="HtmlHelpers\SxGridView.cs" />
     <Compile Include="HtmlHelpers\SxList.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
@@ -150,7 +155,7 @@
     <Compile Include="Managers\SxAppSignInManager.cs" />
     <Compile Include="Managers\SxAppUserManager.cs" />
     <Compile Include="Managers\SxSeoWordCounter.cs" />
-    <Compile Include="Providers\ErrorProvider.cs" />
+    <Compile Include="Providers\SxErrorProvider.cs" />
     <Compile Include="Providers\PictureProvider.cs" />
     <Compile Include="Providers\QueryProvider.cs" />
     <Compile Include="Providers\SxBannerProvider.cs" />
@@ -158,6 +163,9 @@
     <Compile Include="Repositories\RepoBannedUrl.cs" />
     <Compile Include="Repositories\RepoComment.cs" />
     <Compile Include="Repositories\RepoEmployee.cs" />
+    <Compile Include="Repositories\RepoSiteSetting.cs" />
+    <Compile Include="Repositories\RepoSiteTestBlock.cs" />
+    <Compile Include="Repositories\RepoSiteTest.cs" />
     <Compile Include="Repositories\RepoVideo.cs" />
     <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoManual.cs" />
@@ -193,6 +201,8 @@
     <Compile Include="SxForumPart.cs" />
     <Compile Include="SxForumTheme.cs" />
     <Compile Include="SxLike.cs" />
+    <Compile Include="SxSiteTestBlock.cs" />
+    <Compile Include="SxSiteTestQuestion.cs" />
     <Compile Include="SxStatisticUserLogin.cs" />
     <Compile Include="SxManual.cs" />
     <Compile Include="SxMaterialCategory.cs" />
@@ -211,6 +221,7 @@
     <Compile Include="SxStatistic.cs" />
     <Compile Include="SxUserClick.cs" />
     <Compile Include="SxUserClickResult.cs" />
+    <Compile Include="SxSiteTest.cs" />
     <Compile Include="SxVideo.cs" />
     <Compile Include="SxVideoLink.cs" />
     <Compile Include="ViewModels\SxVMValute.cs" />

@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 31.05.2016 10:45:32
+ * Time: 01.06.2016 13:58:14
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,11 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
+
+
+
 
 
 
@@ -402,6 +407,11 @@ BEGIN
 	RETURN @res
 END
 GO
+
+
+
+
+
 
 
 
@@ -1080,7 +1090,8 @@ GO
 IF OBJECT_ID(N'dbo.add_banner_clicks_count', N'P') IS NOT NULL
     DROP PROCEDURE dbo.add_banner_clicks_count;
 GO
-CREATE PROCEDURE dbo.add_banner_clicks_count(@id UNIQUEIDENTIFIER)
+CREATE PROCEDURE dbo.add_banner_clicks_count
+	@id UNIQUEIDENTIFIER
 AS
 BEGIN
 	DECLARE @count INT
@@ -1091,5 +1102,44 @@ BEGIN
 	UPDATE D_BANNER
 	SET    ClicksCount     = @count + 1
 	WHERE  Id              = @id
+END
+GO
+
+/*******************************************
+ * Обновить количество показов списка баннеров
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_banners_shows_count', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_banners_shows_count;
+GO
+CREATE PROCEDURE dbo.add_banners_shows_count
+	@keys VARCHAR(MAX)
+AS
+BEGIN
+	EXEC('UPDATE D_BANNER
+	SET    ShowsCount = db2.ShowsCount + 1
+	FROM   D_BANNER AS db
+	       JOIN (
+	                SELECT db2.Id,
+	                       db2.ShowsCount
+	                FROM   D_BANNER AS db2
+	                WHERE  Id IN ('+@keys+')
+	            ) AS db2
+	            ON  db2.Id = db.Id')
+END
+GO
+
+/*******************************************
+ * Список настроек сайта
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_site_settings', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_site_settings;
+GO
+CREATE PROCEDURE dbo.get_site_settings
+	@keys VARCHAR(MAX)
+AS
+BEGIN
+	EXEC (
+	         'SELECT*FROM D_SITE_SETTING AS dss WHERE dss.Id IN (' + @keys + ')'
+	     )
 END
 GO

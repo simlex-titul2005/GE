@@ -25,6 +25,9 @@ namespace SX.WebCore
 
         public BannerPlace Place { get; set; }
 
+        /// <summary>
+        /// Место размещения баннера на странице
+        /// </summary>
         public enum BannerPlace : byte
         {
             Unknown=0,
@@ -38,6 +41,21 @@ namespace SX.WebCore
             Left=4
         }
 
+        /// <summary>
+        /// Количество кликов
+        /// </summary>
         public int ClicksCount { get; set; }
+
+        /// <summary>
+        /// Количество показов
+        /// </summary>
+        public int ShowsCount { get; set; }
+
+        /// <summary>
+        /// Стоимость цели
+        /// </summary>
+        public decimal TargetCost { get; set; }
+
+        public decimal CPM { get; set; }
     }
 }

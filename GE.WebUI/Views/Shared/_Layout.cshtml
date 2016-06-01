@@ -8,6 +8,7 @@
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
     var bannerControllerBlackList = new string[] { "employees", "account" };
+    var pageBanners = BannerProvider.Provider.GetPageBanners<DbContext>(controllerName, actionName);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +59,7 @@
 
         <div class="container">
             @{
-                var banner = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.Top, controllerName, actionName);
+                var banner = pageBanners.SingleOrDefault(x=>x.Place==SxBanner.BannerPlace.Top);
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
@@ -74,7 +75,7 @@
             @RenderBody()
 
             @{
-                banner = BannerProvider.Provider.GetBanner(SxBanner.BannerPlace.Bottom, controllerName, actionName);
+                banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom);
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     <br />

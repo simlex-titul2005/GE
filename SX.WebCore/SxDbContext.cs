@@ -51,6 +51,8 @@ namespace SX.WebCore
 
         public DbSet<SxSiteSetting> SiteSettings { get; set; }
 
+        public DbSet<SxSiteTest> SiteTests { get; set; }
+
         public DbSet<SxStatistic> Statistic { get; set; }
 
         public DbSet<SxVideo> Videos { get; set; }
@@ -86,6 +88,9 @@ namespace SX.WebCore
             modelBuilder.Entity<SxVideoLink>().HasRequired(x => x.Video).WithMany().HasForeignKey(x => new { x.VideoId }).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<SxEmployee>().HasKey(x => x.Id).HasRequired(x=>x.User).WithOptional().WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<SxBanner>().Property(x => x.TargetCost).HasColumnType("money");
+            modelBuilder.Entity<SxBanner>().Property(x => x.CPM).HasColumnType("money");
         }
     }
 }

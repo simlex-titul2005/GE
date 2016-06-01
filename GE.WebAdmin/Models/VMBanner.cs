@@ -22,5 +22,19 @@ namespace GE.WebAdmin.Models
         public SxBanner.BannerPlace Place { get; set; }
 
         public int ClicksCount { get; set; }
+
+        public int ShowsCount { get; set; }
+
+        public decimal TargetCost { get; set; }
+
+        public decimal CPM { get; set; }
+
+        public decimal CTR
+        {
+            get
+            {
+                return Math.Round(ShowsCount == 0 ? 0 : (decimal)ClicksCount / ShowsCount * 100, 2);
+            }
+        }
     }
 }

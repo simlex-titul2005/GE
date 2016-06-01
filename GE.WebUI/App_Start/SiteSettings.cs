@@ -1,19 +1,15 @@
-﻿using GE.WebCoreExtantions.Repositories;
+﻿using GE.WebCoreExtantions;
 using SX.WebCore;
+using SX.WebCore.Repositories;
+using SX.WebCore.Resources;
 using System;
+using System.Collections.Generic;
 using System.Runtime.Caching;
 
 namespace GE.WebUI
 {
     public static class SiteSettings
     {
-        private static MemoryCache _cache;
-        static SiteSettings()
-        {
-            if(_cache==null)
-                _cache = new MemoryCache("CACHE_SITE_SETTINGS");
-        }
-
         private static CacheItemPolicy _defaultPolicy
         {
             get
@@ -25,17 +21,30 @@ namespace GE.WebUI
             }
         }
 
+        private static Dictionary<string, SxSiteSetting> getSettings()
+        {
+            var data = new RepoSiteSetting<DbContext>().GetByKeys(
+                    Settings.siteName,
+                    Settings.siteLogoPath,
+                    Settings.siteBgPath,
+                    Settings.emptyGameIconPath,
+                    Settings.emptyGameGoodImagePath,
+                    Settings.emptyGameBadImagePath
+                );
+
+            return data;
+        }
+
         public static SxSiteSetting Get(string keySetting)
         {
-            var setting = _cache.Get(keySetting);
-            if (setting != null) return (SxSiteSetting)setting;
+            var settings = (Dictionary<string, SxSiteSetting>)MvcApplication.AppCache["CACHE_SITE_SETTINGS"];
+            if (settings == null)
+            {
+                settings = getSettings();
+                MvcApplication.AppCache.Add("CACHE_SITE_SETTINGS", settings, _defaultPolicy);
+            }
 
-            var repo = new RepoSiteSetting();
-            var value = repo.GetByKey(keySetting);
-            var newItem = value == null || (value != null && value.Value == null) ? new SxSiteSetting { Id = keySetting, Value = null } : value;
-            _cache.Add(new CacheItem(keySetting, newItem), _defaultPolicy);
-
-            return (SxSiteSetting)_cache.Get(keySetting);
+            return settings.ContainsKey(keySetting) ? settings[keySetting] : null;
         }
     }
 }

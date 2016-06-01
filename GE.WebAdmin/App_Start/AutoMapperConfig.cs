@@ -114,6 +114,16 @@ namespace GE.WebAdmin
                     //request
                     cfg.CreateMap<SxRequest, VMRequest>();
 
+                    //site test
+                    cfg.CreateMap<SxSiteTest, VMSiteTest>();
+                    cfg.CreateMap<SxSiteTest, VMEditSiteTest>();
+                    cfg.CreateMap<VMEditSiteTest, SxSiteTest>();
+
+                    //site test block
+                    cfg.CreateMap<SxSiteTestBlock, VMSiteTestBlock>();
+                    cfg.CreateMap<SxSiteTestBlock, VMEditSiteTestBlock>();
+                    cfg.CreateMap<VMEditSiteTestBlock, SxSiteTestBlock>();
+
                     //seo info
                     cfg.CreateMap<SxSeoInfo, VMSeoInfo>();
                     cfg.CreateMap<VMSeoInfo, SxSeoInfo>();

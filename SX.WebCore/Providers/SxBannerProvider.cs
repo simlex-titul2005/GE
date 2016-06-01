@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SX.WebCore.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SX.WebCore.Providers
 {
@@ -12,25 +14,12 @@ namespace SX.WebCore.Providers
             _banners = banners;
         }
 
-        public SxBanner GetBanner(SxBanner.BannerPlace place, string controllerName = null, string actionName = null)
-        {
-            SxBanner banner = null;
-            if (controllerName == null && actionName == null)
-                banner = getPlaceBanner(place);
-            else if (controllerName != null && actionName == null)
-                banner = getControllerBanner(place, controllerName);
-            else if (controllerName != null && actionName != null)
-                banner = getActionBanner(place, controllerName, actionName);
-
-            return banner;
-        }
-
         private static SxBanner getPlaceBanner(SxBanner.BannerPlace place)
         {
             SxBanner banner = null;
             var data = _banners().Where(x => x.Place == place && x.ControllerName == null && x.ActionName == null).ToArray();
             banner = getRandomBanner(data);
-            return banner ?? getPlaceBanner(place);
+            return banner;
         }
 
         private static SxBanner getControllerBanner(SxBanner.BannerPlace place, string controllerName)
@@ -62,16 +51,37 @@ namespace SX.WebCore.Providers
             return banner;
         }
 
-        public SxBanner[] GetPageBanners(string controllerName, string actionName)
+        private static SxBanner getBanner(SxBanner.BannerPlace place, string controllerName = null, string actionName = null)
+        {
+            if (place == SxBanner.BannerPlace.Unknown) return null;
+
+            SxBanner banner = null;
+            if (controllerName == null && actionName == null)
+                banner = getPlaceBanner(place);
+            else if (controllerName != null && actionName == null)
+                banner = getControllerBanner(place, controllerName);
+            else if (controllerName != null && actionName != null)
+                banner = getActionBanner(place, controllerName, actionName);
+
+            return banner;
+        }
+
+        public SxBanner[] GetPageBanners<TDbContext>(string controllerName, string actionName) where TDbContext : SxDbContext
         {
             var list = new List<SxBanner>();
             foreach (var p in Enum.GetValues(typeof(SxBanner.BannerPlace)))
             {
                 var place = (SxBanner.BannerPlace)p;
-                var banner = GetBanner(place, controllerName, actionName);
+                var banner = getBanner(place, controllerName, actionName);
                 if (banner != null)
                     list.Add(banner);
             }
+
+            Task.Run(() =>
+            {
+                var keys = list.Select(x => x.Id).ToArray();
+                new RepoBanner<TDbContext>().AddShows(keys);
+            });
 
             return list.ToArray();
         }

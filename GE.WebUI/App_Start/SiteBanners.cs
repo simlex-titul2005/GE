@@ -10,14 +10,6 @@ namespace GE.WebUI
 {
     public static class SiteBanners
     {
-        private static readonly string _cacheBannersKey = "CACHE_BANNER_LIST";
-        private static MemoryCache _cache;
-        static SiteBanners()
-        {
-            if (_cache == null)
-                _cache = new MemoryCache("CACHE_SITE_BANNERS");
-        }
-
         private static CacheItemPolicy _defaultPolicy
         {
             get
@@ -33,21 +25,17 @@ namespace GE.WebUI
         {
             get
             {
-                var cacheBanners = _cache.Get(_cacheBannersKey);
+                var cacheBanners = (SxBannerCollection)MvcApplication.AppCache["CACHE_SITE_BANNERS"];
                 if (cacheBanners == null)
                 {
-                    var collection = new SxBannerCollection();
-                    collection.Banners = new RepoBanner<DbContext>().All.ToArray();
+                    cacheBanners = new SxBannerCollection();
+                    cacheBanners.Banners = new RepoBanner<DbContext>().All.ToArray();
+                    cacheBanners.BannerGroups = new RepoBannerGroup().All.ToArray();
 
-                    collection.BannerGroups = new RepoBannerGroup().All.ToArray();
+                    MvcApplication.AppCache.Add("CACHE_SITE_BANNERS", cacheBanners, _defaultPolicy);
+                }
 
-                    _cache.Add(new CacheItem(_cacheBannersKey, collection), _defaultPolicy);
-                    return collection;
-                }
-                else
-                {
-                    return (SxBannerCollection)_cache[_cacheBannersKey];
-                }
+                return cacheBanners;
             }
         }
     }

@@ -3,14 +3,12 @@ using System;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Mvc;
-using System.Web.SessionState;
 using System.Xml.Linq;
 
 namespace GE.WebUI.Controllers
 {
     public partial class ValutesController : BaseController
     {
-        private static MemoryCache _cache;
         private static CacheItemPolicy _defaultPolicy
         {
             get
@@ -21,10 +19,6 @@ namespace GE.WebUI.Controllers
                 };
             }
         }
-        public ValutesController()
-        {
-            _cache = _cache ?? new MemoryCache("GE_CACHE_VALUTES");
-        }
 
         [HttpPost]
         public virtual JsonResult GetCurCourse(string cc)
@@ -32,9 +26,12 @@ namespace GE.WebUI.Controllers
             var strD = DateTime.Now.ToString("dd/MM/yyyy");
             var url = string.Format("http://www.cbr.ru/scripts/XML_daily.asp?date_req={0}", strD);
 
-            if (_cache["VALUTES"] == null)
-                _cache.Add(new CacheItem("VALUTES", XDocument.Load(url)), _defaultPolicy);
-            var doc = (XDocument)_cache["VALUTES"];
+            var doc = (XDocument)MvcApplication.AppCache["CACHE_VALUTES_XML_DOCUMENT"];
+            if (doc == null)
+            {
+                doc = XDocument.Load(url);
+                MvcApplication.AppCache.Add("CACHE_VALUTES_XML_DOCUMENT", doc, _defaultPolicy);
+            }
 
             var data = doc.Descendants("Valute")
                 .Select(x => new SxVMValute

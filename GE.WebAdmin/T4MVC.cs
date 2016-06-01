@@ -54,6 +54,8 @@ public static partial class MVC
     public static GE.WebAdmin.Controllers.SeoKeywordsController SeoKeywords = new GE.WebAdmin.Controllers.T4MVC_SeoKeywordsController();
     public static GE.WebAdmin.Controllers.SeoWordCounterController SeoWordCounter = new GE.WebAdmin.Controllers.T4MVC_SeoWordCounterController();
     public static GE.WebAdmin.Controllers.SettingsController Settings = new GE.WebAdmin.Controllers.T4MVC_SettingsController();
+    public static GE.WebAdmin.Controllers.SiteTestBlocksController SiteTestBlocks = new GE.WebAdmin.Controllers.T4MVC_SiteTestBlocksController();
+    public static GE.WebAdmin.Controllers.SiteTestsController SiteTests = new GE.WebAdmin.Controllers.T4MVC_SiteTestsController();
     public static GE.WebAdmin.Controllers.StatisticsController Statistics = new GE.WebAdmin.Controllers.T4MVC_StatisticsController();
     public static GE.WebAdmin.Controllers.UsersController Users = new GE.WebAdmin.Controllers.T4MVC_UsersController();
     public static GE.WebAdmin.Controllers.ValutesController Valutes = new GE.WebAdmin.Controllers.T4MVC_ValutesController();
@@ -228,6 +230,7 @@ namespace Links
                 public static readonly string bootstrap_datetimepicker_min_js = Url("bootstrap-datetimepicker.min.js");
                 public static readonly string lightbox_min_js = Url("lightbox.min.js");
                 public static readonly string moment_with_locales_min_js = Url("moment-with-locales.min.js");
+                public static readonly string raphael_min_js = Url("raphael.min.js");
                 public static readonly string site_min_js = Url("site.min.js");
             }
         
@@ -239,6 +242,7 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string background_jpg = Url("background.jpg");
+            public static readonly string bannerPlaces_jpg = Url("bannerPlaces.jpg");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -295,6 +299,7 @@ namespace Links
                         public const string bootstrap_datetimepicker_min_js = "~/Content/dist/js/bootstrap-datetimepicker.min.js"; 
                         public const string lightbox_min_js = "~/Content/dist/js/lightbox.min.js"; 
                         public const string moment_with_locales_min_js = "~/Content/dist/js/moment-with-locales.min.js"; 
+                        public const string raphael_min_js = "~/Content/dist/js/raphael.min.js"; 
                         public const string site_min_js = "~/Content/dist/js/site.min.js"; 
                     }
                 }

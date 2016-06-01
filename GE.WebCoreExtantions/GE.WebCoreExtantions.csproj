@@ -90,7 +90,6 @@
     <Compile Include="Repositories\RepoVideo.cs" />
     <Compile Include="Repositories\RepoSeoInfo.cs" />
     <Compile Include="Repositories\RepoSeoKeywords.cs" />
-    <Compile Include="Repositories\RepoSiteSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SX.WebCore\SX.WebCore.csproj">

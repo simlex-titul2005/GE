@@ -8,11 +8,11 @@ using GE.WebCoreExtantions;
 using SX.WebCore.Managers;
 using SX.WebCore;
 using Microsoft.Owin.Security.Google;
-using Microsoft.Owin.Security.MicrosoftAccount;
 using System.Configuration;
+using System.Web.Http;
 
-[assembly: OwinStartup(typeof(AspNetIdentityApp.Startup))]
-namespace AspNetIdentityApp
+[assembly: OwinStartup(typeof(GE.WebUI.Startup))]
+namespace GE.WebUI
 {
     public class Startup
     {
@@ -23,6 +23,11 @@ namespace AspNetIdentityApp
             app.CreatePerOwinContext<SxAppUserManager>(SxAppUserManager.Create<DbContext>);
             app.CreatePerOwinContext<SxAppSignInManager>(SxAppSignInManager.Create);
 
+            var httpConfiguration = new HttpConfiguration();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+            app.UseWebApi(httpConfiguration);
+
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
@@ -32,8 +37,8 @@ namespace AspNetIdentityApp
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.  
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<SxAppUserManager, SxAppUser>(
-                        validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                            validateInterval: TimeSpan.FromMinutes(30),
+                            regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);

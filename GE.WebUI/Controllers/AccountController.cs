@@ -1,6 +1,6 @@
 ﻿namespace GE.WebUI.Controllers
 {
-    public partial class AccountController : SX.WebCore.Controllers.AccountController
+    public partial class AccountController : SX.WebCore.Controllers.SxAccountController
     {
 
     }

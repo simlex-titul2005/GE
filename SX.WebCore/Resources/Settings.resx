@@ -122,7 +122,7 @@
     <comment>Наименование админ панели</comment>
   </data>
   <data name="adminPanelVersion" xml:space="preserve">
-    <value>v. 1.0.0.7</value>
+    <value>v. 1.0.0.8</value>
     <comment>Версия админ панели</comment>
   </data>
   <data name="emptyGameBadImagePath" xml:space="preserve">
@@ -144,6 +144,10 @@
   <data name="siteBgPath" xml:space="preserve">
     <value>siteBgPath</value>
     <comment>Путь к файлу фона сайта</comment>
+  </data>
+  <data name="siteDomain" xml:space="preserve">
+    <value>siteDomain</value>
+    <comment>Домен управляемого сайта</comment>
   </data>
   <data name="siteFaveiconPath" xml:space="preserve">
     <value>siteFaveiconPath</value>

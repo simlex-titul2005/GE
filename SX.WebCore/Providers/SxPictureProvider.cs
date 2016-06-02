@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 
 namespace SX.WebCore.Providers
 {
-    public static class PictureProvider
+    public static class SxPictureProvider
     {
         public static byte[] ScaleImage(byte[] inputByteArray, ImageScaleMode scaleMode = ImageScaleMode.Width, int? destWidth = null, int? destHeight = null)
         {
-            var originalImage = imageFromByteArray(inputByteArray);
+            var originalImage = imageFromByteArray(ref inputByteArray);
 
             switch (scaleMode)
             {
@@ -31,13 +30,13 @@ namespace SX.WebCore.Providers
             byte[] resultByteArray = null;
             using (MemoryStream stream = new MemoryStream())
             {
-                bitmap.Save(stream, (ImageFormat)originalImage.RawFormat);
+                bitmap.Save(stream, originalImage.RawFormat);
                 resultByteArray = stream.ToArray();
             }
             return resultByteArray;
         }
 
-        private static Image imageFromByteArray(byte[] bytes)
+        private static Image imageFromByteArray(ref byte[] bytes)
         {
             using (var ms = new MemoryStream(bytes))
             {

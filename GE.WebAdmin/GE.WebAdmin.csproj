@@ -157,6 +157,8 @@
     <Content Include="Content\dist\images\next.png" />
     <Content Include="Content\dist\images\prev.png" />
     <Content Include="Content\dist\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Content\dist\js\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Content\dist\js\jquery.validate.min.js" />
     <Content Include="Content\dist\js\lightbox.min.js" />
     <Content Include="Content\dist\js\moment-with-locales.min.js" />
     <Content Include="Content\dist\js\raphael.min.js" />

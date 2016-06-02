@@ -84,7 +84,6 @@
     <Compile Include="Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Repositories\RepoMaterialTag.cs" />
     <Compile Include="Repositories\RepoNews.cs" />
-    <Compile Include="Repositories\RepoPicture.cs" />
     <Compile Include="Repositories\RepoRedirect.cs" />
     <Compile Include="Repositories\RepoRequest.cs" />
     <Compile Include="Repositories\RepoVideo.cs" />

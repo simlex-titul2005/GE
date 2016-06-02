@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GE.WebAdmin.Models
 {
@@ -27,5 +23,10 @@ namespace GE.WebAdmin.Models
         public string SiteFaveiconPath { get; set; }
         [MaxLength(255)]
         public string OldSiteFaveiconPath { get; set; }
+
+        [Required, Display(Name = "Домен управляемого сайта"), MaxLength(100), DataType(DataType.Url)]
+        public string SiteDomain { get; set; }
+        [MaxLength(100)]
+        public string OldSiteDomain { get; set; }
     }
 }

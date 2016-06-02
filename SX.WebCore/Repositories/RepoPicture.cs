@@ -1,13 +1,12 @@
-﻿using SX.WebCore;
+﻿using Dapper;
 using SX.WebCore.Abstract;
 using System;
 using System.Data.SqlClient;
 using System.Linq;
-using Dapper;
 
-namespace GE.WebCoreExtantions.Repositories
+namespace SX.WebCore.Repositories
 {
-    public sealed class RepoPicture : SxDbRepository<Guid, SxPicture, DbContext>
+    public sealed class RepoPicture<TDbContext> : SxDbRepository<Guid, SxPicture, TDbContext> where TDbContext : SxDbContext
     {
         public override SxPicture GetByKey(params object[] id)
         {
@@ -44,7 +43,7 @@ COMMIT TRANSACTION";
 
             using (var connection = new SqlConnection(base.ConnectionString))
             {
-                connection.Execute(query, new { picture_id= id[0] });
+                connection.Execute(query, new { picture_id = id[0] });
             }
         }
     }

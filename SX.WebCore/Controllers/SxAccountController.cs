@@ -12,7 +12,7 @@ using System;
 namespace SX.WebCore.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public abstract class SxAccountController : Controller
     {
         private SxAppSignInManager _signInManager;
         private SxAppUserManager _userManager;
@@ -20,11 +20,11 @@ namespace SX.WebCore.Controllers
         protected virtual Action<SxVMLogin> ActionLogin { get; }
         protected virtual Action ActionLogOff { get; }
 
-        public AccountController()
+        public SxAccountController()
         {
         }
 
-        public AccountController(SxAppUserManager userManager, SxAppSignInManager signInManager)
+        public SxAccountController(SxAppUserManager userManager, SxAppSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;

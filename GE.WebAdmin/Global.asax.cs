@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Runtime.Caching;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -11,6 +11,7 @@ namespace GE.WebAdmin
     public class MvcApplication : System.Web.HttpApplication
     {
         private static Dictionary<string, string> _usersOnSite;
+        private static MemoryCache _cache;
         public static Dictionary<string, string> UsersOnSite
         {
             get
@@ -25,6 +26,7 @@ namespace GE.WebAdmin
         private static MapperConfiguration _mapperConfiguration;
         protected void Application_Start()
         {
+            _cache = new MemoryCache("SXADMIN_CACHE");
             ErrorProvider.Configure(Server.MapPath("~/Logs"));
             Database.SetInitializer<WebCoreExtantions.DbContext>(null);
             AreaRegistration.RegisterAllAreas();
@@ -38,6 +40,14 @@ namespace GE.WebAdmin
             get
             {
                 return _mapperConfiguration;
+            }
+        }
+
+        public static MemoryCache AppCache
+        {
+            get
+            {
+                return _cache;
             }
         }
 

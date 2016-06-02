@@ -94,6 +94,7 @@ namespace GE.WebAdmin.Controllers
         {
 
             var settings = (_repo as RepoSiteSetting<DbContext>).GetByKeys(
+                    Settings.siteDomain,
                     Settings.siteLogoPath,
                     Settings.siteName,
                     Settings.siteBgPath,
@@ -102,12 +103,14 @@ namespace GE.WebAdmin.Controllers
 
             var viewModel = new VMSiteSettings
             {
+                SiteDomain= settings.ContainsKey(Settings.siteDomain) ? settings[Settings.siteDomain].Value : null,
                 LogoPath = settings.ContainsKey(Settings.siteLogoPath) ? settings[Settings.siteLogoPath].Value : null,
                 SiteName = settings.ContainsKey(Settings.siteName) ? settings[Settings.siteName].Value : null,
                 SiteBgPath = settings.ContainsKey(Settings.siteBgPath) ? settings[Settings.siteBgPath].Value : null,
                 SiteFaveiconPath = settings.ContainsKey(Settings.siteFaveiconPath) ? settings[Settings.siteFaveiconPath].Value : null,
             };
 
+            viewModel.OldSiteDomain = viewModel.SiteDomain;
             viewModel.OldLogoPath = viewModel.LogoPath;
             viewModel.OldSiteName = viewModel.SiteName;
             viewModel.OldSiteBgPath = viewModel.SiteBgPath;
@@ -115,19 +118,18 @@ namespace GE.WebAdmin.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = "admin")]
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin"), HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult EditSite(VMSiteSettings model)
         {
             if (ModelState.IsValid)
             {
-                var isExists = !string.IsNullOrEmpty(model.OldLogoPath) || !string.IsNullOrEmpty(model.OldSiteName) || !string.IsNullOrEmpty(model.OldSiteBgPath) || !string.IsNullOrEmpty(model.OldSiteFaveiconPath);
-                var isModified = !Equals(model.LogoPath, model.OldLogoPath) || !Equals(model.SiteName, model.OldSiteName) || !Equals(model.SiteBgPath, model.OldSiteBgPath) || !Equals(model.SiteFaveiconPath, model.OldSiteFaveiconPath);
+                var isExists = !string.IsNullOrEmpty(model.OldSiteDomain) || !string.IsNullOrEmpty(model.OldLogoPath) || !string.IsNullOrEmpty(model.OldSiteName) || !string.IsNullOrEmpty(model.OldSiteBgPath) || !string.IsNullOrEmpty(model.OldSiteFaveiconPath);
+                var isModified = !Equals(model.SiteDomain, model.OldSiteDomain) || !Equals(model.LogoPath, model.OldLogoPath) || !Equals(model.SiteName, model.OldSiteName) || !Equals(model.SiteBgPath, model.OldSiteBgPath) || !Equals(model.SiteFaveiconPath, model.OldSiteFaveiconPath);
 
                 if (!isExists)
                 {
                     var settings = new SxSiteSetting[] {
+                        new SxSiteSetting { Id = Settings.siteDomain, Value = model.SiteDomain },
                         new SxSiteSetting { Id = Settings.siteLogoPath, Value = model.LogoPath },
                         new SxSiteSetting { Id = Settings.siteName, Value = model.SiteName },
                         new SxSiteSetting { Id = Settings.siteBgPath, Value = model.SiteBgPath },
@@ -143,6 +145,7 @@ namespace GE.WebAdmin.Controllers
                 }
                 else if (isExists && isModified)
                 {
+                    _repo.Update(new SxSiteSetting { Id = Settings.siteDomain, Value = model.SiteDomain }, true, "Value");
                     _repo.Update(new SxSiteSetting { Id = Settings.siteLogoPath, Value = model.LogoPath }, true, "Value");
                     _repo.Update(new SxSiteSetting { Id = Settings.siteName, Value = model.SiteName }, true, "Value");
                     _repo.Update(new SxSiteSetting { Id = Settings.siteBgPath, Value = model.SiteBgPath }, true, "Value");

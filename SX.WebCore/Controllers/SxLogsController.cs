@@ -6,8 +6,7 @@ using System.Web.Mvc;
 
 namespace SX.WebCore.Controllers
 {
-    [Authorize(Roles = "architect")]
-    public abstract class LogsController : Controller
+    public abstract class SxLogsController : Controller
     {
         [HttpGet]
         public virtual FileResult GetLog(string siteName=null)

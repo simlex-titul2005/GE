@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -95,6 +96,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -140,8 +142,9 @@
     <Compile Include="Attrubutes\MinWordsCountAttribute.cs" />
     <Compile Include="Attrubutes\MaxWordsCountAttribute.cs" />
     <Compile Include="Attrubutes\NotLogRequestAttribute.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\LogsController.cs" />
+    <Compile Include="Controllers\SxAccountController.cs" />
+    <Compile Include="Controllers\SxPicturesController.cs" />
+    <Compile Include="Controllers\SxLogsController.cs" />
     <Compile Include="HtmlHelpers\SxGridView.cs" />
     <Compile Include="HtmlHelpers\SxList.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
@@ -156,13 +159,14 @@
     <Compile Include="Managers\SxAppUserManager.cs" />
     <Compile Include="Managers\SxSeoWordCounter.cs" />
     <Compile Include="Providers\SxErrorProvider.cs" />
-    <Compile Include="Providers\PictureProvider.cs" />
+    <Compile Include="Providers\SxPictureProvider.cs" />
     <Compile Include="Providers\QueryProvider.cs" />
     <Compile Include="Providers\SxBannerProvider.cs" />
     <Compile Include="Providers\VideoProvider.cs" />
     <Compile Include="Repositories\RepoBannedUrl.cs" />
     <Compile Include="Repositories\RepoComment.cs" />
     <Compile Include="Repositories\RepoEmployee.cs" />
+    <Compile Include="Repositories\RepoPicture.cs" />
     <Compile Include="Repositories\RepoSiteSetting.cs" />
     <Compile Include="Repositories\RepoSiteTestQuestion.cs" />
     <Compile Include="Repositories\RepoSiteTestBlock.cs" />

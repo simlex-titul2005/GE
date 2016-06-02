@@ -70,7 +70,7 @@ namespace SX.WebCore.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v. 1.0.0.7.
+        ///   Looks up a localized string similar to v. 1.0.0.8.
         /// </summary>
         public static string adminPanelVersion {
             get {
@@ -120,6 +120,15 @@ namespace SX.WebCore.Resources {
         public static string siteBgPath {
             get {
                 return ResourceManager.GetString("siteBgPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to siteDomain.
+        /// </summary>
+        public static string siteDomain {
+            get {
+                return ResourceManager.GetString("siteDomain", resourceCulture);
             }
         }
         

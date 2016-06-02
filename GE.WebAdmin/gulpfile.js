@@ -75,8 +75,6 @@ function createCss() {
 function createJs() {
     gulp.src([
         'bower_components/jquery/dist/jquery.min.js',
-        'bower_components/jquery-validation/dist/jquery.validate.min.js',
-        'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
         'bower_components/metisMenu/dist/metisMenu.min.js',
         'content/sx/js/**/*.js',
@@ -99,7 +97,9 @@ function createJs() {
         'bower_components/moment/min/moment-with-locales.min.js',
         'bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         'bower_components/lightbox2/dist/js/lightbox.min.js',
-        'bower_components/raphael/raphael.min.js'
+        'bower_components/raphael/raphael.min.js',
+        'bower_components/jquery-validation/dist/jquery.validate.min.js',
+        'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js'
     ])
         .pipe(gulp.dest('content/dist/js'));
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNet.Identity;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class AccountController : SX.WebCore.Controllers.AccountController
+    public partial class AccountController : SX.WebCore.Controllers.SxAccountController
     {
         protected override Action<SxVMLogin> ActionLogin
         {

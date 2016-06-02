@@ -252,6 +252,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SiteTestBlocksController.cs" />
+    <Compile Include="Controllers\SiteTestQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\VideoLinksController.cs" />
     <Compile Include="Controllers\VideosController.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="Models\VMEditProjectStep.cs" />
     <Compile Include="Models\VMEditSiteTest.cs" />
     <Compile Include="Models\VMEditSiteTestBlock.cs" />
+    <Compile Include="Models\VMEditSiteTestQuestion.cs" />
     <Compile Include="Models\VMEditVideo.cs" />
     <Compile Include="Models\VMEmployee.cs" />
     <Compile Include="Models\VMFAQ.cs" />
@@ -362,6 +364,7 @@
     <Compile Include="Models\VMSiteSettings.cs" />
     <Compile Include="Models\VMSiteTest.cs" />
     <Compile Include="Models\VMSiteTestBlock.cs" />
+    <Compile Include="Models\VMSiteTestQuestion.cs" />
     <Compile Include="Models\VMStatisticUserLogin.cs" />
     <Compile Include="Models\VMUser.cs" />
     <Compile Include="Models\VMVideo.cs" />
@@ -400,6 +403,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SiteTestBlocksController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SiteTestQuestionsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SiteTestsController.generated.cs">
@@ -533,6 +539,13 @@
     <Content Include="Views\SiteTestBlocks\_GridView.cshtml" />
     <Content Include="Views\SiteTestBlocks\Edit.cshtml" />
     <Content Include="Views\SiteTestBlocks\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditSiteTest.cshtml" />
+    <Content Include="Views\SiteTests\_FindGridView.cshtml" />
+    <Content Include="Views\SiteTestQuestions\_GridView.cshtml" />
+    <Content Include="Views\SiteTestQuestions\Edit.cshtml" />
+    <Content Include="Views\SiteTestQuestions\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditSiteTestBlock.cshtml" />
+    <Content Include="Views\SiteTestBlocks\_FindGridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

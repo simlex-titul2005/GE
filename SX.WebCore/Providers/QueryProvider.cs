@@ -32,15 +32,13 @@ namespace SX.WebCore.Providers
             var sb = new StringBuilder();
             if (orders == null || orderCount==0)
             {
-                sb.Append(","+dc + " ");
-                sb.Append(dsd.ToString().ToUpper());
+                sb.AppendFormat(",{0} {1}", dc, dsd.ToString().ToUpper());
             }
             else
             {
                 foreach (var order in orders.Where(x=>x.Value!=SortDirection.Unknown))
                 {
-                    sb.Append(","+order.Key + " ");
-                    sb.Append(order.Value.ToString().ToUpper());
+                    sb.AppendFormat(",{0} {1}", order.Key, order.Value.ToString().ToUpper());
                 }
             }
 

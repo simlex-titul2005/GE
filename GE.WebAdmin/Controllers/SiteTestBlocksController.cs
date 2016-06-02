@@ -39,6 +39,11 @@ namespace GE.WebAdmin.Controllers
         {
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
+            var whereObject = filterModel;
+
+            var testTitle = Request.Form["TestTitle"];
+            if (!string.IsNullOrEmpty(testTitle) )
+                whereObject.Test = new VMSiteTest { Title = Request.Form["TestTitle"] };
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
             var totalItems = (_repo as RepoSiteTestBlock<DbContext>).Count(filter);
@@ -51,16 +56,39 @@ namespace GE.WebAdmin.Controllers
             return PartialView("_GridView", viewModel);
         }
 
+        [HttpPost]
+        public virtual PartialViewResult FindGridView(int testId, VMSiteTestBlock filterModel, int page = 1, int pageSize = 10)
+        {
+            filterModel.TestId = testId;
+            ViewBag.Filter = filterModel;
+            var filter = new WebCoreExtantions.Filter(page, pageSize) { WhereExpressionObject= filterModel };
+            filter.WhereExpressionObject = filterModel;
+            var totalItems = (_repo as RepoSiteTestBlock<DbContext>).Count(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
+
+            var viewModel = (_repo as RepoSiteTestBlock<DbContext>).Query(filter).ToArray()
+                .Select(x => Mapper.Map<SxSiteTestBlock, VMSiteTestBlock>(x)).ToArray();
+
+            return PartialView("_FindGridView", viewModel);
+        }
+
+
         [HttpGet]
         public virtual ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id) : new SxSiteTestBlock();
+            if (id.HasValue)
+                ViewBag.SiteTestName = new RepoSiteTest<DbContext>().GetByKey(model.TestId).Title;
             return View(Mapper.Map<SxSiteTestBlock, VMEditSiteTestBlock>(model));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditSiteTestBlock model)
         {
+            if (model.TestId == 0)
+                ModelState.AddModelError("TestId", "Выберите тест");
+
             var redactModel = Mapper.Map<VMEditSiteTestBlock, SxSiteTestBlock>(model);
             if (ModelState.IsValid)
             {
@@ -68,7 +96,7 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, true, "TestId");
+                    newModel = _repo.Update(redactModel, true, "Title", "TestId", "Description");
                 return RedirectToAction("index");
             }
             else

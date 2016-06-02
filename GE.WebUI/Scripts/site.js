@@ -70,3 +70,13 @@ function playVideoById(id, videoId) {
         }
     });
 }
+
+//resize footer
+function resizeFooter() {
+    var $footer = $('footer');
+    var h = $footer.height();
+    $footer.css({
+        'position': 'absolute'
+    });
+    $('body').css('margin-bottom', h + 'px');
+}

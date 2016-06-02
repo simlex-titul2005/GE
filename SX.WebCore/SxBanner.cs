@@ -30,15 +30,19 @@ namespace SX.WebCore
         /// </summary>
         public enum BannerPlace : byte
         {
-            Unknown=0,
+            Unknown = 0,
 
-            Top=1,
+            Top = 1,
 
-            Right=2,
+            Average = 2,
 
-            Bottom=3,
+            Intermediate = 3,
 
-            Left=4
+            Right = 4,
+
+            Bottom = 5,
+
+            Left = 6
         }
 
         /// <summary>

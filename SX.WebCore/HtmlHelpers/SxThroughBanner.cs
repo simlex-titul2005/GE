@@ -18,7 +18,10 @@ namespace SX.WebCore.HtmlHelpers
             a.MergeAttribute("rel", "nofollow");
 
             var img = new TagBuilder("img");
-            img.MergeAttribute("src", FuncBannerImgUrl(banner));
+            img.AddCssClass("lazy");
+            img.MergeAttribute("data-src", FuncBannerImgUrl(banner));
+            img.MergeAttribute("data-id", banner.Id.ToString().ToLower());
+            img.MergeAttribute("src", null);
             img.MergeAttribute("alt", banner.Title);
             a.InnerHtml += img;
 

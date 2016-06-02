@@ -51,6 +51,22 @@ namespace GE.WebAdmin.Controllers
             return PartialView("_GridView", viewModel);
         }
 
+        [HttpPost]
+        public virtual PartialViewResult FindGridView(VMSiteTest filterModel, int page = 1, int pageSize = 10)
+        {
+            ViewBag.Filter = filterModel;
+            var filter = new WebCoreExtantions.Filter(page, pageSize);
+            filter.WhereExpressionObject = filterModel;
+            var totalItems = (_repo as RepoSiteTest<DbContext>).Count(filter);
+            filter.PagerInfo.TotalItems = totalItems;
+            ViewBag.PagerInfo = filter.PagerInfo;
+
+            var viewModel = (_repo as RepoSiteTest<DbContext>).Query(filter).ToArray()
+                .Select(x => Mapper.Map<SxSiteTest, VMSiteTest>(x)).ToArray();
+
+            return PartialView("_FindGridView", viewModel);
+        }
+
         [HttpGet]
         public virtual ViewResult Edit(int? id)
         {
@@ -68,7 +84,7 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, true, "Title");
+                    newModel = _repo.Update(redactModel, true, "Title", "Description");
                 return RedirectToAction("index");
             }
             else

@@ -25,10 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace GE.WebAdmin.Controllers
 {
-    public partial class SiteTestBlocksController
+    public partial class SiteTestQuestionsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected SiteTestBlocksController(Dummy d) { }
+        protected SiteTestQuestionsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -58,12 +58,6 @@ namespace GE.WebAdmin.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.PartialViewResult FindGridView()
-        {
-            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindGridView);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ViewResult Edit()
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
@@ -76,13 +70,13 @@ namespace GE.WebAdmin.Controllers
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public SiteTestBlocksController Actions { get { return MVC.SiteTestBlocks; } }
+        public SiteTestQuestionsController Actions { get { return MVC.SiteTestQuestions; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "SiteTestBlocks";
+        public readonly string Name = "SiteTestQuestions";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "SiteTestBlocks";
+        public const string NameConst = "SiteTestQuestions";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -91,7 +85,6 @@ namespace GE.WebAdmin.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string FindGridView = "FindGridView";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
         }
@@ -100,7 +93,6 @@ namespace GE.WebAdmin.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string FindGridView = "FindGridView";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
         }
@@ -115,17 +107,6 @@ namespace GE.WebAdmin.Controllers
             public readonly string page = "page";
             public readonly string filterModel = "filterModel";
             public readonly string order = "order";
-        }
-        static readonly ActionParamsClass_FindGridView s_params_FindGridView = new ActionParamsClass_FindGridView();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_FindGridView FindGridViewParams { get { return s_params_FindGridView; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_FindGridView
-        {
-            public readonly string testId = "testId";
-            public readonly string filterModel = "filterModel";
-            public readonly string page = "page";
-            public readonly string pageSize = "pageSize";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -154,22 +135,20 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _FindGridView = "_FindGridView";
                 public readonly string _GridView = "_GridView";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
-            public readonly string _FindGridView = "~/Views/SiteTestBlocks/_FindGridView.cshtml";
-            public readonly string _GridView = "~/Views/SiteTestBlocks/_GridView.cshtml";
-            public readonly string Edit = "~/Views/SiteTestBlocks/Edit.cshtml";
-            public readonly string Index = "~/Views/SiteTestBlocks/Index.cshtml";
+            public readonly string _GridView = "~/Views/SiteTestQuestions/_GridView.cshtml";
+            public readonly string Edit = "~/Views/SiteTestQuestions/Edit.cshtml";
+            public readonly string Index = "~/Views/SiteTestQuestions/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_SiteTestBlocksController : GE.WebAdmin.Controllers.SiteTestBlocksController
+    public partial class T4MVC_SiteTestQuestionsController : GE.WebAdmin.Controllers.SiteTestQuestionsController
     {
-        public T4MVC_SiteTestBlocksController() : base(Dummy.Instance) { }
+        public T4MVC_SiteTestQuestionsController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int page);
@@ -184,31 +163,16 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMSiteTestBlock filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMSiteTestQuestion filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page);
 
         [NonAction]
-        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMSiteTestBlock filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
+        public override System.Web.Mvc.PartialViewResult Index(GE.WebAdmin.Models.VMSiteTestQuestion filterModel, System.Collections.Generic.IDictionary<string, SX.WebCore.HtmlHelpers.SxExtantions.SortDirection> order, int page)
         {
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             IndexOverride(callInfo, filterModel, order, page);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void FindGridViewOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int testId, GE.WebAdmin.Models.VMSiteTestBlock filterModel, int page, int pageSize);
-
-        [NonAction]
-        public override System.Web.Mvc.PartialViewResult FindGridView(int testId, GE.WebAdmin.Models.VMSiteTestBlock filterModel, int page, int pageSize)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindGridView);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "testId", testId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
-            FindGridViewOverride(callInfo, testId, filterModel, page, pageSize);
             return callInfo;
         }
 
@@ -225,10 +189,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditSiteTestBlock model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GE.WebAdmin.Models.VMEditSiteTestQuestion model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditSiteTestBlock model)
+        public override System.Web.Mvc.ActionResult Edit(GE.WebAdmin.Models.VMEditSiteTestQuestion model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -237,10 +201,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_RedirectToRouteResult callInfo, GE.WebAdmin.Models.VMEditSiteTestBlock model);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_RedirectToRouteResult callInfo, GE.WebAdmin.Models.VMEditSiteTestQuestion model);
 
         [NonAction]
-        public override System.Web.Mvc.RedirectToRouteResult Delete(GE.WebAdmin.Models.VMEditSiteTestBlock model)
+        public override System.Web.Mvc.RedirectToRouteResult Delete(GE.WebAdmin.Models.VMEditSiteTestQuestion model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

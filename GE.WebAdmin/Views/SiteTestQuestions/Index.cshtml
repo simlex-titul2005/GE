@@ -1,0 +1,10 @@
+﻿@model VMSiteTestQuestion[]
+@{
+    ViewBag.Title = "Вопросы тестов сайта";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="site-test-questions">
+    @Html.Partial(MVC.SiteTestQuestions.Views._GridView, Model)
+</div>

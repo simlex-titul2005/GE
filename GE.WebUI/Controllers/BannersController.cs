@@ -16,5 +16,14 @@ namespace GE.WebUI.Controllers
                 new RepoBanner<DbContext>().AddClick(bannerId);
             });
         }
+
+        [HttpPost]
+        public async virtual Task AddShow(Guid bannerId)
+        {
+            await Task.Run(() =>
+            {
+                new RepoBanner<DbContext>().AddShows(new Guid[] { bannerId });
+            });
+        }
     }
 }

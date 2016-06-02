@@ -1,0 +1,26 @@
+﻿@model VMSiteTestQuestion[]
+@{
+    Layout = null;
+    var pagerInfo = ViewBag.PagerInfo;
+    var filter = ViewBag.Filter != null ? (VMSiteTestQuestion)ViewBag.Filter : null;
+    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+}
+
+
+@Html.SxGridView(
+        new SxExtantions.SxGridViewSettings<VMSiteTestQuestion>
+        {
+            UpdateTargetId = "site-test-questions",
+            Data = Model,
+            Columns = new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>[]{
+                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="DateCreate", Caption="Дата создания"},
+                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="TestTitle", Caption="Тест"},
+                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="BlockTitle", Caption="Блок"},
+                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="Text", Caption="Текст"}
+            },
+            PagerInfo=pagerInfo,
+            Filter = filter,
+            SortDirections = sortDirections
+        },
+        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+    )

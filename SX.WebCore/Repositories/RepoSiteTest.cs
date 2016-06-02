@@ -9,6 +9,19 @@ namespace SX.WebCore.Repositories
 {
     public sealed class RepoSiteTest<TDbContext> : SxDbRepository<int, SxSiteTest, TDbContext> where TDbContext : SxDbContext
     {
+        public override IQueryable<SxSiteTest> All
+        {
+            get
+            {
+                var query = @"SELECT * FROM D_SITE_TEST AS dst";
+                using (var conn = new SqlConnection(ConnectionString))
+                {
+                    var data = conn.Query<SxSiteTest>(query);
+                    return data.AsQueryable();
+                }
+            }
+        }
+
         public override IQueryable<SxSiteTest> Query(SxFilter filter)
         {
             var query = QueryProvider.GetSelectString();
@@ -47,12 +60,15 @@ namespace SX.WebCore.Repositories
             param = null;
             string query = null;
             query += " WHERE (dst.Title LIKE '%'+@title+'%' OR @title IS NULL) ";
+            query += " AND (dst.Description LIKE '%'+@desc+'%' OR @desc IS NULL) ";
 
             var title = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null ? (string)filter.WhereExpressionObject.Title : null;
+            var desc = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Description != null ? (string)filter.WhereExpressionObject.Description : null;
 
             param = new
             {
-                title = title
+                title = title,
+                desc=desc
             };
 
             return query;

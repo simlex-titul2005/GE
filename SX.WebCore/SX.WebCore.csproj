@@ -164,6 +164,7 @@
     <Compile Include="Repositories\RepoComment.cs" />
     <Compile Include="Repositories\RepoEmployee.cs" />
     <Compile Include="Repositories\RepoSiteSetting.cs" />
+    <Compile Include="Repositories\RepoSiteTestQuestion.cs" />
     <Compile Include="Repositories\RepoSiteTestBlock.cs" />
     <Compile Include="Repositories\RepoSiteTest.cs" />
     <Compile Include="Repositories\RepoVideo.cs" />

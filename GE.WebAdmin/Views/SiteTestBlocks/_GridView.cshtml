@@ -14,7 +14,9 @@
             Data = Model,
             Columns = new SxExtantions.SxGridViewColumn<VMSiteTestBlock>[]{
                 new SxExtantions.SxGridViewColumn<VMSiteTestBlock>{FieldName="DateCreate", Caption="Дата создания"},
-                new SxExtantions.SxGridViewColumn<VMSiteTestBlock>{FieldName="TestTitle", Caption="Тест"}
+                new SxExtantions.SxGridViewColumn<VMSiteTestBlock>{FieldName="TestTitle", Caption="Тест"},
+                new SxExtantions.SxGridViewColumn<VMSiteTestBlock>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGridViewColumn<VMSiteTestBlock>{FieldName="Description", Caption="Описание"}
             },
             PagerInfo=pagerInfo,
             Filter = filter,

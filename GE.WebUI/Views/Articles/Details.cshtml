@@ -1,4 +1,6 @@
-﻿@model VMDetailArticle
+﻿@using SX.WebCore;
+
+@model VMDetailArticle
 @{
     var title = ViewBag.Title;
     var h1 = ViewBag.H1;
@@ -6,6 +8,8 @@
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
     ViewBag.PageImage = Model.FrontPictureId.HasValue ? Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId)) : null;
+    var banners = (SxBanner[])ViewBag.PageBanners;
+    SxBanner banner = null;
 }
 
 <div class="detail-article">
@@ -31,6 +35,16 @@
     </div>
     
     @Html.Action("likematerials", new { controller = "articles", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
+
+    @{
+        banner = banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate);
+        if (banner != null)
+        {
+            <div style="margin-top:30px;">
+                @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+            </div>
+        }
+    }
 
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
     

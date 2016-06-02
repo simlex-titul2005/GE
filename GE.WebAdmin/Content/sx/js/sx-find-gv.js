@@ -28,7 +28,7 @@ $(function () {
 });
 
 function getFindTableHtml(box) {
-    var url = $(box).data('url');
+    var url = $(box).attr('data-url');
     $.ajax({
         method: 'post',
         url: url,
@@ -41,7 +41,7 @@ function getFindTableHtml(box) {
         },
         complete: function () {
             $(box).find('button i.fa-spin').remove();
-            $(box).data('is-load', true);
+            $(box).attr('data-is-load', true);
         }
     });
 }

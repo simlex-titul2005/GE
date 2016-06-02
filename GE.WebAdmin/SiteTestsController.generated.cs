@@ -58,6 +58,12 @@ namespace GE.WebAdmin.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult FindGridView()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindGridView);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ViewResult Edit()
         {
             return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Edit);
@@ -85,6 +91,7 @@ namespace GE.WebAdmin.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string FindGridView = "FindGridView";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
         }
@@ -93,6 +100,7 @@ namespace GE.WebAdmin.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string FindGridView = "FindGridView";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
         }
@@ -107,6 +115,16 @@ namespace GE.WebAdmin.Controllers
             public readonly string page = "page";
             public readonly string filterModel = "filterModel";
             public readonly string order = "order";
+        }
+        static readonly ActionParamsClass_FindGridView s_params_FindGridView = new ActionParamsClass_FindGridView();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_FindGridView FindGridViewParams { get { return s_params_FindGridView; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_FindGridView
+        {
+            public readonly string filterModel = "filterModel";
+            public readonly string page = "page";
+            public readonly string pageSize = "pageSize";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -135,10 +153,12 @@ namespace GE.WebAdmin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _FindGridView = "_FindGridView";
                 public readonly string _GridView = "_GridView";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
+            public readonly string _FindGridView = "~/Views/SiteTests/_FindGridView.cshtml";
             public readonly string _GridView = "~/Views/SiteTests/_GridView.cshtml";
             public readonly string Edit = "~/Views/SiteTests/Edit.cshtml";
             public readonly string Index = "~/Views/SiteTests/Index.cshtml";
@@ -173,6 +193,20 @@ namespace GE.WebAdmin.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "order", order);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             IndexOverride(callInfo, filterModel, order, page);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void FindGridViewOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, GE.WebAdmin.Models.VMSiteTest filterModel, int page, int pageSize);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult FindGridView(GE.WebAdmin.Models.VMSiteTest filterModel, int page, int pageSize)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.FindGridView);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "filterModel", filterModel);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
+            FindGridViewOverride(callInfo, filterModel, page, pageSize);
             return callInfo;
         }
 

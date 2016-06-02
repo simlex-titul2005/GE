@@ -6,7 +6,7 @@ namespace GE.WebAdmin.Models
     {
         public int Id { get; set; }
 
-        [Required, Display(Name = "Тест")]
+        [Required, Display(Name = "Тест"), UIHint("EditSiteTest")]
         public int TestId { get; set; }
 
         [Required, MaxLength(100), Display(Name ="Заголовок")]

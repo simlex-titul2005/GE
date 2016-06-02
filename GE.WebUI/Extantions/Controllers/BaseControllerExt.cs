@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
+using GE.WebUI.Infrastructure;
 using GE.WebUI.Models;
 using SX.WebCore;
 using System;
@@ -148,6 +150,15 @@ namespace GE.WebUI.Extantions.Controllers
             }
 
             controller.ViewBag.Breadcrumbs = breadcrumbs.ToArray();
+        }
+
+        public static void WritePageBanners(this Controller controller)
+        {
+            var routes = controller.ControllerContext.RequestContext.RouteData.Values;
+            var controllerName = routes["controller"].ToString().ToLowerInvariant();
+            var actionName = routes["action"].ToString().ToLowerInvariant();
+
+            controller.ViewBag.PageBanners = BannerProvider.Provider.GetPageBanners<DbContext>(controllerName, actionName);
         }
     }
 }

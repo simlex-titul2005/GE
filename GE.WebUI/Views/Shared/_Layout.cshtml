@@ -7,8 +7,7 @@
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
-    var bannerControllerBlackList = new string[] { "employees", "account" };
-    var pageBanners = BannerProvider.Provider.GetPageBanners<DbContext>(controllerName, actionName);
+    var bannerControllerBlackList = new string[] { "employees", "account", "error" };
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +58,7 @@
 
         <div class="container">
             @{
-                var banner = pageBanners.SingleOrDefault(x=>x.Place==SxBanner.BannerPlace.Top);
+                var banner = (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top);
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
@@ -75,7 +74,7 @@
             @RenderBody()
 
             @{
-                banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom);
+                banner = (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom);
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     <br />
@@ -98,14 +97,17 @@
 
         $('#game-list').geGameMenu();
 
-        function resizeFooter() {
-            var $footer = $('footer');
-            var h = $footer.height();
-            $footer.css({
-                'position': 'absolute'
-            });
-            $('body').css('margin-bottom', h + 'px');
-        }
+        $(".th-banner img.lazy").Lazy({
+            afterLoad: function (banner) {
+                var id = $(banner).data('id');
+                $.ajax({
+                    method: 'post',
+                    url: '/banners/addshow',
+                    data: { bannerId: id }
+                });
+            }
+        });
+
     </script>
     @RenderSection("scripts", false)
 </body>

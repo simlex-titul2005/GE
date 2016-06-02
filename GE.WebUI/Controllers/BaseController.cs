@@ -59,6 +59,8 @@ namespace GE.WebUI.Controllers
             this.WriteSeoInfo(_seoInfoCache, _mapper);
 
             this.WriteBreadcrumbs();
+
+            this.WritePageBanners();
         }
     }
 }

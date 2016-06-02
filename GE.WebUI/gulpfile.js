@@ -96,6 +96,7 @@ function createCss() {
 function createJs() {
     gulp.src([
         'bower_components/jquery/dist/jquery.min.js',
+        'bower_components/jquery-lazy/jquery.lazy.min.js',
         'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
         'scripts/ge-game-menu.js',

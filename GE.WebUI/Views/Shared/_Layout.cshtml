@@ -1,5 +1,4 @@
 ﻿@using SX.WebCore;
-@using GE.WebUI.Infrastructure;
 @{
     Layout = null;
     var bgUrl = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
@@ -7,7 +6,7 @@
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
-    var bannerControllerBlackList = new string[] { "employees", "account", "error" };
+    var bannerControllerBlackList = new string[] { "employees", "account", "error", "sitetests" };
 }
 <!DOCTYPE html>
 <html lang="en">

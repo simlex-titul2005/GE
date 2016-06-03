@@ -13,7 +13,7 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMPicture[] QueryForAdmin(this RepoPicture<DbContext> repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dp.Id", "dp.Caption", "dp.[Description]", "dp.Width", "dp.Height" });
+            var query = QueryProvider.GetSelectString(new string[] { "dp.Id", "dp.Caption", "dp.[Description]", "dp.Width", "dp.Height", "dp.Size" });
             query += " FROM D_PICTURE AS dp";
 
             object param = null;

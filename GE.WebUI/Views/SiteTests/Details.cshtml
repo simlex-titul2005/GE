@@ -1,0 +1,81 @@
+﻿@model VMSiteTest
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.H1 = ViewBag.H1 ?? Model.Title;
+    ViewBag.Description = ViewBag.Description ?? Model.Description;
+    ViewBag.Keywords = ViewBag.Keywords ?? "Игровые тесты, тесты для игр";
+}
+
+@if (Model.Blocks.Any())
+{
+    <div id="st-page">
+        <br />
+        <h2>
+            @Model.Description
+        </h2>
+
+        <div>
+            @for (int i = 0; i < Model.Blocks.Length; i++)
+            {
+                var block = Model.Blocks[i];
+                if (block.Questions.Any())
+                {
+                    <section id="stb-@block.Id" class="@(i!=0?"hidden":null)">
+                        <blockquote class="desc">
+                            @block.Description
+                        </blockquote>
+
+                        @for (int y = 0; y < block.Questions.Length; y++)
+                        {
+                            var question = block.Questions[y];
+                            <div class="stq">
+                                <input type="radio" value="@question.Id" name="stq" id="stq-@question.Id" autocomplete="off" />
+                                <label for="stq-@question.Id">@question.Text</label>
+                            </div>
+                        }
+                    </section>
+                }
+            }
+            <div class="text-center">
+                <button class="btn btn-default btn-transparent white next-btn">
+                    <span></span>
+                    Далее
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @section scripts{
+        <script>
+            var stbCount=@Model.Blocks.Length-1;
+            var counter=stbCount;
+            $(function () {
+                stbCount = $('section').length;
+                $('.next-btn').click(function () {
+                    $btn=$(this);
+                    $block = $('section').not('.hidden');
+                    $blockNext = $block.next('section');
+                    if ($blockNext.length == 1) {
+                        $block.animate({
+                            'opacity': '0'
+                        }, 'fast', function () {
+                            $block.hide().addClass('hidden');
+                            $blockNext.removeClass('hidden').show();
+                            counter+=-1;
+                            fillNextButton($btn);
+                        });
+                    }
+                });
+            });
+
+            function fillNextButton(btn)
+            {
+                $btn=$(btn);
+                var width=100-counter*100/stbCount+'%';
+                $btn.find('span').animate({
+                    'width': width
+                }, 'fast');
+            }
+        </script>
+    }
+}

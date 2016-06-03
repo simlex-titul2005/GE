@@ -65,7 +65,8 @@ function createCss() {
         'content/less/game-details.less',
         'content/less/employee.less',
         'content/less/th-banner.less',
-        'content/less/site-tests.less'
+        'content/less/site-tests.less',
+        'content/less/st-page.less'
     ])
         .pipe(less())
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))

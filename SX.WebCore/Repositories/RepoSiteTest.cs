@@ -74,25 +74,25 @@ namespace SX.WebCore.Repositories
             return query;
         }
 
-        public dynamic[] RandomList()
+        public dynamic[] RandomList(int amount=3)
         {
-            var query = @"SELECT TOP(3) dst.Title,
-       dst.[Description],
-       COUNT(DISTINCT(dstb.Id))   AS StepsCount,
-       COUNT(DISTINCT(dstq.Id))   AS QuestionsCount
-FROM   D_SITE_TEST                AS dst
-       JOIN D_SITE_TEST_BLOCK     AS dstb
-            ON  dstb.TestId = dst.Id
-       JOIN D_SITE_TEST_QUESTION  AS dstq
-            ON  dstq.BlockId = dstb.Id
-GROUP BY
-       dst.Title,
-       dst.[Description]
-ORDER BY NEWID()";
             using (var conn = new SqlConnection(ConnectionString))
             {
 
-                var data = conn.Query(query);
+                var data = conn.Query("get_random_site_tests @amount", new { amount= amount });
+                return data.ToArray();
+            }
+        }
+
+        public SxSiteTestQuestion[] GetSiteTestPage(int id)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                var data = conn.Query<SxSiteTestQuestion, SxSiteTestBlock, SxSiteTest, SxSiteTestQuestion>("get_site_test_page @id", (q, b, t)=> {
+                    b.Test = t;
+                    q.Block = b;
+                    return q;
+                }, new { id = id }, splitOn:"Id");
                 return data.ToArray();
             }
         }

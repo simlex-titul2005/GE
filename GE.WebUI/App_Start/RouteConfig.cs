@@ -211,6 +211,15 @@ namespace GE.WebUI
             );
             #endregion
 
+            #region site tests
+            routes.MapRoute(
+                name: null,
+                url: "sitetests/{id}",
+                defaults: new { controller = "sitetests", action = "details", area = "" },
+                namespaces: _defNamespace
+            );
+            #endregion
+
             routes.MapRoute(
                 name: null,
                 url: "home/{gameTitle}",

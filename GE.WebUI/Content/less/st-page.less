@@ -1,0 +1,50 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "positioned.less";
+@import (reference) "../../bower_components/bootstrap/less/variables.less";
+
+#st-page{
+    color:@color-white;
+}
+
+#st-page section{
+    margin-top:@def-pad*3;
+    position:relative;
+}
+
+#st-page section > .desc{
+    color:@color-muted-blue;
+    margin-bottom:@def-pad*4;
+}
+
+#st-page input[type="radio"]{
+    float:left;
+}
+
+#st-page input[type="radio"]:focus, #st-page input[type="radio"]:active {
+    outline:none;
+}
+
+#st-page label{
+    font-weight:300;
+    font-size: 16px;
+    display:block;
+    margin-left:@def-pad*2;
+    line-height:1.2;
+}
+
+#st-page .stq{
+    margin-bottom:@def-pad*3;
+}
+
+#st-page .next-btn{
+    position:relative;
+}
+
+#st-page .next-btn > span{
+    background: linear-gradient(to top, rgba(255,255,255,.3), rgba(255,255,255,.3), rgba(255,255,255,.1));
+    position:absolute;
+    height:100%;
+    top: 0;
+    left: 0;
+}

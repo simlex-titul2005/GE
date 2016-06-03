@@ -304,6 +304,8 @@ namespace SX.WebCore.HtmlHelpers
                     var type = typeof(TModel);
 
                     a.MergeAttribute("href", settings.FuncEditLink!=null? settings.FuncEditLink(model) : string.Format("/{0}/edit{1}", controller, qs));
+                    a.MergeAttribute("data-title", "Редактировать");
+                    a.MergeAttribute("data-toggle", "tooltip");
                     a.InnerHtml += "<i class=\"fa fa-pencil\"></i>";
 
                     td.InnerHtml += a;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -10,12 +11,10 @@ namespace SX.WebCore.Abstract
         where TModel : SxDbModel<TKey>
         where TDbContext : SxDbContext
     {
-        private SxDbContext _dbContext;
-        private string _connectionString;
-        public SxDbRepository()
+        private static string _connectionString;
+        static SxDbRepository()
         {
-            _dbContext = Activator.CreateInstance<TDbContext>();
-            _connectionString = _dbContext.Database.Connection.ConnectionString;
+            _connectionString = ConfigurationManager.ConnectionStrings["DbContext"].ConnectionString;
         }
         public string ConnectionString
         {
@@ -29,11 +28,13 @@ namespace SX.WebCore.Abstract
         {
             if (model is SxDbModel<TKey>)
                 prepareUpdatedModel(model as SxDbModel<TKey>);
-            _dbContext.Configuration.AutoDetectChangesEnabled = false;
-            _dbContext.Entry(model).State = EntityState.Added;
-            _dbContext.Configuration.AutoDetectChangesEnabled = true;
-            _dbContext.SaveChanges();
-            
+
+            var dbContext = Activator.CreateInstance<TDbContext>();
+            dbContext.Configuration.AutoDetectChangesEnabled = false;
+            dbContext.Entry(model).State = EntityState.Added;
+            dbContext.Configuration.AutoDetectChangesEnabled = true;
+            dbContext.SaveChanges();
+
             return model;
         }
         private static void prepareUpdatedModel(SxDbModel<TKey> model)
@@ -49,14 +50,16 @@ namespace SX.WebCore.Abstract
                 if (model is SxMaterial)
                     (model as SxMaterial).DateOfPublication = model.DateCreate;
             }
-            
+
         }
 
-        public virtual TModel Update(TModel model, bool changeDateUpdate=true, params string[] propertiesForChange)
+        public virtual TModel Update(TModel model, bool changeDateUpdate = true, params string[] propertiesForChange)
         {
+            var dbContext = Activator.CreateInstance<TDbContext>();
+
             var modelType = typeof(TModel);
-            var keys = getEntityKeys(_dbContext, modelType, model);
-            var oldModel = GetByKey(keys);
+            var keys = getEntityKeys(dbContext, modelType, model);
+            var oldModel = dbContext.Set<TModel>().Find(keys);
             if (oldModel == null) return null;
             var oldModelType = oldModel.GetType();
             var propsForChange = modelType.GetProperties()
@@ -71,10 +74,10 @@ namespace SX.WebCore.Abstract
             if (changeDateUpdate && oldModel is SxDbUpdatedModel<TKey>)
                 (oldModel as SxDbUpdatedModel<TKey>).DateUpdate = DateTime.Now;
 
-            _dbContext.Configuration.AutoDetectChangesEnabled = false;
-            _dbContext.Entry(oldModel).State = EntityState.Modified;
-            _dbContext.Configuration.AutoDetectChangesEnabled = true;
-            _dbContext.SaveChanges();
+            dbContext.Configuration.AutoDetectChangesEnabled = false;
+            dbContext.Entry(oldModel).State = EntityState.Modified;
+            dbContext.Configuration.AutoDetectChangesEnabled = true;
+            dbContext.SaveChanges();
 
             return oldModel;
         }
@@ -86,18 +89,20 @@ namespace SX.WebCore.Abstract
 
         public virtual void Delete(params object[] id)
         {
-            var model = GetByKey(id);
+            var dbContext = Activator.CreateInstance<TDbContext>();
+            var model = dbContext.Set<TModel>().Find(id);
             if (model == null) return;
 
-            _dbContext.Entry(model).State = EntityState.Deleted;
-            _dbContext.SaveChanges();
+            dbContext.Entry(model).State = EntityState.Deleted;
+            dbContext.SaveChanges();
         }
 
         public virtual IQueryable<TModel> All
         {
             get
             {
-                return _dbContext.Set<TModel>().AsNoTracking();
+                var dbContext = Activator.CreateInstance<TDbContext>();
+                return dbContext.Set<TModel>().AsNoTracking();
             }
         }
 
@@ -113,7 +118,8 @@ namespace SX.WebCore.Abstract
 
         public virtual TModel GetByKey(params object[] id)
         {
-            var dbSet = _dbContext.Set<TModel>();
+            var dbContext = Activator.CreateInstance<TDbContext>();
+            var dbSet = dbContext.Set<TModel>();
             return dbSet.Find(id);
         }
 

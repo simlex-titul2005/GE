@@ -20,8 +20,11 @@
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Description", Caption="Описание"},
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Width", Caption="Ширина, px"},
             new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Height", Caption="Высота, px"},
-            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Id", Caption="#", Template=(p)=> {
-                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Помотреть картинку\" href=\"{0}\"><i class=\"fa fa-picture-o\"></i></a>", Url.Action(MVC.Pictures.Picture(p.Id)), p.Caption);
+            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Size", Caption="Размер, Kb", Template=(p)=> {
+                return string.Format("<span>{0}</span>", Math.Round((double)p.Size/1024, 2));
+            } },
+            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Id", Caption="Картинка", Template=(p)=> {
+                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" title=\"Помотреть картинку\" href=\"{0}\"><i class=\"fa fa-picture-o\"></i></a>", Url.Action(MVC.Pictures.Picture(p.Id)), p.Caption);
             } }
         },
             PagerInfo=pagerInfo,

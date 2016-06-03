@@ -10,5 +10,6 @@ namespace GE.WebAdmin.Models
         public int Width { get; set; }
         public int Height { get; set; }
         public string ImgFormat { get; set; }
+        public int Size { get; set; }
     }
 }

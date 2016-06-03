@@ -6,5 +6,6 @@ namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoBannerGroup : SxDbRepository<Guid, SxBannerGroup, DbContext>
     {
+
     }
 }

@@ -261,6 +261,9 @@
     <Compile Include="Models\VMLCNB.cs" />
     <Compile Include="Models\VMLCNBCategory.cs" />
     <Compile Include="Models\VMLCNBNews.cs" />
+    <Compile Include="Models\VMSiteTest.cs" />
+    <Compile Include="Models\VMSiteTestBlock.cs" />
+    <Compile Include="Models\VMSiteTestQuestion.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -465,6 +468,7 @@
     <Content Include="Views\Employees\List.cshtml" />
     <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
     <Content Include="Views\SiteTests\_RandomList.cshtml" />
+    <Content Include="Views\SiteTests\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -475,6 +479,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\dist\i\temp\" />
+    <Folder Include="Content\less\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">

@@ -17,6 +17,9 @@
                         <h4>@item.Title</h4>
                         <p>@item.Description</p>
                         <div>@item.QuestionsCount вопросов за @item.StepsCount шагов</div>
+                        <div>
+                            <a href="@Url.Action(MVC.SiteTests.Details(id: (int)item.Id))">Пройти тест</a>
+                        </div>
                     </div>
                 </div>
             }

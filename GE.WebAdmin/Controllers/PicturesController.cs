@@ -101,7 +101,7 @@ namespace GE.WebAdmin.Controllers
                     if (file != null)
                     {
                         redactModel = getImage(redactModel, file);
-                        Repo.Update(redactModel, true, "Caption", "Description", "OriginalContent", "Width", "Height", "Size");
+                        Repo.Update(redactModel, true, "Caption", "Description", "OriginalContent", "Width", "Height", "Size", "ImgFormat");
                     }
                     else
                     {

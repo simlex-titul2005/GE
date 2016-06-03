@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 01.06.2016 13:58:14
+ * Time: 03.06.2016 13:39:37
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,8 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
 
 
 
@@ -407,6 +409,8 @@ BEGIN
 	RETURN @res
 END
 GO
+
+
 
 
 
@@ -1115,16 +1119,19 @@ CREATE PROCEDURE dbo.add_banners_shows_count
 	@keys VARCHAR(MAX)
 AS
 BEGIN
-	EXEC('UPDATE D_BANNER
+	EXEC (
+	         'UPDATE D_BANNER
 	SET    ShowsCount = db2.ShowsCount + 1
 	FROM   D_BANNER AS db
 	       JOIN (
 	                SELECT db2.Id,
 	                       db2.ShowsCount
 	                FROM   D_BANNER AS db2
-	                WHERE  Id IN ('+@keys+')
+	                WHERE  Id IN (' + @keys +
+	         ')
 	            ) AS db2
-	            ON  db2.Id = db.Id')
+	            ON  db2.Id = db.Id'
+	     )
 END
 GO
 
@@ -1141,5 +1148,52 @@ BEGIN
 	EXEC (
 	         'SELECT*FROM D_SITE_SETTING AS dss WHERE dss.Id IN (' + @keys + ')'
 	     )
+END
+GO
+
+/*******************************************
+ * Блок случайных тестов
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_random_site_tests', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_random_site_tests;
+GO
+CREATE PROCEDURE dbo.get_random_site_tests
+	@amount INT
+AS
+BEGIN
+	SELECT TOP(@amount) dst.Title,
+	       dst.[Description],
+	       COUNT(DISTINCT(dstb.Id))   AS StepsCount,
+	       COUNT(DISTINCT(dstq.Id))   AS QuestionsCount
+	FROM   D_SITE_TEST                AS dst
+	       JOIN D_SITE_TEST_BLOCK     AS dstb
+	            ON  dstb.TestId = dst.Id
+	       JOIN D_SITE_TEST_QUESTION  AS dstq
+	            ON  dstq.BlockId = dstb.Id
+	GROUP BY
+	       dst.Title,
+	       dst.[Description]
+	ORDER BY
+	       NEWID()
+END
+GO
+
+/*******************************************
+ * Страницы прохождения теста
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_site_test_page', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_site_test_page;
+GO
+CREATE PROCEDURE dbo.get_site_test_page
+	@id INT
+AS
+BEGIN
+	SELECT *
+	FROM   D_SITE_TEST_QUESTION    AS dstq
+	       JOIN D_SITE_TEST_BLOCK  AS dstb
+	            ON  dstb.Id = dstq.BlockId
+	       JOIN D_SITE_TEST        AS dst
+	            ON  dst.Id = dstb.TestId
+	WHERE  dst.Id = @id
 END
 GO

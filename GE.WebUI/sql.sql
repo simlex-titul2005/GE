@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 03.06.2016 13:39:37
+ * Time: 03.06.2016 13:46:13
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,7 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
 
 
 
@@ -409,6 +410,7 @@ BEGIN
 	RETURN @res
 END
 GO
+
 
 
 
@@ -1161,7 +1163,8 @@ CREATE PROCEDURE dbo.get_random_site_tests
 	@amount INT
 AS
 BEGIN
-	SELECT TOP(@amount) dst.Title,
+	SELECT TOP(@amount) dst.Id,
+	       dst.Title,
 	       dst.[Description],
 	       COUNT(DISTINCT(dstb.Id))   AS StepsCount,
 	       COUNT(DISTINCT(dstq.Id))   AS QuestionsCount
@@ -1171,6 +1174,7 @@ BEGIN
 	       JOIN D_SITE_TEST_QUESTION  AS dstq
 	            ON  dstq.BlockId = dstb.Id
 	GROUP BY
+	       dst.Id,
 	       dst.Title,
 	       dst.[Description]
 	ORDER BY

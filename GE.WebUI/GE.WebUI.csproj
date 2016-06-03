@@ -226,6 +226,7 @@
     <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\SiteQuetionsController.cs" />
+    <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="EmployeesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -276,6 +277,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SiteQuetionsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SiteTestsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="T4MVC.cs">
@@ -460,6 +464,7 @@
     <Content Include="Views\Games\DisplayTemplates\VMDetailGameMaterial.cshtml" />
     <Content Include="Views\Employees\List.cshtml" />
     <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
+    <Content Include="Views\SiteTests\_RandomList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

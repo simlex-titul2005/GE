@@ -4,9 +4,9 @@ $(function () {
     $('.sx-find-gv .input-group [type="text"]').click(function () {
         var $input = $(this);
         var $box = $input.closest('.sx-find-gv');
-        var isLoad = $box.data('is-load');
+        var isLoad = $box.attr('data-is-load');
         var $dropdown = $box.children('.dropdown');
-        if (!isLoad) {
+        if (isLoad=='false') {
             getFindTableHtml($box);
         }
         $('.sx-find-gv .dropdown').not($dropdown).hide();

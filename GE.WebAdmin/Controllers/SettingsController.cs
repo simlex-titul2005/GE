@@ -137,20 +137,24 @@ namespace GE.WebAdmin.Controllers
                     };
                     for (int i = 0; i < settings.Length; i++)
                     {
-                        _repo.Create(settings[i]);
+                        var setting = settings[i];
+                        _repo.Create(setting);
                     }
 
                     TempData["EditEmptyGameMessage"] = "Настройки успешно сохранены";
+                    MvcApplication.SiteDomain = model.SiteDomain;
                     return RedirectToAction(MVC.Settings.EditSite());
                 }
                 else if (isExists && isModified)
                 {
                     _repo.Update(new SxSiteSetting { Id = Settings.siteDomain, Value = model.SiteDomain }, true, "Value");
+
                     _repo.Update(new SxSiteSetting { Id = Settings.siteLogoPath, Value = model.LogoPath }, true, "Value");
                     _repo.Update(new SxSiteSetting { Id = Settings.siteName, Value = model.SiteName }, true, "Value");
                     _repo.Update(new SxSiteSetting { Id = Settings.siteBgPath, Value = model.SiteBgPath }, true, "Value");
                     _repo.Update(new SxSiteSetting { Id = Settings.siteFaveiconPath, Value = model.SiteFaveiconPath }, true, "Value");
                     TempData["EditEmptyGameMessage"] = "Настройки успешно обновлены";
+                    MvcApplication.SiteDomain = model.SiteDomain;
                     return RedirectToAction(MVC.Settings.EditSite());
                 }
                 else

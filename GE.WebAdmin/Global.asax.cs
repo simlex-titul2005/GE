@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNet.Identity;
+using SX.WebCore.Repositories;
+using SX.WebCore.Resources;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Runtime.Caching;
@@ -12,6 +14,7 @@ namespace GE.WebAdmin
     {
         private static Dictionary<string, string> _usersOnSite;
         private static MemoryCache _cache;
+        
         public static Dictionary<string, string> UsersOnSite
         {
             get
@@ -33,7 +36,12 @@ namespace GE.WebAdmin
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             _mapperConfiguration = AutoMapperConfig.MapperConfigurationInstance;
+
+            var siteDomainItem = new RepoSiteSetting<WebCoreExtantions.DbContext>().GetByKey(Settings.siteDomain);
+            SiteDomain = siteDomainItem?.Value;
         }
+
+        public  static string SiteDomain { get; set; }
 
         public static MapperConfiguration MapperConfiguration
         {

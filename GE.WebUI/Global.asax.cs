@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using System.Runtime.Caching;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Http;
 
 namespace GE.WebUI
 {
@@ -14,9 +14,11 @@ namespace GE.WebUI
         {
             _cache = new MemoryCache("GAME_EXE_CACHE");
             ErrorProvider.Configure(Server.MapPath("~/Logs"));
-            AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
             _mapperConfiguration = AutoMapperConfig.MapperConfigurationInstance;
+
+            AreaRegistration.RegisterAllAreas();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 
         public static MapperConfiguration MapperConfiguration

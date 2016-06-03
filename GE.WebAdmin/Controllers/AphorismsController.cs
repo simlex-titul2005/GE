@@ -18,7 +18,7 @@ namespace GE.WebAdmin.Controllers
     public partial class AphorismsController : BaseController
     {
         private static int _pageSize = 10;
-        private SxDbRepository<int, Aphorism, DbContext> _repo;
+        private static SxDbRepository<int, Aphorism, DbContext> _repo;
         public AphorismsController()
         {
             _repo = new RepoAphorism();

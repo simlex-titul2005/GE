@@ -1,0 +1,25 @@
+﻿@model dynamic[]
+@{
+    Layout = null;
+}
+
+@if (Model.Any())
+{
+    <div class="random-test">
+        <h2 class="header">Проверьте свои знания</h2>
+        <br />
+        <div class="row">
+            @for (int i = 0; i < Model.Length; i++)
+            {
+                var item = Model[i];
+                <div class="col-md-4">
+                    <div class="content">
+                        <h4>@item.Title</h4>
+                        <p>@item.Description</p>
+                        <div>@item.QuestionsCount вопросов за @item.StepsCount шагов</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

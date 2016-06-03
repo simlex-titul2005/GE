@@ -14,10 +14,11 @@ namespace GE.WebAdmin.Controllers
     [Authorize(Roles ="seo")]
     public partial class RequestController : BaseController
     {
-        private SxDbRepository<Guid, SxRequest, DbContext> _repo;
+        private static SxDbRepository<Guid, SxRequest, DbContext> _repo;
         public RequestController()
         {
-            _repo = new RepoRequest();
+            if(_repo==null)
+                _repo = new RepoRequest();
         }
 
         private static int _pageSize = 50;

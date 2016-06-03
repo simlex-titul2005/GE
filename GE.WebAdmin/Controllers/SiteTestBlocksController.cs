@@ -59,6 +59,8 @@ namespace GE.WebAdmin.Controllers
         [HttpPost]
         public virtual PartialViewResult FindGridView(int testId, VMSiteTestBlock filterModel, int page = 1, int pageSize = 10)
         {
+            if (filterModel == null && testId != 0)
+                filterModel = new VMSiteTestBlock();
             filterModel.TestId = testId;
             ViewBag.Filter = filterModel;
             var filter = new WebCoreExtantions.Filter(page, pageSize) { WhereExpressionObject= filterModel };
@@ -72,7 +74,6 @@ namespace GE.WebAdmin.Controllers
 
             return PartialView("_FindGridView", viewModel);
         }
-
 
         [HttpGet]
         public virtual ViewResult Edit(int? id)

@@ -9,7 +9,6 @@ using SX.WebCore.Managers;
 using SX.WebCore;
 using Microsoft.Owin.Security.Google;
 using System.Configuration;
-using System.Web.Http;
 
 [assembly: OwinStartup(typeof(GE.WebUI.Startup))]
 namespace GE.WebUI
@@ -22,11 +21,6 @@ namespace GE.WebUI
             app.CreatePerOwinContext<DbContext>(DbContext.Create<DbContext>);
             app.CreatePerOwinContext<SxAppUserManager>(SxAppUserManager.Create<DbContext>);
             app.CreatePerOwinContext<SxAppSignInManager>(SxAppSignInManager.Create);
-
-            var httpConfiguration = new HttpConfiguration();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            app.UseWebApi(httpConfiguration);
-
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

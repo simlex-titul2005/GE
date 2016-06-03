@@ -1,4 +1,6 @@
-﻿@model VMDetailNews
+﻿@using SX.WebCore;
+
+@model VMDetailNews
 @{
     var title = ViewBag.Title;
     var h1 = ViewBag.H1;
@@ -6,6 +8,8 @@
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
     ViewBag.PageImage = Model.FrontPictureId.HasValue ? Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId)) : null;
+    var banners = (SxBanner[])ViewBag.PageBanners;
+    SxBanner banner = null;
 }
 
 <div class="detail-news">
@@ -20,7 +24,7 @@
             <img class="f-picture" alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))" />
         }
         @Html.Raw(Model.Html)
-        @*@Html.Partial(MVC.Shared.Views._SocNetButtons)*@
+
         @Html.Partial(MVC.Shared.Views._Share42, Model)
     </div>
 
@@ -33,6 +37,16 @@
     </div>
 
     @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
+
+    @{
+        banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
+        if (banner != null)
+        {
+            <div style="margin-top:30px;">
+                @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+            </div>
+        }
+    }
 
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
 

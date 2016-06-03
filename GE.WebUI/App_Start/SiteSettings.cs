@@ -29,7 +29,9 @@ namespace GE.WebUI
                     Settings.siteBgPath,
                     Settings.emptyGameIconPath,
                     Settings.emptyGameGoodImagePath,
-                    Settings.emptyGameBadImagePath
+                    Settings.emptyGameBadImagePath,
+                    Settings.robotsFileSetting,
+                    Settings.siteFaveiconPath
                 );
 
             return data;

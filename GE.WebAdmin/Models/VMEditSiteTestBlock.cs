@@ -12,7 +12,7 @@ namespace GE.WebAdmin.Models
         [Required, MaxLength(100), Display(Name ="Заголовок")]
         public string Title { get; set; }
 
-        [Required, MaxLength(400), Display(Name = "Описание"), DataType(DataType.MultilineText)]
+        [Required, MaxLength(1000), Display(Name = "Описание"), DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
     }

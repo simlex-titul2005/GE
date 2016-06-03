@@ -29,7 +29,9 @@ function fillGridViewForm(guid) {
 
 function fillGridViewFormLookup(guid, page, filter)
 {
+    var url = $('#' + guid).closest('.sx-find-gv').data('url');
     var dataUrl = $('#' + guid).data('data-url');
+    dataUrl = dataUrl != url ? url : dataUrl;
     $.ajax({
         url: dataUrl,
         method: 'post',
@@ -88,7 +90,6 @@ function pressGridViewLookupFilter(e) {
         var guid = $(e.target).closest('table').attr('id');
         var $tr = $(e.target).closest('tr');
         var filter = getLookupFilter($tr);
-
         fillGridViewFormLookup(guid, 1, filter);
         e.preventDefault();
     }

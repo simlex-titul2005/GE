@@ -14,7 +14,7 @@ namespace SX.WebCore
         [Required, MaxLength(100)]
         public string Title { get; set; }
 
-        [Required, MaxLength(400)]
+        [Required, MaxLength(1000)]
         public string Description { get; set; }
 
         public virtual ICollection<SxSiteTestQuestion> Questions { get; set; }

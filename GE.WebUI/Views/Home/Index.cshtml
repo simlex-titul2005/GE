@@ -22,6 +22,10 @@
     <a href="@Url.Action(MVC.News.List())" class="btn btn-default btn-transparent white">Все новости</a>
 </div>
 
+<section>
+    @Html.Action("randomlist", "sitetests")
+</section>
+
 @Html.Action(MVC.Articles.ForGamersBlock())
 
 @section scripts{

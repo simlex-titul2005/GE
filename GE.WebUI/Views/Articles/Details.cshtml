@@ -33,11 +33,11 @@
     <div id="aphorisms">
         @{Html.RenderAction("random", new { controller = "aphorism" }); }
     </div>
-    
+
     @Html.Action("likematerials", new { controller = "articles", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
 
     @{
-        banner = banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate);
+        banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
         if (banner != null)
         {
             <div style="margin-top:30px;">
@@ -47,7 +47,7 @@
     }
 
     @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
-    
+
     <div id="by-date-mat">
         @Html.Action(MVC.Articles.ByDateMaterial(mid: Model.Id, mct: Model.ModelCoreType))
     </div>

@@ -21,9 +21,9 @@ namespace SX.WebCore.HtmlHelpers
             img.AddCssClass("lazy");
             img.MergeAttribute("data-src", FuncBannerImgUrl(banner));
             img.MergeAttribute("data-id", banner.Id.ToString().ToLower());
-            img.MergeAttribute("src", null);
             img.MergeAttribute("alt", banner.Title);
-            a.InnerHtml += img;
+            img.MergeAttribute("src", "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=");
+            a.InnerHtml += img.ToString(TagRenderMode.SelfClosing);
 
             figure.InnerHtml += a;
 

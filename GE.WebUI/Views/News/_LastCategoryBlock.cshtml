@@ -17,7 +17,7 @@
                             {
                                 var news = Model.News[i];
                                 <li>
-                                    <a @(news.CategoryId != null?string.Format("data-category-id={0}", news.CategoryId):null) data-category-id="@news.CategoryId" href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))">
+                                    <a @(news.CategoryId != null?string.Format("data-category-id={0}", news.CategoryId):null) href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))">
                                         <span class="date">@news.DateCreate.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
                                     </a>
                                 </li>

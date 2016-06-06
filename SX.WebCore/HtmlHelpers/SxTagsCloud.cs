@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Linq;
 using System.Collections.Generic;
 using SX.WebCore.ViewModels;
+using System.Web;
 
 namespace SX.WebCore.HtmlHelpers
 {
@@ -35,10 +36,10 @@ namespace SX.WebCore.HtmlHelpers
         {
             sb.Append("<li ");
             if(tag.IsCurrent)
-                sb.Append("class=\"current\"");
+                sb.Append("class=\"current\" ");
             sb.Append("style=\"font-size:" + fs + "px\">");
             sb.Append("<a style=\"line-height:"+ maxFontSize + "px;\" href=\"");
-            sb.Append(url+"?tag="+tag.Title.ToLowerInvariant());
+            sb.Append(url+"?tag="+ HttpUtility.UrlEncode(tag.Title.ToLowerInvariant()));
             sb.Append("\"");
             sb.Append(">");
             sb.Append(tag.Title);

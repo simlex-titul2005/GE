@@ -39,10 +39,13 @@
                 }
             }
             <div class="text-center">
-                <button class="btn btn-default btn-transparent white next-btn">
+                <button class="btn btn-default btn-transparent white next-btn disabled">
                     <span></span>
                     Далее
                 </button>
+                <form method="post" action="result">
+                    <input type="hidden" name="test" value="@Model.Id" />
+                </form>
             </div>
         </div>
     </div>
@@ -52,12 +55,20 @@
             var stbCount=@Model.Blocks.Length-1;
             var counter=stbCount;
             $(function () {
-                stbCount = $('section').length;
+                $('input[type="radio"]').change(function () {
+                    $('.next-btn').removeClass('disabled');
+                });
+
                 $('.next-btn').click(function () {
-                    $btn=$(this);
+                    $btn = $(this);
+                    if ($btn.hasClass('disabled')) return false;
+
                     $block = $('section').not('.hidden');
                     $blockNext = $block.next('section');
                     if ($blockNext.length == 1) {
+                        var blockId = $block.attr('id').replace('stb-', '');
+                        var questionId = $block.find('input[type="radio"]:checked').val();
+                        addBlockResultInfo(blockId, questionId);
                         $block.animate({
                             'opacity': '0'
                         }, 'fast', function () {
@@ -65,7 +76,11 @@
                             $blockNext.removeClass('hidden').fadeIn();
                             counter+=-1;
                             fillNextButton($btn);
+                            $btn.addClass('disabled');
                         });
+                    }
+                    else {
+                        alert('Функционал не реализован');
                     }
                 });
             });
@@ -77,6 +92,12 @@
                 $btn.find('span').animate({
                     'width': width
                 }, 'fast');
+            }
+
+            function addBlockResultInfo(blockId, questionId)
+            {
+                $('form').append('<input type="hidden" name="block" value="' + blockId + '" />');
+                $('form').append('<input type="hidden" name="question" value="' + questionId + '" />');
             }
         </script>
     }

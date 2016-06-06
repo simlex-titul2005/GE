@@ -10,9 +10,9 @@
 {
     <div id="st-page">
         <br />
-        <h2>
+        <p>
             @Model.Description
-        </h2>
+        </p>
 
         <div>
             @for (int i = 0; i < Model.Blocks.Length; i++)
@@ -22,6 +22,8 @@
                 {
                     <section id="stb-@block.Id" class="@(i!=0?"hidden":null)">
                         <blockquote class="desc">
+                            <h3 class="title">@block.Title</h3>
+                            <br />
                             @block.Description
                         </blockquote>
 
@@ -60,7 +62,7 @@
                             'opacity': '0'
                         }, 'fast', function () {
                             $block.hide().addClass('hidden');
-                            $blockNext.removeClass('hidden').show();
+                            $blockNext.removeClass('hidden').fadeIn();
                             counter+=-1;
                             fillNextButton($btn);
                         });

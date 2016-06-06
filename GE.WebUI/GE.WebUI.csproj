@@ -479,7 +479,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\dist\i\temp\" />
-    <Folder Include="Content\less\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">

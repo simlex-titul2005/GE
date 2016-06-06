@@ -24,13 +24,13 @@ namespace SX.WebCore.Repositories
 
         public override IQueryable<SxSiteTest> Query(SxFilter filter)
         {
-            var query = QueryProvider.GetSelectString();
+            var query = SxQueryProvider.GetSelectString();
             query += " FROM D_SITE_TEST AS dst ";
 
             object param = null;
             query += getSiteTestWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dst.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dst.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

@@ -13,7 +13,7 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMSeoKeyword[] QueryForAdmin(this RepoSeoKeywords repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] {
+            var query = SxQueryProvider.GetSelectString(new string[] {
                     "dsk.Id", "dsk.Value"
                 });
             query += @" FROM D_SEO_KEYWORD AS dsk ";
@@ -21,7 +21,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             object param = null;
             query += getSeoKeywordsWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dsk.Value", SortDirection.Asc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dsk.Value", SortDirection.Asc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

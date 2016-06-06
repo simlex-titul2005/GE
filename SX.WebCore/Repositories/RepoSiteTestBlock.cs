@@ -11,14 +11,14 @@ namespace SX.WebCore.Repositories
     {
         public override IQueryable<SxSiteTestBlock> Query(SxFilter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dstb.*", "dst.Id", "dst.Title", "dst.Title AS TestTitle" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dstb.*", "dst.Id", "dst.Title", "dst.Title AS TestTitle" });
             query += @" FROM D_SITE_TEST_BLOCK AS dstb
 JOIN D_SITE_TEST AS dst ON dst.Id = dstb.TestId ";
 
             object param = null;
             query += getSiteTestBlockWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dstb.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dstb.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

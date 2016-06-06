@@ -298,6 +298,7 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\ReportAdapters\ReportAphorismsAdapter.cs" />
     <Compile Include="LogsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

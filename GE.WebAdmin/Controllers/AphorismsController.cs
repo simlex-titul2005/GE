@@ -11,6 +11,7 @@ using static SX.WebCore.UrlHelperExtensions;
 using GE.WebAdmin.Extantions.Repositories;
 using static SX.WebCore.Enums;
 using SX.WebCore.Repositories;
+using GE.WebAdmin.Infrastructure.ReportAdapters;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -107,6 +108,15 @@ namespace GE.WebAdmin.Controllers
         {
             _repo.Delete(id, mct);
             return RedirectToAction(MVC.Aphorisms.Index(curCat: cat));
+        }
+
+        [HttpPost]
+        public virtual void Report()
+        {
+            using (var ra = new ReportAphorismsAdapter())
+            {
+                ra.SendReport(Response, "aphorisms");
+            }
         }
     }
 }

@@ -64,5 +64,25 @@ namespace GE.WebUI.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        public virtual ActionResult Result(int testId, int[] blockId, int[] questionId)
+        {
+            var test = new VMSiteTest { Id = testId };
+            test.Blocks = new VMSiteTestBlock[blockId.Length];
+            for (int i = 0; i < blockId.Length; i++)
+            {
+                var block = new VMSiteTestBlock
+                {
+                    Id = blockId[i],
+                    Questions = new VMSiteTestQuestion[1] {
+                        new VMSiteTestQuestion { Id=questionId[i]}
+                    }
+                };
+                test.Blocks[i] = block;
+            }
+
+            return null;
+        }
     }
 }

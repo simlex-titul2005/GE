@@ -11,13 +11,13 @@ namespace SX.WebCore.Repositories
     {
         public override IQueryable<SxManual> Query(SxFilter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "da.Id", "dm.Title", "dm.CategoryId" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "da.Id", "dm.Title", "dm.CategoryId" });
             query += " FROM D_MANUAL AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType LEFT JOIN D_MATERIAL_CATEGORY as dmc on dmc.Id=dm.CategoryId ";
 
             object param = null;
             query += getManualWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

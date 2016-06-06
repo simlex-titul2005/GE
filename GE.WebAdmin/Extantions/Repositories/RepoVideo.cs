@@ -15,13 +15,13 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMVideo[] QueryForAdmin(this RepoVideo repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString();
+            var query = SxQueryProvider.GetSelectString();
             query += @" FROM D_VIDEO dv ";
 
             object param = null;
             query += getVideoWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dv.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dv.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
@@ -68,13 +68,13 @@ namespace GE.WebAdmin.Extantions.Repositories
 
         public static VMVideo[] LinkedVideos(this RepoVideo repo, Filter filter, bool forMaterial)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dv.*"});
+            var query = SxQueryProvider.GetSelectString(new string[] { "dv.*"});
             query += @" FROM D_VIDEO AS dv " + (forMaterial?"":@"LEFT")+ @" JOIN D_VIDEO_LINK AS dvl ON dvl.VideoId = dv.Id ";
 
             object param = null;
             query += getLinkedVideoWhereString(filter, forMaterial, out param);
 
-            query += QueryProvider.GetOrderString("dv.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dv.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

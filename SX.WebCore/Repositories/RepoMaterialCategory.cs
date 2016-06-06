@@ -12,13 +12,13 @@ namespace SX.WebCore.Repositories
     {
         public override IQueryable<SxMaterialCategory> Query(SxFilter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dmc.*" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dmc.*" });
             query += " FROM D_MATERIAL_CATEGORY AS dmc ";
 
             object param = null;
             query += getMaterialGroupWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("DateCreate", SortDirection.Desc);
+            query += SxQueryProvider.GetOrderString("DateCreate", SortDirection.Desc);
 
             using (var connection = new SqlConnection(ConnectionString))
             {

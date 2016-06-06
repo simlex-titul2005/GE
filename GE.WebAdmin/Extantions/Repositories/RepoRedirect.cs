@@ -13,13 +13,13 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMRedirect[] QueryForAdmin(this RepoRedirect repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dr.Id", "dr.OldUrl", "dr.NewUrl", "dr.DateCreate" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dr.Id", "dr.OldUrl", "dr.NewUrl", "dr.DateCreate" });
             query += " FROM   D_REDIRECT dr";
 
             object param = null;
             query += getRedirectWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dr.DateCreate", SxExtantions.SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dr.DateCreate", SxExtantions.SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

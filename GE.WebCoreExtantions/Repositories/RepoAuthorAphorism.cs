@@ -13,13 +13,13 @@ namespace GE.WebCoreExtantions.Repositories
         public override IQueryable<AuthorAphorism> Query(SxFilter filter)
         {
             var f = (Filter)filter;
-            var query = QueryProvider.GetSelectString();
+            var query = SxQueryProvider.GetSelectString();
             query += @" FROM D_AUTHOR_APHORISM AS daa";
 
             object param = null;
             query += getAuthorAphorismsWhereString(f, out param);
 
-            query += QueryProvider.GetOrderString("daa.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("daa.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

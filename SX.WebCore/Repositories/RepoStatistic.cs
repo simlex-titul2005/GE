@@ -13,7 +13,7 @@ namespace SX.WebCore.Repositories
     {
         public SxStatisticUserLogin[] UserLogins(SxFilter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dsl.*", "ds.*", "anu.Id", "anu.NikName" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dsl.*", "ds.*", "anu.Id", "anu.NikName" });
             query += @" FROM D_STAT_LOGIN AS dsl
 JOIN D_STATISTIC AS ds ON ds.Id = dsl.StatisticId
 JOIN AspNetUsers AS anu ON anu.Id = dsl.UserId ";
@@ -21,7 +21,7 @@ JOIN AspNetUsers AS anu ON anu.Id = dsl.UserId ";
             object param = null;
             query += getUserLoginsWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("ds.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("ds.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

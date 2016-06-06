@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using SX.WebCore.Repositories;
 using SX.WebCore.Resources;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Runtime.Caching;
@@ -14,6 +15,7 @@ namespace GE.WebAdmin
     {
         private static Dictionary<string, string> _usersOnSite;
         private static MemoryCache _cache;
+        private static DateTime _lastStartDate;
         
         public static Dictionary<string, string> UsersOnSite
         {
@@ -29,6 +31,7 @@ namespace GE.WebAdmin
         private static MapperConfiguration _mapperConfiguration;
         protected void Application_Start()
         {
+            _lastStartDate = DateTime.Now;
             _cache = new MemoryCache("SXADMIN_CACHE");
             ErrorProvider.Configure(Server.MapPath("~/Logs"));
             Database.SetInitializer<WebCoreExtantions.DbContext>(null);
@@ -48,6 +51,14 @@ namespace GE.WebAdmin
             get
             {
                 return _mapperConfiguration;
+            }
+        }
+
+        public static DateTime LastStartDate
+        {
+            get
+            {
+                return _lastStartDate;
             }
         }
 

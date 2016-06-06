@@ -2,7 +2,7 @@
 
 namespace SX.WebCore.Providers
 {
-    public static class VideoProvider
+    public static class SxVideoProvider
     {
         public static string GetVideoImageUrl(string videoId, VideoQuality quality = VideoQuality.Max)
         {

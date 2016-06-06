@@ -13,13 +13,13 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMPicture[] QueryForAdmin(this RepoPicture<DbContext> repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dp.Id", "dp.Caption", "dp.[Description]", "dp.Width", "dp.Height", "dp.Size" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dp.Id", "dp.Caption", "dp.[Description]", "dp.Width", "dp.Height", "dp.Size" });
             query += " FROM D_PICTURE AS dp";
 
             object param = null;
             query += getPictureWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dp.DateCreate", SxExtantions.SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dp.DateCreate", SxExtantions.SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

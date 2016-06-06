@@ -14,13 +14,13 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMBanner[] QueryForAdmin(this RepoBanner<DbContext> repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
         {
-            var query = QueryProvider.GetSelectString();
+            var query = SxQueryProvider.GetSelectString();
             query += " FROM D_BANNER AS db ";
 
             object param = null;
             query += getBannerWhereString(filter, out param, forGroup, forMaterial);
 
-            query += QueryProvider.GetOrderString("db.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("db.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

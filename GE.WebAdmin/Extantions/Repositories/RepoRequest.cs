@@ -13,7 +13,7 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMRequest[] QueryForAdmin(this WebCoreExtantions.Repositories.RepoRequest repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] {
+            var query = SxQueryProvider.GetSelectString(new string[] {
                     "dr.Id", "dr.SessionId", "dr.UrlRef", "dr.Browser", "dr.ClientIP", "dr.UserAgent", "dr.RequestType", "dr.DateCreate", "dr.RawUrl"
                 });
             query += @" FROM D_REQUEST dr ";
@@ -21,7 +21,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             object param = null;
             query += getRequestWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dr.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dr.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

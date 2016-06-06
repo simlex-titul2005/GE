@@ -11,7 +11,7 @@ namespace SX.WebCore.Repositories
     {
         public override IQueryable<SxSiteTestQuestion> Query(SxFilter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dstq.*", "dstb.Id", "dstb.Title", "dstb.Title AS BlockTitle", "dst.Id", "dst.Title", "dst.Title AS TestTitle" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dstq.*", "dstb.Id", "dstb.Title", "dstb.Title AS BlockTitle", "dst.Id", "dst.Title", "dst.Title AS TestTitle" });
             query += @" FROM   D_SITE_TEST_QUESTION    AS dstq
        JOIN D_SITE_TEST_BLOCK  AS dstb
             ON  dstb.Id = dstq.BlockId
@@ -21,7 +21,7 @@ namespace SX.WebCore.Repositories
             object param = null;
             query += getSiteTestQuestionWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dstq.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dstq.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

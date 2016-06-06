@@ -13,13 +13,13 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMGame[] QueryForAdmin(this RepoGame repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dg.Id", "dg.Title", "dg.TitleAbbr", "dg.[Description]", "dg.Show" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dg.Id", "dg.Title", "dg.TitleAbbr", "dg.[Description]", "dg.Show" });
             query += " FROM D_GAME AS dg ";
 
             object param = null;
             query += getGameWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dg.Title", SortDirection.Asc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dg.Title", SortDirection.Asc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

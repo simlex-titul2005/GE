@@ -13,14 +13,14 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMEmployee[] QueryForAdmin(this RepoEmployee<DbContext> repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString();
+            var query = SxQueryProvider.GetSelectString();
             query += @" FROM D_EMPLOYEE AS de
 JOIN AspNetUsers AS anu ON anu.Id = de.Id ";
 
             object param = null;
             query += getEmployeeWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("de.DateCreate", SortDirection.Asc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("de.DateCreate", SortDirection.Asc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

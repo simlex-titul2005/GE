@@ -29,7 +29,7 @@ ORDER BY dm.DateCreate DESC";
         public override IQueryable<Article> Query(SxFilter filter)
         {
             var f = (Filter)filter;
-            var query = QueryProvider.GetSelectString(new string[] {
+            var query = SxQueryProvider.GetSelectString(new string[] {
                 "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title",
                 @"(SELECT
        SUBSTRING(
@@ -70,7 +70,7 @@ ORDER BY dv.DateCreate DESC";
             object param = null;
             query += getArticleWhereString(f, out param);
 
-            query += QueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc);
+            query += SxQueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

@@ -13,7 +13,7 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMForumPart[] QueryForAdmin(this RepoForumPart repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] {
+            var query = SxQueryProvider.GetSelectString(new string[] {
                     "dfp.Id", "dfp.Title", "dfp.Html"
                 });
             query += @" FROM D_FORUM_PART dfp ";
@@ -21,7 +21,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             object param = null;
             query += getForumPartWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dfp.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dfp.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

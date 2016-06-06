@@ -11,13 +11,13 @@ namespace SX.WebCore.Repositories
     {
         public override IQueryable<SxBannedUrl> Query(SxFilter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dbu.Id", "dbu.Url", "dbu.Couse" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dbu.Id", "dbu.Url", "dbu.Couse" });
             query += " FROM D_BANNED_URL AS dbu ";
 
             object param = null;
             query += getBannedUrlWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dbu.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dbu.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

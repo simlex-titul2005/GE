@@ -536,6 +536,34 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
+
+/*******************************************
+* получить отчет по афоризмам
+*******************************************/
+IF OBJECT_ID(N'dbo.get_report_aphorisms', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_report_aphorisms;
+GO
+CREATE PROCEDURE dbo.get_report_aphorisms
+	@catId VARCHAR(255)
+AS
+BEGIN
+	SELECT dmc.Title                    AS Category,
+	       daa.Name                     AS Author,
+	       dm.DateCreate,
+	       dm.Title,
+	       dm.Html
+	FROM   D_APHORISM                   AS da
+	       JOIN DV_MATERIAL             AS dm
+	            ON  dm.Id = da.Id
+	            AND dm.ModelCoreType = da.ModelCoreType
+	       LEFT JOIN D_AUTHOR_APHORISM  AS daa
+	            ON  daa.Id = da.AuthorId
+	       JOIN D_MATERIAL_CATEGORY     AS dmc
+	            ON  dmc.Id = dm.CategoryId
+	ORDER BY dm.DateCreate DESC
+END
+GO
+
    
 /*******************************************
 * получить страницу афоризма

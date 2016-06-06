@@ -213,6 +213,13 @@ namespace GE.WebUI
 
             #region site tests
             routes.MapRoute(
+               name: null,
+               url: "sitetests/result",
+               defaults: new { controller = "sitetests", action = "result", area = "" },
+               namespaces: _defNamespace
+           );
+
+            routes.MapRoute(
                 name: null,
                 url: "sitetests/{id}",
                 defaults: new { controller = "sitetests", action = "details", area = "" },

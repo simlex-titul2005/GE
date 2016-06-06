@@ -25,13 +25,13 @@ WHERE dm.TitleUrl=@TITLE_URL";
 
         public static VMNews[] QueryForAdmin(this RepoNews repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "da.Id", "dm.DateCreate", "dm.DateOfPublication", "dm.Title", "dm.SeoInfoId", "dm.Show" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "da.Id", "dm.DateCreate", "dm.DateOfPublication", "dm.Title", "dm.SeoInfoId", "dm.Show" });
             query += " FROM D_NEWS AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType LEFT JOIN D_GAME AS dg ON dg.ID = da.GameId ";
 
             object param = null;
             query += getNewsWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

@@ -15,13 +15,13 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMSeoInfo[] QueryForAdmin(this RepoSeoInfo repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dsi.Id", "dsi.RawUrl" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dsi.Id", "dsi.RawUrl" });
             query += " FROM D_SEO_INFO AS dsi ";
 
             object param = null;
             query += getSeoInfoWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dsi.RawUrl", SxExtantions.SortDirection.Asc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dsi.RawUrl", SxExtantions.SortDirection.Asc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

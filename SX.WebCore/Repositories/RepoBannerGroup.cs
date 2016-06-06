@@ -12,13 +12,13 @@ namespace SX.WebCore.Repositories
     {
         public override IQueryable<SxBannerGroup> Query(SxFilter filter)
         {
-            var query = QueryProvider.GetSelectString();
+            var query = SxQueryProvider.GetSelectString();
             query += " FROM D_BANNER_GROUP AS dbg ";
 
             object param = null;
             query += getBannerGroupWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dbg.DateCreate", SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dbg.DateCreate", SortDirection.Desc, filter.Orders);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

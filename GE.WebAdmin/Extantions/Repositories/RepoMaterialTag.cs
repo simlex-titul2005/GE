@@ -13,13 +13,13 @@ namespace GE.WebAdmin.Extantions.Repositories
     {
         public static VMMaterialTag[] QueryForAdmin(this RepoMaterialTag repo, Filter filter)
         {
-            var query = QueryProvider.GetSelectString(new string[] { "dmt.Id", "dmt.DateCreate", "dmt.MaterialId", "dmt.ModelCoreType" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "dmt.Id", "dmt.DateCreate", "dmt.MaterialId", "dmt.ModelCoreType" });
             query += " FROM D_MATERIAL_TAG AS dmt";
 
             object param = null;
             query += getMaterialTagWhereString(filter, out param);
 
-            query += QueryProvider.GetOrderString("dmt.DateCreate", SxExtantions.SortDirection.Desc, filter.Orders);
+            query += SxQueryProvider.GetOrderString("dmt.DateCreate", SxExtantions.SortDirection.Desc, filter.Orders);
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
             using (var conn = new SqlConnection(repo.ConnectionString))

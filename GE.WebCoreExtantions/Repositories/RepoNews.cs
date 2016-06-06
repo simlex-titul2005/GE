@@ -29,7 +29,7 @@ ORDER BY dm.DateCreate DESC";
         public override IQueryable<News> Query(SxFilter filter)
         {
             var f = (Filter)filter;
-            var query = QueryProvider.GetSelectString(new string[] {
+            var query = SxQueryProvider.GetSelectString(new string[] {
                 "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title",
                 "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount",
                 @"(SELECT
@@ -54,7 +54,7 @@ ORDER BY dm.DateCreate DESC";
             object param = null;
             query += getNewsWhereString(f, out param);
 
-            query += QueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc);
+            query += SxQueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 

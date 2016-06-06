@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SX.WebCore.Providers
 {
-    public static class QueryProvider
+    public static class SxQueryProvider
     {
         public static string GetSelectString(string[] columns = null)
         {

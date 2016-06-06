@@ -43,8 +43,8 @@
                     <span></span>
                     Далее
                 </button>
-                <form method="post" action="result">
-                    <input type="hidden" name="test" value="@Model.Id" />
+                <form method="post" action="@Url.Action(MVC.SiteTests.Result())">
+                    <input type="hidden" name="testId" value="@Model.Id" />
                 </form>
             </div>
         </div>
@@ -80,7 +80,7 @@
                         });
                     }
                     else {
-                        alert('Функционал не реализован');
+                        $('form').submit();
                     }
                 });
             });
@@ -96,8 +96,8 @@
 
             function addBlockResultInfo(blockId, questionId)
             {
-                $('form').append('<input type="hidden" name="block" value="' + blockId + '" />');
-                $('form').append('<input type="hidden" name="question" value="' + questionId + '" />');
+                $('form').append('<input type="hidden" name="blockId" value="' + blockId + '" />');
+                $('form').append('<input type="hidden" name="questionId" value="' + questionId + '" />');
             }
         </script>
     }

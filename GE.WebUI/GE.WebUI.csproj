@@ -264,6 +264,7 @@
     <Compile Include="Models\VMSiteTest.cs" />
     <Compile Include="Models\VMSiteTestBlock.cs" />
     <Compile Include="Models\VMSiteTestQuestion.cs" />
+    <Compile Include="Models\VMSiteTestSession.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -469,6 +470,7 @@
     <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
     <Content Include="Views\SiteTests\_RandomList.cshtml" />
     <Content Include="Views\SiteTests\Details.cshtml" />
+    <Content Include="Views\SiteTests\Result.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

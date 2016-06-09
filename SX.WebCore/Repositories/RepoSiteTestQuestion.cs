@@ -76,5 +76,13 @@ namespace SX.WebCore.Repositories
 
             return query;
         }
+
+        public override void Delete(params object[] id)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Execute("del_site_test_question @questionId", new { questionId = id[0] });
+            }
+        }
     }
 }

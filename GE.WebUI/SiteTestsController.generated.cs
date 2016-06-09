@@ -64,9 +64,9 @@ namespace GE.WebUI.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Result()
+        public virtual System.Web.Mvc.ViewResult Result()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Result);
+            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Result);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -112,9 +112,7 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Result
         {
-            public readonly string testId = "testId";
-            public readonly string blockId = "blockId";
-            public readonly string questionId = "questionId";
+            public readonly string resultId = "resultId";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -128,9 +126,11 @@ namespace GE.WebUI.Controllers
             {
                 public readonly string _RandomList = "_RandomList";
                 public readonly string Details = "Details";
+                public readonly string Result = "Result";
             }
             public readonly string _RandomList = "~/Views/SiteTests/_RandomList.cshtml";
             public readonly string Details = "~/Views/SiteTests/Details.cshtml";
+            public readonly string Result = "~/Views/SiteTests/Result.cshtml";
         }
     }
 
@@ -163,16 +163,14 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void ResultOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int testId, int[] blockId, int[] questionId);
+        partial void ResultOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string resultId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Result(int testId, int[] blockId, int[] questionId)
+        public override System.Web.Mvc.ViewResult Result(string resultId)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Result);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "testId", testId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "blockId", blockId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "questionId", questionId);
-            ResultOverride(callInfo, testId, blockId, questionId);
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Result);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "resultId", resultId);
+            ResultOverride(callInfo, resultId);
             return callInfo;
         }
 

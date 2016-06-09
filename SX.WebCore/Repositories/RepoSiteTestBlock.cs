@@ -71,5 +71,13 @@ JOIN D_SITE_TEST AS dst ON dst.Id = dstb.TestId ";
 
             return query;
         }
+
+        public override void Delete(params object[] id)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Execute("del_site_test_block @blockId", new { blockId = id[0] });
+            }
+        }
     }
 }

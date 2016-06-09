@@ -3,52 +3,74 @@
 @import (reference) "positioned.less";
 @import (reference) "../../bower_components/bootstrap/less/variables.less";
 
-#st-page{
-    color:@color-white;
+#st-page {
+    color: @color-white;
 }
 
-#st-page section{
-    margin-top:@def-pad*3;
-    position:relative;
+#st-page section {
+    margin-top: @def-pad*3;
+    position: relative;
 }
 
-#st-page section .title{
-    color:@color-white;
+#st-page section .title {
+    color: @color-white;
 }
 
-#st-page section > .desc{
-    color:@color-muted-blue;
-    margin-bottom:@def-pad*4;
+#st-page section > .desc {
+    color: @color-muted-blue;
+    margin-bottom: @def-pad*4;
 }
 
-#st-page input[type="radio"]{
-    float:left;
+#st-page input[type="radio"] {
+    float: left;
 }
 
-#st-page input[type="radio"]:focus, #st-page input[type="radio"]:active {
-    outline:none;
+#st-page .next-btn {
+    position: relative;
 }
 
-#st-page label{
-    font-weight:300;
-    font-size: 16px;
-    display:block;
-    margin-left:@def-pad*2;
-    line-height:1.2;
-}
-
-#st-page .stq{
-    margin-bottom:@def-pad*3;
-}
-
-#st-page .next-btn{
-    position:relative;
-}
-
-#st-page .next-btn > span{
+#st-page .next-btn > span {
     background: linear-gradient(to top, rgba(255,255,255,.3), rgba(255,255,255,.3), rgba(255,255,255,.1));
-    position:absolute;
-    height:100%;
+    position: absolute;
+    height: 100%;
     top: 0;
     left: 0;
+}
+
+@indicator-w:60px;
+#st-page .sx-indicator-list li{
+    margin-bottom:@def-pad*2;
+}
+
+#st-page .sx-indicator {
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 2px;
+    width:@indicator-w;
+    height:@indicator-w/2;
+    display:inline-table;
+    float:left;
+    background:linear-gradient(to top,#05110f,#afb1b3);
+}
+
+#st-page .sx-indicator > span{
+    display:table-cell;
+    vertical-align:middle;
+    width: 50%;
+    text-align: center;
+    user-select:none;
+    cursor:pointer;
+    color:#b0b0b0;
+}
+
+#st-page .sx-indicator > span.active{
+    background:linear-gradient(to top,#afb1b3,#05110f);
+    color:@color-white;
+    font-weight: bold;
+    box-shadow: 1px 1px 8px #bcf0b9;
+}
+
+#st-page .sx-indicator-txt{
+    font-size:20px;
+    margin-left: @indicator-w+@def-pad*2;
+    display:block;
 }

@@ -152,6 +152,7 @@
     <Compile Include="Controllers\SxPicturesController.cs" />
     <Compile Include="Controllers\SxLogsController.cs" />
     <Compile Include="HtmlHelpers\SxGridView.cs" />
+    <Compile Include="HtmlHelpers\SxIndicatorGroup.cs" />
     <Compile Include="HtmlHelpers\SxList.cs" />
     <Compile Include="HtmlHelpers\SxPager.cs" />
     <Compile Include="HtmlHelpers\SxTagsCloud.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Repositories\RepoSiteTestQuestion.cs" />
     <Compile Include="Repositories\RepoSiteTestBlock.cs" />
     <Compile Include="Repositories\RepoSiteTest.cs" />
+    <Compile Include="Repositories\RepoSiteTestResult.cs" />
     <Compile Include="Repositories\RepoVideo.cs" />
     <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoManual.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="SxLike.cs" />
     <Compile Include="SxSiteTestBlock.cs" />
     <Compile Include="SxSiteTestQuestion.cs" />
+    <Compile Include="SxSiteTestResult.cs" />
     <Compile Include="SxStatisticUserLogin.cs" />
     <Compile Include="SxManual.cs" />
     <Compile Include="SxMaterialCategory.cs" />

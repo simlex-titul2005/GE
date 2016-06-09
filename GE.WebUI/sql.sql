@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 03.06.2016 13:46:13
+ * Time: 09.06.2016 16:18:08
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,16 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -425,6 +435,16 @@ GO
 
 
 
+
+
+
+
+
+
+
+
+
+
 /*******************************************
  * добавить комментарии материала
  *******************************************/
@@ -560,7 +580,8 @@ BEGIN
 	            ON  daa.Id = da.AuthorId
 	       JOIN D_MATERIAL_CATEGORY     AS dmc
 	            ON  dmc.Id = dm.CategoryId
-	ORDER BY dm.DateCreate DESC
+	ORDER BY
+	       dm.DateCreate DESC
 END
 GO
 
@@ -1227,5 +1248,103 @@ BEGIN
 	       JOIN D_SITE_TEST        AS dst
 	            ON  dst.Id = dstb.TestId
 	WHERE  dst.Id = @id
+END
+GO
+
+/*******************************************
+ * Удалить тест
+ *******************************************/
+IF OBJECT_ID(N'dbo.del_site_test', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.del_site_test;
+GO
+CREATE PROCEDURE dbo.del_site_test
+	@testId INT
+AS
+	BEGIN TRANSACTION
+	DELETE 
+	FROM   D_SITE_TEST_RESULT
+	WHERE  TestId = @testId
+	
+	DELETE 
+	FROM   D_SITE_TEST
+	WHERE  Id = @testId
+	
+	COMMIT TRANSACTION
+GO
+
+/*******************************************
+ * Удалить блок теста
+ *******************************************/
+IF OBJECT_ID(N'dbo.del_site_test_block', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.del_site_test_block;
+GO
+CREATE PROCEDURE dbo.del_site_test_block
+	@blockId INT
+AS
+	BEGIN TRANSACTION
+	DELETE 
+	FROM   D_SITE_TEST_RESULT
+	WHERE  BlockId = @blockId
+	
+	DELETE 
+	FROM   D_SITE_TEST_BLOCK
+	WHERE  Id = @blockId
+	
+	COMMIT TRANSACTION
+GO
+
+/*******************************************
+ * Удалить вопрос теста
+ *******************************************/
+IF OBJECT_ID(N'dbo.del_site_test_question', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.del_site_test_question;
+GO
+CREATE PROCEDURE dbo.del_site_test_question
+	@questionId INT
+AS
+	BEGIN TRANSACTION
+	DELETE 
+	FROM   D_SITE_TEST_RESULT
+	WHERE  QuestionId = @questionId
+	
+	DELETE 
+	FROM   D_SITE_TEST_QUESTION
+	WHERE  Id = @questionId
+	
+	COMMIT TRANSACTION
+GO
+
+/*******************************************
+ * Добавить результат теста
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_site_test_result', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_site_test_result;
+GO
+CREATE PROCEDURE dbo.add_site_test_result
+	@id UNIQUEIDENTIFIER,
+	@testId INT,
+	@blockId INT,
+	@questionId INT,
+	@result BIT
+AS
+BEGIN
+	INSERT INTO D_SITE_TEST_RESULT
+	  (
+	    Id,
+	    TestId,
+	    BlockId,
+	    QuestionId,
+	    Result,
+	    DateCreate
+	  )
+	VALUES
+	  (
+	    @id,
+	    @testId,
+	    @blockId,
+	    @questionId,
+	    @result,
+	    GETDATE()
+	  )
 END
 GO

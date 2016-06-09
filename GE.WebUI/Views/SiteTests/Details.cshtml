@@ -15,7 +15,7 @@
         </p>
 
         <div>
-            @for (int i = 0; i < Model.Blocks.Length; i++)
+            @for (int i = 0; i < 2; i++)
             {
                 var block = Model.Blocks[i];
                 if (block.Questions.Any())
@@ -27,14 +27,12 @@
                             @block.Description
                         </blockquote>
 
-                        @for (int y = 0; y < block.Questions.Length; y++)
-                        {
-                            var question = block.Questions[y];
-                            <div class="stq">
-                                <input type="radio" value="@question.Id" name="stq" id="stq-@question.Id" autocomplete="off" />
-                                <label for="stq-@question.Id">@question.Text</label>
-                            </div>
-                        }
+                        @Html.SxIndicatorGroup(block.Questions, new SxExtantions.SxIndicatorGroupSettings<VMSiteTestQuestion>
+                   {
+                       FuncGetId = x => "stq-" + x.Id,
+                       FuncGetLabel = x => x.Text
+                   })
+
                     </section>
                 }
             }
@@ -43,61 +41,75 @@
                     <span></span>
                     Далее
                 </button>
-                <form method="post" action="@Url.Action(MVC.SiteTests.Result())">
-                    <input type="hidden" name="testId" value="@Model.Id" />
-                </form>
             </div>
         </div>
     </div>
 
     @section scripts{
         <script>
-            var stbCount=@Model.Blocks.Length-1;
-            var counter=stbCount;
             $(function () {
-                $('input[type="radio"]').change(function () {
-                    $('.next-btn').removeClass('disabled');
+                $('.sx-indicator > span').click(function () {
+                    $span = $(this);
+                    $section = $span.closest('section');
+                    var isTrue = $span.data('dir') == true;
+
+                    if (isTrue)
+                        $span.next('span').removeAttr('class');
+                    else
+                        $span.prev('span').removeAttr('class');
+
+                    $span.addClass('active');
+                    showNextQuestionsBtn($section);
                 });
 
                 $('.next-btn').click(function () {
-                    $btn = $(this);
-                    if ($btn.hasClass('disabled')) return false;
-
-                    $block = $('section').not('.hidden');
-                    $blockNext = $block.next('section');
-                    if ($blockNext.length == 1) {
-                        var blockId = $block.attr('id').replace('stb-', '');
-                        var questionId = $block.find('input[type="radio"]:checked').val();
-                        addBlockResultInfo(blockId, questionId);
-                        $block.animate({
-                            'opacity': '0'
-                        }, 'fast', function () {
-                            $block.hide().addClass('hidden');
-                            $blockNext.removeClass('hidden').fadeIn();
-                            counter+=-1;
-                            fillNextButton($btn);
-                            $btn.addClass('disabled');
-                        });
+                    $section = $('section:visible');
+                    $sectionNext = $section.next('section');
+                    if ($sectionNext.length == 1) {
+                        $section.addClass('hidden');
+                        $sectionNext.removeClass('hidden');
                     }
-                    else {
-                        $('form').submit();
-                    }
+                    else
+                        sendSiteTestResult();
                 });
             });
 
-            function fillNextButton(btn)
+            function showNextQuestionsBtn(section)
             {
-                $btn=$(btn);
-                var width=100-counter*100/stbCount+'%';
-                $btn.find('span').animate({
-                    'width': width
-                }, 'fast');
+                var count = $(section).find('.sx-indicator').length;
+                var selected = $section.find('.sx-indicator > span.active').length;
+                if (count == selected)
+                    $('.next-btn').removeClass('disabled');
             }
 
-            function addBlockResultInfo(blockId, questionId)
+            function sendSiteTestResult()
             {
-                $('form').append('<input type="hidden" name="blockId" value="' + blockId + '" />');
-                $('form').append('<input type="hidden" name="questionId" value="' + questionId + '" />');
+                var test = { testId: @Model.Id, blocks: [] };
+
+                $('section').each(function () {
+                    $block=$(this);
+                    var id=parseInt($block.attr('id').replace('stb-', ''));
+                    var b={ blockId: id, questions: []};
+                    $block.find('li[id^="stq-"]').each(function(){
+                        $question=$(this);
+                        var qid=parseInt($question.attr('id').replace('stq-', ''));
+                        var res=$question.find('span.active').data('dir');
+                        var q={questionId: qid, result: res};
+                        b.questions.push(q);
+                    });
+                    test.blocks.push(b);
+                });
+
+                $.ajax({
+                    method:'post',
+                    url:'/sitetests/result',
+                    contentType:'application/json',
+                    data: JSON.stringify(test),
+                    success:function(data){
+                        alert(data);
+                        window.location='/sitetests/result?resultId='+data;
+                    }
+                });
             }
         </script>
     }

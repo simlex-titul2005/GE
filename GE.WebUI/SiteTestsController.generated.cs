@@ -64,9 +64,9 @@ namespace GE.WebUI.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Result()
+        public virtual System.Web.Mvc.ActionResult Result()
         {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Result);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Result);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -163,12 +163,12 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void ResultOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, string resultId);
+        partial void ResultOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Guid resultId);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Result(string resultId)
+        public override System.Web.Mvc.ActionResult Result(System.Guid resultId)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Result);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Result);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "resultId", resultId);
             ResultOverride(callInfo, resultId);
             return callInfo;

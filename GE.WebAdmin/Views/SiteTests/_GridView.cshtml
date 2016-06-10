@@ -15,11 +15,12 @@
             Columns = new SxExtantions.SxGridViewColumn<VMSiteTest>[]{
                 new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="DateCreate", Caption="Дата создания"},
                 new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Title", Caption="Заголовок"},
-                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Description", Caption="Описание"}
+                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Description", Caption="Описание"},
+                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="TestType", Caption="Тип" }
             },
             PagerInfo=pagerInfo,
             Filter = filter,
             SortDirections = sortDirections
         },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
     )

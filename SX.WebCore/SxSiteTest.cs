@@ -1,5 +1,6 @@
 ﻿using SX.WebCore.Abstract;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,5 +16,13 @@ namespace SX.WebCore
         public string Description { get; set; }
 
         public virtual ICollection<SxSiteTestBlock> Blocks { get; set; }
+
+        public SiteTestType TestType { get; set; }
+
+        public enum SiteTestType : byte
+        {
+            [Description("Угадыватель")]
+            GuessYesNo=1
+        }
     }
 }

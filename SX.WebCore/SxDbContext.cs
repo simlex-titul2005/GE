@@ -94,9 +94,7 @@ namespace SX.WebCore
             modelBuilder.Entity<SxBanner>().Property(x => x.TargetCost).HasColumnType("money");
             modelBuilder.Entity<SxBanner>().Property(x => x.CPM).HasColumnType("money");
 
-            modelBuilder.Entity<SxSiteTestResult>().HasKey(x => new { x.Id, x.TestId, x.BlockId, x.QuestionId });
-            modelBuilder.Entity<SxSiteTestResult>().HasRequired(x => x.Block).WithMany().WillCascadeOnDelete(false);
-            modelBuilder.Entity<SxSiteTestResult>().HasRequired(x => x.Question).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<SxSiteTestResult>().HasKey(x => new { x.Id, x.QuestionId });
         }
     }
 }

@@ -84,7 +84,7 @@ namespace GE.WebAdmin.Controllers
                 if (model.Id == 0)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, true, "Title", "Description");
+                    newModel = _repo.Update(redactModel, true, "Title", "Description", "TestType");
                 return RedirectToAction("index");
             }
             else
@@ -96,6 +96,13 @@ namespace GE.WebAdmin.Controllers
         {
             _repo.Delete(model.Id);
             return RedirectToAction("index");
+        }
+
+        [HttpGet]
+        public virtual PartialViewResult TestMatrix(int testId)
+        {
+            var data = (_repo as RepoSiteTest<DbContext>).GetMatrix(testId).Select(x=>Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(x)).ToArray();
+            return PartialView(MVC.SiteTests.Views._Matrix, data);
         }
     }
 }

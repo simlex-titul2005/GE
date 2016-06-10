@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 09.06.2016 16:18:08
+ * Time: 10.06.2016 11:58:49
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,11 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
+
+
+
 
 
 
@@ -420,6 +425,11 @@ BEGIN
 	RETURN @res
 END
 GO
+
+
+
+
+
 
 
 
@@ -1260,11 +1270,6 @@ GO
 CREATE PROCEDURE dbo.del_site_test
 	@testId INT
 AS
-	BEGIN TRANSACTION
-	DELETE 
-	FROM   D_SITE_TEST_RESULT
-	WHERE  TestId = @testId
-	
 	DELETE 
 	FROM   D_SITE_TEST
 	WHERE  Id = @testId
@@ -1281,11 +1286,6 @@ GO
 CREATE PROCEDURE dbo.del_site_test_block
 	@blockId INT
 AS
-	BEGIN TRANSACTION
-	DELETE 
-	FROM   D_SITE_TEST_RESULT
-	WHERE  BlockId = @blockId
-	
 	DELETE 
 	FROM   D_SITE_TEST_BLOCK
 	WHERE  Id = @blockId
@@ -1302,11 +1302,6 @@ GO
 CREATE PROCEDURE dbo.del_site_test_question
 	@questionId INT
 AS
-	BEGIN TRANSACTION
-	DELETE 
-	FROM   D_SITE_TEST_RESULT
-	WHERE  QuestionId = @questionId
-	
 	DELETE 
 	FROM   D_SITE_TEST_QUESTION
 	WHERE  Id = @questionId
@@ -1322,29 +1317,66 @@ IF OBJECT_ID(N'dbo.add_site_test_result', N'P') IS NOT NULL
 GO
 CREATE PROCEDURE dbo.add_site_test_result
 	@id UNIQUEIDENTIFIER,
-	@testId INT,
-	@blockId INT,
 	@questionId INT,
-	@result BIT
+	@result BIT,
+	@dateAnswer DATETIME
 AS
 BEGIN
 	INSERT INTO D_SITE_TEST_RESULT
 	  (
 	    Id,
-	    TestId,
-	    BlockId,
 	    QuestionId,
 	    Result,
+	    DateAnswer,
 	    DateCreate
 	  )
 	VALUES
 	  (
 	    @id,
-	    @testId,
-	    @blockId,
 	    @questionId,
 	    @result,
+	    @dateAnswer,
 	    GETDATE()
 	  )
+END
+GO
+
+/*******************************************
+ * Страницы результата тестов
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_site_test_result', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_site_test_result;
+GO
+CREATE PROCEDURE dbo.get_site_test_result
+	@id UNIQUEIDENTIFIER
+AS
+BEGIN
+	SELECT *
+	FROM   D_SITE_TEST_RESULT         AS dstr
+	       JOIN D_SITE_TEST_QUESTION  AS dstq
+	            ON  dstq.Id = dstr.QuestionId
+	       JOIN D_SITE_TEST_BLOCK     AS dstb
+	            ON  dstb.Id = dstq.BlockId
+	       JOIN D_SITE_TEST           AS dst
+	            ON  dst.Id = dstb.TestId
+	WHERE  dstr.Id = @id
+END
+GO
+
+/*******************************************
+ * Матрица ответов для тестов типа GuessYesNo 
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_site_test_matrix', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_site_test_matrix;
+GO
+CREATE PROCEDURE dbo.get_site_test_matrix
+	@testId INT
+AS
+BEGIN
+	SELECT *
+	FROM   D_SITE_TEST_QUESTION    AS dstq
+	       JOIN D_SITE_TEST_BLOCK  AS dstb
+	            ON  dstb.Id = dstq.BlockId
+	            AND dstb.TestId = @testId
 END
 GO

@@ -214,8 +214,8 @@ namespace GE.WebUI
             #region site tests
             routes.MapRoute(
                name: null,
-               url: "sitetests/result",
-               defaults: new { controller = "sitetests", action = "result", area = "" },
+               url: "sitetests/result/{resultId}",
+               defaults: new { controller = "sitetests", action = "result", resultId = UrlParameter.Optional, area = "" },
                namespaces: _defNamespace
            );
 

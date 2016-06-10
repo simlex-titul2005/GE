@@ -72,33 +72,23 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpPost]
-        public virtual Guid Result(VMSiteTestSession test)
+        public virtual Guid Result(List<SxSiteTestResult> questions)
         {
-            if (test.TestId == 0 || test.Blocks.Count == 0) return Guid.Empty;
+            if (!questions.Any()) return Guid.Empty;
 
-            var questionResults = new List<SxSiteTestResult>();
-            foreach (var block in test.Blocks)
-            {
-                foreach (var question in block.Questions)
-                {
-                    questionResults.Add(new SxSiteTestResult
-                    {
-                        TestId = test.TestId,
-                        BlockId = block.BlockId,
-                        QuestionId = question.QuestionId,
-                        Result = question.Result
-                    });
-                }
-            }
-
-            var resultId = new RepoSiteTestResult<DbContext>().Create(questionResults.ToArray());
+            var resultId = new RepoSiteTestResult<DbContext>().Create(questions.ToArray());
             return resultId;
         }
 
         [HttpGet]
-        public virtual ViewResult Result(string resultId)
+        public virtual ActionResult Result(Guid resultId)
         {
-            return View(resultId);
+            ViewBag.TestResultId = resultId;
+            var data = new RepoSiteTestResult<DbContext>().GetByKey(resultId);
+            if (!data.Any())
+                return new HttpNotFoundResult();
+
+            return View();
         }
     }
 }

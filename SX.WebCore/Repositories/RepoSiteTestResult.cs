@@ -1,22 +1,40 @@
 ﻿using Dapper;
 using SX.WebCore.Abstract;
+using SX.WebCore.ViewModels;
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace SX.WebCore.Repositories
 {
     public sealed class RepoSiteTestResult<TDbContext> : SxDbRepository<Guid, SxSiteTestResult, TDbContext> where TDbContext : SxDbContext
     {
+        public SxSiteTestResult[] GetByKey(Guid id)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                var data = conn.Query<SxSiteTestResult, SxSiteTestQuestion, SxSiteTestBlock, SxSiteTest, SxSiteTestResult>("get_site_test_result @id", (r, q, b, t) =>
+                {
+                    b.Test = t;
+                    q.Block = b;
+                    r.Question = q;
+                    return r;
+                }, new { id = id }).ToArray();
+
+                return data;
+            }
+        }
+
         public override SxSiteTestResult Create(SxSiteTestResult model)
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                conn.Execute("dbo.add_site_test_result @id, @testId, @blockId, @questionId, @result", new {
-                    id= model.Id,
-                    testId=model.TestId,
-                    blockId=model.BlockId,
-                    questionId=model.QuestionId,
-                    result=model.Result
+                conn.Execute("add_site_test_result @id, @questionId, @result, @dateAnswer", new
+                {
+                    id = model.Id,
+                    questionId = model.QuestionId,
+                    result = model.Result,
+                    dateAnswer = model.DateAnswer
                 });
             }
 

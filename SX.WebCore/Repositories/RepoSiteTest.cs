@@ -104,5 +104,17 @@ namespace SX.WebCore.Repositories
                 conn.Execute("del_site_test @testId", new { testId = id[0] });
             }
         }
+
+        public SxSiteTestQuestion[] GetMatrix(int testId)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                var data = conn.Query<SxSiteTestQuestion, SxSiteTestBlock, SxSiteTestQuestion>("get_site_test_matrix @testId", (q,b)=> {
+                    q.Block = b;
+                    return q;
+                }, new { testId = testId });
+                return data.ToArray();
+            }
+        }
     }
 }

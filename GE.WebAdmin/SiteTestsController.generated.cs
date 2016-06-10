@@ -74,6 +74,12 @@ namespace GE.WebAdmin.Controllers
         {
             return new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult TestMatrix()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.TestMatrix);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public SiteTestsController Actions { get { return MVC.SiteTests; } }
@@ -94,6 +100,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string FindGridView = "FindGridView";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
+            public readonly string TestMatrix = "TestMatrix";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -103,6 +110,7 @@ namespace GE.WebAdmin.Controllers
             public const string FindGridView = "FindGridView";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
+            public const string TestMatrix = "TestMatrix";
         }
 
 
@@ -143,6 +151,14 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_TestMatrix s_params_TestMatrix = new ActionParamsClass_TestMatrix();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_TestMatrix TestMatrixParams { get { return s_params_TestMatrix; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_TestMatrix
+        {
+            public readonly string testId = "testId";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -155,11 +171,13 @@ namespace GE.WebAdmin.Controllers
             {
                 public readonly string _FindGridView = "_FindGridView";
                 public readonly string _GridView = "_GridView";
+                public readonly string _Matrix = "_Matrix";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
             public readonly string _FindGridView = "~/Views/SiteTests/_FindGridView.cshtml";
             public readonly string _GridView = "~/Views/SiteTests/_GridView.cshtml";
+            public readonly string _Matrix = "~/Views/SiteTests/_Matrix.cshtml";
             public readonly string Edit = "~/Views/SiteTests/Edit.cshtml";
             public readonly string Index = "~/Views/SiteTests/Index.cshtml";
         }
@@ -243,6 +261,18 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_RedirectToRouteResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             DeleteOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void TestMatrixOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int testId);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult TestMatrix(int testId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.TestMatrix);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "testId", testId);
+            TestMatrixOverride(callInfo, testId);
             return callInfo;
         }
 

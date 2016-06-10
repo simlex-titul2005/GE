@@ -1,7 +1,5 @@
-﻿@model Guid
-@{
-    ViewBag.Title = "Result";
+﻿@{
+    ViewBag.H1 = ViewBag.H1 ?? "Результаты теста " + ViewBag.TestResultId;
+    ViewBag.Title = ViewBag.H1;
 }
-
-<h2>@Model</h2>
 

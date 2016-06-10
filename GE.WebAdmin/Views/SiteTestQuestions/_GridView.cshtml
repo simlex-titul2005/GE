@@ -16,11 +16,14 @@
                 new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="DateCreate", Caption="Дата создания"},
                 new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="TestTitle", Caption="Тест"},
                 new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="BlockTitle", Caption="Блок"},
-                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="Text", Caption="Текст"}
+                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="Text", Caption="Текст"},
+                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="IsCorrect", Caption="Корректность",Template= (q)=> {
+                    return q.IsCorrect?"Да":"Нет";
+                } }
             },
             PagerInfo=pagerInfo,
             Filter = filter,
             SortDirections = sortDirections
         },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
     )

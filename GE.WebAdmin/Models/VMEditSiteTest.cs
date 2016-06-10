@@ -11,5 +11,8 @@ namespace GE.WebAdmin.Models
 
         [Required, MaxLength(1000), Display(Name = "Описание"), DataType(DataType.MultilineText)]
         public string Description { get; set; }
+
+        [Required, Display(Name ="Тип теста")]
+        public SX.WebCore.SxSiteTest.SiteTestType TestType { get; set; }
     }
 }

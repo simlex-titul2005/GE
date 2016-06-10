@@ -15,7 +15,7 @@
         </p>
 
         <div>
-            @for (int i = 0; i < 2; i++)
+            @for (int i = 0; i < Model.Blocks.Length; i++)
             {
                 var block = Model.Blocks[i];
                 if (block.Questions.Any())
@@ -41,33 +41,56 @@
                     <span></span>
                     Далее
                 </button>
+                <form method="post" action="@MVC.SiteTests.Result()">
+
+                </form>
             </div>
         </div>
     </div>
 
     @section scripts{
         <script>
+            var count = $('section').length;
+            var counter = count;
             $(function () {
+                
                 $('.sx-indicator > span').click(function () {
                     $span = $(this);
                     $section = $span.closest('section');
                     var isTrue = $span.data('dir') == true;
+                    var isActive = $span.hasClass('active');
+                    if (isActive) return;
 
-                    if (isTrue)
+                    if (isTrue) {
                         $span.next('span').removeAttr('class');
-                    else
+                        $span.next('span').removeAttr('data-date');
+                    }
+                    else {
                         $span.prev('span').removeAttr('class');
+                        $span.prev('span').removeAttr('data-date');
+                    }
 
-                    $span.addClass('active');
+                    $span.addClass('active').attr('data-date', getAnswerDate());
                     showNextQuestionsBtn($section);
                 });
 
                 $('.next-btn').click(function () {
+                    $btn = $(this);
                     $section = $('section:visible');
                     $sectionNext = $section.next('section');
+
+                    var count1 = $section.find('.sx-indicator').length;
+                    var selected = $section.find('.sx-indicator > span.active').length;
+
                     if ($sectionNext.length == 1) {
+                        
+                        if (count1 != selected) return;
                         $section.addClass('hidden');
                         $sectionNext.removeClass('hidden');
+                        counter--;
+                        var width = 100 - counter * 100 / count;
+                        $btn.find('span').css({ 'width': width + '%' });
+                        $btn.addClass('disabled');
                     }
                     else
                         sendSiteTestResult();
@@ -76,7 +99,8 @@
 
             function showNextQuestionsBtn(section)
             {
-                var count = $(section).find('.sx-indicator').length;
+                $section = $(section);
+                var count = $section.find('.sx-indicator').length;
                 var selected = $section.find('.sx-indicator > span.active').length;
                 if (count == selected)
                     $('.next-btn').removeClass('disabled');
@@ -84,32 +108,41 @@
 
             function sendSiteTestResult()
             {
-                var test = { testId: @Model.Id, blocks: [] };
+                var questions = [];
 
-                $('section').each(function () {
-                    $block=$(this);
-                    var id=parseInt($block.attr('id').replace('stb-', ''));
-                    var b={ blockId: id, questions: []};
-                    $block.find('li[id^="stq-"]').each(function(){
-                        $question=$(this);
-                        var qid=parseInt($question.attr('id').replace('stq-', ''));
-                        var res=$question.find('span.active').data('dir');
-                        var q={questionId: qid, result: res};
-                        b.questions.push(q);
-                    });
-                    test.blocks.push(b);
+                $('li[id^="stq-"]').each(function () {
+                    $question = $(this);
+                    var id = parseInt($question.attr('id').replace('stq-', ''));
+                    $span = $question.find('span[data-dir].active');
+                    var result = $span.data('dir');
+                    var date = $span.data('date');
+                    questions.push({ questionId: id, result: result, dateAnswer: date });
                 });
 
                 $.ajax({
                     method:'post',
                     url:'/sitetests/result',
                     contentType:'application/json',
-                    data: JSON.stringify(test),
+                    data: JSON.stringify(questions),
                     success:function(data){
-                        alert(data);
-                        window.location='/sitetests/result?resultId='+data;
+                        window.location='/sitetests/result/'+data;
                     }
                 });
+            }
+
+            function getAnswerDate()
+            {
+                var date=new Date();
+                var year=date.getFullYear();
+                var month=date.getMonth();
+                var day=date.getDate();
+                var hour=date.getHours();
+                var minute=date.getMinutes();
+                var second = date.getSeconds();
+                var milisecond = date.getMilliseconds();
+
+                var result = year + '-' + (month+1) + '-' + day + ' ' + hour + ':' + minute + ':' + second + '.' + milisecond;
+                return result;
             }
         </script>
     }

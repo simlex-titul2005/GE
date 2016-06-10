@@ -264,7 +264,6 @@
     <Compile Include="Models\VMSiteTest.cs" />
     <Compile Include="Models\VMSiteTestBlock.cs" />
     <Compile Include="Models\VMSiteTestQuestion.cs" />
-    <Compile Include="Models\VMSiteTestSession.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -479,7 +478,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\dist\i\temp\" />
   </ItemGroup>
   <ItemGroup>

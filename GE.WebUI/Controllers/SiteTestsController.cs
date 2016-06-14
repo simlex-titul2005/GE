@@ -32,6 +32,8 @@ namespace GE.WebUI.Controllers
         public virtual ActionResult Details(string titleUrl)
         {
             var viewModel = getTest(titleUrl);
+            if (viewModel == null)
+                return new HttpNotFoundResult();
 
             return View(model: viewModel);
         }

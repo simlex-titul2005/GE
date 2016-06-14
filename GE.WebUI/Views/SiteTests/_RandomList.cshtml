@@ -10,18 +10,21 @@
         <h2 class="header">Проверьте свои знания</h2>
         <br />
         <div class="row">
-            @for (int i = 0; i < Model.Length; i++)
+            @for (int i = 0; i < amount; i++)
             {
-                var item = Model[i];
                 <div class="col-md-4">
-                    <div class="content">
-                        <h4>@item.Title</h4>
-                        <br />
-                        <p>@item.Description</p>
-                        <div class="btn-block">
-                            <a href="@Url.Action(MVC.SiteTests.Details(titleUrl: (string)item.TitleUrl))" class="btn btn-default btn-sm">Пройти тест <i class="fa fa-angle-double-right"></i></a>
+                    @if (i < Model.Length)
+                    {
+                        var item = Model[i];
+                        <div class="content">
+                            <h4>@item.Title</h4>
+                            <br />
+                            <p>@item.Description</p>
+                            <div class="btn-block">
+                                <a href="@Url.Action(MVC.SiteTests.Details(titleUrl: (string)item.TitleUrl))" class="btn btn-default btn-sm">Пройти тест <i class="fa fa-angle-double-right"></i></a>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             }
         </div>

@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 14.06.2016 11:06:33
+ * Time: 14.06.2016 18:51:04
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,8 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
 
 
 
@@ -426,6 +428,8 @@ BEGIN
 	RETURN @res
 END
 GO
+
+
 
 
 
@@ -917,7 +921,9 @@ GO
 IF OBJECT_ID(N'dbo.get_game_materials', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_game_materials;
 GO
-CREATE PROCEDURE dbo.get_game_materials(@titleUrl VARCHAR(50), @amount INT)
+CREATE PROCEDURE dbo.get_game_materials
+	@titleUrl VARCHAR(50),
+	@amount INT
 AS
 BEGIN
 	SELECT x.Id,
@@ -926,6 +932,7 @@ BEGIN
 	       x.TitleUrl,
 	       x.DateCreate,
 	       x.DateOfPublication,
+	       x.ViewsCount,
 	       CASE 
 	            WHEN x.ModelCoreType = 6 THEN x.Html
 	            ELSE x.Foreword
@@ -956,6 +963,8 @@ BEGIN
 	                       AND dg.Show = 1
 	           WHERE  dm.Show = 1
 	                  AND dm.DateOfPublication <= GETDATE()
+	           ORDER BY
+	                  dm.DateOfPublication DESC
 	           UNION ALL
 	           SELECT TOP(@amount) dm.*,
 	                  NULL              AS PictureId,
@@ -970,6 +979,8 @@ BEGIN
 	                       AND dg.Show = 1
 	           WHERE  dm.Show = 1
 	                  AND dm.DateOfPublication <= GETDATE()
+	           ORDER BY
+	                  dm.DateOfPublication DESC
 	           UNION ALL
 	           SELECT TOP(@amount) dm.*,
 	                  daa.PictureId,

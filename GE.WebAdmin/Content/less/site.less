@@ -1,6 +1,7 @@
 ﻿@import (reference) "colors.less";
 @import "sb-admin-2.less";
 @import "bootstrap-ext.less";
+@import (reference) "../../bower_components/bootstrap/less/variables.less";
 
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic&subset=latin,cyrillic);
 
@@ -11,8 +12,24 @@ body {
 }
 
 #footer {
-    padding: 15px 10px;
+    padding: 10px 0;
     border-top: 1px solid @color-border;
+}
+
+#footer .developer{
+    text-align:right;
+    @media (max-width: @screen-xs-max) {
+        text-align:left;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
 }
 
 .datepicker td, .datepicker th {

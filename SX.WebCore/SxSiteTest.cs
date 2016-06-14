@@ -12,6 +12,9 @@ namespace SX.WebCore
         [Required, MaxLength(200)]
         public string Title { get; set; }
 
+        [Required, MaxLength(255), Index]
+        public string TitleUrl { get; set; }
+
         [Required, MaxLength(1000)]
         public string Description { get; set; }
 

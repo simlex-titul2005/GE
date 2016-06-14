@@ -221,7 +221,7 @@ namespace GE.WebUI
 
             routes.MapRoute(
                 name: null,
-                url: "sitetests/{id}",
+                url: "sitetests/{titleUrl}",
                 defaults: new { controller = "sitetests", action = "details", area = "" },
                 namespaces: _defNamespace
             );

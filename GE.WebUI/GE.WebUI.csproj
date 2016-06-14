@@ -470,6 +470,7 @@
     <Content Include="Views\SiteTests\_RandomList.cshtml" />
     <Content Include="Views\SiteTests\Details.cshtml" />
     <Content Include="Views\SiteTests\Result.cshtml" />
+    <Content Include="Views\SiteTests\_Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

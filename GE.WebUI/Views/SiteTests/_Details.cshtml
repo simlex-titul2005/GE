@@ -1,0 +1,73 @@
+﻿@model VMSiteTest
+@{
+    Layout = null;
+    var pastQuestions = (VMSiteTestQuestion[])ViewBag.PastQuestionTexts;
+    var text = Model.GetRandomQuestion(pastQuestions == null ? null : pastQuestions.Select(x => x.Text).Distinct().ToArray());
+    var questions = new VMSiteTestQuestion[] {
+        new VMSiteTestQuestion {
+            Text=text
+        }
+    };
+    VMSiteTestBlock block = null;
+}
+
+<br />
+<p>
+    @Model.Description
+    @if (Model.Blocks.Length == 2)
+    {
+        <span class="text-warning"> Вы уже близко!</span>
+    }
+    @if (Model.Blocks.Length == 1)
+    {
+        <span class="text-warning"> Результаты теста определены!</span>
+    }
+</p>
+
+@if (!string.IsNullOrEmpty(text))
+{
+
+
+    if (!string.IsNullOrEmpty(text))
+    {
+        <section>
+            @Html.SxIndicatorGroup(questions, new SxExtantions.SxIndicatorGroupSettings<VMSiteTestQuestion>
+       {
+           FuncGetLabel = x => x.Text
+       })
+
+        </section>
+    }
+    <div class="text-center">
+        @using (Ajax.BeginForm(MVC.SiteTests.Details(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page", OnSuccess = "initialyzeIndicators" }, new { @id = "st-form" }))
+        {
+            if (pastQuestions != null && pastQuestions.Any())
+            {
+                for (int i = 0; i < pastQuestions.Length; i++)
+                {
+                    <input type="hidden" name="[@i].Text" value="@(pastQuestions[i].Text)" />
+                    <input type="hidden" name="[@i].IsCorrect" value="@(pastQuestions[i].IsCorrect.ToString().ToLower())" />
+                }
+            }
+            <button type="submit" class="btn btn-default btn-transparent white next-btn">
+                <span></span>
+                Далее
+            </button>
+        }
+    </div>
+}
+else
+{
+    for (int i = 0; i < Model.Blocks.Length; i++)
+    {
+        block = Model.Blocks[i];
+        <blockquote>
+            <h4 class="header">@block.Title</h4>
+            <br />
+            <p>@block.Description</p>
+            <br />
+            <a href="@Url.Action(MVC.SiteTests.Details(titleUrl: Model.TitleUrl))" class="btn btn-default">Начать заново</a>
+
+        </blockquote>
+    }
+}

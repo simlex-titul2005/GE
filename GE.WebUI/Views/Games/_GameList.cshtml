@@ -10,7 +10,7 @@
         <div class="container">
             <ul>
                 <li style="width:@(length + "%")" @(gameName == null ? "class=active" : null)>
-                    <a href="@(controllerName != "home" && controllerName!="games" ? Url.Action("list", new { controller = controllerName, gameTitle = (string)null }) : "/")" title="Показать все" data-toggle="tooltip" data-placement="bottom" class="red-tooltip">
+                    <a href="@(controllerName != "home" && controllerName!="games" && controllerName!="sitetests" ? Url.Action("list", new { controller = controllerName, gameTitle = (string)null }) : "/")" title="Показать все" data-toggle="tooltip" data-placement="bottom" class="red-tooltip">
                         <img alt="Показать все" src="@(Model.EmptyGame.IconPath)" />
                     </a>
                 </li>
@@ -21,20 +21,23 @@
                     var url = string.Empty;
                     switch(controllerName)
                     {
-                        case "home":
-                            url = Url.Action("details", new { controller = "games", titleUrl = item.TitleUrl });
-                            break;
                         case "aphorisms":
                             url = Url.Action("details", new { controller = "games", titleUrl = item.TitleUrl });
+                            break;
+                        case "articles":
+                            url = actionName == "list" || actionName == "index" ? Url.Action(actionName, new { controller = controllerName, gameTitle = item.TitleUrl }) : Url.Action("list", new { controller = controllerName, gameTitle = item.TitleUrl });
                             break;
                         case "games":
                             url = Url.Action("details", new { controller = "games", titleUrl = item.TitleUrl });
                             break;
-                        case "articles":
-                            url=actionName == "list" || actionName == "index" ? Url.Action(actionName, new { controller = controllerName, gameTitle = item.TitleUrl }) : Url.Action("list", new { controller = controllerName, gameTitle = item.TitleUrl });
+                        case "home":
+                            url = Url.Action("details", new { controller = "games", titleUrl = item.TitleUrl });
                             break;
                         case "news":
                             url = actionName == "list" || actionName == "index" ? Url.Action(actionName, new { controller = controllerName, gameTitle = item.TitleUrl }) : Url.Action("list", new { controller = controllerName, gameTitle = item.TitleUrl });
+                            break;
+                        case "sitetests":
+                            url = Url.Action("details", new { controller = "games", titleUrl = item.TitleUrl });
                             break;
                         default:
                             url = "#";

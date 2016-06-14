@@ -6,144 +6,41 @@
     ViewBag.Keywords = ViewBag.Keywords ?? "Игровые тесты, тесты для игр";
 }
 
-@if (Model.Blocks.Any())
-{
-    <div id="st-page">
-        <br />
-        <p>
-            @Model.Description
-        </p>
+<div id="st-page">
+    @Html.Partial(MVC.SiteTests.Views._Details, Model)
+</div>
 
-        <div>
-            @for (int i = 0; i < Model.Blocks.Length; i++)
-            {
-                var block = Model.Blocks[i];
-                if (block.Questions.Any())
-                {
-                    <section id="stb-@block.Id" class="@(i!=0?"hidden":null)">
-                        <blockquote class="desc">
-                            <h3 class="title">@block.Title</h3>
-                            <br />
-                            @block.Description
-                        </blockquote>
+@section scripts{
+    <script>
+        $(function () {
+            initialyzeIndicators();
+        });
 
-                        @Html.SxIndicatorGroup(block.Questions, new SxExtantions.SxIndicatorGroupSettings<VMSiteTestQuestion>
-                   {
-                       FuncGetId = x => "stq-" + x.Id,
-                       FuncGetLabel = x => x.Text
-                   })
+        function initialyzeIndicators() {
+            $('.sx-indicator').on('click', 'span', function () {
+                $span = $(this);
+                $section = $span.closest('section');
+                var isTrue = $span.data('dir') == true;
+                var isActive = $span.hasClass('active');
+                if (isActive) return;
 
-                    </section>
+                if (isTrue) {
+                    $span.next('span').removeAttr('class');
+                    $span.next('span').removeAttr('data-date');
                 }
-            }
-            <div class="text-center">
-                <button class="btn btn-default btn-transparent white next-btn disabled">
-                    <span></span>
-                    Далее
-                </button>
-                <form method="post" action="@MVC.SiteTests.Result()">
+                else {
+                    $span.prev('span').removeAttr('class');
+                    $span.prev('span').removeAttr('data-date');
+                }
 
-                </form>
-            </div>
-        </div>
-    </div>
+                $span.addClass('active');
 
-    @section scripts{
-        <script>
-            var count = $('section').length;
-            var counter = count;
-            $(function () {
-                
-                $('.sx-indicator > span').click(function () {
-                    $span = $(this);
-                    $section = $span.closest('section');
-                    var isTrue = $span.data('dir') == true;
-                    var isActive = $span.hasClass('active');
-                    if (isActive) return;
-
-                    if (isTrue) {
-                        $span.next('span').removeAttr('class');
-                        $span.next('span').removeAttr('data-date');
-                    }
-                    else {
-                        $span.prev('span').removeAttr('class');
-                        $span.prev('span').removeAttr('data-date');
-                    }
-
-                    $span.addClass('active').attr('data-date', getAnswerDate());
-                    showNextQuestionsBtn($section);
-                });
-
-                $('.next-btn').click(function () {
-                    $btn = $(this);
-                    $section = $('section:visible');
-                    $sectionNext = $section.next('section');
-
-                    var count1 = $section.find('.sx-indicator').length;
-                    var selected = $section.find('.sx-indicator > span.active').length;
-
-                    if ($sectionNext.length == 1) {
-                        
-                        if (count1 != selected) return;
-                        $section.addClass('hidden');
-                        $sectionNext.removeClass('hidden');
-                        counter--;
-                        var width = 100 - counter * 100 / count;
-                        $btn.find('span').css({ 'width': width + '%' });
-                        $btn.addClass('disabled');
-                    }
-                    else
-                        sendSiteTestResult();
-                });
+                var text = $span.closest('li').find('.sx-indicator-txt').text();
+                var isCorrect = $span.data('dir') == true;
+                $('#st-form').append('<input type="hidden" name="questionText" value="' + text + '" />');
+                $('#st-form').append('<input type="hidden" name="isTrue" value="' + isCorrect + '" />');
             });
+        }
 
-            function showNextQuestionsBtn(section)
-            {
-                $section = $(section);
-                var count = $section.find('.sx-indicator').length;
-                var selected = $section.find('.sx-indicator > span.active').length;
-                if (count == selected)
-                    $('.next-btn').removeClass('disabled');
-            }
-
-            function sendSiteTestResult()
-            {
-                var questions = [];
-
-                $('li[id^="stq-"]').each(function () {
-                    $question = $(this);
-                    var id = parseInt($question.attr('id').replace('stq-', ''));
-                    $span = $question.find('span[data-dir].active');
-                    var result = $span.data('dir');
-                    var date = $span.data('date');
-                    questions.push({ questionId: id, result: result, dateAnswer: date });
-                });
-
-                $.ajax({
-                    method:'post',
-                    url:'/sitetests/result',
-                    contentType:'application/json',
-                    data: JSON.stringify(questions),
-                    success:function(data){
-                        window.location='/sitetests/result/'+data;
-                    }
-                });
-            }
-
-            function getAnswerDate()
-            {
-                var date=new Date();
-                var year=date.getFullYear();
-                var month=date.getMonth();
-                var day=date.getDate();
-                var hour=date.getHours();
-                var minute=date.getMinutes();
-                var second = date.getSeconds();
-                var milisecond = date.getMilliseconds();
-
-                var result = year + '-' + (month+1) + '-' + day + ' ' + hour + ':' + minute + ':' + second + '.' + milisecond;
-                return result;
-            }
-        </script>
-    }
+    </script>
 }

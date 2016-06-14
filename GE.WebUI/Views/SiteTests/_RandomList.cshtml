@@ -1,6 +1,7 @@
 ﻿@model dynamic[]
 @{
     Layout = null;
+    var amount = 3;
 }
 
 @if (Model.Any())
@@ -15,10 +16,10 @@
                 <div class="col-md-4">
                     <div class="content">
                         <h4>@item.Title</h4>
+                        <br />
                         <p>@item.Description</p>
-                        <div>@item.QuestionsCount вопросов за @item.StepsCount шагов</div>
-                        <div>
-                            <a href="@Url.Action(MVC.SiteTests.Details(id: (int)item.Id))">Пройти тест</a>
+                        <div class="btn-block">
+                            <a href="@Url.Action(MVC.SiteTests.Details(titleUrl: (string)item.TitleUrl))" class="btn btn-default btn-sm">Пройти тест <i class="fa fa-angle-double-right"></i></a>
                         </div>
                     </div>
                 </div>

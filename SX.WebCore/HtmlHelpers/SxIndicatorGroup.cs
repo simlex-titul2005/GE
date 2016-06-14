@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web.Mvc;
 
 namespace SX.WebCore.HtmlHelpers
@@ -9,11 +8,6 @@ namespace SX.WebCore.HtmlHelpers
     {
         public sealed class SxIndicatorGroupSettings<TModel>
         {
-            /// <summary>
-            /// Вернуть ID итема группы
-            /// </summary>
-            public Func<TModel, string> FuncGetId { get; set; }
-
             /// <summary>
             /// Название итема
             /// </summary>
@@ -36,7 +30,6 @@ namespace SX.WebCore.HtmlHelpers
                 item = collection[i];
 
                 li = new TagBuilder("li");
-                li.MergeAttribute("id", settings.FuncGetId(item));
 
                 spanIndicator = new TagBuilder("div");
                 spanIndicator.AddCssClass("sx-indicator");
@@ -59,8 +52,6 @@ namespace SX.WebCore.HtmlHelpers
         {
             if (settings == null)
                 throw new ArgumentNullException("Не определены настройки группы");
-            if (settings.FuncGetId == null)
-                throw new ArgumentNullException("Не определена функция определения ID итема группы");
             if (settings.FuncGetLabel == null)
                 throw new ArgumentNullException("Не определена функция определения названия итема группы");
         }

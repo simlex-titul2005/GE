@@ -53,8 +53,6 @@ namespace SX.WebCore
 
         public DbSet<SxSiteTest> SiteTests { get; set; }
 
-        public DbSet<SxSiteTestResult> SiteTestResults { get; set; }
-
         public DbSet<SxStatistic> Statistic { get; set; }
 
         public DbSet<SxVideo> Videos { get; set; }
@@ -93,8 +91,6 @@ namespace SX.WebCore
 
             modelBuilder.Entity<SxBanner>().Property(x => x.TargetCost).HasColumnType("money");
             modelBuilder.Entity<SxBanner>().Property(x => x.CPM).HasColumnType("money");
-
-            modelBuilder.Entity<SxSiteTestResult>().HasKey(x => new { x.Id, x.QuestionId });
         }
     }
 }

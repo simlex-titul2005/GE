@@ -19,7 +19,8 @@ namespace SX.WebCore
 
         public static string SeoFriendlyUrl(this UrlHelper url, string title)
         {
-            if (title == null) return "";
+            if (title == null)
+                throw new ArgumentNullException("Входящий параметр должен иметь значение");
 
             const int maxlen = 80;
             int len = title.Length;

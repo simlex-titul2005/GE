@@ -84,15 +84,15 @@ namespace SX.WebCore.Repositories
             }
         }
 
-        public SxSiteTestQuestion[] GetSiteTestPage(int id)
+        public SxSiteTestQuestion[] GetSiteTestPage(string titleUrl)
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<SxSiteTestQuestion, SxSiteTestBlock, SxSiteTest, SxSiteTestQuestion>("get_site_test_page @id", (q, b, t)=> {
+                var data = conn.Query<SxSiteTestQuestion, SxSiteTestBlock, SxSiteTest, SxSiteTestQuestion>("get_site_test_page @titleUrl", (q, b, t)=> {
                     b.Test = t;
                     q.Block = b;
                     return q;
-                }, new { id = id }, splitOn:"Id");
+                }, new { titleUrl = titleUrl }, splitOn:"Id");
                 return data.ToArray();
             }
         }

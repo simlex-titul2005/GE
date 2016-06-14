@@ -44,9 +44,9 @@ namespace GE.WebUI
                     cfg.CreateMap<SxSeoInfo, VMSeoInfo>();
 
                     //site test
-                    cfg.CreateMap<SxSiteTestQuestion, VMSiteTestQuestion>();
-                    cfg.CreateMap<SxSiteTestBlock, VMSiteTestBlock>();
-                    cfg.CreateMap<SxSiteTest, VMSiteTest>();
+                    //cfg.CreateMap<SxSiteTestQuestion, VMSiteTestQuestion>();
+                    //cfg.CreateMap<SxSiteTestBlock, VMSiteTestBlock>();
+                    //cfg.CreateMap<SxSiteTest, VMSiteTest>();
 
                     //seo info
                     cfg.CreateMap<SxAppUser, VMUser>();

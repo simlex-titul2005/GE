@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using System.Linq;
 using GE.WebUI.Models;
 using System.Collections.Generic;
-using System;
 
 namespace GE.WebUI.Controllers
 {
@@ -19,6 +18,9 @@ namespace GE.WebUI.Controllers
                 _repo = new RepoSiteTest<DbContext>();
         }
 
+#if !DEBUG
+        [OutputCache(Duration =900)]
+#endif
         [ChildActionOnly]
         public virtual PartialViewResult RandomList()
         {
@@ -27,68 +29,81 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpGet]
-        public virtual ViewResult Details(int id)
+        public virtual ActionResult Details(string titleUrl)
         {
-            var data = (_repo as RepoSiteTest<DbContext>).GetSiteTestPage(id);
+            var viewModel = getTest(titleUrl);
 
-            var test = data.GroupBy(x => x.Block.Test).Select(x => new
-            {
-                Id = x.Key.Id,
-                Title = x.Key.Title,
-                Description = x.Key.Description
-            }).Distinct().SingleOrDefault();
-
-            var viewModel = new VMSiteTest()
-            {
-                Id = test.Id,
-                Title = test.Title,
-                Description = test.Description
-            };
-
-            var blocks = data.GroupBy(x => x.Block).Select(x => new
-            {
-                Id = x.Key.Id,
-                Title = x.Key.Title,
-                Description = x.Key.Description
-            }).Distinct();
-
-            viewModel.Blocks = blocks.Select(x => new VMSiteTestBlock
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Description = x.Description
-            }).ToArray();
-
-            if (viewModel.Blocks.Any())
-            {
-                for (int i = 0; i < viewModel.Blocks.Length; i++)
-                {
-                    var block = viewModel.Blocks[i];
-                    block.Questions = data.Where(x => x.BlockId == block.Id).Select(x => Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(x)).ToArray();
-                }
-            }
-
-            return View(viewModel);
+            return View(model: viewModel);
         }
 
         [HttpPost]
-        public virtual Guid Result(List<SxSiteTestResult> questions)
+        public virtual ActionResult Details(string titleUrl, string questionText, bool isTrue, List<VMSiteTestQuestion> pastQuestions)
         {
-            if (!questions.Any()) return Guid.Empty;
+            //pastQuestionTexts
+            var pqt = pastQuestions == null? new VMSiteTestQuestion[1] : new VMSiteTestQuestion[pastQuestions.Count+1];
+            var q=new VMSiteTestQuestion { Text=questionText, IsCorrect= isTrue };
+            if (pastQuestions != null)
+            {
+                pastQuestions.CopyTo(pqt);
+                pqt[pastQuestions.Count] = q;
+            }
+            else
+            {
+                pqt[0] = q;
+            }
+            ViewBag.PastQuestionTexts = pqt.ToArray();
 
-            var resultId = new RepoSiteTestResult<DbContext>().Create(questions.ToArray());
-            return resultId;
+            var viewModel = getTest(titleUrl);
+            var blocks = viewModel.Blocks.ToList();
+            VMSiteTestQuestion question = null;
+            foreach (var block in blocks)
+            {
+                if (block.Questions == null) continue;
+                for (int i = 0; i < pqt.Length; i++)
+                {
+                    if (block.Questions == null) continue;
+
+                    question = pqt[i];
+                    if (block.Questions.SingleOrDefault(x => x.Text == question.Text && x.IsCorrect == question.IsCorrect) == null)
+                        block.Questions = null;
+                }
+            }
+
+            viewModel.Blocks = blocks.Where(x => x.Questions != null).ToArray();
+
+            return PartialView(MVC.SiteTests.Views._Details, viewModel);
         }
 
-        [HttpGet]
-        public virtual ActionResult Result(Guid resultId)
+        private static VMSiteTest getTest(string titleUrl)
         {
-            ViewBag.TestResultId = resultId;
-            var data = new RepoSiteTestResult<DbContext>().GetByKey(resultId);
-            if (!data.Any())
-                return new HttpNotFoundResult();
+            var data = (_repo as RepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
+            if (!data.Any()) return null;
 
-            return View();
+            var dataTest = data.GroupBy(x => x.Block.Test).FirstOrDefault();
+            var viewModel = new VMSiteTest();
+            viewModel.Title = dataTest.Key.Title;
+            viewModel.Description = dataTest.Key.Description;
+            viewModel.TitleUrl = dataTest.Key.TitleUrl;
+
+            viewModel.Blocks = data.GroupBy(x => x.Block).Select(x => new
+            {
+                Id = x.Key.Id,
+                Title = x.Key.Title,
+                Description=x.Key.Description
+            }).Distinct().Select(x => new VMSiteTestBlock
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Description=x.Description,
+                Questions = data.Where(q => q.Block.Id == x.Id).Select(q => new VMSiteTestQuestion
+                {
+                    Id = q.Id,
+                    IsCorrect = q.IsCorrect,
+                    Text = q.Text
+                }).ToArray()
+            }).ToArray();
+
+            return viewModel;
         }
     }
 }

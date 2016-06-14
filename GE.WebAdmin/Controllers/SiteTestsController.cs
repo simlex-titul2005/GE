@@ -30,7 +30,7 @@ namespace GE.WebAdmin.Controllers
             ViewBag.PagerInfo = filter.PagerInfo;
 
             var viewModel = (_repo as RepoSiteTest<DbContext>).Query(filter).ToArray()
-                .Select(x=>Mapper.Map<SxSiteTest, VMSiteTest>(x)).ToArray();
+                .Select(x => Mapper.Map<SxSiteTest, VMSiteTest>(x)).ToArray();
             return View(viewModel);
         }
 
@@ -77,14 +77,47 @@ namespace GE.WebAdmin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditSiteTest model)
         {
+            var isArchitect = User.IsInRole("architect");
+            var isNew = model.Id == 0;
+            if (isNew)
+            {
+                model.TitleUrl = Url.SeoFriendlyUrl(model.Title);
+                if (_repo.All.SingleOrDefault(x => x.TitleUrl == model.TitleUrl) != null)
+                    ModelState.AddModelError("Title", "Модель с таким текстовым ключем уже существует");
+                else
+                    ModelState["TitleUrl"].Errors.Clear();
+            }
+            else
+            {
+                if(string.IsNullOrEmpty(model.TitleUrl))
+                {
+                    var url=Url.SeoFriendlyUrl(model.Title);
+                    if (_repo.All.SingleOrDefault(x => x.TitleUrl == url && x.Id != model.Id) != null)
+                        ModelState.AddModelError(isArchitect ? "TitleUrl" : "Title", "Модель с таким текстовым ключем уже существует");
+                    else
+                    {
+                        model.TitleUrl = url;
+                        ModelState["TitleUrl"].Errors.Clear();
+                    }
+                }
+            }
+
             var redactModel = Mapper.Map<VMEditSiteTest, SxSiteTest>(model);
             if (ModelState.IsValid)
             {
                 SxSiteTest newModel = null;
-                if (model.Id == 0)
+                if (isNew)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, true, "Title", "Description", "TestType");
+                {
+                    var old = _repo.All.SingleOrDefault(x => x.TitleUrl == model.TitleUrl && x.Id != model.Id);
+                    if (old != null)
+                        ModelState.AddModelError(isArchitect ? "TitleUrl" : "Title", "Модель с таким текстовым ключем уже существует");
+                    if (isArchitect)
+                        newModel = _repo.Update(redactModel, true, "Title", "Description", "TestType", "TitleUrl");
+                    else
+                        newModel = _repo.Update(redactModel, true, "Title", "Description", "TestType");
+                }
                 return RedirectToAction("index");
             }
             else
@@ -101,7 +134,7 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual PartialViewResult TestMatrix(int testId)
         {
-            var data = (_repo as RepoSiteTest<DbContext>).GetMatrix(testId).Select(x=>Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(x)).ToArray();
+            var data = (_repo as RepoSiteTest<DbContext>).GetMatrix(testId).Select(x => Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(x)).ToArray();
             return PartialView(MVC.SiteTests.Views._Matrix, data);
         }
     }

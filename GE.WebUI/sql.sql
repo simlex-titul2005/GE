@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 10.06.2016 11:58:49
+ * Time: 14.06.2016 11:06:33
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,7 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
 
 
 
@@ -425,6 +426,7 @@ BEGIN
 	RETURN @res
 END
 GO
+
 
 
 
@@ -1224,6 +1226,7 @@ AS
 BEGIN
 	SELECT TOP(@amount) dst.Id,
 	       dst.Title,
+	       dst.TitleUrl,
 	       dst.[Description],
 	       COUNT(DISTINCT(dstb.Id))   AS StepsCount,
 	       COUNT(DISTINCT(dstq.Id))   AS QuestionsCount
@@ -1235,6 +1238,7 @@ BEGIN
 	GROUP BY
 	       dst.Id,
 	       dst.Title,
+	       dst.TitleUrl,
 	       dst.[Description]
 	ORDER BY
 	       NEWID()
@@ -1248,7 +1252,7 @@ IF OBJECT_ID(N'dbo.get_site_test_page', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_site_test_page;
 GO
 CREATE PROCEDURE dbo.get_site_test_page
-	@id INT
+	@titleUrl VARCHAR(255)
 AS
 BEGIN
 	SELECT *
@@ -1257,7 +1261,7 @@ BEGIN
 	            ON  dstb.Id = dstq.BlockId
 	       JOIN D_SITE_TEST        AS dst
 	            ON  dst.Id = dstb.TestId
-	WHERE  dst.Id = @id
+	WHERE  dst.TitleUrl = @titleUrl
 END
 GO
 
@@ -1273,8 +1277,6 @@ AS
 	DELETE 
 	FROM   D_SITE_TEST
 	WHERE  Id = @testId
-	
-	COMMIT TRANSACTION
 GO
 
 /*******************************************
@@ -1289,8 +1291,6 @@ AS
 	DELETE 
 	FROM   D_SITE_TEST_BLOCK
 	WHERE  Id = @blockId
-	
-	COMMIT TRANSACTION
 GO
 
 /*******************************************
@@ -1305,62 +1305,6 @@ AS
 	DELETE 
 	FROM   D_SITE_TEST_QUESTION
 	WHERE  Id = @questionId
-	
-	COMMIT TRANSACTION
-GO
-
-/*******************************************
- * Добавить результат теста
- *******************************************/
-IF OBJECT_ID(N'dbo.add_site_test_result', N'P') IS NOT NULL
-    DROP PROCEDURE dbo.add_site_test_result;
-GO
-CREATE PROCEDURE dbo.add_site_test_result
-	@id UNIQUEIDENTIFIER,
-	@questionId INT,
-	@result BIT,
-	@dateAnswer DATETIME
-AS
-BEGIN
-	INSERT INTO D_SITE_TEST_RESULT
-	  (
-	    Id,
-	    QuestionId,
-	    Result,
-	    DateAnswer,
-	    DateCreate
-	  )
-	VALUES
-	  (
-	    @id,
-	    @questionId,
-	    @result,
-	    @dateAnswer,
-	    GETDATE()
-	  )
-END
-GO
-
-/*******************************************
- * Страницы результата тестов
- *******************************************/
-IF OBJECT_ID(N'dbo.get_site_test_result', N'P') IS NOT NULL
-    DROP PROCEDURE dbo.get_site_test_result;
-GO
-CREATE PROCEDURE dbo.get_site_test_result
-	@id UNIQUEIDENTIFIER
-AS
-BEGIN
-	SELECT *
-	FROM   D_SITE_TEST_RESULT         AS dstr
-	       JOIN D_SITE_TEST_QUESTION  AS dstq
-	            ON  dstq.Id = dstr.QuestionId
-	       JOIN D_SITE_TEST_BLOCK     AS dstb
-	            ON  dstb.Id = dstq.BlockId
-	       JOIN D_SITE_TEST           AS dst
-	            ON  dst.Id = dstb.TestId
-	WHERE  dstr.Id = @id
-END
 GO
 
 /*******************************************

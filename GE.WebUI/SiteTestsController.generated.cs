@@ -58,15 +58,9 @@ namespace GE.WebUI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ViewResult Details()
+        public virtual System.Web.Mvc.ActionResult Details()
         {
-            return new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Result()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Result);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -86,7 +80,6 @@ namespace GE.WebUI.Controllers
         {
             public readonly string RandomList = "RandomList";
             public readonly string Details = "Details";
-            public readonly string Result = "Result";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -94,7 +87,6 @@ namespace GE.WebUI.Controllers
         {
             public const string RandomList = "RandomList";
             public const string Details = "Details";
-            public const string Result = "Result";
         }
 
 
@@ -104,15 +96,10 @@ namespace GE.WebUI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Details
         {
-            public readonly string id = "id";
-        }
-        static readonly ActionParamsClass_Result s_params_Result = new ActionParamsClass_Result();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Result ResultParams { get { return s_params_Result; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Result
-        {
-            public readonly string resultId = "resultId";
+            public readonly string titleUrl = "titleUrl";
+            public readonly string questionText = "questionText";
+            public readonly string isCorrect = "isCorrect";
+            public readonly string pastQuestions = "pastQuestions";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -124,10 +111,12 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _Details = "_Details";
                 public readonly string _RandomList = "_RandomList";
                 public readonly string Details = "Details";
                 public readonly string Result = "Result";
             }
+            public readonly string _Details = "~/Views/SiteTests/_Details.cshtml";
             public readonly string _RandomList = "~/Views/SiteTests/_RandomList.cshtml";
             public readonly string Details = "~/Views/SiteTests/Details.cshtml";
             public readonly string Result = "~/Views/SiteTests/Result.cshtml";
@@ -151,26 +140,29 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo, int id);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string titleUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ViewResult Details(int id)
+        public override System.Web.Mvc.ActionResult Details(string titleUrl)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Details);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            DetailsOverride(callInfo, id);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
+            DetailsOverride(callInfo, titleUrl);
             return callInfo;
         }
 
         [NonAction]
-        partial void ResultOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Guid resultId);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string titleUrl, string questionText, bool isCorrect, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestQuestion> pastQuestions);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Result(System.Guid resultId)
+        public override System.Web.Mvc.ActionResult Details(string titleUrl, string questionText, bool isCorrect, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestQuestion> pastQuestions)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Result);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "resultId", resultId);
-            ResultOverride(callInfo, resultId);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "questionText", questionText);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "isCorrect", isCorrect);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pastQuestions", pastQuestions);
+            DetailsOverride(callInfo, titleUrl, questionText, isCorrect, pastQuestions);
             return callInfo;
         }
 

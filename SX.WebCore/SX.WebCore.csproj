@@ -178,7 +178,6 @@
     <Compile Include="Repositories\RepoSiteTestQuestion.cs" />
     <Compile Include="Repositories\RepoSiteTestBlock.cs" />
     <Compile Include="Repositories\RepoSiteTest.cs" />
-    <Compile Include="Repositories\RepoSiteTestResult.cs" />
     <Compile Include="Repositories\RepoVideo.cs" />
     <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoManual.cs" />
@@ -216,7 +215,6 @@
     <Compile Include="SxLike.cs" />
     <Compile Include="SxSiteTestBlock.cs" />
     <Compile Include="SxSiteTestQuestion.cs" />
-    <Compile Include="SxSiteTestResult.cs" />
     <Compile Include="SxStatisticUserLogin.cs" />
     <Compile Include="SxManual.cs" />
     <Compile Include="SxMaterialCategory.cs" />

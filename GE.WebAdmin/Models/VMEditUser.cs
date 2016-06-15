@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SX.WebCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace GE.WebAdmin.Models
@@ -12,6 +13,7 @@ namespace GE.WebAdmin.Models
 
         public string Id { get; set; }
 
+        public SxPicture Avatar { get; set; }
         [Display(Name = "Аватар"), UIHint("EditImage")]
         public Guid? AvatarId { get; set; }
 

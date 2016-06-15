@@ -7,11 +7,11 @@
 
 @if (message != null)
 {
-    <h3>Роли <span class="pull-right small" id="mes-roles">@message</span></h3>
+    <h3 class="text-warning">Роли <span class="pull-right small" id="mes-roles">@message</span></h3>
 }
 else
 {
-    <h3>Роли</h3>
+    <h3 class="text-warning">Роли</h3>
 }
 @using (Ajax.BeginForm(MVC.Users.EditRoles(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "roles" , OnBegin="$(this).closest('section').find('button').prepend('<i class=\"fa fa-spin fa-spinner\"></i>&nbsp;')", OnComplete= "removeMessage('#mes-roles')" }))
 {

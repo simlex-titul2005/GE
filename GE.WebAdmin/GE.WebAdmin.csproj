@@ -550,6 +550,7 @@
     <Content Include="Views\Shared\EditorTemplates\EditSiteTestBlock.cshtml" />
     <Content Include="Views\SiteTestBlocks\_FindGridView.cshtml" />
     <Content Include="Views\SiteTests\_Matrix.cshtml" />
+    <Content Include="Views\Users\_UserReports.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

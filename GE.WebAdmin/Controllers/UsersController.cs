@@ -128,6 +128,8 @@ namespace GE.WebAdmin.Controllers
             var allRoles = RoleManager.Roles.Where(x => x.Name != _architectRole).ToArray();
             ViewBag.Roles = allRoles;
             var viewModel = getEditUser(data, allRoles);
+            if (viewModel.Avatar != null)
+                ViewBag.PictureCaption = viewModel.Avatar.Caption;
 
             return View(viewModel);
         }
@@ -195,11 +197,25 @@ namespace GE.WebAdmin.Controllers
 
                 var allRoles = RoleManager.Roles.Where(x => x.Name != _architectRole).ToArray();
                 var viewModel = getEditUser(oldUser, allRoles);
+                if (viewModel.Avatar != null)
+                    ViewBag.PictureCaption = viewModel.Avatar.Caption;
                 TempData["UserInfoMessage"] = "Информация обновлена";
                 return PartialView(MVC.Users.Views._UserInfo, viewModel);
             }
             else
                 return PartialView(MVC.Users.Views._UserInfo, user);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual PartialViewResult EditUserReport(int[] reportsId)
+        {
+            if (ModelState.IsValid)
+            {
+                TempData["UserInfoMessage"] = "Информация обновлена";
+                return PartialView(MVC.Users.Views._UserReports, reportsId);
+            }
+            else
+                return PartialView(MVC.Users.Views._UserReports, reportsId);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -242,6 +258,7 @@ namespace GE.WebAdmin.Controllers
             var editUser = new VMEditUser
             {
                 Id = data.Id,
+                Avatar = data.Avatar,
                 AvatarId = data.AvatarId,
                 Email = data.Email,
                 NikName = data.NikName,

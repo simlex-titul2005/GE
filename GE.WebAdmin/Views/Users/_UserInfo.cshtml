@@ -6,11 +6,11 @@
 
 @if (message != null)
 {
-    <h3>Инфо <span class="pull-right small" id="mes-user-info">@message</span></h3>
+    <h3 class="text-warning">Общая иформация <span class="pull-right small" id="mes-user-info">@message</span></h3>
 }
 else
 {
-    <h3>Инфо</h3>
+    <h3 class="text-warning">Общая иформация</h3>
 }
 @using (Ajax.BeginForm(MVC.Users.EditUserInfo(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "info", OnBegin = "$(this).closest('section').find('button[type=\"submit\"]').prepend('<i class=\"fa fa-spin fa-spinner\"></i>&nbsp;')", OnComplete = "removeMessage('#mes-user-info')" }, new { @autocomplete="off"}))
 {

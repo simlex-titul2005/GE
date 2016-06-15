@@ -70,6 +70,12 @@ namespace GE.WebAdmin.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult EditUserReport()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditUserReport);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult Delete()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
@@ -94,6 +100,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string Edit = "Edit";
             public readonly string EditRoles = "EditRoles";
             public readonly string EditUserInfo = "EditUserInfo";
+            public readonly string EditUserReport = "EditUserReport";
             public readonly string Delete = "Delete";
             public readonly string UsersOnSite = "UsersOnSite";
         }
@@ -105,6 +112,7 @@ namespace GE.WebAdmin.Controllers
             public const string Edit = "Edit";
             public const string EditRoles = "EditRoles";
             public const string EditUserInfo = "EditUserInfo";
+            public const string EditUserReport = "EditUserReport";
             public const string Delete = "Delete";
             public const string UsersOnSite = "UsersOnSite";
         }
@@ -144,6 +152,14 @@ namespace GE.WebAdmin.Controllers
         {
             public readonly string user = "user";
         }
+        static readonly ActionParamsClass_EditUserReport s_params_EditUserReport = new ActionParamsClass_EditUserReport();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_EditUserReport EditUserReportParams { get { return s_params_EditUserReport; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_EditUserReport
+        {
+            public readonly string reportsId = "reportsId";
+        }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
@@ -164,6 +180,7 @@ namespace GE.WebAdmin.Controllers
             {
                 public readonly string _GridView = "_GridView";
                 public readonly string _UserInfo = "_UserInfo";
+                public readonly string _UserReports = "_UserReports";
                 public readonly string _UserRoles = "_UserRoles";
                 public readonly string _UsersOnSite = "_UsersOnSite";
                 public readonly string Edit = "Edit";
@@ -171,6 +188,7 @@ namespace GE.WebAdmin.Controllers
             }
             public readonly string _GridView = "~/Views/Users/_GridView.cshtml";
             public readonly string _UserInfo = "~/Views/Users/_UserInfo.cshtml";
+            public readonly string _UserReports = "~/Views/Users/_UserReports.cshtml";
             public readonly string _UserRoles = "~/Views/Users/_UserRoles.cshtml";
             public readonly string _UsersOnSite = "~/Views/Users/_UsersOnSite.cshtml";
             public readonly string Edit = "~/Views/Users/Edit.cshtml";
@@ -242,6 +260,18 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditUserInfo);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "user", user);
             EditUserInfoOverride(callInfo, user);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditUserReportOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int[] reportsId);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult EditUserReport(int[] reportsId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.EditUserReport);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "reportsId", reportsId);
+            EditUserReportOverride(callInfo, reportsId);
             return callInfo;
         }
 

@@ -8,6 +8,7 @@ namespace SX.WebCore.Providers
     public class SxErrorProvider
     {
         private static string _dir;
+        private static object _locko = new object();
         public SxErrorProvider(string dir)
         {
             _dir = dir;
@@ -15,20 +16,23 @@ namespace SX.WebCore.Providers
 
         private static void WriteMessage(string message)
         {
-            Task.Run(() =>
+            lock(_locko)
             {
-                var date = DateTime.Now.ToString("yyyy-MM-dd");
-                if (!Directory.Exists(_dir))
-                    Directory.CreateDirectory(_dir);
+                Task.Run(() =>
+                {
+                    var date = DateTime.Now.ToString("yyyy-MM-dd");
+                    if (!Directory.Exists(_dir))
+                        Directory.CreateDirectory(_dir);
 
-                var filePath = Path.Combine(_dir, date + ".log");
+                    var filePath = Path.Combine(_dir, date + ".log");
 
-                var sb = new StringBuilder();
-                sb.AppendLine("Date: " + DateTime.Now.ToString());
-                sb.AppendLine(message);
+                    var sb = new StringBuilder();
+                    sb.AppendLine("Date: " + DateTime.Now.ToString());
+                    sb.AppendLine(message);
 
-                File.AppendAllText(filePath, sb.ToString());
-            });
+                    File.AppendAllText(filePath, sb.ToString());
+                });
+            }
         }
 
         public virtual void WriteMessage(Exception ex)

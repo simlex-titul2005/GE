@@ -89,7 +89,7 @@ namespace GE.WebAdmin.Controllers
 
         #region Настройки сайта
         [Authorize(Roles = "admin")]
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult EditSite()
         {
 

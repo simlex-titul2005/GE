@@ -16,7 +16,7 @@ namespace GE.WebAdmin
         private static Dictionary<string, string> _usersOnSite;
         private static MemoryCache _cache;
         private static DateTime _lastStartDate;
-        
+
         public static Dictionary<string, string> UsersOnSite
         {
             get
@@ -44,7 +44,7 @@ namespace GE.WebAdmin
             SiteDomain = siteDomainItem?.Value;
         }
 
-        public  static string SiteDomain { get; set; }
+        public static string SiteDomain { get; set; }
 
         public static MapperConfiguration MapperConfiguration
         {

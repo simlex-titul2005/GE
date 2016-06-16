@@ -15,7 +15,7 @@ using AutoMapper;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class PicturesController : SX.WebCore.Controllers.SxPicturesController<DbContext>
+    public partial class PicturesController : SX.WebCore.MvcControllers.SxPicturesController<DbContext>
     {
         private IMapper _mapper;
         public PicturesController()

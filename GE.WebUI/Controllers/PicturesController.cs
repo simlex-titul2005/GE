@@ -1,5 +1,5 @@
 ﻿using GE.WebCoreExtantions;
-using SX.WebCore.Controllers;
+using SX.WebCore.MvcControllers;
 
 namespace GE.WebUI.Controllers
 {

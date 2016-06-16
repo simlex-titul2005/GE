@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GE.WebUI</RootNamespace>
     <AssemblyName>GE.WebUI</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -174,6 +174,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
       <Private>True</Private>
@@ -186,7 +187,6 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -332,7 +332,6 @@
     </None>
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt.settings.xml" />
-    <Content Include="packages.config" />
     <Content Include="share42\icons.png" />
     <Content Include="share42\share42.js" />
     <Content Include="Views\Articles\List.cshtml">
@@ -482,13 +481,13 @@
     <Folder Include="Content\dist\i\temp\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SX.Web.Core\SX.WebCore\SX.WebCore.csproj">
+      <Project>{daf1a092-ded8-4c43-b08d-20e55c6f03a2}</Project>
+      <Name>SX.WebCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">
       <Project>{bf57645e-fa93-44aa-8c87-7f1bdd240dc2}</Project>
       <Name>GE.WebCoreExtantions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SX.WebCore\SX.WebCore.csproj">
-      <Project>{daf1a092-ded8-4c43-b08d-20e55c6f03a2}</Project>
-      <Name>SX.WebCore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

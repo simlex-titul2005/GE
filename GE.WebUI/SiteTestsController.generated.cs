@@ -98,7 +98,7 @@ namespace GE.WebUI.Controllers
         {
             public readonly string titleUrl = "titleUrl";
             public readonly string questionText = "questionText";
-            public readonly string isCorrect = "isCorrect";
+            public readonly string isTrue = "isTrue";
             public readonly string pastQuestions = "pastQuestions";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -152,17 +152,17 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string titleUrl, string questionText, bool isCorrect, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestQuestion> pastQuestions);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string titleUrl, string questionText, bool isTrue, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestQuestion> pastQuestions);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Details(string titleUrl, string questionText, bool isCorrect, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestQuestion> pastQuestions)
+        public override System.Web.Mvc.ActionResult Details(string titleUrl, string questionText, bool isTrue, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestQuestion> pastQuestions)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "questionText", questionText);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "isCorrect", isCorrect);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "isTrue", isTrue);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pastQuestions", pastQuestions);
-            DetailsOverride(callInfo, titleUrl, questionText, isCorrect, pastQuestions);
+            DetailsOverride(callInfo, titleUrl, questionText, isTrue, pastQuestions);
             return callInfo;
         }
 

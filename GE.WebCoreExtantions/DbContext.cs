@@ -1,8 +1,9 @@
 ﻿using System.Data.Entity;
+using SX.WebCore;
 
 namespace GE.WebCoreExtantions
 {
-    public class DbContext : SX.WebCore.SxDbContext
+    public class DbContext : SxDbContext
     {
         public DbContext() : base("DbContext") { }
 

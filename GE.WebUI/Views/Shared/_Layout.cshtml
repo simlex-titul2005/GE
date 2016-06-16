@@ -6,7 +6,7 @@
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
-    var bannerControllerBlackList = new string[] { "employees", "account", "error", "sitetests" };
+    var bannerControllerBlackList = new string[] { "employees", "account", "error", "sitetests", "sitequetions" };
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +49,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body @(bg != null ? bg : null)>
+<body @(bg ?? null)>
     @Html.Partial(MVC.Shared.Views._NavBar)
     <div class="wrapper">
 

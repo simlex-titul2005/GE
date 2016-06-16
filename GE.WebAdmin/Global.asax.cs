@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using SX.WebCore.MvcApplication;
 using SX.WebCore.Repositories;
 using SX.WebCore.Resources;
@@ -11,12 +10,6 @@ namespace GE.WebAdmin
 {
     public class MvcApplication : SxApplication<WebCoreExtantions.DbContext>
     {
-        public MvcApplication() : base(
-            WebApiConfig.Register,
-            RouteConfig.RegisterRoutes,
-            AutoMapperConfig.MapperConfigurationInstance)
-        { }
-
         private static Dictionary<string, string> _usersOnSite;
         private static DateTime _lastStartDate;
 
@@ -31,9 +24,16 @@ namespace GE.WebAdmin
             }
         }
 
-        protected override void Application_Start()
+        protected override void Application_Start(object sender, EventArgs e)
         {
-            base.Application_Start();
+
+            var args = new SxApplicationEventArgs();
+            args.WebApiConfigRegister = WebApiConfig.Register;
+            args.RegisterRoutes = RouteConfig.RegisterRoutes;
+            args.MapperConfiguration = AutoMapperConfig.MapperConfigurationInstance;
+            args.LogDirectory = null;
+            args.LoggingRequest = false;
+            base.Application_Start(sender, args);
 
             _lastStartDate = DateTime.Now;
             Database.SetInitializer<WebCoreExtantions.DbContext>(null);

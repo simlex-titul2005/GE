@@ -2,16 +2,16 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using GE.WebCoreExtantions.Repositories;
 using SX.WebCore.HtmlHelpers;
 using SX.WebCore.Providers;
 using GE.WebAdmin.Models;
+using SX.WebCore.Repositories;
 
 namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMRedirect[] QueryForAdmin(this RepoRedirect repo, Filter filter)
+        public static VMRedirect[] QueryForAdmin(this SxRepoRedirect<DbContext> repo, Filter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] { "dr.Id", "dr.OldUrl", "dr.NewUrl", "dr.DateCreate" });
             query += " FROM   D_REDIRECT dr";
@@ -30,7 +30,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        public static int FilterCount(this RepoRedirect repo, Filter filter)
+        public static int FilterCount(this SxRepoRedirect<DbContext> repo, Filter filter)
         {
             var query = @"SELECT COUNT(1) FROM   D_REDIRECT dr";
 

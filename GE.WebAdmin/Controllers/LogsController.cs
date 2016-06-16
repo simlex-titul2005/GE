@@ -1,6 +1,9 @@
-﻿namespace GE.WebAdmin.Controllers
+﻿using GE.WebCoreExtantions;
+using SX.WebCore.MvcControllers;
+
+namespace GE.WebAdmin.Controllers
 {
-    public partial class LogsController : SX.WebCore.MvcControllers.SxLogsController
+    public partial class LogsController : SxLogsController<DbContext>
     {
         
     }

@@ -18,8 +18,8 @@ namespace GE.WebUI.Controllers
         private SxDbRepository<Guid, SxLike, DbContext> _repoLike;
         public UserClicksController()
         {
-            _repo = new RepoUserClick<DbContext>();
-            _repoLike = new RepoLike<DbContext>();
+            _repo = new SxRepoUserClick<DbContext>();
+            _repoLike = new SxRepoLike<DbContext>();
         }
 
         [HttpPost]

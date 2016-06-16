@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using static SX.WebCore.Enums;
+using SX.WebCore.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -18,7 +19,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<int, SxSeoInfo, DbContext> _repo;
         public SeoInfoController()
         {
-            _repo = new RepoSeoInfo();
+            _repo = new SxRepoSeoInfo<DbContext>();
         }
 
         private static int _pageSize = 20;
@@ -26,11 +27,11 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (_repo as RepoSeoInfo).FilterCount(filter);
+            var totalItems = (_repo as SxRepoSeoInfo<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoSeoInfo).QueryForAdmin(filter);
+            var viewModel = (_repo as SxRepoSeoInfo<DbContext>).QueryForAdmin(filter);
             return View(viewModel);
         }
 
@@ -41,11 +42,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoSeoInfo).FilterCount(filter);
+            var totalItems = (_repo as SxRepoSeoInfo<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoSeoInfo).QueryForAdmin(filter);
+            var viewModel = (_repo as SxRepoSeoInfo<DbContext>).QueryForAdmin(filter);
 
             return PartialView("_GridView", viewModel);
         }
@@ -71,7 +72,7 @@ namespace GE.WebAdmin.Controllers
                 SxSeoInfo newModel = null;
                 if (model.Id == 0)
                 {
-                    var existInfo = (_repo as RepoSeoInfo).GetByRawUrl(model.RawUrl);
+                    var existInfo = (_repo as SxRepoSeoInfo<DbContext>).GetByRawUrl(model.RawUrl);
                     if(existInfo!=null)
                     {
                         ModelState.AddModelError("RawUrl", "Информация для страницы с таким url уже содержится в БД");

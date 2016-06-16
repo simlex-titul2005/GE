@@ -16,7 +16,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<Guid, SxStatistic, DbContext> _repo;
         public StatisticsController()
         {
-            _repo = new RepoStatistic<DbContext>();
+            _repo = new SxRepoStatistic<DbContext>();
         }
 
         private static int _pageUserLoginsSize = 20;
@@ -24,11 +24,11 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult StatUserLogins(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageUserLoginsSize);
-            var totalItems = (_repo as RepoStatistic<DbContext>).UserLoginsCount(filter);
+            var totalItems = (_repo as SxRepoStatistic<DbContext>).UserLoginsCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoStatistic<DbContext>).UserLogins(filter).Select(x=>Mapper.Map<SxStatisticUserLogin, VMStatisticUserLogin>(x)).ToArray();
+            var viewModel = (_repo as SxRepoStatistic<DbContext>).UserLogins(filter).Select(x=>Mapper.Map<SxStatisticUserLogin, VMStatisticUserLogin>(x)).ToArray();
             return View(MVC.Statistics.Views.UserLogins, viewModel);
         }
 
@@ -39,11 +39,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new WebCoreExtantions.Filter(page, _pageUserLoginsSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoStatistic<DbContext>).UserLoginsCount(filter);
+            var totalItems = (_repo as SxRepoStatistic<DbContext>).UserLoginsCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoStatistic<DbContext>).UserLogins(filter).Select(x => Mapper.Map<SxStatisticUserLogin, VMStatisticUserLogin>(x)).ToArray();
+            var viewModel = (_repo as SxRepoStatistic<DbContext>).UserLogins(filter).Select(x => Mapper.Map<SxStatisticUserLogin, VMStatisticUserLogin>(x)).ToArray();
 
             return PartialView(MVC.Statistics.Views._UserLoginsGridView, viewModel);
         }

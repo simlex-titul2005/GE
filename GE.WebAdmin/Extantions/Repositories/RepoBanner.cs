@@ -12,7 +12,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMBanner[] QueryForAdmin(this RepoBanner<DbContext> repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
+        public static VMBanner[] QueryForAdmin(this SxRepoBanner<DbContext> repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
         {
             var query = SxQueryProvider.GetSelectString();
             query += " FROM D_BANNER AS db ";
@@ -31,7 +31,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        public static int FilterCount(this RepoBanner<DbContext> repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
+        public static int FilterCount(this SxRepoBanner<DbContext> repo, Filter filter, bool? forGroup = null, bool? forMaterial = null)
         {
             var query = @"SELECT COUNT(1) FROM D_BANNER AS db ";
 

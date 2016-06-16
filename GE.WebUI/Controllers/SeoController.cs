@@ -23,7 +23,7 @@ namespace GE.WebUI.Controllers
         [OutputCache(Duration = 900)]
         public virtual ContentResult Robotstxt()
         {
-            var fileContent = SiteSettings.Get(SX.WebCore.Resources.Settings.robotsFileSetting);
+            var fileContent = MvcApplication.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.robotsFileSetting);
             if (fileContent != null)
                 return Content(fileContent.Value, "text/plain", Encoding.UTF8);
             else return null;

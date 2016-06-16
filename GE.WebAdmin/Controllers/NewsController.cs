@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using Microsoft.AspNet.Identity;
+using SX.WebCore.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -127,7 +128,7 @@ namespace GE.WebAdmin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditNews model)
         {
-            var repoSeoInfo = new RepoSeoInfo();
+            var repoSeoInfo = new SxRepoSeoInfo<DbContext>();
             repoSeoInfo.DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
 
             _repo.Delete(model.Id, model.ModelCoreType);

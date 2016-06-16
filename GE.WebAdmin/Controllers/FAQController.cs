@@ -13,7 +13,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<int, SxManual, DbContext> _repo;
         public FAQController()
         {
-            _repo = new RepoManual<DbContext>();
+            _repo = new SxRepoManual<DbContext>();
         }
 
         [HttpGet]
@@ -21,7 +21,7 @@ namespace GE.WebAdmin.Controllers
         {
             ViewBag.CategoryId = curCat;
 
-            var viewModel = (_repo as RepoManual<DbContext>).GetManualsByCategoryId(curCat)
+            var viewModel = (_repo as SxRepoManual<DbContext>).GetManualsByCategoryId(curCat)
                 .Select(x => Mapper.Map<SxManual, VMFAQ>(x)).ToArray();
 
             return View(curCat == null ? new VMFAQ[0] : viewModel);

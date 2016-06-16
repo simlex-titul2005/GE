@@ -15,7 +15,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<string, SxSiteSetting, DbContext> _repo;
         public SettingsController()
         {
-            _repo = new RepoSiteSetting<DbContext>();
+            _repo = new SxRepoSiteSetting<DbContext>();
         }
 
         #region Начальная иконка
@@ -23,7 +23,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult EditEmptyGame()
         {
-            var settings = (_repo as RepoSiteSetting<DbContext>).GetByKeys(
+            var settings = (_repo as SxRepoSiteSetting<DbContext>).GetByKeys(
                     Settings.emptyGameIconPath,
                     Settings.emptyGameGoodImagePath,
                     Settings.emptyGameBadImagePath
@@ -93,7 +93,7 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult EditSite()
         {
 
-            var settings = (_repo as RepoSiteSetting<DbContext>).GetByKeys(
+            var settings = (_repo as SxRepoSiteSetting<DbContext>).GetByKeys(
                     Settings.siteDomain,
                     Settings.siteLogoPath,
                     Settings.siteName,
@@ -173,7 +173,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult EditRobotsFile()
         {
-            var settings = (_repo as RepoSiteSetting<DbContext>).GetByKeys(
+            var settings = (_repo as SxRepoSiteSetting<DbContext>).GetByKeys(
                     Settings.robotsFileSetting
                 );
 

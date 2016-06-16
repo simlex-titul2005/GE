@@ -17,18 +17,18 @@ namespace GE.WebAdmin.Controllers
 
         public EmployeesController()
         {
-            _repo = new RepoEmployee<DbContext>();
+            _repo = new SxRepoEmployee<DbContext>();
         }
 
         [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (_repo as RepoEmployee<DbContext>).FilterCount(filter);
+            var totalItems = (_repo as SxRepoEmployee<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoEmployee<DbContext>).QueryForAdmin(filter);
+            var viewModel = (_repo as SxRepoEmployee<DbContext>).QueryForAdmin(filter);
             return View(viewModel);
         }
 
@@ -39,11 +39,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoEmployee<DbContext>).FilterCount(filter);
+            var totalItems = (_repo as SxRepoEmployee<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoEmployee<DbContext>).QueryForAdmin(filter);
+            var viewModel = (_repo as SxRepoEmployee<DbContext>).QueryForAdmin(filter);
 
             return PartialView("_GridView", viewModel);
         }

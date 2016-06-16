@@ -13,7 +13,7 @@ namespace GE.WebUI.Controllers
         private SxDbRepository<string, SxEmployee, DbContext> _repo;
         public EmployeesController()
         {
-            _repo = new RepoEmployee<DbContext>();
+            _repo = new SxRepoEmployee<DbContext>();
         }
 
 #if !DEBUG

@@ -15,7 +15,7 @@ namespace GE.WebUI.Controllers
         public SiteTestsController()
         {
             if (_repo == null)
-                _repo = new RepoSiteTest<DbContext>();
+                _repo = new SxRepoSiteTest<DbContext>();
         }
 
 #if !DEBUG
@@ -24,7 +24,7 @@ namespace GE.WebUI.Controllers
         [ChildActionOnly]
         public virtual PartialViewResult RandomList()
         {
-            var data = (_repo as RepoSiteTest<DbContext>).RandomList();
+            var data = (_repo as SxRepoSiteTest<DbContext>).RandomList();
             return PartialView("_RandomList", data);
         }
 
@@ -78,7 +78,7 @@ namespace GE.WebUI.Controllers
 
         private static VMSiteTest getTest(string titleUrl)
         {
-            var data = (_repo as RepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
+            var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
             if (!data.Any()) return null;
 
             var dataTest = data.GroupBy(x => x.Block.Test).FirstOrDefault();

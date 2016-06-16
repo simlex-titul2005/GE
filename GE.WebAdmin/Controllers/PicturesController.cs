@@ -11,26 +11,11 @@ using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using System.Linq;
 using SX.WebCore.Repositories;
-using AutoMapper;
 
 namespace GE.WebAdmin.Controllers
 {
     public partial class PicturesController : SX.WebCore.MvcControllers.SxPicturesController<DbContext>
     {
-        private IMapper _mapper;
-        public PicturesController()
-        {
-            _mapper = MvcApplication.MapperConfiguration.CreateMapper();
-        }
-
-        protected IMapper Mapper
-        {
-            get
-            {
-                return _mapper;
-            }
-        }
-
         private static int _pageSize = 20;
 
         [Authorize(Roles = "photo-redactor")]
@@ -38,11 +23,11 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (Repo as RepoPicture<DbContext>).FilterCount(filter);
+            var totalItems = (Repo as SxRepoPicture<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (Repo as RepoPicture<DbContext>).QueryForAdmin(filter);
+            var viewModel = (Repo as SxRepoPicture<DbContext>).QueryForAdmin(filter);
             return View(viewModel);
         }
 
@@ -54,11 +39,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (Repo as RepoPicture<DbContext>).FilterCount(filter);
+            var totalItems = (Repo as SxRepoPicture<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (Repo as RepoPicture<DbContext>).QueryForAdmin(filter);
+            var viewModel = (Repo as SxRepoPicture<DbContext>).QueryForAdmin(filter);
 
             return PartialView("_GridView", viewModel);
         }
@@ -138,12 +123,12 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             var filter = new WebCoreExtantions.Filter(page, pageSize);
             filter.WhereExpressionObject = filterModel;
-            var totalItems = (Repo as RepoPicture<DbContext>).FilterCount(filter);
+            var totalItems = (Repo as SxRepoPicture<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             filter.PagerInfo.PagerSize = 5;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (Repo as RepoPicture<DbContext>).QueryForAdmin(filter);
+            var viewModel = (Repo as SxRepoPicture<DbContext>).QueryForAdmin(filter);
 
             return PartialView(MVC.Pictures.Views._FindGridView, viewModel);
         }

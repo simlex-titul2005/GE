@@ -18,18 +18,18 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<Guid, SxBanner, DbContext> _repo;
         public BannersController()
         {
-            _repo = new RepoBanner<DbContext>();
+            _repo = new SxRepoBanner<DbContext>();
         }
 
         [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter);
+            var totalItems = (_repo as SxRepoBanner<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter);
+            var viewModel = (_repo as SxRepoBanner<DbContext>).QueryForAdmin(filter);
             return View(viewModel);
         }
 
@@ -40,11 +40,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter);
+            var totalItems = (_repo as SxRepoBanner<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter);
+            var viewModel = (_repo as SxRepoBanner<DbContext>).QueryForAdmin(filter);
 
             return PartialView("_GridView", viewModel);
         }
@@ -99,12 +99,12 @@ namespace GE.WebAdmin.Controllers
             filterModel.BannerGroupId = bgid;
             ViewBag.Filter = filterModel;
             var filter = new WebCoreExtantions.Filter(page, pageSize) { WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter, false);
+            var totalItems = (_repo as SxRepoBanner<DbContext>).FilterCount(filter, false);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
             ViewBag.BannerGroupId = bgid;
 
-            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter, false);
+            var viewModel = (_repo as SxRepoBanner<DbContext>).QueryForAdmin(filter, false);
 
             return PartialView(MVC.Banners.Views._FindGridView, viewModel);
         }
@@ -113,12 +113,12 @@ namespace GE.WebAdmin.Controllers
         public virtual PartialViewResult GroupBanners(Guid bgid, int page = 1, int pageSize = 10)
         {
             var filter = new WebCoreExtantions.Filter(page, pageSize) { WhereExpressionObject = new VMBanner { BannerGroupId = bgid } };
-            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter, true);
+            var totalItems = (_repo as SxRepoBanner<DbContext>).FilterCount(filter, true);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
             ViewBag.BannerGroupId = bgid;
 
-            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter, true);
+            var viewModel = (_repo as SxRepoBanner<DbContext>).QueryForAdmin(filter, true);
             return PartialView(MVC.Banners.Views._GroupBanners, viewModel);
         }
 
@@ -130,12 +130,12 @@ namespace GE.WebAdmin.Controllers
 
             filterModel.BannerGroupId = bgid;
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoBanner<DbContext>).FilterCount(filter, true);
+            var totalItems = (_repo as SxRepoBanner<DbContext>).FilterCount(filter, true);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
             ViewBag.BannerGroupId = bgid;
 
-            var viewModel = (_repo as RepoBanner<DbContext>).QueryForAdmin(filter, true);
+            var viewModel = (_repo as SxRepoBanner<DbContext>).QueryForAdmin(filter, true);
 
             return PartialView(MVC.Banners.Views._GroupBanners, viewModel);
         }

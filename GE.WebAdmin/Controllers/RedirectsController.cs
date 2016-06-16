@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
+using SX.WebCore.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -17,7 +18,7 @@ namespace GE.WebAdmin.Controllers
         SxDbRepository<Guid, SxRedirect, DbContext> _repo;
         public RedirectsController()
         {
-            _repo = new RepoRedirect();
+            _repo = new SxRepoRedirect<DbContext>();
         }
 
         private static int _pageSize = 20;
@@ -26,11 +27,11 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (_repo as RepoRedirect).FilterCount(filter);
+            var totalItems = (_repo as SxRepoRedirect<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoRedirect).QueryForAdmin(filter);
+            var viewModel = (_repo as SxRepoRedirect<DbContext>).QueryForAdmin(filter);
             return View(viewModel);
         }
 
@@ -41,11 +42,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoRedirect).FilterCount(filter);
+            var totalItems = (_repo as SxRepoRedirect<DbContext>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoRedirect).QueryForAdmin(filter);
+            var viewModel = (_repo as SxRepoRedirect<DbContext>).QueryForAdmin(filter);
 
             return PartialView("_GridView", viewModel);
         }

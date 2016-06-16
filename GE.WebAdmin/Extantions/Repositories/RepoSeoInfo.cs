@@ -7,13 +7,13 @@ using SX.WebCore;
 using SX.WebCore.HtmlHelpers;
 using SX.WebCore.Providers;
 using static SX.WebCore.Enums;
-using GE.WebCoreExtantions.Repositories;
+using SX.WebCore.Repositories;
 
 namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMSeoInfo[] QueryForAdmin(this RepoSeoInfo repo, Filter filter)
+        public static VMSeoInfo[] QueryForAdmin(this SxRepoSeoInfo<DbContext> repo, Filter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] { "dsi.Id", "dsi.RawUrl" });
             query += " FROM D_SEO_INFO AS dsi ";
@@ -32,7 +32,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        public static int FilterCount(this RepoSeoInfo repo, Filter filter)
+        public static int FilterCount(this SxRepoSeoInfo<DbContext> repo, Filter filter)
         {
             var query = @"SELECT COUNT(1) FROM D_SEO_INFO as dsi";
 
@@ -69,7 +69,7 @@ namespace GE.WebAdmin.Extantions.Repositories
         /// <param name="repo"></param>
         /// <param name="rawUrl"></param>
         /// <returns></returns>
-        public static SxSeoInfo GetByRawUrl(this RepoSeoInfo repo, string rawUrl)
+        public static SxSeoInfo GetByRawUrl(this SxRepoSeoInfo<DbContext> repo, string rawUrl)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
@@ -85,7 +85,7 @@ namespace GE.WebAdmin.Extantions.Repositories
         /// <param name="repo"></param>
         /// <param name="mid"></param>
         /// <param name="mct"></param>
-        public static void DeleteMaterialSeoInfo(this RepoSeoInfo repo, int mid, ModelCoreType mct)
+        public static void DeleteMaterialSeoInfo(this SxRepoSeoInfo<DbContext> repo, int mid, ModelCoreType mct)
         {
             var query = "UPDATE DV_MATERIAL SET SeoInfoId=NULL WHERE Id=@mid AND ModelCoreType=@mct;";
             query+="DELETE FROM D_SEO_INFO WHERE Id IN (SELECT dsi.Id FROM D_SEO_INFO AS dsi WHERE MaterialId=@mid AND ModelCoreType=@mct)";
@@ -101,7 +101,7 @@ namespace GE.WebAdmin.Extantions.Repositories
         /// <param name="mid"></param>
         /// <param name="mct"></param>
         /// <returns></returns>
-        public static SxSeoInfo GetMaterialSeoInfo(this RepoSeoInfo repo, int mid, ModelCoreType mct)
+        public static SxSeoInfo GetMaterialSeoInfo(this SxRepoSeoInfo<DbContext> repo, int mid, ModelCoreType mct)
         {
             var query = "SELECT * FROM D_SEO_INFO AS dsi WHERE MaterialId=@mid AND ModelCoreType=@mct";
             using (var connection = new SqlConnection(repo.ConnectionString))

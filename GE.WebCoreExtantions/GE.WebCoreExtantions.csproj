@@ -78,16 +78,13 @@
     <Compile Include="Repositories\RepoAuthorAphorism.cs" />
     <Compile Include="Repositories\RepoAphorism.cs" />
     <Compile Include="Repositories\RepoArticle.cs" />
-    <Compile Include="Repositories\RepoBannerGroup.cs" />
     <Compile Include="Repositories\RepoForumPart.cs" />
     <Compile Include="Repositories\RepoGame.cs" />
     <Compile Include="Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Repositories\RepoMaterialTag.cs" />
     <Compile Include="Repositories\RepoNews.cs" />
-    <Compile Include="Repositories\RepoRedirect.cs" />
     <Compile Include="Repositories\RepoRequest.cs" />
     <Compile Include="Repositories\RepoVideo.cs" />
-    <Compile Include="Repositories\RepoSeoInfo.cs" />
     <Compile Include="Repositories\RepoSeoKeywords.cs" />
   </ItemGroup>
   <ItemGroup>

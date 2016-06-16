@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoMaterialCategory : SX.WebCore.Repositories.RepoMaterialCategory<DbContext>
+    public sealed class RepoMaterialCategory : SX.WebCore.Repositories.SxRepoMaterialCategory<DbContext>
     {
         public new MaterialCategory GetByKey(params object[] id)
         {

@@ -13,8 +13,9 @@ using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using static SX.WebCore.Enums;
 using System.Globalization;
-using System.Web.SessionState;
 using SX.WebCore.Attrubutes;
+using SX.WebCore.Repositories;
+using SX.WebCore.MvcApplication;
 
 namespace GE.WebUI.Controllers
 {
@@ -151,11 +152,11 @@ namespace GE.WebUI.Controllers
             else
             {
                 var html=SxBBCodeParser.GetHtml(model.Html);
-                html = SxBBCodeParser.ReplaceBanners(html, SiteBanners.Collection, (b)=>Url.Action(MVC.Pictures.Picture(b.PictureId)));
+                html = SxBBCodeParser.ReplaceBanners(html, SxApplication<DbContext>.GetBanners(), (b)=>Url.Action(MVC.Pictures.Picture(b.PictureId)));
                 html = SxBBCodeParser.ReplaceVideo(html, model.Videos);
                 model.Html = html;
 
-                var seoInfoRepo = new RepoSeoInfo();
+                var seoInfoRepo = new SxRepoSeoInfo<DbContext>();
                 var matSeoInfo = Mapper.Map<SxSeoInfo, VMSeoInfo>(seoInfoRepo.GetSeoInfo(model.Id, model.ModelCoreType));
 
                 ViewBag.Title = ViewBag.Title ?? (matSeoInfo!=null? matSeoInfo.SeoTitle:null) ?? model.Title;

@@ -1,23 +1,12 @@
-﻿using AutoMapper;
+﻿using GE.WebCoreExtantions;
+using SX.WebCore.MvcControllers;
 using System.Web.Mvc;
 
 namespace GE.WebAdmin
 {
     [Authorize]
-    public abstract partial class BaseController : Controller
+    public abstract partial class BaseController : SxBaseController<DbContext>
     {
-        private IMapper _mapper;
-        public BaseController()
-        {
-            _mapper = MvcApplication.MapperConfiguration.CreateMapper();
-        }
-
-        protected IMapper Mapper
-        {
-            get
-            {
-                return _mapper;
-            }
-        }
+        
     }
 }

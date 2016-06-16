@@ -3,10 +3,11 @@ using System.Linq;
 using System;
 using GE.WebCoreExtantions;
 using Microsoft.AspNet.Identity;
+using SX.WebCore.MvcControllers;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class AccountController : SX.WebCore.MvcControllers.SxAccountController
+    public partial class AccountController : SxAccountController<DbContext>
     {
         protected override Action<SxVMLogin> ActionLogin
         {
@@ -56,7 +57,7 @@ namespace GE.WebAdmin.Controllers
         private void addStatisticUserLogin(DateTime date, string email)
         {
             var user = UserManager.FindByEmail(email);
-            new SX.WebCore.Repositories.RepoStatistic<DbContext>().CreateStatisticUserLogin(date, user.Id);
+            new SX.WebCore.Repositories.SxRepoStatistic<DbContext>().CreateStatisticUserLogin(date, user.Id);
         }
     }
 }  

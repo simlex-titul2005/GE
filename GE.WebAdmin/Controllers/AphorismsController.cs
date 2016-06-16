@@ -30,7 +30,7 @@ namespace GE.WebAdmin.Controllers
         {
             if(curCat!=null)
             {
-                var category = new RepoMaterialCategory<DbContext>().GetByKey(curCat);
+                var category = new SxRepoMaterialCategory<DbContext>().GetByKey(curCat);
                 ViewBag.Category = category;
             }
 

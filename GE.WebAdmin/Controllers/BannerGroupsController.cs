@@ -19,7 +19,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<Guid, SxBannerGroup, DbContext> _repo;
         public BannerGroupsController()
         {
-            _repo = new RepoBannerGroup<DbContext>();
+            _repo = new SxRepoBannerGroup<DbContext>();
         }
 
         [HttpGet]
@@ -97,16 +97,16 @@ namespace GE.WebAdmin.Controllers
         [HttpPost]
         public virtual RedirectToRouteResult AddBanner(Guid bgid, Guid bid)
         {
-            (_repo as RepoBannerGroup<DbContext>).AddBanner(bgid, bid);
+            (_repo as SxRepoBannerGroup<DbContext>).AddBanner(bgid, bid);
             return RedirectToAction(MVC.BannerGroups.Edit(bgid));
         }
 
         [HttpPost]
         public virtual PartialViewResult DeleteBanner(Guid bgid, Guid bid)
         {
-            (_repo as RepoBannerGroup<DbContext>).DeleteBanner(bgid, bid);
+            (_repo as SxRepoBannerGroup<DbContext>).DeleteBanner(bgid, bid);
 
-            var repoBanner = new RepoBanner<DbContext>();
+            var repoBanner = new SxRepoBanner<DbContext>();
             var filter = new WebCoreExtantions.Filter(1, 20) { WhereExpressionObject = new VMBanner { BannerGroupId = bgid } };
             var totalItems = repoBanner.FilterCount(filter, true);
             filter.PagerInfo.TotalItems = totalItems;

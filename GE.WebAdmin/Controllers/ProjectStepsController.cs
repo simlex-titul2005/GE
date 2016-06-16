@@ -14,7 +14,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<int, SxProjectStep, DbContext> _repo;
         public ProjectStepsController()
         {
-            _repo = new RepoProjectStep<DbContext>();
+            _repo = new SxRepoProjectStep<DbContext>();
         }
 
         [HttpGet]
@@ -84,7 +84,7 @@ namespace GE.WebAdmin.Controllers
         [HttpPost]
         public virtual EmptyResult ReplaceOrder(int id, bool dir, int? osid=null)
         {
-            (_repo as RepoProjectStep<DbContext>).ReplaceOrder(id, dir, osid);
+            (_repo as SxRepoProjectStep<DbContext>).ReplaceOrder(id, dir, osid);
             return null;
         }
 
@@ -92,7 +92,7 @@ namespace GE.WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public virtual RedirectResult ReplaceDone(int id, bool done)
         {
-            (_repo as RepoProjectStep<DbContext>).ReplaceDone(id, done);
+            (_repo as SxRepoProjectStep<DbContext>).ReplaceDone(id, done);
             return Redirect("/projectsteps/index#pstep-" + id);
         }
 

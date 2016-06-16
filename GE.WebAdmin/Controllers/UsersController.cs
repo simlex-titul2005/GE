@@ -47,7 +47,7 @@ namespace GE.WebAdmin.Controllers
 
         public UsersController()
         {
-            _repoEmployee = new SX.WebCore.Repositories.RepoEmployee<DbContext>();
+            _repoEmployee = new SX.WebCore.Repositories.SxRepoEmployee<DbContext>();
         }
 
         [HttpGet]

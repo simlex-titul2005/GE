@@ -11,7 +11,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMPicture[] QueryForAdmin(this RepoPicture<DbContext> repo, Filter filter)
+        public static VMPicture[] QueryForAdmin(this SxRepoPicture<DbContext> repo, Filter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] { "dp.Id", "dp.Caption", "dp.[Description]", "dp.Width", "dp.Height", "dp.Size" });
             query += " FROM D_PICTURE AS dp";
@@ -30,7 +30,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        public static int FilterCount(this RepoPicture<DbContext> repo, Filter filter)
+        public static int FilterCount(this SxRepoPicture<DbContext> repo, Filter filter)
         {
             var query = @"SELECT COUNT(1) FROM D_PICTURE as dp";
 

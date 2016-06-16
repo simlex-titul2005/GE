@@ -16,7 +16,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<int, SxSiteTestQuestion, DbContext> _repo;
         public SiteTestQuestionsController()
         {
-            _repo = new RepoSiteTestQuestion<DbContext>();
+            _repo = new SxRepoSiteTestQuestion<DbContext>();
         }
 
         private static int _pageSize = 20;
@@ -25,11 +25,11 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (_repo as RepoSiteTestQuestion<DbContext>).Count(filter);
+            var totalItems = (_repo as SxRepoSiteTestQuestion<DbContext>).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoSiteTestQuestion<DbContext>).Query(filter).ToArray()
+            var viewModel = (_repo as SxRepoSiteTestQuestion<DbContext>).Query(filter).ToArray()
                 .Select(x => Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(x)).ToArray();
             return View(viewModel);
         }
@@ -53,11 +53,11 @@ namespace GE.WebAdmin.Controllers
             var whereObject = filterModel;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoSiteTestQuestion<DbContext>).Count(filter);
+            var totalItems = (_repo as SxRepoSiteTestQuestion<DbContext>).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoSiteTestQuestion<DbContext>).Query(filter).ToArray()
+            var viewModel = (_repo as SxRepoSiteTestQuestion<DbContext>).Query(filter).ToArray()
                 .Select(x => Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(x)).ToArray(); ;
 
             return PartialView("_GridView", viewModel);

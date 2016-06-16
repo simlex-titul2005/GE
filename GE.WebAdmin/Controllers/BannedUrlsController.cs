@@ -18,7 +18,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<int, SxBannedUrl, DbContext> _repo;
         public BannedUrlsController()
         {
-            _repo = new RepoBannedUrl<DbContext>();
+            _repo = new SxRepoBannedUrl<DbContext>();
         }
 
         [HttpGet]

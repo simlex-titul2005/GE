@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 14.06.2016 18:51:04
+ * Time: 16.06.2016 13:26:40
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,22 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -428,6 +444,22 @@ BEGIN
 	RETURN @res
 END
 GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1333,5 +1365,146 @@ BEGIN
 	       JOIN D_SITE_TEST_BLOCK  AS dstb
 	            ON  dstb.Id = dstq.BlockId
 	            AND dstb.TestId = @testId
+END
+GO
+
+/*******************************************
+ * Добавить информацию по запросу клиента
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_request', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_request;
+GO
+CREATE PROCEDURE dbo.add_request
+	@id UNIQUEIDENTIFIER,
+	@browser VARCHAR(150),
+	@clientIP VARCHAR(150),
+	@rawUrl VARCHAR(255),
+	@requestType VARCHAR(20),
+	@urlRef VARCHAR(MAX),
+	@sessionId VARCHAR(128),
+	@userAgent VARCHAR(150)
+AS
+BEGIN
+	INSERT INTO D_REQUEST
+	  (
+	    Id,
+	    SessionId,
+	    UrlRef,
+	    Browser,
+	    ClientIP,
+	    UserAgent,
+	    RequestType,
+	    DateCreate,
+	    RawUrl
+	  )
+	VALUES
+	  (
+	    @id,
+	    @sessionId,
+	    @urlRef,
+	    @browser,
+	    @clientIP,
+	    @userAgent,
+	    @requestType,
+	    GETDATE(),
+	    @rawUrl
+	  )
+END
+GO
+
+/*******************************************
+ * Получить картинку
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_picture', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_picture;
+GO
+CREATE PROCEDURE dbo.get_picture
+	@pictureId UNIQUEIDENTIFIER
+AS
+BEGIN
+	SELECT TOP(1) *
+	FROM   D_PICTURE dp
+	WHERE  dp.ID = @pictureId
+END
+GO
+
+/*******************************************
+ * Все редиректы сайта
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_redirect', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_redirect;
+GO
+CREATE PROCEDURE dbo.get_redirect
+	@url VARCHAR(255)
+AS
+BEGIN
+	SELECT TOP(1) *
+	FROM   D_REDIRECT AS dr
+	WHERE  dr.OldUrl = @url
+END
+GO
+
+/*******************************************
+ * Все seo info сайта
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_all_seo_info', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_all_seo_info;
+GO
+CREATE PROCEDURE dbo.get_all_seo_info
+AS
+BEGIN
+	SELECT *
+	FROM   D_SEO_INFO AS dsi
+	ORDER BY
+	       dsi.RawUrl
+END
+GO
+
+/*******************************************
+ * Seo info страницы
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_page_seo_info', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_page_seo_info;
+GO
+CREATE PROCEDURE dbo.get_page_seo_info
+	@url VARCHAR(255)
+AS
+BEGIN
+	SELECT TOP(1) *
+	FROM   D_SEO_INFO AS dsi
+	WHERE  dsi.RawUrl = @url
+END
+GO
+
+/*******************************************
+ * Seo info материала
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_material_seo_info', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_material_seo_info;
+GO
+CREATE PROCEDURE dbo.get_material_seo_info
+	@mid INT,
+	@mct INT
+AS
+BEGIN
+	SELECT TOP(1) * 
+	FROM   D_SEO_INFO AS dsi
+	WHERE  (dsi.MaterialId = @mid AND dsi.ModelCoreType = @mct)
+END
+GO
+
+/*******************************************
+ * Seo info страницы
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_page_seo_info_keywords', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_page_seo_info_keywords;
+GO
+CREATE PROCEDURE dbo.get_page_seo_info_keywords
+	@seoInfoId INT
+AS
+BEGIN
+	SELECT *
+	FROM   D_SEO_KEYWORD AS dsk
+	WHERE  dsk.SeoInfoId = @seoInfoId
 END
 GO

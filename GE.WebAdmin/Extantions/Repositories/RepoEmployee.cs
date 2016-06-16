@@ -11,7 +11,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMEmployee[] QueryForAdmin(this RepoEmployee<DbContext> repo, Filter filter)
+        public static VMEmployee[] QueryForAdmin(this SxRepoEmployee<DbContext> repo, Filter filter)
         {
             var query = SxQueryProvider.GetSelectString();
             query += @" FROM D_EMPLOYEE AS de
@@ -34,7 +34,7 @@ JOIN AspNetUsers AS anu ON anu.Id = de.Id ";
             }
         }
 
-        public static int FilterCount(this RepoEmployee<DbContext> repo, Filter filter)
+        public static int FilterCount(this SxRepoEmployee<DbContext> repo, Filter filter)
         {
             var query = @"SELECT COUNT(1) FROM D_EMPLOYEE AS de";
 

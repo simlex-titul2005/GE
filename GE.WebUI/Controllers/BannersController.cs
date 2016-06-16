@@ -13,7 +13,7 @@ namespace GE.WebUI.Controllers
         {
             await Task.Run(() =>
             {
-                new RepoBanner<DbContext>().AddClick(bannerId);
+                new SxRepoBanner<DbContext>().AddClick(bannerId);
             });
         }
 
@@ -22,7 +22,7 @@ namespace GE.WebUI.Controllers
         {
             await Task.Run(() =>
             {
-                new RepoBanner<DbContext>().AddShows(new Guid[] { bannerId });
+                new SxRepoBanner<DbContext>().AddShows(new Guid[] { bannerId });
             });
         }
     }

@@ -16,7 +16,7 @@ namespace GE.WebAdmin.Controllers
         private SxDbRepository<int, SxSiteTest, DbContext> _repo;
         public SiteTestsController()
         {
-            _repo = new RepoSiteTest<DbContext>();
+            _repo = new SxRepoSiteTest<DbContext>();
         }
 
         private static int _pageSize = 20;
@@ -25,11 +25,11 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (_repo as RepoSiteTest<DbContext>).Count(filter);
+            var totalItems = (_repo as SxRepoSiteTest<DbContext>).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoSiteTest<DbContext>).Query(filter).ToArray()
+            var viewModel = (_repo as SxRepoSiteTest<DbContext>).Query(filter).ToArray()
                 .Select(x => Mapper.Map<SxSiteTest, VMSiteTest>(x)).ToArray();
             return View(viewModel);
         }
@@ -41,11 +41,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoSiteTest<DbContext>).Count(filter);
+            var totalItems = (_repo as SxRepoSiteTest<DbContext>).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoSiteTest<DbContext>).Query(filter).ToArray()
+            var viewModel = (_repo as SxRepoSiteTest<DbContext>).Query(filter).ToArray()
                 .Select(x => Mapper.Map<SxSiteTest, VMSiteTest>(x)).ToArray(); ;
 
             return PartialView("_GridView", viewModel);
@@ -57,11 +57,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             var filter = new WebCoreExtantions.Filter(page, pageSize);
             filter.WhereExpressionObject = filterModel;
-            var totalItems = (_repo as RepoSiteTest<DbContext>).Count(filter);
+            var totalItems = (_repo as SxRepoSiteTest<DbContext>).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as RepoSiteTest<DbContext>).Query(filter).ToArray()
+            var viewModel = (_repo as SxRepoSiteTest<DbContext>).Query(filter).ToArray()
                 .Select(x => Mapper.Map<SxSiteTest, VMSiteTest>(x)).ToArray();
 
             return PartialView("_FindGridView", viewModel);
@@ -134,7 +134,7 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual PartialViewResult TestMatrix(int testId)
         {
-            var data = (_repo as RepoSiteTest<DbContext>).GetMatrix(testId).Select(x => Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(x)).ToArray();
+            var data = (_repo as SxRepoSiteTest<DbContext>).GetMatrix(testId).Select(x => Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(x)).ToArray();
             return PartialView(MVC.SiteTests.Views._Matrix, data);
         }
     }

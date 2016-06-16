@@ -1,7 +1,7 @@
 ﻿@using SX.WebCore;
 @{
     Layout = null;
-    var bgUrl = GE.WebUI.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
+    var bgUrl = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
     var bg = string.IsNullOrEmpty(bgUrl) ? null : string.Format("style=background:url('{0}');", bgUrl);
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];

@@ -28,6 +28,9 @@ namespace GE.WebAdmin.Controllers
     public partial class PicturesController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public PicturesController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected PicturesController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

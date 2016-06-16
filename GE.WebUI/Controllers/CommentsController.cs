@@ -16,7 +16,7 @@ namespace GE.WebUI.Controllers
         private SxDbRepository<int, SxComment, DbContext> _repo;
         public CommentsController()
         {
-            _repo = new RepoComment<DbContext>();
+            _repo = new SxRepoComment<DbContext>();
         }
 
         [HttpGet, NotLogRequest]
@@ -82,7 +82,7 @@ namespace GE.WebUI.Controllers
         private VMComment[] getResult(int mid, ModelCoreType mct)
         {
             var filter = new WebCoreExtantions.Filter { MaterialId = mid, ModelCoreType = mct };
-            var data = (_repo as RepoComment<DbContext>).Query(filter).ToArray();
+            var data = (_repo as SxRepoComment<DbContext>).Query(filter).ToArray();
             var viewModel = data.Select(x => Mapper.Map<SxComment, VMComment>(x)).ToArray();
             return viewModel;
         }

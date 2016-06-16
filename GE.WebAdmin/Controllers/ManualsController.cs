@@ -15,7 +15,7 @@ namespace GE.WebAdmin.Controllers
         SxDbRepository<int, SxManual, DbContext> _repo;
         public ManualsController()
         {
-            _repo = new SX.WebCore.Repositories.RepoManual<DbContext>();
+            _repo = new SX.WebCore.Repositories.SxRepoManual<DbContext>();
         }
 
         private static int _pageSize = 20;
@@ -24,11 +24,11 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Index(int page = 1)
         {
             var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (_repo as SX.WebCore.Repositories.RepoManual<DbContext>).Count(filter);
+            var totalItems = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as SX.WebCore.Repositories.RepoManual<DbContext>).Query(filter).ToArray()
+            var viewModel = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Query(filter).ToArray()
                 .Select(x=>Mapper.Map<SxManual, VMManual>(x)).ToArray();
             return View(viewModel);
         }
@@ -40,11 +40,11 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Order = order;
 
             var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as SX.WebCore.Repositories.RepoManual<DbContext>).Count(filter);
+            var totalItems = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
-            var viewModel = (_repo as SX.WebCore.Repositories.RepoManual<DbContext>).Query(filter).ToArray()
+            var viewModel = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Query(filter).ToArray()
                 .Select(x => Mapper.Map<SxManual, VMManual>(x)).ToArray();
 
             return PartialView("_GridView", viewModel);

@@ -17,7 +17,7 @@ namespace GE.WebUI.Controllers
         public GamesController()
         {
             _repo = new RepoGame();
-            _repoSetting = new RepoSiteSetting<DbContext>();
+            _repoSetting = new SxRepoSiteSetting<DbContext>();
         }
 
         private const string __emptyGameIconPath = "emptyGameIconPath";

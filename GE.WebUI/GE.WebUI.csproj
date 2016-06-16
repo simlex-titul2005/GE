@@ -322,13 +322,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\release.pubxml" />
-    <None Include="Properties\PublishProfiles\test-lr.pubxml" />
     <Content Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </Content>
     <Content Include="T4MVC.tt.hooks.t4" />
+    <None Include="Properties\PublishProfiles\release.pubxml" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="share42\icons.png" />
     <Content Include="share42\share42.js" />

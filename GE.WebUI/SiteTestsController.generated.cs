@@ -62,6 +62,12 @@ namespace GE.WebUI.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Step()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Step);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public SiteTestsController Actions { get { return MVC.SiteTests; } }
@@ -80,6 +86,7 @@ namespace GE.WebUI.Controllers
         {
             public readonly string RandomList = "RandomList";
             public readonly string Details = "Details";
+            public readonly string Step = "Step";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -87,6 +94,7 @@ namespace GE.WebUI.Controllers
         {
             public const string RandomList = "RandomList";
             public const string Details = "Details";
+            public const string Step = "Step";
         }
 
 
@@ -97,9 +105,15 @@ namespace GE.WebUI.Controllers
         public class ActionParamsClass_Details
         {
             public readonly string titleUrl = "titleUrl";
-            public readonly string questionText = "questionText";
-            public readonly string isTrue = "isTrue";
-            public readonly string pastQuestions = "pastQuestions";
+        }
+        static readonly ActionParamsClass_Step s_params_Step = new ActionParamsClass_Step();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Step StepParams { get { return s_params_Step; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Step
+        {
+            public readonly string ttu = "ttu";
+            public readonly string pastQ = "pastQ";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -111,13 +125,13 @@ namespace GE.WebUI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _Details = "_Details";
                 public readonly string _RandomList = "_RandomList";
+                public readonly string _Step = "_Step";
                 public readonly string Details = "Details";
                 public readonly string Result = "Result";
             }
-            public readonly string _Details = "~/Views/SiteTests/_Details.cshtml";
             public readonly string _RandomList = "~/Views/SiteTests/_RandomList.cshtml";
+            public readonly string _Step = "~/Views/SiteTests/_Step.cshtml";
             public readonly string Details = "~/Views/SiteTests/Details.cshtml";
             public readonly string Result = "~/Views/SiteTests/Result.cshtml";
         }
@@ -152,17 +166,15 @@ namespace GE.WebUI.Controllers
         }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string titleUrl, string questionText, bool isTrue, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestQuestion> pastQuestions);
+        partial void StepOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string ttu, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestStep> pastQ);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Details(string titleUrl, string questionText, bool isTrue, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestQuestion> pastQuestions)
+        public override System.Web.Mvc.ActionResult Step(string ttu, System.Collections.Generic.List<GE.WebUI.Models.VMSiteTestStep> pastQ)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "titleUrl", titleUrl);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "questionText", questionText);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "isTrue", isTrue);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pastQuestions", pastQuestions);
-            DetailsOverride(callInfo, titleUrl, questionText, isTrue, pastQuestions);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Step);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "ttu", ttu);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pastQ", pastQ);
+            StepOverride(callInfo, ttu, pastQ);
             return callInfo;
         }
 

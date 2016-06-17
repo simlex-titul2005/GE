@@ -80,6 +80,12 @@ namespace GE.WebAdmin.Controllers
         {
             return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.TestMatrix);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult LoadTestFromFile()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LoadTestFromFile);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public SiteTestsController Actions { get { return MVC.SiteTests; } }
@@ -101,6 +107,7 @@ namespace GE.WebAdmin.Controllers
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
             public readonly string TestMatrix = "TestMatrix";
+            public readonly string LoadTestFromFile = "LoadTestFromFile";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -111,6 +118,7 @@ namespace GE.WebAdmin.Controllers
             public const string Edit = "Edit";
             public const string Delete = "Delete";
             public const string TestMatrix = "TestMatrix";
+            public const string LoadTestFromFile = "LoadTestFromFile";
         }
 
 
@@ -158,6 +166,14 @@ namespace GE.WebAdmin.Controllers
         public class ActionParamsClass_TestMatrix
         {
             public readonly string testId = "testId";
+        }
+        static readonly ActionParamsClass_LoadTestFromFile s_params_LoadTestFromFile = new ActionParamsClass_LoadTestFromFile();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_LoadTestFromFile LoadTestFromFileParams { get { return s_params_LoadTestFromFile; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_LoadTestFromFile
+        {
+            public readonly string file = "file";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -273,6 +289,18 @@ namespace GE.WebAdmin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.TestMatrix);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "testId", testId);
             TestMatrixOverride(callInfo, testId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void LoadTestFromFileOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Web.HttpPostedFileBase file);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult LoadTestFromFile(System.Web.HttpPostedFileBase file)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LoadTestFromFile);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "file", file);
+            LoadTestFromFileOverride(callInfo, file);
             return callInfo;
         }
 

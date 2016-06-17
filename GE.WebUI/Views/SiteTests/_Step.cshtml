@@ -1,0 +1,33 @@
+﻿@model VMSiteTestQuestion
+@{
+    Layout = null;
+    var pastQ = (List<VMSiteTestStep>)ViewBag.PastQ;
+    var blocksCount = ViewBag.BlocksCount;
+}
+
+@blocksCount
+@using (Ajax.BeginForm(MVC.SiteTests.Step(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }))
+{
+    <p>
+        @Model.Block.Test.Description
+    </p>
+
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="ttu" value="@Model.Block.Test.TitleUrl" />
+    if (pastQ != null)
+    {
+        var count = 0;
+        foreach (var q in pastQ)
+        {
+            <input type="hidden" class="pastQT" name="[@count].Order" value="@q.Order" />
+            <input type="hidden" name="[@count].Question.Text" value="@q.Question.Text" />
+            <input type="hidden" name="[@count].Question.IsCorrect" value="@q.Question.IsCorrect" />
+            count++;
+        }
+    }
+
+    @Html.SxIndicatorGroup(new VMSiteTestQuestion[] { Model }, new SxExtantions.SxIndicatorGroupSettings<VMSiteTestQuestion>
+{
+    FuncGetLabel = x => x.Text
+})
+}

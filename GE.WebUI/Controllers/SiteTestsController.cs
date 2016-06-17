@@ -31,80 +31,30 @@ namespace GE.WebUI.Controllers
         [HttpGet]
         public virtual ActionResult Details(string titleUrl)
         {
-            var viewModel = getTest(titleUrl);
-            if (viewModel == null)
-                return new HttpNotFoundResult();
-
+            var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
+            var viewModel = Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(data);
             return View(model: viewModel);
         }
 
-        [HttpPost]
-        public virtual ActionResult Details(string titleUrl, string questionText, bool isTrue, List<VMSiteTestQuestion> pastQuestions)
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual ActionResult Step(string ttu, List<VMSiteTestStep> pastQ = null)
         {
-            //pastQuestionTexts
-            var pqt = pastQuestions == null? new VMSiteTestQuestion[1] : new VMSiteTestQuestion[pastQuestions.Count+1];
-            var q=new VMSiteTestQuestion { Text=questionText, IsCorrect= isTrue };
-            if (pastQuestions != null)
-            {
-                pastQuestions.CopyTo(pqt);
-                pqt[pastQuestions.Count] = q;
-            }
-            else
-            {
-                pqt[0] = q;
-            }
-            ViewBag.PastQuestionTexts = pqt.ToArray();
+            ViewBag.PastQ = pastQ.Select(x => new { T = x.Question.Text, C = x.Question.IsCorrect, O = x.Order }).Distinct()
+                .Select(x => new VMSiteTestStep {
+                    Order=x.O,
+                    Question=new VMSiteTestQuestion { Text=x.T, IsCorrect=x.C }
+                }).ToList();
 
-            var viewModel = getTest(titleUrl);
-            var blocks = viewModel.Blocks.ToList();
-            VMSiteTestQuestion question = null;
-            foreach (var block in blocks)
-            {
-                if (block.Questions == null) continue;
-                for (int i = 0; i < pqt.Length; i++)
-                {
-                    if (block.Questions == null) continue;
-
-                    question = pqt[i];
-                    if (block.Questions.SingleOrDefault(x => x.Text == question.Text && x.IsCorrect == question.IsCorrect) == null)
-                        block.Questions = null;
-                }
-            }
-
-            viewModel.Blocks = blocks.Where(x => x.Questions != null).ToArray();
-
-            return PartialView(MVC.SiteTests.Views._Details, viewModel);
+            var blocksCount = -1;
+            VMSiteTestQuestion data = getGuessYesNoStep(ttu, pastQ, out blocksCount);
+            ViewBag.BlocksCount = blocksCount;
+            return PartialView(MVC.SiteTests.Views._Step, data);
         }
-
-        private static VMSiteTest getTest(string titleUrl)
+        private static VMSiteTestQuestion getGuessYesNoStep(string ttu, List<VMSiteTestStep> pastQ, out int blocksCount)
         {
-            var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
-            if (!data.Any()) return null;
-
-            var dataTest = data.GroupBy(x => x.Block.Test).FirstOrDefault();
-            var viewModel = new VMSiteTest();
-            viewModel.Title = dataTest.Key.Title;
-            viewModel.Description = dataTest.Key.Description;
-            viewModel.TitleUrl = dataTest.Key.TitleUrl;
-
-            viewModel.Blocks = data.GroupBy(x => x.Block).Select(x => new
-            {
-                Id = x.Key.Id,
-                Title = x.Key.Title,
-                Description=x.Key.Description
-            }).Distinct().Select(x => new VMSiteTestBlock
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Description=x.Description,
-                Questions = data.Where(q => q.Block.Id == x.Id).Select(q => new VMSiteTestQuestion
-                {
-                    Id = q.Id,
-                    IsCorrect = q.IsCorrect,
-                    Text = q.Text
-                }).ToArray()
-            }).ToArray();
-
+            var select = pastQ.Select(x => Mapper.Map<VMSiteTestStep, SxSiteTestStep>(x)).ToList();
+            var data = (_repo as SxRepoSiteTest<DbContext>).GetGuessYesNoStep(ttu, select, out blocksCount);
+            var viewModel = Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(data);
             return viewModel;
         }
     }

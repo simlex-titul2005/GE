@@ -1,6 +1,6 @@
 /************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 16.06.2016 13:26:40
+ * Time: 17.06.2016 15:52:05
  ************************************************************/
 
 /*******************************************
@@ -196,6 +196,25 @@ BEGIN
 	RETURN LTRIM(RTRIM(@HTMLText))
 END
 GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -444,6 +463,25 @@ BEGIN
 	RETURN @res
 END
 GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1278,6 +1316,7 @@ BEGIN
 	            ON  dstb.TestId = dst.Id
 	       JOIN D_SITE_TEST_QUESTION  AS dstq
 	            ON  dstq.BlockId = dstb.Id
+	WHERE  Show = 1
 	GROUP BY
 	       dst.Id,
 	       dst.Title,
@@ -1298,15 +1337,63 @@ CREATE PROCEDURE dbo.get_site_test_page
 	@titleUrl VARCHAR(255)
 AS
 BEGIN
-	SELECT *
+	SELECT TOP(1) *
 	FROM   D_SITE_TEST_QUESTION    AS dstq
 	       JOIN D_SITE_TEST_BLOCK  AS dstb
 	            ON  dstb.Id = dstq.BlockId
 	       JOIN D_SITE_TEST        AS dst
 	            ON  dst.Id = dstb.TestId
-	WHERE  dst.TitleUrl = @titleUrl
+	            AND dst.TitleUrl = @titleUrl
+	            AND dst.Show = 1
 END
 GO
+
+/*******************************************
+ * Добавить тест
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_site_test', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_site_test;
+GO
+CREATE PROCEDURE dbo.add_site_test
+	@title NVARCHAR(200),
+	@desc NVARCHAR(1000),
+	@type INT,
+	@titleUrl VARCHAR(255)
+AS
+BEGIN
+	IF NOT EXISTS (
+	       SELECT TOP(1) *
+	       FROM   D_SITE_TEST AS dst
+	       WHERE  dst.TitleUrl = @titleUrl
+	   )
+	BEGIN
+	    INSERT INTO D_SITE_TEST
+	      (
+	        Title,
+	        [Description],
+	        DateUpdate,
+	        DateCreate,
+	        TestType,
+	        TitleUrl
+	      )
+	    VALUES
+	      (
+	        @title,
+	        @desc,
+	        GETDATE(),
+	        GETDATE(),
+	        @type,
+	        @titleUrl
+	      )
+	    
+	    DECLARE @id INT
+	    SET @id = @@identity
+	    SELECT TOP(1) *
+	    FROM   D_SITE_TEST AS dst
+	    WHERE  dst.Id = @id
+	END
+END
+GO	
 
 /*******************************************
  * Удалить тест
@@ -1323,6 +1410,52 @@ AS
 GO
 
 /*******************************************
+ * Добавить блок теста
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_site_test_block', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_site_test_block;
+GO
+CREATE PROCEDURE dbo.add_site_test_block
+	@testId INT,
+	@title NVARCHAR(200),
+	@desc NVARCHAR(1000)
+AS
+BEGIN
+	IF NOT EXISTS (
+	       SELECT TOP(1) *
+	       FROM   D_SITE_TEST_BLOCK AS dstb
+	       WHERE  dstb.TestId = @testId
+	              AND dstb.Title = @title
+	   )
+	BEGIN
+	    INSERT INTO D_SITE_TEST_BLOCK
+	      (
+	        TestId,
+	        Title,
+	        [Description],
+	        DateUpdate,
+	        DateCreate
+	      )
+	    VALUES
+	      (
+	        @testId,
+	        @title,
+	        @desc,
+	        GETDATE(),
+	        GETDATE()
+	      )
+	    
+	    DECLARE @id INT
+	    SET @id = @@identity
+	    
+	    SELECT TOP(1) *
+	    FROM   D_SITE_TEST_BLOCK AS dstb
+	    WHERE  dstb.Id = @id
+	END
+END
+GO
+
+/*******************************************
  * Удалить блок теста
  *******************************************/
 IF OBJECT_ID(N'dbo.del_site_test_block', N'P') IS NOT NULL
@@ -1334,6 +1467,52 @@ AS
 	DELETE 
 	FROM   D_SITE_TEST_BLOCK
 	WHERE  Id = @blockId
+GO
+
+/*******************************************
+ * Добавить вопрос теста
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_site_test_question', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_site_test_question;
+GO
+CREATE PROCEDURE dbo.add_site_test_question
+	@blockId INT,
+	@text NVARCHAR(400),
+	@isCorrect BIT
+AS
+BEGIN
+	IF NOT EXISTS (
+	       SELECT TOP(1) *
+	       FROM   D_SITE_TEST_QUESTION AS dstq
+	       WHERE  dstq.BlockId = @blockId
+	              AND dstq.[Text] = @text
+	   )
+	BEGIN
+	    INSERT INTO D_SITE_TEST_QUESTION
+	      (
+	        BlockId,
+	        [Text],
+	        IsCorrect,
+	        DateUpdate,
+	        DateCreate
+	      )
+	    VALUES
+	      (
+	        @blockId,
+	        @text,
+	        @isCorrect,
+	        GETDATE(),
+	        GETDATE()
+	      )
+	    
+	    DECLARE @id INT
+	    SET @id = @@identity
+	    
+	    SELECT TOP(1) *
+	    FROM   D_SITE_TEST_QUESTION AS dstq
+	    WHERE  dstq.Id = @id
+	END
+END
 GO
 
 /*******************************************
@@ -1487,14 +1666,14 @@ CREATE PROCEDURE dbo.get_material_seo_info
 	@mct INT
 AS
 BEGIN
-	SELECT TOP(1) * 
+	SELECT TOP(1) *
 	FROM   D_SEO_INFO AS dsi
 	WHERE  (dsi.MaterialId = @mid AND dsi.ModelCoreType = @mct)
 END
 GO
 
 /*******************************************
- * Seo info страницы
+ * Seo info keywords
  *******************************************/
 IF OBJECT_ID(N'dbo.get_page_seo_info_keywords', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_page_seo_info_keywords;
@@ -1506,5 +1685,106 @@ BEGIN
 	SELECT *
 	FROM   D_SEO_KEYWORD AS dsk
 	WHERE  dsk.SeoInfoId = @seoInfoId
+END
+GO
+
+/*******************************************
+ * site test step type
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_guess_yes_no_step', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_guess_yes_no_step;
+GO
+IF TYPE_ID(N'SiteTestStep') IS NOT NULL
+    DROP TYPE SiteTestStep
+ 
+ CREATE TYPE SiteTestStep AS TABLE 
+(QuestionText NVARCHAR(200), IsCorrect BIT, [Order] INT)
+ GO
+
+/*******************************************
+ * get_guess_yes_no_step
+ *******************************************/
+CREATE PROCEDURE dbo.get_guess_yes_no_step
+	@ttu VARCHAR(255),
+	@pastQ SiteTestStep READONLY,
+	@blocksCount INT OUTPUT
+AS
+BEGIN
+	DECLARE @temp TABLE (BlockId INT)
+	DECLARE @blocks TABLE (BlockId INT)
+	DECLARE @count INT = 0
+	DECLARE @text          NVARCHAR(200),
+	        @isCorrect     BIT
+	
+	DECLARE c CURSOR  
+	FOR
+	    SELECT p.QuestionText,
+	           p.IsCorrect
+	    FROM   @pastQ AS p
+	    ORDER BY
+	           p.[Order]
+	
+	OPEN c 
+	FETCH NEXT FROM c INTO @text, @isCorrect
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	    SET @count = @count + 1
+	    DELETE 
+	    FROM   @blocks
+	    
+	    INSERT INTO @blocks
+	    SELECT dstb.Id
+	    FROM   D_SITE_TEST_QUESTION    AS dstq
+	           JOIN D_SITE_TEST_BLOCK  AS dstb
+	                ON  dstb.Id = dstq.BlockId
+	           JOIN D_SITE_TEST        AS dst
+	                ON  dst.Id = dstb.TestId
+	                AND dst.Show = 1
+	                AND dst.TitleUrl = @ttu
+	    WHERE  dstq.[Text] = @text
+	           AND dstq.IsCorrect = @isCorrect
+	    
+	    IF (@count = 1)
+	    BEGIN
+	        INSERT INTO @temp
+	        SELECT b.BlockId
+	        FROM   @blocks AS b
+	    END
+	    ELSE
+	    BEGIN
+	        IF (@isCorrect = 1)
+	        BEGIN
+	            IF EXISTS (
+	                   SELECT *
+	                   FROM   @temp AS t
+	                   WHERE  t.BlockId IN (SELECT b.BlockId
+	                                        FROM   @blocks AS b)
+	               )
+	            BEGIN
+	                DELETE 
+	                FROM   @temp
+	                WHERE  BlockId NOT IN (SELECT b.BlockId
+	                                       FROM   @blocks AS b)
+	            END
+	        END
+	    END
+	    FETCH NEXT FROM c INTO @text, @isCorrect
+	END
+	CLOSE c
+	DEALLOCATE c
+	
+	SELECT @blocksCount = COUNT(1)
+	FROM   @temp AS t
+	
+	SELECT TOP(1) *
+	FROM   D_SITE_TEST_QUESTION    AS dstq
+	       JOIN D_SITE_TEST_BLOCK  AS dstb
+	            ON  dstb.Id = dstq.BlockId
+	       JOIN D_SITE_TEST        AS dst
+	            ON  dst.Id = dstb.TestId
+	            AND dst.Show = 1
+	            AND dst.TitleUrl = @ttu
+	WHERE  dstq.[Text] NOT IN (SELECT p.QuestionText
+	                           FROM   @pastQ AS p)
 END
 GO

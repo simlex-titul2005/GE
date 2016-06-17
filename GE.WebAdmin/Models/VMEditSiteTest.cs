@@ -17,5 +17,8 @@ namespace GE.WebAdmin.Models
 
         [Required, Display(Name ="Тип теста")]
         public SX.WebCore.SxSiteTest.SiteTestType TestType { get; set; }
+
+        [Display(Name = "Показывать")]
+        public bool Show { get; set; }
     }
 }

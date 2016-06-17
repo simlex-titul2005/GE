@@ -7,32 +7,6 @@
     color: @color-white;
 }
 
-#st-page section {
-    margin-top: @def-pad*3;
-    position: relative;
-}
-
-#st-page section .title {
-    color: @color-white;
-}
-
-/*#st-page section > .desc {
-    color: @color-muted-blue;
-    margin-bottom: @def-pad*4;
-}*/
-
-#st-page .next-btn {
-    position: relative;
-}
-
-#st-page .next-btn > span {
-    background: linear-gradient(to top, rgba(255,255,255,.3), rgba(255,255,255,.3), rgba(255,255,255,.1));
-    position: absolute;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
-
 @indicator-w:60px;
 #st-page .sx-indicator-list li{
     margin-bottom:@def-pad*2;
@@ -58,7 +32,7 @@
     color:#b0b0b0;
 }
 
-#st-page .sx-indicator > span.active{
+#st-page .sx-indicator > span:active{
     background:linear-gradient(to top,#afb1b3,#05110f);
     color:@color-white;
     font-weight: bold;

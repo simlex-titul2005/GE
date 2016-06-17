@@ -6,6 +6,7 @@ using SX.WebCore.HtmlHelpers;
 using SX.WebCore.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
@@ -89,9 +90,9 @@ namespace GE.WebAdmin.Controllers
             }
             else
             {
-                if(string.IsNullOrEmpty(model.TitleUrl))
+                if (string.IsNullOrEmpty(model.TitleUrl))
                 {
-                    var url=Url.SeoFriendlyUrl(model.Title);
+                    var url = Url.SeoFriendlyUrl(model.Title);
                     if (_repo.All.SingleOrDefault(x => x.TitleUrl == url && x.Id != model.Id) != null)
                         ModelState.AddModelError(isArchitect ? "TitleUrl" : "Title", "Модель с таким текстовым ключем уже существует");
                     else
@@ -114,9 +115,9 @@ namespace GE.WebAdmin.Controllers
                     if (old != null)
                         ModelState.AddModelError(isArchitect ? "TitleUrl" : "Title", "Модель с таким текстовым ключем уже существует");
                     if (isArchitect)
-                        newModel = _repo.Update(redactModel, true, "Title", "Description", "TestType", "TitleUrl");
+                        newModel = _repo.Update(redactModel, true, "Title", "Description", "TestType", "TitleUrl", "Show");
                     else
-                        newModel = _repo.Update(redactModel, true, "Title", "Description", "TestType");
+                        newModel = _repo.Update(redactModel, true, "Title", "Description", "TestType", "Show");
                 }
                 return RedirectToAction("index");
             }
@@ -136,6 +137,51 @@ namespace GE.WebAdmin.Controllers
         {
             var data = (_repo as SxRepoSiteTest<DbContext>).GetMatrix(testId).Select(x => Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(x)).ToArray();
             return PartialView(MVC.SiteTests.Views._Matrix, data);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual ActionResult LoadTestFromFile(HttpPostedFileBase file)
+        {
+            var testRepo = (SxRepoSiteTest<DbContext>)_repo;
+            var blocksRepo = new SxRepoSiteTestBlock<DbContext>();
+            var questionRepo = new SxRepoSiteTestQuestion<DbContext>();
+            var data = testRepo.LoadFromFile(file);
+            data.TestType = SxSiteTest.SiteTestType.GuessYesNo;
+
+            SxSiteTest test = null;
+            SxSiteTestBlock block = null;
+            SxSiteTestQuestion question = null;
+
+            test = testRepo.All.SingleOrDefault(x => x.Title == data.Title);
+            if (test != null)
+                testRepo.Delete(test.Id);
+            var testId=createTest(data, testRepo, blocksRepo, questionRepo, ref test, ref block, ref question);
+
+            return RedirectToAction(MVC.SiteTests.Edit(id: testId));
+        }
+        private static int createTest(SxSiteTest data, SxRepoSiteTest<DbContext> testRepo, SxRepoSiteTestBlock<DbContext> blocksRepo, SxRepoSiteTestQuestion<DbContext> questionRepo, ref SxSiteTest test, ref SxSiteTestBlock block, ref SxSiteTestQuestion question)
+        {
+            test = new SxSiteTest { Title = data.Title, Description = data.Description, TestType = data.TestType };
+            test = testRepo.Create(test);
+
+            if (test != null)
+            {
+                foreach (var b in data.Blocks)
+                {
+                    block = new SxSiteTestBlock { TestId = test.Id, Title = b.Title, Description = b.Description };
+                    block = blocksRepo.Create(block);
+                    if (block != null)
+                    {
+                        foreach (var q in b.Questions)
+                        {
+                            question = new SxSiteTestQuestion { BlockId = block.Id, Text = q.Text, IsCorrect = q.IsCorrect };
+                            question = questionRepo.Create(question);
+                        }
+                    }
+                }
+            }
+
+            return test.Id;
         }
     }
 }

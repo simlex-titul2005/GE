@@ -5,10 +5,12 @@ using System.Web.Mvc;
 using System.Linq;
 using System.Text;
 using System;
+using System.Web.SessionState;
 
 namespace GE.WebAdmin.Controllers
 {
     [Authorize(Roles = "seo")]
+    [SessionState(SessionStateBehavior.Default)]
     public partial class SeoWordCounterController : BaseController
     {
         private ISxSeoWordCounter _counter;

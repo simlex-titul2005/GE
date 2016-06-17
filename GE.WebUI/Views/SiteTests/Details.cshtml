@@ -1,47 +1,34 @@
-﻿@model VMSiteTest
+﻿@model VMSiteTestQuestion
 @{
-    ViewBag.Title = Model.Title;
-    ViewBag.H1 = ViewBag.H1 ?? Model.Title;
-    ViewBag.Description = ViewBag.Description ?? Model.Description;
+    ViewBag.Title = Model.Block != null && Model.Block.Test != null ? Model.Block.Test.Title : "Страница прохождения теста";
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.Description = ViewBag.Description ?? Model.Block != null && Model.Block.Test != null ? Model.Block.Test.Description : "Страница прохождения теста";
     ViewBag.Keywords = ViewBag.Keywords ?? "Игровые тесты, тесты для игр";
 }
 
-<div id="st-page">
-    @Html.Partial(MVC.SiteTests.Views._Details, Model)
-</div>
+@if (Model.Block != null && Model.Block.Test != null)
+{
+    <div id="st-page">
+        @Html.Partial(MVC.SiteTests.Views._Step, Model)
+    </div>
 
-@section scripts{
-    <script type="text/javascript" src="~/share42/share42.js"></script>
-    <script>
-        $(function () {
-            initialyzeIndicators();
-        });
+    @section scripts{
+        <script type="text/javascript" src="~/share42/share42.js"></script>
+        <script>
+            $(function () {
+                $('#st-page').on('click', '.sx-indicator > span', function () {
+                    $span = $(this);
+                    var text = $span.closest('li').find('.sx-indicator-txt').text();
+                    var isCorrect = $span.data('dir') == true;
 
-        function initialyzeIndicators() {
-            $('.sx-indicator').on('click', 'span', function () {
-                $span = $(this);
-                $section = $span.closest('section');
-                var isTrue = $span.data('dir') == true;
-                var isActive = $span.hasClass('active');
-                if (isActive) return;
-
-                if (isTrue) {
-                    $span.next('span').removeAttr('class');
-                    $span.next('span').removeAttr('data-date');
-                }
-                else {
-                    $span.prev('span').removeAttr('class');
-                    $span.prev('span').removeAttr('data-date');
-                }
-
-                $span.addClass('active');
-
-                var text = $span.closest('li').find('.sx-indicator-txt').text();
-                var isCorrect = $span.data('dir') == true;
-                $('#st-form').append('<input type="hidden" name="questionText" value="' + text + '" />');
-                $('#st-form').append('<input type="hidden" name="isTrue" value="' + isCorrect + '" />');
+                    $form = $span.closest('form');
+                    var count = $form.find('input[type="hidden"][class="pastQT"]').length;
+                    $form.append('<input type="hidden" class="pastQT" name="[' + count + '].Order" value="' + (count + 1) + '" />');
+                    $form.append('<input type="hidden" name="[' + count + '].Question.Text" value="' + text + '" />');
+                    $form.append('<input type="hidden" name="[' + count + '].Question.IsCorrect" value="' + isCorrect + '" />');
+                    $form.submit();
+                });
             });
-        }
-
-    </script>
+        </script>
+    }
 }

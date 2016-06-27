@@ -16,6 +16,10 @@
             }}
         },
         DataAjaxUrl="/games",
-        RowCssClass = x => { return x.Show ? "success" : null; }
+        RowCssClass = x => { return x.Show ? "success" : null; },
+        EnableCreating=true,
+        CreateRowUrl="/games/edit",
+        EnableEditing=true,
+        EditRowUrl = x =>{ return "/games/edit/" + x.Id; }
     }
     )

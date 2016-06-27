@@ -30,10 +30,10 @@ namespace GE.WebAdmin.Models
         [Display(Name="Иконка"), UIHint("EditImage"), Required]
         public Guid? FrontPictureId { get; set; }
 
-        [Display(Name = "Картинка для новостей"), UIHint("EditImage"), Required]
+        [Display(Name = "Картинка для новостей (левая)"), UIHint("EditImage"), Required]
         public Guid? GoodPictureId { get; set; }
 
-        [Display(Name = "Картинка для статей"), UIHint("EditImage"), Required]
+        [Display(Name = "Картинка для статей (правая)"), UIHint("EditImage"), Required]
         public Guid? BadPictureId { get; set; }
     }
 }

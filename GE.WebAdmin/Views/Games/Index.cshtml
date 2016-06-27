@@ -6,5 +6,11 @@
 <h2>Игры</h2>
 <br />
 <div id="grid-games">
-    @Html.Partial(MVC.Games.Views._GridView, Model)
+    @Html.Partial("_GridView", Model)
 </div>
+
+@section scripts{
+    <script>
+        $('#grid-games').sx_gv();
+    </script>
+}

@@ -1,7 +1,11 @@
 ﻿@model VMAphorism[]
 @{
     ViewBag.Title = "Афоризмы";
-    SX.WebCore.SxMaterialCategory category = ViewBag.Category;
+    SxMaterialCategory category = ViewBag.Category;
+}
+
+@section styles{
+    <link href="~/Content/dist/css/grid-aphorisms.min.css" rel="stylesheet" />
 }
 
 <h2>@ViewBag.Title</h2>
@@ -14,23 +18,27 @@
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading"><b>Категории афоризмов</b></div>
-    <div class="panel-body" style="max-height:200px; overflow:hidden; overflow-y:auto;">
-        @Html.Action(MVC.MaterialCategories.TreeViewMenu(mct: SX.WebCore.Enums.ModelCoreType.Aphorism))
+<div class="row">
+    <div class="col-md-3">
+        @Html.Action("TreeViewMenu", new { controller = "MaterialCategories", mct = Enums.ModelCoreType.Aphorism })
     </div>
-    <div class="panel-footer">
-        <div class="text-right">
-            <a href="@Url.Action(MVC.MaterialCategories.Index(mct: SX.WebCore.Enums.ModelCoreType.Aphorism))">К списку категорий афоризмов</a>
+    <div class="col-md-9">
+        <div class="content">
+            @if (category != null)
+            {
+                <h4 class="header">@category.Title</h4>
+            }
+            <div id="grid-aphorisms">
+                @Html.Partial("_GridView", Model)
+            </div>
         </div>
     </div>
 </div>
 
-@if(category!=null)
-{
-    <h4>@category.Title</h4>
+@section scripts{
+    <script>
+        $(function () {
+            $('#grid-aphorisms').sx_gv();
+        });
+    </script>
 }
-
-<div id="grid-aphorisms">
-    @Html.Partial(MVC.Aphorisms.Views._GridView, Model)
-</div>

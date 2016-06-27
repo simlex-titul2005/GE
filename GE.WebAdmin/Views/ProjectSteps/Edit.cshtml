@@ -1,4 +1,4 @@
-﻿@model VMEditProjectStep
+﻿@model SxVMEditProjectStep
 @{
     var isNew = Model.Id == 0;
     ViewBag.Title = isNew ? "Добавить шаг" : "Редактировать шаг \"" + Model.Title + "\"";
@@ -8,36 +8,44 @@
 @if (!isNew)
 {
     <div class="text-right">
-        <form method="post" action="@Url.Action(MVC.ProjectSteps.Delete())">
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(x => x.Id)
-            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить</button>
-        </form>
+        <div class="form-group">
+            <form method="post" action="/projectsteps/delete">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.Id)
+                <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить</button>
+            </form>
+        </div>
     </div>
 }
-<br />
-<form method="post" action="@Url.Action(MVC.ProjectSteps.Edit())">
+
+<form method="post" action="/projectsteps/edit">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.ParentStepId)
 
-    @Html.LabelFor(x => x.Title)
-    @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
-    @Html.ValidationMessageFor(x => x.Title)
-    <br />
+    <div class="form-group">
+        @Html.LabelFor(x => x.Title)
+        @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.Title)
+    </div>
 
-    @Html.LabelFor(x => x.Foreword)
-    @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control" } })
-    @Html.ValidationMessageFor(x => x.Foreword)
-    <br />
+    <div class="form-group">
+        @Html.LabelFor(x => x.Foreword)
+        @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.Foreword)
+    </div>
 
-    @Html.LabelFor(x => x.Html)
-    @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
-    @Html.ValidationMessageFor(x => x.Html)
-    <br />
+    <div class="form-group">
+        @Html.LabelFor(x => x.Html)
+        @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.Html)
+    </div>
 
-    <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
-    <a href="@Url.Action(MVC.ProjectSteps.Index())" class="btn btn-default">Назад</a>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
+        <a href="@Url.Action("index")" class="btn btn-default">Назад</a>
+    </div>
+
 </form>
 
 @section scripts{

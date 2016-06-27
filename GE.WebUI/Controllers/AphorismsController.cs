@@ -43,7 +43,7 @@ namespace GE.WebUI.Controllers
             var data = (_repo as RepoAphorism).GetAphorismCategories(curCat);
             var viewModel = onlyNotCurrent ? data.Where(x => !x.IsCurrent).ToArray() : data;
 
-            return PartialView(MVC.Aphorisms.Views._Categories, viewModel);
+            return PartialView("~/views/Aphorisms/_Categories.cshtml", viewModel);
         }
 
         private static int _pageSize = 20;
@@ -51,7 +51,7 @@ namespace GE.WebUI.Controllers
         public virtual ViewResult List(string categoryId = null, int page = 1)
         {
             var author = Request.QueryString["author"];
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) {
+            var filter = new SxFilter(page, _pageSize) {
                 WhereExpressionObject = new VMAphorism { CategoryId = categoryId, Author = new VMAuthorAphorism { Name = author } },
                 OnlyShow = true
             };

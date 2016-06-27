@@ -1,45 +1,37 @@
-﻿/// <reference path="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
-
-var promise = require('es6-promise'),
+﻿var promise = require('es6-promise'),
     gulp = require('gulp'),
-    minifyCss = require('gulp-minify-css'),
-    autoprefixer = require('gulp-autoprefixer'),
-    rename = require('gulp-rename'),
-    del = require('del'),
-    less = require('gulp-less'),
     watch = require('gulp-watch'),
+    del = require('del'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
-    merge = require('merge-stream')
+    merge = require('merge-stream'),
+    order = require('gulp-order'),
+    less = require('gulp-less'),
+    cleanCSS = require('gulp-clean-css'),
+    autoprefixer = require('gulp-autoprefixer'),
+    rename = require('gulp-rename');
 
+//clear all files
 function clear() {
     del([
         'content/dist/css/**/*.css',
         'content/dist/js/**/*.js',
-        //'content/fonts',
-        'fonts/**/*'
+        'content/dist/fonts/**/*'
     ]);
 }
 
-function createFonts() {
-    gulp.src([
-        'bower_components/bootstrap/dist/fonts/**/'
-    ])
-        .pipe(gulp.dest('fonts'));
-
-    gulp.src([
-        'bower_components/font-awesome/fonts/**/*.{eot,svg,ttf,woff,woff2,otf}'
-    ])
-        .pipe(gulp.dest('content/dist/fonts'));
-}
-
+//create css files
 function createCss() {
     var lessStream = gulp.src([
-       'content/less/**/*.less',
-       'content/sx/less/**/*.less'
+       'less/site.less',
+       'less/sx-gv.less',
+       'less/sx-gvl.less',
+       'less/sx-tv.less'
     ])
-       .pipe(less())
-       .pipe(concat('less-files.less'));
+        .pipe(less())
+        .pipe(cleanCSS({ compatibility: 'ie8' }))
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
+        .pipe(concat('sitecss.css'));
 
     var cssStream = gulp.src([
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -47,64 +39,86 @@ function createCss() {
         'bower_components/font-awesome/css/font-awesome.min.css',
         'bower_components/metisMenu/dist/metisMenu.min.css'
     ])
-        .pipe(concat('css-files.css'));
+        .pipe(concat('css.css'));
 
     var mergedStream = merge(lessStream, cssStream)
-        .pipe(concat('site.min.css'))
+        .pipe(order([
+            'css.css',
+            'sitecss.css'
+        ]))
+            .pipe(concat('site.min.css'))
+            .pipe(gulp.dest('content/dist/css'));
+
+    //by one less
+    gulp.src([
+       'less/login.less',
+       'less/grid-users.less',
+       'less/grid-pictures.less',
+       'less/grid-banners.less',
+       'less/ps-tree.less',
+       'less/grid-a-authors.less',
+       'less/grid-aphorisms.less'
+    ])
+        .pipe(less())
+        .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(minifyCss())
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(gulp.dest('content/dist/css'));
 
-    //gulp.src([
-    //   'bower_components/lightbox2/dist/css/lightbox.css'
-    //])
-    //    .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-    //    .pipe(minifyCss())
-    //    .pipe(rename({
-    //        suffix: '.min'
-    //    }))
-    //    .pipe(gulp.dest('content/dist/css'));
-
+    //by one css
     gulp.src([
-        'bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
-        'bower_components/lightbox2/dist/css/lightbox.min.css'
+       'bower_components/lightbox2/dist/css/lightbox.min.css'
     ])
         .pipe(gulp.dest('content/dist/css'));
 }
 
-function createJs() {
+//create fonts
+function createFonts() {
     gulp.src([
+        'bower_components/font-awesome/fonts/**/*'
+    ])
+        .pipe(gulp.dest('content/dist/fonts'));
+}
+
+//create js files
+function createJs() {
+    var js = gulp.src([
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
-        'bower_components/metisMenu/dist/metisMenu.min.js',
-        'content/sx/js/**/*.js',
-        'scripts/site.js'
+        'bower_components/metisMenu/dist/metisMenu.min.js'
     ])
-        .pipe(concat('site.min.js'))
+        .pipe(concat('js.js'));
+
+    var sitejs = gulp.src([
+        'scripts/site.js',
+        'scripts/sx-gv.js',
+        'scripts/sx-gvl.js'
+    ])
         .pipe(uglify())
-        .pipe(gulp.dest('content/dist/js'));
+        .pipe(concat('sitejs.js'));
 
-    //gulp.src([
-    //    'bower_components/lightbox2/dist/js/lightbox.js'
-    //])
-    //    .pipe(uglify())
-    //    .pipe(rename({
-    //        suffix: '.min'
-    //    }))
-    //    .pipe(gulp.dest('content/dist/js'));
+    var mergedStream = merge(js, sitejs)
+        .pipe(order([
+            'js.js',
+            'sitejs.js'
+        ]))
+            .pipe(concat('site.min.js'))
+            .pipe(gulp.dest('content/dist/js'));
 
+    //by one js
     gulp.src([
-        'bower_components/moment/min/moment-with-locales.min.js',
-        'bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-        'bower_components/lightbox2/dist/js/lightbox.min.js',
-        'bower_components/raphael/raphael.min.js',
         'bower_components/jquery-validation/dist/jquery.validate.min.js',
-        'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js'
+        'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
+        'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js',
+        'bower_components/lightbox2/dist/js/lightbox.min.js'
     ])
         .pipe(gulp.dest('content/dist/js'));
+    
 }
 
-function createImg() {
+function createImages() {
     gulp.src([
         'bower_components/lightbox2/dist/images/**'
     ])
@@ -112,11 +126,14 @@ function createImg() {
 }
 
 gulp.task('watch', function (cb) {
-    watch(['content/less/**/*.less', 'content/sx/less/**/*.less', 'content/sx/js/**/*.js', 'scripts/**/*.js'], function () {
+    watch([
+        'less/**/*.less',
+        'scripts/**/*.js'
+    ], function () {
         clear();
-        createFonts();
         createCss();
+        createFonts();
         createJs();
-        createImg();
+        createImages();
     });
 });

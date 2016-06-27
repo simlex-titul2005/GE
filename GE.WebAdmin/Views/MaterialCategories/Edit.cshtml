@@ -1,7 +1,7 @@
 ﻿@model VMEditMaterialCategory
 @{
     var isNew = Model.Id == null;
-    var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
+    Enums.ModelCoreType mct = ViewBag.ModelCoreType;
     ViewBag.Title = isNew ? "Добавить категорию" : "Редактировать категорию \"" + Model.Title + "\"";
     ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
     var forAphorism = Model.ModelCoreType == SX.WebCore.Enums.ModelCoreType.Aphorism;
@@ -11,7 +11,7 @@
 
 @if (!isNew)
 {
-    <form method="post" action="@Url.Action(MVC.MaterialCategories.Delete())">
+    <form method="post" action="@Url.Action("delete", new { controller="MaterialCategories"})">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.Id)
         @Html.HiddenFor(x => x.ModelCoreType)
@@ -19,7 +19,7 @@
     </form>
 }
 <br />
-<form method="post" action="@Url.Action(MVC.MaterialCategories.Edit())">
+<form method="post" action="@Url.Action("edit", new { controller="MaterialCategories"})">
     @Html.AntiForgeryToken()
     @if (!isNew && !User.IsInRole("architect"))
     {
@@ -70,12 +70,12 @@
     @if (Model.FrontPictureId.HasValue)
     {
         <div class="form-group">
-            <img alt="@ViewBag.GameTitle" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId, width: 150))" style="max-width:150px;" />
+            <img alt="@ViewBag.GameTitle" src="@Url.Action("picture", new { controller="pictures", id=Model.FrontPictureId, width=150})" style="max-width:150px;" />
         </div>
     }
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
-        @Html.ActionLink("Назад", MVC.MaterialCategories.Index(mct: mct), new { @class = "btn btn-default" })
+        @Html.ActionLink("Назад", "index", new { controller = "MaterialCategories", mct = mct }, new { @class = "btn btn-default" })
     </div>
 </form>

@@ -80,19 +80,9 @@ ORDER BY
             switch (mct)
             {
                 case ModelCoreType.Article:
-                    return hu + helper.Action(MVC.Articles.Details(
-                        (int)model.DateCreate.Year,
-                        (string)model.DateCreate.Month.ToString("00"),
-                        (string)model.DateCreate.Day.ToString("00"),
-                        (string)model.TitleUrl
-                        ));
+                    return hu + helper.Action("details", new {controller= "Articles", year= model.DateCreate.Year, month= model.DateCreate.Month.ToString("00"), day= model.DateCreate.Day.ToString("00"), titleUrl= model.TitleUrl } );
                 case ModelCoreType.News:
-                    return hu + helper.Action(MVC.News.Details(
-                        (int)model.DateCreate.Year,
-                        (string)model.DateCreate.Month.ToString("00"),
-                        (string)model.DateCreate.Day.ToString("00"),
-                        (string)model.TitleUrl
-                        ));
+                    return hu + helper.Action("details", new { controller = "News", year = model.DateCreate.Year, month = model.DateCreate.Month.ToString("00"), day = model.DateCreate.Day.ToString("00"), titleUrl = model.TitleUrl });
                 default: return null;
             }
         }

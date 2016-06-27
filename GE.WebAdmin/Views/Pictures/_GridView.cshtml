@@ -1,35 +1,30 @@
-﻿@model VMPicture[]
+﻿@model SxVMPicture[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMPicture)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
-
-@Html.SxGridView(
-        new SxExtantions.SxGridViewSettings<VMPicture>
+@Html.SxGV(Model,
+        new SxExtantions.SxGVSettings<SxVMPicture>
         {
-            UpdateTargetId = "grid-pictures",
-            Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn<VMPicture>[]{
-            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Id", Caption="Идентификатор", Template=(p)=> {
+            Columns = new SxExtantions.SxGvColumn<SxVMPicture>[]{
+            new SxExtantions.SxGvColumn<SxVMPicture>{FieldName="Id", Caption="Идентификатор", Template=(p)=> {
                 return string.Format("<b class=\"text-info\">{0}</b>", p.Id);
             } },
-            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Caption", Caption="Название"},
-            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Description", Caption="Описание"},
-            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Width", Caption="Ширина, px"},
-            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Height", Caption="Высота, px"},
-            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Size", Caption="Размер, Kb", Template=(p)=> {
+            new SxExtantions.SxGvColumn<SxVMPicture>{FieldName="Caption", Caption="Название"},
+            new SxExtantions.SxGvColumn<SxVMPicture>{FieldName="Description", Caption="Описание"},
+            new SxExtantions.SxGvColumn<SxVMPicture>{FieldName="Width", Caption="Ширина, px"},
+            new SxExtantions.SxGvColumn<SxVMPicture>{FieldName="Height", Caption="Высота, px"},
+            new SxExtantions.SxGvColumn<SxVMPicture>{FieldName="Size", Caption="Размер, Kb", Template=(p)=> {
                 return string.Format("<span>{0}</span>", Math.Round((double)p.Size/1024, 2));
             } },
-            new SxExtantions.SxGridViewColumn<VMPicture>{FieldName="Id", Caption="Картинка", Template=(p)=> {
-                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" title=\"Помотреть картинку\" href=\"{0}\"><i class=\"fa fa-picture-o\"></i></a>", Url.Action(MVC.Pictures.Picture(p.Id)), p.Caption);
+            new SxExtantions.SxGvColumn<SxVMPicture>{FieldName="Id", Caption="Картинка", Template=(p)=> {
+                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" title=\"Помотреть картинку\" href=\"/pictures/picture/{0}\"><i class=\"fa fa-picture-o\"></i></a>", p.Id, p.Caption);
             } }
         },
-            PagerInfo=pagerInfo,
-            Filter = filter,
-            SortDirections = sortDirections,
-        },
-            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            EnableCreating = true,
+            CreateRowUrl = "/pictures/edit",
+            EnableEditing = true,
+            EditRowUrl = (x) => { return "/pictures/edit/" + x.Id; },
+            DataAjaxUrl = "/pictures"
+        }
     )

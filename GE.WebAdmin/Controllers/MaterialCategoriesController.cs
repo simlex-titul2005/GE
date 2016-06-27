@@ -22,7 +22,7 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual ActionResult Index(ModelCoreType mct)
         {
-            var filter = new WebCoreExtantions.Filter { ModelCoreType = mct };
+            var filter = new SxFilter { ModelCoreType = mct };
             var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
             var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
             for (int i = 0; i < parents.Length; i++)
@@ -127,7 +127,7 @@ namespace GE.WebAdmin.Controllers
                     else
                         newModel = (_repo as RepoMaterialCategory).Update(redactModel, true, "Title", "FrontPictureId", "ModelCoreType", "GameId");
                 }
-                return RedirectToAction(MVC.MaterialCategories.Index(mct: model.ModelCoreType));
+                return RedirectToAction("index", new { mct= model.ModelCoreType } );
             }
             else
             {
@@ -139,13 +139,13 @@ namespace GE.WebAdmin.Controllers
         {
             var mct = model.ModelCoreType;
             _repo.Delete(model.Id);
-            return RedirectToAction(MVC.MaterialCategories.Index(mct: mct));
+            return RedirectToAction("index", new { mct =mct});
         }
 
         [HttpPost]
         public virtual PartialViewResult FindTable(ModelCoreType mct)
         {
-            var filter = new WebCoreExtantions.Filter { ModelCoreType = mct };
+            var filter = new SxFilter { ModelCoreType = mct };
             var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
             var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
             for (int i = 0; i < parents.Length; i++)
@@ -160,7 +160,7 @@ namespace GE.WebAdmin.Controllers
             ViewBag.ModelCoreType = mct;
             ViewBag.PageTitle = getPageTitle(mct);
 
-            return PartialView(MVC.MaterialCategories.Views._TreeView, parents);
+            return PartialView("~/views/MaterialCategories/_TreeView.cshtml", parents);
         }
 
         [HttpGet]
@@ -168,7 +168,7 @@ namespace GE.WebAdmin.Controllers
         {
             ViewBag.CurrentCategory = cur;
 
-            var filter = new WebCoreExtantions.Filter { ModelCoreType = mct };
+            var filter = new SxFilter { ModelCoreType = mct };
             var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
             var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
             for (int i = 0; i < parents.Length; i++)
@@ -184,7 +184,7 @@ namespace GE.WebAdmin.Controllers
             ViewBag.PageTitle = getPageTitle(mct);
             ViewBag.TreeViewMenuFuncContent = TreeViewMenuFuncContent(mct);
 
-            return PartialView(MVC.MaterialCategories.Views._TreeViewMenu, parents);
+            return PartialView("~/views/MaterialCategories/_TreeViewMenu.cshtml", parents);
         }
 
         private Func<VMMaterialCategory, string> TreeViewMenuFuncContent(ModelCoreType mct)
@@ -192,9 +192,9 @@ namespace GE.WebAdmin.Controllers
             switch (mct)
             {
                 case ModelCoreType.Aphorism:
-                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action(MVC.Aphorisms.Index(curCat: x.Id)), x.Title);
+                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action("index", new { controller= "Aphorisms", curCat= x.Id } ), x.Title);
                 case ModelCoreType.Manual:
-                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action(MVC.FAQ.Index(curCat: x.Id)), x.Title);
+                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action("index", new { controller = "FAQ", curCat = x.Id }), x.Title);
                 default:
                     return null;
             }

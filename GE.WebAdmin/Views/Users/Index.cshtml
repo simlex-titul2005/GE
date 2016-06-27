@@ -1,10 +1,22 @@
-﻿@model VMUser[]
+﻿@model SxVMAppUser[]
 @{
     ViewBag.Title = "Управление пользователями";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/content/dist/css/grid-users.min.css" />
 }
 
 <h2>@ViewBag.Title</h2>
 <br />
 <div id="grid-users">
-    @Html.Partial(MVC.Users.Views._GridView, Model)
+    @Html.Partial("_GridView", Model)
 </div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#grid-users').sx_gv();
+        });
+    </script>
+}

@@ -1,26 +1,18 @@
 ﻿@model VMAuthorAphorism[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMAuthorAphorism)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 
-@Html.SxGridView(
-        new SxExtantions.SxGridViewSettings<VMAuthorAphorism>
+@Html.SxGV(Model,
+        new SxExtantions.SxGVSettings<VMAuthorAphorism>
         {
-            UpdateTargetId = "grid-author-ap",
-            Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn<VMAuthorAphorism>[]{
-                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="PictureId", Caption="Фото", Template=(a)=> {
-                    return a.PictureId.HasValue? string.Format("<figure class=\"img-circle\" style=\"background-image:url({0})\" ></figure>", Url.Action(MVC.Pictures.Picture((Guid)a.PictureId))):null;
+            Columns = new SxExtantions.SxGvColumn<VMAuthorAphorism>[]{
+                new SxExtantions.SxGvColumn<VMAuthorAphorism>{FieldName="PictureId", Caption="Фото", Template=(a)=> {
+                    return a.PictureId.HasValue? string.Format("<figure class=\"img-circle\" style=\"background-image:url(/pictures/picture/{0})\" ></figure>",a.PictureId):null;
                 } },
-                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя"}
+                new SxExtantions.SxGvColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя"}
             },
-            PagerInfo = pagerInfo,
-            Filter = filter,
-            SortDirections = sortDirections
-        },
-            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            DataAjaxUrl=""
+        }
     )

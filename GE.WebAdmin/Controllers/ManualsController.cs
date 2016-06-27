@@ -23,7 +23,7 @@ namespace GE.WebAdmin.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var filter = new SxFilter(page, _pageSize);
             var totalItems = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
@@ -34,12 +34,12 @@ namespace GE.WebAdmin.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public virtual PartialViewResult Index(VMManual filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMManual filterModel, SxOrder order, int page = 1)
         {
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
             var totalItems = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
@@ -81,7 +81,7 @@ namespace GE.WebAdmin.Controllers
                     newModel = _repo.Update(redactModel, true, "Title", "Html", "Foreword", "CategoryId");
                 }
 
-                return RedirectToAction(MVC.Manuals.Index());
+                return RedirectToAction("index");
             }
             else
                 return View(model);
@@ -92,7 +92,7 @@ namespace GE.WebAdmin.Controllers
         public virtual ActionResult Delete(VMEditManual model)
         {
             _repo.Delete(model.Id, model.ModelCoreType);
-            return RedirectToAction(MVC.Manuals.Index());
+            return RedirectToAction("index");
         }
     }
 }

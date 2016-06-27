@@ -1,4 +1,4 @@
-﻿@model VMBannerGroup[]
+﻿@model SxVMBannerGroup[]
 @{
     ViewBag.Title = "Группы баннеров";
 }
@@ -6,5 +6,13 @@
 <h2>@ViewBag.Title</h2>
 <br />
 <div id="grid-banner-groups">
-    @Html.Partial(MVC.BannerGroups.Views._GridView, Model)
+    @Html.Partial("_GridView", Model)
 </div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#grid-banner-groups').sx_gv();
+        });
+    </script>
+}

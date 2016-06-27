@@ -1,4 +1,4 @@
-﻿@model VMFAQ[]
+﻿@model SxVMFAQ[]
 @{
     ViewBag.Title = "FAQ";
 }
@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-md-2">
-        @Html.Action(MVC.MaterialCategories.TreeViewMenu(mct: SX.WebCore.Enums.ModelCoreType.Manual))
+        @*@Html.Action(MVC.MaterialCategories.TreeViewMenu(mct: SX.WebCore.Enums.ModelCoreType.Manual))*@
     </div>
     <div class="col-md-10">
         @if(Model.Any())

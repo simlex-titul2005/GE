@@ -3,11 +3,10 @@ using System.Linq;
 using System;
 using GE.WebCoreExtantions;
 using Microsoft.AspNet.Identity;
-using SX.WebCore.MvcControllers;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class AccountController : SxAccountController<DbContext>
+    public partial class AccountController : SX.WebCore.MvcControllers.SxAccountController<WebCoreExtantions.DbContext>
     {
         protected override Action<SxVMLogin> ActionLogin
         {
@@ -37,18 +36,17 @@ namespace GE.WebAdmin.Controllers
         {
             var date = DateTime.Now;
             var sessionId = Session.SessionID;
-            var usersOnSite = MvcApplication.UsersOnSite;
-            if (!usersOnSite.ContainsKey(sessionId))
-                usersOnSite.Add(sessionId, model.Email);
+            if (!MvcApplication.UsersOnSite.ContainsKey(sessionId))
+                MvcApplication.UsersOnSite.Add(sessionId, model.Email);
             else
             {
-                if (usersOnSite.ContainsValue(model.Email))
+                if (MvcApplication.UsersOnSite.ContainsValue(model.Email))
                 {
-                    var key = usersOnSite.SingleOrDefault(x => x.Value == model.Email).Key;
-                    usersOnSite.Remove(key);
+                    var key = MvcApplication.UsersOnSite.SingleOrDefault(x => x.Value == model.Email).Key;
+                    MvcApplication.UsersOnSite.Remove(key);
                 }
 
-                usersOnSite[sessionId] = model.Email;
+                MvcApplication.UsersOnSite[sessionId] = model.Email;
             }
 
             addStatisticUserLogin(date, model.Email);

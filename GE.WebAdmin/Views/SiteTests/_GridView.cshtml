@@ -1,26 +1,22 @@
-﻿@model VMSiteTest[]
+﻿@model SxVMSiteTest[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMSiteTest)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 
-@Html.SxGridView(
-        new SxExtantions.SxGridViewSettings<VMSiteTest>
+@Html.SxGV(Model,
+        new SxExtantions.SxGVSettings<SxVMSiteTest>
         {
-            UpdateTargetId = "site-tests",
-            Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn<VMSiteTest>[]{
-                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="DateCreate", Caption="Дата создания"},
-                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Title", Caption="Заголовок"},
-                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Description", Caption="Описание"},
-                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="TestType", Caption="Тип" }
+            Columns = new SxExtantions.SxGvColumn<SxVMSiteTest>[]{
+                new SxExtantions.SxGvColumn<SxVMSiteTest>{FieldName="DateCreate", Caption="Дата создания"},
+                new SxExtantions.SxGvColumn<SxVMSiteTest>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGvColumn<SxVMSiteTest>{FieldName="Description", Caption="Описание"},
+                new SxExtantions.SxGvColumn<SxVMSiteTest>{FieldName="TestType", Caption="Тип" }
             },
-            PagerInfo=pagerInfo,
-            Filter = filter,
-            SortDirections = sortDirections
-        },
-            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            EnableCreating = true,
+            CreateRowUrl = "/sitetests/edit",
+            EnableEditing = true,
+            EditRowUrl = (x) => { return "/sitetests/edit/" + x.Id; },
+            DataAjaxUrl = "/sitetests"
+        }
     )

@@ -21,10 +21,10 @@ namespace GE.WebUI.Models.Abstract
             switch (ModelCoreType)
             {
                 case ModelCoreType.Article:
-                    url = urlHelper.Action(MVC.Articles.Details(DateCreate.Year, DateCreate.Month.ToString("00"), DateCreate.Day.ToString("00"), TitleUrl));
+                    url = urlHelper.Action("details", new { controller="articles", year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
                     break;
                 case ModelCoreType.News:
-                    url = urlHelper.Action(MVC.News.Details(DateCreate.Year, DateCreate.Month.ToString("00"), DateCreate.Day.ToString("00"), TitleUrl));
+                    url = urlHelper.Action("details", new { controller = "news", year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
                     break;
             }
             return url;

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using SX.WebCore;
 using SX.WebCore.Abstract;
 using SX.WebCore.Providers;
 using System.Data.SqlClient;
@@ -10,34 +11,32 @@ namespace GE.WebCoreExtantions.Repositories
     public sealed class RepoAuthorAphorism : SxDbRepository<int, AuthorAphorism, DbContext>
     {
 
-        public override IQueryable<AuthorAphorism> Query(SxFilter filter)
+        public override AuthorAphorism[] Query(SxFilter filter)
         {
-            var f = (Filter)filter;
             var query = SxQueryProvider.GetSelectString();
             query += @" FROM D_AUTHOR_APHORISM AS daa";
 
             object param = null;
-            query += getAuthorAphorismsWhereString(f, out param);
+            query += getAuthorAphorismsWhereString(filter, out param);
 
-            query += SxQueryProvider.GetOrderString("daa.DateCreate", SortDirection.Desc, filter.Orders);
+            var defaultOrder = new SxOrder { FieldName = "daa.DateCreate", Direction = SortDirection.Desc };
+            query += SxQueryProvider.GetOrderString(defaultOrder, filter.Order);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
             using (var conn = new SqlConnection(base.ConnectionString))
             {
                 var data = conn.Query<AuthorAphorism>(query, param: param);
-
-                return data.AsQueryable();
+                return data.ToArray();
             }
         }
 
         public override int Count(SxFilter filter)
         {
-            var f = (Filter)filter;
             var query = @"SELECT COUNT(1) FROM D_AUTHOR_APHORISM AS daa ";
 
             object param = null;
-            query += getAuthorAphorismsWhereString(f, out param);
+            query += getAuthorAphorismsWhereString(filter, out param);
 
             using (var conn = new SqlConnection(ConnectionString))
             {
@@ -54,7 +53,7 @@ namespace GE.WebCoreExtantions.Repositories
             }
         }
 
-        private static string getAuthorAphorismsWhereString(Filter filter, out object param)
+        private static string getAuthorAphorismsWhereString(SxFilter filter, out object param)
         {
             param = null;
             string query = null;

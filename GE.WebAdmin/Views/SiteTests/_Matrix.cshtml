@@ -1,4 +1,4 @@
-﻿@model VMSiteTestQuestion[]
+﻿@model SxVMSiteTestQuestion[]
 @{
     Layout = null;
     var blocks = Model.GroupBy(x => x.Block).Select(x => new { BlockId = x.Key.Id, Title = x.Key.Title }).Distinct().OrderBy(x => x.Title).ToArray();

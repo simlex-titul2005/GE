@@ -2,45 +2,50 @@
 using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
-using SX.WebCore.HtmlHelpers;
-using System.Collections.Generic;
+using SX.WebCore;
+using SX.WebCore.Repositories;
+using SX.WebCore.Resources;
 using System.Web.Mvc;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebAdmin.Controllers
 {
     [Authorize(Roles ="admin")]
-    public partial class GamesController : BaseController
+    public sealed class GamesController : BaseController
     {
-        SX.WebCore.Abstract.SxDbRepository<int, Game, DbContext> _repo;
+        private static RepoGame _repo;
+        //private static SxRepoSiteSetting<TDbContext> _repoSS;
+        private static int _pageSize = 20;
         public GamesController()
         {
-            _repo = new RepoGame();
+            if(_repo==null)
+                _repo = new RepoGame();
+            //if (_repoSS == null)
+            //    _repoSS = new SxRepoSiteSetting<TDbContext>();
         }
 
-        private static int _pageSize = 20;
+        
 
         [HttpGet]
-        public virtual ViewResult Index(int page = 1)
+        public ViewResult Index(int page = 1)
         {
-            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var defaultOrder = new SxOrder { FieldName = "Title", Direction = SortDirection.Asc };
+            var filter = new SxFilter(page, _pageSize) { Order= defaultOrder };
             var totalItems = (_repo as RepoGame).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
             var viewModel = (_repo as RepoGame).QueryForAdmin(filter);
             return View(viewModel);
         }
 
         [HttpPost]
-        public virtual PartialViewResult Index(VMGame filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public PartialViewResult Index(VMGame filterModel, SxOrder order, int page = 1)
         {
-            ViewBag.Filter = filterModel;
-            ViewBag.Order = order;
-
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
             var totalItems = (_repo as RepoGame).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
             var viewModel = (_repo as RepoGame).QueryForAdmin(filter);
 
@@ -48,14 +53,14 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpGet]
-        public virtual ViewResult Edit(int? id)
+        public ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id) : new Game();
             return View(Mapper.Map<Game, VMEditGame>(model));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(VMEditGame model)
+        public ActionResult Edit(VMEditGame model)
         {
             var redactModel = Mapper.Map<VMEditGame, Game>(model);
             if (ModelState.IsValid)
@@ -65,17 +70,17 @@ namespace GE.WebAdmin.Controllers
                     newModel = _repo.Create(redactModel);
                 else
                     newModel = _repo.Update(redactModel, true, "Title", "TitleAbbr", "Description", "Show", "FrontPictureId", "GoodPictureId", "BadPictureId", "TitleUrl", "FullDescription");
-                return RedirectToAction(MVC.Games.Index());
+                return RedirectToAction("index");
             }
             else
                 return View(model);
         }
 
         [HttpPost, AllowAnonymous]
-        public virtual PartialViewResult FindGridView(VMGame filterModel, int page = 1, int pageSize = 10)
+        public PartialViewResult FindGridView(VMGame filterModel, int page = 1, int pageSize = 10)
         {
             ViewBag.Filter = filterModel;
-            var filter = new WebCoreExtantions.Filter(page, pageSize);
+            var filter = new SxFilter(page, pageSize);
             filter.WhereExpressionObject = filterModel;
             var totalItems = (_repo as RepoGame).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
@@ -83,7 +88,7 @@ namespace GE.WebAdmin.Controllers
 
             var viewModel = (_repo as RepoGame).QueryForAdmin(filter);
 
-            return PartialView(MVC.Games.Views._FindGridView, viewModel);
+            return PartialView("~/views/Games/_FindGridView.cshtml", viewModel);
         }
     }
 }

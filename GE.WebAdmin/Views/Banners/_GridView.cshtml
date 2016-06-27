@@ -1,37 +1,33 @@
-﻿@model VMBanner[]
+﻿@model SxVMBanner[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMBanner)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 
-@Html.SxGridView(
-        new SxExtantions.SxGridViewSettings<VMBanner>
+@Html.SxGV(Model,
+        new SxExtantions.SxGVSettings<SxVMBanner>
         {
-            UpdateTargetId = "grid-banners",
-            Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn<VMBanner>[]{
-                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="Id", Caption="Идентификатор"},
-                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="Url", Caption="Адрес перехода", Template=(b)=> {
+            Columns = new SxExtantions.SxGvColumn<SxVMBanner>[]{
+                new SxExtantions.SxGvColumn<SxVMBanner>{FieldName="Id", Caption="Идентификатор"},
+                new SxExtantions.SxGvColumn<SxVMBanner>{FieldName="Url", Caption="Адрес перехода", Template=(b)=> {
                     return string.Format("<i class=\"fa fa-link\"></i>&nbsp;<a target=\"_blank\" href=\"{0}\">{0}</a>", b.Url);
                 } },
-                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="Title", Caption="Заголовок"},
-                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="Place", Caption="Позиция", Template=(b)=> {
+                new SxExtantions.SxGvColumn<SxVMBanner>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGvColumn<SxVMBanner>{FieldName="Place", Caption="Позиция", Template=(b)=> {
                     return b.Place==SX.WebCore.SxBanner.BannerPlace.Unknown? null : string.Format("<b class=\"text-warning\">{0}</b>", b.Place);
                 } },
-                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="ShowsCount", Caption="Показов"},
-                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="ClicksCount", Caption="Кликов"},
-                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="CTR", Caption="CTR, %"},
-                new SxExtantions.SxGridViewColumn<VMBanner>{FieldName="PictureId", Caption="Картинка", Template=(p)=> {
-                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Помотреть картинку\" href=\"{0}\"><i class=\"fa fa-picture-o\"></i></a>", Url.Action(MVC.Pictures.Picture(p.PictureId)), p.Title);
-            } }
+                new SxExtantions.SxGvColumn<SxVMBanner>{FieldName="ShowsCount", Caption="Показов"},
+                new SxExtantions.SxGvColumn<SxVMBanner>{FieldName="ClicksCount", Caption="Кликов"},
+                new SxExtantions.SxGvColumn<SxVMBanner>{FieldName="CTR", Caption="CTR, %"},
+                new SxExtantions.SxGvColumn<SxVMBanner>{FieldName="PictureId", Caption="Картинка", Template=(p)=> {
+                return string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{1}\" data-toggle=\"tooltip\" title=\"Помотреть картинку\" href=\"/pictures/picture/{0}\"><i class=\"fa fa-picture-o\"></i></a>", p.PictureId, p.Title);
+            }
+                }
             },
-            PagerInfo = pagerInfo,
-            Filter = filter,
-            SortDirections = sortDirections,
-            FuncRowCssClass = (b) => b.CTR > 0 ? "success" : null
-        },
-            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            EnableCreating = true,
+            CreateRowUrl = "/banners/edit",
+            EnableEditing = true,
+            EditRowUrl = (x) => { return "/banners/edit/" + x.Id; },
+            DataAjaxUrl = "/banners"
+        }
     )

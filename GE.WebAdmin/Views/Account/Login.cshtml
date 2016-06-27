@@ -1,52 +1,90 @@
-﻿@model SX.WebCore.ViewModels.SxVMLogin
+﻿@model SxVMLogin
 @{
     Layout = null;
 }
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>@(!string.IsNullOrEmpty(ViewBag.Title) ? ViewBag.Title + " | " + SX.WebCore.Resources.Settings.adminPanelName : SX.WebCore.Resources.Settings.adminPanelVersion)</title>
-    <link rel="icon" href="~/faveicon.png" type="image/png" />
+    <title>SX Admin | Вход</title>
 
-    <!-- Bootstrap -->
-    <link href="~/Content/dist/css/site.min.css" rel="stylesheet">
+    <link rel="icon" href="~/content/dist/i/faveicon.png" type="image/png">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style type="text/css">
-        html, body {
-            height: 100%;
-        }
-    </style>
+    <link href="~/content/dist/css/site.min.css" rel="stylesheet">
+    <link href="~/content/dist/css/login.min.css" rel="stylesheet">
 </head>
-<body style="background: url('../../Content/i/background.jpg') center / cover;">
-    <div class="form-block">
-        <form class="form-signin" method="post" action="@Url.Action(MVC.Account.Login())">
-            @Html.AntiForgeryToken()
+<body>
 
-            <h2 class="form-signin-heading">@SX.WebCore.Resources.Settings.adminPanelName</h2>
-            <br />
-            @Html.LabelFor(x => x.Email, new { @class = "sr-only control-label" })
-            @Html.EditorFor(x => x.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Адрес электронной почты" } })
-            @Html.ValidationMessageFor(x => x.Email)
-            <br />
-            @Html.LabelFor(x => x.Password, new { @class = "sr-only control-label" })
-            @Html.EditorFor(x => x.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Пароль" } })
-            @Html.ValidationMessageFor(x => x.Password)
-            <br />
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-            <br />
-            <a href="mailto:simlex.dev.2014@gmail.com" class="text-muted small pull-right">Связаться с разработчиком</a>
-        </form>
+    <div class="container-fluid">
+        <h1 class="login-header">SX Admin <br /><small class="login-header__small">Контролируй свой ASP.NET MVC сайт!</small></h1>
+        <div class="login-desc">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="login-desc__item">
+                        Хорошая новость для всех команд по World of Warships, наконец, наступило то самое время Большого турнира! Турнир уже успел начаться сегодня, 20 июня, в 8 часов вечера по Московскому времени, и 1/16 финала уже можно наблюдать на стриме! А уже завтра, на канале организаторов турнира, под названием «Корабли TV» можно будет пронаблюдать записи всех боёв и трансляций, проводимых на данный момент! Так что если вы пропустили сегодняшние битвы, в которых участвовали сильнейшие команды, то всегда можете заглянуть на их канал!
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="login-desc__item">
+                        Хорошая новость для всех команд по World of Warships, наконец, наступило то самое время Большого турнира! Турнир уже успел начаться сегодня, 20 июня, в 8 часов вечера по Московскому времени, и 1/16 финала уже можно наблюдать на стриме! А уже завтра, на канале организаторов турнира, под названием «Корабли TV» можно будет пронаблюдать записи всех боёв и трансляций, проводимых на данный момент! Так что если вы пропустили сегодняшние битвы, в которых участвовали сильнейшие команды, то всегда можете заглянуть на их канал!
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="login-desc__item">
+                        Хорошая новость для всех команд по World of Warships, наконец, наступило то самое время Большого турнира! Турнир уже успел начаться сегодня, 20 июня, в 8 часов вечера по Московскому времени, и 1/16 финала уже можно наблюдать на стриме! А уже завтра, на канале организаторов турнира, под названием «Корабли TV» можно будет пронаблюдать записи всех боёв и трансляций, проводимых на данный момент! Так что если вы пропустили сегодняшние битвы, в которых участвовали сильнейшие команды, то всегда можете заглянуть на их канал!
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="~/Content/dist/js/site.min.js"></script>
+
+    <div class="login-form">
+        <div class="login-form__wrapper">
+            <form method="post" action="/account/login">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Email)
+                    @Html.EditorFor(x => x.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.Email)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Password)
+                    @Html.EditorFor(x => x.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.Password)
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary login-form__btn">Вход</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="text-muted">
+                <div class="row">
+                    <div class="col-sm-6">
+                        © Все права защищены, 2015 - @DateTime.Now.Year год
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="footer__preambule">
+                            Любое использование или копирование материалов сайта - только с разрешения правообладателя и только с указанием ссылки на сайт<br />
+                            По всем вопросам настройки и установки обращаться по адресу: <a href="mailto:simlex.dev.2014@gmail.com" class="text-muted login-form__dev-link">simlex.dev.2014@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/content/dist/js/site.min.js"></script>
+    <script src="~/content/dist/js/jquery.validate.min.js"></script>
+    <script src="~/content/dist/js/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>
+

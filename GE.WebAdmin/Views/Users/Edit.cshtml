@@ -1,4 +1,4 @@
-﻿@model VMEditUser
+﻿@model SxVMEditAppUser
 @{
     var isNew = string.IsNullOrEmpty(Model.Id);
     var userName = Model.NikName ?? Model.Email;
@@ -6,7 +6,7 @@
 }
 
 <div>
-    <a class="btn btn-default" href="@Url.Action(MVC.Users.Index())">Назад</a>
+    <a class="btn btn-default" href="@Url.Action("index")">Назад</a>
 </div>
 
 <h2>@ViewBag.Title</h2>
@@ -15,7 +15,7 @@
     @if (Model.AvatarId.HasValue)
             {
         <div>
-            <img class="img-circle" alt="@userName" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.AvatarId))" />
+            <img class="img-circle" alt="@userName" src="@Url.Action("picture", new { controller = "pictures", id = Model.AvatarId })" />
         </div>
     }
     <div class="row">
@@ -40,11 +40,11 @@
             </section>
 
             <section id="roles">
-                @Html.Partial(MVC.Users.Views._UserRoles, Model)
+                @Html.Partial("_UserRoles", Model)
             </section>
 
             <section id="info">
-                @Html.Partial(MVC.Users.Views._UserInfo, Model)
+                @Html.Partial("_UserInfo", Model)
             </section>
         </div>
 

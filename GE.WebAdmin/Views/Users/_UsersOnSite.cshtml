@@ -1,4 +1,4 @@
-﻿@model VMUser[]
+﻿@model SxVMAppUser[]
 @{
     Layout = null;
     var colCount = 4;
@@ -22,7 +22,7 @@
                                 <li>
                                     @if (item.AvatarId.HasValue)
                                     {
-                                        <img class="img-circle avatar" alt="@item.NikName" src="@Url.Action(MVC.Pictures.Picture((Guid)item.AvatarId))" />
+                                        <img class="img-circle avatar" alt="@item.NikName" src="@Url.Action("picture", new { controller="pictures", id=item.AvatarId})" />
                                     }
                                 </li>
                                 <li>

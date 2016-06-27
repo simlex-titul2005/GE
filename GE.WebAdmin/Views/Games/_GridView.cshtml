@@ -1,32 +1,21 @@
 ﻿@model VMGame[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMGame)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 
-@Html.SxGridView(
-        new SxExtantions.SxGridViewSettings<VMGame>
-        {
-            UpdateTargetId = "grid-games",
-            Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn<VMGame>[]{
-            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Title", Caption="Наименование игры"},
-            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
-            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Description", Caption="Описание"},
-            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Show", Caption="Показывать", Template=(m)=> {
+@Html.SxGV(Model,
+    new SxExtantions.SxGVSettings<VMGame>
+    {
+        Columns = new SxExtantions.SxGvColumn<VMGame>[]{
+            new SxExtantions.SxGvColumn<VMGame>{FieldName="Title", Caption="Наименование игры"},
+            new SxExtantions.SxGvColumn<VMGame>{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
+            new SxExtantions.SxGvColumn<VMGame>{FieldName="Description", Caption="Описание"},
+            new SxExtantions.SxGvColumn<VMGame>{FieldName="Show", Caption="Показывать", Template=(m)=> {
                 return m.Show? "Да":"Нет";
-            } }
+            }}
         },
-            PagerInfo=pagerInfo,
-            Filter = filter,
-            SortDirections = sortDirections,
-            FuncRowCssClass = (g) =>
-            {
-                return g.Show ? null : "warning";
-            }
-        },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+        DataAjaxUrl="/games",
+        RowCssClass = x => { return x.Show ? "success" : null; }
+    }
     )

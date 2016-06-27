@@ -1,24 +1,20 @@
-﻿@model VMRedirect[]
+﻿@model SxVM301Redirect[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMRedirect)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 
-@Html.SxGridView(
-            new SxExtantions.SxGridViewSettings<VMRedirect>
+@Html.SxGV(Model,
+            new SxExtantions.SxGVSettings<SxVM301Redirect>
             {
-                UpdateTargetId = "grid-301-redirect",
-                Data = Model,
-                Columns = new SxExtantions.SxGridViewColumn<VMRedirect>[]{
-            new SxExtantions.SxGridViewColumn<VMRedirect>{FieldName="OldUrl", Caption="Старый адрес"},
-            new SxExtantions.SxGridViewColumn<VMRedirect>{FieldName="NewUrl", Caption="Новый адрес"}
-        },
-                PagerInfo = pagerInfo,
-                Filter = filter,
-                SortDirections = sortDirections
-            },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+                Columns = new SxExtantions.SxGvColumn<SxVM301Redirect>[]{
+                    new SxExtantions.SxGvColumn<SxVM301Redirect>{FieldName="OldUrl", Caption="Старый адрес"},
+                    new SxExtantions.SxGvColumn<SxVM301Redirect>{FieldName="NewUrl", Caption="Новый адрес"}
+                },
+                EnableCreating = true,
+                CreateRowUrl = "/redirects/edit",
+                EnableEditing = true,
+                EditRowUrl = (x) => { return "/redirects/edit/" + x.Id; },
+                DataAjaxUrl = "/redirects"
+            }
     )

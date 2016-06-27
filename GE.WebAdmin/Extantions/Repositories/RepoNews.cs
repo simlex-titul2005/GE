@@ -2,6 +2,7 @@
 using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
+using SX.WebCore;
 using SX.WebCore.Providers;
 using System.Data.SqlClient;
 using System.Linq;
@@ -23,7 +24,7 @@ WHERE dm.TitleUrl=@TITLE_URL";
             }
         }
 
-        public static VMNews[] QueryForAdmin(this RepoNews repo, Filter filter)
+        public static VMNews[] QueryForAdmin(this RepoNews repo, SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] { "da.Id", "dm.DateCreate", "dm.DateOfPublication", "dm.Title", "dm.SeoInfoId", "dm.Show" });
             query += " FROM D_NEWS AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType LEFT JOIN D_GAME AS dg ON dg.ID = da.GameId ";
@@ -31,7 +32,8 @@ WHERE dm.TitleUrl=@TITLE_URL";
             object param = null;
             query += getNewsWhereString(filter, out param);
 
-            query += SxQueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc, filter.Orders);
+            var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
+            query += SxQueryProvider.GetOrderString(defaultOrder, filter.Order);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
@@ -42,7 +44,7 @@ WHERE dm.TitleUrl=@TITLE_URL";
             }
         }
 
-        public static int FilterCount(this RepoNews repo, Filter filter)
+        public static int FilterCount(this RepoNews repo, SxFilter filter)
         {
             var query = @"SELECT COUNT(1) FROM D_NEWS AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType ";
 
@@ -56,7 +58,7 @@ WHERE dm.TitleUrl=@TITLE_URL";
             }
         }
 
-        private static string getNewsWhereString(Filter filter, out object param)
+        private static string getNewsWhereString(SxFilter filter, out object param)
         {
             param = null;
             string query = null;

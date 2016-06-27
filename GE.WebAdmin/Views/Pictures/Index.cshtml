@@ -1,10 +1,11 @@
-﻿@model VMPicture[]
+﻿@model SxVMPicture[]
 @{
     ViewBag.Title = "Фото-контент";
 }
 
 @section styles{
-    <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
+    <link href="~/content/dist/css/lightbox.min.css" rel="stylesheet" />
+    <link href="~/content/dist/css/grid-pictures.min.css" rel="stylesheet" />
 }
 
 <h2>@ViewBag.Title</h2>
@@ -13,9 +14,14 @@
 </p>
 <br />
 <div id="grid-pictures">
-    @Html.Partial(MVC.Pictures.Views._GridView, Model)
+    @Html.Partial("_GridView", Model)
 </div>
 
 @section scripts{
-    <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
+    <script src="~/content/dist/js/lightbox.min.js"></script>
+    <script>
+        $(function () {
+            $('#grid-pictures').sx_gv();
+        });
+    </script>
 }

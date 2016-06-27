@@ -1,4 +1,4 @@
-﻿@model VMSiteTest[]
+﻿@model SxVMSiteTest[]
 @{
     ViewBag.Title = "Тесты сайта";
 }
@@ -6,5 +6,13 @@
 <h2>@ViewBag.Title</h2>
 <br />
 <div id="site-tests">
-    @Html.Partial(MVC.SiteTests.Views._GridView, Model)
+    @Html.Partial("_gridview", Model)
 </div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#site-tests').sx_gv();
+        });
+    </script>
+}

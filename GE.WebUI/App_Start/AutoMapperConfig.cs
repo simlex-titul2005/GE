@@ -2,6 +2,7 @@
 using GE.WebCoreExtantions;
 using GE.WebUI.Models;
 using SX.WebCore;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI
 {
@@ -23,10 +24,7 @@ namespace GE.WebUI
                     cfg.CreateMap<Article, VMDetailArticle>();
 
                     //employees
-                    cfg.CreateMap<SxEmployee, VMEmployee>();
-
-                    //articles
-                    cfg.CreateMap<SxForumPart, VMForumPart>();
+                    cfg.CreateMap<SxEmployee, SxVMEmployee>();
 
                     //comments
                     cfg.CreateMap<SxComment, VMComment>();
@@ -40,17 +38,17 @@ namespace GE.WebUI
                     cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
 
                     //seo info
-                    cfg.CreateMap<SxSeoInfo, VMSeoInfo>();
+                    cfg.CreateMap<SxSeoTags, SxVMSeoTags>();
 
                     //site test
-                    cfg.CreateMap<SxSiteTestQuestion, VMSiteTestQuestion>();
-                    cfg.CreateMap<VMSiteTestQuestion, SxSiteTestQuestion>();
-                    cfg.CreateMap<SxSiteTestBlock, VMSiteTestBlock>();
-                    cfg.CreateMap<VMSiteTestBlock, SxSiteTestBlock>();
-                    cfg.CreateMap<SxSiteTest, VMSiteTest>();
-                    cfg.CreateMap<VMSiteTest, SxSiteTest>();
-                    cfg.CreateMap<SxSiteTestStep, VMSiteTestStep>();
-                    cfg.CreateMap<VMSiteTestStep, SxSiteTestStep>();
+                    cfg.CreateMap<SxSiteTestQuestion, SxVMSiteTestQuestion>();
+                    cfg.CreateMap<SxVMSiteTestQuestion, SxSiteTestQuestion>();
+                    cfg.CreateMap<SxSiteTestBlock, SxVMSiteTestBlock>();
+                    cfg.CreateMap<SxVMSiteTestBlock, SxSiteTestBlock>();
+                    cfg.CreateMap<SxSiteTest, SxVMSiteTest>();
+                    cfg.CreateMap<SxVMSiteTest, SxSiteTest>();
+                    cfg.CreateMap<SxSiteTestStep, SxVMSiteTestStep>();
+                    cfg.CreateMap<SxVMSiteTestStep, SxSiteTestStep>();
 
                     //seo info
                     cfg.CreateMap<SxAppUser, VMUser>();

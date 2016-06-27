@@ -198,25 +198,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AphorismController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AphorismsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="ArticlesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BannersController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CommentsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AphorismController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
     <Compile Include="Controllers\api\LogsController.cs" />
@@ -225,26 +207,8 @@
     <Compile Include="Controllers\SiteQuetionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
-    <Compile Include="EmployeesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ErrorController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Extantions\Repositories\RepoAphorism.cs" />
-    <Compile Include="ForumController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GamesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HomeController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Infrastructure\SiteSettings.cs" />
-    <Compile Include="MaterialTagsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Abstract\VMLastMaterial.cs" />
     <Compile Include="Models\VMAphorismCategory.cs" />
     <Compile Include="Models\VMAuthorAphorism.cs" />
@@ -253,50 +217,10 @@
     <Compile Include="Models\VMDetailGame.cs" />
     <Compile Include="Models\VMDetailGameMaterial.cs" />
     <Compile Include="Models\VMEditSiteQuetion.cs" />
-    <Compile Include="Models\VMEmployee.cs" />
     <Compile Include="Models\VMLastNews.cs" />
     <Compile Include="Models\VMLCNB.cs" />
     <Compile Include="Models\VMLCNBCategory.cs" />
     <Compile Include="Models\VMLCNBNews.cs" />
-    <Compile Include="Models\VMSiteTest.cs" />
-    <Compile Include="Models\VMSiteTestBlock.cs" />
-    <Compile Include="Models\VMSiteTestQuestion.cs" />
-    <Compile Include="Models\VMSiteTestStep.cs" />
-    <Compile Include="NewsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PicturesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SearchController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SeoController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SiteQuetionsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SiteTestsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserClicksController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ValutesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="VideosController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Content Include="Content\dist\css\error-page.min.css" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
@@ -323,13 +247,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="packages.config" />
-    <Content Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </Content>
-    <Content Include="T4MVC.tt.hooks.t4" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
-    <None Include="T4MVC.tt.settings.xml" />
     <Content Include="share42\icons.png" />
     <Content Include="share42\share42.js" />
     <Content Include="Views\Articles\List.cshtml">
@@ -346,7 +264,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaterialsController.cs">
@@ -378,7 +295,6 @@
     <Compile Include="Models\VMMaterialCategory.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMMenuItem.cs" />
-    <Compile Include="Models\VMSeoInfo.cs" />
     <Compile Include="Models\VMBreadcrumb.cs" />
     <Compile Include="Models\VMComment.cs" />
     <Compile Include="Models\VMDetailNews.cs" />

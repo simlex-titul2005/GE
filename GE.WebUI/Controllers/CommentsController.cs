@@ -23,7 +23,7 @@ namespace GE.WebUI.Controllers
         public virtual PartialViewResult List(int mid, ModelCoreType mct, int page=1)
         {
             var viewModel = getResult(mid, mct);
-            return PartialView(MVC.Comments.Views._List, viewModel);
+            return PartialView("_List", viewModel);
         }
 
         [HttpGet]
@@ -37,7 +37,7 @@ namespace GE.WebUI.Controllers
 
             ViewBag.NewCommentTitle = getNewCommentTitle(mct);
 
-            return PartialView(MVC.Comments.Views._Edit, viewModel);
+            return PartialView("_Edit", viewModel);
         }
         private static string getNewCommentTitle(ModelCoreType mct)
         {
@@ -76,12 +76,12 @@ namespace GE.WebUI.Controllers
             }
 
             var viewModel = getResult(model.MaterialId, model.ModelCoreType);
-            return PartialView(MVC.Comments.Views._List, viewModel);
+            return PartialView("_List", viewModel);
         }
 
         private VMComment[] getResult(int mid, ModelCoreType mct)
         {
-            var filter = new WebCoreExtantions.Filter { MaterialId = mid, ModelCoreType = mct };
+            var filter = new SxFilter { MaterialId = mid, ModelCoreType = mct };
             var data = (_repo as SxRepoComment<DbContext>).Query(filter).ToArray();
             var viewModel = data.Select(x => Mapper.Map<SxComment, VMComment>(x)).ToArray();
             return viewModel;

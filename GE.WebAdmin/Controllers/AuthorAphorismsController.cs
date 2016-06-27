@@ -1,11 +1,9 @@
 ﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
-using SX.WebCore.Abstract;
-using System.Collections.Generic;
+using SX.WebCore;
 using System.Linq;
 using System.Web.Mvc;
-using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -13,34 +11,32 @@ namespace GE.WebAdmin.Controllers
     public partial class AuthorAphorismsController : BaseController
     {
         private static int _pageSize = 20;
-        private SxDbRepository<int, AuthorAphorism, DbContext> _repo;
+        private static RepoAuthorAphorism _repo;
         public AuthorAphorismsController()
         {
-            _repo = new RepoAuthorAphorism();
+            if(_repo==null)
+                _repo = new RepoAuthorAphorism();
         }
 
         [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new WebCoreExtantions.Filter(page, _pageSize);
-            var totalItems = (_repo as RepoAuthorAphorism).Count(filter);
+            var filter = new SxFilter(page, _pageSize);
+            var totalItems = _repo.Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
-            var viewModel = (_repo as RepoAuthorAphorism).Query(filter).ToArray().Select(x => Mapper.Map<AuthorAphorism, VMAuthorAphorism>(x)).ToArray();
+            var viewModel = _repo.Query(filter).ToArray().Select(x => Mapper.Map<AuthorAphorism, VMAuthorAphorism>(x)).ToArray();
             return View(viewModel);
         }
 
         [HttpPost]
-        public virtual PartialViewResult Index(VMAuthorAphorism filterModel, IDictionary<string, SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMAuthorAphorism filterModel, SxOrder order, int page = 1)
         {
-            ViewBag.Filter = filterModel;
-            ViewBag.Order = order;
-
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoAuthorAphorism).Count(filter);
+            var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
+            var totalItems = _repo.Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
             var viewModel = (_repo as RepoAuthorAphorism).Query(filter).ToArray().Select(x => Mapper.Map<AuthorAphorism, VMAuthorAphorism>(x)).ToArray();
 
@@ -79,7 +75,7 @@ namespace GE.WebAdmin.Controllers
                 else
                     newModel = _repo.Update(redactModel, true, "Name", "Description", "PictureId");
 
-                return RedirectToAction(MVC.AuthorAphorisms.Index());
+                return RedirectToAction("index");
             }
             else
             {
@@ -99,7 +95,7 @@ namespace GE.WebAdmin.Controllers
         public virtual PartialViewResult FindGridView(VMAuthorAphorism filterModel, int page = 1, int pageSize = 10)
         {
             ViewBag.Filter = filterModel;
-            var filter = new WebCoreExtantions.Filter(page, pageSize);
+            var filter = new SxFilter(page, pageSize);
             filter.WhereExpressionObject = filterModel;
             var totalItems = (_repo as RepoAuthorAphorism).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
@@ -108,7 +104,7 @@ namespace GE.WebAdmin.Controllers
 
             var viewModel = (_repo as RepoAuthorAphorism).Query(filter).ToArray().Select(x => Mapper.Map<AuthorAphorism, VMAuthorAphorism>(x)).ToArray();
 
-            return PartialView(MVC.AuthorAphorisms.Views._FindGridView, viewModel);
+            return PartialView("~/views/AuthorAphorisms/_FindGridView.cshtml", viewModel);
         }
     }
 }

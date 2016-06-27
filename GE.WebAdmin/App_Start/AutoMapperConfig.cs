@@ -2,6 +2,7 @@
 using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using SX.WebCore;
+using SX.WebCore.ViewModels;
 using System.Linq;
 
 namespace GE.WebAdmin
@@ -31,34 +32,29 @@ namespace GE.WebAdmin
                     cfg.CreateMap<VMEditAuthorAphorism, AuthorAphorism>();
 
                     //banned url
-                    cfg.CreateMap<SxBannedUrl, VMBannedUrl>();
-                    cfg.CreateMap<SxBannedUrl, VMEditBannedUrl>();
-                    cfg.CreateMap<VMEditBannedUrl, SxBannedUrl>();
+                    cfg.CreateMap<SxBannedUrl, SxVMBannedUrl>();
+                    cfg.CreateMap<SxBannedUrl, SxVMEditBannedUrl>();
+                    cfg.CreateMap<SxVMEditBannedUrl, SxBannedUrl>();
 
                     //banner
-                    cfg.CreateMap<SxBanner, VMBanner>();
-                    cfg.CreateMap<VMBanner, SxBanner>();
-                    cfg.CreateMap<SxBanner, VMEditBanner>();
-                    cfg.CreateMap<VMEditBanner, SxBanner>();
+                    cfg.CreateMap<SxBanner, SxVMBanner>();
+                    cfg.CreateMap<SxVMBanner, SxBanner>();
+                    cfg.CreateMap<SxBanner, SxVMEditBanner>();
+                    cfg.CreateMap<SxVMEditBanner, SxBanner>();
 
                     //banner group
-                    cfg.CreateMap<SxBannerGroup, VMBannerGroup>();
-                    cfg.CreateMap<SxBannerGroup, VMEditBannerGroup>();
-                    cfg.CreateMap<VMEditBannerGroup, SxBannerGroup>();
+                    cfg.CreateMap<SxBannerGroup, SxVMBannerGroup>();
+                    cfg.CreateMap<SxBannerGroup, SxVMEditBannerGroup>();
+                    cfg.CreateMap<SxVMEditBannerGroup, SxBannerGroup>();
 
                     //employee
-                    cfg.CreateMap<SxEmployee, VMEmployee>();
-                    cfg.CreateMap<SxEmployee, VMEditEmployee>();
-                    cfg.CreateMap<VMEditEmployee, SxEmployee>();
-                    cfg.CreateMap<VMEditUser, SxAppUser>();
+                    cfg.CreateMap<SxEmployee, SxVMEmployee>();
+                    cfg.CreateMap<SxEmployee, SxVMEditEmployee>();
+                    cfg.CreateMap<SxVMEditEmployee, SxEmployee>();
+                    cfg.CreateMap<SxVMEditAppUser, SxAppUser>();
 
                     //faq
-                    cfg.CreateMap<SxManual, VMFAQ>();
-
-                    //forum parts
-                    cfg.CreateMap<SxForumPart, VMForumPart>();
-                    cfg.CreateMap<SxForumPart, VMEditForumPart>();
-                    cfg.CreateMap<VMEditForumPart, SxForumPart>();
+                    cfg.CreateMap<SxManual, SxVMFAQ>();
 
                     //game
                     cfg.CreateMap<Game, VMGame>();
@@ -81,9 +77,9 @@ namespace GE.WebAdmin
                     cfg.CreateMap<VMEditMaterialCategory, MaterialCategory>();
 
                     //material tags
-                    cfg.CreateMap<SxMaterialTag, VMMaterialTag>();
-                    cfg.CreateMap<SxMaterialTag, VMEditMaterialTag>();
-                    cfg.CreateMap<VMEditMaterialTag, SxMaterialTag>();
+                    cfg.CreateMap<SxMaterialTag, SxVMMaterialTag>();
+                    cfg.CreateMap<SxMaterialTag, SxVMEditMaterialTag>();
+                    cfg.CreateMap<SxVMEditMaterialTag, SxMaterialTag>();
 
                     //news
                     cfg.CreateMap<News, VMNews>();
@@ -91,75 +87,75 @@ namespace GE.WebAdmin
                     cfg.CreateMap<VMEditNews, News>();
 
                     //picture
-                    cfg.CreateMap<SxPicture, VMPicture>();
-                    cfg.CreateMap<VMPicture, SxPicture>();
-                    cfg.CreateMap<SxPicture, VMEditPicture>();
-                    cfg.CreateMap<VMEditPicture, SxPicture>();
+                    cfg.CreateMap<SxPicture, SxVMPicture>();
+                    cfg.CreateMap<SxVMPicture, SxPicture>();
+                    cfg.CreateMap<SxPicture, SxVMEditPicture>();
+                    cfg.CreateMap<SxVMEditPicture, SxPicture>();
 
                     //project step
-                    cfg.CreateMap<SxProjectStep, VMProjectStep>();
-                    cfg.CreateMap<SxProjectStep, VMEditProjectStep>();
-                    cfg.CreateMap<VMEditProjectStep, SxProjectStep>();
+                    cfg.CreateMap<SxProjectStep, SxVMProjectStep>();
+                    cfg.CreateMap<SxProjectStep, SxVMEditProjectStep>();
+                    cfg.CreateMap<SxVMEditProjectStep, SxProjectStep>();
 
                     //roles
-                    cfg.CreateMap<SxAppRole, VMRole>();
-                    cfg.CreateMap<SxAppRole, VMEditRole>();
-                    cfg.CreateMap<VMEditRole, SxAppRole>();
+                    cfg.CreateMap<SxAppRole, SxVMAppRole>();
+                    cfg.CreateMap<SxAppRole, SxVMEditAppRole>();
+                    cfg.CreateMap<SxVMEditAppRole, SxAppRole>();
 
                     //redirect
-                    cfg.CreateMap<SxRedirect, VMRedirect>();
-                    cfg.CreateMap<SxRedirect, VMEditRedirect>();
-                    cfg.CreateMap<VMEditRedirect, SxRedirect>();
+                    cfg.CreateMap<Sx301Redirect, SxVM301Redirect>();
+                    cfg.CreateMap<Sx301Redirect, SxVMEdit301Redirect>();
+                    cfg.CreateMap<SxVMEdit301Redirect, Sx301Redirect>();
 
                     //request
-                    cfg.CreateMap<SxRequest, VMRequest>();
+                    cfg.CreateMap<SxRequest, SxVMRequest>();
 
                     //site test
-                    cfg.CreateMap<SxSiteTest, VMSiteTest>();
-                    cfg.CreateMap<SxSiteTest, VMEditSiteTest>();
-                    cfg.CreateMap<VMEditSiteTest, SxSiteTest>();
+                    cfg.CreateMap<SxSiteTest, SxVMSiteTest>();
+                    cfg.CreateMap<SxSiteTest, SxVMEditSiteTest>();
+                    cfg.CreateMap<SxVMEditSiteTest, SxSiteTest>();
 
                     //site test block
-                    cfg.CreateMap<SxSiteTestBlock, VMSiteTestBlock>();
-                    cfg.CreateMap<VMSiteTestBlock, SxSiteTestBlock>();
-                    cfg.CreateMap<SxSiteTestBlock, VMEditSiteTestBlock>();
-                    cfg.CreateMap<VMEditSiteTestBlock, SxSiteTestBlock>();
+                    cfg.CreateMap<SxSiteTestBlock, SxVMSiteTestBlock>();
+                    cfg.CreateMap<SxVMSiteTestBlock, SxSiteTestBlock>();
+                    cfg.CreateMap<SxSiteTestBlock, SxVMEditSiteTestBlock>();
+                    cfg.CreateMap<SxVMEditSiteTestBlock, SxSiteTestBlock>();
 
                     //site test question
-                    cfg.CreateMap<SxSiteTestQuestion, VMSiteTestQuestion>();
-                    cfg.CreateMap<SxSiteTestQuestion, VMEditSiteTestQuestion>();
-                    cfg.CreateMap<VMEditSiteTestQuestion, SxSiteTestQuestion>();
+                    cfg.CreateMap<SxSiteTestQuestion, SxVMSiteTestQuestion>();
+                    cfg.CreateMap<SxSiteTestQuestion, SxVMEditSiteTestQuestion>();
+                    cfg.CreateMap<SxVMEditSiteTestQuestion, SxSiteTestQuestion>();
 
                     //seo info
-                    cfg.CreateMap<SxSeoInfo, VMSeoInfo>();
-                    cfg.CreateMap<VMSeoInfo, SxSeoInfo>();
-                    cfg.CreateMap<SxSeoInfo, VMEditSeoInfo>();
-                    cfg.CreateMap<VMEditSeoInfo, SxSeoInfo>();
+                    cfg.CreateMap<SxSeoTags, SxVMSeoTags>();
+                    cfg.CreateMap<SxVMSeoTags, SxSeoTags>();
+                    cfg.CreateMap<SxSeoTags, SxVMEditSeoTags>();
+                    cfg.CreateMap<SxVMEditSeoTags, SxSeoTags>();
 
                     //seo keywords
-                    cfg.CreateMap<SxSeoKeyword, VMSeoKeyword>();
-                    cfg.CreateMap<SxSeoKeyword, VMEditSeoKeyword>();
-                    cfg.CreateMap<VMEditSeoKeyword, SxSeoKeyword>();
+                    cfg.CreateMap<SxSeoKeyword, SxVMSeoKeyword>();
+                    cfg.CreateMap<SxSeoKeyword, SxVMEditSeoKeyword>();
+                    cfg.CreateMap<SxVMEditSeoKeyword, SxSeoKeyword>();
 
                     //statistic user login
-                    cfg.CreateMap<SxStatisticUserLogin, VMStatisticUserLogin>()
+                    cfg.CreateMap<SxStatisticUserLogin, SxVMStatisticUserLogin>()
                     .ForMember(d => d.DateCreate, d => d.MapFrom(s => s.Statistic.DateCreate))
                     .ForMember(d => d.NikName, d => d.MapFrom(s => s.User.NikName))
                     .ForMember(d => d.AvatarId, d => d.MapFrom(s => s.User.AvatarId));
 
                     //users
-                    cfg.CreateMap<SxAppUser, VMUser>()
-                    .ForMember(d => d.Roles, d => d.MapFrom(s => s.Roles.Select(r=>new VMRole { Id=r.RoleId, Name=r.UserId}).ToArray()));
-                    cfg.CreateMap<SxAppUser, VMEditUser>();
-                    cfg.CreateMap<VMUser, SxAppUser>();
+                    cfg.CreateMap<SxAppUser, SxVMAppUser>()
+                    .ForMember(d => d.Roles, d => d.MapFrom(s => s.Roles.Select(r=>new SxVMAppRole { Id=r.RoleId, Name=r.UserId}).ToArray()));
+                    cfg.CreateMap<SxAppUser, SxVMEditAppUser>();
+                    cfg.CreateMap<SxVMAppUser, SxAppUser>();
 
 
-                    cfg.CreateMap<VMEditUser, SxEmployee>();
+                    cfg.CreateMap<SxVMEditAppUser, SxEmployee>();
 
                     //video
-                    cfg.CreateMap<SxVideo, VMVideo>();
-                    cfg.CreateMap<SxVideo, VMEditVideo>();
-                    cfg.CreateMap<VMEditVideo, SxVideo>();
+                    cfg.CreateMap<SxVideo, SxVMVideo>();
+                    cfg.CreateMap<SxVideo, SxVMEditVideo>();
+                    cfg.CreateMap<SxVMEditVideo, SxVideo>();
                 });
             }
         }

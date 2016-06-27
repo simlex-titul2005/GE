@@ -1,11 +1,11 @@
-﻿@model SX.WebCore.SxSeoPhrase[]
+﻿@model SxSeoPhrase[]
 @{
     ViewBag.Title = "Счетчик слов";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Ajax.BeginForm(MVC.SeoWordCounter.AddPhrases(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "phrases" }))
+@using (Ajax.BeginForm("addphrases", new { controller = "seowordcounter" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "phrases" }))
 {
     @Html.AntiForgeryToken()
     <label for="phrase">Текст для анализа</label>
@@ -17,5 +17,9 @@
 }
 
 <div id="phrases">
-    @Html.Partial(MVC.SeoWordCounter.Views._Table, Model)
+    @Html.Partial("_Table", Model)
 </div>
+
+@section scripts{
+    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
+}

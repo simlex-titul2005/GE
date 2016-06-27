@@ -166,25 +166,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\dist\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\dist\css\grid-a-authors.min.css" />
+    <Content Include="Content\dist\css\grid-aphorisms.min.css" />
+    <Content Include="Content\dist\css\grid-banners.min.css" />
+    <Content Include="Content\dist\css\grid-pictures.min.css" />
+    <Content Include="Content\dist\css\grid-users.min.css" />
     <Content Include="Content\dist\css\lightbox.min.css" />
+    <Content Include="Content\dist\css\login.min.css" />
+    <Content Include="Content\dist\css\ps-tree.min.css" />
     <Content Include="Content\dist\css\site.min.css" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\dist\images\close.png" />
     <Content Include="Content\dist\images\loading.gif" />
     <Content Include="Content\dist\images\next.png" />
     <Content Include="Content\dist\images\prev.png" />
-    <Content Include="Content\dist\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Content\dist\i\bg.jpg" />
     <Content Include="Content\dist\js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Content\dist\js\jquery.validate.min.js" />
     <Content Include="Content\dist\js\lightbox.min.js" />
-    <Content Include="Content\dist\js\moment-with-locales.min.js" />
-    <Content Include="Content\dist\js\raphael.min.js" />
     <Content Include="Content\dist\js\site.min.js" />
-    <Content Include="Content\i\background.jpg" />
-    <Content Include="Content\i\bannerPlaces.jpg" />
-    <Content Include="Content\sx\js\sx-find-gv.js" />
-    <Content Include="Content\sx\js\sx-grid-view.js" />
     <Content Include="faveicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -192,20 +192,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="robots.txt" />
+    <Content Include="packages.config" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\dist\fonts\FontAwesome.otf" />
-    <Content Include="robots.txt" />
-    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\admin-game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
-    <Content Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </Content>
+    <Content Include="Views\SiteSettings\EditEmptyGame.cshtml" />
     <Content Include="Views\VideoLinks\_GridView.cshtml" />
     <Content Include="Views\VideoLinks\_GridViewNotLinked.cshtml" />
     <Content Include="Web.config">
@@ -214,34 +211,10 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AphorismsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="ArticlesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AuthorAphorismsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BannedUrlsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BannerGroupsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BannersController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CommentsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
     <Compile Include="Controllers\AuthorAphorismsController.cs" />
@@ -254,7 +227,6 @@
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
-    <Compile Include="Controllers\ForumPartsController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\MaterialCategoriesController.cs" />
@@ -263,190 +235,54 @@
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProjectStepsController.cs" />
     <Compile Include="Controllers\RedirectsController.cs" />
-    <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SeoController.cs" />
+    <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Controllers\SiteTestBlocksController.cs" />
     <Compile Include="Controllers\SiteTestQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\VideoLinksController.cs" />
     <Compile Include="Controllers\VideosController.cs" />
-    <Compile Include="Controllers\SeoInfoController.cs" />
+    <Compile Include="Controllers\SeoTagsController.cs" />
     <Compile Include="Controllers\SeoKeywordsController.cs" />
     <Compile Include="Controllers\SeoWordCounterController.cs" />
-    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
-    <Compile Include="EmployeesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Extantions\Repositories\RepoAphorizm.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
-    <Compile Include="Extantions\Repositories\RepoBanner.cs" />
-    <Compile Include="Extantions\Repositories\RepoForumPart.cs" />
-    <Compile Include="Extantions\Repositories\RepoEmployee.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
-    <Compile Include="Extantions\Repositories\RepoPicture.cs" />
-    <Compile Include="Extantions\Repositories\RepoRedirect.cs" />
-    <Compile Include="Extantions\Repositories\RepoVideo.cs" />
-    <Compile Include="Extantions\Repositories\RepoRequest.cs" />
-    <Compile Include="Extantions\Repositories\RepoSeoInfo.cs" />
-    <Compile Include="Extantions\Repositories\RepoSeoKeywords.cs" />
-    <Compile Include="FAQController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ForumPartsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GamesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HomeController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Infrastructure\ReportAdapters\ReportAphorismsAdapter.cs" />
-    <Compile Include="LogsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ManualsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MaterialCategoriesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MaterialTagsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\VMAphorism.cs" />
     <Compile Include="Models\VMAuthorAphorism.cs" />
-    <Compile Include="Models\VMBanner.cs" />
-    <Compile Include="Models\VMBannerGroup.cs" />
     <Compile Include="Models\VMEditAphorism.cs" />
     <Compile Include="Models\VMEditAuthorAphorism.cs" />
-    <Compile Include="Models\VMEditBannedUrl.cs" />
-    <Compile Include="Models\VMBannedUrl.cs" />
-    <Compile Include="Models\VMEditBanner.cs" />
-    <Compile Include="Models\VMEditBannerGroup.cs" />
-    <Compile Include="Models\VMEditEmployee.cs" />
     <Compile Include="Models\VMEditManual.cs" />
     <Compile Include="Models\VMEditMaterialCategory.cs" />
-    <Compile Include="Models\VMEditProjectStep.cs" />
-    <Compile Include="Models\VMEditSiteTest.cs" />
-    <Compile Include="Models\VMEditSiteTestBlock.cs" />
-    <Compile Include="Models\VMEditSiteTestQuestion.cs" />
-    <Compile Include="Models\VMEditVideo.cs" />
-    <Compile Include="Models\VMEmployee.cs" />
-    <Compile Include="Models\VMFAQ.cs" />
     <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMClick.cs" />
     <Compile Include="Models\VMClickType.cs" />
     <Compile Include="Models\VMEditClickType.cs" />
-    <Compile Include="Models\VMEditForumPart.cs" />
-    <Compile Include="Models\VMEditMaterialTag.cs" />
     <Compile Include="Models\VMEditNewsRubric.cs" />
-    <Compile Include="Models\VMEditRole.cs" />
-    <Compile Include="Models\VMEditSeoKeyword.cs" />
     <Compile Include="Models\VMEditNews.cs" />
-    <Compile Include="Models\VMEditSeoInfo.cs" />
-    <Compile Include="Models\VMEditRedirect.cs" />
-    <Compile Include="Models\VMEditUser.cs" />
-    <Compile Include="Models\VMForumPart.cs" />
-    <Compile Include="Models\VMLoginModel.cs" />
     <Compile Include="Models\VMMaterialCategory.cs" />
-    <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMNewsRubric.cs" />
-    <Compile Include="Models\VMProjectStep.cs" />
-    <Compile Include="Models\VMRedirect.cs" />
-    <Compile Include="Models\VMRequest.cs" />
-    <Compile Include="Models\VMRobotsFile.cs" />
-    <Compile Include="Models\VMRole.cs" />
     <Compile Include="Models\VMNews.cs" />
     <Compile Include="Models\VMArticle.cs" />
     <Compile Include="Models\VMEditArticle.cs" />
     <Compile Include="Models\VMEditEmptyGameSettings.cs" />
     <Compile Include="Models\VMEditGame.cs" />
     <Compile Include="Models\VMGame.cs" />
-    <Compile Include="Models\VMEditPicture.cs" />
-    <Compile Include="Models\VMPicture.cs" />
-    <Compile Include="Models\VMSeoInfo.cs" />
-    <Compile Include="Models\VMSeoKeyword.cs" />
     <Compile Include="Models\VMSiteSettings.cs" />
-    <Compile Include="Models\VMSiteTest.cs" />
-    <Compile Include="Models\VMSiteTestBlock.cs" />
-    <Compile Include="Models\VMSiteTestQuestion.cs" />
-    <Compile Include="Models\VMStatisticUserLogin.cs" />
-    <Compile Include="Models\VMUser.cs" />
-    <Compile Include="Models\VMVideo.cs" />
-    <Compile Include="NewsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PicturesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectStepsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RedirectsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RequestController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RolesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SeoInfoController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SeoKeywordsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SeoWordCounterController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SiteTestBlocksController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SiteTestQuestionsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SiteTestsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StatisticsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UsersController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ValutesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="VideoLinksController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="VideosController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -459,42 +295,21 @@
     <Content Include="Views\Games\_GridView.cshtml" />
     <Content Include="Views\Games\Edit.cshtml" />
     <Content Include="Views\Games\Index.cshtml" />
-    <Content Include="Views\Pictures\_GridView.cshtml" />
-    <Content Include="Views\Pictures\Edit.cshtml" />
-    <Content Include="Views\Pictures\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EditImage.cshtml" />
-    <Content Include="Views\Settings\EditEmptyGame.cshtml" />
     <Content Include="Views\News\_GridView.cshtml" />
     <Content Include="Views\News\Edit.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EditGame.cshtml" />
-    <Content Include="Views\Settings\EditSite.cshtml" />
-    <Content Include="Views\SeoInfo\Index.cshtml" />
-    <Content Include="Views\SeoInfo\_GridView.cshtml" />
-    <Content Include="Views\SeoInfo\Edit.cshtml" />
-    <Content Include="Views\Request\Index.cshtml" />
-    <Content Include="Views\Request\_GridView.cshtml" />
-    <Content Include="Views\Redirects\_GridView.cshtml" />
-    <Content Include="Views\Redirects\Index.cshtml" />
-    <Content Include="Views\Redirects\Edit.cshtml" />
-    <Content Include="Views\Settings\EditRobotsFile.cshtml" />
+    <Content Include="Views\SiteSettings\EditSite.cshtml" />
+    <Content Include="Views\SeoTags\Index.cshtml" />
+    <Content Include="Views\SeoTags\_GridView.cshtml" />
+    <Content Include="Views\SeoTags\Edit.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Roles\_GridView.cshtml" />
-    <Content Include="Views\Roles\Index.cshtml" />
-    <Content Include="Views\Roles\Edit.cshtml" />
-    <Content Include="Views\ForumParts\_GridView.cshtml" />
-    <Content Include="Views\ForumParts\Edit.cshtml" />
-    <Content Include="Views\ForumParts\Index.cshtml" />
     <Content Include="Views\MaterialTags\_GridView.cshtml" />
     <Content Include="Views\MaterialTags\Edit.cshtml" />
-    <Content Include="Views\Users\_GridView.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\SeoInfo\_EditForMaterial.cshtml" />
-    <Content Include="Views\SeoInfo\_GeneralEdit.cshtml" />
+    <Content Include="Views\SeoTags\_EditForMaterial.cshtml" />
+    <Content Include="Views\SeoTags\_GeneralEdit.cshtml" />
     <Content Include="Views\SeoKeywords\_GridView.cshtml" />
     <Content Include="Views\Comments\_LastComments.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EditMaterialCategory.cshtml" />
     <Content Include="Views\Users\_UsersOnSite.cshtml" />
     <Content Include="Views\Manuals\_GridView.cshtml" />
     <Content Include="Views\Manuals\Edit.cshtml" />
@@ -505,9 +320,7 @@
     <Content Include="Views\MaterialCategories\_TreeView.cshtml" />
     <Content Include="Views\SeoWordCounter\Index.cshtml" />
     <Content Include="Views\SeoWordCounter\_Table.cshtml" />
-    <Content Include="Views\Pictures\_FindGridView.cshtml" />
     <Content Include="Views\Games\_FindGridView.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\_UserRoles.cshtml" />
     <Content Include="Views\Users\_UserInfo.cshtml" />
     <Content Include="Views\Valutes\Index.cshtml" />
@@ -517,7 +330,6 @@
     <Content Include="Views\BannedUrls\Edit.cshtml" />
     <Content Include="Views\Shared\_MaterialModal.cshtml" />
     <Content Include="Views\ProjectSteps\Index.cshtml" />
-    <Content Include="Views\ProjectSteps\DisplayTemplates\VMProjectStep.cshtml" />
     <Content Include="Views\ProjectSteps\Edit.cshtml" />
     <Content Include="Views\Banners\_GridView.cshtml" />
     <Content Include="Views\Banners\Edit.cshtml" />
@@ -526,46 +338,59 @@
     <Content Include="Views\BannerGroups\Edit.cshtml" />
     <Content Include="Views\BannerGroups\Index.cshtml" />
     <Content Include="Views\Banners\_FindGridView.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\AddBanner.cshtml" />
     <Content Include="Views\Banners\_GroupBanners.cshtml" />
     <Content Include="Views\Statistics\_UserLoginsGridView.cshtml" />
     <Content Include="Views\Statistics\UserLogins.cshtml" />
-    <Content Include="Views\Videos\_GridView.cshtml" />
-    <Content Include="Views\Videos\Edit.cshtml" />
-    <Content Include="Views\Videos\Index.cshtml" />
     <Content Include="Views\Shared\_NotMaterialVideos.cshtml" />
     <Content Include="Views\Aphorisms\Index.cshtml" />
     <Content Include="Views\MaterialCategories\_TreeViewMenu.cshtml" />
     <Content Include="Views\Aphorisms\_GridView.cshtml" />
     <Content Include="Views\Aphorisms\Edit.cshtml" />
     <Content Include="Views\FAQ\Index.cshtml" />
-    <Content Include="Views\FAQ\DisplayTemplates\VMFAQ.cshtml" />
     <Content Include="Views\AuthorAphorisms\_GridView.cshtml" />
     <Content Include="Views\AuthorAphorisms\Edit.cshtml" />
     <Content Include="Views\AuthorAphorisms\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EditAuthorAphorism.cshtml" />
     <Content Include="Views\AuthorAphorisms\_FindGridView.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EditDate.cshtml" />
-    <Content Include="Views\Employees\_GridView.cshtml" />
+    <Content Include="Views\Users\_UserReports.cshtml" />
+    <Content Include="Views\UserRoles\Edit.cshtml" />
+    <Content Include="Views\UserRoles\Index.cshtml" />
+    <Content Include="Views\UserRoles\_GridView.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\_GridView.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
-    <Content Include="Views\SiteTests\_GridView.cshtml" />
+    <Content Include="Views\Employees\_GridView.cshtml" />
+    <Content Include="Views\Pictures\Edit.cshtml" />
+    <Content Include="Views\Pictures\Index.cshtml" />
+    <Content Include="Views\Pictures\_FindGridView.cshtml" />
+    <Content Include="Views\Pictures\_GridView.cshtml" />
+    <Content Include="Views\Videos\Edit.cshtml" />
+    <Content Include="Views\Videos\Index.cshtml" />
+    <Content Include="Views\Videos\_GridView.cshtml" />
     <Content Include="Views\SiteTests\Edit.cshtml" />
     <Content Include="Views\SiteTests\Index.cshtml" />
-    <Content Include="Views\SiteTestBlocks\_GridView.cshtml" />
+    <Content Include="Views\SiteTests\_FindGridView.cshtml" />
+    <Content Include="Views\SiteTests\_GridView.cshtml" />
+    <Content Include="Views\SiteTests\_Matrix.cshtml" />
     <Content Include="Views\SiteTestBlocks\Edit.cshtml" />
     <Content Include="Views\SiteTestBlocks\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EditSiteTest.cshtml" />
-    <Content Include="Views\SiteTests\_FindGridView.cshtml" />
-    <Content Include="Views\SiteTestQuestions\_GridView.cshtml" />
+    <Content Include="Views\SiteTestBlocks\_FindGridView.cshtml" />
+    <Content Include="Views\SiteTestBlocks\_GridView.cshtml" />
     <Content Include="Views\SiteTestQuestions\Edit.cshtml" />
     <Content Include="Views\SiteTestQuestions\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EditSiteTestBlock.cshtml" />
-    <Content Include="Views\SiteTestBlocks\_FindGridView.cshtml" />
-    <Content Include="Views\SiteTests\_Matrix.cshtml" />
-    <Content Include="Views\Users\_UserReports.cshtml" />
-    <Content Include="T4MVC.tt.hooks.t4" />
-    <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Views\SiteTestQuestions\_GridView.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PicturesLookupGrid.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SiteTestBlocksLookupGrid.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SiteTestsLookupGrid.cshtml" />
+    <Content Include="Views\Redirects\Edit.cshtml" />
+    <Content Include="Views\Redirects\Index.cshtml" />
+    <Content Include="Views\Redirects\_GridView.cshtml" />
+    <Content Include="Views\Requests\Index.cshtml" />
+    <Content Include="Views\Requests\_GridView.cshtml" />
+    <Content Include="Views\Seo\EditRobotsFile.cshtml" />
+    <Content Include="Views\ProjectSteps\DisplayTemplates\SxVMProjectStep.cshtml" />
+    <Content Include="Views\FAQ\DisplayTemplates\SxVMFAQ.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

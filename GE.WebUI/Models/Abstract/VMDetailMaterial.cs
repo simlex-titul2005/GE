@@ -1,4 +1,5 @@
 ﻿using SX.WebCore;
+using SX.WebCore.ViewModels;
 using System;
 
 namespace GE.WebUI.Models.Abstract
@@ -37,7 +38,7 @@ namespace GE.WebUI.Models.Abstract
                 };
             }
         }
-        public VMSeoInfo SeoInfo { get; set; }
+        public SxVMSeoTags SeoTags { get; set; }
         public SxVideo[] Videos { get; set; }
     }
 }

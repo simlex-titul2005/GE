@@ -1,18 +1,18 @@
-﻿@model VMEditBanner
+﻿@model SxVMEditBanner
 @{
     var isNew = Model.Id == Guid.Empty;
     ViewBag.Title = isNew ? "Добавить баннер" : "Редактировать баннер \"" + Model.Title ?? Model.Id.ToString() + "\"";
 }
 
 @section styles{
-    <link rel="stylesheet" href="~/Content/dist/css/lightbox.min.css" />
+    <link rel="stylesheet" href="~/content/dist/css/lightbox.min.css" />
 }
 
 <h2>@ViewBag.Title</h2>
 @if (!isNew)
 {
     <div class="text-right">
-        <form method="post" action="@Url.Action(MVC.Banners.Delete())">
+        <form method="post" action="/banners/delete">
             @Html.AntiForgeryToken()
             @Html.HiddenFor(x => x.Id)
             <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить</button>
@@ -20,7 +20,7 @@
     </div>
 }
 <br />
-<form method="post" action="@Url.Action(MVC.Banners.Edit())">
+<form method="post" action="/banners/edit">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
 
@@ -34,7 +34,7 @@
         @Html.LabelFor(x => x.PictureId)
         @if (!isNew && Model.Picture!=null)
         {
-            <a style="color:inherit; text-decoration:none;" data-lightbox="roadtrip" data-title="@Model.Picture.Caption" data-toggle="tooltip" data-placement="right" title="Помотреть картинку" href="@Url.Action(MVC.Pictures.Picture((Guid)Model.PictureId))">&nbsp;<i class="fa fa-picture-o"></i></a>
+            <a style="color:inherit; text-decoration:none;" data-lightbox="roadtrip" data-title="@Model.Picture.Caption" data-toggle="tooltip" data-placement="right" title="Помотреть картинку" href="/pictures/picture/@Model.PictureId">&nbsp;<i class="fa fa-picture-o"></i></a>
         }
         @Html.EditorFor(x => x.PictureId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Укажите изображение" } })
         @Html.ValidationMessageFor(x => x.PictureId)
@@ -56,7 +56,6 @@
                 @Html.LabelFor(x => x.Place)
                 <a style="color:inherit; text-decoration:none;" data-lightbox="cheme" data-title="Схема шаблона" data-toggle="tooltip" data-placement="right" title="Помотреть схему" href="~/Content/i/bannerPlaces.jpg">&nbsp;<i class="fa fa-question-circle-o"></i></a>
                 @Html.EnumDropDownListFor(x=>x.Place, new { @class = "form-control", @placeholder = "Задайте место баннера на странице" })
-                @*@Html.EditorFor(x => x.Place, new { htmlAttributes = new { @class = "form-control", @placeholder = "Задайте место баннера на странице" } })*@
                 @Html.ValidationMessageFor(x => x.Place)
             </div>
         </div>
@@ -78,10 +77,10 @@
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
-        <a href="@Url.Action(MVC.Banners.Index())" class="btn btn-default">Назад</a>
+        <a href="/banners" class="btn btn-default">Назад</a>
     </div>
 </form>
 
 @section scripts{
-    <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
+    <script type="text/javascript" src="~/content/dist/js/lightbox.min.js"></script>
 }

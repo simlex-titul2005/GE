@@ -16,7 +16,7 @@ namespace GE.WebUI.Controllers
         {
             var gameTitle = Request.RequestContext.RouteData.Values["GameTitle"];
             var viewModel = (base.Repository as RepoArticle).ForGamersBlock((string)gameTitle);
-            return PartialView(MVC.Articles.Views._ForGamersBlock, viewModel);
+            return PartialView("_ForGamersBlock", viewModel);
         }
 
         [OutputCache(Duration =900, VaryByParam = "gt;c;lc")]
@@ -28,7 +28,7 @@ namespace GE.WebUI.Controllers
             var viewModel = (base.Repository as RepoArticle).PreviewMaterials(gt, c, lc);
             if (!viewModel.Any())
                 return Content("<div class=\"empty-result\">Данные отсутствуют</div>");
-            return PartialView(MVC.Articles.Views._Preview, viewModel);
+            return PartialView("_Preview", viewModel);
         }
 
         [ChildActionOnly]
@@ -36,7 +36,7 @@ namespace GE.WebUI.Controllers
         public virtual PartialViewResult Last(int amount=3)
         {
             var viewModel = (base.Repository as RepoArticle).Last(amount);
-            return PartialView(MVC.Articles.Views._Last, viewModel);
+            return PartialView("_Last", viewModel);
         }
     }
 }

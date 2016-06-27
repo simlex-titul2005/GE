@@ -17,7 +17,7 @@ namespace GE.WebUI.Controllers
         public virtual PartialViewResult LastGamesNewsBlock(int lnc = 5, int gc = 4, int glnc = 3, int gtc=20)
         {
             var viewModel = (base.Repository as RepoNews).LastGameNewsBlock(lnc, gc, glnc, gtc);
-            return PartialView(MVC.News.Views._LastNewsBlock, viewModel);
+            return PartialView("_LastNewsBlock", viewModel);
         }
 
 #if !DEBUG
@@ -27,7 +27,7 @@ namespace GE.WebUI.Controllers
         public virtual PartialViewResult NewsCategories(int lnc=5, int clnc=3, int ctc=20)
         {
             var data = (Repository as RepoNews).LastCategoryBlock(lnc, clnc, ctc);
-            return PartialView(MVC.News.Views._NewsCategories, data);
+            return PartialView("_NewsCategories", data);
         }
     }
 }

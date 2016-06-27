@@ -1,17 +1,17 @@
-﻿using GE.WebCoreExtantions;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using GE.WebCoreExtantions.Repositories;
-using SX.WebCore.HtmlHelpers;
 using SX.WebCore.Providers;
-using GE.WebAdmin.Models;
+using SX.WebCore;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMMaterialTag[] QueryForAdmin(this RepoMaterialTag repo, Filter filter)
+        public static SxVMMaterialTag[] QueryForAdmin(this RepoMaterialTag repo, SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] { "dmt.Id", "dmt.DateCreate", "dmt.MaterialId", "dmt.ModelCoreType" });
             query += " FROM D_MATERIAL_TAG AS dmt";
@@ -19,17 +19,18 @@ namespace GE.WebAdmin.Extantions.Repositories
             object param = null;
             query += getMaterialTagWhereString(filter, out param);
 
-            query += SxQueryProvider.GetOrderString("dmt.DateCreate", SxExtantions.SortDirection.Desc, filter.Orders);
+            var defaultOrder = new SxOrder { FieldName = "dmt.DateCreate", Direction = SortDirection.Desc };
+            query += SxQueryProvider.GetOrderString(defaultOrder, filter.Order);
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var data = conn.Query<VMMaterialTag>(query, param: param);
+                var data = conn.Query<SxVMMaterialTag>(query, param: param);
                 return data.ToArray();
             }
         }
 
-        public static int FilterCount(this RepoMaterialTag repo, Filter filter)
+        public static int FilterCount(this RepoMaterialTag repo, SxFilter filter)
         {
             var query = @"SELECT COUNT(1) FROM D_MATERIAL_TAG AS dmt";
 
@@ -43,7 +44,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        private static string getMaterialTagWhereString(Filter filter, out object param)
+        private static string getMaterialTagWhereString(SxFilter filter, out object param)
         {
             param = null;
             string query = null;

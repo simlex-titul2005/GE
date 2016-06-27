@@ -13,17 +13,6 @@ namespace GE.WebAdmin
         private static Dictionary<string, string> _usersOnSite;
         private static DateTime _lastStartDate;
 
-        public static Dictionary<string, string> UsersOnSite
-        {
-            get
-            {
-                if (_usersOnSite == null)
-                    _usersOnSite = new Dictionary<string, string>();
-
-                return _usersOnSite;
-            }
-        }
-
         protected override void Application_Start(object sender, EventArgs e)
         {
 
@@ -40,8 +29,6 @@ namespace GE.WebAdmin
             var siteDomainItem = new SxRepoSiteSetting<WebCoreExtantions.DbContext>().GetByKey(Settings.siteDomain);
             SiteDomain = siteDomainItem?.Value;
         }
-
-        public static string SiteDomain { get; set; }
 
         public static DateTime LastStartDate
         {

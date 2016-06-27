@@ -1,29 +1,15 @@
 ﻿@model VMAuthorAphorism[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMAuthorAphorism)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 
-@Html.SxGridView(
-        new SxExtantions.SxGridViewSettings<VMAuthorAphorism>
+@Html.SxGV(Model,
+        new SxExtantions.SxGVSettings<VMAuthorAphorism>
         {
-            UpdateTargetId = "grid-author-ap",
-            Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn<VMAuthorAphorism>[]{
-            new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя" },
+            Columns = new SxExtantions.SxGvColumn<VMAuthorAphorism>[]{
+            new SxExtantions.SxGvColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя" },
         },
-            PagerInfo = pagerInfo,
-            Filter = filter,
-            SortDirections = sortDirections,
-            EnableEditing = false,
-            EnableCreate = false,
-            Mode = SxExtantions.SxGridViewMode.Lookup,
-            FuncDataUrl = () => Url.Action(MVC.AuthorAphorisms.FindGridView()),
-            FuncGetId = (x) => x.Id,
-            FuncTextField = () => "Name"
-        },
-            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            DataAjaxUrl= "AuthorAphorisms"
+        }
     )

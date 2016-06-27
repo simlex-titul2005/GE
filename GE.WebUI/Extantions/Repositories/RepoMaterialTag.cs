@@ -2,14 +2,14 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using GE.WebCoreExtantions;
 using SX.WebCore.ViewModels;
+using SX.WebCore;
 
 namespace GE.WebUI.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static SxVMMaterialTag[] GetCloud(this RepoMaterialTag repo, Filter filter, int amount=50)
+        public static SxVMMaterialTag[] GetCloud(this RepoMaterialTag repo, SxFilter filter, int amount=50)
         {
             var query = @"SELECT TOP(@amount) x.Title,
        SUM(x.[Count])  AS [Count],

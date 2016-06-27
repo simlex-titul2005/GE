@@ -31,7 +31,7 @@ ORDER BY
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DbContext"].ConnectionString))
             {
                 var data = connection.Query<dynamic>(query, new { amount = amount }).ToArray();
-                return PartialView(MVC.Comments.Views._LastComments, data);
+                return PartialView("~/views/Comments/_LastComments.cshtml", data);
             }
         }
     }

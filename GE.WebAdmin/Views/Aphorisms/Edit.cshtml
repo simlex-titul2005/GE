@@ -9,14 +9,14 @@
 @if (!isNew)
 {
     <div class="text-right">
-        <form method="post" action="@Url.Action(MVC.Aphorisms.Delete(cat: Model.CategoryId, id: Model.Id, mct: SX.WebCore.Enums.ModelCoreType.Aphorism))">
+        <form method="post" action="@Url.Action("delete", new { controller="Aphorisms", cat=Model.CategoryId, id=Model.Id, mct=Enums.ModelCoreType.Aphorism })">
             @Html.AntiForgeryToken()
             <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить афоризм</button>
         </form>
     </div>
 }
 <br />
-<form method="post" action="@Url.Action(MVC.Aphorisms.Edit())">
+<form method="post" action="@Url.Action("edit")">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.CategoryId)
@@ -63,7 +63,7 @@
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
-        @Html.ActionLink("Назад", MVC.Aphorisms.Index(curCat: Model.CategoryId), new { @class = "btn btn-default" })
+        @Html.ActionLink("Назад", "index", new{controller= "Aphorisms", curCat= Model.CategoryId }, new { @class = "btn btn-default" })
     </div>
 </form>
 

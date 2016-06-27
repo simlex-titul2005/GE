@@ -1,37 +1,29 @@
 ﻿@model VMAphorism[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMAphorism)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
     string categoryId = ViewBag.CategoryId;
 }
 
 @if (categoryId != null)
 {
-    @Html.SxGridView(
-                new SxExtantions.SxGridViewSettings<VMAphorism>
+    @Html.SxGV(Model,
+                new SxExtantions.SxGVSettings<VMAphorism>
                 {
-                    UpdateTargetId = "grid-aphorisms",
-                    Data = Model,
-                    Columns = new SxExtantions.SxGridViewColumn<VMAphorism>[]{
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"},
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Name", Caption="Автор",Template=(a)=> {
+                    Columns = new SxExtantions.SxGvColumn<VMAphorism>[]{
+            new SxExtantions.SxGvColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"},
+            new SxExtantions.SxGvColumn<VMAphorism>{FieldName="Name", Caption="Автор",Template=(a)=> {
                 return a.Author!=null? a.Author.Name:null;
             } },
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Show", Caption="Показывать", Template=(a)=> {
+            new SxExtantions.SxGvColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
+            new SxExtantions.SxGvColumn<VMAphorism>{FieldName="Show", Caption="Показывать", Template=(a)=> {
                 return a.Show?"Да":"Нет";
             } }
             },
-                    PagerInfo = pagerInfo,
-                    Filter = filter,
-                    SortDirections = sortDirections,
-                    CreateLink = Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism)),
-                    FuncEditLink = x => Url.Action(MVC.Aphorisms.Edit(cat: categoryId, mct: SX.WebCore.Enums.ModelCoreType.Aphorism, id: x.Id)),
-                    PagerLink = Url.Action(MVC.Aphorisms.Index(curCat: categoryId)),
-                    FuncRowCssClass = (x) => !x.Show ? "warning" : null
-    },
-                    new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+                    DataAjaxUrl = "/aphorisms?curCat=" + categoryId,
+                    EnableCreating=true,
+                    CreateRowUrl= "/aphorisms/edit?curCat=" + categoryId+"&mct="+Enums.ModelCoreType.Aphorism,
+                    EnableEditing=true,
+                    EditRowUrl = x => { return "/aphorisms/edit/"+x.Id+"?curCat=" + categoryId + "&mct=" + Enums.ModelCoreType.Aphorism; }
+                }
         )
 }

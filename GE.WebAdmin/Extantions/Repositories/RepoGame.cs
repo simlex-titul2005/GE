@@ -1,17 +1,17 @@
 ﻿using GE.WebAdmin.Models;
-using GE.WebCoreExtantions;
 using SX.WebCore.Providers;
 using System.Data.SqlClient;
 using System.Linq;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using Dapper;
 using GE.WebCoreExtantions.Repositories;
+using SX.WebCore;
 
 namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static VMGame[] QueryForAdmin(this RepoGame repo, Filter filter)
+        public static VMGame[] QueryForAdmin(this RepoGame repo, SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] { "dg.Id", "dg.Title", "dg.TitleAbbr", "dg.[Description]", "dg.Show" });
             query += " FROM D_GAME AS dg ";
@@ -19,7 +19,8 @@ namespace GE.WebAdmin.Extantions.Repositories
             object param = null;
             query += getGameWhereString(filter, out param);
 
-            query += SxQueryProvider.GetOrderString("dg.Title", SortDirection.Asc, filter.Orders);
+            var defaultOrder = new SxOrder { FieldName = "dg.Title", Direction = SortDirection.Asc };
+            query += SxQueryProvider.GetOrderString(defaultOrder, filter.Order);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
@@ -30,7 +31,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        public static int FilterCount(this RepoGame repo, Filter filter)
+        public static int FilterCount(this RepoGame repo, SxFilter filter)
         {
             var query = @"SELECT COUNT(1) FROM D_GAME AS dg";
 
@@ -44,7 +45,7 @@ namespace GE.WebAdmin.Extantions.Repositories
             }
         }
 
-        private static string getGameWhereString(Filter filter, out object param)
+        private static string getGameWhereString(SxFilter filter, out object param)
         {
             param = null;
             string query = null;

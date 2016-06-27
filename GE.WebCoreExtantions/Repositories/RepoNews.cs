@@ -26,9 +26,8 @@ ORDER BY dm.DateCreate DESC";
             }
         }
 
-        public override IQueryable<News> Query(SxFilter filter)
+        public override News[] Query(SxFilter filter)
         {
-            var f = (Filter)filter;
             var query = SxQueryProvider.GetSelectString(new string[] {
                 "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title",
                 "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount",
@@ -52,9 +51,10 @@ ORDER BY dm.DateCreate DESC";
             ON  dg.Id = da.GameId";
 
             object param = null;
-            query += getNewsWhereString(f, out param);
+            query += getNewsWhereString(filter, out param);
 
-            query += SxQueryProvider.GetOrderString("dm.DateCreate", SortDirection.Desc);
+            var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
+            query += SxQueryProvider.GetOrderString(defaultOrder, filter.Order);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
 
@@ -66,13 +66,12 @@ ORDER BY dm.DateCreate DESC";
                     return da;
                 }, param: param, splitOn: "UserId, GameId");
 
-                return data.AsQueryable();
+                return data.ToArray();
             }
         }
 
         public override int Count(SxFilter filter)
         {
-            var f = (Filter)filter;
             var query = @"SELECT COUNT(1) FROM D_NEWS AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.ID
@@ -82,7 +81,7 @@ ORDER BY dm.DateCreate DESC";
             ON  dg.Id = da.GameId";
 
             object param = null;
-            query += getNewsWhereString(f, out param);
+            query += getNewsWhereString(filter, out param);
 
             using (var conn = new SqlConnection(base.ConnectionString))
             {
@@ -91,7 +90,7 @@ ORDER BY dm.DateCreate DESC";
             }
         }
 
-        private static string getNewsWhereString(Filter filter, out object param)
+        private static string getNewsWhereString(SxFilter filter, out object param)
         {
             param = null;
             string query = null;
@@ -103,22 +102,22 @@ ORDER BY dm.DateCreate DESC";
 
                 param = new
                 {
-                    gtu = filter.GameTitle,
-                    tag = filter.Tag
+                    //gtu = filter.GameTitle,
+                    //tag = filter.Tag
                 };
             }
             else
             {
                 param = new
                 {
-                    gtu = filter.GameTitle
+                    //gtu = filter.GameTitle
                 };
             }
 
             return query;
         }
 
-        public News[] GetLikeMaterial(Filter filter, int amount)
+        public News[] GetLikeMaterial(SxFilter filter, int amount)
         {
             var query = @"SELECT DISTINCT TOP(@amount)
        dm.DateCreate,

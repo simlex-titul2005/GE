@@ -1,4 +1,4 @@
-﻿@model VMEditSiteTest
+﻿@model SxVMEditSiteTest
 @{
     var isNew = Model.Id == 0;
     ViewBag.Title = Model.Id == 0 ? "Добавить тест сайта" : "Редактировать тест \"" + Model.Title + "\"";
@@ -11,7 +11,7 @@
     <div class="form-group">
         @if (!isNew)
         {
-            <form method="post" action="delete">
+            <form method="post" action="/sitetests/delete">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(x => x.Id)
                 <button type="submit" class="btn btn-danger" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить тест</button>
@@ -19,7 +19,7 @@
         }
         else
         {
-            <form method="post" action="@Url.Action(MVC.SiteTests.LoadTestFromFile())" enctype="multipart/form-data">
+            <form method="post" action="/sitetests/loadtestfromfile" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
                 <input type="file" name="file" class="hidden" />
             </form>

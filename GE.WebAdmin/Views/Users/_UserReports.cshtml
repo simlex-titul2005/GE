@@ -13,7 +13,7 @@ else
     <h3 class="text-warning">Подписки на отчеты</h3>
 }
 
-@using (Ajax.BeginForm(MVC.Users.EditUserReport(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "subscription", OnComplete = "removeMessage('#mes-user-info')" }, new { @autocomplete="off"}))
+@using (Ajax.BeginForm("EditUserReport", new { controller="users"}, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "subscription", OnComplete = "removeMessage('#mes-user-info')" }, new { @autocomplete="off"}))
 {
     @Html.AntiForgeryToken()
     <table class="table table-striped table-condensed">

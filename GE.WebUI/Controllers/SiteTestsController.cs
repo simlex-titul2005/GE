@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Linq;
 using GE.WebUI.Models;
 using System.Collections.Generic;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
@@ -32,29 +33,29 @@ namespace GE.WebUI.Controllers
         public virtual ActionResult Details(string titleUrl)
         {
             var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
-            var viewModel = Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(data);
+            var viewModel = Mapper.Map<SxSiteTestQuestion, SxVMSiteTestQuestion>(data);
             return View(model: viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Step(string ttu, List<VMSiteTestStep> pastQ = null)
+        public virtual ActionResult Step(string ttu, List<SxVMSiteTestStep> pastQ = null)
         {
             ViewBag.PastQ = pastQ.Select(x => new { T = x.Question.Text, C = x.Question.IsCorrect, O = x.Order }).Distinct()
-                .Select(x => new VMSiteTestStep {
+                .Select(x => new SxVMSiteTestStep {
                     Order=x.O,
-                    Question=new VMSiteTestQuestion { Text=x.T, IsCorrect=x.C }
+                    Question=new SxVMSiteTestQuestion { Text=x.T, IsCorrect=x.C }
                 }).ToList();
 
             var blocksCount = -1;
-            VMSiteTestQuestion data = getGuessYesNoStep(ttu, pastQ, out blocksCount);
+            SxVMSiteTestQuestion data = getGuessYesNoStep(ttu, pastQ, out blocksCount);
             ViewBag.BlocksCount = blocksCount;
-            return PartialView(MVC.SiteTests.Views._Step, data);
+            return PartialView("_Step", data);
         }
-        private static VMSiteTestQuestion getGuessYesNoStep(string ttu, List<VMSiteTestStep> pastQ, out int blocksCount)
+        private static SxVMSiteTestQuestion getGuessYesNoStep(string ttu, List<SxVMSiteTestStep> pastQ, out int blocksCount)
         {
-            var select = pastQ.Select(x => Mapper.Map<VMSiteTestStep, SxSiteTestStep>(x)).ToList();
+            var select = pastQ.Select(x => Mapper.Map<SxVMSiteTestStep, SxSiteTestStep>(x)).ToList();
             var data = (_repo as SxRepoSiteTest<DbContext>).GetGuessYesNoStep(ttu, select, out blocksCount);
-            var viewModel = Mapper.Map<SxSiteTestQuestion, VMSiteTestQuestion>(data);
+            var viewModel = Mapper.Map<SxSiteTestQuestion, SxVMSiteTestQuestion>(data);
             return viewModel;
         }
     }

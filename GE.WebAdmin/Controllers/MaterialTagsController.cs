@@ -6,8 +6,7 @@ using System.Web.Mvc;
 using static SX.WebCore.Enums;
 using GE.WebAdmin.Extantions.Repositories;
 using GE.WebAdmin.Models;
-using System.Collections.Generic;
-using static SX.WebCore.HtmlHelpers.SxExtantions;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -26,18 +25,18 @@ namespace GE.WebAdmin.Controllers
             ViewBag.MaterialId = mid;
             ViewBag.ModelCoreType = mct;
 
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { MaterialId = mid, ModelCoreType = mct };
+            var filter = new SxFilter(page, _pageSize) { MaterialId = mid, ModelCoreType = mct };
             var totalItems = (_repo as RepoMaterialTag).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
             var viewModel = (_repo as RepoMaterialTag).QueryForAdmin(filter);
 
-            return PartialView(MVC.MaterialTags.Views._GridView, viewModel);
+            return PartialView("~/views/MaterialTags/_GridView.cshtml", viewModel);
         }
 
         [HttpPost]
-        public virtual PartialViewResult Index(int mid, ModelCoreType mct, VMMaterialTag filterModel, IDictionary<string, SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(int mid, ModelCoreType mct, SxVMMaterialTag filterModel, SxOrder order, int page = 1)
         {
             ViewBag.MaterialId = mid;
             ViewBag.ModelCoreType = mct;
@@ -45,18 +44,18 @@ namespace GE.WebAdmin.Controllers
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel, MaterialId = mid, ModelCoreType = mct };
+            var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel, MaterialId = mid, ModelCoreType = mct };
             var totalItems = (_repo as RepoMaterialTag).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
 
             var viewModel = (_repo as RepoMaterialTag).QueryForAdmin(filter);
 
-            return PartialView(MVC.MaterialTags.Views._GridView, viewModel);
+            return PartialView("~/views/MaterialTags/_GridView.cshtml", viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual RedirectToRouteResult Edit(VMEditMaterialTag model)
+        public virtual RedirectToRouteResult Edit(SxVMEditMaterialTag model)
         {
             if (ModelState.IsValid)
             {
@@ -65,23 +64,23 @@ namespace GE.WebAdmin.Controllers
                 if (_repo.GetByKey(model.Id, model.MaterialId, model.ModelCoreType) != null)
                 {
                     ModelState.AddModelError("Id", "Такой тег уже добавлен для материала");
-                    return RedirectToAction(MVC.MaterialTags.Index(model.MaterialId, model.ModelCoreType));
+                    return RedirectToAction("index", new { mid= model.MaterialId, mct= model.ModelCoreType });
                 }
 
-                var redactModel = Mapper.Map<VMEditMaterialTag, SxMaterialTag>(model);
+                var redactModel = Mapper.Map<SxVMEditMaterialTag, SxMaterialTag>(model);
                 _repo.Create(redactModel);
             }
 
-            return RedirectToAction(MVC.MaterialTags.Index(model.MaterialId, model.ModelCoreType));
+            return RedirectToAction("index", new { mid = model.MaterialId, mct = model.ModelCoreType });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual RedirectToRouteResult Delete(VMMaterialTag model)
+        public virtual RedirectToRouteResult Delete(SxVMEditMaterialTag model)
         {
             var id = model.Id.Replace("^", ".");
             _repo.Delete(id, model.MaterialId, model.ModelCoreType);
 
-            return RedirectToAction(MVC.MaterialTags.Index(model.MaterialId, model.ModelCoreType));
+            return RedirectToAction("index", new { mid = model.MaterialId, mct = model.ModelCoreType });
         }
     }
 }

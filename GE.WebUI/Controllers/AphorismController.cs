@@ -21,7 +21,7 @@ namespace GE.WebUI.Controllers
             var data = (_repo as RepoAphorism).GetRandom(id);
             ViewBag.AphorismLettersCount = data.Html.Length;
             var viewModel = Mapper.Map<Aphorism, VMAphorism>(data);
-            return PartialView(MVC.Aphorism.Views._Random, viewModel);
+            return PartialView("_Random", viewModel);
         }
     }
 }

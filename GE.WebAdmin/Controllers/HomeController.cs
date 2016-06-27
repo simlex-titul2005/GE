@@ -5,8 +5,8 @@ namespace GE.WebAdmin.Controllers
 {
     public partial class HomeController : BaseController
     {
-        [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult Index(DbContext dbContext)
+        [HttpGet]
+        public virtual ViewResult Index()
         {
             return View();
         }

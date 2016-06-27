@@ -32,40 +32,40 @@ namespace GE.WebUI.Extantions.Controllers
             {
                 if (controller.SxActionName == "list" || controller.SxActionName == "details")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Афоризмы", Url = controller.Url.Action(MVC.Aphorisms.List()) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Афоризмы", Url = controller.Url.Action("list", new { controller= "Aphorisms" }) });
                 }
             }
             else if (controller.SxControllerName == "articles")
             {
                 if (controller.SxActionName == "list")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = controller.Url.Action(MVC.Articles.List()) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = controller.Url.Action("list", new { controller= "Articles" }) });
                     if (gameName != null)
                         breadcrumbs.Add(new VMBreadcrumb { Title = gameName });
                 }
                 else if (controller.SxActionName == "details")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = controller.Url.Action(MVC.Articles.List()) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Статьи", Url = controller.Url.Action("list", new { controller= "Articles" }) });
                 }
             }
             else if (controller.SxControllerName == "news")
             {
                 if (controller.SxActionName == "list")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = controller.Url.Action(MVC.News.List()) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = controller.Url.Action("list", new { controller= "News" }) });
                     if (gameName != null)
                         breadcrumbs.Add(new VMBreadcrumb { Title = gameName });
                 }
                 else if (controller.SxActionName == "details")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = controller.Url.Action(MVC.News.List()) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Новости", Url = controller.Url.Action("list", new { controller = "News" }) });
                 }
             }
             else if (controller.SxControllerName == "forum")
             {
                 if (controller.SxActionName == "list")
                 {
-                    breadcrumbs.Add(new VMBreadcrumb { Title = "Форум", Url = controller.Url.Action(MVC.Forum.List()) });
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Форум", Url = controller.Url.Action("list", new { controller = "Forum" }) });
                     if (gameName != null)
                         breadcrumbs.Add(new VMBreadcrumb { Title = gameName });
                 }

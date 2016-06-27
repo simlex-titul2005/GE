@@ -16,6 +16,7 @@ using System.Globalization;
 using SX.WebCore.Attrubutes;
 using SX.WebCore.Repositories;
 using SX.WebCore.MvcApplication;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
@@ -50,15 +51,16 @@ namespace GE.WebUI.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ViewResult List(WebCoreExtantions.Filter filter)
+        public virtual ViewResult List(SxFilter filter)
         {
-            ViewBag.GameTitle = filter.GameTitle;
+            var gameTitle = (string)Request.RequestContext.RouteData.Values["GameTitle"];
+            ViewBag.GameTitle = gameTitle;
             var page = Request.RequestContext.RouteData.Values["page"]!=null? Convert.ToInt32(Request.RequestContext.RouteData.Values["page"]):1;
             filter.PagerInfo.Page = page;
 
-            if (filter.GameTitle!=null)
+            if (gameTitle != null)
             {
-                var existGame = (_repoGame as RepoGame).ExistGame(filter.GameTitle);
+                var existGame = (_repoGame as RepoGame).ExistGame(gameTitle);
                 if(!existGame)
                 {
                     Response.StatusCode = 404;
@@ -102,7 +104,7 @@ namespace GE.WebUI.Controllers
 #endif
         [AcceptVerbs(HttpVerbs.Get)]
         [ChildActionOnly]
-        public virtual PartialViewResult LikeMaterials(WebCoreExtantions.Filter filter, int amount=10)
+        public virtual PartialViewResult LikeMaterials(SxFilter filter, int amount=10)
         {
             dynamic[] viewModel = null;
             switch(filter.ModelCoreType)
@@ -116,10 +118,10 @@ namespace GE.WebUI.Controllers
             }
             ViewBag.LikeMatTitle = getLikeMatTitle(filter.ModelCoreType);
 
-            return PartialView(MVC.Shared.Views._LikeMaterial, viewModel);
+            return PartialView("~/views/Shared/_LikeMaterial.cshtml", viewModel);
         }
 
-        private static string getLikeMatTitle(SX.WebCore.Enums.ModelCoreType mct)
+        private static string getLikeMatTitle(ModelCoreType mct)
         {
             switch (mct)
             {
@@ -152,12 +154,12 @@ namespace GE.WebUI.Controllers
             else
             {
                 var html=SxBBCodeParser.GetHtml(model.Html);
-                html = SxBBCodeParser.ReplaceBanners(html, SxApplication<DbContext>.GetBanners(), (b)=>Url.Action(MVC.Pictures.Picture(b.PictureId)));
+                html = SxBBCodeParser.ReplaceBanners(html, SxApplication<DbContext>.GetBanners(), (b)=>Url.Action("picture", new { controller="pictures", id=b.PictureId}));
                 html = SxBBCodeParser.ReplaceVideo(html, model.Videos);
                 model.Html = html;
 
-                var seoInfoRepo = new SxRepoSeoInfo<DbContext>();
-                var matSeoInfo = Mapper.Map<SxSeoInfo, VMSeoInfo>(seoInfoRepo.GetSeoInfo(model.Id, model.ModelCoreType));
+                var seoInfoRepo = new SxRepoSeoTags<DbContext>();
+                var matSeoInfo = Mapper.Map<SxSeoTags, SxVMSeoTags>(seoInfoRepo.GetSeoTags(model.Id, model.ModelCoreType));
 
                 ViewBag.Title = ViewBag.Title ?? (matSeoInfo!=null? matSeoInfo.SeoTitle:null) ?? model.Title;
                 ViewBag.Description = ViewBag.Description ?? (matSeoInfo != null ? matSeoInfo.SeoDescription : null) ?? model.Foreword;
@@ -187,10 +189,10 @@ namespace GE.WebUI.Controllers
                     {
                         switch (_modelCoreType)
                         {
-                            case Enums.ModelCoreType.Article:
+                            case ModelCoreType.Article:
                                 (_repo as RepoArticle).AddUserView(model.Id, model.ModelCoreType);
                                 break;
-                            case Enums.ModelCoreType.News:
+                            case ModelCoreType.News:
                                 (_repo as RepoNews).AddUserView(model.Id, model.ModelCoreType);
                                 break;
                         }
@@ -221,7 +223,7 @@ namespace GE.WebUI.Controllers
                     break;
             }
 
-            return PartialView(MVC.Shared.Views._ByDateMaterial, data);
+            return PartialView("~/views/shared/_bydatematerial.cshtml", data);
         }
 
 
@@ -243,7 +245,7 @@ namespace GE.WebUI.Controllers
             }
             ViewData["ModelCoreType"] = mct;
 
-            return PartialView(MVC.Shared.Views._PopularMaterials, data);
+            return PartialView("~/views/shared/_popularmaterials.cshtml", data);
         }
     }
 }

@@ -1,29 +1,25 @@
-﻿@model VMSiteTestQuestion[]
+﻿@model SxVMSiteTestQuestion[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMSiteTestQuestion)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 
-@Html.SxGridView(
-        new SxExtantions.SxGridViewSettings<VMSiteTestQuestion>
+@Html.SxGV(Model,
+        new SxExtantions.SxGVSettings<SxVMSiteTestQuestion>
         {
-            UpdateTargetId = "site-test-questions",
-            Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>[]{
-                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="DateCreate", Caption="Дата создания"},
-                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="TestTitle", Caption="Тест"},
-                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="BlockTitle", Caption="Блок"},
-                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="Text", Caption="Текст"},
-                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="IsCorrect", Caption="Корректность",Template= (q)=> {
+            Columns = new SxExtantions.SxGvColumn<SxVMSiteTestQuestion>[]{
+                new SxExtantions.SxGvColumn<SxVMSiteTestQuestion>{FieldName="DateCreate", Caption="Дата создания"},
+                new SxExtantions.SxGvColumn<SxVMSiteTestQuestion>{FieldName="TestTitle", Caption="Тест"},
+                new SxExtantions.SxGvColumn<SxVMSiteTestQuestion>{FieldName="BlockTitle", Caption="Блок"},
+                new SxExtantions.SxGvColumn<SxVMSiteTestQuestion>{FieldName="Text", Caption="Текст"},
+                new SxExtantions.SxGvColumn<SxVMSiteTestQuestion>{FieldName="IsCorrect", Caption="Корректность",Template= (q)=> {
                     return q.IsCorrect?"Да":"Нет";
                 } }
             },
-            PagerInfo=pagerInfo,
-            Filter = filter,
-            SortDirections = sortDirections
-        },
-            new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            EnableCreating = true,
+            CreateRowUrl = "/sitetestquestions/edit/",
+            EnableEditing = true,
+            EditRowUrl = (x) => { return "/sitetestquestions/edit/" + x.Id; },
+            DataAjaxUrl = "/sitetestquestions"
+        }
     )

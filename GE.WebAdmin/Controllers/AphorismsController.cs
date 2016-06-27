@@ -4,14 +4,13 @@ using SX.WebCore.Abstract;
 using System.Web.Mvc;
 using System.Linq;
 using GE.WebAdmin.Models;
-using System.Collections.Generic;
-using SX.WebCore.HtmlHelpers;
 using Microsoft.AspNet.Identity;
 using static SX.WebCore.UrlHelperExtensions;
 using GE.WebAdmin.Extantions.Repositories;
 using static SX.WebCore.Enums;
 using SX.WebCore.Repositories;
 using GE.WebAdmin.Infrastructure.ReportAdapters;
+using SX.WebCore;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -22,23 +21,24 @@ namespace GE.WebAdmin.Controllers
         private static SxDbRepository<int, Aphorism, DbContext> _repo;
         public AphorismsController()
         {
-            _repo = new RepoAphorism();
+            if(_repo==null)
+                _repo = new RepoAphorism();
         }
 
         [HttpGet]
         public virtual ViewResult Index(int page = 1, string curCat=null)
         {
-            if(curCat!=null)
+            if(curCat != null)
             {
                 var category = new SxRepoMaterialCategory<DbContext>().GetByKey(curCat);
                 ViewBag.Category = category;
             }
 
             ViewBag.CategoryId = curCat;
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { WhereExpressionObject=new VMAphorism { CategoryId=curCat } };
+            var filter = new SxFilter(page, _pageSize) { WhereExpressionObject=new VMAphorism { CategoryId= curCat } };
             var totalItems = (_repo as RepoAphorism).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
             var data = (_repo as RepoAphorism).Query(filter).ToArray();
             var viewModel = data.Select(x=>Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
@@ -47,21 +47,19 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost]
-        public virtual PartialViewResult Index(string curCat, VMAphorism filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(string curCat, VMAphorism filterModel, SxOrder order, int page = 1)
         {
-            ViewBag.Filter = filterModel;
-            ViewBag.Order = order;
             filterModel.CategoryId = curCat;
             ViewBag.CategoryId = curCat;
 
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
             var totalItems = (_repo as RepoAphorism).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
             var viewModel = (_repo as RepoAphorism).Query(filter).ToArray().Select(x => Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
 
-            return PartialView(MVC.Aphorisms.Views._GridView, viewModel);
+            return PartialView("~/views/Aphorisms/_GridView.cshtml", viewModel);
         }
 
         [HttpGet]
@@ -98,7 +96,7 @@ namespace GE.WebAdmin.Controllers
                     _repo.Create(redactModel);
                 else
                     _repo.Update(redactModel, true, "Title", "Html", "AuthorId", "Show", "SourceUrl");
-                return RedirectToAction(MVC.Aphorisms.Index(curCat: model.CategoryId));
+                return RedirectToAction("index", new { curCat= model.CategoryId });
             }
             return View(model);
         }
@@ -107,7 +105,7 @@ namespace GE.WebAdmin.Controllers
         public virtual RedirectToRouteResult Delete(string cat, int id, ModelCoreType mct)
         {
             _repo.Delete(id, mct);
-            return RedirectToAction(MVC.Aphorisms.Index(curCat: cat));
+            return RedirectToAction("index", new { curCat= cat });
         }
 
         [HttpPost]

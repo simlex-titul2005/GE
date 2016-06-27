@@ -1,31 +1,23 @@
-﻿@model VMUser[]
+﻿@model SxVMAppUser[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMUser)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
-
-@Html.SxGridView(
-    new SxExtantions.SxGridViewSettings<VMUser>
-    {
-        UpdateTargetId = "grid-users",
-        Data = Model,
-        Columns = new SxExtantions.SxGridViewColumn<VMUser>[]{
-            new SxExtantions.SxGridViewColumn<VMUser>{FieldName="NikName", Caption="Ник-нейм"},
-            new SxExtantions.SxGridViewColumn<VMUser>{FieldName="Email", Caption="Почта", Template=(m)=> {
+@Html.SxGV(Model, new SxExtantions.SxGVSettings<SxVMAppUser>()
+{
+    Columns = new SxExtantions.SxGvColumn<SxVMAppUser>[] {
+        new SxExtantions.SxGvColumn<SxVMAppUser> { FieldName="NikName", Caption="Ник-нейм"},
+        new SxExtantions.SxGvColumn<SxVMAppUser> { FieldName="Email", Template=(m)=> {
                 return string.Format("<a href=\"mailto:{0}\">{0}</a>", m.Email);
             }},
-            new SxExtantions.SxGridViewColumn<VMUser>{FieldName="RoleNames", Caption="Роль"},
-            new SxExtantions.SxGridViewColumn<VMUser>{FieldName="IsOnline", Caption="Статус", Template=(u)=> {
+        new SxExtantions.SxGvColumn<SxVMAppUser> { FieldName="RoleNames", Caption="Роли"},
+        new SxExtantions.SxGvColumn<SxVMAppUser> { FieldName="IsOnline", Caption="Статус", Template=(u)=> {
                 return u.IsOnline?string.Format("<span class=\"badge\">online</span>"):null;
-            } }
-        },
-        PagerInfo=pagerInfo,
-        Filter = filter,
-        SortDirections = sortDirections,
-        EnableCreate=false
+            }}
     },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
-    )
+    EnableCreating = true,
+    CreateRowUrl = "/users/edit",
+    EnableEditing = true,
+    EditRowUrl = (x) => { return "/users/edit/" + x.Id; },
+    DataAjaxUrl = "/users"
+})

@@ -1,4 +1,4 @@
-﻿@model VMEditSiteTestBlock
+﻿@model SxVMEditSiteTestBlock
 @{
     var isNew = Model.Id == 0;
     ViewBag.Title = Model.Id == 0 ? "Добавить блок теста сайта" : "Редактировать блок теста \"" + Model.Title + "\"";
@@ -10,7 +10,7 @@
 {
     <div class="text-right">
         <div class="form-group">
-            <form method="post" action="delete">
+            <form method="post" action="/sitetestblocks/delete">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(x => x.Id)
                 <button type="submit" class="btn btn-danger" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить блок</button>
@@ -19,7 +19,7 @@
     </div>
 }
 
-<form method="post" action="edit">
+<form method="post" action="edit" autocomplete="off">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
 
@@ -27,7 +27,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(x => x.Title, new { @class = "control-label" })
-                @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder="Введите название группы" } })
+                @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите название группы" } })
                 @Html.ValidationMessageFor(x => x.Title)
             </div>
         </div>
@@ -48,6 +48,12 @@
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
-        @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
+        @Html.RouteLink("Назад", new { action = "Index", controller = "sitetestblocks" }, new { @class = "btn btn-default" })
     </div>
 </form>
+
+@section scripts{
+    <script>
+        $('#TestId').sx_gvl();
+    </script>
+}

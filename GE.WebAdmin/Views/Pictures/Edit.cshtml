@@ -1,4 +1,4 @@
-﻿@model VMEditPicture
+﻿@model SxVMEditPicture
 @{
     var isNew = Model.Id == Guid.Empty;
 }
@@ -8,7 +8,7 @@
 </h2>
 @if (!isNew)
 {
-    <form method="post" action="@Url.Action(MVC.Pictures.Delete(id: Model.Id))">
+    <form method="post" action="/pictures/delete">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.Id)
         <button type="submit" class="btn btn-danger pull-right" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить фото</button>
@@ -52,7 +52,7 @@
     <br />
     @if (!isNew)
     {
-        <img alt="@Model.Caption" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.Id))" />
+        <img alt="@Model.Caption" src="/pictures/picture/@Model.Id" />
         <br />
     }
     <br />

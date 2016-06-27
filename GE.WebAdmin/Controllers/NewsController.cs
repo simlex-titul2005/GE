@@ -3,8 +3,6 @@ using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Abstract;
-using SX.WebCore.HtmlHelpers;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using Microsoft.AspNet.Identity;
@@ -14,10 +12,11 @@ namespace GE.WebAdmin.Controllers
 {
     public partial class NewsController : BaseController
     {
-        SxDbRepository<int, News, DbContext> _repo;
+        private SxDbRepository<int, News, DbContext> _repo;
         public NewsController()
         {
-            _repo = new RepoNews();
+            if(_repo==null)
+                _repo = new RepoNews();
         }
 
         private static int _pageSize = 20;
@@ -25,7 +24,7 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new WebCoreExtantions.Filter(page, _pageSize);
+            var filter = new SxFilter(page, _pageSize);
             var totalItems = (_repo as RepoNews).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
@@ -35,12 +34,12 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost]
-        public virtual PartialViewResult Index(VMNews filterModel, IDictionary<string, SxExtantions.SortDirection> order, int page = 1)
+        public virtual PartialViewResult Index(VMNews filterModel, SxOrder order, int page = 1)
         {
             ViewBag.Filter = filterModel;
             ViewBag.Order = order;
 
-            var filter = new WebCoreExtantions.Filter(page, _pageSize) { Orders = order, WhereExpressionObject = filterModel };
+            var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
             var totalItems = (_repo as RepoNews).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.PagerInfo = filter.PagerInfo;
@@ -107,7 +106,7 @@ namespace GE.WebAdmin.Controllers
                     newModel = _repo.Update(redactModel, true, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "DateOfPublication", "UserId", "Foreword",  "ShowFrontPictureOnDetailPage", "CategoryId", "IsTop");
                 }
 
-                return RedirectToAction(MVC.News.Index());
+                return RedirectToAction("index");
             }
             else
             {
@@ -128,11 +127,11 @@ namespace GE.WebAdmin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditNews model)
         {
-            var repoSeoInfo = new SxRepoSeoInfo<DbContext>();
+            var repoSeoInfo = new SxRepoSeoTags<DbContext>();
             repoSeoInfo.DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
 
             _repo.Delete(model.Id, model.ModelCoreType);
-            return RedirectToAction(MVC.News.Index());
+            return RedirectToAction("index");
         }
     }
 }

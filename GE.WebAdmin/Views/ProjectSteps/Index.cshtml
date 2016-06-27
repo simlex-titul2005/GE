@@ -1,21 +1,20 @@
-﻿@model VMProjectStep[]
+﻿@model SxVMProjectStep[]
 @{
     ViewBag.Title = "Развитие проекта";
 }
 
-@helper WriteStep(VMProjectStep step)
-{
-
+@section styles{
+    <link href="~/content/dist/css/ps-tree.min.css" rel="stylesheet" />
 }
 
 <h2>@ViewBag.Title</h2>
 <div class="text-right">
-    <a class="btn btn-default" href="@Url.Action(MVC.ProjectSteps.Edit())">Создать</a>
+    <a class="btn btn-default" href="/projectsteps/edit">Создать</a>
 </div>
 <br />
 @if (Model.Any())
 {
-    @Html.SxTree(Model, new SxExtantions.SxTreeSettings<VMProjectStep>
+    @Html.SxTree(Model, new SxExtantions.SxTreeSettings<SxVMProjectStep>
 {
     FuncChildren = (s) => { return s.Steps; },
     FuncContent = (s) => { return Html.DisplayFor(x => s).ToString(); }
@@ -41,8 +40,7 @@
                 url: '/projectsteps/replaceorder',
                 data: { id: id, osid: osid, dir: dir },
                 success: function (data) {
-                    if(dir)
-                    {
+                    if (dir) {
                         $prevli = $li.prev('li');
                         if ($prevli.length == 1) {
                             var oldhtml = $prevli.html();
@@ -62,8 +60,7 @@
             });
         }
 
-        function fillProjectStepHtml(s)
-        {
+        function fillProjectStepHtml(s) {
             $a = $(s);
             var id = $a.data("id");
             $.ajax({
@@ -73,9 +70,8 @@
                 beforeSend: function () {
                     $('.ps-tree .html').remove();
                 },
-                success:function(data)
-                {
-                    var html=$('<div class="html"></div>').append(data);
+                success: function (data) {
+                    var html = $('<div class="html"></div>').append(data);
                     $a.closest('div').append(html);
                 }
             });

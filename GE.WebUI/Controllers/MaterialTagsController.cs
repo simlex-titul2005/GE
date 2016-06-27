@@ -22,22 +22,22 @@ namespace GE.WebUI.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual PartialViewResult List(int mid, ModelCoreType mct, int maxFs=30, int amount=50)
         {
-            var filter = new WebCoreExtantions.Filter(1, 10) { MaterialId= mid, ModelCoreType=mct };
+            var filter = new SxFilter(1, 10) { MaterialId= mid, ModelCoreType=mct };
             var viewModel = (_repo as RepoMaterialTag).GetCloud(filter);
             string url = "#";
             switch(mct)
             {
                 case ModelCoreType.Article:
-                    url = Url.Action(MVC.Articles.List());
+                    url = Url.Action("~/views/articles/list.cshtml");
                     break;
                 case ModelCoreType.News:
-                    url = Url.Action(MVC.News.List());
+                    url = Url.Action("~/views/news/list.cshtml");
                     break;
             }
             ViewData["TagsMaxFs"] = maxFs;
             ViewData["TagsUrl"] = url;
             ViewData["TagsShowHeader"] = true;
-            return PartialView(MVC.MaterialTags.Views._TagsCloud, viewModel);
+            return PartialView("~/views/MaterialTags/_TagsCloud.cshtml", viewModel);
         }
     }
 }

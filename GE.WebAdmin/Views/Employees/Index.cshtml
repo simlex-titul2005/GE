@@ -1,4 +1,4 @@
-﻿@model VMEmployee[]
+﻿@model SxVMEmployee[]
 @{
     ViewBag.Title = "Сотрудники сайта";
 }
@@ -6,5 +6,13 @@
 <h2>@ViewBag.Title</h2>
 <br />
 <div id="grid-employees">
-    @Html.Partial(MVC.Employees.Views._GridView, Model)
+    @Html.Partial("_GridView", Model)
 </div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#grid-employees').sx_gv();
+        });
+    </script>
+}

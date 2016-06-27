@@ -1,4 +1,4 @@
-﻿@model VMVideo[]
+﻿@model SxVMVideo[]
 @{
     ViewBag.Title = "Видео сайта";
 }
@@ -6,5 +6,13 @@
 <h2>@ViewBag.Title</h2>
 <br />
 <div id="grid-videos">
-    @Html.Partial(MVC.Videos.Views._GridView, Model)
+    @Html.Partial("_GridView", Model)
 </div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#grid-videos').sx_gv();
+        });
+    </script>
+}

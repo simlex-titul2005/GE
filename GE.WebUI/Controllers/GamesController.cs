@@ -53,7 +53,7 @@ namespace GE.WebUI.Controllers
                 BadImagePath = emptyGameBadImagePath != null ? emptyGameBadImagePath.Value : null,
             };
 
-            return PartialView(MVC.Games.Views._GameList, viewModel);
+            return PartialView("_GameList", viewModel);
         }
 
         [HttpGet]

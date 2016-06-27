@@ -1,32 +1,27 @@
-﻿@model VMVideo[]
+﻿@model SxVMVideo[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMVideo)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
-
-@Html.SxGridView(
-            new SxExtantions.SxGridViewSettings<VMVideo>
+@Html.SxGV(Model,
+            new SxExtantions.SxGVSettings<SxVMVideo>
             {
-                UpdateTargetId = "grid-videos",
-                Data = Model,
-                Columns = new SxExtantions.SxGridViewColumn<VMVideo>[]{
-            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Id", Caption="Внутренний идентификатор", Template=(v)=> {
+                Columns = new SxExtantions.SxGvColumn<SxVMVideo>[]{
+            new SxExtantions.SxGvColumn<SxVMVideo>{FieldName="Id", Caption="Внутренний идентификатор", Template=(v)=> {
                 return string.Format("<b class=\"text-info\">{0}</b>", v.Id);
             }},
-            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="VideoId", Caption="Идентификатор", Template=(v)=> {
+            new SxExtantions.SxGvColumn<SxVMVideo>{FieldName="VideoId", Caption="Идентификатор", Template=(v)=> {
                 return string.Format("<b class=\"text-warning\">{0}</b>", v.VideoId);
             } },
-            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Title", Caption="Название видео"},
-            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="SourceUrl", Caption="Источник", Template=(v)=> {
+            new SxExtantions.SxGvColumn<SxVMVideo>{FieldName="Title", Caption="Название видео"},
+            new SxExtantions.SxGvColumn<SxVMVideo>{FieldName="SourceUrl", Caption="Источник", Template=(v)=> {
                 return v.SourceUrl!=null?string.Format("<i class=\"fa fa-link\"></i>&nbsp;<a rel=\"nofollow\" href=\"{0}\">{0}</a>", v.SourceUrl):null;
             } }
         },
-                PagerInfo = pagerInfo,
-                Filter = filter,
-                SortDirections = sortDirections
-            },
-                new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+                EnableCreating = true,
+                CreateRowUrl = "/videos/edit",
+                EnableEditing = true,
+                EditRowUrl = (x) => { return "/videos/edit/" + x.Id; },
+                DataAjaxUrl = "/videos"
+            }
     )

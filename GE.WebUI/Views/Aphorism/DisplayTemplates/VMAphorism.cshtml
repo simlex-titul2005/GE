@@ -12,14 +12,14 @@
     <div class="aph-html">
         @if (Model.Author != null && Model.Author.PictureId.HasValue)
         {
-            <figure class="img-circle" style="background-image:url(@Url.Action(MVC.Pictures.Picture((Guid)Model.Author.PictureId))">
+            <figure class="img-circle" style="background-image:url(@Url.Action("Picture", new { controller="Pictures", id=Model.Author.PictureId}))">
 
             </figure>
         }
         <div class="html">
             @Html.Raw(Model.Html)
             <br />
-            <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Aphorisms.Details(categoryId: Model.CategoryId, titleUrl: Model.TitleUrl))">Подробнее <i class="fa fa fa-angle-double-right"></i></a>
+            <a class="btn btn-default btn-sm" href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})">Подробнее <i class="fa fa fa-angle-double-right"></i></a>
         </div>
     </div>
 </div>

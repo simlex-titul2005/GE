@@ -1,29 +1,10 @@
 ﻿using GE.WebCoreExtantions;
-using SX.WebCore.Repositories;
-using System;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+using SX.WebCore.MvcControllers;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class BannersController : Controller
+    public sealed class BannersController : SxBannersController<DbContext>
     {
-        [HttpPost]
-        public async virtual Task AddClick(Guid bannerId)
-        {
-            await Task.Run(() =>
-            {
-                new SxRepoBanner<DbContext>().AddClick(bannerId);
-            });
-        }
-
-        [HttpPost]
-        public async virtual Task AddShow(Guid bannerId)
-        {
-            await Task.Run(() =>
-            {
-                new SxRepoBanner<DbContext>().AddShows(new Guid[] { bannerId });
-            });
-        }
+        
     }
 }

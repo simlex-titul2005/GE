@@ -192,10 +192,6 @@
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="robots.txt" />
     <Content Include="packages.config" />
     <Content Include="content\dist\fonts\fontawesome-webfont.eot" />
@@ -203,6 +199,10 @@
     <Content Include="content\dist\fonts\fontawesome-webfont.woff" />
     <Content Include="content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="content\dist\fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\admin-game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\release.pubxml" />

@@ -14,7 +14,7 @@
             <blockquote style="color:white;">
                 @if (Model.Aphorism.Author != null && Model.Aphorism.Author.PictureId.HasValue)
                 {
-                    <figure class="author-img img-circle" style="background-image:url(@Url.Action(MVC.Pictures.Picture((Guid)Model.Aphorism.Author.PictureId)));">
+                    <figure class="author-img img-circle" style="background-image:url(@Url.Action("Picture", new { controller="Pictures", id=Model.Aphorism.Author.PictureId}));">
 
                     </figure>
                 }
@@ -22,12 +22,12 @@
                 <h4 class="small">@(author)</h4>
             </blockquote>
 
-            @Html.Action(MVC.Comments.Edit(mid: Model.Aphorism.Id, mct: SX.WebCore.Enums.ModelCoreType.Aphorism))
+            @Html.Action("Edit", new { controller= "Comments", mid= Model.Aphorism.Id, mct= SX.WebCore.Enums.ModelCoreType.Aphorism }))
 
             @*author*@
             @if (Model.TopForAuthor.Any())
             {
-                @Html.Partial(MVC.Aphorisms.Views._List, Model.TopForAuthor, new ViewDataDictionary { { "Author", author } })
+                @Html.Partial("_List", Model.TopForAuthor, new ViewDataDictionary { { "Author", author } })
                 <div class="text-center">
                     <a href="@Url.Action("list", new { author=author=="Аноним"? "no":author})" class="btn btn-default btn-transparent white">Все афоризмы автора</a>
                 </div>
@@ -36,14 +36,14 @@
             @*category*@
             @if (Model.TopForCategory.Any())
             {
-                @Html.Partial(MVC.Aphorisms.Views._List, Model.TopForCategory, new ViewDataDictionary { { "Category", Model.Aphorism.Category.Title } })
+                @Html.Partial("_List", Model.TopForCategory, new ViewDataDictionary { { "Category", Model.Aphorism.Category.Title } })
                 <div class="text-center">
-                    <a href="@Url.Action(MVC.Aphorisms.List(categoryId: Model.Aphorism.CategoryId))" class="btn btn-default btn-transparent white">Все афоризмы категории</a>
+                    <a href="@Url.Action("List", new { controller="Aphorisms", categoryId= Model.Aphorism.CategoryId})" class="btn btn-default btn-transparent white">Все афоризмы категории</a>
                 </div>
             }
         </div>
         <div class="col-md-3">
-            @Html.Action(MVC.Aphorisms.Categories(curCat: Model.Aphorism.CategoryId))
+            @Html.Action("Categories", new { controller= "Aphorisms", curCat= Model.Aphorism.CategoryId })
         </div>
     </div>
 </div>

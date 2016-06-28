@@ -1,7 +1,6 @@
 ﻿using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using GE.WebUI.Models;
-using SX.WebCore.Abstract;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using System.Linq;
@@ -10,16 +9,17 @@ using System.Threading.Tasks;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class AphorismsController : BaseController
+    public sealed class AphorismsController : BaseController
     {
-        private SxDbRepository<int, Aphorism, DbContext> _repo;
+        private static RepoAphorism _repo;
         public AphorismsController()
         {
-            _repo = new RepoAphorism();
+            if(_repo==null)
+                _repo = new RepoAphorism();
         }
 
         [HttpGet]
-        public virtual ActionResult Details(string categoryId, string titleUrl)
+        public ActionResult Details(string categoryId, string titleUrl)
         {
             var viewModel = (_repo as RepoAphorism).GetByTitleUrl(categoryId, titleUrl);
             if (viewModel == null || viewModel.Aphorism == null)
@@ -38,7 +38,7 @@ namespace GE.WebUI.Controllers
 
         [OutputCache(Duration = 900, VaryByParam = "curCat;onlyNotCurrent")]
         [HttpGet, ChildActionOnly]
-        public virtual PartialViewResult Categories(string curCat = null, bool onlyNotCurrent = true)
+        public PartialViewResult Categories(string curCat = null, bool onlyNotCurrent = true)
         {
             var data = (_repo as RepoAphorism).GetAphorismCategories(curCat);
             var viewModel = onlyNotCurrent ? data.Where(x => !x.IsCurrent).ToArray() : data;
@@ -48,7 +48,7 @@ namespace GE.WebUI.Controllers
 
         private static int _pageSize = 20;
         [HttpGet]
-        public virtual ViewResult List(string categoryId = null, int page = 1)
+        public ViewResult List(string categoryId = null, int page = 1)
         {
             var author = Request.QueryString["author"];
             var filter = new SxFilter(page, _pageSize) {
@@ -68,7 +68,7 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual RedirectToRouteResult Search(string author, string html)
+        public RedirectToRouteResult Search(string author, string html)
         {
             return RedirectToAction("list", new { author = author, html = html });
         }

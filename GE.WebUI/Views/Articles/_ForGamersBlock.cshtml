@@ -1,6 +1,8 @@
 ﻿@model VMFGBlock
 @{
     Layout = null;
+    VMFGBGame game;
+    VMMaterialCategory cat;
 }
 
 <!--for gamers block-->
@@ -13,11 +15,11 @@
                 <ul class="games">
                     @for (int i = 0; i < Model.GameLength; i++)
                     {
-                        var game = Model.Games[i];
+                        game = Model.Games[i];
                         <li @(Model.SelectedGameTitle!=null && Model.SelectedGameTitle.ToLowerInvariant()==game.TitleUrl.ToLowerInvariant()?"class=selected":null)>
                             <a href="#" rel="nofollow" data-game-title="@game.TitleUrl">
                                 <figure>
-                                    <img alt="@game.Title" src="@Url.Action(MVC.Pictures.Picture(game.FrontPictureId, height:80))" />
+                                    <img alt="@game.Title" src="@Url.Action("Picture", new { controller="Pictures", id=game.FrontPictureId, height=80})" />
                                     <h4>@game.Title <i class="fa fa-angle-double-down" title="Развернуть блок"></i></h4>
                                     <span class="desc">@game.Description</span>
                                 </figure>
@@ -26,7 +28,7 @@
                             <ul class="dropdown">
                                 @for (int y = 0; y < game.MaterialCategoryLength; y++)
                                 {
-                                    var cat = game.MaterialCategories[y];
+                                    cat = game.MaterialCategories[y];
                                     var title = cat.Title;
                                     <li>
                                         <a title="@title" href="#" data-game-title="@game.TitleUrl" data-category-id="@cat.Id">@title</a>
@@ -40,7 +42,7 @@
             <div class="col-md-9">
                 <h3>Анонсы статей</h3>
                 <div id="materials-preview">
-                    @Html.Partial(MVC.Articles.Views._Preview, Model.Articles)
+                    @Html.Partial("_Preview", Model.Articles)
                 </div>
             </div>
         </div>

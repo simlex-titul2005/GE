@@ -11,7 +11,7 @@
         <div class="col-md-2">
             @if (Model.FrontPictureId.HasValue)
             {
-                <figure class="@(isAphorism?"img-circle":null)" style="background-image:url(@(Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId, width: 300))))" onclick="changeLocation($(this).closest('.dg-lm'))">
+                <figure class="@(isAphorism?"img-circle":null)" style="background-image:url(@(Url.Action("Picture", new { controller="Pictures", id=Model.FrontPictureId, width= 300})))" onclick="changeLocation($(this).closest('.dg-lm'))">
 
                 </figure>
             }

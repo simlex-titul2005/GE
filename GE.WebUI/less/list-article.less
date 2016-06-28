@@ -1,0 +1,215 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
+
+.list-article {
+    display: inline-table;
+    height: 100%;
+    border-radius:3px;
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
+    color:@color-white;
+    width:100%;
+    padding-bottom:@def-pad*4;
+
+    @media (max-width: @screen-xs-max) {
+        margin-top: @def-pad*2;
+        padding-bottom:0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        padding-bottom:0;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article .video figure{
+    height:150px;
+    background-position:center center;
+    background-size:cover;
+}
+
+.list-article .video figure figcaption{
+    text-align:left;
+    padding:5px;
+}
+
+.list-article > .content {
+    padding: 0 10px @def-pad 10px;
+}
+
+.list-article figure{
+    text-align:center;
+    @media (max-width: @screen-xs-max) {
+       
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        display:none;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article figure > img {
+    width: 100%;
+    @media (max-width: @screen-xs-max) {
+        width: 100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article .info {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+
+    @media (max-width: @screen-xs-max) {
+        margin-top: @def-pad;
+        position:relative;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        position:relative;
+        display:none;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-article ul > li {
+    float: unset;
+    margin-right: unset;
+}
+
+.list-article a {
+    color: inherit;
+}
+
+.list-article .btn-transparent {
+    width: 100%;
+    min-width: unset;
+    @media (max-width: @screen-xs-max) {
+        margin-top:@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        max-width:107px;
+    }
+
+    @media (min-width: @screen-lg-min) {
+        max-width:140px;
+    }
+}
+
+.list-article .link {
+    font-size: 22px;
+    color: @color-muted-blue;
+    font-weight: 700;
+    line-height: 1;
+    display: block;
+    margin-top: @def-pad;
+}
+
+.list-article .foreword {
+    margin-top: @def-pad;
+    font-size:0.9em;
+}
+
+.list-article-container .sx-list.t-mode {
+    margin-top:@def-pad*2;
+    @media (max-width: @screen-xs-max) {
+        margin: 0 !important;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article-container  .sx-list > .row {
+    @media (max-width: @screen-xs-max) {
+        display: inline-block !important;
+        margin: 0 !important;
+        width:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article-container .sx-list > .row > div {
+    @media (max-width: @screen-xs-max) {
+        display: inline-block !important;
+        width:100%;
+        padding:0 !important;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.list-article-container .sx-list.t-mode > .row > div{
+    @media (max-width: @screen-xs-max) {
+       
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}

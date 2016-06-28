@@ -133,9 +133,7 @@ function getGridViewData(grid, page, order) {
         method: 'post',
         success: function (result) {
             $grid.parent().html(result);
-        },
-        complete: function () {
-            $grid.parent().find('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="tooltip"]').tooltip();
         }
     });
 }

@@ -1,0 +1,199 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "positioned.less";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
+
+.forum {
+    font-size: 15px;
+    color: @color-forum-txt;
+}
+
+.forum a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.forum h2, .forum h3, .forum h4, .forum h5, .forum h6 {
+    font-size: 1em;
+}
+
+.forum > .part {
+    margin-top: @def-pad*2;
+    background-color: @color-white;
+}
+
+.forum > .part > .p-header {
+    text-transform: uppercase;
+    border-bottom: 1px solid @color-forum-border;
+    padding: 10px @def-pad*2;
+}
+
+.forum > .part > .p-header .p-title {
+    font-size: 20px;
+}
+
+.forum > .part > .p-header .p-last-com {
+    font-size: 13pt;
+    @media (max-width: @screen-xs-max) {
+        display:none;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
+}
+
+.forum > .part > .p-content {
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        padding-bottom: @def-pad;
+    }
+}
+
+.forum .theme {
+    padding: @def-pad @def-pad*2;
+    transition:all 0.1s;
+}
+
+.forum .theme:hover{
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        background-color:@color-forum-blue !important;
+        cursor:pointer;
+    }
+}
+
+.forum .theme:hover  .t-title, .forum .theme:hover .t-foreword, .forum .theme:hover .t-last-com
+{
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        color:@color-white;
+    }
+}
+
+.forum .theme:hover .t-info {
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        color:#989898;
+    }
+}
+
+.forum .theme:nth-child(2n) {
+    background-color: #f2f6fa;
+}
+
+.forum .theme .t-title , .forum .theme .t-last-com {
+    color:@color-forum-blue;
+}
+
+.forum .theme .t-title{
+    font-size:18px;
+}
+
+.forum .theme .t-foreword{
+    margin-top:10px;
+    font-size:16px;
+    line-height:1;
+    @media (max-width: @screen-xs-max) {
+        margin-top:@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
+}
+
+.forum .theme .t-info{
+    text-align:right;
+    @media (max-width: @screen-xs-max) {
+        text-align:left;
+        margin-top:@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
+}
+
+.forum .theme .t-last-com{
+    font-size:13px;
+    @media (max-width: @screen-xs-max) {
+        margin-top:@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
+}

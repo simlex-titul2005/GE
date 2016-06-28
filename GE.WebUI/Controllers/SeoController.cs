@@ -1,6 +1,5 @@
 ﻿using System.Configuration;
 using System.Data.SqlClient;
-using System.Text;
 using System.Web.Mvc;
 using Dapper;
 using System.Linq;
@@ -8,31 +7,24 @@ using static SX.WebCore.Enums;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using GE.WebUI.Infrastructure;
-using System.Web.SessionState;
+using SX.WebCore.MvcControllers;
+using GE.WebCoreExtantions;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class SeoController : Controller
+    public sealed class SeoController : SxSeoController<DbContext>
     {
         private static ISxSiteMapProvider _smProvider;
-        static SeoController()
+        public SeoController()
         {
-            _smProvider = SiteMapProvider.Create();
-        }
-
-        [OutputCache(Duration = 900)]
-        public virtual ContentResult Robotstxt()
-        {
-            var fileContent = MvcApplication.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.robotsFileSetting);
-            if (fileContent != null)
-                return Content(fileContent.Value, "text/plain", Encoding.UTF8);
-            else return null;
+            if(_smProvider==null)
+                _smProvider = SiteMapProvider.Create();
         }
 
 #if !DEBUG
         [OutputCache(Duration = 3600)]
 #endif
-        public virtual ContentResult Sitemap()
+        public ContentResult Sitemap()
         {
             var query = @"SELECT dm.TitleUrl,
        dm.DateCreate,

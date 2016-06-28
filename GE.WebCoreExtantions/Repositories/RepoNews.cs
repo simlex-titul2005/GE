@@ -60,7 +60,8 @@ ORDER BY dm.DateCreate DESC";
 
             using (var conn = new SqlConnection(base.ConnectionString))
             {
-                var data = conn.Query<News, SxAppUser, Game, News>(query, (da, anu, dg) => {
+                var data = conn.Query<News, SxAppUser, Game, News>(query, (da, anu, dg) =>
+                {
                     da.Game = dg;
                     da.User = anu;
                     return da;
@@ -102,15 +103,15 @@ ORDER BY dm.DateCreate DESC";
 
                 param = new
                 {
-                    //gtu = filter.GameTitle,
-                    //tag = filter.Tag
+                    gtu = (string)(filter.AddintionalInfo == null || filter.AddintionalInfo[0] == null ? null : filter.AddintionalInfo[0]),
+                    tag = filter.Tag
                 };
             }
             else
             {
                 param = new
                 {
-                    //gtu = filter.GameTitle
+                    gtu = (string)(filter.AddintionalInfo == null || filter.AddintionalInfo[0] == null ? null : filter.AddintionalInfo[0])
                 };
             }
 
@@ -143,10 +144,11 @@ ORDER BY
 
             using (var conn = new SqlConnection(this.ConnectionString))
             {
-                var data = conn.Query<News, SxAppUser, News>(query, (m,u)=> {
+                var data = conn.Query<News, SxAppUser, News>(query, (m, u) =>
+                {
                     m.User = u;
                     return m;
-                }, new { mid = filter.MaterialId, mct = filter.ModelCoreType, amount = amount }, splitOn:"UserId");
+                }, new { mid = filter.MaterialId, mct = filter.ModelCoreType, amount = amount }, splitOn: "UserId");
                 return data.ToArray();
             }
         }

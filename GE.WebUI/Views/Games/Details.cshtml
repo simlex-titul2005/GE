@@ -11,13 +11,13 @@
         @Html.Raw(Model.FullDescription)
     </div>
     <div class="news">
-        @Html.Partial(MVC.Games.Views._DetailGameMaterials, Model.GetMaterialsByCoreType(SX.WebCore.Enums.ModelCoreType.News), new ViewDataDictionary { { "ModelCoreType", SX.WebCore.Enums.ModelCoreType.News } })
+        @Html.Partial("_DetailGameMaterials", Model.GetMaterialsByCoreType(SX.WebCore.Enums.ModelCoreType.News), new ViewDataDictionary { { "ModelCoreType", SX.WebCore.Enums.ModelCoreType.News } })
     </div>
     <div class="articles">
-        @Html.Partial(MVC.Games.Views._DetailGameMaterials, Model.GetMaterialsByCoreType(SX.WebCore.Enums.ModelCoreType.Article), new ViewDataDictionary { { "ModelCoreType", SX.WebCore.Enums.ModelCoreType.Article } })
+        @Html.Partial("_DetailGameMaterials", Model.GetMaterialsByCoreType(SX.WebCore.Enums.ModelCoreType.Article), new ViewDataDictionary { { "ModelCoreType", SX.WebCore.Enums.ModelCoreType.Article } })
     </div>
     <div class="aphorisms">
-        @Html.Partial(MVC.Games.Views._DetailGameMaterials, Model.GetMaterialsByCoreType(SX.WebCore.Enums.ModelCoreType.Aphorism), new ViewDataDictionary { { "ModelCoreType", SX.WebCore.Enums.ModelCoreType.Aphorism }, { "GameTitle", Model.Title } })
+        @Html.Partial("_DetailGameMaterials", Model.GetMaterialsByCoreType(SX.WebCore.Enums.ModelCoreType.Aphorism), new ViewDataDictionary { { "ModelCoreType", SX.WebCore.Enums.ModelCoreType.Aphorism }, { "GameTitle", Model.Title } })
     </div>
 </div>
 

@@ -47,7 +47,7 @@
 
                     <li style="width:@(length + "%")" @(item.TitleUrl.ToLower() == gameName ? "class=active" : null)>
                         <a href="@url" title="@item.Title" data-toggle="tooltip" data-placement="bottom" class="red-tooltip ">
-                            <img alt="@item.Title" src="@Url.Action(MVC.Pictures.Picture(item.FrontPictureId, height: 80))" />
+                            <img alt="@item.Title" src="@Url.Action("Picture", new { controller="Pictures", id=item.FrontPictureId, height= 80})" />
                             <span class="visible-xs">@item.Title</span>
                         </a>
                     </li>

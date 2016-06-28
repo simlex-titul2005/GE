@@ -14,18 +14,18 @@
     ViewBag.Keywords = ViewBag.Keywords ?? title;
 }
 
-@Html.Partial(MVC.Shared.Views._Breadcrumbs, (VMBreadcrumb[])ViewBag.Breadcrumbs)
+@Html.Partial("_Breadcrumbs", (VMBreadcrumb[])ViewBag.Breadcrumbs)
 
 <div class="ap-list-page">
     <div class="row">
         <div class="col-md-9">
-            @Html.Partial(MVC.Aphorisms.Views._List, Model)
+            @Html.Partial("_List", Model)
             <div class="text-center">
                 @Html.SxPager(pagerInfo, pageUrl: (x) => Url.Action("list", new { categoryId = categoryId, page = x, author = ViewBag.AuthorName }), htmlAttributes: new { @class = "pagination" }, isAjax: false)
             </div>
         </div>
         <div class="col-md-3">
-            @Html.Action(MVC.Aphorisms.Categories(curCat: categoryId, onlyNotCurrent: false))
+            @Html.Action("Categories", new { controller= "Aphorisms", curCat= categoryId, onlyNotCurrent= false })
         </div>
     </div>
 </div>

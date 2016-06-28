@@ -8,17 +8,13 @@
         ViewsCount = Model.ViewsCount
     };
 
-    var year = Model.DateCreate.Year;
-    var month = Model.DateCreate.Month.ToString("00");
-    var day = Model.DateCreate.Day.ToString("00");
-    var titleUrl = Model.TitleUrl;
     var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.BadPictureId : Guid.Empty);
 }
 
 <figure class="mat-f-p">
     @if (picureId.HasValue)
     {
-        <img alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)picureId, width: 300))" />
+        <img alt="@Model.Title" src="@Url.Action("Picture", new { controller="Pictures", id=picureId, width= 300}))" />
     }
     else
     {
@@ -36,7 +32,7 @@
         </div>
     }
 
-    <a class="link" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))" title="@Model.Title">@Model.Title</a>
+    <a class="link" href="@Model.Url(Url)" title="@Model.Title">@Model.Title</a>
     <p class="foreword">
         @Model.Foreword
     </p>
@@ -56,6 +52,6 @@
 <div class="info">
     <div class="row">
         <div class="col-md-6">@Html.DisplayFor(x => info)</div>
-        <div class="col-md-6"><a class="btn btn-default btn-transparent muted-blue" href="@Url.Action(MVC.Articles.Details(year, month, day, titleUrl))">Подробнее</a></div>
+        <div class="col-md-6"><a class="btn btn-default btn-transparent muted-blue" href="@Model.Url(Url)">Подробнее</a></div>
     </div>
 </div>

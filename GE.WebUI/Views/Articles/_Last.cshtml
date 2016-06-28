@@ -1,24 +1,15 @@
-﻿@model GE.WebUI.Models.Abstract.VMDetailMaterial[]
+﻿@model VMDetailMaterial[]
 @{
     Layout = null;
+    VMDetailMaterial item;
 }
 
 <ul class="last-articles">
-    @foreach (var item in Model)
+    @for (int i = 0; i < Model.Length; i++)
     {
-        var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
-        string url = null;
-        switch (mct)
-        {
-            case SX.WebCore.Enums.ModelCoreType.Article:
-                url = Url.Action(MVC.Articles.Details(item.DateCreate.Year, item.DateCreate.Month.ToString("00"), item.DateCreate.Day.ToString("00"), item.TitleUrl));
-                break;
-            case SX.WebCore.Enums.ModelCoreType.News:
-                url = Url.Action(MVC.News.Details(item.DateCreate.Year, item.DateCreate.Month.ToString("00"), item.DateCreate.Day.ToString("00"), item.TitleUrl));
-                break;
-        }
+        item = Model[i];
         <li>
-            <a title="@item.Title" href="@url">@item.Title</a>
+            <a title="@item.Title" href="@item.Url(Url)">@item.Title</a>
         </li>
     }
 </ul>

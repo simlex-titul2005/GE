@@ -1,6 +1,5 @@
 ﻿using GE.WebCoreExtantions;
 using SX.WebCore;
-using SX.WebCore.Abstract;
 using SX.WebCore.Repositories;
 using SX.WebCore.ViewModels;
 using System.Linq;
@@ -8,19 +7,20 @@ using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class EmployeesController : BaseController
+    public sealed class EmployeesController : BaseController
     {
-        private SxDbRepository<string, SxEmployee, DbContext> _repo;
+        private static SxRepoEmployee<DbContext> _repo;
         public EmployeesController()
         {
-            _repo = new SxRepoEmployee<DbContext>();
+            if(_repo==null)
+                _repo = new SxRepoEmployee<DbContext>();
         }
 
 #if !DEBUG
         [OutputCache(Duration =900)]
 #endif
         [HttpGet]
-        public virtual ActionResult List()
+        public ActionResult List()
         {
             var data = _repo.All.ToArray();
             var viewModel = data.Select(x => Mapper.Map<SxEmployee, SxVMEmployee>(x)).ToArray();

@@ -130,15 +130,15 @@ ORDER BY dv.DateCreate DESC";
 
                 param = new
                 {
-                    //gtu = filter.GameTitle,
-                    //tag = filter.Tag
+                    gtu = (string)(filter.AddintionalInfo == null || filter.AddintionalInfo[0] == null ? null : filter.AddintionalInfo[0]),
+                    tag = filter.Tag
                 };
             }
             else
             {
                 param = new
                 {
-                    //gtu = filter.GameTitle
+                    gtu = (string)(filter.AddintionalInfo == null || filter.AddintionalInfo[0] == null ? null : filter.AddintionalInfo[0])
                 };
             }
 

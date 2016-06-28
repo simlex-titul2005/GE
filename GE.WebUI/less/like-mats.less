@@ -1,0 +1,110 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "positioned.less";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
+
+.like-mats{
+    margin-top:@def-pad*2;
+}
+.like-mats .like-mat {
+    font-size: 14px;
+    height: 100%;
+    display: inline-table;
+    color: @color-white;
+    width: 100%;
+    position: relative;
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius:3px;
+    padding:@def-pad;
+    padding-bottom:@def-pad*2;
+    cursor:pointer;
+
+    @media (max-width: @screen-xs-max) {
+        display: block;
+        height: auto;
+        margin-bottom: @def-pad*2;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        transition:all .2s;
+    }
+}
+
+.like-mats .like-mat:hover{
+    @media (max-width: @screen-xs-max) {
+        
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        box-shadow:1px 1px 8px rgba(255,255,255,.5);
+    }
+}
+
+.like-mats .like-mat a {
+    font-size: 18px;
+    color: @color-muted-blue;
+    font-weight: 700;
+    line-height: 1;
+    display: block;
+    margin: 10px 0;
+}
+
+.like-mats .like-mat .author{
+    position:absolute;
+    bottom:0;
+    left:0;
+    padding:0 0 10px @def-pad;
+}
+
+.like-mats .row {
+    display: table;
+    margin-bottom: @def-pad*2;
+
+    @media (max-width: @screen-xs-max) {
+        display: block;
+        margin-bottom: 0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.like-mats .row > div {
+    display: table-cell;
+float: none;
+vertical-align: top;
+height: 100%;
+
+    @media (max-width: @screen-xs-max) {
+        display: inline-block;
+        float: left;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}

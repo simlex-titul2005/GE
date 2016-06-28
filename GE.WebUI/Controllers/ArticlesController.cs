@@ -7,12 +7,12 @@ using SX.WebCore;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class ArticlesController : MaterialsController<int, Article>
+    public sealed class ArticlesController : MaterialsController<int, Article>
     {
         public ArticlesController() : base(Enums.ModelCoreType.Article) { }
 
         [ChildActionOnly]
-        public virtual PartialViewResult ForGamersBlock()
+        public PartialViewResult ForGamersBlock()
         {
             var gameTitle = Request.RequestContext.RouteData.Values["GameTitle"];
             var viewModel = (base.Repository as RepoArticle).ForGamersBlock((string)gameTitle);
@@ -20,8 +20,8 @@ namespace GE.WebUI.Controllers
         }
 
         [OutputCache(Duration =900, VaryByParam = "gt;c;lc")]
-        [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ActionResult Preview(string gt, string c, int lc)
+        [HttpGet]
+        public ActionResult Preview(string gt, string c, int lc)
         {
             if (!Request.IsAjaxRequest()) return null;
 
@@ -33,7 +33,7 @@ namespace GE.WebUI.Controllers
 
         [ChildActionOnly]
         [OutputCache(Duration = 900, VaryByParam = "amount")]
-        public virtual PartialViewResult Last(int amount=3)
+        public PartialViewResult Last(int amount=3)
         {
             var viewModel = (base.Repository as RepoArticle).Last(amount);
             return PartialView("_Last", viewModel);

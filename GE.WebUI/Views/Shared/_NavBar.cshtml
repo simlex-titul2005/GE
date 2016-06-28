@@ -25,28 +25,28 @@
                     <ul class="dropdown-menu">
                         <li><a href="/">Вернутся на главную</a></li>
                         <li><a href="#">Выбрать игру</a></li>
-                        <li><a href="@Url.Action(MVC.News.List())">Почитать новости</a></li>
-                        <li><a href="@Url.Action(MVC.Articles.List())">Почитать статьи</a></li>
-                        <li><a href="@Url.Action(MVC.Aphorisms.List())">Кратко о главном</a></li>
-                        <li><a href="@Url.Action(MVC.SiteQuetions.Edit())">Обратная связь</a></li>
+                        <li><a href="@Url.Action("List", "News")">Почитать новости</a></li>
+                        <li><a href="@Url.Action("List", "Articles")">Почитать статьи</a></li>
+                        <li><a href="@Url.Action("List", "Aphorisms")">Кратко о главном</a></li>
+                        <li><a href="@Url.Action("Edit", "SiteQuetions")">Обратная связь</a></li>
                         @*<li><a href="#">Почитать форум</a></li>*@
                     </ul>
                 </li>
                 <li>
-                    <a href="@Url.Action(MVC.News.List())">Новости</a>
+                    <a href="@Url.Action("List", "News")">Новости</a>
                 </li>
                 <li>
-                    <a href="@Url.Action(MVC.Articles.List())">Статьи</a>
+                    <a href="@Url.Action("List", "Articles")">Статьи</a>
                 </li>
                 <li>
-                    <a href="@Url.Action(MVC.Aphorisms.List())">Кратко</a>
+                    <a href="@Url.Action("List", "Aphorisms")">Кратко</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li>
-                        <form method="post" action="@Url.Action(MVC.Account.LogOff())" class="hidden">
+                        <form method="post" action="@Url.Action("LogOff","Account")" class="hidden">
                             @Html.AntiForgeryToken()
                         </form>
                         <a href="javascript:void(0)" onclick="$(this).prev('form').submit();">Выход</a>
@@ -55,14 +55,14 @@
                 else
                 {
                     <li>
-                        <a href="@Url.Action(MVC.Account.Login())" rel="nofollow">Вход</a>
+                        <a href="@Url.Action("Login","Account")" rel="nofollow">Вход</a>
                     </li>
                 }
                 <li>
-                    <a href="@Url.Action(MVC.Account.Register())" rel="nofollow">Регистрация</a>
+                    <a href="@Url.Action("Register","Account")" rel="nofollow">Регистрация</a>
                 </li>
             </ul>
-            @Html.Partial(MVC.Search.Views._Search)
+            @Html.Partial("~/Views/Search/_Search.cshtml")
         </div>
     </div>
 </nav>

@@ -1,94 +1,94 @@
 ﻿var promise = require('es6-promise'),
     gulp = require('gulp'),
-    minifyCss = require('gulp-minify-css'),
-    autoprefixer = require('gulp-autoprefixer'),
-    rename = require('gulp-rename'),
-    del = require('del'),
-    less = require('gulp-less'),
     watch = require('gulp-watch'),
+    del = require('del'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
-    merge = require('merge-stream');
+    merge = require('merge-stream'),
+    order = require('gulp-order'),
+    less = require('gulp-less'),
+    cleanCSS = require('gulp-clean-css'),
+    autoprefixer = require('gulp-autoprefixer'),
+    rename = require('gulp-rename');
 
 function clear() {
     del([
         'content/dist/css/**/*.css',
         'content/dist/js/**/*.js',
-        'content/fonts',
-        'fonts/**/*'
+        'content/dist/fonts/**/*'
     ]);
 }
 
 function createFonts() {
     gulp.src([
-        'bower_components/bootstrap/fonts/**/'
-    ])
-        .pipe(gulp.dest('fonts'));
-
-    gulp.src([
-        'bower_components/font-awesome/fonts/**/*.{eot,svg,ttf,woff,woff2,otf}'
+        'bower_components/font-awesome/fonts/**/*'
     ])
         .pipe(gulp.dest('content/dist/fonts'));
 }
 
 function createCss() {
     var lessStream = gulp.src([
-        'content/less/article.less',
-        'content/less/bootstrap-ext.less',
-        'content/less/comments.less',
-        'content/less/footer.less',
-        'content/less/for-gamers-block.less',
-        'content/less/forum.less',
-        'content/less/game-list.less',
-        'content/less/last-news-block.less',
-        'content/less/last-category-news-block.less',
-        'content/less/list-article.less',
-        'content/less/list-news.less',
-        'content/less/material.less',
-        'content/less/positioned.less',
-        'content/less/seach-block.less',
-        'content/less/site.less',
-        'content/less/sx-list.less',
-        'content/less/sx-pager.less',
-        'content/less/sn-btn.less',
-        'content/less/tags-cloud.less',
-        'content/less/like-mats.less',
-        'content/less/by-date-m.less',
-        'content/less/share42init.less',
-        'content/less/pop-mat.less',
-        'content/less/banners.less',
-        'content/less/identity-page.less',
-        'content/less/video.less',
-        'content/less/aphorisms.less',
-        'content/less/site-quetions.less',
-        'content/less/form-transparent.less',
-        'content/less/game-details.less',
-        'content/less/employee.less',
-        'content/less/th-banner.less',
-        'content/less/site-tests.less',
-        'content/less/st-page.less'
+        'less/article.less',
+        'less/bootstrap-ext.less',
+        'less/comments.less',
+        'less/footer.less',
+        'less/for-gamers-block.less',
+        'less/forum.less',
+        'less/game-list.less',
+        'less/last-news-block.less',
+        'less/last-category-news-block.less',
+        'less/list-article.less',
+        'less/list-news.less',
+        'less/material.less',
+        'less/positioned.less',
+        'less/seach-block.less',
+        'less/site.less',
+        'less/sx-list.less',
+        'less/sx-pager.less',
+        'less/sn-btn.less',
+        'less/tags-cloud.less',
+        'less/like-mats.less',
+        'less/by-date-m.less',
+        'less/share42init.less',
+        'less/pop-mat.less',
+        'less/banners.less',
+        'less/identity-page.less',
+        'less/video.less',
+        'less/aphorisms.less',
+        'less/site-quetions.less',
+        'less/form-transparent.less',
+        'less/game-details.less',
+        'less/employee.less',
+        'less/th-banner.less',
+        'less/site-tests.less',
+        'less/st-page.less'
     ])
         .pipe(less())
+        .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(minifyCss())
-        .pipe(concat('less-files.less'));
+        .pipe(concat('sitecss.css'));
 
     var cssStream = gulp.src([
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
         'bower_components/font-awesome/css/font-awesome.min.css',
     ])
-        .pipe(concat('css-files.css'));
+        .pipe(concat('css.css'));
 
-    var mergedStream = merge(lessStream, cssStream)
-        .pipe(concat('site.min.css'))
-        .pipe(gulp.dest('content/dist/css'));
+    merge(cssStream, lessStream)
+        .pipe(order([
+            'css.css',
+            'sitecss.css'
+        ]))
+            .pipe(concat('site.min.css'))
+            .pipe(gulp.dest('content/dist/css'));
 
+    //by one less
     gulp.src([
-        'content/less/error-page.less',
+       'less/error-page.less'
     ])
         .pipe(less())
+        .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(minifyCss())
         .pipe(rename({
             suffix: '.min'
         }))
@@ -96,28 +96,38 @@ function createCss() {
 }
 
 function createJs() {
-    gulp.src([
+    var js = gulp.src([
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/jquery-lazy/jquery.lazy.min.js',
-        'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
-        'bower_components/bootstrap/dist/js/bootstrap.min.js',
+        'bower_components/bootstrap/dist/js/bootstrap.min.js'
+    ])
+        .pipe(concat('js.js'));
+
+    var sitejs = gulp.src([
         'scripts/ge-game-menu.js',
         'scripts/find-engine.js',
         'scripts/user-clicks-engine.js',
         'scripts/site.js'
     ])
-        .pipe(concat('site.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('content/dist/js'));
+        .pipe(concat('sitejs.js'));
 
+    merge(js, sitejs)
+        .pipe(order([
+            'js.js',
+            'sitejs.js'
+        ]))
+            .pipe(concat('site.min.js'))
+            .pipe(gulp.dest('content/dist/js'));
+
+
+    //by one js
     gulp.src([
         'scripts/ge-for-gamers-block.js',
         'scripts/ge-last-news-block.js',
         'scripts/ge-last-category-block.js',
         'scripts/currency-provider.js',
-        'scripts/ge-aphorisms.js',
-        'bower_components/jquery-validation/dist/jquery.validate.js',
-        'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js'
+        'scripts/ge-aphorisms.js'
     ])
         .pipe(uglify())
         .pipe(rename({
@@ -125,16 +135,23 @@ function createJs() {
         }))
         .pipe(gulp.dest('content/dist/js'));
 
+    gulp.src([
+        'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
+        'bower_components/jquery-validation/dist/jquery.validate.min.js',
+        'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js'
+    ])
+        .pipe(gulp.dest('content/dist/js'));
+
 }
 
 gulp.task('watch', function (cb) {
     watch([
-        'content/less/**/*.less',
+        'less/**/*.less',
         'scripts/**/*.js'
     ], function () {
         clear();
-        createFonts();
         createCss();
+        createFonts();
         createJs();
     });
 });

@@ -1,6 +1,8 @@
 ﻿@model VMLCNBCategory
 @{
     Layout = null;
+    VMLCNBNews news;
+    VMLCNBNews cNews;
 }
 
 @if (Model.News.Any())
@@ -15,9 +17,9 @@
                         {
                             for (int i = 0; i < Model.News.Length; i++)
                             {
-                                var news = Model.News[i];
+                                news = Model.News[i];
                                 <li>
-                                    <a @(news.CategoryId != null?string.Format("data-category-id={0}", news.CategoryId):null) href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))">
+                                    <a @(news.CategoryId != null?string.Format("data-category-id={0}", news.CategoryId):null) href="@news.Url(Url)">
                                         <span class="date">@news.DateCreate.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
                                     </a>
                                 </li>
@@ -38,7 +40,7 @@
                                         : Guid.Empty;
                                     <li>
                                         <a href="#">
-                                            <figure data-category-id="@subCategory.Id" style="background:url(@Url.Action(MVC.Pictures.Picture((Guid)pictureId))) center / cover">
+                                            <figure data-category-id="@subCategory.Id" style="background:url('@Url.Action("Picture", new { controller="Pictures", id=pictureId})') center / cover">
 
                                             </figure>
                                         </a>
@@ -47,9 +49,9 @@
                                             <ul class="lcnb-news hidden-xs">
                                                 @for (int y = 0; y < subCategory.News.Length; y++)
                                                 {
-                                                    var cNews = subCategory.News[y];
+                                                    cNews = subCategory.News[y];
                                                     <li>
-                                                        <a href="@Url.Action(MVC.News.Details(cNews.DateCreate.Year, cNews.DateCreate.Month.ToString("00"), cNews.DateCreate.Day.ToString("00"), cNews.TitleUrl))">@cNews.Title</a>
+                                                        <a href="@cNews.Url(Url)">@cNews.Title</a>
                                                     </li>
                                                 }
                                             </ul>
@@ -58,7 +60,7 @@
                                         {
                                             <div class="tags">
                                                 <h4>@subCategory.Title</h4>
-                                                @Html.Partial(MVC.MaterialTags.Views._TagsCloud, subCategory.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action(MVC.News.List()) } })
+                                                @Html.Partial("~/Views/MaterialTags/_TagsCloud.cshtml", subCategory.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action("List", "News") } })
                                             </div>
                                         }
                                     </li>

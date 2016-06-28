@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GE.WebUI.Models.Abstract;
+using System;
 using System.Linq;
 using static SX.WebCore.Enums;
 
@@ -97,12 +98,8 @@ namespace GE.WebUI.Models
         public int IconHeight { get; set; }
     }
 
-    public sealed class VMImgGameMaterial
+    public sealed class VMImgGameMaterial : VMLastMaterial
     {
-        public ModelCoreType ModelCoreType { get; set; }
-        public DateTime DateCreate { get; set; }
-        public DateTime DateOfPublication { get; set; }
-        public string Title { get; set; }
-        public string TitleUrl { get; set; }
+
     }
 }

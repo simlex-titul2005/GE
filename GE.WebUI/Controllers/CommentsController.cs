@@ -1,7 +1,6 @@
 ﻿using GE.WebCoreExtantions;
 using GE.WebUI.Models;
 using SX.WebCore;
-using SX.WebCore.Abstract;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;
 using SX.WebCore.Attrubutes;
@@ -11,23 +10,24 @@ using Microsoft.AspNet.Identity;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class CommentsController : BaseController
+    public sealed class CommentsController : BaseController
     {
-        private SxDbRepository<int, SxComment, DbContext> _repo;
+        private static SxRepoComment<DbContext> _repo;
         public CommentsController()
         {
-            _repo = new SxRepoComment<DbContext>();
+            if(_repo==null)
+                _repo = new SxRepoComment<DbContext>();
         }
 
         [HttpGet, NotLogRequest]
-        public virtual PartialViewResult List(int mid, ModelCoreType mct, int page=1)
+        public PartialViewResult List(int mid, ModelCoreType mct, int page=1)
         {
             var viewModel = getResult(mid, mct);
             return PartialView("_List", viewModel);
         }
 
         [HttpGet]
-        public virtual PartialViewResult Edit(int mid, ModelCoreType mct)
+        public PartialViewResult Edit(int mid, ModelCoreType mct)
         {
             var viewModel = new VMEditComment {
                 MaterialId = mid,
@@ -55,7 +55,7 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual PartialViewResult Edit(VMEditComment model)
+        public PartialViewResult Edit(VMEditComment model)
         {
             var sessionId = Session.SessionID;
             var isAuth = User.Identity.IsAuthenticated;
@@ -82,7 +82,7 @@ namespace GE.WebUI.Controllers
         private VMComment[] getResult(int mid, ModelCoreType mct)
         {
             var filter = new SxFilter { MaterialId = mid, ModelCoreType = mct };
-            var data = (_repo as SxRepoComment<DbContext>).Query(filter).ToArray();
+            var data = _repo.Query(filter).ToArray();
             var viewModel = data.Select(x => Mapper.Map<SxComment, VMComment>(x)).ToArray();
             return viewModel;
         }

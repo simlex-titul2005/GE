@@ -4,13 +4,12 @@ using SX.WebCore.Abstract;
 using SX.WebCore.Repositories;
 using System.Web.Mvc;
 using System.Linq;
-using GE.WebUI.Models;
 using System.Collections.Generic;
 using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class SiteTestsController : BaseController
+    public sealed class SiteTestsController : BaseController
     {
         private static SxDbRepository<int, SxSiteTest, DbContext> _repo;
         public SiteTestsController()
@@ -23,14 +22,14 @@ namespace GE.WebUI.Controllers
         [OutputCache(Duration =900)]
 #endif
         [ChildActionOnly]
-        public virtual PartialViewResult RandomList()
+        public PartialViewResult RandomList()
         {
             var data = (_repo as SxRepoSiteTest<DbContext>).RandomList();
             return PartialView("_RandomList", data);
         }
 
         [HttpGet]
-        public virtual ActionResult Details(string titleUrl)
+        public ActionResult Details(string titleUrl)
         {
             var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
             var viewModel = Mapper.Map<SxSiteTestQuestion, SxVMSiteTestQuestion>(data);
@@ -38,7 +37,7 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Step(string ttu, List<SxVMSiteTestStep> pastQ = null)
+        public ActionResult Step(string ttu, List<SxVMSiteTestStep> pastQ = null)
         {
             ViewBag.PastQ = pastQ.Select(x => new { T = x.Question.Text, C = x.Question.IsCorrect, O = x.Order }).Distinct()
                 .Select(x => new SxVMSiteTestStep {

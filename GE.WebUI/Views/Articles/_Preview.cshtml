@@ -3,6 +3,7 @@
     Layout = null;
     var colCount = 2;
     var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
+    VMPreviewArticle m;
 }
 
 @for (int y = 0; y < rowsCount; y++)
@@ -11,11 +12,11 @@
     <div class="row">
         @for (int i = 0; i < rows.Length; i++)
         {
-            var m = rows[i];
+            m = rows[i];
             <div class="col-md-6">
                 <div class="pv-article">
                     <h5 class="title">
-                        <a href="@Url.Action(MVC.Articles.Details(m.DateCreate.Year, m.DateCreate.Month.ToString("00"), m.DateCreate.Day.ToString("00"), m.TitleUrl))" target="_blank">@m.Title</a>
+                        <a href="@m.Url(Url)" target="_blank">@m.Title</a>
                     </h5>
                     @Html.DisplayFor(x => m.Info)
                     <p class="foreword">

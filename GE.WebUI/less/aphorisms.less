@@ -1,0 +1,195 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "positioned.less";
+@import (reference) "../bower_components/bootstrap/less/variables";
+
+.aphorisms {
+    color: @color-white;
+    margin-top: @def-pad*2;
+    min-height: 120px;
+}
+
+.aphorism {
+    position: relative;
+    padding: @def-pad;
+    border-radius: 3px;
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
+}
+
+.aphorism > .aph-progress {
+    height: 4px;
+    padding: @def-pad;
+    position: absolute;
+    width: 100%;
+    top: -@def-pad / 2;
+    left: 0;
+}
+
+.aphorism > .aph-progress > div {
+    height: 2px;
+    background-color: @color-red;
+}
+
+@aph-html-img-size:70px;
+.aphorism .aph-html{
+    min-height:@aph-html-img-size;
+    margin-top:@def-pad;
+}
+
+.aphorism .aph-html > figure{
+    width:@aph-html-img-size;
+    height:@aph-html-img-size;
+    background-size:cover;
+    background-position:center center;
+    border:3px solid @color-muted-blue;
+    display:inline-block;
+    float:left;
+    margin-right:@def-pad*3;
+}
+
+.aphorism .aph-html > .html > .btn{
+    margin-top:@def-pad;
+}
+
+//ap-author-list
+.ap-page {
+    margin-top: @def-pad*2;
+    margin-bottom: @def-pad*2;
+}
+
+.ap-page blockquote {
+    min-height: 90px;
+    display: inline-block;
+    width: 100%;
+}
+
+.ap-page .ap-list > ul{
+    margin-top:@def-pad*2;
+}
+
+@aut_img-size:90px;
+.ap-page .author-img {
+    height: 90px;
+    width:90px;
+    border: 3px solid @color-muted-blue;
+    margin-right: @def-pad*2;
+    margin-bottom: @def-pad*2;
+    float: left;
+    background-size:cover;
+    background-position:center center;
+}
+
+.ap-list {
+    margin-top: @def-pad*4;
+}
+
+.ap-list .content {
+    padding:@def-pad;
+    border-radius:3px;
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
+    font-size: 16px;
+    line-height:1.2;
+}
+
+.ap-list .content .info > ul{
+    list-style:none;
+    font-size:12px;
+    padding:0;
+    margin:0;
+}
+
+.ap-list .content .info > ul > li{
+    margin:0;
+    margin-right:@def-pad;
+}
+
+.ap-list-page .ap-list {
+    margin-top: 0;
+}
+
+.ap-list > ul {
+    list-style: none;
+    color: @color-white;
+    padding: 0;
+    margin: 0;
+}
+
+.ap-list > ul > li {
+    margin-bottom: @def-pad*2;
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        cursor:pointer;
+        transition:all .2s;
+    }
+}
+
+.ap-list > ul > li:hover{
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        box-shadow:-1px 1px 4px rgba(255,255,255, 0.5);
+    }
+}
+
+.ap-list ul > li .author {
+    color: @color-muted-blue;
+    margin-top:@def-pad;
+    font-size:14px;
+}
+
+.ap-list ul > li a{
+    font-size:12px;
+    color:inherit;
+}
+
+.ap-cat {
+    @media (max-width: @screen-xs-max) {
+        margin-top: @def-pad*2;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        margin-top: @def-pad*2;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.ap-cat > .list-group-item {
+    background-color: unset;
+    color: @color-white;
+}
+
+.ap-cat > .list-group-item:hover {
+    background-color: unset;
+    color: @color-muted-blue;
+}
+
+.ap-cat > .list-group-item.active {
+    border-color: @color-muted-blue;
+    background-color: rgba(255,255,255, 0.1);
+}
+
+.ap-list-page{
+    margin-top:@def-pad*2;
+}

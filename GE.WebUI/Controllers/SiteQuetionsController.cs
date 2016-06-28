@@ -6,17 +6,17 @@ using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class SiteQuetionsController : BaseController
+    public sealed class SiteQuetionsController : BaseController
     {
         [HttpGet]
-        public virtual ActionResult Edit()
+        public ActionResult Edit()
         {
             var viewModel = new VMEditSiteQuetion();
             return View(viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual ViewResult Edit(VMEditSiteQuetion model)
+        public ViewResult Edit(VMEditSiteQuetion model)
         {
             if (ModelState.IsValid)
             {

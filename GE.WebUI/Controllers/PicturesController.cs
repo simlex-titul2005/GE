@@ -3,7 +3,7 @@ using SX.WebCore.MvcControllers;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class PicturesController : SxPicturesController<DbContext>
+    public sealed class PicturesController : SxPicturesController<DbContext>
     {
         
     }

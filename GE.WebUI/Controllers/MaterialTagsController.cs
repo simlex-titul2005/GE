@@ -1,29 +1,28 @@
 ﻿using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
-using GE.WebUI.Extantions.Repositories;
 using SX.WebCore;
-using SX.WebCore.Abstract;
+using SX.WebCore.Repositories;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class MaterialTagsController : BaseController
+    public sealed class MaterialTagsController : BaseController
     {
-        private SxDbRepository<string, SxMaterialTag, DbContext> _repo;
+        private static SxRepoMaterialTag<DbContext> _repo;
         public MaterialTagsController()
         {
-            _repo = new RepoMaterialTag();
+            if(_repo==null)
+                _repo = new SxRepoMaterialTag<DbContext>();
         }
 
 #if !DEBUG
         [OutputCache(Duration =900, VaryByParam = "mid;mct")]
 #endif
         [AcceptVerbs(HttpVerbs.Get)]
-        public virtual PartialViewResult List(int mid, ModelCoreType mct, int maxFs=30, int amount=50)
+        public PartialViewResult List(int mid, ModelCoreType mct, int maxFs=30, int amount=50)
         {
             var filter = new SxFilter(1, 10) { MaterialId= mid, ModelCoreType=mct };
-            var viewModel = (_repo as RepoMaterialTag).GetCloud(filter);
+            var viewModel = _repo.GetCloud(filter);
             string url = "#";
             switch(mct)
             {

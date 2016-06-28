@@ -50,17 +50,17 @@
     <![endif]-->
 </head>
 <body @(bg ?? null)>
-    @Html.Partial(MVC.Shared.Views._NavBar)
+    @Html.Partial("_NavBar")
     <div class="wrapper">
 
-        @Html.Action(MVC.Games.GameList())
+        @Html.Action("GameList", "Games")
 
         <div class="container">
             @{
                 var banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top) : null;
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
-                    @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", new { controller = "Pictures", id = b.PictureId }))
                     <br>
                 }
             }
@@ -79,14 +79,14 @@
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     <br />
-                    @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", new { controller = "Pictures", id = b.PictureId }))
                 }
             }
         </div>
     </div>
-    @Html.Partial(MVC.Shared.Views._Footer)
+    @Html.Partial("_Footer")
 
-    @Html.Partial(MVC.Shared.Views._Analytics)
+    @Html.Partial("_Analytics")
     <script src="~/Content/dist/js/site.min.js"></script>
     <script type="text/javascript">
         var $WIDTH_SX = 768;
@@ -112,5 +112,4 @@
     </script>
     @RenderSection("scripts", false)
 </body>
-
 </html>

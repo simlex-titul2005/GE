@@ -1,6 +1,7 @@
 ﻿@model VMImgGameMaterial[]
 @{
     Layout = null;
+    VMImgGameMaterial item;
 }
 @if (Model.Any())
 {
@@ -8,20 +9,10 @@
         <ul>
             @for (int i = 0; i < Model.Length; i++)
             {
-                var item = Model[i];
-                string url = string.Empty;
-                switch (item.ModelCoreType)
-                {
-                    case SX.WebCore.Enums.ModelCoreType.News:
-                        url = Url.Action(MVC.News.Details(year: item.DateCreate.Year, month: item.DateCreate.Month.ToString("00"), day: item.DateCreate.Day.ToString("00"), titleUrl: item.TitleUrl));
-                        break;
-                    case SX.WebCore.Enums.ModelCoreType.Article:
-                        url = Url.Action(MVC.Articles.Details(year: item.DateCreate.Year, month: item.DateCreate.Month.ToString("00"), day: item.DateCreate.Day.ToString("00"), titleUrl: item.TitleUrl));
-                        break;
-                }
+                item = Model[i];
                 <li>
                     <span class="time">@item.DateOfPublication.ToString("dd.MM.yyyy")</span><br />
-                    <a href="@url">@item.Title</a>
+                    <a href="@item.Url(Url)">@item.Title</a>
                 </li>
             }
         </ul>

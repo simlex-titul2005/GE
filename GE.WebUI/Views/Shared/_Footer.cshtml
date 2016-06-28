@@ -11,21 +11,21 @@
                 <div class="col-md-6 col-sm-6">
                     <ul class="menu">
                         <li>
-                            <a href="@Url.Action(MVC.Home.Index())">Главная</a>
+                            <a href="@Url.Action("Index", "Home")">Главная</a>
                         </li>
                         <li>
-                            <a href="@Url.Action(MVC.News.List())">Новости</a>
+                            <a href="@Url.Action("List", "News")">Новости</a>
                         </li>
                         <li>
-                            <a href="@Url.Action(MVC.Articles.List())">Статьи</a>
+                            <a href="@Url.Action("List", "Articles")">Статьи</a>
                         </li>
                         <li>
-                            <a href="@Url.Action(MVC.Aphorisms.List())">Кратко</a>
+                            <a href="@Url.Action("List", "Aphorisms")">Кратко</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                    @Html.Partial(MVC.Shared.Views._SocialIconsMenu)
+                    @Html.Partial("_SocialIconsMenu")
                 </div>
             </div>
         </div>
@@ -35,30 +35,30 @@
             <div class="row">
                 <div class="col-md-4">
                     <h6 class="header">Последние публикации</h6>
-                    @Html.Action(MVC.Articles.Last(3))
+                    @Html.Action("Last", new { controller= "Articles", amount=3 })
                 </div>
                 <div class="col-md-4">
                     <ul class="menu">
                         <li>
-                            <a href="@Url.Action(MVC.News.List())">Новости</a>
+                            <a href="@Url.Action("List", "News")">Новости</a>
                         </li>
                         <li>
-                            <a href="@Url.Action(MVC.Articles.List())">Статьи</a>
+                            <a href="@Url.Action("List", "Articles")">Статьи</a>
                         </li>
                         <li>
-                            <a href="@Url.Action(MVC.Employees.List())">Контакты</a>
+                            <a href="@Url.Action("List", "Employees")">Контакты</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <ul class="sign-menu">
                         <li>
-                            <a href="@Url.Action(MVC.Account.Register())" rel="nofollow">Регистрация</a>
+                            <a href="@Url.Action("Register", "Account")" rel="nofollow">Регистрация</a>
                         </li>
                         @if (!User.Identity.IsAuthenticated)
                         {
                             <li>
-                                <a href="@Url.Action(MVC.Account.Login())" rel="nofollow">Войти в аккаунт</a>
+                                <a href="@Url.Action("Login", "Account")" rel="nofollow">Войти в аккаунт</a>
                             </li>
                         }
                         else

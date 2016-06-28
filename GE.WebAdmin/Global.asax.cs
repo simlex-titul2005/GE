@@ -13,7 +13,6 @@ namespace GE.WebAdmin
 
         protected override void Application_Start(object sender, EventArgs e)
         {
-
             var args = new SxApplicationEventArgs();
             args.WebApiConfigRegister = WebApiConfig.Register;
             args.RegisterRoutes = RouteConfig.RegisterRoutes;

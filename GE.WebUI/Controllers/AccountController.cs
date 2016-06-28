@@ -3,7 +3,7 @@ using SX.WebCore.MvcControllers;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class AccountController : SxAccountController<DbContext>
+    public sealed class AccountController : SxAccountController<DbContext>
     {
 
     }

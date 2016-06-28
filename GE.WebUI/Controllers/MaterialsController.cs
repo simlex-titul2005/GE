@@ -20,7 +20,7 @@ using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
-    public abstract partial class MaterialsController<TKey, TModel> : BaseController where TModel : SxDbModel<TKey>, IHasGame
+    public abstract class MaterialsController<TKey, TModel> : BaseController where TModel : SxDbModel<TKey>, IHasGame
     {
         private SxDbRepository<TKey, TModel, DbContext> _repo;
         private SxDbRepository<int, Game, DbContext> _repoGame;
@@ -53,10 +53,12 @@ namespace GE.WebUI.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public virtual ViewResult List(SxFilter filter)
         {
-            var gameTitle = (string)Request.RequestContext.RouteData.Values["GameTitle"];
+            var routeDataValues = Request.RequestContext.RouteData.Values;
+            var gameTitle = (string)routeDataValues["gameTitle"];
             ViewBag.GameTitle = gameTitle;
-            var page = Request.RequestContext.RouteData.Values["page"]!=null? Convert.ToInt32(Request.RequestContext.RouteData.Values["page"]):1;
+            var page = routeDataValues["page"]!=null? Convert.ToInt32(routeDataValues["page"]):1;
             filter.PagerInfo.Page = page;
+            filter.AddintionalInfo = new object[] { gameTitle };
 
             if (gameTitle != null)
             {

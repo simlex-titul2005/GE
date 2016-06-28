@@ -2,9 +2,9 @@
 
 namespace GE.WebUI.Controllers
 {
-    public partial class HomeController : BaseController
+    public sealed class HomeController : BaseController
     {
-        public virtual ViewResult Index(string game=null)
+        public ViewResult Index(string game=null)
         {
             return View();
         }

@@ -4,14 +4,13 @@ using System.Linq;
 using System.Web.Mvc;
 using Dapper;
 using GE.WebUI.Models;
-using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class SearchController : BaseController
+    public sealed class SearchController : BaseController
     {
-        [AcceptVerbs(HttpVerbs.Get)]
-        public virtual ActionResult List(string key)
+        [HttpGet]
+        public ActionResult List(string key)
         {
             if (!Request.IsAjaxRequest()) return null;
 

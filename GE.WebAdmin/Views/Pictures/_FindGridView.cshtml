@@ -15,6 +15,7 @@
         },
         DataAjaxUrl="/pictures/findgridview",
         RowId = x => { return x.Id.ToString(); },
-        RowText = x => { return x.Caption; }
-    }
+        RowText = x => { return x.Caption; },
+    },
+    htmlAttributes: new { @class="grid-pictures"}
 )

@@ -221,32 +221,33 @@
     <Compile Include="Models\VMLCNB.cs" />
     <Compile Include="Models\VMLCNBCategory.cs" />
     <Compile Include="Models\VMLCNBNews.cs" />
-    <Content Include="Content\dist\css\error-page.min.css" />
-    <Content Include="Content\dist\css\site.min.css" />
-    <Content Include="Content\dist\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\dist\i\article-empty.png" />
-    <Content Include="Content\dist\i\faveicon.png" />
-    <Content Include="Content\dist\i\logo.png" />
-    <Content Include="Content\dist\js\currency-provider.min.js" />
-    <Content Include="Content\dist\js\ge-aphorisms.min.js" />
-    <Content Include="Content\dist\js\ge-for-gamers-block.min.js" />
-    <Content Include="Content\dist\js\ge-last-category-block.min.js" />
-    <Content Include="Content\dist\js\ge-last-news-block.min.js" />
-    <Content Include="Content\dist\js\jquery.validate.min.js" />
-    <Content Include="Content\dist\js\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Content\dist\js\site.min.js" />
+    <Content Include="content\dist\css\error-page.min.css" />
+    <Content Include="content\dist\css\site.min.css" />
+    <Content Include="content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="content\dist\i\article-empty.png" />
+    <Content Include="content\dist\i\faveicon.png" />
+    <Content Include="content\dist\i\logo.png" />
+    <Content Include="content\dist\js\currency-provider.min.js" />
+    <Content Include="content\dist\js\ge-aphorisms.min.js" />
+    <Content Include="content\dist\js\ge-for-gamers-block.min.js" />
+    <Content Include="content\dist\js\ge-last-category-block.min.js" />
+    <Content Include="content\dist\js\ge-last-news-block.min.js" />
+    <Content Include="content\dist\js\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="content\dist\js\jquery.validate.min.js" />
+    <Content Include="content\dist\js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="content\dist\js\site.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\dist\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\dist\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\dist\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\dist\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\dist\fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="packages.config" />
+    <Content Include="content\dist\fonts\fontawesome-webfont.eot" />
+    <Content Include="content\dist\fonts\fontawesome-webfont.ttf" />
+    <Content Include="content\dist\fonts\fontawesome-webfont.woff" />
+    <Content Include="content\dist\fonts\fontawesome-webfont.woff2" />
+    <Content Include="content\dist\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
     <Content Include="share42\icons.png" />
     <Content Include="share42\share42.js" />
@@ -390,7 +391,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\dist\i\temp\" />
+    <Folder Include="content\dist\i\temp\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SX.Web.Core\SX.WebCore\SX.WebCore.csproj">

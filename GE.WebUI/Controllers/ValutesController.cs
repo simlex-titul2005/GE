@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class ValutesController : BaseController
+    public sealed class ValutesController : BaseController
     {
         private static CacheItemPolicy _defaultPolicy
         {
@@ -21,7 +21,7 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpPost]
-        public virtual JsonResult GetCurCourse(string cc)
+        public JsonResult GetCurCourse(string cc)
         {
             var strD = DateTime.Now.ToString("dd/MM/yyyy");
             var url = string.Format("http://www.cbr.ru/scripts/XML_daily.asp?date_req={0}", strD);

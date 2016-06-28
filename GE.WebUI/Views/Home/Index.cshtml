@@ -14,19 +14,19 @@
     ViewBag.Keywords = ViewBag.Keywords ?? gameName;
 }
 
-@Html.Action(MVC.News.LastGamesNewsBlock(lnc: 5))
+@Html.Action("LastGamesNewsBlock", new { controller= "News", lnc= 5 })
 
-@Html.Action(MVC.News.NewsCategories(lnc: 5))
+@Html.Action("NewsCategories", new { controller = "News", lnc = 5 })
 
 <div class="text-center all-news-btn">
-    <a href="@Url.Action(MVC.News.List())" class="btn btn-default btn-transparent white">Все новости</a>
+    <a href="@Url.Action("list", "news")" class="btn btn-default btn-transparent white">Все новости</a>
 </div>
 
 <section>
     @Html.Action("randomlist", "sitetests")
 </section>
 
-@Html.Action(MVC.Articles.ForGamersBlock())
+@Html.Action("ForGamersBlock", "Articles")
 
 @section scripts{
     <script type="text/javascript" src="~/Content/dist/js/ge-last-news-block.min.js"></script>

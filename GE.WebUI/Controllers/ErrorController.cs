@@ -1,17 +1,16 @@
 ﻿using System.Web.Mvc;
-using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class ErrorController : Controller
+    public sealed class ErrorController : Controller
     {
-        public virtual ActionResult NotFound()
+        public ActionResult NotFound()
         {
             Response.StatusCode = 404;
             return View();
         }
 
-        public virtual ActionResult ServerError()
+        public ActionResult ServerError()
         {
             Response.StatusCode = 500;
             return View();

@@ -8,11 +8,10 @@ using System.Web.Mvc;
 using static SX.WebCore.Enums;
 using System.Linq;
 using SX.WebCore.Repositories;
-using System.Web.SessionState;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class UserClicksController : BaseController
+    public sealed class UserClicksController : BaseController
     {
         private SxDbRepository<Guid, SxUserClick, DbContext> _repo;
         private SxDbRepository<Guid, SxLike, DbContext> _repoLike;
@@ -24,7 +23,7 @@ namespace GE.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<int> Click(int mid, ModelCoreType mct, UserClickType uct)
+        public async Task<int> Click(int mid, ModelCoreType mct, UserClickType uct)
         {
             return await Task.Run(() =>
             {

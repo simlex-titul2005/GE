@@ -10,7 +10,7 @@ using SX.WebCore.Repositories;
 
 namespace GE.WebUI.Controllers
 {
-    public partial class GamesController : BaseController
+    public sealed class GamesController : BaseController
     {
         private SxDbRepository<int, Game, DbContext> _repo;
         private SxDbRepository<string, SxSiteSetting, DbContext> _repoSetting;
@@ -24,7 +24,7 @@ namespace GE.WebUI.Controllers
         private const string __emptyGameGoodImagePath = "emptyGameGoodImagePath";
         private const string __emptyGameBadImagePath = "emptyGameBadImagePath";
         [ChildActionOnly]
-        public virtual PartialViewResult GameList(int imgWidth = 570, int iconHeight = 80, int gnc=3)
+        public PartialViewResult GameList(int imgWidth = 570, int iconHeight = 80, int gnc=3)
         {
             var routes = Request.RequestContext.RouteData.Values;
             var controller = routes["controller"].ToString().ToLowerInvariant();
@@ -57,8 +57,10 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpGet]
-        public virtual ActionResult Details(string titleUrl)
+        public ActionResult Details(string titleUrl)
         {
+            if (string.IsNullOrEmpty(titleUrl) || Equals(titleUrl.ToUpper(), "DETAILS")) return new HttpNotFoundResult();
+
             var viewModel = (_repo as RepoGame).GetGameDetails(titleUrl);
 
             if (viewModel == null) return new HttpStatusCodeResult(404);

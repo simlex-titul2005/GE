@@ -1,6 +1,8 @@
 ﻿@model VMLGNB
 @{
     Layout = null;
+    VMLGNBNews news;
+    VMLGNBNews gNews;
 }
 
 <!--last news block-->
@@ -14,9 +16,9 @@
                     {
                         for (int i = 0; i < Model.News.Length; i++)
                         {
-                            var news = Model.News[i];
+                            news = Model.News[i];
                             <li>
-                                <a href="@Url.Action(MVC.News.Details(news.DateCreate.Year, news.DateCreate.Month.ToString("00"), news.DateCreate.Day.ToString("00"), news.TitleUrl))" data-game-id="@news.GameId">
+                                <a href="@news.Url(Url)" data-game-id="@news.GameId">
                                     <span class="date">@news.DateCreate.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
                                 </a>
                             </li>
@@ -39,7 +41,7 @@
                                     var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
                                     <li @("style=width:" + width + "%")>
                                         <a href="@Url.Action("list", new { controller = "news", gameTitle = game.TitleUrl })">
-                                            <figure data-game-id="@game.Id" style="background:url('@Url.Action(MVC.Pictures.Picture((Guid)game.FrontPictureId, height: 220))') center / cover">
+                                            <figure data-game-id="@game.Id" style="background:url('@Url.Action("Picture", new { controller="Pictures", id=game.FrontPictureId, height= 220})') center / cover">
                                                 
                                             </figure>
                                         </a>
@@ -48,9 +50,9 @@
                                             <ul class="lgnb-news hidden-xs">
                                                 @for (int y = 0; y < game.News.Length; y++)
                                                 {
-                                                    var gNews = game.News[y];
+                                                    gNews = game.News[y];
                                                     <li>
-                                                        <a href="@Url.Action(MVC.News.Details(gNews.DateCreate.Year, gNews.DateCreate.Month.ToString("00"), gNews.DateCreate.Day.ToString("00"), gNews.TitleUrl))">@gNews.Title</a>
+                                                        <a href="@gNews.Url(Url)">@gNews.Title</a>
                                                     </li>
                                                 }
                                             </ul>
@@ -59,7 +61,7 @@
                                         {
                                             <div class="tags">
                                                 <h4>@game.Title</h4>
-                                                @Html.Partial(MVC.MaterialTags.Views._TagsCloud, game.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action(MVC.News.List()) } })
+                                                @Html.Partial("~/Views/MaterialTags/_TagsCloud.cshtml", game.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action("List", "News") } })
                                             </div>
                                         }
                                     </li>

@@ -14,7 +14,7 @@ namespace GE.WebAdmin.Models
         [AllowHtml, DataType(DataType.MultilineText), Display(Name="Описание")]
         public string Description { get; set; }
 
-        [Display(Name = "Изображение"), UIHint("EditImage")]
+        [Display(Name = "Изображение"), UIHint("PicturesLookupGrid")]
         public Guid? PictureId { get; set; }
     }
 }

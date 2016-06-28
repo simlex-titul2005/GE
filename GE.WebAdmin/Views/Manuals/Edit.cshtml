@@ -8,16 +8,17 @@
 <h2>@ViewBag.Title</h2>
 @if (Model.Id != 0)
 {
-    <div class="text-right">
-        <form method="post" action="delete">
-            @Html.HiddenFor(x => x.Id)
-            @Html.HiddenFor(x => x.ModelCoreType)
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить материал</button>
-        </form>
+    <div class="form-group">
+        <div class="text-right">
+            <form method="post" action="@Url.Action("delete", "manuals")">
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.ModelCoreType)
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить материал</button>
+            </form>
+        </div>
     </div>
 }
-<br />
 
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
@@ -25,7 +26,7 @@
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="params">
         <h2>Основные параметры материала</h2>
-        <form method="post" action="@Url.Action(MVC.Manuals.Edit())">
+        <form method="post" action="@Url.Action("edit", "manuals")" autocomplete="off">
             @Html.AntiForgeryToken()
 
             @Html.HiddenFor(x => x.Id)
@@ -75,5 +76,9 @@
             CKEDITOR.remove(CKEDITOR.instances['Html']);
         }
         CKEDITOR.replace('Html', { height: 400 });
+
+        $(function () {
+            $("#CategoryId").sx_gvl();
+        });
     </script>
 }

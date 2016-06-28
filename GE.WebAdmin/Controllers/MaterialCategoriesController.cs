@@ -13,10 +13,11 @@ namespace GE.WebAdmin.Controllers
 {
     public partial class MaterialCategoriesController : BaseController
     {
-        private SxDbRepository<string, SxMaterialCategory, DbContext> _repo;
+        private static RepoMaterialCategory _repo;
         public MaterialCategoriesController()
         {
-            _repo = new RepoMaterialCategory();
+            if(_repo==null)
+                _repo = new RepoMaterialCategory();
         }
 
         [HttpGet]
@@ -79,11 +80,13 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual ActionResult Edit(ModelCoreType mct, string pcid = null, string id = null)
         {
-            var data = string.IsNullOrEmpty(id) ? new MaterialCategory { ModelCoreType = mct, ParentCategoryId = pcid } : (_repo as RepoMaterialCategory).GetByKey(id);
+            var data = string.IsNullOrEmpty(id) ? new MaterialCategory { ModelCoreType = mct, ParentCategoryId = pcid } : _repo.GetByKey(id);
             var viewModel = Mapper.Map<MaterialCategory, VMEditMaterialCategory>(data);
             ViewBag.ModelCoreType = mct;
             if (data.FrontPictureId.HasValue)
-                ViewBag.PictureCaption = data.FrontPicture.Caption;
+                ViewBag.FrontPictureIdCaption = data.FrontPicture.Caption;
+            if (data.GameId.HasValue)
+                ViewBag.GameTitle = data.Game.Title;
             return View(viewModel);
         }
 
@@ -143,7 +146,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost]
-        public virtual PartialViewResult FindTable(ModelCoreType mct)
+        public virtual PartialViewResult FindTreeView(ModelCoreType mct)
         {
             var filter = new SxFilter { ModelCoreType = mct };
             var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
@@ -160,7 +163,7 @@ namespace GE.WebAdmin.Controllers
             ViewBag.ModelCoreType = mct;
             ViewBag.PageTitle = getPageTitle(mct);
 
-            return PartialView("~/views/MaterialCategories/_TreeView.cshtml", parents);
+            return PartialView("_TreeView", parents);
         }
 
         [HttpGet]

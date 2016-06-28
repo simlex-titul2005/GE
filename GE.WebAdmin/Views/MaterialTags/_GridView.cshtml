@@ -1,50 +1,36 @@
-﻿@model VMMaterialTag[]
+﻿@model SxVMMaterialTag[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var mid = (int)ViewBag.MaterialId;
-    var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
-    var filter = ViewBag.Filter != null ? (VMMaterialTag)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
+    int mid = ViewBag.MaterialId;
+    Enums.ModelCoreType mct = ViewBag.ModelCoreType;
 }
 
 <h3>Облако тегов для материала</h3>
 <blockquote>
     Теги должны содержать основные слова, которые могут содержаться в облаке тегов сайта.
 </blockquote>
-@using (Ajax.BeginForm(MVC.MaterialTags.Edit(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "grid-mat-tags" }, new { @autocomplete="off"}))
+@using (Ajax.BeginForm("edit", new { controler = "MaterialTags" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "grid-mat-tags" }, new { @autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="MaterialId" name="MaterialId" value="@mid" />
     <input type="hidden" id="ModelCoreType" name="ModelCoreType" value="@mct" />
-    <label for="Value">Новый тег облака</label> <span class="text-info">(максимально 4 слова)</span>
-    <div class="input-group">
-        <input type="text" id="Id" name="Id" class="form-control" placeholder="Введите значение тега" />
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Добавить</button>
-        </span>
-    </div>
+        <label for="Value">Новый тег облака</label> <span class="text-info">(максимально 4 слова)</span>
+        <div class="input-group">
+            <input type="text" id="Id" name="Id" class="form-control" placeholder="Введите значение тега" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Добавить</button>
+            </span>
+        </div>
 }
 <br />
-@Html.SxGridView(
-        new SxExtantions.SxGridViewSettings<VMMaterialTag>
+@Html.SxGridView(Model,
+        new SxExtantions.SxGridViewSettings<SxVMMaterialTag>
         {
-            UpdateTargetId = "grid-mat-tags",
-            Data = Model,
-            Columns = new SxExtantions.SxGridViewColumn<VMMaterialTag>[]{ new SxExtantions.SxGridViewColumn<VMMaterialTag>{
-                FieldName ="Id",
-                Caption ="Значение"
+            Columns = new SxExtantions.SxGridViewColumn<SxVMMaterialTag>[]{
+                new SxExtantions.SxGridViewColumn<SxVMMaterialTag>{ FieldName ="Id", Caption ="Значение"
             } },
-            PagerInfo = pagerInfo,
-            Filter = filter,
-            SortDirections = sortDirections,
-            GeneralControllerName = "materialtags",
-            KeyFieldsName = new string[] { "Id", "MaterialId", "ModelCoreType" },
-            EnableEditing = false,
-            EnableDelete = true,
-            EnableCreate = false,
-            FuncDeleteLink =(mt) =>Url.Action("delete", "materialtags", new { Id= mt.Id.Replace(".", "^"), MaterialId = mid, ModelCoreType=mct }),
-            PagerLink=string.Format("/materialtags/index?mid={0}&mct={1}", mid, mct)
-        },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+            DataAjaxUrl = "/MaterialTags?mid=" + mid + "&mct=" + mct,
+            EnableDeleting=true,
+            DeleteRowUrl = x => { return "/MaterialTags/delete?Id=" + x.Id+"&MaterialId="+mid+"&ModelCoreType="+mct; }
+        }
     )

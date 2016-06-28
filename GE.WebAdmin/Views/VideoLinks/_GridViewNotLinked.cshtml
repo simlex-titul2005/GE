@@ -1,34 +1,20 @@
-﻿@model VMVideo[]
+﻿@model SxVMVideo[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMVideo)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
-    var mid = (int)ViewBag.MaterialId;
-    var mct = (SX.WebCore.Enums.ModelCoreType)ViewBag.ModelCoreType;
+    int mid = ViewBag.MaterialId;
+    Enums.ModelCoreType mct = ViewBag.ModelCoreType;
 }
 
 
-@Html.SxGridView(
-            new SxExtantions.SxGridViewSettings<VMVideo>
+@Html.SxGridView(Model,
+            new SxExtantions.SxGridViewSettings<SxVMVideo>
             {
-                UpdateTargetId = "grid-not-mat-videos",
-                Data = Model,
-                Columns = new SxExtantions.SxGridViewColumn<VMVideo>[]{
-            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="Title", Caption="Название видео"},
-            new SxExtantions.SxGridViewColumn<VMVideo>{FieldName="VideoId", Caption="Идентификатор"}
-        },
-                PagerInfo = pagerInfo,
-                Filter = filter,
-                SortDirections = sortDirections,
-                EnableCreate = false,
-                PagerLink = Url.Action(MVC.VideoLinks.IndexNotlinked(mid: mid, mct: mct, fm: false)),
-                EnableEditing = false,
-                ShowSelectCheckbox = true,
-                FunCheckBoxName=(v)=>"video",
-                FunCheckBoxTrue=(v)=> false,
-                FuncGetId=(v)=>v.Id,
-                FunCheckBoxChange=(v)=> "linkedVideoSelectedChange(this)"
-            },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+                Columns = new SxExtantions.SxGridViewColumn<SxVMVideo>[]{
+                    new SxExtantions.SxGridViewColumn<SxVMVideo>{FieldName="Title", Caption="Название видео"},
+                    new SxExtantions.SxGridViewColumn<SxVMVideo>{FieldName="VideoId", Caption="Идентификатор"}
+                },
+                DataAjaxUrl= "/VideoLinks/IndexNotlinked?mid="+mid+"&mct="+ mct+"&fm=false",
+                ShowSelectedCheckbox=true,
+                RowId = x => { return x.Id.ToString(); }
+            }
     )

@@ -6,16 +6,16 @@
 
 @if (categoryId != null)
 {
-    @Html.SxGV(Model,
-                new SxExtantions.SxGVSettings<VMAphorism>
+    @Html.SxGridView(Model,
+                new SxExtantions.SxGridViewSettings<VMAphorism>
                 {
-                    Columns = new SxExtantions.SxGvColumn<VMAphorism>[]{
-            new SxExtantions.SxGvColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"},
-            new SxExtantions.SxGvColumn<VMAphorism>{FieldName="Name", Caption="Автор",Template=(a)=> {
+                    Columns = new SxExtantions.SxGridViewColumn<VMAphorism>[]{
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"},
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Name", Caption="Автор",Template=(a)=> {
                 return a.Author!=null? a.Author.Name:null;
             } },
-            new SxExtantions.SxGvColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
-            new SxExtantions.SxGvColumn<VMAphorism>{FieldName="Show", Caption="Показывать", Template=(a)=> {
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Show", Caption="Показывать", Template=(a)=> {
                 return a.Show?"Да":"Нет";
             } }
             },

@@ -1,35 +1,27 @@
 ﻿@model VMNews[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMNews)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
 }
 
 
-@Html.SxGridView(
+@Html.SxGridView(Model,
         new SxExtantions.SxGridViewSettings<VMNews>
         {
-            UpdateTargetId = "grid-news",
-            Data = Model,
             Columns = new SxExtantions.SxGridViewColumn<VMNews>[]{
-            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="DateCreate", Caption="Дата создания"},
-            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="DateOfPublication", Caption="Дата публикации"},
-            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="Title", Caption="Заголовок"},
-            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="SeoInfoId", Caption="Инфо", Template=(m)=> {
-                return !m.SeoInfoId.HasValue? "<i class=\"text-danger\">не заданы теги seo</i>":null;
-            } },
-            new SxExtantions.SxGridViewColumn<VMNews>{FieldName="Show", Caption="Показывать", Template=(m)=> {
-                return m.Show? "Да":"Нет";
-            } }
-        },
-            PagerInfo=pagerInfo,
-            Filter = filter,
-            SortDirections = sortDirections,
-            FuncRowCssClass = (a) =>
-            {
-                return a.Show ? null : "warning";
-            }
-        },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+                new SxExtantions.SxGridViewColumn<VMNews>{FieldName="DateCreate", Caption="Дата создания"},
+                new SxExtantions.SxGridViewColumn<VMNews>{FieldName="DateOfPublication", Caption="Дата публикации"},
+                new SxExtantions.SxGridViewColumn<VMNews>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGridViewColumn<VMNews>{FieldName="SeoTagsId", Caption="Инфо", Template=(m)=> {
+                    return !m.SeoTagsId.HasValue? "<i class=\"text-danger\">не заданы теги seo</i>":null;
+                } },
+                new SxExtantions.SxGridViewColumn<VMNews>{FieldName="Show", Caption="Показывать", Template=(m)=> {
+                    return m.Show? "Да":"Нет";
+                } }
+            },
+            DataAjaxUrl = "/news",
+            EnableCreating = true,
+            CreateRowUrl = "/news/edit",
+            EnableEditing = true,
+            EditRowUrl = x => { return "/news/edit/" + x.Id; }
+        }
     )

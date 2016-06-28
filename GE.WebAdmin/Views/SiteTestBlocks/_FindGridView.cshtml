@@ -5,11 +5,11 @@
 }
 
 
-@Html.SxGV(Model,
-        new SxExtantions.SxGVSettings<SxVMSiteTestBlock>
+@Html.SxGridView(Model,
+        new SxExtantions.SxGridViewSettings<SxVMSiteTestBlock>
         {
-            Columns = new SxExtantions.SxGvColumn<SxVMSiteTestBlock>[]{
-                new SxExtantions.SxGvColumn<SxVMSiteTestBlock>{FieldName="Title", Caption="Заголовок" }
+            Columns = new SxExtantions.SxGridViewColumn<SxVMSiteTestBlock>[]{
+                new SxExtantions.SxGridViewColumn<SxVMSiteTestBlock>{FieldName="Title", Caption="Заголовок" }
             },
             DataAjaxUrl = "/sitetestblocks/findgridview?testId="+ testId,
             RowId = x => { return x.Id.ToString(); },

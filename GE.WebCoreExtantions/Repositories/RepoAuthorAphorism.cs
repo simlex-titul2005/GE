@@ -19,7 +19,7 @@ namespace GE.WebCoreExtantions.Repositories
             object param = null;
             query += getAuthorAphorismsWhereString(filter, out param);
 
-            var defaultOrder = new SxOrder { FieldName = "daa.DateCreate", Direction = SortDirection.Desc };
+            var defaultOrder = new SxOrder { FieldName = "daa.Name", Direction = SortDirection.Asc };
             query += SxQueryProvider.GetOrderString(defaultOrder, filter.Order);
 
             query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";

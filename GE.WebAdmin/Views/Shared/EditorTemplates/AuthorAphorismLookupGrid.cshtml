@@ -1,0 +1,16 @@
+﻿@model int?
+@{
+    var caption = (string)ViewBag.AuthorName;
+}
+
+<div id="@Html.IdForModel()">
+    <input type="hidden" value="@Html.ValueForModel()" name="@Html.IdForModel()" />
+
+    @Html.SxGridLookup(new SxExtantions.SxGridLookupSettings
+{
+    DataAjaxUrl = "/AuthorAphorisms/findgridview",
+    DefaulText = caption == null ? Html.ValueForModel().ToString() : caption
+},
+    new VMAuthorAphorism [0]
+)
+</div>

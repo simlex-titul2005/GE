@@ -4,13 +4,13 @@
 }
 
 
-@Html.SxGV(Model,
-        new SxExtantions.SxGVSettings<SxVMBannerGroup>
+@Html.SxGridView(Model,
+        new SxExtantions.SxGridViewSettings<SxVMBannerGroup>
         {
-            Columns = new SxExtantions.SxGvColumn<SxVMBannerGroup>[]{
-                new SxExtantions.SxGvColumn<SxVMBannerGroup>{FieldName="Id", Caption="Идентификатор"},
-                new SxExtantions.SxGvColumn<SxVMBannerGroup>{FieldName="Title", Caption="Заголовок"},
-                new SxExtantions.SxGvColumn<SxVMBannerGroup>{FieldName="Description", Caption="Описание"}
+            Columns = new SxExtantions.SxGridViewColumn<SxVMBannerGroup>[]{
+                new SxExtantions.SxGridViewColumn<SxVMBannerGroup>{FieldName="Id", Caption="Идентификатор"},
+                new SxExtantions.SxGridViewColumn<SxVMBannerGroup>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGridViewColumn<SxVMBannerGroup>{FieldName="Description", Caption="Описание"}
             },
             EnableCreating = true,
             CreateRowUrl = "/bannergroups/edit",

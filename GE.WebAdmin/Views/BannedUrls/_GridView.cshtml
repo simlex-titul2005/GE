@@ -4,14 +4,14 @@
 }
 
 
-@Html.SxGV(Model,
-        new SxExtantions.SxGVSettings<SxVMBannedUrl>
+@Html.SxGridView(Model,
+        new SxExtantions.SxGridViewSettings<SxVMBannedUrl>
         {
-            Columns = new SxExtantions.SxGvColumn<SxVMBannedUrl>[]{
-                new SxExtantions.SxGvColumn<SxVMBannedUrl>{FieldName="Url", Caption="Адрес", Template=(u)=> {
+            Columns = new SxExtantions.SxGridViewColumn<SxVMBannedUrl>[]{
+                new SxExtantions.SxGridViewColumn<SxVMBannedUrl>{FieldName="Url", Caption="Адрес", Template=(u)=> {
                     return string.Format("<a href=\"{0}\" target=\"_blank\">{0}</a>", u.Url);
                 } },
-                new SxExtantions.SxGvColumn<SxVMBannedUrl>{FieldName="Couse", Caption="Причина бана"}
+                new SxExtantions.SxGridViewColumn<SxVMBannedUrl>{FieldName="Couse", Caption="Причина бана"}
             },
             EnableCreating = true,
             CreateRowUrl = "/bannedurls/edit",

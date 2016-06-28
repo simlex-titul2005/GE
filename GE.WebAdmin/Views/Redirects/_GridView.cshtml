@@ -4,12 +4,12 @@
 }
 
 
-@Html.SxGV(Model,
-            new SxExtantions.SxGVSettings<SxVM301Redirect>
+@Html.SxGridView(Model,
+            new SxExtantions.SxGridViewSettings<SxVM301Redirect>
             {
-                Columns = new SxExtantions.SxGvColumn<SxVM301Redirect>[]{
-                    new SxExtantions.SxGvColumn<SxVM301Redirect>{FieldName="OldUrl", Caption="Старый адрес"},
-                    new SxExtantions.SxGvColumn<SxVM301Redirect>{FieldName="NewUrl", Caption="Новый адрес"}
+                Columns = new SxExtantions.SxGridViewColumn<SxVM301Redirect>[]{
+                    new SxExtantions.SxGridViewColumn<SxVM301Redirect>{FieldName="OldUrl", Caption="Старый адрес"},
+                    new SxExtantions.SxGridViewColumn<SxVM301Redirect>{FieldName="NewUrl", Caption="Новый адрес"}
                 },
                 EnableCreating = true,
                 CreateRowUrl = "/redirects/edit",

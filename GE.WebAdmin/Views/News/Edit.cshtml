@@ -16,16 +16,17 @@
 <h2>@ViewBag.Title</h2>
 @if (!isNew)
 {
-    <div class="text-right">
-        <form method="post" action="delete">
-            @Html.HiddenFor(x => x.Id)
-            @Html.HiddenFor(x => x.ModelCoreType)
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить новость</button>
-        </form>
+    <div class="form-group">
+        <div class="text-right">
+            <form method="post" action="@Url.Action("delete", "news")">
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.ModelCoreType)
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить новость</button>
+            </form>
+        </div>
     </div>
 }
-<br />
 
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="@(uriFragmet==null || uriFragmet=="params"? "active":null)"><a href="#params" aria-controls="params" role="tab" data-toggle="tab">Параметры</a></li>
@@ -43,7 +44,7 @@
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane @(uriFragmet==null || uriFragmet=="params"? "active":null)" id="params">
         <h2>Основные параметры материала</h2>
-        <form method="post" action="@Url.Action(MVC.News.Edit())">
+        <form method="post" action="@Url.Action("edit", "news")">
             @Html.AntiForgeryToken()
 
             @Html.HiddenFor(x => x.Id)
@@ -110,10 +111,9 @@
                 </div>
                 <div class="col-md-3">
                     @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
-                    @if (!isNew && Model.FrontPictureId.HasValue)
+                    @if (Model.FrontPictureId.HasValue)
                     {
-                        @:&nbsp;
-                        <a href="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))">Показать</a>
+                        <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="@Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.FrontPictureId"><i class="fa fa-picture-o"></i></a>
                     }
                     @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.FrontPictureId)
@@ -139,7 +139,7 @@
                     @Html.LabelFor(x => x.Html, new { @class = "control-label" }) <br /><br />
                     @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(x => x.Html)
-                    @Html.Partial(MVC.Shared.Views._MaterialModal, Model)
+                    @Html.Partial("_MaterialModal", Model)
                 </div>
             </div>
             <br />
@@ -159,7 +159,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div id="grid-mat-tags">
-                        @Html.Action(MVC.MaterialTags.Index(mid: Model.Id, mct: Model.ModelCoreType))
+                        @Html.Action("index", new { controller = "MaterialTags", mid = Model.Id, mct = Model.ModelCoreType })
                     </div>
                 </div>
             </div>
@@ -168,7 +168,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div id="grid-mat-tags">
-                        @Html.Action(MVC.SeoInfo.EditForMaterial(mid: Model.Id, mct: Model.ModelCoreType, id: Model.SeoInfoId))
+                        @Html.Action("EditForMaterial", new { controller = "SeoTags", mid = Model.Id, mct = Model.ModelCoreType, id = Model.SeoTagsId })
                     </div>
                 </div>
             </div>
@@ -177,11 +177,11 @@
     @if (User.IsInRole("video-redactor") && !isNew && !hasError)
     {
         <div role="tabpanel" id="videos" class="tab-pane @(uriFragmet=="videos"? "active":null)">
-            @Html.Partial(MVC.Shared.Views._NotMaterialVideos, Model)
+            @Html.Partial("_NotMaterialVideos", Model)
             <h3>Видео контент материала</h3>
-            <p class="text-info">Для добавления доступны только видеоролики, зарегистрированные на сайте. Для регистрации видеоролика его необходимо занести в базу данных <a href="@Url.Action(MVC.Videos.Index())" style="text-decoration:underline;" target="_blank">здесь</a></p>
+            <p class="text-info">Для добавления доступны только видеоролики, зарегистрированные на сайте. Для регистрации видеоролика его необходимо занести в базу данных <a href="@Url.Action("index", new { controller="videos"})" style="text-decoration:underline;" target="_blank">здесь</a></p>
             <div id="grid-videos">
-                @Html.Action(MVC.VideoLinks.Index(mid: Model.Id, mct: Model.ModelCoreType))
+                @Html.Action("index", new { controller = "VideoLinks", mid = Model.Id, mct = Model.ModelCoreType })
             </div>
         </div>
     }
@@ -189,6 +189,7 @@
 
 @section scripts{
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
+    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/lightbox.min.js"></script>
@@ -199,6 +200,9 @@
         CKEDITOR.replace('Html', { height: 400 });
 
         $(function () {
+            $('#FrontPictureId, #GameId, #CategoryId').sx_gvl();
+            $('#grid-mat-tags, #seo-kw, #grid-videos, #grid-not-mat-videos').sx_gv();
+
             $('#DateOfPublication').closest('.date').datetimepicker({
                 locale: 'ru',
                 format: 'DD.MM.YYYY HH:mm',
@@ -213,6 +217,35 @@
                     clear: '',
                     close: ''
                 }
+            });
+
+            $('#not-mat-videos-form').submit(function (e) {
+                $form = $(this);
+                $target = $('#not-mat-videos');
+                $target.find('input[type="checkbox"]:checked').each(function () {
+                    $input = $(this);
+                    var id = $input.closest('.sx-gv__row').attr('data-row-id');
+                    $('<input type="hidden" name="video" value="' + id + '" />').appendTo($form);
+                });
+
+                $.ajax({
+                    url: '@Url.Action("AddMaterialVideo", "VideoLinks")',
+                    data: $form.serialize(),
+                    type: 'post',
+                    success: function (data) {
+                        $('#grid-videos').html(data);
+                        $('#not-mat-videos').modal('hide');
+                    },
+                    complete: function () {
+                        $form.find('input[name="video"]').remove();
+                    }
+                });
+                e.preventDefault();
+            });
+
+            $('#grid-videos').on('click', '.sx-gv__create-btn', function (event) {
+                $('#not-mat-videos').modal('show');
+                return false;
             });
 
             $('#matModal').on('show.bs.modal', function (e) {

@@ -2,17 +2,17 @@
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
-using SX.WebCore.Abstract;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using Microsoft.AspNet.Identity;
 using SX.WebCore.Repositories;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebAdmin.Controllers
 {
     public partial class ArticlesController : BaseController
     {
-        private static SxDbRepository<int, Article, DbContext> _repo;
+        private static RepoArticle _repo;
         public ArticlesController()
         {
             if(_repo==null)
@@ -24,25 +24,24 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new SxFilter(page, _pageSize);
+            var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
+            var filter = new SxFilter(page, _pageSize) { Order= defaultOrder };
             var totalItems = (_repo as RepoArticle).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
-            var viewModel = (_repo as RepoArticle).QueryForAdmin(filter);
+            var viewModel = _repo.QueryForAdmin(filter);
             return View(viewModel);
         }
 
         [HttpPost]
         public virtual PartialViewResult Index(VMArticle filterModel, SxOrder order, int page = 1)
         {
-            ViewBag.Filter = filterModel;
-            ViewBag.Order = order;
-
-            var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
+            var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
+            var filter = new SxFilter(page, _pageSize) { Order = order==null || order.Direction==SortDirection.Unknown? defaultOrder:order, WhereExpressionObject = filterModel };
             var totalItems = (_repo as RepoArticle).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
             var viewModel = (_repo as RepoArticle).QueryForAdmin(filter);
 
@@ -56,14 +55,22 @@ namespace GE.WebAdmin.Controllers
             var viewModel = Mapper.Map<Article, VMEditArticle>(model);
             viewModel.OldTitleUrl = viewModel.TitleUrl;
             if (model.FrontPictureId.HasValue)
-                ViewBag.PictureCaption = model.FrontPicture.Caption;
+                ViewData["FrontPictureIdCaption"] = model.FrontPicture.Caption;
+            if (model.Game != null)
+                ViewBag.GameTitle = model.Game.Title;
+            if (model.Category != null)
+                ViewBag.MaterialCategoryTitle = model.Category.Title;
+
+            ViewBag.MaterialId = id;
+            ViewBag.ModelCoreType = model.ModelCoreType;
+
             return View(viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditArticle model)
         {
-            if(string.IsNullOrEmpty(model.TitleUrl))
+            if(model.Title!=null && string.IsNullOrEmpty(model.TitleUrl))
             {
                 var titleUrl = Url.SeoFriendlyUrl(model.Title);
                 var existModel = (_repo as RepoArticle).GetByTitleUrl(titleUrl);

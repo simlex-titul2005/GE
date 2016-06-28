@@ -25,7 +25,7 @@ namespace GE.WebAdmin.Models
         public string TitleUrl { get; set; }
 
         public VMAuthorAphorism Author { get; set; }
-        [Display(Name = "Автор"), UIHint("EditAuthorAphorism")]
+        [Display(Name = "Автор"), UIHint("AuthorAphorismLookupGrid")]
         public int? AuthorId { get; set; }
 
         [Display(Name ="Источник"), MaxLength(255), DataType(DataType.Url)]

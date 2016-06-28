@@ -3,8 +3,6 @@ using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
-using SX.WebCore.Repositories;
-using SX.WebCore.Resources;
 using System.Web.Mvc;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
@@ -14,14 +12,11 @@ namespace GE.WebAdmin.Controllers
     public sealed class GamesController : BaseController
     {
         private static RepoGame _repo;
-        //private static SxRepoSiteSetting<TDbContext> _repoSS;
         private static int _pageSize = 20;
         public GamesController()
         {
             if(_repo==null)
                 _repo = new RepoGame();
-            //if (_repoSS == null)
-            //    _repoSS = new SxRepoSiteSetting<TDbContext>();
         }
 
         
@@ -56,6 +51,9 @@ namespace GE.WebAdmin.Controllers
         public ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id) : new Game();
+            ViewData["FrontPictureIdCaption"] = model.FrontPicture?.Caption;
+            ViewData["GoodPictureIdCaption"] = model.GoodPicture?.Caption;
+            ViewData["BadPictureIdCaption"] = model.BadPicture?.Caption;
             return View(Mapper.Map<Game, VMEditGame>(model));
         }
 
@@ -77,14 +75,13 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost, AllowAnonymous]
-        public PartialViewResult FindGridView(VMGame filterModel, int page = 1, int pageSize = 10)
+        public PartialViewResult FindGridView(VMGame filterModel, SxOrder order, int page = 1, int pageSize = 10)
         {
-            ViewBag.Filter = filterModel;
-            var filter = new SxFilter(page, pageSize);
-            filter.WhereExpressionObject = filterModel;
+            var defaultOrder = new SxOrder { FieldName = "Title", Direction = SortDirection.Asc };
+            var filter = new SxFilter(page, pageSize) { WhereExpressionObject=filterModel, Order=order==null || order.Direction==SortDirection.Unknown? defaultOrder:order};
             var totalItems = (_repo as RepoGame).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
             var viewModel = (_repo as RepoGame).QueryForAdmin(filter);
 

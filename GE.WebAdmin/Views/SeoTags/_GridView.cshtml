@@ -4,11 +4,11 @@
 }
 
 
-@Html.SxGV(Model,
-        new SxExtantions.SxGVSettings<SxVMSeoTags>
+@Html.SxGridView(Model,
+        new SxExtantions.SxGridViewSettings<SxVMSeoTags>
         {
-            Columns = new SxExtantions.SxGvColumn<SxVMSeoTags>[]{
-                new SxExtantions.SxGvColumn<SxVMSeoTags>{FieldName="RawUrl", Caption="Адрес"}
+            Columns = new SxExtantions.SxGridViewColumn<SxVMSeoTags>[]{
+                new SxExtantions.SxGridViewColumn<SxVMSeoTags>{FieldName="RawUrl", Caption="Адрес"}
             },
             EnableCreating = true,
             CreateRowUrl = "/seotags/edit",

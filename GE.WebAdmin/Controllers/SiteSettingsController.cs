@@ -3,11 +3,12 @@ using GE.WebCoreExtantions;
 using SX.WebCore;
 using SX.WebCore.Repositories;
 using SX.WebCore.Resources;
+using System;
 using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class SiteSettingsController : SX.WebCore.MvcControllers.SxSiteSettingsController<WebCoreExtantions.DbContext>
+    public sealed class SiteSettingsController : SX.WebCore.MvcControllers.SxSiteSettingsController<WebCoreExtantions.DbContext>
     {
         #region Начальная иконка
         [Authorize(Roles = "admin")]
@@ -30,6 +31,19 @@ namespace GE.WebAdmin.Controllers
             viewModel.OldIconPath = viewModel.IconPath;
             viewModel.OldGoodImagePath = viewModel.GoodImagePath;
             viewModel.OldBadImagePath = viewModel.BadImagePath;
+
+            Guid guid;
+            Guid.TryParse(settings[Settings.emptyGameIconPath].ToString(), out guid);
+            if (guid != Guid.Empty)
+                ViewData["IconPathCaption"] = RepoPicture.GetByKey(guid).Caption;
+
+            Guid.TryParse(settings[Settings.emptyGameGoodImagePath].ToString(), out guid);
+            if (guid != Guid.Empty)
+                ViewData["GoodImagePathCaption"] = RepoPicture.GetByKey(guid).Caption;
+
+            Guid.TryParse(settings[Settings.emptyGameBadImagePath].ToString(), out guid);
+            if (guid != Guid.Empty)
+                ViewData["BadImagePathCaption"] = RepoPicture.GetByKey(guid).Caption;
 
             return View(viewModel);
         }

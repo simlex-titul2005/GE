@@ -3,14 +3,12 @@ using SX.WebCore.MvcApplication;
 using SX.WebCore.Repositories;
 using SX.WebCore.Resources;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 
 namespace GE.WebAdmin
 {
     public class MvcApplication : SxApplication<WebCoreExtantions.DbContext>
     {
-        private static Dictionary<string, string> _usersOnSite;
         private static DateTime _lastStartDate;
 
         protected override void Application_Start(object sender, EventArgs e)

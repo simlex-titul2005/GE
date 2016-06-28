@@ -4,11 +4,11 @@
 }
 
 
-@Html.SxGV(Model, new SxExtantions.SxGVSettings<SxVMValute> {
-    Columns = new SxExtantions.SxGvColumn<SxVMValute>[] {
-        new SxExtantions.SxGvColumn<SxVMValute> { FieldName="Name", Caption="Наименование"},
-        new SxExtantions.SxGvColumn<SxVMValute> { FieldName="Nominal", Caption="Номинал"},
-        new SxExtantions.SxGvColumn<SxVMValute> { FieldName="Value", Caption="Значение, руб."},
+@Html.SxGridView(Model, new SxExtantions.SxGridViewSettings<SxVMValute> {
+    Columns = new SxExtantions.SxGridViewColumn<SxVMValute>[] {
+        new SxExtantions.SxGridViewColumn<SxVMValute> { FieldName="Name", Caption="Наименование"},
+        new SxExtantions.SxGridViewColumn<SxVMValute> { FieldName="Nominal", Caption="Номинал"},
+        new SxExtantions.SxGridViewColumn<SxVMValute> { FieldName="Value", Caption="Значение, руб."},
     },
     RowCssClass = (x) => { return Equals(x.CharCode, "USD") || Equals(x.CharCode, "EUR") ? "success" : null; },
     DataAjaxUrl="/valutes"

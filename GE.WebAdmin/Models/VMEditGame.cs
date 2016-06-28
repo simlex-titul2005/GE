@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
 {
@@ -27,13 +26,13 @@ namespace GE.WebAdmin.Models
         [Display(Name = "Показывать")]
         public bool Show { get; set; }
 
-        [Display(Name="Иконка"), UIHint("EditImage"), Required]
+        [Display(Name="Иконка"), UIHint("PicturesLookupGrid"), Required]
         public Guid? FrontPictureId { get; set; }
 
-        [Display(Name = "Картинка для новостей (левая)"), UIHint("EditImage"), Required]
+        [Display(Name = "Картинка для новостей (левая)"), UIHint("PicturesLookupGrid"), Required]
         public Guid? GoodPictureId { get; set; }
 
-        [Display(Name = "Картинка для статей (правая)"), UIHint("EditImage"), Required]
+        [Display(Name = "Картинка для статей (правая)"), UIHint("PicturesLookupGrid"), Required]
         public Guid? BadPictureId { get; set; }
     }
 }

@@ -1,65 +1,64 @@
 ﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using SX.WebCore;
-using SX.WebCore.Abstract;
-using SX.WebCore.HtmlHelpers;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Linq;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
+using SX.WebCore.Repositories;
 
 namespace GE.WebAdmin.Controllers
 {
     public partial class ManualsController : BaseController
     {
-        SxDbRepository<int, SxManual, DbContext> _repo;
+        private static SxRepoManual<DbContext> _repo;
         public ManualsController()
         {
-            _repo = new SX.WebCore.Repositories.SxRepoManual<DbContext>();
+            if(_repo==null)
+                _repo = new SxRepoManual<DbContext>();
         }
 
         private static int _pageSize = 20;
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult Index(int page = 1)
         {
-            var filter = new SxFilter(page, _pageSize);
-            var totalItems = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Count(filter);
-            filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
+            var filter = new SxFilter(page, _pageSize) { Order=defaultOrder};
+            filter.PagerInfo.TotalItems = _repo.Count(filter);
+            ViewBag.Filter = filter;
 
-            var viewModel = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Query(filter).ToArray()
+            var viewModel = _repo.Query(filter).ToArray()
                 .Select(x=>Mapper.Map<SxManual, VMManual>(x)).ToArray();
             return View(viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public virtual PartialViewResult Index(VMManual filterModel, SxOrder order, int page = 1)
         {
-            ViewBag.Filter = filterModel;
-            ViewBag.Order = order;
+            var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
+            var filter = new SxFilter(page, _pageSize) { Order = order==null || order.Direction==SortDirection.Unknown?defaultOrder:order, WhereExpressionObject = filterModel };
+            filter.PagerInfo.TotalItems = _repo.Count(filter);
+            ViewBag.Filter = filter;
 
-            var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Count(filter);
-            filter.PagerInfo.TotalItems = totalItems;
-            ViewBag.PagerInfo = filter.PagerInfo;
-
-            var viewModel = (_repo as SX.WebCore.Repositories.SxRepoManual<DbContext>).Query(filter).ToArray()
+            var viewModel = _repo.Query(filter).ToArray()
                 .Select(x => Mapper.Map<SxManual, VMManual>(x)).ToArray();
 
             return PartialView("_GridView", viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id, Enums.ModelCoreType.Manual) : new SxManual { ModelCoreType = Enums.ModelCoreType.Manual };
             var viewModel = Mapper.Map<SxManual, VMEditManual>(model);
+            ViewBag.ModelCoreType = model.ModelCoreType;
+            if (model.Category != null)
+                ViewBag.MaterialCategoryTitle = model.Category.Title;
             return View(viewModel);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditManual model)
         {
             if (ModelState.IsValid)
@@ -87,8 +86,7 @@ namespace GE.WebAdmin.Controllers
                 return View(model);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Delete(VMEditManual model)
         {
             _repo.Delete(model.Id, model.ModelCoreType);

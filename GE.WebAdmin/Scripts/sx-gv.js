@@ -25,6 +25,28 @@
                 }
             });
 
+            $this.on('click', '.sx-gv__delete-btn', function (event) {
+                $a = $(this);
+                var url = $a.attr('href');
+                var token = $('input[name="__RequestVerificationToken"]').val();
+                $grid = $a.closest('.sx-gv');
+                $parent = $grid.parent();
+
+                if (confirm('Удалить запись?')) {
+                    $.ajax({
+                        url: url,
+                        method: 'post',
+                        data: { __RequestVerificationToken: token },
+                        success: function (data) {
+                            $parent.html(data);
+                        }
+                    });
+                }
+
+                event.preventDefault();
+                return false;
+            });
+
             $this.on('keypress', '.sx-gv__filter-row input', function (event) {
                 if (event.which != 13) return;
 

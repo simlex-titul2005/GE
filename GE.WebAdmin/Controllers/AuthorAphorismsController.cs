@@ -4,6 +4,7 @@ using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using System.Linq;
 using System.Web.Mvc;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebAdmin.Controllers
 {
@@ -46,8 +47,10 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual ViewResult Edit(int? id = null)
         {
-            var model = id.HasValue ? _repo.GetByKey(id) : new AuthorAphorism();
-            var viewModel = Mapper.Map<AuthorAphorism, VMEditAuthorAphorism>(model);
+            var data = id.HasValue ? _repo.GetByKey(id) : new AuthorAphorism();
+            var viewModel = Mapper.Map<AuthorAphorism, VMEditAuthorAphorism>(data);
+            if (data.Picture != null)
+                ViewData["PictureIdCaption"] = data.Picture.Caption;
             return View(viewModel);
         }
 
@@ -92,19 +95,18 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost]
-        public virtual PartialViewResult FindGridView(VMAuthorAphorism filterModel, int page = 1, int pageSize = 10)
+        public virtual PartialViewResult FindGridView(VMAuthorAphorism filterModel, SxOrder order, int page = 1, int pageSize = 10)
         {
-            ViewBag.Filter = filterModel;
-            var filter = new SxFilter(page, pageSize);
-            filter.WhereExpressionObject = filterModel;
+            var defaultOrder = new SxOrder { FieldName = "Name", Direction = SortDirection.Asc };
+            var filter = new SxFilter(page, pageSize) { WhereExpressionObject= filterModel, Order= order==null || order.Direction==SortDirection.Unknown ? defaultOrder:order };
             var totalItems = (_repo as RepoAuthorAphorism).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             filter.PagerInfo.PagerSize = 5;
-            ViewBag.PagerInfo = filter.PagerInfo;
+            ViewBag.Filter = filter;
 
-            var viewModel = (_repo as RepoAuthorAphorism).Query(filter).ToArray().Select(x => Mapper.Map<AuthorAphorism, VMAuthorAphorism>(x)).ToArray();
+            var viewModel = _repo.Query(filter).Select(x => Mapper.Map<AuthorAphorism, VMAuthorAphorism>(x)).ToArray();
 
-            return PartialView("~/views/AuthorAphorisms/_FindGridView.cshtml", viewModel);
+            return PartialView("_FindGridView", viewModel);
         }
     }
 }

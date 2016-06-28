@@ -4,15 +4,19 @@
 }
 
 
-@Html.SxGV(Model,
-        new SxExtantions.SxGVSettings<VMAuthorAphorism>
+@Html.SxGridView(Model,
+        new SxExtantions.SxGridViewSettings<VMAuthorAphorism>
         {
-            Columns = new SxExtantions.SxGvColumn<VMAuthorAphorism>[]{
-                new SxExtantions.SxGvColumn<VMAuthorAphorism>{FieldName="PictureId", Caption="Фото", Template=(a)=> {
+            Columns = new SxExtantions.SxGridViewColumn<VMAuthorAphorism>[]{
+                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="PictureId", Caption="Фото", Template=(a)=> {
                     return a.PictureId.HasValue? string.Format("<figure class=\"img-circle\" style=\"background-image:url(/pictures/picture/{0})\" ></figure>",a.PictureId):null;
                 } },
-                new SxExtantions.SxGvColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя"}
+                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя"}
             },
-            DataAjaxUrl=""
+            DataAjaxUrl= "/AuthorAphorisms",
+            EnableCreating=true,
+            CreateRowUrl= "/AuthorAphorisms/edit",
+            EnableEditing=true,
+            EditRowUrl = x => { return "/AuthorAphorisms/edit/" + x.Id; }
         }
     )

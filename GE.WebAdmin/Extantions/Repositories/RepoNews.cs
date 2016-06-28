@@ -26,7 +26,7 @@ WHERE dm.TitleUrl=@TITLE_URL";
 
         public static VMNews[] QueryForAdmin(this RepoNews repo, SxFilter filter)
         {
-            var query = SxQueryProvider.GetSelectString(new string[] { "da.Id", "dm.DateCreate", "dm.DateOfPublication", "dm.Title", "dm.SeoInfoId", "dm.Show" });
+            var query = SxQueryProvider.GetSelectString(new string[] { "da.Id", "dm.DateCreate", "dm.DateOfPublication", "dm.Title", "dm.SeoTagsId", "dm.Show" });
             query += " FROM D_NEWS AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType LEFT JOIN D_GAME AS dg ON dg.ID = da.GameId ";
 
             object param = null;

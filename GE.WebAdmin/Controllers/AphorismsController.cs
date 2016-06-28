@@ -66,6 +66,8 @@ namespace GE.WebAdmin.Controllers
         public virtual ViewResult Edit(string cat, ModelCoreType mct, int? id = null)
         {
             var data = id.HasValue ? _repo.GetByKey(id, mct) : new Aphorism { CategoryId = cat, Show=true };
+            if (data.Author != null)
+                ViewBag.AuthorName = data.Author.Name;
             var viewModel = Mapper.Map<Aphorism, VMEditAphorism>(data);
             return View(viewModel);
         }

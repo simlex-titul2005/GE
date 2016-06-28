@@ -20,6 +20,18 @@
                     $dropdown.hide();
                 });
 
+            $this.on('click', '.sx-tv tbody tr', function (e) {
+                $row = $(this);
+                $input = $row.closest('.sx-gvl').prev('input[type="hidden"]');
+                $textInput = $this.find('.sx-gvl__input');
+                $dropdown = $this.find('.sx-gvl__dropdown');
+                var id = $row.attr('data-id');
+                var text = $row.find('[data-text-field]').text();
+                $input.val(id);
+                $textInput.val(text);
+                $dropdown.hide();
+            });
+
             $this.on('click', '.sx-gvl__input', function () {
                 $grid = $(this).closest('.sx-gvl');
                 var isLoaded = $grid.attr('data-is-loaded');

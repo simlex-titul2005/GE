@@ -11,7 +11,7 @@ namespace GE.WebAdmin.Models
         public string UserId { get; set; }
 
         public VMEditMaterialCategory Category { get; set; }
-        [Display(Name = "Категория"), UIHint("EditMaterialCategory"), AdditionalMetadata("mct", ModelCoreType.Manual)]
+        [Display(Name = "Категория"), UIHint("MaterialCategoryLookupGrid"), AdditionalMetadata("mct", ModelCoreType.Manual)]
         public string CategoryId { get; set; }
 
         [Display(Name = "Название материала"), MaxLength(255), Required]

@@ -6,5 +6,11 @@
 <h2>@ViewBag.Title</h2>
 <br />
 <div id="grid-manuals">
-    @Html.Partial(MVC.Manuals.Views._GridView, Model)
+    @Html.Partial("_GridView", Model)
 </div>
+
+@section scripts{
+    <script>
+        $('#grid-manuals').sx_gv();
+    </script>
+}

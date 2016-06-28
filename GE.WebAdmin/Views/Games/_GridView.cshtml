@@ -4,14 +4,14 @@
 }
 
 
-@Html.SxGV(Model,
-    new SxExtantions.SxGVSettings<VMGame>
+@Html.SxGridView(Model,
+    new SxExtantions.SxGridViewSettings<VMGame>
     {
-        Columns = new SxExtantions.SxGvColumn<VMGame>[]{
-            new SxExtantions.SxGvColumn<VMGame>{FieldName="Title", Caption="Наименование игры"},
-            new SxExtantions.SxGvColumn<VMGame>{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
-            new SxExtantions.SxGvColumn<VMGame>{FieldName="Description", Caption="Описание"},
-            new SxExtantions.SxGvColumn<VMGame>{FieldName="Show", Caption="Показывать", Template=(m)=> {
+        Columns = new SxExtantions.SxGridViewColumn<VMGame>[]{
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Title", Caption="Наименование игры"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Description", Caption="Описание"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Show", Caption="Показывать", Template=(m)=> {
                 return m.Show? "Да":"Нет";
             }}
         },

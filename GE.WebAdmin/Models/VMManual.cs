@@ -1,6 +1,4 @@
-﻿using SX.WebCore;
-
-namespace GE.WebAdmin.Models
+﻿namespace GE.WebAdmin.Models
 {
     public sealed class VMManual
     {

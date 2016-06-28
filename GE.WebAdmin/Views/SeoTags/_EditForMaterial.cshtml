@@ -1,4 +1,4 @@
-﻿@model VMEditSeoInfo
+﻿@model SxVMEditSeoTags
 @{
     Layout = null;
     var isNew = Model.Id == 0;
@@ -9,7 +9,7 @@
 @if (!isNew)
 {
     <div class="text-right">
-        @using (Ajax.BeginForm(MVC.SeoInfo.DeleteForMaterial(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo" }))
+        @using (Ajax.BeginForm("DeleteForMaterial", new { controller = "SeoTags" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo" }))
         {
             @Html.AntiForgeryToken()
             <input type="hidden" name="Id" value="@Model.Id" autocomplete="off" />
@@ -25,7 +25,7 @@
     <p class="text-success">@TempData["ModelSeoInfoRedactInfo"]</p>
 }
 
-@using (Ajax.BeginForm(MVC.SeoInfo.EditForMaterial(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo" }))
+@using (Ajax.BeginForm("EditForMaterial", new { controller = "SeoTags" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" name="Id" value="@Model.Id" autocomplete="off" />
@@ -33,7 +33,7 @@
     <input type="hidden" name="ModelCoreType" value="@Model.ModelCoreType" autocomplete="off" />
 
 
-    @Html.Partial(MVC.SeoInfo.Views._GeneralEdit)
+    @Html.Partial("_GeneralEdit")
 
     <br />
     <div class="row">
@@ -45,9 +45,10 @@
     </div>
 }
 
-<div id="seo-kw">
-    @if (!isNew)
-    {
-        @Html.Action(MVC.SeoKeywords.Index(seoInfoId: Model.Id))
-    }
-</div>
+
+@if (!isNew)
+{
+    <div id="seo-kw">
+        @Html.Action("index", new { controller = "SeoKeywords", stid = Model.Id })
+    </div>
+}

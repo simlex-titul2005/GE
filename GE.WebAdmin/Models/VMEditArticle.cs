@@ -13,7 +13,7 @@ namespace GE.WebAdmin.Models
     public sealed class VMEditArticle : SxMaterial
     {
         public Game Game { get; set; }
-        [UIHint("EditGame"), Display(Name = "Игра")]
+        [UIHint("GameLookupGrid"), Display(Name = "Игра")]
         public int? GameId { get; set; }
 
         [Display(Name = "Тип статьи")]
@@ -37,7 +37,7 @@ namespace GE.WebAdmin.Models
         [Display(Name = "Показывать"), Required]
         public bool Show { get; set; }
 
-        [Display(Name = "Изображение"), UIHint("EditImage")]
+        [Display(Name = "Изображение"), UIHint("PicturesLookupGrid")]
         public Guid? FrontPictureId { get; set; }
 
         [Display(Name = "Показывать картинку на странице")]
@@ -49,7 +49,7 @@ namespace GE.WebAdmin.Models
         [Display(Name = "Дата публикации"), UIHint("EditDate")]
         public DateTime DateOfPublication { get; set; }
 
-        [Display(Name = "Категория"), UIHint("EditMaterialCategory"), AdditionalMetadata("mct", ModelCoreType.Article)]
+        [Display(Name = "Категория"), UIHint("MaterialCategoryLookupGrid"), AdditionalMetadata("mct", ModelCoreType.Article)]
         public string CategoryId { get; set; }
 
         [Display(Name = "Показывать в избранных")]

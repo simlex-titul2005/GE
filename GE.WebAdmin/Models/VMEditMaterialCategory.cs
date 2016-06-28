@@ -17,11 +17,11 @@ namespace GE.WebAdmin.Models
         public VMMaterialCategory ParentCategory { get; set; }
         public string ParentCategoryId { get; set; }
 
-        [Display(Name = "Изображение"), UIHint("EditImage")]
+        [Display(Name = "Изображение"), UIHint("PicturesLookupGrid")]
         public Guid? FrontPictureId { get; set; }
 
         public VMGame Game { get; set; }
-        [Display(Name ="Игра"), UIHint("EditGame")]
+        [Display(Name ="Игра"), UIHint("GameLookupGrid")]
         public int? GameId { get; set; }
     }
 }

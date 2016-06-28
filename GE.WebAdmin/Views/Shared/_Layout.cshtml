@@ -536,6 +536,14 @@
             $().alert();
 
             $('[data-toggle="tooltip"]').tooltip();
+
+            $(document).mouseup(function (e) {
+                var container = $(".sx-gvl__dropdown");
+
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    container.hide();
+                }
+            });
         });
     </script>
     @RenderSection("scripts", false)

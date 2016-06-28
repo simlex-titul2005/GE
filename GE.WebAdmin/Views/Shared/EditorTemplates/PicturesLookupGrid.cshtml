@@ -1,6 +1,7 @@
-﻿@model string
+﻿@model object
 @{
-    var pictureCaption = ViewBag.PictureCaption;
+    var fieldName = Html.NameForModel().ToString()+"Caption";
+    var pictureCaption = ViewData[fieldName];
 }
 
 <div id="@Html.IdForModel()">
@@ -11,6 +12,6 @@
     DataAjaxUrl = "/pictures/findgridview",
     DefaulText = pictureCaption == null ? Html.ValueForModel().ToString() : pictureCaption.ToString()
 },
-    new SxVMSiteTest[0]
+    new SxVMPicture[0]
 )
 </div>

@@ -7,19 +7,27 @@
     var forAphorism = Model.ModelCoreType == SX.WebCore.Enums.ModelCoreType.Aphorism;
 }
 
+@section styles{
+    <link href="~/content/dist/css/lightbox.min.css" rel="stylesheet" />
+}
+
 <h2>@ViewBag.Title</h2>
 
 @if (!isNew)
 {
-    <form method="post" action="@Url.Action("delete", new { controller="MaterialCategories"})">
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(x => x.Id)
-        @Html.HiddenFor(x => x.ModelCoreType)
-        <button type="submit" class="btn btn-danger pull-right" onclick="if (!confirm('Удалить запись?')) return false;">Удалить</button>
-    </form>
+    <div class="form-group">
+        <div class="text-right">
+            <form method="post" action="@Url.Action("delete", new { controller="MaterialCategories"})">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.ModelCoreType)
+                <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) return false;">Удалить</button>
+            </form>
+        </div>
+    </div>
 }
-<br />
-<form method="post" action="@Url.Action("edit", new { controller="MaterialCategories"})">
+
+<form method="post" action="@Url.Action("edit", new { controller="MaterialCategories"})" autocomplete="off">
     @Html.AntiForgeryToken()
     @if (!isNew && !User.IsInRole("architect"))
     {
@@ -51,6 +59,10 @@
         <div class="col-md-@(forAphorism?6:12)">
             <div class="form-group">
                 @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
+                @if (Model.FrontPictureId.HasValue)
+                {
+                    <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Иконка @Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.FrontPictureId"><i class="fa fa-picture-o"></i></a>
+                }
                 @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Выберите изображение" } })
                 @Html.ValidationMessageFor(x => x.FrontPictureId)
             </div>
@@ -67,15 +79,17 @@
         }
     </div>
 
-    @if (Model.FrontPictureId.HasValue)
-    {
-        <div class="form-group">
-            <img alt="@ViewBag.GameTitle" src="@Url.Action("picture", new { controller="pictures", id=Model.FrontPictureId, width=150})" style="max-width:150px;" />
-        </div>
-    }
-
     <div class="form-group">
         <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
         @Html.ActionLink("Назад", "index", new { controller = "MaterialCategories", mct = mct }, new { @class = "btn btn-default" })
     </div>
 </form>
+
+@section scripts{
+    <script src="~/content/dist/js/lightbox.min.js"></script>
+    <script>
+        $(function () {
+            $('#FrontPictureId, #GameId').sx_gvl();
+        });
+    </script>
+}

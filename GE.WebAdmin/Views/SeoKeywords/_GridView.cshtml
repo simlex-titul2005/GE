@@ -1,18 +1,14 @@
-﻿@model VMSeoKeyword[]
+﻿@model SxVMSeoKeyword[]
 @{
     Layout = null;
-    var pagerInfo = ViewBag.PagerInfo;
-    var filter = ViewBag.Filter != null ? (VMSeoKeyword)ViewBag.Filter : null;
-    var sortDirections = ViewBag.Order != null ? (Dictionary<string, SxExtantions.SortDirection>)ViewBag.Order : null;
-    var seoInfoId = ViewBag.SeoInfoId;
+    int seoTagsId = ViewBag.SeoTagsId;
 }
 
 <br />
 <h3>Ключевые слова<span class="small"> (Максимально рекомендуемое количество фраз - 20)</span></h3>
-@using (Ajax.BeginForm(MVC.SeoKeywords.Edit(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo-kw" }))
+@using (Ajax.BeginForm("edit", new { controller = "SeoKeywords", SeoTagsId= seoTagsId }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo-kw" }))
 {
     @Html.AntiForgeryToken()
-    <input type="hidden" id="SeoInfoId" name="SeoInfoId" value="@seoInfoId" autocomplete="off"  />
     <label for="Value">Новое ключевое слово</label>
     <div class="input-group">
         <input type="text" id="Value" name="Value" class="form-control" placeholder="Введите ключевое слово" autocomplete="off" />
@@ -22,23 +18,14 @@
     </div>
 }
 <br />
-@Html.SxGridView(
-            new SxExtantions.SxGridViewSettings<VMSeoKeyword>
+@Html.SxGridView(Model,
+            new SxExtantions.SxGridViewSettings<SxVMSeoKeyword>
             {
-                UpdateTargetId = "seo-kw",
-                Data = Model,
-                Columns = new SxExtantions.SxGridViewColumn<VMSeoKeyword>[]{
-            new SxExtantions.SxGridViewColumn<VMSeoKeyword>{FieldName="Value", Caption="Ключевое слово"}
-        },
-                PagerInfo=pagerInfo,
-                Filter = filter,
-                SortDirections = sortDirections,
-                GeneralControllerName = "seokeywords",
-                EnableEditing = false,
-                EnableDelete = true,
-                EnableCreate = false,
-                FuncDeleteLink =(skw) => Url.Action("delete", new { controller="seokeywords", SeoInfoId= seoInfoId, Id= skw.Id }),
-                PagerLink = string.Format("/seokeywords/index?seoInfoId={0}", seoInfoId)
-            },
-        new { @class = "table table-condensed table-bordered table-responsive table-striped" }
+                Columns = new SxExtantions.SxGridViewColumn<SxVMSeoKeyword>[]{
+                    new SxExtantions.SxGridViewColumn<SxVMSeoKeyword>{FieldName="Value", Caption="Ключевое слово"}
+                },
+                DataAjaxUrl="/seokeywords?stid="+ seoTagsId,
+                EnableDeleting=true,
+                DeleteRowUrl = x => { return "/seokeywords/delete?Id=" + x.Id+"&SeoTagsId="+ seoTagsId; }
+            }
     )

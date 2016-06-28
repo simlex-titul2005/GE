@@ -3,7 +3,7 @@
     Layout = null;
 }
 <div class="modal fade" id="not-mat-videos" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -18,7 +18,7 @@
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Закрыть</button>
                     </li>
                     <li>
-                        <form method="post" action="@Url.Action(MVC.VideoLinks.AddMaterialVideo())">
+                        <form method="post" action="@Url.Action("AddMaterialVideo", "VideoLinks")" id="not-mat-videos-form">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="mid" value="@Model.Id" />
                             <input type="hidden" name="mct" value="@Model.ModelCoreType" />

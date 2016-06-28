@@ -166,6 +166,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\dist\css\bootstrap-datetimepicker.min.css" />
     <Content Include="content\dist\css\grid-a-authors.min.css" />
     <Content Include="content\dist\css\grid-aphorisms.min.css" />
     <Content Include="content\dist\css\grid-banners.min.css" />
@@ -182,10 +183,12 @@
     <Content Include="content\dist\images\prev.png" />
     <Content Include="content\dist\i\bg.jpg" />
     <Content Include="content\dist\i\faveicon.png" />
+    <Content Include="content\dist\js\bootstrap-datetimepicker.min.js" />
     <Content Include="content\dist\js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="content\dist\js\jquery.validate.min.js" />
     <Content Include="content\dist\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="content\dist\js\lightbox.min.js" />
+    <Content Include="content\dist\js\moment-with-locales.min.js" />
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -255,7 +258,6 @@
     <Compile Include="Extantions\Repositories\RepoAphorizm.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialCategory.cs" />
-    <Compile Include="Extantions\Repositories\RepoMaterialTag.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Global.asax.cs">
@@ -268,12 +270,12 @@
     <Compile Include="Models\VMEditAuthorAphorism.cs" />
     <Compile Include="Models\VMEditManual.cs" />
     <Compile Include="Models\VMEditMaterialCategory.cs" />
-    <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMClick.cs" />
     <Compile Include="Models\VMClickType.cs" />
     <Compile Include="Models\VMEditClickType.cs" />
     <Compile Include="Models\VMEditNewsRubric.cs" />
     <Compile Include="Models\VMEditNews.cs" />
+    <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMMaterialCategory.cs" />
     <Compile Include="Models\VMNewsRubric.cs" />
     <Compile Include="Models\VMNews.cs" />
@@ -392,6 +394,10 @@
     <Content Include="Views\Seo\EditRobotsFile.cshtml" />
     <Content Include="Views\ProjectSteps\DisplayTemplates\SxVMProjectStep.cshtml" />
     <Content Include="Views\FAQ\DisplayTemplates\SxVMFAQ.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AuthorAphorismLookupGrid.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GameLookupGrid.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditDate.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MaterialCategoryLookupGrid.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,17 @@
+﻿@model string
+@{
+    var caption = (string)ViewBag.MaterialCategoryTitle;
+    Enums.ModelCoreType mct = (Enums.ModelCoreType)ViewBag.ModelCoreType;
+}
+
+<div id="@Html.IdForModel()">
+    <input type="hidden" value="@Html.ValueForModel()" name="@Html.IdForModel()" />
+
+    @Html.SxGridLookup(new SxExtantions.SxGridLookupSettings
+{
+    DataAjaxUrl = "/MaterialCategories/FindTreeView?mct="+ mct,
+    DefaulText = caption == null ? Html.ValueForModel().ToString() : caption
+},
+    new VMGame [0]
+)
+</div>

@@ -8,6 +8,7 @@
         ViewsCount = Model.ViewsCount
     };
 
+    var url = Model.Url(Url);
     var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.GoodPictureId : Guid.Empty);
 }
 
@@ -20,7 +21,7 @@
     <div class="col-md-6">
         <div class="content">
             <time>@Model.DateOfPublication.ToString("dd.MM.yyyy")</time>
-            <a class="link" href="@Model.Url(Url)">@Model.Title</a>
+            <a class="link" href="@url">@Model.Title</a>
             <p class="foreword">@Model.Foreword</p>
             <div>
                 @if(Model.User!=null)

@@ -1,7 +1,9 @@
 ﻿@using SX.WebCore;
 @{
     Layout = null;
-    var bgUrl = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath).ToString();
+    var bgUrl = Url.Action("Picture", "Pictures", new { id= GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath) });
+    var logoPath = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteLogoPath) });
+    var iconPath = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteFaveiconPath) });
     var bg = string.IsNullOrEmpty(bgUrl) ? null : string.Format("style=background:url('{0}');", bgUrl);
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];
@@ -35,11 +37,11 @@
     <meta property="og:url" content="@Request.Url" />
     <title>@ViewBag.Title</title>
     <meta property="og:title" content="@ViewBag.Title" />
-    <meta property="og:image" content="@Url.ContentAbsUrl(ViewBag.PageImage!=null?(string)ViewBag.PageImage: "~/content/dist/i/faveicon.png")" />
+    <meta property="og:image" content="@Url.ContentAbsUrl(ViewBag.PageImage!=null?(string)ViewBag.PageImage: (logoPath ?? "~/content/dist/i/faveicon.png"))" />
 
     @RenderSection("head", false)
 
-    <link rel="shortcut icon" href="@("/content/dist/i/faveicon.png")" type="image/png" />
+    <link rel="shortcut icon" href="@(iconPath ?? "~/content/dist/i/faveicon.png")" type="image/png" />
 
     <link href="~/Content/dist/css/site.min.css" rel="stylesheet" />
     @RenderSection("styles", false)

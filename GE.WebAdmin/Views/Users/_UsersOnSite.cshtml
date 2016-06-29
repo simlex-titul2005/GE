@@ -3,6 +3,7 @@
     Layout = null;
     var colCount = 4;
     var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
+    SxVMAppUser item;
 }
 
 @if (Model.Any())
@@ -15,7 +16,7 @@
             {
                 if (c < items.Length)
                 {
-                    var item = items[c];
+                    item = items[c];
                     <div class="col-md-@(12 / colCount)">
                         <div class="us-on-site">
                             <ul class="list-inline">

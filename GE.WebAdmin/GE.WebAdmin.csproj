@@ -230,7 +230,6 @@
     <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\MaterialCategoriesController.cs" />
@@ -312,7 +311,6 @@
     <Content Include="Views\SeoTags\_EditForMaterial.cshtml" />
     <Content Include="Views\SeoTags\_GeneralEdit.cshtml" />
     <Content Include="Views\SeoKeywords\_GridView.cshtml" />
-    <Content Include="Views\Comments\_LastComments.cshtml" />
     <Content Include="Views\Users\_UsersOnSite.cshtml" />
     <Content Include="Views\Manuals\_GridView.cshtml" />
     <Content Include="Views\Manuals\Edit.cshtml" />

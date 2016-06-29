@@ -7,7 +7,7 @@
     ViewBag.Title = title ?? Model.Title;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
-    ViewBag.PageImage = Model.FrontPictureId.HasValue ? Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId)) : null;
+    ViewBag.PageImage = Model.FrontPictureId.HasValue ? Url.Action("Picture", "Pictures", new { id = Model.FrontPictureId }) : null;
     var banners = (SxBanner[])ViewBag.PageBanners;
     SxBanner banner = null;
 }
@@ -18,16 +18,16 @@
     @Html.Partial("_Foreword", Model)
 
     <div class="m-html">
-        @Html.Action(MVC.Articles.Popular(mct: Model.ModelCoreType, mid: Model.Id, amount: 4))
+        @Html.Action("Popular", "Articles", new { mct = Model.ModelCoreType, mid = Model.Id, amount = 4 })
         @if (Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage)
         {
-            <img class="f-picture" alt="@Model.Title" src="@Url.Action(MVC.Pictures.Picture((Guid)Model.FrontPictureId))" />
+            <img class="f-picture" alt="@Model.Title" src="@Url.Action("Picture", "Pictures", new { id= Model.FrontPictureId })" />
         }
         @Html.Raw(Model.Html)
-        @Html.Partial(MVC.Shared.Views._Share42, Model)
+        @Html.Partial("_Share42", Model)
     </div>
 
-    @Html.Partial(MVC.Shared.Views._MaterialInfo, Model)
+    @Html.Partial("_MaterialInfo", Model)
 
     @*aphorisms*@
     <div id="aphorisms">
@@ -41,24 +41,25 @@
         if (banner != null)
         {
             <div style="margin-top:30px;">
-                @Html.SxThroughBanner(banner, (b) => Url.Action(MVC.Pictures.Picture(b.PictureId)))
+                @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }))
             </div>
         }
     }
 
-    @Html.Action(MVC.MaterialTags.List(mid: Model.Id, mct: Model.ModelCoreType, maxFs: 30))
+    @Html.Action("List", "MaterialTags", new { mid = Model.Id, mct = Model.ModelCoreType, maxFs = 30 })
 
     <div id="by-date-mat">
-        @Html.Action(MVC.Articles.ByDateMaterial(mid: Model.Id, mct: Model.ModelCoreType))
+        @Html.Action("ByDateMaterial", "Articles", new { mid = Model.Id, mct = Model.ModelCoreType })
     </div>
 
     <br />
-    @Html.Action(MVC.Comments.Edit(mid: Model.Id, mct: Model.ModelCoreType))
+    @Html.Action("Edit", "Comments", new { mid = Model.Id, mct = Model.ModelCoreType })
 
 </div>
 
 @section scripts{
     <script type="text/javascript" src="~/share42/share42.js"></script>
+    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/currency-provider.min.js"></script>

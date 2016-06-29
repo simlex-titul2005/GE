@@ -1,6 +1,6 @@
-﻿@{ 
+﻿@{
     var siteName = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteName);
-    var logoUrl = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteLogoPath);
+    var logoUrl = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteLogoPath) });
 }
 <nav class="navbar navbar-default">
     <div class="container">
@@ -13,7 +13,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">
-                <img alt="@siteName.Value" src="@logoUrl.Value">
+                <img alt="@siteName.Value" src="@logoUrl">
             </a>
         </div>
 

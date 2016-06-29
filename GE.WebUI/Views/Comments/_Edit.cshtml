@@ -5,7 +5,7 @@
 }
 
 <div class="new-comment">
-    <form class="transparent" method="post" action="@Url.Action(MVC.Comments.Edit())" autocomplete="off" data-ajax="true" data-ajax-method="post" data-ajax-update="#comments-@guid">
+    <form class="transparent" method="post" action="@Url.Action("Edit", "Comments")" autocomplete="off" data-ajax="true" data-ajax-method="post" data-ajax-update="#comments-@guid">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.Id)
         @Html.HiddenFor(x => x.MaterialId)
@@ -58,5 +58,5 @@
 </div>
 
 <section id="comments-@guid" class="comments">
-    @*@Html.Action(MVC.Comments.List(mid: Model.MaterialId, mct: Model.ModelCoreType))*@
+    @*@Html.Action("List", "Comments", new { mid = Model.MaterialId, mct = Model.ModelCoreType })*@
 </section>

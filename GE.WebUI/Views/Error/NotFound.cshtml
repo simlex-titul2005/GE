@@ -1,5 +1,5 @@
 ﻿@{
-    Layout=MVC.Shared.Views._Errors;
+    Layout = "~/Views/Shared/_Errors.cshtml";
     ViewBag.Title = "Страница не найдена";
 }
 <div class="e-txt">Ошибка <span class="e-num">404</span></div>
@@ -10,10 +10,10 @@
         <a href="/">На главную</a>
     </li>
     <li>
-        <a href="@Url.Action(MVC.News.List())">Новости</a>
+        <a href="@Url.Action("List", "News")">Новости</a>
     </li>
     <li>
-        <a href="@Url.Action(MVC.Articles.List())">Статьи</a>
+        <a href="@Url.Action("List", "Articles")">Статьи</a>
     </li>
 
 </ul>

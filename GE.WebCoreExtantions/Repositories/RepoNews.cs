@@ -29,7 +29,7 @@ ORDER BY dm.DateCreate DESC";
         public override News[] Query(SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] {
-                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title",
+                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title", "dm.ModelCoreType",
                 "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount",
                 @"(SELECT
        SUBSTRING(

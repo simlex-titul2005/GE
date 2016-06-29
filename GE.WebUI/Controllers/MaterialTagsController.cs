@@ -27,10 +27,10 @@ namespace GE.WebUI.Controllers
             switch(mct)
             {
                 case ModelCoreType.Article:
-                    url = Url.Action("~/views/articles/list.cshtml");
+                    url = Url.Action("List","Articles");
                     break;
                 case ModelCoreType.News:
-                    url = Url.Action("~/views/news/list.cshtml");
+                    url = Url.Action("List", "News");
                     break;
             }
             ViewData["TagsMaxFs"] = maxFs;

@@ -1,4 +1,4 @@
-﻿@model GE.WebUI.Models.Abstract.VMDetailMaterial
+﻿@model VMDetailMaterial
 @{
     Layout = null;
 }
@@ -14,5 +14,5 @@
         <br />
         Автор материала: <strong>@Model.UserNikName</strong>
     </p>
-    @Html.Partial(MVC.Shared.Views._Share42, Model)
+    @Html.Partial("_Share42", Model)
 </blockquote>

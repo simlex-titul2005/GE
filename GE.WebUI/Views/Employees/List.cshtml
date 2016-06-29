@@ -1,10 +1,12 @@
-﻿@model VMEmployee[]
+﻿@model SxVMEmployee[]
 @{
     ViewBag.Title = ViewBag.Title ?? "Контакты";
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.H1CssClass = "hidden";
     ViewBag.Description = ViewBag.Description ?? "Контакты руководства и сотрудников сайта";
     ViewBag.Keywords = ViewBag.Keywords ?? "Контакты руководства game-exe.com, Контакты сотрудников game-exe.com";
+    SxVMEmployee item;
+    var s = Model[0];
 }
 
 <div class="identity-page employees">
@@ -14,12 +16,12 @@
     {
         for (int i = 0; i < Model.Length; i++)
         {
-            var item = Model[i];
+            item = Model[i];
             <div class="employee">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="text-left">
-                            <figure class="emp-avatar img-circle" style="background-image:url(@Url.Action(MVC.Pictures.Picture((Guid)item.User.AvatarId)))"></figure>
+                            <figure class="emp-avatar img-circle" style="background-image:url(@Url.Action("Picture","Pictures", new { id=item.User.AvatarId }))"></figure>
                             <div class="nik">@item.User.NikName</div>
                             <a href="mailto:@item.User.Email">@item.User.Email</a>
                         </div>

@@ -3,6 +3,7 @@
     Layout = null;
     var colCount = 3;
     var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
+    dynamic item;
 }
 
 @if (Model.Any())
@@ -18,7 +19,7 @@
                 {
                     if (c < items.Length)
                     {
-                        var item = items[c];
+                        item = items[c];
                         var date = (DateTime)item.DateCreate;
                         var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
                         var titleUrl = (string)item.TitleUrl;
@@ -26,10 +27,10 @@
                         switch (mct)
                         {
                             case SX.WebCore.Enums.ModelCoreType.Article:
-                                url = Url.Action(MVC.Articles.Details(date.Year, date.Month.ToString("00"), date.Day.ToString("00"), titleUrl));
+                                url = Url.Action("Details", "Articles", new { year = item.DateCreate.Year, month = item.DateCreate.Month.ToString("00"), day = item.DateCreate.Day.ToString("00"), titleUrl = item.TitleUrl });
                                 break;
                             case SX.WebCore.Enums.ModelCoreType.News:
-                                url = Url.Action(MVC.News.Details(date.Year, date.Month.ToString("00"), date.Day.ToString("00"), titleUrl));
+                                url = Url.Action("Details", "News", new { year = item.DateCreate.Year, month = item.DateCreate.Month.ToString("00"), day = item.DateCreate.Day.ToString("00"), titleUrl = item.TitleUrl });
                                 break;
                         }
                         <div class="col-md-4">

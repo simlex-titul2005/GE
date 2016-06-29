@@ -20,10 +20,10 @@ namespace GE.WebCoreExtantions
             switch (ModelCoreType)
             {
                 case Enums.ModelCoreType.Article:
-                    url = urlHelper.Action("details", new { controller = "articles", year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
+                    url = urlHelper.Action("Details", "Articles", new {year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
                     break;
                 case Enums.ModelCoreType.News:
-                    url = urlHelper.Action("details", new { controller = "news", year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
+                    url = urlHelper.Action("Details", "News", new {year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
                     break;
             }
             return url;

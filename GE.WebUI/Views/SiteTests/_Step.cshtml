@@ -1,12 +1,12 @@
-﻿@model VMSiteTestQuestion
+﻿@model SxVMSiteTestQuestion
 @{
     Layout = null;
-    var pastQ = (List<VMSiteTestStep>)ViewBag.PastQ;
+    var pastQ = (List<SxVMSiteTestStep>)ViewBag.PastQ;
     var blocksCount = ViewBag.BlocksCount;
 }
 
 @blocksCount
-@using (Ajax.BeginForm(MVC.SiteTests.Step(), new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }))
+@using (Ajax.BeginForm("Step", "SiteTests", new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }))
 {
     <p>
         @Model.Block.Test.Description
@@ -26,7 +26,7 @@
         }
     }
 
-    @Html.SxIndicatorGroup(new VMSiteTestQuestion[] { Model }, new SxExtantions.SxIndicatorGroupSettings<VMSiteTestQuestion>
+    @Html.SxIndicatorGroup(new SxVMSiteTestQuestion[] { Model }, new SxExtantions.SxIndicatorGroupSettings<SxVMSiteTestQuestion>
 {
     FuncGetLabel = x => x.Text
 })

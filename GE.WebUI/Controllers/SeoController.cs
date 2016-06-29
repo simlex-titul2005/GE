@@ -24,6 +24,7 @@ namespace GE.WebUI.Controllers
 #if !DEBUG
         [OutputCache(Duration = 3600)]
 #endif
+        [AllowAnonymous]
         public ContentResult Sitemap()
         {
             var query = @"SELECT dm.TitleUrl,

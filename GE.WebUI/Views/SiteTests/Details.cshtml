@@ -1,4 +1,4 @@
-﻿@model VMSiteTestQuestion
+﻿@model SxVMSiteTestQuestion
 @{
     ViewBag.Title = Model.Block != null && Model.Block.Test != null ? Model.Block.Test.Title : "Страница прохождения теста";
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
@@ -9,7 +9,7 @@
 @if (Model.Block != null && Model.Block.Test != null)
 {
     <div id="st-page">
-        @Html.Partial(MVC.SiteTests.Views._Step, Model)
+        @Html.Partial("~/Views/SiteTests/_Step.cshtml", Model)
     </div>
 
     @section scripts{

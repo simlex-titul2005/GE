@@ -10,13 +10,13 @@ namespace GE.WebAdmin.Models
         [MaxLength(255)]
         public string OldIconPath { get; set; }
 
-        [Required, MaxLength(255), Display(Name = "Положительное изображение"), UIHint("PicturesLookupGrid")]
+        [Required, MaxLength(255), Display(Name = "Изображение для новостей"), UIHint("PicturesLookupGrid")]
         public string GoodImagePath { get; set; }
         
         [MaxLength(255)]
         public string OldGoodImagePath { get; set; }
 
-        [Required, MaxLength(255), Display(Name = "Отрицательное изображение"), UIHint("PicturesLookupGrid")]
+        [Required, MaxLength(255), Display(Name = "Изображение для статей"), UIHint("PicturesLookupGrid")]
         public string BadImagePath { get; set; }
 
         [MaxLength(255)]

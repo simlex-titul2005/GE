@@ -36,7 +36,7 @@ namespace GE.WebUI.Controllers
             ViewBag.ControllerName = controller;
             if (ViewBag.ControllerName == "error") return null;
             ViewBag.ActionName = routes["action"];
-            var gameName = routes["gameTitle"] ?? this.ControllerContext.ParentActionViewContext.ViewBag.GameName;
+            var gameName = routes["gameTitle"] ?? ControllerContext.ParentActionViewContext.ViewBag.GameName;
             ViewBag.GameName = gameName;
             if (ViewBag.ActionName == "details")
                 ViewBag.GameName = ControllerContext.ParentActionViewContext.ViewBag.GameName;
@@ -48,9 +48,9 @@ namespace GE.WebUI.Controllers
             var emptyGameBadImagePath = _repoSetting.GetByKey(__emptyGameBadImagePath);
             viewModel.EmptyGame = new VMEmptyGame
             {
-                IconPath = emptyGameIconPath != null ? emptyGameIconPath.Value : null,
-                GoodImagePath = emptyGameGoodImagePath != null ? emptyGameGoodImagePath.Value : null,
-                BadImagePath = emptyGameBadImagePath != null ? emptyGameBadImagePath.Value : null,
+                IconPath = emptyGameIconPath != null ? Url.Action("Picture", "Pictures", new { id = emptyGameIconPath }) : null,
+                GoodImagePath = emptyGameGoodImagePath != null ? Url.Action("Picture", "Pictures", new { id = emptyGameGoodImagePath }) : null,
+                BadImagePath = emptyGameBadImagePath != null ? Url.Action("Picture", "Pictures", new { id = emptyGameBadImagePath }) : null,
             };
 
             return PartialView("_GameList", viewModel);

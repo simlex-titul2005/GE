@@ -26,7 +26,8 @@ function createCss() {
        'less/site.less',
        'less/sx-gv.less',
        'less/sx-gvl.less',
-       'less/sx-tv.less'
+       'less/sx-tv.less',
+       'less/us-on-site.less'
     ])
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))

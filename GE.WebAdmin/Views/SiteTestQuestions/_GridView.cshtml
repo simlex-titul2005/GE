@@ -1,6 +1,7 @@
 ﻿@model SxVMSiteTestQuestion[]
 @{
     Layout = null;
+    var testId = (ViewBag.Filter as SxFilter).AddintionalInfo[0];
 }
 
 
@@ -8,18 +9,14 @@
         new SxExtantions.SxGridViewSettings<SxVMSiteTestQuestion>
         {
             Columns = new SxExtantions.SxGridViewColumn<SxVMSiteTestQuestion>[]{
-                new SxExtantions.SxGridViewColumn<SxVMSiteTestQuestion>{FieldName="DateCreate", Caption="Дата создания"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTestQuestion>{FieldName="TestTitle", Caption="Тест"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTestQuestion>{FieldName="BlockTitle", Caption="Блок"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTestQuestion>{FieldName="Text", Caption="Текст"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTestQuestion>{FieldName="IsCorrect", Caption="Корректность",Template= (q)=> {
-                    return q.IsCorrect?"Да":"Нет";
-                } }
+                new SxExtantions.SxGridViewColumn<SxVMSiteTestQuestion>{FieldName="Text", Caption="Текст"}
             },
-            EnableCreating = true,
-            CreateRowUrl = "/sitetestquestions/edit/",
-            EnableEditing = true,
-            EditRowUrl = (x) => { return "/sitetestquestions/edit/" + x.Id; },
-            DataAjaxUrl = "/sitetestquestions"
+            DataAjaxUrl = "/sitetestquestions?testId="+ testId,
+            EnableCreating=true,
+            CreateRowUrl= "/sitetestquestions/edit?testId=" + testId,
+            EnableDeleting =true,
+            DeleteRowUrl = x => { return "/sitetestquestions/delete/" + x.Id+"?testId="+testId; },
+            EnableEditing=true,
+            EditRowUrl = x => { return "/sitetestquestions/edit/"+x.Id+"?testId=" + testId; }
         }
     )

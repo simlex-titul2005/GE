@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Linq;
 using System.Collections.Generic;
 using SX.WebCore.ViewModels;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebUI.Controllers
 {
@@ -16,6 +17,23 @@ namespace GE.WebUI.Controllers
         {
             if (_repo == null)
                 _repo = new SxRepoSiteTest<DbContext>();
+        }
+
+        [HttpGet]
+        public ViewResult List(int page=1)
+        {
+            var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
+            var filter = new SxFilter { Order = defaultOrder };
+            filter.PagerInfo.TotalItems = _repo.Count(filter);
+            ViewBag.Filter = filter;
+            var data = _repo.Query(filter).Select(x => Mapper.Map<SxSiteTest, SxVMSiteTest>(x)).ToArray();
+
+            var viewModel = new SxPagedCollection<SxVMSiteTest> {
+                Collection= data,
+                PagerInfo= filter.PagerInfo
+            };
+
+            return View(model: viewModel);
         }
 
 #if !DEBUG
@@ -32,6 +50,8 @@ namespace GE.WebUI.Controllers
         public ActionResult Details(string titleUrl)
         {
             var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
+            if (data == null) return new HttpNotFoundResult();
+
             var viewModel = Mapper.Map<SxSiteTestQuestion, SxVMSiteTestQuestion>(data);
             return View(model: viewModel);
         }
@@ -39,11 +59,11 @@ namespace GE.WebUI.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Step(string ttu, List<SxVMSiteTestStep> pastQ = null)
         {
-            ViewBag.PastQ = pastQ.Select(x => new { T = x.Question.Text, C = x.Question.IsCorrect, O = x.Order }).Distinct()
-                .Select(x => new SxVMSiteTestStep {
-                    Order=x.O,
-                    Question=new SxVMSiteTestQuestion { Text=x.T, IsCorrect=x.C }
-                }).ToList();
+            //ViewBag.PastQ = pastQ.Select(x => new { T = x.Question.Text, C = x.Question.IsCorrect, O = x.Order }).Distinct()
+            //    .Select(x => new SxVMSiteTestStep {
+            //        Order=x.O,
+            //        Question=new SxVMSiteTestQuestion { Text=x.T, IsCorrect=x.C }
+            //    }).ToList();
 
             var blocksCount = -1;
             SxVMSiteTestQuestion data = getGuessYesNoStep(ttu, pastQ, out blocksCount);

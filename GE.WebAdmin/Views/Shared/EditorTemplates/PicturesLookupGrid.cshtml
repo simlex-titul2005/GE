@@ -2,16 +2,17 @@
 @{
     var fieldName = Html.NameForModel().ToString()+"Caption";
     var pictureCaption = ViewData[fieldName];
+    var prefix = (string)ViewBag.Prefix;
 }
 
 <div id="@Html.IdForModel()">
-    <input type="hidden" value="@Html.ValueForModel()" name="@Html.IdForModel()" />
+    <input type="hidden" value="@Html.ValueForModel()" name="@(prefix==null?Html.IdForModel().ToString(): prefix+"."+Html.IdForModel().ToString())" />
 
     @Html.SxGridLookup(new SxExtantions.SxGridLookupSettings
-{
-    DataAjaxUrl = "/pictures/findgridview",
-    DefaulText = pictureCaption == null ? Html.ValueForModel().ToString() : pictureCaption.ToString()
-},
+    {
+        DataAjaxUrl = "/pictures/findgridview",
+        DefaulText = pictureCaption == null ? Html.ValueForModel().ToString() : pictureCaption.ToString()
+    },
     new SxVMPicture[0]
 )
 </div>

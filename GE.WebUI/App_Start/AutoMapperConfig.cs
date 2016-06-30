@@ -44,8 +44,6 @@ namespace GE.WebUI
                     //site test
                     cfg.CreateMap<SxSiteTestQuestion, SxVMSiteTestQuestion>();
                     cfg.CreateMap<SxVMSiteTestQuestion, SxSiteTestQuestion>();
-                    cfg.CreateMap<SxSiteTestBlock, SxVMSiteTestBlock>();
-                    cfg.CreateMap<SxVMSiteTestBlock, SxSiteTestBlock>();
                     cfg.CreateMap<SxSiteTest, SxVMSiteTest>();
                     cfg.CreateMap<SxVMSiteTest, SxSiteTest>();
                     cfg.CreateMap<SxSiteTestStep, SxVMSiteTestStep>();

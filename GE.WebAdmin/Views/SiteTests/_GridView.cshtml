@@ -11,12 +11,13 @@
                 new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="DateCreate", Caption="Дата создания"},
                 new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Title", Caption="Заголовок"},
                 new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Description", Caption="Описание"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="TestType", Caption="Тип" }
+                new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Show", Caption="Показывать", Template=x=> { return x.Show?"Да":"Нет"; } }
             },
             EnableCreating = true,
             CreateRowUrl = "/sitetests/edit",
             EnableEditing = true,
             EditRowUrl = (x) => { return "/sitetests/edit/" + x.Id; },
-            DataAjaxUrl = "/sitetests"
+            DataAjaxUrl = "/sitetests",
+            RowCssClass = x => { return x.Show ? "success" : null; }
         }
     )

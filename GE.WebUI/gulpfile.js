@@ -84,7 +84,8 @@ function createCss() {
 
     //by one less
     gulp.src([
-       'less/error-page.less'
+       'less/error-page.less',
+       'less/test-list.less'
     ])
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))

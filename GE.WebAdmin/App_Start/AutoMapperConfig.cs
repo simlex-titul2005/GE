@@ -112,19 +112,19 @@ namespace GE.WebAdmin
 
                     //site test
                     cfg.CreateMap<SxSiteTest, SxVMSiteTest>();
+                    cfg.CreateMap<SxVMSiteTest, SxSiteTest>();
                     cfg.CreateMap<SxSiteTest, SxVMEditSiteTest>();
                     cfg.CreateMap<SxVMEditSiteTest, SxSiteTest>();
-
-                    //site test block
-                    cfg.CreateMap<SxSiteTestBlock, SxVMSiteTestBlock>();
-                    cfg.CreateMap<SxVMSiteTestBlock, SxSiteTestBlock>();
-                    cfg.CreateMap<SxSiteTestBlock, SxVMEditSiteTestBlock>();
-                    cfg.CreateMap<SxVMEditSiteTestBlock, SxSiteTestBlock>();
 
                     //site test question
                     cfg.CreateMap<SxSiteTestQuestion, SxVMSiteTestQuestion>();
                     cfg.CreateMap<SxSiteTestQuestion, SxVMEditSiteTestQuestion>();
                     cfg.CreateMap<SxVMEditSiteTestQuestion, SxSiteTestQuestion>();
+
+                    //site test subject
+                    cfg.CreateMap<SxSiteTestSubject, SxVMSiteTestSubject>();
+                    cfg.CreateMap<SxSiteTestSubject, SxVMEditSiteTestSubject>();
+                    cfg.CreateMap<SxVMEditSiteTestSubject, SxSiteTestSubject>();
 
                     //seo info
                     cfg.CreateMap<SxSeoTags, SxVMSeoTags>();

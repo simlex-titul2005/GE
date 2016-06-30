@@ -219,6 +219,7 @@
     <Compile Include="Models\VMLCNBNews.cs" />
     <Content Include="content\dist\css\error-page.min.css" />
     <Content Include="content\dist\css\site.min.css" />
+    <Content Include="content\dist\css\test-list.min.css" />
     <Content Include="content\dist\fonts\fontawesome-webfont.svg" />
     <Content Include="content\dist\i\article-empty.png" />
     <Content Include="content\dist\i\faveicon.png" />
@@ -377,6 +378,7 @@
     <Content Include="Views\SiteTests\Details.cshtml" />
     <Content Include="Views\SiteTests\Result.cshtml" />
     <Content Include="Views\SiteTests\_Step.cshtml" />
+    <Content Include="Views\SiteTests\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

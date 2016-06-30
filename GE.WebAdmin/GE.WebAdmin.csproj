@@ -241,8 +241,8 @@
     <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SeoController.cs" />
+    <Compile Include="Controllers\SiteTestSubjectsController.cs" />
     <Compile Include="Controllers\UserRolesController.cs" />
-    <Compile Include="Controllers\SiteTestBlocksController.cs" />
     <Compile Include="Controllers\SiteTestQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\VideoLinksController.cs" />
@@ -373,13 +373,7 @@
     <Content Include="Views\SiteTests\Index.cshtml" />
     <Content Include="Views\SiteTests\_FindGridView.cshtml" />
     <Content Include="Views\SiteTests\_GridView.cshtml" />
-    <Content Include="Views\SiteTests\_Matrix.cshtml" />
-    <Content Include="Views\SiteTestBlocks\Edit.cshtml" />
-    <Content Include="Views\SiteTestBlocks\Index.cshtml" />
-    <Content Include="Views\SiteTestBlocks\_FindGridView.cshtml" />
-    <Content Include="Views\SiteTestBlocks\_GridView.cshtml" />
-    <Content Include="Views\SiteTestQuestions\Edit.cshtml" />
-    <Content Include="Views\SiteTestQuestions\Index.cshtml" />
+    <Content Include="Views\SiteTestQuestions\_Edit.cshtml" />
     <Content Include="Views\SiteTestQuestions\_GridView.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PicturesLookupGrid.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SiteTestBlocksLookupGrid.cshtml" />
@@ -396,6 +390,9 @@
     <Content Include="Views\Shared\EditorTemplates\GameLookupGrid.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditDate.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MaterialCategoryLookupGrid.cshtml" />
+    <Content Include="Views\SiteTestSubjects\_Edit.cshtml" />
+    <Content Include="Views\SiteTestSubjects\_GridView.cshtml" />
+    <Content Include="Views\SiteTests\_Matrix.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

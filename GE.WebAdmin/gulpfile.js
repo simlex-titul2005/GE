@@ -58,7 +58,8 @@ function createCss() {
        'less/grid-banners.less',
        'less/ps-tree.less',
        'less/grid-a-authors.less',
-       'less/grid-aphorisms.less'
+       'less/grid-aphorisms.less',
+       'less/test-matrix.less'
     ])
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))

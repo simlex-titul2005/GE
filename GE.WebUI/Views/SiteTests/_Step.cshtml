@@ -1,33 +1,33 @@
 ﻿@model SxVMSiteTestQuestion
 @{
     Layout = null;
-    var pastQ = (List<SxVMSiteTestStep>)ViewBag.PastQ;
-    var blocksCount = ViewBag.BlocksCount;
+    var oldSteps = (SxVMSiteTestStep[])ViewBag.OldSteps;
+    SxVMSiteTestStep step;
 }
 
-@blocksCount
 @using (Ajax.BeginForm("Step", "SiteTests", new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }))
 {
     <p>
-        @Model.Block.Test.Description
+        @Model.Test.Description
     </p>
 
     @Html.AntiForgeryToken()
-    <input type="hidden" name="ttu" value="@Model.Block.Test.TitleUrl" />
-    if (pastQ != null)
-    {
-        var count = 0;
-        foreach (var q in pastQ)
-        {
-            <input type="hidden" class="pastQT" name="[@count].Order" value="@q.Order" />
-            <input type="hidden" name="[@count].Question.Text" value="@q.Question.Text" />
-            <input type="hidden" name="[@count].Question.IsCorrect" value="@q.Question.IsCorrect" />
-            count++;
-        }
-    }
+    <input type="hidden" name="testId" value="@Model.Test.Id" />
 
-    @Html.SxIndicatorGroup(new SxVMSiteTestQuestion[] { Model }, new SxExtantions.SxIndicatorGroupSettings<SxVMSiteTestQuestion>
-{
-    FuncGetLabel = x => x.Text
-})
+    <div class="q">
+        @for (int i = 0; i < oldSteps.Length; i++)
+        {
+            step = oldSteps[i];
+            <input type="hidden" name="[@i].QuestionId" value="@step.QuestionId" />
+            <input type="hidden" name="[@i].IsCorrect" data-q-id="@step.QuestionId" value="@step.IsCorrect.ToString().ToLower()" />
+        }
+    </div>
+
+    @Html.SxIndicatorGroup(
+    new SxVMSiteTestQuestion[] { Model },
+    new SxExtantions.SxIndicatorGroupSettings<SxVMSiteTestQuestion>
+    {
+        FuncGetLabel = x => x.Text,
+        FuncGetId = x => x.Id.ToString()
+    })
 }

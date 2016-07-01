@@ -4,7 +4,6 @@ using SX.WebCore.MvcControllers;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Caching;
-using System.Web.Mvc;
 
 namespace GE.WebUI.Extantions.Controllers
 {
@@ -69,6 +68,11 @@ namespace GE.WebUI.Extantions.Controllers
                     if (gameName != null)
                         breadcrumbs.Add(new VMBreadcrumb { Title = gameName });
                 }
+            }
+            else if (controller.SxControllerName == "sitetests")
+            {
+                if (controller.SxActionName == "list" || controller.SxActionName == "details")
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Тесты", Url = controller.Url.Action("list", "sitetests") });
             }
 
             controller.ViewBag.Breadcrumbs = breadcrumbs.ToArray();

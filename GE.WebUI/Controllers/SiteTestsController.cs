@@ -12,7 +12,7 @@ namespace GE.WebUI.Controllers
 {
     public sealed class SiteTestsController : BaseController
     {
-        private static SxDbRepository<int, SxSiteTest, DbContext> _repo;
+        private static SxRepoSiteTest<DbContext> _repo;
         public SiteTestsController()
         {
             if (_repo == null)
@@ -23,7 +23,7 @@ namespace GE.WebUI.Controllers
         public ViewResult List(int page=1)
         {
             var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
-            var filter = new SxFilter { Order = defaultOrder };
+            var filter = new SxFilter { Order = defaultOrder, OnlyShow=true };
             filter.PagerInfo.TotalItems = _repo.Count(filter);
             ViewBag.Filter = filter;
             var data = _repo.Query(filter).Select(x => Mapper.Map<SxSiteTest, SxVMSiteTest>(x)).ToArray();
@@ -52,30 +52,19 @@ namespace GE.WebUI.Controllers
             var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
             if (data == null) return new HttpNotFoundResult();
 
+            ViewBag.OldSteps = new SxVMSiteTestStep[] { new SxVMSiteTestStep { QuestionId = data.Id, IsCorrect = false } };
             var viewModel = Mapper.Map<SxSiteTestQuestion, SxVMSiteTestQuestion>(data);
             return View(model: viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Step(string ttu, List<SxVMSiteTestStep> pastQ = null)
+        public ActionResult Step(int testId, List<SxVMSiteTestStep> steps)
         {
-            //ViewBag.PastQ = pastQ.Select(x => new { T = x.Question.Text, C = x.Question.IsCorrect, O = x.Order }).Distinct()
-            //    .Select(x => new SxVMSiteTestStep {
-            //        Order=x.O,
-            //        Question=new SxVMSiteTestQuestion { Text=x.T, IsCorrect=x.C }
-            //    }).ToList();
-
-            var blocksCount = -1;
-            SxVMSiteTestQuestion data = getGuessYesNoStep(ttu, pastQ, out blocksCount);
-            ViewBag.BlocksCount = blocksCount;
-            return PartialView("_Step", data);
-        }
-        private static SxVMSiteTestQuestion getGuessYesNoStep(string ttu, List<SxVMSiteTestStep> pastQ, out int blocksCount)
-        {
-            var select = pastQ.Select(x => Mapper.Map<SxVMSiteTestStep, SxSiteTestStep>(x)).ToList();
-            var data = (_repo as SxRepoSiteTest<DbContext>).GetGuessYesNoStep(ttu, select, out blocksCount);
+            var data = _repo.GetNextStep(testId, steps);
+            steps.Add(new SxVMSiteTestStep { QuestionId = data.Id, IsCorrect = false });
+            ViewBag.OldSteps = steps.ToArray();
             var viewModel = Mapper.Map<SxSiteTestQuestion, SxVMSiteTestQuestion>(data);
-            return viewModel;
+            return PartialView("_Step", viewModel);
         }
     }
 }

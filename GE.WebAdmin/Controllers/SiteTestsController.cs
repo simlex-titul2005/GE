@@ -3,7 +3,7 @@
 namespace GE.WebAdmin.Controllers
 {
     [Authorize(Roles = "admin")]
-    public partial class SiteTestsController : SX.WebCore.MvcControllers.SxSiteTestController<WebCoreExtantions.DbContext>
+    public partial class SiteTestsController : SX.WebCore.MvcControllers.SxSiteTestsController<WebCoreExtantions.DbContext>
     {
         
     }

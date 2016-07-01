@@ -176,6 +176,7 @@
     <Content Include="content\dist\css\login.min.css" />
     <Content Include="content\dist\css\ps-tree.min.css" />
     <Content Include="content\dist\css\site.min.css" />
+    <Content Include="content\dist\css\test-matrix.min.css" />
     <Content Include="content\dist\fonts\fontawesome-webfont.svg" />
     <Content Include="content\dist\images\close.png" />
     <Content Include="content\dist\images\loading.gif" />

@@ -1,45 +1,69 @@
 ﻿@model System.Data.DataTable
+@{
+    var count = (int)ViewBag.Count;
+    var pageSize = (int)ViewBag.PageSize;
+    var pageCount = (int)Math.Ceiling((decimal)count / pageSize);
+    var testId = (int)ViewBag.TestId;
+    var page = (int)ViewBag.Page;
+    string firstColumnTitle;
+}
 @if (Model != null)
 {
-    <table class="table table-condensed table-bordered table-responsive table-striped">
-        <thead>
-            <tr>
-                @foreach (System.Data.DataColumn column in Model.Columns)
-                {
-                    <th>
-                        @if (column == Model.Columns[0])
-                        {
-
-                        }
-                        else
-                        {
-                            @column.Caption
-                        }
-                    </th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (System.Data.DataRow row in Model.Rows)
-            {
+    <div class="matrix__table">
+        <table class="table table-condensed table-bordered table-responsive table-striped">
+            <thead>
                 <tr>
                     @foreach (System.Data.DataColumn column in Model.Columns)
+                {
+                        <th>
+                            @if (column == Model.Columns[0])
+                            {
+
+                            }
+                            else
+                            {
+                                @column.Caption
+                            }
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model.Rows)
+                {
+                    firstColumnTitle = row[0].ToString();
+                    <tr>
+                        @foreach (System.Data.DataColumn column in Model.Columns)
                     {
                         if (column == Model.Columns[0])
                         {
-                            <td class="matrix__first-column">
-                                @row[column.ColumnName]
-                            </td>
+                                <td class="matrix__first-column">
+                                    @row[column.ColumnName]
+                                </td>
+                            }
+                            else
+                            {
+                                <td data-toggle="tooltip" title="@firstColumnTitle">
+                                    @row[column.ColumnName]
+                                </td>
+                            }
                         }
-                        else
-                        {
-                            <td>
-                                @row[column.ColumnName]
-                            </td>
-                        }
-                    }
-                </tr>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    if (pageCount > 1)
+    {
+        <ul class="list-unstyled list-inline sx-pager">
+            @for (int i = 0; i < pageCount; i++)
+            {
+                <li @((i + 1) == page ? "class=active" : null)>
+                    <a href="@Url.Action("testmatrix", "sitetests", new { testId = testId, page = i + 1 })">@(i + 1)</a>
+                </li>
             }
-        </tbody>
-    </table>
+        </ul>
+        <i class="fa fa-spinner fa-spin p-spinner" style="display:none;"></i>
+    }
 }

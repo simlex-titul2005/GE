@@ -1,7 +1,7 @@
 ﻿@model string
 @{
     var caption = (string)ViewBag.MaterialCategoryTitle;
-    Enums.ModelCoreType mct = (Enums.ModelCoreType)ViewBag.ModelCoreType;
+    Enums.ModelCoreType mct = ViewBag.ModelCoreType;
 }
 
 <div id="@Html.IdForModel()">

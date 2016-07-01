@@ -1,5 +1,6 @@
 ﻿@import (reference) "colors.less";
 @import (reference) "sizes.less";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
 
 .th-top-block > .row > div{
     padding:0;
@@ -27,4 +28,17 @@
 .th-banner a > img{
     max-width:100%;
     transition:all .4s;
+
+    @media (max-width: @screen-xs-max) {
+        width:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
 }

@@ -342,40 +342,44 @@
                                         </ul>
                                     </li>
                                 }
-                                <li>
-                                    <a href="#"><i class="fa fa-book"></i> Статьи <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        @if (User.IsInRole("author-article"))
-                                        {
+                                @if (User.IsInRole("author-article"))
+                                {
+                                    <li>
+                                        <a href="#"><i class="fa fa-book"></i> Статьи <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+
                                             <li>
                                                 <a href="@Url.Action("Index", new { controller= "Articles" })">Каталог статей</a>
                                             </li>
-                                        }
-                                        @if (User.IsInRole("admin"))
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("Index", new { controller = "MaterialCategories", mct = SX.WebCore.Enums.ModelCoreType.Article })">Категории статей</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-newspaper-o"></i> Новости <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        @if (User.IsInRole("author-news"))
-                                        {
+
+                                            @if (User.IsInRole("admin"))
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", new { controller = "MaterialCategories", mct = Enums.ModelCoreType.Article })">Категории статей</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                                @if (User.IsInRole("author-news"))
+                                {
+                                    <li>
+                                        <a href="#"><i class="fa fa-newspaper-o"></i> Новости <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+
                                             <li>
                                                 <a href="@Url.Action("Index", new { controller="News"})">Каталог новостей</a>
                                             </li>
-                                        }
-                                        @if (User.IsInRole("admin"))
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("Index", new { controller = "MaterialCategories", mct = SX.WebCore.Enums.ModelCoreType.News })">Категории новостей</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </li>
+
+                                            @if (User.IsInRole("admin"))
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", new { controller = "MaterialCategories", mct = Enums.ModelCoreType.News })">Категории новостей</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
                             </ul>
                         </li>
                         @if (User.IsInRole("admin"))
@@ -447,9 +451,12 @@
                                 </ul>
                             </li>
                         }
-                        <li>
-                            <a href="@Url.Action("Index", new { controller= "ProjectSteps" })"><i class="fa fa-calendar fa-fw"></i> Развитие проекта</a>
-                        </li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", new { controller = "ProjectSteps" })"><i class="fa fa-calendar fa-fw"></i> Развитие проекта</a>
+                            </li>
+                        }
                         @if (User.IsInRole("admin"))
                         {
                             <li>
@@ -486,7 +493,7 @@
             @RenderBody()
         </div>
     </div>
-    
+
     <script src="~/Content/dist/js/site.min.js"></script>
     <script type="text/javascript">
         $(function () {

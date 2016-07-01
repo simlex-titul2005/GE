@@ -118,6 +118,7 @@ namespace GE.WebAdmin.Controllers
             else
             {
                 ViewBag.HasError = true;
+                ViewBag.ModelCoreType = Enums.ModelCoreType.Article;
                 model = isNew?model: getPreparedArticle(model);
                 return View(model);
             }

@@ -7,27 +7,28 @@
 @section styles{
     <link href="~/content/dist/css/lightbox.min.css" rel="stylesheet" />
     <style type="text/css">
-        #grid-test-subjects tbody > tr > td:last-child{
-            width:70px;
-            vertical-align:middle;
-            text-align:center;
-        }
-        #matrix{
-            overflow:hidden;
-            max-height:100%;
-            overflow-x:auto;
-            margin-top:15px;
+        #grid-test-subjects tbody > tr > td:last-child {
+            width: 70px;
+            vertical-align: middle;
+            text-align: center;
         }
 
-        #matrix td{
-            text-align:center;
-            vertical-align:middle;
-            cursor:pointer;
+        #matrix {
+            overflow: hidden;
+            max-height: 100%;
+            overflow-x: auto;
+            margin-top: 15px;
         }
 
-        #matrix td:not(.matrix__first-column):active{
-            background-color:#DFF0D8;
-        }
+            #matrix td:not(.matrix__first-column) {
+                text-align: center;
+                vertical-align: middle;
+                cursor: pointer;
+            }
+
+                #matrix td:not(.matrix__first-column):active {
+                    background-color: #DFF0D8;
+                }
     </style>
 }
 
@@ -43,14 +44,6 @@
                 @Html.HiddenFor(x => x.Id)
                 <button type="submit" class="btn btn-danger" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить тест</button>
             </form>
-        }
-        else
-        {
-            <form method="post" action="/sitetests/loadtestfromfile" enctype="multipart/form-data">
-                @Html.AntiForgeryToken()
-                <input type="file" name="file" class="hidden" />
-            </form>
-            <a href="javascript:void(0)" id="ofd-btn" class="btn btn-default"><i class="fa fa-th" aria-hidden="true"></i> Загрузить из файла</a>
         }
     </div>
 </div>
@@ -88,12 +81,12 @@
 
             @if (!isNew && User.IsInRole("architect"))
             {
-            <div class="form-group">
-                @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
-                <span class="text-info"> (применяется для уникальной идентификации материала)</span>
-                @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(x => x.TitleUrl)
-            </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+                    <span class="text-info"> (применяется для уникальной идентификации материала)</span>
+                    @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.TitleUrl)
+                </div>
             }
 
             <div class="form-group">
@@ -199,6 +192,9 @@
                     url: '/sitetests/testmatrix?testId='+@Model.Id,
                     success:function(result){
                         $('#matrix').html(result);
+                    },
+                    complete:function(){
+                        $('#matrix td:not(.matrix__first-column):contains(1)').addClass('success');
                     }
                 });
             })
@@ -300,7 +296,28 @@
             });
 
             $('#matrix').on('click', 'td:not(.matrix__first-column)', function(){
-                alert();
+                $td=$(this);
+                $tr=$td.closest('tr');
+                var question=$.trim($tr.find('.matrix__first-column').html());
+                var subject = $.trim($td.closest('table').find('th').eq($td.index()).html());
+                var value=parseInt($td.html());
+                var token = $('input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    method:'post',
+                    url: '@Url.Action("revertmatrixvalue", "sitetests")',
+                    data:{subjectTitle: subject, questionText: question, value: value, __RequestVerificationToken:token},
+                    beforeSend:function(){
+                        $td.html('<i class="fa fa-spinner fa-spin"></i>');
+                    },
+                    success:function(result){
+                        $td.html(result);
+                        if(value==0)
+                            $td.addClass('success');
+                        else
+                            $td.removeClass('success');
+                    }
+                });
             });
         });
     </script>

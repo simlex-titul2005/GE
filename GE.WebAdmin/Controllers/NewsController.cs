@@ -70,7 +70,7 @@ namespace GE.WebAdmin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(VMEditNews model)
         {
-            if (string.IsNullOrEmpty(model.TitleUrl))
+            if (model.Title != null && string.IsNullOrEmpty(model.TitleUrl))
             {
                 var titleUrl = Url.SeoFriendlyUrl(model.Title);
                 var existModel = (_repo as RepoNews).GetByTitleUrl(titleUrl);
@@ -118,6 +118,7 @@ namespace GE.WebAdmin.Controllers
             else
             {
                 ViewBag.HasError = true;
+                ViewBag.ModelCoreType = Enums.ModelCoreType.News;
                 model = isNew ? model : getPreparedNews(model);
                 return View(model);
             }

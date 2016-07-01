@@ -5,6 +5,15 @@
     ViewBag.Title = isNew ? "Добавить пользователя" : "Редактировать пользователя \"" + userName + "\"";
 }
 
+@section styles{
+    <style type="text/css">
+        .user .img-circle{
+            width:70px;
+            border:3px solid #ddd;
+        }
+    </style>
+    }
+
 <div>
     <a class="btn btn-default" href="@Url.Action("index")">Назад</a>
 </div>
@@ -57,6 +66,7 @@
 </div>
 
 @section scripts{
+    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
     <script type="text/javascript">
         function removeMessage(id) {
             setTimeout(function () {

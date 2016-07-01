@@ -62,7 +62,7 @@
                 var banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top) : null;
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
-                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", new { controller = "Pictures", id = b.PictureId }))
+                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }))
                     <br>
                 }
             }

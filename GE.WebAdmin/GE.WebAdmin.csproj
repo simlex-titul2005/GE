@@ -204,8 +204,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <None Include="Properties\PublishProfiles\admin-game-exe.pubxml" />
-    <None Include="Properties\PublishProfiles\game-exe.pubxml" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
     <Content Include="Views\SiteSettings\EditEmptyGame.cshtml" />
     <Content Include="Views\VideoLinks\_GridView.cshtml" />

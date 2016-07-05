@@ -27,7 +27,7 @@
     "jquery-ajax-unobtrusive": "3.2.4",
     "jquery-validation-unobtrusive": "3.2.6",
     "jquery-validation": "1.15.0",
-    "ckeditor": "4.5.7",
+    "ckeditor":"4.5.9",
     "metisMenu": "2.4.3",
     "eonasdan-bootstrap-datetimepicker": "*",
     "jquery": "2.2.3",

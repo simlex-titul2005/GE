@@ -52,18 +52,20 @@ namespace GE.WebUI.Controllers
             var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
             if (data == null) return new HttpNotFoundResult();
 
-            ViewBag.OldSteps = new SxVMSiteTestStep[] { new SxVMSiteTestStep { QuestionId = data.Id, IsCorrect = false } };
-            var viewModel = Mapper.Map<SxSiteTestQuestion, SxVMSiteTestQuestion>(data);
+            ViewBag.OldSteps = new SxVMSiteTestStep[] { new SxVMSiteTestStep { QuestionId = data.QuestionId, IsCorrect = false } };
+            var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
             return View(model: viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Step(int testId, List<SxVMSiteTestStep> steps)
+        public ActionResult Step(List<SxVMSiteTestStep> steps)
         {
-            var data = _repo.GetNextStep(testId, steps);
-            steps.Add(new SxVMSiteTestStep { QuestionId = data.Id, IsCorrect = false });
+            int subjectsCount;
+            var data = _repo.GetStep(steps, out subjectsCount);
+            ViewBag.SubjectsCount = subjectsCount;
+            steps.Add(new SxVMSiteTestStep { QuestionId = data.QuestionId, IsCorrect = false });
             ViewBag.OldSteps = steps.ToArray();
-            var viewModel = Mapper.Map<SxSiteTestQuestion, SxVMSiteTestQuestion>(data);
+            var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
             return PartialView("_Step", viewModel);
         }
     }

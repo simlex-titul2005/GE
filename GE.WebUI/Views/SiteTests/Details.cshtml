@@ -1,14 +1,14 @@
-﻿@model SxVMSiteTestQuestion
+﻿@model SxVMSiteTestAnswer
 @{
-    ViewBag.Title = Model.Test != null ? Model.Test.Title : "Страница прохождения теста";
+    ViewBag.Title = Model.Question!=null && Model.Question.Test!=null ? Model.Question.Test.Title : "Страница прохождения теста";
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
-    ViewBag.Description = ViewBag.Description ?? Model.Test != null ? Model.Test.Description : "Страница прохождения теста";
+    ViewBag.Description = ViewBag.Description ?? Model.Question != null && Model.Question.Test!=null ? Model.Question.Test.Description : "Страница прохождения теста";
     ViewBag.Keywords = ViewBag.Keywords ?? "Игровые тесты, тесты для игр";
 }
 
 @Html.Partial("_Breadcrumbs", (VMBreadcrumb[])ViewBag.Breadcrumbs)
 
-@if (Model.Test != null)
+@if (Model.Question != null && Model.Question.Test!=null)
 {
     <div id="st-page">
         @Html.Partial("_Step", Model)

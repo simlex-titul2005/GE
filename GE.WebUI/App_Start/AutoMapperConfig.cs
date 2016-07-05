@@ -38,14 +38,19 @@ namespace GE.WebUI
                     //material category
                     cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
 
+                    //material category
+                    cfg.CreateMap<SxPicture, SxVMPicture>();
+
                     //seo info
                     cfg.CreateMap<SxSeoTags, SxVMSeoTags>();
 
                     //site test
-                    cfg.CreateMap<SxSiteTestQuestion, SxVMSiteTestQuestion>();
-                    cfg.CreateMap<SxVMSiteTestQuestion, SxSiteTestQuestion>();
                     cfg.CreateMap<SxSiteTest, SxVMSiteTest>();
                     cfg.CreateMap<SxVMSiteTest, SxSiteTest>();
+                    cfg.CreateMap<SxSiteTestQuestion, SxVMSiteTestQuestion>();
+                    cfg.CreateMap<SxVMSiteTestQuestion, SxSiteTestQuestion>();
+                    cfg.CreateMap<SxSiteTestSubject, SxVMSiteTestSubject>();
+                    cfg.CreateMap<SxSiteTestAnswer, SxVMSiteTestAnswer>();
 
                     //seo info
                     cfg.CreateMap<SxAppUser, VMUser>();

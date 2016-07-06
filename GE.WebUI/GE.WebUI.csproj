@@ -388,7 +388,7 @@
     <Folder Include="content\dist\i\temp\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SX.Web.Core\SX.WebCore\SX.WebCore.csproj">
+    <ProjectReference Include="..\..\SX.WebCore\SX.WebCore\SX.WebCore.csproj">
       <Project>{daf1a092-ded8-4c43-b08d-20e55c6f03a2}</Project>
       <Name>SX.WebCore</Name>
     </ProjectReference>

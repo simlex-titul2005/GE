@@ -25,7 +25,7 @@ namespace GE.WebUI.Controllers
         {
             if (!Request.IsAjaxRequest()) return null;
 
-            var viewModel = (base.Repository as RepoArticle).PreviewMaterials(gt, c, lc);
+            var viewModel = (Repository as RepoArticle).PreviewMaterials(gt, c, lc);
             if (!viewModel.Any())
                 return Content("<div class=\"empty-result\">Данные отсутствуют</div>");
             return PartialView("_Preview", viewModel);

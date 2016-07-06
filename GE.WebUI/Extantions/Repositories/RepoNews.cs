@@ -28,6 +28,7 @@ namespace GE.WebUI.Extantions.Repositories
        dm.Title,
        dm.TitleUrl,
        dm.DateCreate,
+       dm.ModelCoreType,
        dn.GameId
 FROM   DV_MATERIAL  AS dm
        JOIN D_NEWS  AS dn
@@ -75,6 +76,7 @@ ORDER BY
        dm.Title,
        dm.TitleUrl,
        dm.FrontPictureId,
+       dm.ModelCoreType,
        dm.DateCreate
 FROM   DV_MATERIAL  AS dm
        JOIN D_NEWS  AS dn
@@ -156,6 +158,7 @@ ORDER BY dmc.Title";
        dm.DateCreate,
        dm.Title,
        dm.TitleUrl,
+       dm.ModelCoreType,
        dm.FrontPictureId
 FROM   DV_MATERIAL AS dm
 WHERE  dm.CategoryId = @cat_id
@@ -193,6 +196,7 @@ SELECT TOP(@lnc) dm.DateOfPublication,
        dm.DateCreate,
        dm.Title,
        dm.TitleUrl,
+       dm.ModelCoreType,
        dm.CategoryId
 FROM   DV_MATERIAL           AS dm
        JOIN (

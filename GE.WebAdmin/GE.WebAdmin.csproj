@@ -225,6 +225,7 @@
     <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\BannedUrlsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\LikeButtonsController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\MaterialCategoriesController.cs" />
     <Compile Include="Controllers\MaterialTagsController.cs" />
+    <Compile Include="Controllers\NetsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProjectStepsController.cs" />
@@ -392,6 +394,11 @@
     <Content Include="Views\SiteTestSubjects\_Edit.cshtml" />
     <Content Include="Views\SiteTestSubjects\_GridView.cshtml" />
     <Content Include="Views\SiteTests\_Matrix.cshtml" />
+    <Content Include="Views\Nets\_GridView.cshtml" />
+    <Content Include="Views\Nets\Index.cshtml" />
+    <Content Include="Views\LikeButtons\_GridView.cshtml" />
+    <Content Include="Views\LikeButtons\Edit.cshtml" />
+    <Content Include="Views\LikeButtons\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

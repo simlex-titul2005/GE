@@ -1,9 +1,0 @@
-﻿@model VMDetailMaterial
-@using SX.WebCore;
-
-@{
-    Layout = null;
-}
-
-<label>Поделиться</label>
-<div class="share42init" data-url="@Request.Url" data-title="@Model.Title" data-description="@Model.Foreword" data-image="@(Model.FrontPictureId.HasValue ? Url.ContentAbsUrl(Url.Action("Picture","Pictures",new { id=Model.FrontPictureId})) : null)"></div>

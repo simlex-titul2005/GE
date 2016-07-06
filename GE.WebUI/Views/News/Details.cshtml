@@ -1,4 +1,5 @@
-﻿@using SX.WebCore;
+﻿@using SX.WebCore.Providers;
+@using SX.WebCore;
 
 @model VMDetailNews
 @{
@@ -7,7 +8,11 @@
     ViewBag.Title = title ?? Model.Title;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
-    ViewBag.PageImage = Model.FrontPictureId.HasValue ? Url.Action("Pictures", "Pictures", new { id = Model.FrontPictureId }) : null;
+    ViewBag.PageImage = Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage
+        ? Url.Action("Picture", "Pictures", new { id = Model.FrontPictureId })
+        : Model.Videos.Length>0
+        ? SxVideoProvider.GetVideoImageUrl(Model.Videos[0].VideoId, SxVideoProvider.VideoQuality.Medium)
+        : null;
     var banners = (SxBanner[])ViewBag.PageBanners;
     SxBanner banner = null;
 }
@@ -21,11 +26,11 @@
         @Html.Action("Popular", "News", new { mct = Model.ModelCoreType, mid = Model.Id, amount = 4 })
         @if (Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage)
         {
-            <img class="f-picture" alt="@Model.Title" src="@Url.Action("Pictures", "Pictures", new { id=Model.FrontPictureId})" />
+            <img class="f-picture" alt="@Model.Title" src="@Url.Action("Picture", "Pictures", new { id=Model.FrontPictureId})" />
         }
         @Html.Raw(Model.Html)
 
-        @Html.Partial("_Share42", Model)
+        @Html.SxLikeButtons(global_asax.LikeButtons)
     </div>
 
 
@@ -43,7 +48,7 @@
         if (banner != null)
         {
             <div style="margin-top:30px;">
-                @Html.SxThroughBanner(banner, (b) => Url.Action("Pictures", "Pictures", new { id = b.PictureId }))
+                @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }))
             </div>
         }
     }
@@ -61,12 +66,12 @@
 
 
 @section scripts{
-    <script type="text/javascript" src="~/share42/share42.js"></script>
     <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/ge-aphorisms.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/currency-provider.min.js"></script>
+    <script src="~/content/dist/js/goodshare.min.js"></script>
     <script type="text/javascript">
         loadScriptOnce('https://www.youtube.com/iframe_api');
         $(function () {

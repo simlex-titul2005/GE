@@ -14,7 +14,7 @@
             <blockquote style="color:white;">
                 @if (Model.Aphorism.Author != null && Model.Aphorism.Author.PictureId.HasValue)
                 {
-                    <figure class="author-img img-circle" style="background-image:url(@Url.Action("Picture", new { controller="Pictures", id=Model.Aphorism.Author.PictureId}));">
+                    <figure class="author-img img-circle" style="background-image:url(@Url.Action("Picture", "Pictures", new { id=Model.Aphorism.Author.PictureId}));">
 
                     </figure>
                 }

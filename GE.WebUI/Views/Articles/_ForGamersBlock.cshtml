@@ -19,7 +19,7 @@
                         <li @(Model.SelectedGameTitle!=null && Model.SelectedGameTitle.ToLowerInvariant()==game.TitleUrl.ToLowerInvariant()?"class=selected":null)>
                             <a href="#" rel="nofollow" data-game-title="@game.TitleUrl">
                                 <figure>
-                                    <img alt="@game.Title" src="@Url.Action("Picture", new { controller="Pictures", id=game.FrontPictureId, height=80})" />
+                                    <img alt="@game.Title" src="@Url.Action("Picture", "Pictures", new { id=game.FrontPictureId, height=80})" />
                                     <h4>@game.Title <i class="fa fa-angle-double-down" title="Развернуть блок"></i></h4>
                                     <span class="desc">@game.Description</span>
                                 </figure>

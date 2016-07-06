@@ -12,7 +12,7 @@
             <div class="author">
                 @if (Model.User != null && Model.User.AvatarId.HasValue)
                 {
-                    <img class="img-circle" alt="@Model.User.NikName" src="@Url.Action("Picture","Pictures", new { id=Model.User.AvatarId })" />
+                    <img class="img-circle" alt="@Model.User.NikName" src="@Url.Action("Picture", "Pictures", new { id=Model.User.AvatarId })" />
                 }
                 <div class="nik">@Model.User.NikName</div>
             </div>

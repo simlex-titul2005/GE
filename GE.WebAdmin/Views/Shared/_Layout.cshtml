@@ -310,7 +310,7 @@
                                     @if (User.IsInRole("video-redactor"))
                                     {
                                         <li>
-                                            <a href="@Url.Action("index", new { controller="videos"})"><i class="fa fa-youtube fa-fw"></i> Видео сайта</a>
+                                            <a href="@Url.Action("Index", "Videos")"><i class="fa fa-youtube fa-fw"></i> Видео сайта</a>
                                         </li>
                                     }
                                 </ul>
@@ -319,7 +319,21 @@
                         @if (User.IsInRole("admin"))
                         {
                             <li>
-                                <a href="@Url.Action("index", new { controller="games"})"><i class="fa fa-space-shuttle fa-fw"></i>Игры</a>
+                                <a href="javascript:void(0)"><i class="fa fa-globe fa-fw"></i> Соцсети<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "Nets")"> Поддерживаемы сети</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "LikeButtons")"> Кнопки лайков</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "Games")"><i class="fa fa-space-shuttle fa-fw"></i>Игры</a>
                             </li>
                         }
                         <li>

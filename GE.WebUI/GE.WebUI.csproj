@@ -229,6 +229,7 @@
     <Content Include="content\dist\js\ge-for-gamers-block.min.js" />
     <Content Include="content\dist\js\ge-last-category-block.min.js" />
     <Content Include="content\dist\js\ge-last-news-block.min.js" />
+    <Content Include="content\dist\js\goodshare.min.js" />
     <Content Include="content\dist\js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="content\dist\js\jquery.validate.min.js" />
     <Content Include="content\dist\js\jquery.validate.unobtrusive.min.js" />
@@ -246,8 +247,6 @@
     <Content Include="content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="content\dist\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
-    <Content Include="share42\icons.png" />
-    <Content Include="share42\share42.js" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -339,7 +338,6 @@
     <Content Include="Views\Shared\_Foreword.cshtml" />
     <Content Include="Views\MaterialTags\_TagsCloud.cshtml" />
     <Content Include="Views\Shared\_LikeMaterial.cshtml" />
-    <Content Include="Views\Shared\_Share42.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />

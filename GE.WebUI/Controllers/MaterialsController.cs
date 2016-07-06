@@ -156,7 +156,7 @@ namespace GE.WebUI.Controllers
             else
             {
                 var html=SxBBCodeParser.GetHtml(model.Html);
-                html = SxBBCodeParser.ReplaceBanners(html, SxApplication<DbContext>.GetBanners(), (b)=>Url.Action("picture", new { controller="pictures", id=b.PictureId}));
+                html = SxBBCodeParser.ReplaceBanners(html, SxApplication<DbContext>.GetBanners(), (b)=>Url.Action("Picture", "Pictures", new { id=b.PictureId}));
                 html = SxBBCodeParser.ReplaceVideo(html, model.Videos);
                 model.Html = html;
 

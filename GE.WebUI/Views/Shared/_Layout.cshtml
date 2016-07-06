@@ -37,7 +37,7 @@
     <meta property="og:url" content="@Request.Url" />
     <title>@ViewBag.Title</title>
     <meta property="og:title" content="@ViewBag.Title" />
-    <meta property="og:image" content="@Url.ContentAbsUrl(ViewBag.PageImage!=null?(string)ViewBag.PageImage: (logoPath ?? "~/content/dist/i/faveicon.png"))" />
+    <meta property="og:image" content="@(ViewBag.PageImage!=null ? ViewBag.PageImage: Url.ContentAbsUrl(logoPath ?? "/content/dist/i/faveicon.png"))" />
 
     @RenderSection("head", false)
 

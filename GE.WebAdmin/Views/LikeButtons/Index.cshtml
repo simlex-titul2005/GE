@@ -1,0 +1,18 @@
+﻿@model SxVMLikeButton[]
+@{
+    ViewBag.Title = "Кнопки лайков";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-like-buttons">
+    @Html.Partial("_gridview", Model)
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#grid-like-buttons').sx_gv();
+        });
+    </script>
+}

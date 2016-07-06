@@ -62,6 +62,12 @@ namespace GE.WebAdmin
                     cfg.CreateMap<Game, VMEditGame>();
                     cfg.CreateMap<VMEditGame, Game>();
 
+                    //like buttons
+                    cfg.CreateMap<SxLikeButton, SxVMLikeButton>()
+                    .ForMember(d => d.NetName, d => d.MapFrom(s => s.Net==null?null: s.Net.Name));
+                    cfg.CreateMap<SxLikeButton, SxVMEditLikeButton>();
+                    cfg.CreateMap<SxVMEditLikeButton, SxLikeButton>();
+
                     //manuals
                     cfg.CreateMap<SxManual, VMManual>();
                     cfg.CreateMap<SxManual, VMEditManual>();
@@ -85,6 +91,10 @@ namespace GE.WebAdmin
                     cfg.CreateMap<News, VMNews>();
                     cfg.CreateMap<News, VMEditNews>();
                     cfg.CreateMap<VMEditNews, News>();
+
+                    //net
+                    cfg.CreateMap<SxNet, SxVMNet>();
+                    cfg.CreateMap<SxVMNet, SxNet>();
 
                     //picture
                     cfg.CreateMap<SxPicture, SxVMPicture>();

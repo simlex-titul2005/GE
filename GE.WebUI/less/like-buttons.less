@@ -1,0 +1,52 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "../bower_components/bootstrap/less/variables";
+
+.like-buttons{
+    list-style:none;
+    padding:0;
+    margin:0;
+    margin-left:-@def-pad;
+}
+
+.like-buttons > li{
+    display:inline;
+    margin-left:@def-pad;
+    cursor:pointer;
+}
+
+.like-buttons .like-buttons__item{
+    border:1px solid @color-light-gray;
+    border-radius:2px;
+    display:inline-table;
+}
+
+.like-buttons .like-buttons__item > span{
+    display:table-cell;
+    height:100%;
+}
+
+.like-buttons .like-buttons__item > span:first-child{
+    padding-right:10px;
+}
+
+.like-buttons .like-buttons__counter{
+    border:1px solid @color-light-gray;
+    position:relative;
+    background-color:@color-white;
+    right:-1px;
+    padding:0 10px;
+}
+
+.like-buttons .like-buttons__counter::before{
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    content:'';
+    position:absolute;
+    width: .6666em;
+    height: .6666em;
+    border:1px solid @color-light-gray;
+    top: 50%;
+    left: -1px;
+    background-color:@color-white;
+    border-width: 0 0 1px 1px;
+}

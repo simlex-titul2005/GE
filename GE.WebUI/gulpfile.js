@@ -61,7 +61,8 @@ function createCss() {
         'less/employee.less',
         'less/th-banner.less',
         'less/site-tests.less',
-        'less/st-page.less'
+        'less/st-page.less',
+        'less/like-buttons.less'
     ])
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))
@@ -139,7 +140,8 @@ function createJs() {
     gulp.src([
         'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
         'bower_components/jquery-validation/dist/jquery.validate.min.js',
-        'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js'
+        'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js',
+        'bower_components/goodshare/goodshare.min.js'
     ])
         .pipe(gulp.dest('content/dist/js'));
 

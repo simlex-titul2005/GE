@@ -97,7 +97,7 @@ namespace GE.WebAdmin.Controllers
                 if (isNew)
                     _repo.Create(redactModel);
                 else
-                    _repo.Update(redactModel, true, "Title", "Html", "AuthorId", "Show", "SourceUrl");
+                    _repo.Update(redactModel, true, "Title", "Html", "Foreword", "AuthorId", "Show", "SourceUrl");
                 return RedirectToAction("index", new { curCat= model.CategoryId });
             }
             return View(model);

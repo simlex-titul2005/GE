@@ -242,7 +242,6 @@
     <Content Include="content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="content\dist\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
-    <None Include="Properties\PublishProfiles\release.pubxml" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>
     </Content>

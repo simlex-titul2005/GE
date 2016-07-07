@@ -13,12 +13,13 @@
             <a href="@Model.SourceUrl">Источник: @Model.SourceUrl</a>
         </div>
     }
+
     <div>
-        @Html.Raw(Model.Html)
+        @(Model.Foreword.Length >= 100 ? Model.Foreword.Substring(0, 100)+"..." : Model.Foreword)
     </div>
     <div class="author">@(Model.Author != null && Model.Author.Name != null ? Model.Author.Name : "Аноним")@(Model.Category != null ? ". " + Model.Category.Title : null)</div>
     <div>
-        <a href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})"><i>Комментировать</i></a>
+        <a href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})"><i>Подробнее</i></a>
     </div>
 
 </div>

@@ -16,8 +16,8 @@
 
             </figure>
         }
-        <div class="html">
-            @Html.Raw(Model.Html)
+        <div class="foreword">
+            @(Model.Foreword.Length>=100?Model.Foreword.Substring(0, 100)+"...": Model.Foreword)
             <br />
             <a class="btn btn-default btn-sm" href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})">Подробнее <i class="fa fa fa-angle-double-right"></i></a>
         </div>

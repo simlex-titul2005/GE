@@ -1,7 +1,7 @@
 ﻿@import (reference) "colors.less";
 @import (reference) "sizes.less";
 @import (reference) "positioned.less";
-@import (reference) "../bower_components/bootstrap/less/variables";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
 
 .aphorisms {
     color: @color-white;
@@ -48,7 +48,11 @@
     margin-right:@def-pad*3;
 }
 
-.aphorism .aph-html > .html > .btn{
+.aphorism .aph-html > .foreword{
+    font-size:18px;
+}
+
+.aphorism .aph-html > .foreword .btn{
     margin-top:@def-pad;
 }
 

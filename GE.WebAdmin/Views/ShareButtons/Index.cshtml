@@ -1,18 +1,18 @@
-﻿@model SxVMLikeButton[]
+﻿@model SxVMShareButton[]
 @{
-    ViewBag.Title = "Кнопки лайков";
+    ViewBag.Title = "Кнопки шар";
 }
 
 <h2>@ViewBag.Title</h2>
 <br />
-<div id="grid-like-buttons">
+<div id="grid-share-buttons">
     @Html.Partial("_gridview", Model)
 </div>
 
 @section scripts{
     <script>
         $(function () {
-            $('#grid-like-buttons').sx_gv();
+            $('#grid-share-buttons').sx_gv();
         });
     </script>
 }

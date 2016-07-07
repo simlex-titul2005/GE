@@ -6,6 +6,20 @@
 
 @section styles{
     <link href="~/Content/dist/css/grid-aphorisms.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .sx-tv a{
+            text-decoration:none;
+            transition:all .2s;
+        }
+        .sx-tv tr:hover a{
+            font-weight:700;
+            color:gray;
+        }
+        .sx-tv tr.active a{
+            font-weight:700;
+            padding-left:5px;
+        }
+    </style>
 }
 
 <h2>@ViewBag.Title</h2>

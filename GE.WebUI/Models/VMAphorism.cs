@@ -9,6 +9,7 @@ namespace GE.WebUI.Models
         public int ViewsCount { get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
+        public string Foreword { get; set; }
         public string Html { get; set; }
         public string TitleUrl { get; set; }
 

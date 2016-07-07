@@ -63,10 +63,10 @@ namespace GE.WebAdmin
                     cfg.CreateMap<VMEditGame, Game>();
 
                     //like buttons
-                    cfg.CreateMap<SxLikeButton, SxVMLikeButton>()
+                    cfg.CreateMap<SxShareButton, SxVMShareButton>()
                     .ForMember(d => d.NetName, d => d.MapFrom(s => s.Net==null?null: s.Net.Name));
-                    cfg.CreateMap<SxLikeButton, SxVMEditLikeButton>();
-                    cfg.CreateMap<SxVMEditLikeButton, SxLikeButton>();
+                    cfg.CreateMap<SxShareButton, SxVMEditShareButton>();
+                    cfg.CreateMap<SxVMEditShareButton, SxShareButton>();
 
                     //manuals
                     cfg.CreateMap<SxManual, VMManual>();

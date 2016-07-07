@@ -12,6 +12,7 @@ namespace GE.WebAdmin.Models
         public int AuthorId { get; set; }
         public VMAuthorAphorism Author { get; set; }
         public string Html { get; set; }
+        public string Foreword { get; set; }
 
         public string Name { get; set; }
     }

@@ -204,7 +204,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <None Include="Properties\PublishProfiles\release.pubxml" />
+    <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="Views\SiteSettings\EditEmptyGame.cshtml" />
     <Content Include="Views\VideoLinks\_GridView.cshtml" />
     <Content Include="Views\VideoLinks\_GridViewNotLinked.cshtml" />
@@ -225,7 +225,7 @@
     <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\BannedUrlsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
-    <Compile Include="Controllers\LikeButtonsController.cs" />
+    <Compile Include="Controllers\ShareButtonsController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\ManualsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
@@ -396,9 +396,9 @@
     <Content Include="Views\SiteTests\_Matrix.cshtml" />
     <Content Include="Views\Nets\_GridView.cshtml" />
     <Content Include="Views\Nets\Index.cshtml" />
-    <Content Include="Views\LikeButtons\_GridView.cshtml" />
-    <Content Include="Views\LikeButtons\Edit.cshtml" />
-    <Content Include="Views\LikeButtons\Index.cshtml" />
+    <Content Include="Views\ShareButtons\_GridView.cshtml" />
+    <Content Include="Views\ShareButtons\Edit.cshtml" />
+    <Content Include="Views\ShareButtons\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

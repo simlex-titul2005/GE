@@ -1,11 +1,24 @@
-﻿@model VMDetailAphorism
+﻿@using SX.WebCore;
+@model VMDetailAphorism
 @{
     var title = ViewBag.Title;
     var h1 = ViewBag.H1;
     ViewBag.Title = title ?? Model.Aphorism.Title;
+    ViewBag.PageImage = Model.Aphorism.Author!=null && Model.Aphorism.Author.PictureId.HasValue
+        ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = Model.Aphorism.Author.PictureId }))
+        : null;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
-    ViewBag.Description = ViewBag.Description ?? "Афоризмы, короткие изречения великих людей, коротко о главном";
+    ViewBag.Description = ViewBag.Description ?? (Model.Aphorism.Author!=null? Model.Aphorism.Author.Name+". ":null)+"Афоризмы, короткие изречения великих людей, коротко о главном";
     var author = Model.Aphorism.Author != null && Model.Aphorism.Author.Name != null ? Model.Aphorism.Author.Name : "Аноним";
+}
+
+@section styles{
+    <style type="text/css">
+        .share-buttons {
+            margin-bottom: 30px;
+            margin-top: 10px;
+        }
+    </style>
 }
 
 <div class="ap-page">
@@ -21,8 +34,9 @@
                 @Html.Raw(Model.Aphorism.Html)
                 <h4 class="small">@(author)</h4>
             </blockquote>
+            @Html.SxShareButtons(global_asax.ShareButtons)
 
-            @Html.Action("Edit", new { controller= "Comments", mid= Model.Aphorism.Id, mct= SX.WebCore.Enums.ModelCoreType.Aphorism }))
+            @Html.Action("Edit", "Comments", new { mid = Model.Aphorism.Id, mct = SX.WebCore.Enums.ModelCoreType.Aphorism }))
 
             @*author*@
             @if (Model.TopForAuthor.Any())
@@ -43,12 +57,13 @@
             }
         </div>
         <div class="col-md-3">
-            @Html.Action("Categories", new { controller= "Aphorisms", curCat= Model.Aphorism.CategoryId })
+            @Html.Action("Categories", new { controller = "Aphorisms", curCat = Model.Aphorism.CategoryId })
         </div>
     </div>
 </div>
 
 @section scripts{
+    <script src="~/content/dist/js/goodshare.min.js"></script>
     <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>

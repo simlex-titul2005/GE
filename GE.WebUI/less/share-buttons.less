@@ -1,34 +1,51 @@
 ﻿@import (reference) "colors.less";
 @import (reference) "sizes.less";
-@import (reference) "../bower_components/bootstrap/less/variables";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
 
 @p: 30px;
 
-.like-buttons {
+.share-buttons {
     list-style: none;
     padding: 0;
     margin: 0;
     margin-left: -@def-pad;
 }
 
-.like-buttons > li {
+.share-buttons > li {
     display: inline;
     margin-left: @def-pad;
     cursor: pointer;
+    @media (max-width: @screen-xs-max) {
+        display: block;
+        margin-bottom: @def-pad;
+        text-align:center;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
-.like-buttons > li > button {
+.share-buttons > li > button {
     border: none;
     font-style: normal;
     position: relative;
     padding-left: @p;
 }
 
-.like-buttons > li > button, .like-buttons > li > button:focus, .like-buttons > li > button:active {
+.share-buttons > li > button, .share-buttons > li > button:focus, .share-buttons > li > button:active {
     outline: none !important;
 }
 
-.like-buttons__icon {
+.share-buttons__icon {
     position: absolute;
     top: 0;
     left: 0;
@@ -41,7 +58,7 @@
     box-shadow: 1px 1px 8px rgba(255,255,255,.5);
 }
 
-.like-buttons__icon::after {
+.share-buttons__icon::after {
     content: '';
     width: 10px;
     height: 10px;
@@ -53,12 +70,12 @@
     background-color: @color-white;
 }
 
-.like-buttons__title{
+.share-buttons__title{
     padding:0 10px 0 @def-pad;
     color:@color-white;
 }
 
-.like-buttons__counter {
+.share-buttons__counter {
     margin-left: 5px;
     background-color: @color-white !important;
     color: @color-black !important;

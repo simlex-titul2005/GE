@@ -14,6 +14,7 @@
             new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Name", Caption="Автор",Template=(a)=> {
                 return a.Author!=null? a.Author.Name:null;
             } },
+            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Foreword", Caption="Вступление"},
             new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
             new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Show", Caption="Показывать", Template=(a)=> {
                 return a.Show?"Да":"Нет";

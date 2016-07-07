@@ -13,6 +13,9 @@ namespace GE.WebAdmin.Models
         [Display(Name = "Показывать на сайте"), Required]
         public bool Show { get; set; }
 
+        [Display(Name = "Вступление"), Required, DataType(DataType.MultilineText)]
+        public string Foreword { get; set; }
+
         [Display(Name = "Содержание"), Required, DataType(DataType.MultilineText), AllowHtml]
         public string Html { get; set; }
 

@@ -2,51 +2,65 @@
 @import (reference) "sizes.less";
 @import (reference) "../bower_components/bootstrap/less/variables";
 
-.like-buttons{
-    list-style:none;
-    padding:0;
-    margin:0;
-    margin-left:-@def-pad;
+@p: 30px;
+
+.like-buttons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-left: -@def-pad;
 }
 
-.like-buttons > li{
-    display:inline;
-    margin-left:@def-pad;
-    cursor:pointer;
+.like-buttons > li {
+    display: inline;
+    margin-left: @def-pad;
+    cursor: pointer;
 }
 
-.like-buttons .like-buttons__item{
-    border:1px solid @color-light-gray;
-    border-radius:2px;
-    display:inline-table;
+.like-buttons > li > button {
+    border: none;
+    font-style: normal;
+    position: relative;
+    padding-left: @p;
 }
 
-.like-buttons .like-buttons__item > span{
-    display:table-cell;
-    height:100%;
+.like-buttons > li > button, .like-buttons > li > button:focus, .like-buttons > li > button:active {
+    outline: none !important;
 }
 
-.like-buttons .like-buttons__item > span:first-child{
-    padding-right:10px;
+.like-buttons__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: @p;
+    background-color: @color-white;
+    border-radius: 3px 0 0 3px;
+    text-align: center;
+    padding-top: 6px;
+    box-shadow: 1px 1px 8px rgba(255,255,255,.5);
 }
 
-.like-buttons .like-buttons__counter{
-    border:1px solid @color-light-gray;
-    position:relative;
-    background-color:@color-white;
-    right:-1px;
-    padding:0 10px;
-}
-
-.like-buttons .like-buttons__counter::before{
-    transform: translateX(-50%) translateY(-50%) rotate(45deg);
-    content:'';
-    position:absolute;
-    width: .6666em;
-    height: .6666em;
-    border:1px solid @color-light-gray;
+.like-buttons__icon::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
     top: 50%;
-    left: -1px;
-    background-color:@color-white;
-    border-width: 0 0 1px 1px;
+    right: -5px;
+    transform: rotate(45deg);
+    margin-top: -4px;
+    background-color: @color-white;
+}
+
+.like-buttons__title{
+    padding:0 10px 0 @def-pad;
+    color:@color-white;
+}
+
+.like-buttons__counter {
+    margin-left: 5px;
+    background-color: @color-white !important;
+    color: @color-black !important;
+    font-weight: 300;
 }

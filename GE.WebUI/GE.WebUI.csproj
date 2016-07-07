@@ -234,18 +234,14 @@
     <Content Include="content\dist\js\jquery.validate.min.js" />
     <Content Include="content\dist\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="content\dist\js\site.min.js" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="packages.config" />
     <Content Include="content\dist\fonts\fontawesome-webfont.eot" />
     <Content Include="content\dist\fonts\fontawesome-webfont.ttf" />
     <Content Include="content\dist\fonts\fontawesome-webfont.woff" />
     <Content Include="content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="content\dist\fonts\FontAwesome.otf" />
+    <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>

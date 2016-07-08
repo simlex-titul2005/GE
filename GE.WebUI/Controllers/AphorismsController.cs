@@ -22,6 +22,12 @@ namespace GE.WebUI.Controllers
         public ActionResult Details(string categoryId, string titleUrl)
         {
             var viewModel = (_repo as RepoAphorism).GetByTitleUrl(categoryId, titleUrl);
+            
+            if(viewModel.Aphorism.Author!=null)
+                ViewBag.Author = viewModel.Aphorism.Author;
+            else
+                ViewBag.CurrentAphorismCategory = getCurrentCategory(categoryId);
+
             if (viewModel == null || viewModel.Aphorism == null)
                 return new HttpStatusCodeResult(404);
 
@@ -36,14 +42,14 @@ namespace GE.WebUI.Controllers
             return View(viewModel);
         }
 
-        [OutputCache(Duration = 900, VaryByParam = "curCat;onlyNotCurrent")]
-        [HttpGet, ChildActionOnly]
-        public PartialViewResult Categories(string curCat = null, bool onlyNotCurrent = true)
-        {
-            var data = (_repo as RepoAphorism).GetAphorismCategories(curCat);
-            var viewModel = onlyNotCurrent ? data.Where(x => !x.IsCurrent).ToArray() : data;
 
-            return PartialView("~/views/Aphorisms/_Categories.cshtml", viewModel);
+        [OutputCache(Duration = 900, VaryByParam = "curCat")]
+        [HttpGet, ChildActionOnly]
+        public PartialViewResult Categories(string curCat = null)
+        {
+            var viewModel = (_repo as RepoAphorism).GetAphorismCategories(curCat);
+
+            return PartialView("_Categories", model: viewModel);
         }
 
         private static int _pageSize = 20;
@@ -51,18 +57,23 @@ namespace GE.WebUI.Controllers
         public ViewResult List(string categoryId = null, int page = 1)
         {
             var author = Request.QueryString["author"];
+            if (!string.IsNullOrWhiteSpace(author))
+                ViewBag.Author = Mapper.Map<AuthorAphorism, VMAuthorAphorism>(new RepoAuthorAphorism().GetByTitleUrl(author));
+            if(!string.IsNullOrWhiteSpace(categoryId))
+                ViewBag.CurrentAphorismCategory = getCurrentCategory(categoryId);
+
+
             var filter = new SxFilter(page, _pageSize) {
-                WhereExpressionObject = new VMAphorism { CategoryId = categoryId, Author = new VMAuthorAphorism { Name = author } },
+                WhereExpressionObject = new VMAphorism { CategoryId = categoryId, Author = new VMAuthorAphorism { TitleUrl = author } },
                 OnlyShow = true
             };
             var totalItems = (_repo as RepoAphorism).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             filter.PagerInfo.PagerSize = 5;
             ViewBag.PagerInfo = filter.PagerInfo;
-            ViewBag.AuthorName = author;
-            ViewBag.CurrentAphorismCategory = getCurrentCategory(categoryId);
+            
 
-            var data = (_repo as RepoAphorism).Query(filter).ToArray();
+            var data = _repo.Query(filter).ToArray();
             var viewModel = data.Select(x => Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
             return View(viewModel);
         }

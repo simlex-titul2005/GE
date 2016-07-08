@@ -8,6 +8,14 @@
 }
 
 <h2>@ViewBag.Title</h2>
+@if(User.IsInRole("architect"))
+{
+    <div class="text-right">
+        <form method="post" action="@Url.Action("GenerateTitleUrl","AuthorAphorisms")">
+            <button type="submit" class="btn btn-default">Сгенерировать TitleUrl</button>
+        </form>
+    </div>
+}
 <p class="text-warning" style="max-width:600px;">
     При добалении изображений не допускайте разрастания базы данных. Размер добавляемого файла не должен превышать <b>150 kB</b> . Перед добавлением рекомендуется сжать изображение специализированным online-сервисом (например <a href="http://resizepiconline.com" rel="nofollow">http://resizepiconline.com</a>). <b>Рекомедуемый размер изображений для авторов афоризмов - 100 x 100 px</b>
 </p>

@@ -71,5 +71,22 @@ namespace GE.WebCoreExtantions.Repositories
 
             return query;
         }
+
+        public AuthorAphorism GetByTitleUrl(string titleUrl)
+        {
+            var query = @"SELECT*FROM D_AUTHOR_APHORISM AS daa
+LEFT JOIN D_PICTURE AS dp ON dp.Id = daa.PictureId
+WHERE daa.TitleUrl=@titleUrl";
+
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                var data = conn.Query<AuthorAphorism, SxPicture, AuthorAphorism>(query, (a, p) => {
+                    a.Picture = p;
+                    return a;
+                }, new { titleUrl = titleUrl }, splitOn: "Id").SingleOrDefault();
+
+                return data;
+            }
+        }
     }
 }

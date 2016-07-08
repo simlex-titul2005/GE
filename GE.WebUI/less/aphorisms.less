@@ -31,29 +31,30 @@
     background-color: @color-red;
 }
 
-@aph-html-img-size:70px;
-.aphorism .aph-html{
-    min-height:@aph-html-img-size;
-    margin-top:@def-pad;
+@aph-html-img-size: 70px;
+
+.aphorism .aph-html {
+    min-height: @aph-html-img-size;
+    margin-top: @def-pad;
 }
 
-.aphorism .aph-html > figure{
-    width:@aph-html-img-size;
-    height:@aph-html-img-size;
-    background-size:cover;
-    background-position:center center;
-    border:3px solid @color-muted-blue;
-    display:inline-block;
-    float:left;
-    margin-right:@def-pad*3;
+.aphorism .aph-html > figure {
+    width: @aph-html-img-size;
+    height: @aph-html-img-size;
+    background-size: cover;
+    background-position: center center;
+    border: 3px solid @color-muted-blue;
+    display: inline-block;
+    float: left;
+    margin-right: @def-pad*3;
 }
 
-.aphorism .aph-html > .foreword{
-    font-size:18px;
+.aphorism .aph-html > .foreword {
+    font-size: 18px;
 }
 
-.aphorism .aph-html > .foreword .btn{
-    margin-top:@def-pad;
+.aphorism .aph-html > .foreword .btn {
+    margin-top: @def-pad;
 }
 
 //ap-author-list
@@ -68,45 +69,70 @@
     width: 100%;
 }
 
-.ap-page .ap-list > ul{
-    margin-top:@def-pad*2;
+.ap-page .ap-list > ul {
+    margin-top: @def-pad*2;
 }
 
-@aut_img-size:90px;
+@aut_img-size: 90px;
+
 .ap-page .author-img {
     height: 90px;
-    width:90px;
+    width: 90px;
     border: 3px solid @color-muted-blue;
     margin-right: @def-pad*2;
     margin-bottom: @def-pad*2;
     float: left;
-    background-size:cover;
-    background-position:center center;
+    background-size: cover;
+    background-position: center center;
 }
 
 .ap-list {
     margin-top: @def-pad*4;
 }
 
+//aph-autor-info
+.aph-autor-info{
+    margin-bottom:@def-pad*2;
+    min-height:100px;
+}
+.aph-autor-info__img{
+    width:100px;
+    height:100px;
+    border:3px solid @color-gray;
+    background-position:center center;
+    background-size:cover;
+    float:left;
+    margin: 0 30px 30px 0;
+}
+
+.aph-autor-info__fwd{
+    color:@color-white;
+    font-style: italic;
+}
+
+.ap-list .header{
+    margin-bottom:@def-pad*2;
+}
+
 .ap-list .content {
-    padding:@def-pad;
-    border-radius:3px;
+    padding: @def-pad;
+    border-radius: 3px;
     background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
     border: 1px solid rgba(255,255,255,.1);
     font-size: 16px;
-    line-height:1.2;
+    line-height: 1.2;
 }
 
-.ap-list .content .info > ul{
-    list-style:none;
-    font-size:12px;
-    padding:0;
-    margin:0;
+.ap-list .content .info > ul {
+    list-style: none;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
 }
 
-.ap-list .content .info > ul > li{
-    margin:0;
-    margin-right:@def-pad;
+.ap-list .content .info > ul > li {
+    margin: 0;
+    margin-right: @def-pad;
 }
 
 .ap-list-page .ap-list {
@@ -122,6 +148,7 @@
 
 .ap-list > ul > li {
     margin-bottom: @def-pad*2;
+
     @media (max-width: @screen-xs-max) {
     }
 
@@ -132,12 +159,12 @@
     }
 
     @media (min-width: @screen-lg-min) {
-        cursor:pointer;
-        transition:all .2s;
+        cursor: pointer;
+        transition: all .2s;
     }
 }
 
-.ap-list > ul > li:hover{
+.ap-list > ul > li:hover {
     @media (max-width: @screen-xs-max) {
     }
 
@@ -148,52 +175,81 @@
     }
 
     @media (min-width: @screen-lg-min) {
-        box-shadow:-1px 1px 4px rgba(255,255,255, 0.5);
+        box-shadow: -1px 1px 4px rgba(255,255,255, 0.5);
     }
 }
 
 .ap-list ul > li .author {
     color: @color-muted-blue;
-    margin-top:@def-pad;
+    margin-top: @def-pad;
+    font-size: 14px;
+}
+
+.ap-list ul > li a {
+    font-size: 12px;
+    color: inherit;
+}
+
+.ap-list-page {
+    margin-top: @def-pad*2;
+}
+
+//aph-cats
+.aph-cats{
+    color:@color-white;
+}
+.aph-cats a{
+    text-decoration:none;
+    display:block;
+}
+
+.aph-cats .panel{
+    background:none;
+}
+
+.aph-cats .panel-default {
+    border-color: rgba(255,255,255,.3);
+    box-shadow: 1px -1px 8px rgba(255,255,255,.2);
+}
+
+.aph-cats .panel-default > .panel-heading{
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    color:@color-white;
+}
+
+.aph-cats .panel-title{
     font-size:14px;
 }
 
-.ap-list ul > li a{
-    font-size:12px;
-    color:inherit;
+.aph-cats .panel-body{
+    border-top:1px solid rgba(255,255,255,.3) !important;
+    max-height:300px;
+    overflow:hidden;
+    overflow-y:auto;
 }
 
-.ap-cat {
-    @media (max-width: @screen-xs-max) {
-        margin-top: @def-pad*2;
-    }
-
-    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-        margin-top: @def-pad*2;
-    }
-
-    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-    }
-
-    @media (min-width: @screen-lg-min) {
-    }
-}
-
-.ap-cat > .list-group-item {
-    background-color: unset;
+.aph-cats .panel-body a {
     color: @color-white;
+    font-size: .9em;
+    line-height: 1.1;
+    margin-bottom: 10px;
 }
 
-.ap-cat > .list-group-item:hover {
-    background-color: unset;
-    color: @color-muted-blue;
+.aph-cats .panel-body a:hover{
+    color:@color-gray;
 }
 
-.ap-cat > .list-group-item.active {
-    border-color: @color-muted-blue;
-    background-color: rgba(255,255,255, 0.1);
+.aph-cats .panel-body a.active{
+    font-weight:700;
 }
 
-.ap-list-page{
-    margin-top:@def-pad*2;
+.aph-cats .panel-footer{
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+}
+
+.aph-cats .panel-footer a{
+    color:#a5a1a1;
+    text-transform:uppercase;
+    text-align:center;
+    font-weight:700;
 }

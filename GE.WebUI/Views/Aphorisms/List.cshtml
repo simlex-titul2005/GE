@@ -1,17 +1,14 @@
 ﻿@model VMAphorism[]
 @{
-    var searchAuthor = Request.QueryString["author"];
-    var authorName = searchAuthor != null ? searchAuthor == "no" ? "Аноним" : searchAuthor.ToString() : null;
     var pagerInfo = (SxExtantions.SxPagerInfo)ViewBag.PagerInfo;
-    var category = ViewBag.CurrentAphorismCategory != null ? ((VMMaterialCategory)ViewBag.CurrentAphorismCategory) : null;
-    var categoryId = category != null ? category.Id : null;
-    var curName = category != null ? category.Title : null;
-    var title = curName == null && authorName == null ? "Афоризмы и цитаты, короткие высказывания, шутки" : string.Format("{0}. Афоризмы и цитаты, короткие высказывания, шутки", curName ?? authorName);
-    ViewBag.Title = title;
+    var author = (VMAuthorAphorism)ViewBag.Author;
+    var category = (VMMaterialCategory)ViewBag.CurrentAphorismCategory;
+    var emptyTitle = "Факты, афоризмы, короткие высказывания, шутки";
 
-    ViewBag.H1 = ViewBag.H1 ?? title;
-    ViewBag.Description = ViewBag.Description ?? title;
-    ViewBag.Keywords = ViewBag.Keywords ?? title;
+    ViewBag.Title = ViewBag.Title ?? category!=null? category.Title+". "+ emptyTitle : author!=null?author.Name+". "+ emptyTitle : "Факты, афоризмы, короткие высказывания, шутки";
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.Description = ViewBag.Description ?? ViewBag.Title;
+    ViewBag.Keywords = ViewBag.Keywords ?? ViewBag.Title;
 }
 
 @Html.Partial("_Breadcrumbs", (VMBreadcrumb[])ViewBag.Breadcrumbs)
@@ -19,13 +16,31 @@
 <div class="ap-list-page">
     <div class="row">
         <div class="col-md-9">
-            @Html.Partial("_List", Model)
+            @Html.Partial("_List", Model, new ViewDataDictionary { { "Category", category }, { "Author", author} })
             <div class="text-center">
-                @Html.SxPager(pagerInfo, pageUrl: (x) => Url.Action("list", new { categoryId = categoryId, page = x, author = ViewBag.AuthorName }), htmlAttributes: new { @class = "pagination" }, isAjax: false)
+                @Html.SxPager(pagerInfo, pageUrl: (x) => Url.Action("List", new { categoryId = category == null ? null : category.Id, page = x, author = author == null ? null : author.TitleUrl }), htmlAttributes: new { @class = "pagination" }, isAjax: false)
             </div>
         </div>
         <div class="col-md-3">
-            @Html.Action("Categories", new { controller= "Aphorisms", curCat= categoryId, onlyNotCurrent= false })
+            @Html.Action("Categories", "Aphorisms", new { curCat = category == null ? null : category.Id, onlyNotCurrent = false })
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        @if(category!=null)
+        {
+            <text>
+        $('#cat-@category.Id').addClass('in');
+        </text>
+        }
+        @if(author!=null)
+        {
+            <text>
+        $('#author-@author.TitleUrl').addClass('active');
+        $('#author-@author.TitleUrl').closest('.panel-collapse').addClass('in');
+        </text>
+        }
+    </script>
+}

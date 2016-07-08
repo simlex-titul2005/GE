@@ -2,14 +2,17 @@
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebAdmin.Controllers
 {
     [Authorize(Roles = "admin")]
-    public partial class AuthorAphorismsController : BaseController
+    public sealed class AuthorAphorismsController : BaseController
     {
         private static int _pageSize = 20;
         private static RepoAuthorAphorism _repo;
@@ -20,7 +23,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpGet]
-        public virtual ViewResult Index(int page = 1)
+        public ViewResult Index(int page = 1)
         {
             var filter = new SxFilter(page, _pageSize);
             var totalItems = _repo.Count(filter);
@@ -32,7 +35,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost]
-        public virtual PartialViewResult Index(VMAuthorAphorism filterModel, SxOrder order, int page = 1)
+        public PartialViewResult Index(VMAuthorAphorism filterModel, SxOrder order, int page = 1)
         {
             var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
             var totalItems = _repo.Count(filter);
@@ -45,7 +48,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpGet]
-        public virtual ViewResult Edit(int? id = null)
+        public ViewResult Edit(int? id = null)
         {
             var data = id.HasValue ? _repo.GetByKey(id) : new AuthorAphorism();
             var viewModel = Mapper.Map<AuthorAphorism, VMEditAuthorAphorism>(data);
@@ -56,9 +59,21 @@ namespace GE.WebAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(VMEditAuthorAphorism model)
+        public ActionResult Edit(VMEditAuthorAphorism model)
         {
             var isNew = model.Id == 0;
+            if (isNew || string.IsNullOrWhiteSpace(model.TitleUrl))
+                model.TitleUrl = UrlHelperExtensions.SeoFriendlyUrl(model.Name);
+
+            var existByTitleUrl = _repo.All.SingleOrDefault(x => x.TitleUrl == model.TitleUrl);
+            if (existByTitleUrl != null)
+            {
+                ModelState.AddModelError("TitleUrl", "Запись с таким строковым ключем уже содержиться в БД");
+                if (!isNew && existByTitleUrl.Id == model.Id)
+                    ModelState["TitleUrl"].Errors.Clear();
+            }
+
+
             var redactModel = Mapper.Map<VMEditAuthorAphorism, AuthorAphorism>(model);
 
             if (isNew)
@@ -76,7 +91,7 @@ namespace GE.WebAdmin.Controllers
                 if (isNew)
                     newModel = _repo.Create(redactModel);
                 else
-                    newModel = _repo.Update(redactModel, true, "Name", "Description", "PictureId");
+                    newModel = _repo.Update(redactModel, true, "Name", "Description", "PictureId", "TitleUrl", "Foreword");
 
                 return RedirectToAction("index");
             }
@@ -88,14 +103,14 @@ namespace GE.WebAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(VMEditAuthorAphorism model)
+        public ActionResult Delete(VMEditAuthorAphorism model)
         {
             _repo.Delete(model.Id);
             return RedirectToAction("index");
         }
 
         [HttpPost]
-        public virtual PartialViewResult FindGridView(VMAuthorAphorism filterModel, SxOrder order, int page = 1, int pageSize = 10)
+        public PartialViewResult FindGridView(VMAuthorAphorism filterModel, SxOrder order, int page = 1, int pageSize = 10)
         {
             var defaultOrder = new SxOrder { FieldName = "Name", Direction = SortDirection.Asc };
             var filter = new SxFilter(page, pageSize) { WhereExpressionObject= filterModel, Order= order==null || order.Direction==SortDirection.Unknown ? defaultOrder:order };
@@ -107,6 +122,24 @@ namespace GE.WebAdmin.Controllers
             var viewModel = _repo.Query(filter).Select(x => Mapper.Map<AuthorAphorism, VMAuthorAphorism>(x)).ToArray();
 
             return PartialView("_FindGridView", viewModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GenerateTitleUrl()
+        {
+            return await Task.Run(()=> {
+
+                using (var dbContext = new DbContext())
+                {
+                    foreach(var empty in dbContext.AuthorAphorisms.Where(x=>x.TitleUrl==null || x.TitleUrl=="" ))
+                    {
+                        empty.TitleUrl = UrlHelperExtensions.SeoFriendlyUrl(empty.Name);
+                    }
+                    dbContext.SaveChanges();
+                }
+
+                return RedirectToAction("Index");
+            });
         }
     }
 }

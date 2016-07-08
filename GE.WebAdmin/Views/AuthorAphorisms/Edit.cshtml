@@ -24,6 +24,19 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
 
+    @if (User.IsInRole("architect"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(x => x.TitleUrl)
+            @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите строковый ключ" } })
+            @Html.ValidationMessageFor(x => x.TitleUrl)
+        </div>
+    }
+    else
+    {
+        @Html.HiddenFor(x=>x.TitleUrl)
+    }
+
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -46,6 +59,12 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(x => x.Foreword) (не более 400 символов включая пробелы)
+        @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите краткое описание автора" } })
+        @Html.ValidationMessageFor(x => x.Foreword)
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(x => x.Description)
         @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание автора" } })
         @Html.ValidationMessageFor(x => x.Description)
@@ -58,6 +77,8 @@
 </form>
 
 @section scripts{
+    <script src="~/content/dist/js/jquery.validate.min.js"></script>
+    <script src="~/content/dist/js/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/content/dist/js/lightbox.min.js"></script>
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
     <script>

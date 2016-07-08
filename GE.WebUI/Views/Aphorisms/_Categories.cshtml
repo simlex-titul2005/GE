@@ -1,20 +1,44 @@
 ﻿@model VMAphorismCategory[]
 @{
-    Layout = null;
-    var cat = ViewBag.CurrentAphorismCategory ?? ViewContext.ParentActionViewContext.ViewBag.CurrentAphorismCategory;
-    var curCat = (VMMaterialCategory)cat;
-    VMAphorismCategory item;
-}
+        Layout = null;
+        var cat = (VMMaterialCategory)ViewContext.ParentActionViewContext.ViewBag.CurrentAphorismCategory;
+        var authorName = (string)ViewContext.ParentActionViewContext.ViewBag.AuthorName;
+        VMAphorismCategory category;
+        VMAphorismCategory author;
+    }
 
-@if (Model.Any())
+@if (Model != null && Model.Any())
 {
-    <div class="list-group ap-cat">
-        @for (int i = 0; i < Model.Length; i++)
-        {
-            item = Model[i];
-            <a class="list-group-item @(curCat != null && item.Id == curCat.Id ? "active" : null)" href="@Url.Action("List", new { controller="Aphorisms", categoryId= item.Id} )">
-            @item.Title
-            </a>
-        }
+    <div class="aph-cats">
+        <div class="panel-group">
+            @for (int i = 0; i < Model.Length; i++)
+            {
+                category = Model[i];
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#cat-@category.Id" data-parent=".panel-group" class="panel-group__title">@category.Title</a>
+                        </h4>
+                    </div>
+                    <div id="cat-@category.Id" class="panel-collapse collapse">
+                        @if (category.Authors.Any())
+                        {
+                            <div class="panel-body">
+                                @for (int y = 0; y < category.Authors.Length; y++)
+                                {
+                                    author = category.Authors[y];
+                                    <a href="@Url.Action("List", "Aphorisms", new { author = author.Id })" id="author-@author.Id">@author.Title</a>
+                                }
+                            </div>
+                        }
+                        <div class="panel-footer">
+                            <h5>
+                                <a href="@Url.Action("List", "Aphorisms", new { categoryId = category.Id })">Все по категории</a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 }

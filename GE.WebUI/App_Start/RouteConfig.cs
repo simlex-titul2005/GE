@@ -32,6 +32,13 @@ namespace GE.WebUI
 
             routes.MapRoute(
                 name: null,
+                url: "authoraphorisms/{titleUrl}",
+                defaults: new { controller = "authoraphorisms", action = "Details", area = "" },
+                namespaces: _defNamespace
+            );
+
+            routes.MapRoute(
+                name: null,
                 url: "aphorisms",
                 defaults: new { controller = "aphorisms", action = "list", categoryId = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace,

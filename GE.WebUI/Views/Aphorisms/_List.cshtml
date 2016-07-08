@@ -1,19 +1,31 @@
 ﻿@model VMAphorism[]
 @{
     Layout = null;
-    var author = (string)ViewData["Author"];
-    var category = (string)ViewData["Category"];
+    var author = (VMAuthorAphorism)ViewData["Author"];
+    var category = (VMMaterialCategory)ViewData["Category"];
     string header = null;
     if (category != null)
     {
-        header = string.Format("Другие высказывания в категории {0}", category);
+        header = string.Format("Другие высказывания в категории {0}", category.Title);
     }
     else if (category == null && author != null)
     {
-        header = string.Format("{0}. Другие высказывания", author);
+        header = string.Format("{0}. Другие высказывания", author.Name);
     }
 }
 <div class="ap-list">
+    @if (author != null && author.PictureId.HasValue && !string.IsNullOrWhiteSpace(author.Foreword))
+    {
+        <div class="aph-autor-info">
+            <figure class="aph-autor-info__img img-circle" style="background-image:url(@Url.Action("Picture","Pictures", new { id=author.PictureId})"></figure>
+            <div class="aph-autor-info__fwd">
+                @author.Foreword<br />
+            </div>
+            <br />
+            <a href="@Url.Action("Details","AuthorAphorisms", new { titleUrl=author.TitleUrl})" class="btn btn-sm btn-default test-item__btn">Подробнее об авторе <i class="fa fa-angle-double-right"></i></a>
+        </div>
+    }
+
     @if (header != null)
     {
         <h2 class="header">@header</h2>

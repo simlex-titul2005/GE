@@ -29,13 +29,24 @@ namespace GE.WebUI.Extantions.Repositories
             return viewModel;
         }
 
-        public static VMAphorismCategory[] GetAphorismCategories(this RepoAphorism repo, string curCategoryId=null)
+        public static VMAphorismCategory[] GetAphorismCategories(this RepoAphorism repo, string cur=null)
         {
+            dynamic[] data;
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var data = conn.Query<VMAphorismCategory>("get_aphorism_categories @curCat", new { curCat = curCategoryId }).ToArray();
-                return data;
+                data = conn.Query("get_aphorism_categories @cur", new { cur = cur }).ToArray();
             }
+
+            var result = data.Where(x => x.Ref == null).OrderBy(x=>x.Title).Select(x => new VMAphorismCategory { Id=x.Id, Title=x.Title }).ToArray();
+
+            VMAphorismCategory category;
+            for (int i = 0; i < result.Length; i++)
+            {
+                category = result[i];
+                category.Authors = data.Where(x => Equals(x.Ref, category.Id)).OrderBy(x => x.Title).Select(x => new VMAphorismCategory { Id = x.Id, Title = x.Title }).ToArray();
+            }
+
+            return result;
         }
     }
 }

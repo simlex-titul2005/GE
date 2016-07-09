@@ -9,7 +9,7 @@
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
     ViewBag.PageImage = Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage
-        ? Url.Action("Picture", "Pictures", new { id = Model.FrontPictureId })
+        ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = Model.FrontPictureId }))
         : Model.Videos.Length > 0
         ? SxVideoProvider.GetVideoImageUrl(Model.Videos[0].VideoId, SxVideoProvider.VideoQuality.Medium)
         : null;

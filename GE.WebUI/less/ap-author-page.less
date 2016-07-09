@@ -1,0 +1,51 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "positioned.less";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
+
+@p-h:100px;
+
+.ap-author-page{
+    color:@color-white;
+    margin-top:@def-pad*2;
+}
+
+.ap-author-page_stat{
+    list-style:none;
+    padding:0;
+    margin:0;
+    margin-left:-@def-pad;
+    font-size:20px;
+    color:@color-gray;
+    font-weight:700;
+}
+
+.ap-author-page_stat > li{
+    display:inline-block;
+    margin-left:@def-pad;
+}
+
+.ap-author-page__info {
+    margin-top:@def-pad*2;
+    min-height: @p-h;
+    display: inline-block;
+    width: 100%;
+    font-size:18px;
+}
+
+.ap-author-page_picture{
+    width:@p-h;
+    height:@p-h;
+    border:3px solid @color-gray;
+    background-position:center center;
+    background-size:cover;
+    float:left;
+    margin:0 @def-pad*2 @def-pad 0;
+}
+
+.ap-author-page__html{
+    margin-top:@def-pad*2;
+    text-align:justify;
+    font-size:15px;
+    padding-bottom:@def-pad*4;
+}

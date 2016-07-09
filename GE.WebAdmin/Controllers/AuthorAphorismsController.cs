@@ -2,6 +2,7 @@
 using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
@@ -18,16 +19,15 @@ namespace GE.WebAdmin.Controllers
         private static RepoAuthorAphorism _repo;
         public AuthorAphorismsController()
         {
-            if(_repo==null)
+            if (_repo == null)
                 _repo = new RepoAuthorAphorism();
         }
 
         [HttpGet]
         public ViewResult Index(int page = 1)
         {
-            var filter = new SxFilter(page, _pageSize);
-            var totalItems = _repo.Count(filter);
-            filter.PagerInfo.TotalItems = totalItems;
+            var filter = new SxFilter(page, _pageSize) { Order = new SxOrder { FieldName = "Name", Direction = SortDirection.Asc } };
+            filter.PagerInfo.TotalItems = _repo.Count(filter);
             ViewBag.Filter = filter;
 
             var viewModel = _repo.Query(filter).ToArray().Select(x => Mapper.Map<AuthorAphorism, VMAuthorAphorism>(x)).ToArray();
@@ -113,7 +113,7 @@ namespace GE.WebAdmin.Controllers
         public PartialViewResult FindGridView(VMAuthorAphorism filterModel, SxOrder order, int page = 1, int pageSize = 10)
         {
             var defaultOrder = new SxOrder { FieldName = "Name", Direction = SortDirection.Asc };
-            var filter = new SxFilter(page, pageSize) { WhereExpressionObject= filterModel, Order= order==null || order.Direction==SortDirection.Unknown ? defaultOrder:order };
+            var filter = new SxFilter(page, pageSize) { WhereExpressionObject = filterModel, Order = order == null || order.Direction == SortDirection.Unknown ? defaultOrder : order };
             var totalItems = (_repo as RepoAuthorAphorism).Count(filter);
             filter.PagerInfo.TotalItems = totalItems;
             filter.PagerInfo.PagerSize = 5;
@@ -127,13 +127,15 @@ namespace GE.WebAdmin.Controllers
         [HttpPost]
         public async Task<ActionResult> GenerateTitleUrl()
         {
-            return await Task.Run(()=> {
+            return await Task.Run(() =>
+            {
 
                 using (var dbContext = new DbContext())
                 {
-                    foreach(var empty in dbContext.AuthorAphorisms.Where(x=>x.TitleUrl==null || x.TitleUrl=="" ))
+                    foreach (var empty in dbContext.AuthorAphorisms.Where(x => x.TitleUrl == null || x.TitleUrl == "" && x.Name != null))
                     {
                         empty.TitleUrl = UrlHelperExtensions.SeoFriendlyUrl(empty.Name);
+                        empty.Foreword = empty.Description == null ? "Не задано описание для автора афоризмов" : empty.Description.Length <= 400 ? empty.Description : empty.Description.Substring(0, 400);
                     }
                     dbContext.SaveChanges();
                 }

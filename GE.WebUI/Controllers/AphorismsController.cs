@@ -21,15 +21,15 @@ namespace GE.WebUI.Controllers
         [HttpGet]
         public ActionResult Details(string categoryId, string titleUrl)
         {
-            var viewModel = (_repo as RepoAphorism).GetByTitleUrl(categoryId, titleUrl);
-            
-            if(viewModel.Aphorism.Author!=null)
-                ViewBag.Author = viewModel.Aphorism.Author;
-            else
-                ViewBag.CurrentAphorismCategory = getCurrentCategory(categoryId);
+            var viewModel = _repo.GetByTitleUrl(categoryId, titleUrl);
 
             if (viewModel == null || viewModel.Aphorism == null)
-                return new HttpStatusCodeResult(404);
+                return new HttpNotFoundResult();
+
+            if (viewModel.Aphorism.Author!=null)
+                ViewBag.Author = viewModel.Aphorism.Author;
+            else
+                ViewBag.Category = getCurrentCategory(categoryId);
 
             //update views count
             if (!Request.IsLocal)
@@ -60,7 +60,7 @@ namespace GE.WebUI.Controllers
             if (!string.IsNullOrWhiteSpace(author))
                 ViewBag.Author = Mapper.Map<AuthorAphorism, VMAuthorAphorism>(new RepoAuthorAphorism().GetByTitleUrl(author));
             if(!string.IsNullOrWhiteSpace(categoryId))
-                ViewBag.CurrentAphorismCategory = getCurrentCategory(categoryId);
+                ViewBag.Category = getCurrentCategory(categoryId);
 
 
             var filter = new SxFilter(page, _pageSize) {

@@ -1,7 +1,7 @@
 ﻿@using SX.WebCore;
 @{
     Layout = null;
-    var bgUrl = Url.Action("Picture", "Pictures", new { id= GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath) });
+    var bgUrl = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath) });
     var logoPath = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteLogoPath) });
     var iconPath = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteFaveiconPath) });
     var bg = string.IsNullOrEmpty(bgUrl) ? null : string.Format("style=background:url('{0}');", bgUrl);
@@ -109,6 +109,16 @@
                     data: { bannerId: id }
                 });
             }
+        });
+
+        $(window).scroll(function () {
+            if ($(window).width() < $WIDTH_SX) return;
+
+            var sticky = $('.game-menu'),
+                scroll = $(window).scrollTop();
+
+            if (scroll >= 400) sticky.addClass('fixed');
+            else sticky.removeClass('fixed');
         });
 
     </script>

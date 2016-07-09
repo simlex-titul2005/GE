@@ -22,6 +22,8 @@ namespace GE.WebUI.Extantions.Controllers
 
         public static void WriteBreadcrumbs(this SxBaseController<DbContext> controller)
         {
+            if (controller.ControllerContext.IsChildAction) return;
+
             var routes = controller.ControllerContext.RequestContext.RouteData.Values;
             var gameName = routes["game"] != null && !string.IsNullOrEmpty(routes["game"].ToString()) ? routes["game"].ToString() : null;
 
@@ -32,6 +34,13 @@ namespace GE.WebUI.Extantions.Controllers
                 if (controller.SxActionName == "list" || controller.SxActionName == "details")
                 {
                     breadcrumbs.Add(new VMBreadcrumb { Title = "Афоризмы", Url = controller.Url.Action("list", new { controller= "Aphorisms" }) });
+                }
+            }
+            if (controller.SxControllerName == "authoraphorisms")
+            {
+                if (controller.SxActionName == "Details")
+                {
+                    breadcrumbs.Add(new VMBreadcrumb { Title = "Афоризмы", Url = controller.Url.Action("list", new { controller = "Aphorisms" }) });
                 }
             }
             else if (controller.SxControllerName == "articles")

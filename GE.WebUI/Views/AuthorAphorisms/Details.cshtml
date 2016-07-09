@@ -1,0 +1,60 @@
+﻿@using SX.WebCore;
+
+@model VMAuthorAphorism
+@{
+    var hasPicture = Model.PictureId.HasValue;
+
+    ViewBag.Title = ViewBag.Title ?? Model.Name;
+    ViewBag.H1 = ViewBag.H1 ?? Model.Name;
+    ViewBag.Description = ViewBag.Description ?? Model.Name+". Подробности биографии, интересные факты, достижения.";
+    ViewBag.Keywords = ViewBag.Keywords ?? Model.Name;
+    ViewBag.PageImage = ViewBag.PageImage ?? hasPicture ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = Model.PictureId })) : null;
+}
+
+@section styles{
+    <link href="~/content/dist/css/ap-author-page.min.css" rel="stylesheet" />
+}
+
+@Html.Partial("_Breadcrumbs", (VMBreadcrumb[])ViewBag.Breadcrumbs)
+
+<div class="ap-author-page">
+    <div class="row">
+        <div class="col-md-9">
+
+            <ul class="ap-author-page_stat">
+                <li>
+                    <i class="fa fa-clock-o"></i>: 28.06.2016
+                </li>
+                <li>
+                    <i class="fa fa-eye"></i>: 16
+                </li>
+                <li>
+                    <i class="fa fa-comments-o"></i>: 0
+                </li>
+            </ul>
+
+            <div class="ap-author-page__info text-muted">
+                @if (hasPicture)
+                {
+                    <figure class="img-circle ap-author-page_picture" style="background-image:url(@Url.Action("Picture", "Pictures", new { id = Model.PictureId }))">
+                    </figure>
+                }
+                @Model.Foreword
+            </div>
+
+            <div class="ap-author-page__html">
+                @Html.Raw(Model.Description)
+            </div>
+
+            <div class="ap-author-page_share-btns">
+                @Html.SxShareButtons(global_asax.ShareButtons)
+            </div>
+        </div>
+
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/content/dist/js/goodshare.min.js"></script>
+}

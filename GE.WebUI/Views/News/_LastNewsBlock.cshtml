@@ -19,7 +19,7 @@
                             news = Model.News[i];
                             <li>
                                 <a href="@news.Url(Url)" data-game-id="@news.GameId">
-                                    <span class="date">@news.DateCreate.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
+                                    <span class="date">@news.DateOfPublication.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
                                 </a>
                             </li>
                         }

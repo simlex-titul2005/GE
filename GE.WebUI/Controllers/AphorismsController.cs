@@ -42,8 +42,9 @@ namespace GE.WebUI.Controllers
             return View(viewModel);
         }
 
-
+#if !DEBUG
         [OutputCache(Duration = 900, VaryByParam = "curCat")]
+#endif
         [HttpGet, ChildActionOnly]
         public PartialViewResult Categories(string curCat = null)
         {

@@ -1,10 +1,10 @@
 ﻿@model VMAphorismCategory[]
 @{
-        Layout = null;
-        var cat = (VMMaterialCategory)ViewContext.ParentActionViewContext.ViewBag.CurrentAphorismCategory;
-        VMAphorismCategory category;
-        VMAphorismCategory author;
-    }
+    Layout = null;
+    var cat = (VMMaterialCategory)ViewContext.ParentActionViewContext.ViewBag.CurrentAphorismCategory;
+    VMAphorismCategory category;
+    VMAphorismCategory author;
+}
 
 @if (Model != null && Model.Any())
 {
@@ -16,7 +16,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" href="#cat-@category.Id" data-parent=".panel-group" class="panel-group__title">@category.Title</a>
+                            <a data-toggle="collapse" href="#cat-@category.Id" data-parent=".panel-group" class="panel-group__title"><i class="fa fa-angle-double-down" aria-hidden="true"></i>&nbsp;@category.Title</a>
                         </h4>
                     </div>
                     <div id="cat-@category.Id" class="panel-collapse collapse">
@@ -26,7 +26,7 @@
                                 @for (int y = 0; y < category.Authors.Length; y++)
                                 {
                                     author = category.Authors[y];
-                                    <a href="@Url.Action("List", "Aphorisms", new { author = author.Id })" id="author-@author.Id">@author.Title</a>
+                                    <a href="@Url.Action("List", "Aphorisms", new { author = author.Id })" id="author-@author.Id">- @author.Title</a>
                                 }
                             </div>
                         }

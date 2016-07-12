@@ -334,8 +334,8 @@
             $('#matrix').on('click', 'td:not(.matrix__first-column)', function(){
                 $td=$(this);
                 $tr=$td.closest('tr');
-                var question=$.trim($tr.find('.matrix__first-column').html());
-                var subject = $.trim($td.closest('table').find('th').eq($td.index()).html());
+                var question=$.trim($tr.find('.matrix__first-column').text());
+                var subject = $.trim($td.closest('table').find('th').eq($td.index()).text());
                 var value=parseInt($td.html());
                 var token = $('input[name="__RequestVerificationToken"]').val();
 

@@ -468,34 +468,38 @@
                         @if (User.IsInRole("admin"))
                         {
                             <li>
-                                <a href="@Url.Action("Index", new { controller = "ProjectSteps" })"><i class="fa fa-calendar fa-fw"></i> Развитие проекта</a>
+                                <a href="@Url.Action("Index", "ProjectSteps")"><i class="fa fa-calendar fa-fw"></i> Развитие проекта</a>
                             </li>
                         }
                         @if (User.IsInRole("admin"))
                         {
                             <li>
-                                <a href="@Url.Action("Index", new { controller= "Valutes" })"><i class="fa fa-rub fa-fw"></i> Курсы валют ЦБ РФ</a>
+                                <a href="@Url.Action("Index", "Valutes")"><i class="fa fa-rub fa-fw"></i> Курсы валют ЦБ РФ</a>
                             </li>
                         }
                         <li>
                             <a href="#"><i class="fa fa-tasks fa-fw"></i> FAQ<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="@Url.Action("Index", new { controller= "FAQ" })">Справка</a>
+                                    <a href="@Url.Action("Index", "FAQ")">Справка</a>
                                 </li>
                                 @if (User.IsInRole("architect"))
                                 {
                                     <li>
-                                        <a href="@Url.Action("Index", new { controller= "MaterialCategories",  mct=SX.WebCore.Enums.ModelCoreType.Manual})">Справочные категории</a>
+                                        <a href="@Url.Action("Index", "MaterialCategories", new { mct=Enums.ModelCoreType.Manual})">Справочные категории</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("Index", new { controller= "Manuals" })">Справочные материалы</a>
+                                        <a href="@Url.Action("Index", "Manuals")">Справочные материалы</a>
                                     </li>
                                 }
                                 <li>
-                                    <a href="@Url.Action("ReleaseNotes", new { controller= "SiteSettings" })">История выпусков</a>
+                                    <a href="@Url.Action("ReleaseNotes", "SiteSettings")">История выпусков</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                        <li>
+                            <a href="@Url.Action("Index", "Chat")"><i class="fa fa fa-comments-o fa-fw"></i> Чат</a>
                         </li>
                     </ul>
                 </div>

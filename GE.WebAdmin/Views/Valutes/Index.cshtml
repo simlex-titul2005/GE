@@ -4,7 +4,9 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<p class="text-info">Данные предоставлены с <a href="http://www.cbr.ru/scripts/Root.asp?PrtId=SXML">http://www.cbr.ru/scripts/Root.asp?PrtId=SXML</a> .Частота обновления данных - 2 часа</p>
+<div class="alert alert-info">
+    <strong>Для справки:</strong> данные предоставлены с <b><a href="http://www.cbr.ru/scripts/Root.asp?PrtId=SXML">http://www.cbr.ru/scripts/Root.asp?PrtId=SXML</a></b>.Частота обновления данных - <b>2 часа</b>
+</div>
 
 <div id="grid-valutes">
     @Html.Partial("_GridView", Model)

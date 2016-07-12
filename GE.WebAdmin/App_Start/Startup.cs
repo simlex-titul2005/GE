@@ -34,6 +34,8 @@ namespace AspNetIdentityApp
                 }
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
+            app.MapSignalR();
         }
     }
 }

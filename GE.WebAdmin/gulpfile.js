@@ -91,8 +91,7 @@ function createJs() {
     var js = gulp.src([
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
-        'bower_components/metisMenu/dist/metisMenu.min.js',
-        'bower_components/angular/angular.min.js'
+        'bower_components/metisMenu/dist/metisMenu.min.js'
     ])
         .pipe(concat('js.js'));
 

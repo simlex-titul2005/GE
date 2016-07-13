@@ -1,0 +1,23 @@
+﻿@model SxVMAppUser[]
+@{
+    SxVMAppUser item;
+}
+@if (Model.Any())
+{
+    <div class="list-group">
+        @for (int i = 0; i < Model.Length; i++)
+        {
+            item = Model[i];
+            <div class="list-group-item">
+                <div class="chat__user" data-email="@item.Email">
+                    @if (item.AvatarId.HasValue)
+                    {
+                        <figure class="img-circle" style="background-image:url(@Url.Action("Picture","Pictures", new { id=item.AvatarId}))"></figure>
+                    }
+                    @item.Email<br />
+                    <strong>@item.NikName</strong>
+                </div>
+            </div>
+        }
+    </div>
+}

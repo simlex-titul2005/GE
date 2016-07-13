@@ -189,9 +189,7 @@
     <Content Include="content\dist\images\prev.png" />
     <Content Include="content\dist\i\bg.jpg" />
     <Content Include="content\dist\i\faveicon.png" />
-    <Content Include="content\dist\jsControllers\chatController.js" />
     <Content Include="content\dist\js\bootstrap-datetimepicker.min.js" />
-    <Content Include="content\dist\js\controllers\chatController.js" />
     <Content Include="content\dist\js\jquery.signalR.min.js" />
     <Content Include="content\dist\js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="content\dist\js\jquery.validate.min.js" />
@@ -412,6 +410,7 @@
     <Content Include="Views\ShareButtons\Edit.cshtml" />
     <Content Include="Views\ShareButtons\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\_OnlineUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

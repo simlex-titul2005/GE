@@ -32,7 +32,13 @@ namespace GE.WebAdmin.Controllers
             var sessionId = Session.SessionID;
             var usersOnSite = MvcApplication.UsersOnSite;
             if (usersOnSite.ContainsKey(sessionId))
+            {
+                var email = usersOnSite[sessionId];
                 usersOnSite.Remove(sessionId);
+
+                var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<SxChatHub>();
+                context.Clients.All.removeUserFromChatList(email);
+            }
         }
 
         private void RegisterLoginUser(SxVMLogin model)

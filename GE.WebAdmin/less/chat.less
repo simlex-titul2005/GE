@@ -1,0 +1,26 @@
+﻿@import (reference) "../bower_components/bootstrap/less/variables.less";
+@import (reference) "colors.less";
+@import (reference) "sizes.less";
+
+.chat{
+
+}
+
+@w:50px;
+.chat__user{
+    height:@w;
+}
+
+.chat__user figure{
+    width:@w;
+    height:@w;
+    border:3px solid @color-gray;
+    background-position:center center;
+    background-size:cover;
+    float:left;
+    margin-right:@def-pad;
+}
+
+.chat__user .chat__user-nikname{
+    font-size:12px;
+}

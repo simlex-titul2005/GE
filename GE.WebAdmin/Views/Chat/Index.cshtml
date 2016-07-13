@@ -3,8 +3,52 @@
     ViewBag.Title = "Чат";
 }
 
+@section styles{
+    <link href="~/content/dist/css/chat.min.css" rel="stylesheet" />
+}
+
 <h2>@ViewBag.Title</h2>
 
 <div class="alert alert-warning">
     <strong>Внимание!</strong> Сообщения не хранятся на сервере и доступны в течении только данной сессии.
 </div>
+
+<div class="chat" ng-app="app">
+    <div class="row">
+        <div class="col-md-3">
+            <h2>Сейчас на сайте</h2>
+            <div id="online-users" ng-controller="chatController">
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="user in users">
+                        <div class="chat__user">
+                            <figure class="img-circle" ng-style="{'background-image':'url(/pictures/picture/{{user.AvatarId}})'}"></figure>
+                            {{user.Email}}<br />
+                            <strong>{{user.NikName}}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9"></div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script src="~/content/dist/js/jquery.signalR.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        //angular
+        var app = angular.module('app', []);
+
+        //signalr
+        var chat = $.connection.sxChatHub;
+        chat.client.addUserToChatList = function (user) {
+            var $scope = angular.element('#online-users').scope();
+            $scope.add(user);
+        };
+        $.connection.hub.start();
+    </script>
+    <script src="~/content/dist/jsControllers/chatController.js"></script>
+}

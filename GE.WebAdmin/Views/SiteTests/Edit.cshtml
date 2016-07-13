@@ -72,6 +72,10 @@
                 @Html.ValidationMessageFor(x => x.TitleUrl)
             </div>
             }
+            else
+            {
+                @Html.HiddenFor(x=>x.TitleUrl)
+            }
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Description, new { @class = "control-label" })

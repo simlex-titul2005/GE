@@ -59,7 +59,8 @@ function createCss() {
        'less/ps-tree.less',
        'less/grid-a-authors.less',
        'less/grid-aphorisms.less',
-       'less/test-matrix.less'
+       'less/test-matrix.less',
+       'less/chat.less'
     ])
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))
@@ -90,7 +91,8 @@ function createJs() {
     var js = gulp.src([
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
-        'bower_components/metisMenu/dist/metisMenu.min.js'
+        'bower_components/metisMenu/dist/metisMenu.min.js',
+        'bower_components/angular/angular.min.js'
     ])
         .pipe(concat('js.js'));
 
@@ -117,7 +119,8 @@ function createJs() {
         'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js',
         'bower_components/lightbox2/dist/js/lightbox.min.js',
         'bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-        'bower_components/moment/min/moment-with-locales.min.js'
+        'bower_components/moment/min/moment-with-locales.min.js',
+        'bower_components/signalr/jquery.signalR.min.js'
     ])
         .pipe(gulp.dest('content/dist/js'));
     

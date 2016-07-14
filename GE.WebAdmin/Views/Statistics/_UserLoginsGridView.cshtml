@@ -9,5 +9,6 @@
         new SxExtantions.SxGridViewColumn<SxVMStatisticUserLogin> { FieldName="DateCreate", Caption="Дата"},
         new SxExtantions.SxGridViewColumn<SxVMStatisticUserLogin> { FieldName="NikName", Caption="Ник-нейм"}
     },
-    DataAjaxUrl = "/statistics/userlogins"
+    DataAjaxUrl = Url.Action("UserLogins", "Statistics"),
+    ShowPagerInfo=true
 })

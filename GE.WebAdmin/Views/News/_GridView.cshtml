@@ -18,10 +18,12 @@
                     return m.Show? "Да":"Нет";
                 } }
             },
-            DataAjaxUrl = "/news",
+            DataAjaxUrl = Url.Action("Index","News"),
             EnableCreating = true,
-            CreateRowUrl = "/news/edit",
+            CreateRowUrl = Url.Action("Edit", "News"),
             EnableEditing = true,
-            EditRowUrl = x => { return "/news/edit/" + x.Id; }
+            EditRowUrl = x => { return Url.Action("Edit", "News", new { id=x.Id}); },
+            RowCssClass = x => { return !x.Show ? "warning" : null; },
+            ShowPagerInfo=true
         }
     )

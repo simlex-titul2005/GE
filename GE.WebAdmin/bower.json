@@ -33,7 +33,6 @@
     "jquery": "2.2.3",
     "lightbox2": "2.8.2",
     "raphael": "2.2.0",
-    "angular": "1.5.7",
     "signalr": "2.2.0"
   }
 }

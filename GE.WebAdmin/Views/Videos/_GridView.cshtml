@@ -19,9 +19,11 @@
             } }
         },
                 EnableCreating = true,
-                CreateRowUrl = "/videos/edit",
+                CreateRowUrl = Url.Action("Edit", "Videos"),
                 EnableEditing = true,
-                EditRowUrl = (x) => { return "/videos/edit/" + x.Id; },
-                DataAjaxUrl = "/videos"
+                EditRowUrl = (x) => { return Url.Action("Edit", "Videos", new { id=x.Id}); },
+                DataAjaxUrl = Url.Action("Index", "Videos"),
+                RowCssClass = x => { return !string.IsNullOrEmpty(x.SourceUrl) ? "warning" : null; },
+                ShowPagerInfo=true
             }
     )

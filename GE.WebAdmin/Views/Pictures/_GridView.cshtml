@@ -22,9 +22,10 @@
             } }
         },
             EnableCreating = true,
-            CreateRowUrl = "/pictures/edit",
+            CreateRowUrl = Url.Action("Edit", "Pictures"),
             EnableEditing = true,
-            EditRowUrl = (x) => { return "/pictures/edit/" + x.Id; },
-            DataAjaxUrl = "/pictures"
+            EditRowUrl = (x) => { return Url.Action("Edit", "Pictures", new { id=x.Id}); },
+            DataAjaxUrl = Url.Action("Index","Pictures"),
+            ShowPagerInfo=true
         }
     )

@@ -17,6 +17,7 @@
             EnableDeleting =true,
             DeleteRowUrl = x => { return "/sitetestquestions/delete/" + x.Id+"?testId="+testId; },
             EnableEditing=true,
-            EditRowUrl = x => { return "/sitetestquestions/edit/"+x.Id+"?testId=" + testId; }
+            EditRowUrl = x => { return "/sitetestquestions/edit/"+x.Id+"?testId=" + testId; },
+            ShowPagerInfo=true
         }
     )

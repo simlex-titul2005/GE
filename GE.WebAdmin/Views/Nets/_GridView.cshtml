@@ -22,6 +22,7 @@
                         return string.Format("<i class=\"fa {0} {1}\"></i>", x.HasCounter?"fa-check ":"fa-times", x.HasCounter?"text-success":"text-danger");
                     } }
                 },
-                DataAjaxUrl = Url.Action("Index", "Nets")
-            }
+                DataAjaxUrl = Url.Action("Index", "Nets"),
+                ShowPagerInfo = true
+}
     )

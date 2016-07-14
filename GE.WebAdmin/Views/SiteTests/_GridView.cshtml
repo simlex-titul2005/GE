@@ -11,13 +11,15 @@
                 new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="DateCreate", Caption="Дата создания"},
                 new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Title", Caption="Заголовок"},
                 new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Description", Caption="Описание"},
+                new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Type", Caption="Тип теста"},
                 new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Show", Caption="Показывать", Template=x=> { return x.Show?"Да":"Нет"; } }
             },
             EnableCreating = true,
-            CreateRowUrl = "/sitetests/edit",
+            CreateRowUrl = Url.Action("Edit", "Sitetests"),
             EnableEditing = true,
-            EditRowUrl = (x) => { return "/sitetests/edit/" + x.Id; },
-            DataAjaxUrl = "/sitetests",
-            RowCssClass = x => { return x.Show ? "success" : null; }
+            EditRowUrl = (x) => { return Url.Action("Edit", "Sitetests", new { id=x.Id}); },
+            DataAjaxUrl = Url.Action("Index", "Sitetests"),
+            RowCssClass = x => { return !x.Show ? "warning" : null; },
+            ShowPagerInfo=true
         }
     )

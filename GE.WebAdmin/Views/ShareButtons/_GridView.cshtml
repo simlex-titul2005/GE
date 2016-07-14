@@ -19,6 +19,7 @@
                 },
                 EnableEditing = true,
                 EditRowUrl = (x) => { return Url.Action("Edit", "ShareButtons", new { id = x.Id }); },
-                DataAjaxUrl = Url.Action("Index", "ShareButtons")
+                DataAjaxUrl = Url.Action("Index", "ShareButtons"),
+                ShowPagerInfo=true
             }
     )

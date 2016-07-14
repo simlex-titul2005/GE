@@ -12,7 +12,7 @@
             new SxExtantions.SxGridViewColumn<VMArticle>{FieldName="DateOfPublication", Caption="Дата публикации"},
             new SxExtantions.SxGridViewColumn<VMArticle>{FieldName="Title", Caption="Заголовок"},
             new SxExtantions.SxGridViewColumn<VMArticle>{FieldName="SeoTagsId", Caption="Инфо", Template=(m)=> {
-                return !m.SeoTagsId.HasValue? "<i class=\"text-danger\">не заданы теги seo</i>":null;
+                return !m.SeoTagsId.HasValue? "<i class=\"text-warning\" data-toggle=\"tooltip\" title=\"Если не заданы теги для SEO, они установяться программно на основе заголовка и дополнительных метаданных страницы\">не заданы теги seo</i>":null;
             } },
             new SxExtantions.SxGridViewColumn<VMArticle>{FieldName="Show", Caption="Показывать", Template=(m)=> {
                 return m.Show? "Да":"Нет";
@@ -22,6 +22,8 @@
         EnableCreating=true,
         CreateRowUrl="/articles/edit",
         EnableEditing=true,
-        EditRowUrl = x => { return "/articles/edit/" + x.Id; }
+        EditRowUrl = x => { return "/articles/edit/" + x.Id; },
+        RowCssClass = x => { return !x.Show ? "warning" : null; },
+        ShowPagerInfo=true
     }
     )

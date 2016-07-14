@@ -13,10 +13,11 @@
                 } },
                 new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя"}
             },
-            DataAjaxUrl= "/AuthorAphorisms",
-            EnableCreating=true,
-            CreateRowUrl= "/AuthorAphorisms/edit",
-            EnableEditing=true,
-            EditRowUrl = x => { return "/AuthorAphorisms/edit/" + x.Id; }
-        }
+            DataAjaxUrl = "/AuthorAphorisms",
+            EnableCreating = true,
+            CreateRowUrl = "/AuthorAphorisms/edit",
+            EnableEditing = true,
+            EditRowUrl = x => { return "/AuthorAphorisms/edit/" + x.Id; },
+            ShowPagerInfo = true
+}
     )

@@ -11,5 +11,6 @@
         new SxExtantions.SxGridViewColumn<SxVMValute> { FieldName="Value", Caption="Значение, руб."},
     },
     RowCssClass = (x) => { return Equals(x.CharCode, "USD") || Equals(x.CharCode, "EUR") ? "success" : null; },
-    DataAjaxUrl="/valutes"
+    DataAjaxUrl="/valutes",
+    ShowPagerInfo=true
 })

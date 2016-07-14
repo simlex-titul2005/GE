@@ -15,12 +15,13 @@
                     return x.Picture==null? null: string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{0}\" data-toggle=\"tooltip\" title=\"Помотреть картинку\" href=\"/pictures/picture/{1}\"><i class=\"fa fa-picture-o\"></i></a>", x.Picture.Caption, x.PictureId);
                 }}
             },
-            DataAjaxUrl = "/sitetestsubjects?testId="+ testId,
+            DataAjaxUrl = Url.Action("Index", "Sitetestsubjects", new { testId= testId }),
             EnableCreating=true,
-            CreateRowUrl= "/sitetestsubjects/edit?testId="+testId,
+            CreateRowUrl= Url.Action("Edit", "Sitetestsubjects", new { testId = testId }),
             EnableDeleting =true,
-            DeleteRowUrl = x => { return "/sitetestsubjects/delete/" + x.Id+"?testId="+testId; },
+            DeleteRowUrl = x => { return Url.Action("Delete", "Sitetestsubjects", new { id=x.Id, testId = testId }); },
             EnableEditing=true,
-            EditRowUrl = x => { return "/sitetestsubjects/edit/"+x.Id+"?testId=" + testId; }
+            EditRowUrl = x => { return Url.Action("Edit", "Sitetestsubjects", new { id=x.Id, testId = testId }); },
+            ShowPagerInfo=true
         }
     )

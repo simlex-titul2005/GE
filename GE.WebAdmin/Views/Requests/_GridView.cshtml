@@ -21,5 +21,6 @@
             }},
         new SxExtantions.SxGridViewColumn<SxVMRequest>{FieldName="RawUrl", Caption="Целевой адрес"}
     },
-    DataAjaxUrl = "/requests"
+    DataAjaxUrl = Url.Action("Index", "Requests"),
+    ShowPagerInfo = true
 })

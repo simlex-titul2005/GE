@@ -1,0 +1,65 @@
+﻿@model SxVMSiteTestAnswer
+@{
+    Layout = null;
+    var oldSteps = (SxVMSiteTestStep[])ViewBag.OldSteps;
+    var allSubjectsCount = Convert.ToInt32(ViewBag.AllSubjectsCount ?? -1);
+    SxVMSiteTestStep step;
+}
+
+@if (allSubjectsCount > oldSteps.Length || allSubjectsCount==-1)
+{
+    using (Ajax.BeginForm("StepNormal", "SiteTests", new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }, new { @autocomplete = "off" }))
+    {
+        <br />
+        <blockquote>
+            @Html.Raw(Model.Question.Test.Description)
+        </blockquote>
+
+        @Html.AntiForgeryToken()
+
+        <div class="s">
+            @for (int i = 0; i < oldSteps.Length; i++)
+            {
+                step = oldSteps[i];
+                <input type="hidden" name="[@i].SubjectId" value="@step.SubjectId" />
+                if (step.QuestionId != 0)
+                {
+                    <input type="hidden" name="[@i].QuestionId" value="@step.QuestionId" />
+                }
+            }
+        </div>
+
+        <h2 data-subject-id="@Model.Subject.Id">@Model.Subject.Title</h2>
+
+        if (Model.Question.Test.Questions.Any())
+        {
+            SxVMSiteTestQuestion question;
+            <ul class="test-normal-q-list">
+                @for (int i = 0; i < Model.Question.Test.Questions.Length; i++)
+                {
+                    question = Model.Question.Test.Questions[i];
+                    <li>
+                        <input type="radio" id="q-@question.Id" name="question" /> <label for="q-@question.Id">@question.Text</label>
+                    </li>
+                }
+            </ul>
+        }
+        <div class="text-center">
+            <button type="submit" class="btn btn-transparent white test-normal-q-list__dont-btn">Пропустить</button>
+        </div>
+    }
+}
+else
+{
+    <br />
+    <blockquote>
+        @Html.Raw(Model.Question.Test.Description)
+    </blockquote>
+
+    <h2>Тест пройден</h2>
+    <br />
+    <div class="text-center">
+        <a class="btn btn-default btn-transparent white" href="@Url.Action("Details", "SiteTests", new { titleUrl=Model.Question.Test.TitleUrl})">Пройти заново</a>
+    </div>
+    <br />
+}

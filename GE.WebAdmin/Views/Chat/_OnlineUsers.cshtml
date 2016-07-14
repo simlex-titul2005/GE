@@ -1,6 +1,9 @@
-﻿@model SxVMAppUser[]
+﻿@using Microsoft.AspNet.Identity;
+
+@model SxVMAppUser[]
 @{
     SxVMAppUser item;
+    var userId = User.Identity.GetUserId();
 }
 @if (Model.Any())
 {
@@ -8,11 +11,13 @@
         @for (int i = 0; i < Model.Length; i++)
         {
             item = Model[i];
+            if (item.Id == userId) { continue; }
+
             <div class="list-group-item">
-                <div class="chat__user" data-email="@item.Email">
+                <div class="chat__user" data-id="@item.Id" data-email="@item.Email">
                     @if (item.AvatarId.HasValue)
                     {
-                        <figure class="img-circle" style="background-image:url(@Url.Action("Picture","Pictures", new { id=item.AvatarId}))"></figure>
+                        <figure class="img-circle" style="background-image:url(@Url.Action("Picture", "Pictures", new { id = item.AvatarId }))"></figure>
                     }
                     @item.Email<br />
                     <strong>@item.NikName</strong>

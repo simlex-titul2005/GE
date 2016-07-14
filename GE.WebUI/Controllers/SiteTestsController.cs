@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using SX.WebCore.ViewModels;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
+using System.Threading.Tasks;
 
 namespace GE.WebUI.Controllers
 {
@@ -20,17 +21,18 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpGet]
-        public ViewResult List(int page=1)
+        public ViewResult List(int page = 1)
         {
             var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
-            var filter = new SxFilter { Order = defaultOrder, OnlyShow=true };
+            var filter = new SxFilter { Order = defaultOrder, OnlyShow = true };
             filter.PagerInfo.TotalItems = _repo.Count(filter);
             ViewBag.Filter = filter;
             var data = _repo.Query(filter).Select(x => Mapper.Map<SxSiteTest, SxVMSiteTest>(x)).ToArray();
 
-            var viewModel = new SxPagedCollection<SxVMSiteTest> {
-                Collection= data,
-                PagerInfo= filter.PagerInfo
+            var viewModel = new SxPagedCollection<SxVMSiteTest>
+            {
+                Collection = data,
+                PagerInfo = filter.PagerInfo
             };
 
             return View(model: viewModel);
@@ -52,21 +54,54 @@ namespace GE.WebUI.Controllers
             var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
             if (data == null) return new HttpNotFoundResult();
 
-            ViewBag.OldSteps = new SxVMSiteTestStep[] { new SxVMSiteTestStep { QuestionId = data.QuestionId, IsCorrect = false } };
+            var step = new SxVMSiteTestStep();
+            if (data.Question.Test.Type == SxSiteTest.SiteTestType.Guess)
+            {
+                step.QuestionId = data.QuestionId;
+                step.IsCorrect = false;
+            }
+            else if(data.Question.Test.Type == SxSiteTest.SiteTestType.Normal)
+            {
+                step.SubjectId = data.SubjectId;
+                step.QuestionId = 0;
+            }
+
+            ViewBag.OldSteps = new SxVMSiteTestStep[] { step };
             var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
             return View(model: viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Step(List<SxVMSiteTestStep> steps)
+        public async Task<ActionResult> StepGuess(List<SxVMSiteTestStep> steps)
         {
-            int subjectsCount;
-            var data = _repo.GetStep(steps, out subjectsCount);
-            ViewBag.SubjectsCount = subjectsCount;
-            steps.Add(new SxVMSiteTestStep { QuestionId = data.QuestionId, IsCorrect = false });
-            ViewBag.OldSteps = steps.ToArray();
-            var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
-            return PartialView("_Step", viewModel);
+            return await Task.Run(() =>
+            {
+                int subjectsCount;
+                var data = _repo.GetGuessStep(steps, out subjectsCount);
+                ViewBag.SubjectsCount = subjectsCount;
+                steps.Add(new SxVMSiteTestStep { QuestionId = data.QuestionId, IsCorrect = false });
+                ViewBag.OldSteps = steps.ToArray();
+                var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
+                return PartialView("_StepGuess", viewModel);
+            });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> StepNormal(List<SxVMSiteTestStep> steps)
+        {
+            return await Task.Run(() =>
+            {
+                int subjectsCount;
+                int allSubjectsCount;
+                var data = _repo.GetNormalStep(steps, out subjectsCount, out allSubjectsCount);
+                ViewBag.SubjectsCount = subjectsCount;
+                if(data!=null)
+                    steps.Add(new SxVMSiteTestStep { QuestionId = data.QuestionId, SubjectId = data.SubjectId });
+                ViewBag.OldSteps = steps.ToArray();
+                ViewBag.AllSubjectsCount = allSubjectsCount;
+                var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
+                return PartialView("_StepNormal", viewModel);
+            });
         }
     }
 }

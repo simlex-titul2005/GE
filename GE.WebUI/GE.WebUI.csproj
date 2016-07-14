@@ -372,9 +372,10 @@
     <Content Include="Views\SiteTests\_RandomList.cshtml" />
     <Content Include="Views\SiteTests\Details.cshtml" />
     <Content Include="Views\SiteTests\Result.cshtml" />
-    <Content Include="Views\SiteTests\_Step.cshtml" />
+    <Content Include="Views\SiteTests\_StepGuess.cshtml" />
     <Content Include="Views\SiteTests\List.cshtml" />
     <Content Include="Views\AuthorAphorisms\Details.cshtml" />
+    <Content Include="Views\SiteTests\_StepNormal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

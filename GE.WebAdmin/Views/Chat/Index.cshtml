@@ -10,10 +10,10 @@
 <h2>@ViewBag.Title</h2>
 
 <div class="alert alert-warning">
-    <strong>Внимание!</strong> Сообщения не хранятся на сервере и доступны в течении только данной сессии.
+    <strong>Внимание!</strong> Диалоги доступны только с пользователями, находящимися <b>online</b>
 </div>
 
-<div class="chat" ng-app="app">
+<div class="chat">
     <div class="row">
         <div class="col-md-3">
             <h3>Сейчас на сайте</h3>
@@ -49,12 +49,12 @@
 
         function addUserToList(user)
         {
-            $item = $('#online-users .chat__user[data-email="' + user.Email + '"]');
+            $item = $('#online-users .chat__user[data-id="' + user.Id + '"]');
             if ($item.length != 0) return;
 
             $listGroup = $('#online-users > .list-group');
-            $listGroupItem = $('<div class="list-group-item"><div class="chat__user" data-email="' + user.Email + '"></div></div>').hide();
-            $item = $listGroupItem.find('.chat__user[data-email="' + user.Email + '"]');
+            $listGroupItem = $('<div class="list-group-item"><div class="chat__user" data-id="' + user.Id + '" data-email="'+user.Email+'"></div></div>').hide();
+            $item = $listGroupItem.find('.chat__user[data-id="' + user.Id + '"]');
             if (user.AvatarId != null)
                 $item.append('<figure class="img-circle" style="background-image:url(/pictures/picture/' + user.AvatarId + ')"></figure>');
             $item.append(user.Email + '<br />');

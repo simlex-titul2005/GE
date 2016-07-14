@@ -512,6 +512,25 @@
         </div>
     </div>
 
+    @*error panel*@
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal-error">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow:hidden; overflow-y:auto; max-height:300px;">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary"><i class="fa fa-envelope-o" aria-hidden="true"></i> Отправить разработчику</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="~/Content/dist/js/site.min.js"></script>
     <script type="text/javascript">
         $(function () {
@@ -544,7 +563,11 @@
             }
 
             $(document).ajaxError(function (event, xhr, settings) {
-                alert(xhr.responseText);
+                $modal = $('#modal-error');
+                console.log(xhr);
+                $modal.find('.modal-header h4').html('<span class="text-danger">Ошибка ' + xhr.status+ '</span>');
+                $modal.find('.modal-body').text(xhr.responseText);
+                $('#modal-error').modal('show');
             });
 
             $().alert();

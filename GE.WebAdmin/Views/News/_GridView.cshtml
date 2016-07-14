@@ -12,7 +12,7 @@
                 new SxExtantions.SxGridViewColumn<VMNews>{FieldName="DateOfPublication", Caption="Дата публикации"},
                 new SxExtantions.SxGridViewColumn<VMNews>{FieldName="Title", Caption="Заголовок"},
                 new SxExtantions.SxGridViewColumn<VMNews>{FieldName="SeoTagsId", Caption="Инфо", Template=(m)=> {
-                    return !m.SeoTagsId.HasValue? "<i class=\"text-danger\">не заданы теги seo</i>":null;
+                    return !m.SeoTagsId.HasValue? "<i class=\"text-warning\" data-toggle=\"tooltip\" title=\"Если не заданы теги для SEO, они установяться программно на основе заголовка и дополнительных метаданных страницы\">не заданы теги seo</i>":null;
                 } },
                 new SxExtantions.SxGridViewColumn<VMNews>{FieldName="Show", Caption="Показывать", Template=(m)=> {
                     return m.Show? "Да":"Нет";

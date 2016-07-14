@@ -7,7 +7,7 @@
 
 @if (ViewBag.SubjectsCount == null || ViewBag.SubjectsCount > 1)
 {
-    using (Ajax.BeginForm("Step", "SiteTests", new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }))
+    using (Ajax.BeginForm("StepGuess", "SiteTests", new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }))
     {
         <br />
         <blockquote>
@@ -48,10 +48,8 @@ else
         @Html.Raw(Model.Subject.Description)
     </div>
     <br />
-
     <div class="text-center">
-        @Html.SxShareButtons(global_asax.ShareButtons)
-        <br />
         <a class="btn btn-default btn-transparent white" href="@Url.Action("Details", "SiteTests", new { titleUrl=Model.Question.Test.TitleUrl})">Пройти заново</a>
     </div>
+    <br />
 }

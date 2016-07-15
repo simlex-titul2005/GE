@@ -15,16 +15,6 @@ jQuery.fn.swap = function (b) {
     return this.pushStack(stack);
 };
 
-//клик по баннеру
-function bannerClick(bannerId) {
-    $.ajax({
-        method: 'post',
-        url: '/banners/addclick',
-        data: { bannerId: bannerId },
-    });
-}
-
-
 //javascript переход по ссылке
 function changeLocation(element) {
     var href = $(element).find('a').attr('href');

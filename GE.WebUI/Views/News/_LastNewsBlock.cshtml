@@ -40,7 +40,7 @@
                                     var length = Model.Games.Length > 4 ? 4 : Model.Games.Length;
                                     var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
                                     <li @("style=width:" + width + "%")>
-                                        <a href="@Url.Action("list", new { controller = "news", gameTitle = game.TitleUrl })">
+                                        <a href="@Url.Action("List", new { controller = "news", gameTitle = game.TitleUrl })">
                                             <figure data-game-id="@game.Id" style="background:url('@Url.Action("Picture", new { controller="Pictures", id=game.FrontPictureId, height= 220})') center / cover">
                                                 
                                             </figure>

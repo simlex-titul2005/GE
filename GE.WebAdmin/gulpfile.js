@@ -73,7 +73,8 @@ function createCss() {
     //by one css
     gulp.src([
        'bower_components/lightbox2/dist/css/lightbox.min.css',
-       'bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'
+       'bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+       'bower_components/morris.js/morris.css'
     ])
         .pipe(gulp.dest('content/dist/css'));
 }
@@ -119,7 +120,9 @@ function createJs() {
         'bower_components/lightbox2/dist/js/lightbox.min.js',
         'bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         'bower_components/moment/min/moment-with-locales.min.js',
-        'bower_components/signalr/jquery.signalR.min.js'
+        'bower_components/signalr/jquery.signalR.min.js',
+        'bower_components/raphael/raphael.min.js',
+        'bower_components/morris.js/morris.min.js'
     ])
         .pipe(gulp.dest('content/dist/js'));
     

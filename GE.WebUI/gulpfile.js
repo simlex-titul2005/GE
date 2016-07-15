@@ -101,7 +101,6 @@ function createCss() {
 function createJs() {
     var js = gulp.src([
         'bower_components/jquery/dist/jquery.min.js',
-        'bower_components/jquery-lazy/jquery.lazy.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js'
     ])
         .pipe(concat('js.js'));

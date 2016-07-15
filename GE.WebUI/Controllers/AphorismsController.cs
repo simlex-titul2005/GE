@@ -82,7 +82,7 @@ namespace GE.WebUI.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public RedirectToRouteResult Search(string author, string html)
         {
-            return RedirectToAction("list", new { author = author, html = html });
+            return RedirectToAction("List", new { author = author, html = html });
         }
 
         private VMMaterialCategory getCurrentCategory(string categoryId=null)

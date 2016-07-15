@@ -222,10 +222,16 @@
     <Content Include="content\dist\css\error-page.min.css" />
     <Content Include="content\dist\css\site.min.css" />
     <Content Include="content\dist\css\test-list.min.css" />
+    <Content Include="content\dist\fonts\fontawesome-webfont.eot" />
     <Content Include="content\dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="content\dist\fonts\fontawesome-webfont.ttf" />
+    <Content Include="content\dist\fonts\fontawesome-webfont.woff" />
+    <Content Include="content\dist\fonts\fontawesome-webfont.woff2" />
+    <Content Include="content\dist\fonts\FontAwesome.otf" />
     <Content Include="content\dist\i\article-empty.png" />
     <Content Include="content\dist\i\faveicon.png" />
     <Content Include="content\dist\i\logo.png" />
+    <Content Include="content\dist\i\testsubject.png" />
     <Content Include="content\dist\js\currency-provider.min.js" />
     <Content Include="content\dist\js\ge-aphorisms.min.js" />
     <Content Include="content\dist\js\ge-for-gamers-block.min.js" />
@@ -238,11 +244,6 @@
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
-    <Content Include="content\dist\fonts\fontawesome-webfont.eot" />
-    <Content Include="content\dist\fonts\fontawesome-webfont.ttf" />
-    <Content Include="content\dist\fonts\fontawesome-webfont.woff" />
-    <Content Include="content\dist\fonts\fontawesome-webfont.woff2" />
-    <Content Include="content\dist\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>
@@ -335,18 +336,8 @@
     <Content Include="Views\Shared\_Foreword.cshtml" />
     <Content Include="Views\MaterialTags\_TagsCloud.cshtml" />
     <Content Include="Views\Shared\_LikeMaterial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Shared\_MaterialInfo.cshtml" />
     <Content Include="Views\Games\_LastMaterials.cshtml" />
     <Content Include="Views\News\_LastCategoryBlock.cshtml" />
@@ -383,9 +374,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="content\dist\i\temp\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\SX.WebCore\SX.WebCore\SX.WebCore.csproj">
       <Project>{daf1a092-ded8-4c43-b08d-20e55c6f03a2}</Project>

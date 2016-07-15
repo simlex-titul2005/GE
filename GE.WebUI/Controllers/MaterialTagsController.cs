@@ -18,7 +18,7 @@ namespace GE.WebUI.Controllers
 #if !DEBUG
         [OutputCache(Duration =900, VaryByParam = "mid;mct")]
 #endif
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public PartialViewResult List(int mid, ModelCoreType mct, int maxFs=30, int amount=50)
         {
             var filter = new SxFilter(1, 10) { MaterialId= mid, ModelCoreType=mct };

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using SX.WebCore.ViewModels;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using System.Threading.Tasks;
+using GE.WebUI.Models;
 
 namespace GE.WebUI.Controllers
 {
@@ -53,6 +54,14 @@ namespace GE.WebUI.Controllers
         {
             var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
             if (data == null) return new HttpNotFoundResult();
+
+            var breadcrumbs = (VMBreadcrumb[])ViewBag.Breadcrumbs;
+            if (breadcrumbs != null)
+            {
+                var bc = breadcrumbs.ToList();
+                bc.Add(new VMBreadcrumb { Title = data.Question.Test.Title });
+                ViewBag.Breadcrumbs = bc.ToArray();
+            }
 
             var step = new SxVMSiteTestStep();
             if (data.Question.Test.Type == SxSiteTest.SiteTestType.Guess)

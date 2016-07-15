@@ -32,10 +32,10 @@ namespace GE.WebUI.Controllers
             _modelCoreType = modelCoreType;
             switch (_modelCoreType)
             {
-                case Enums.ModelCoreType.Article:
+                case ModelCoreType.Article:
                     _repo = new RepoArticle() as SxDbRepository<TKey, TModel, DbContext>;
                     break;
-                case Enums.ModelCoreType.News:
+                case ModelCoreType.News:
                     _repo = new RepoNews() as SxDbRepository<TKey, TModel, DbContext>;
                     break;
                 default:
@@ -50,7 +50,7 @@ namespace GE.WebUI.Controllers
             }
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ViewResult List(SxFilter filter)
         {
             var routeDataValues = Request.RequestContext.RouteData.Values;
@@ -104,7 +104,7 @@ namespace GE.WebUI.Controllers
 #if !DEBUG
         [OutputCache(Duration =900, VaryByParam ="MaterialId;ModelCoreType")]
 #endif
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         [ChildActionOnly]
         public virtual PartialViewResult LikeMaterials(SxFilter filter, int amount=10)
         {
@@ -136,7 +136,7 @@ namespace GE.WebUI.Controllers
             }
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public virtual ActionResult Details(int year, string month, string day, string titleUrl)
         {
             VMDetailMaterial model = null;

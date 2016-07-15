@@ -32,7 +32,8 @@
     "eonasdan-bootstrap-datetimepicker": "*",
     "jquery": "2.2.3",
     "lightbox2": "2.8.2",
-    "raphael": "2.2.0",
-    "signalr": "2.2.0"
+    "signalr": "2.2.0",
+    "raphael": "2.2.1",
+    "morris.js": "0.5.1"
   }
 }

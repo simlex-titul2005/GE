@@ -14,6 +14,16 @@ namespace GE.WebUI
 
             routes.LowercaseUrls = true;
 
+            //#region banners
+            //routes.MapRoute(
+            //    name: null,
+            //    url: "banners/addclick/{bannerId}",
+            //    defaults: new { controller = "Banners", action = "AddClick", area = "" },
+            //    namespaces: _defNamespace,
+            //    constraints: new { httpMethod = new HttpMethodConstraint("post") }
+            //);
+            //#endregion
+
             routes.MapRoute(
                 name: null,
                 url: "robots.txt",
@@ -40,7 +50,7 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "aphorisms",
-                defaults: new { controller = "aphorisms", action = "list", categoryId = (string)null, page = 1, area = "" },
+                defaults: new { controller = "aphorisms", action = "List", categoryId = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { action = "^List" }
             );
@@ -48,7 +58,7 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "aphorisms/page{page}",
-                defaults: new { controller = "aphorisms", action = "list", categoryId=(string)null, page = 1, area = "" },
+                defaults: new { controller = "aphorisms", action = "List", categoryId=(string)null, page = 1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { action = "^List" }
             );
@@ -56,7 +66,7 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "aphorisms/{categoryId}",
-                defaults: new { controller = "aphorisms", action = "list", page=1, area = "" },
+                defaults: new { controller = "aphorisms", action = "List", page=1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { action = "^List" }
             );
@@ -64,7 +74,7 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "aphorisms/{categoryId}/page{page}",
-                defaults: new { controller = "aphorisms", action = "list", page = 1, area = "" },
+                defaults: new { controller = "aphorisms", action = "List", page = 1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { action = "^List" }
             );
@@ -100,25 +110,25 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "articles",
-                defaults: new { controller = "articles", action = "list", gameTitle = (string)null, page = 1, area = "" },
+                defaults: new { controller = "articles", action = "List", gameTitle = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
                 name: null,
                 url: "articles/page{page}",
-                defaults: new { controller = "articles", action = "list", gameTitle = (string)null, page = 1, area = "" },
+                defaults: new { controller = "articles", action = "List", gameTitle = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
                 name: null,
                 url: "articles/{gameTitle}",
-                defaults: new { controller = "articles", action = "list", page = 1, area = "" },
+                defaults: new { controller = "articles", action = "List", page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
                 name: null,
                 url: "articles/{gameTitle}/page{page}",
-                defaults: new { controller = "articles", action = "list", page = 1, area = "" },
+                defaults: new { controller = "articles", action = "List", page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
@@ -130,11 +140,13 @@ namespace GE.WebUI
             );
             #endregion
 
+            
+
             #region employees
             routes.MapRoute(
                 name: null,
                 url: "employees",
-                defaults: new { controller = "employees", action = "list", area = "" },
+                defaults: new { controller = "employees", action = "List", area = "" },
                 namespaces: _defNamespace
             );
             #endregion
@@ -143,26 +155,26 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "forum",
-                defaults: new { controller = "forum", action = "list", gameTitle = (string)null, page = 1, area = "" },
+                defaults: new { controller = "forum", action = "List", gameTitle = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace
             );
 
             routes.MapRoute(
                 name: null,
                 url: "forum/page{page}",
-                defaults: new { controller = "forum", action = "list", gameTitle = (string)null, page = 1, area = "" },
+                defaults: new { controller = "forum", action = "List", gameTitle = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
                 name: null,
                 url: "forum/{gameTitle}",
-                defaults: new { controller = "forum", action = "list", page = 1, area = "" },
+                defaults: new { controller = "forum", action = "List", page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
                 name: null,
                 url: "forum/{gameTitle}/page{page}",
-                defaults: new { controller = "forum", action = "list", page = 1, area = "" },
+                defaults: new { controller = "forum", action = "List", page = 1, area = "" },
                 namespaces: _defNamespace
             );
             #endregion
@@ -188,25 +200,25 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "news",
-                defaults: new { controller = "news", action = "list", gameTitle = (string)null, page = 1, area = "" },
+                defaults: new { controller = "news", action = "List", gameTitle = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
                 name: null,
                 url: "news/page{page}",
-                defaults: new { controller = "news", action = "list", gameTitle = (string)null, page = 1, area = "" },
+                defaults: new { controller = "news", action = "List", gameTitle = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
                 name: null,
                 url: "news/{gameTitle}",
-                defaults: new { controller = "news", action = "list", page = 1, area = "" },
+                defaults: new { controller = "news", action = "List", page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
                 name: null,
                 url: "news/{gameTitle}/page{page}",
-                defaults: new { controller = "news", action = "list", page = 1, area = "" },
+                defaults: new { controller = "news", action = "List", page = 1, area = "" },
                 namespaces: _defNamespace
             );
             routes.MapRoute(
@@ -222,7 +234,7 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "sitetests",
-                defaults: new { controller = "sitetests", action = "list", page=1, area = "" },
+                defaults: new { controller = "sitetests", action = "List", page=1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { httpMethod = new HttpMethodConstraint("get") }
             );

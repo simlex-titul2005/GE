@@ -7,16 +7,17 @@ using GE.WebAdmin.Extantions.Repositories;
 using Microsoft.AspNet.Identity;
 using SX.WebCore.Repositories;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
+using SX.WebCore.MvcControllers;
+using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class NewsController : BaseController
+    public partial class NewsController : SxMaterialsController<News, DbContext>
     {
-        private static RepoNews _repo;
-        public NewsController()
+        public NewsController() : base(ModelCoreType.News)
         {
-            if(_repo==null)
-                _repo = new RepoNews();
+            if (Repo == null)
+                Repo = new RepoNews();
         }
 
         private static int _pageSize = 20;
@@ -26,11 +27,11 @@ namespace GE.WebAdmin.Controllers
         {
             var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
             var filter = new SxFilter(page, _pageSize) { Order = defaultOrder };
-            var totalItems = _repo.FilterCount(filter);
+            var totalItems = (Repo as RepoNews).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.Filter = filter;
 
-            var viewModel = _repo.QueryForAdmin(filter);
+            var viewModel = (Repo as RepoNews).QueryForAdmin(filter);
             return View(viewModel);
         }
 
@@ -39,11 +40,11 @@ namespace GE.WebAdmin.Controllers
         {
             var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
             var filter = new SxFilter(page, _pageSize) { Order = order == null || order.Direction == SortDirection.Unknown ? defaultOrder : order, WhereExpressionObject = filterModel };
-            var totalItems = _repo.FilterCount(filter);
+            var totalItems = (Repo as RepoNews).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.Filter = filter;
 
-            var viewModel = _repo.QueryForAdmin(filter);
+            var viewModel = (Repo as RepoNews).QueryForAdmin(filter);
 
             return PartialView("_GridView", viewModel);
         }
@@ -51,7 +52,7 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public virtual ViewResult Edit(int? id)
         {
-            var model = id.HasValue ? _repo.GetByKey(id, Enums.ModelCoreType.News) : new News { ModelCoreType = Enums.ModelCoreType.News };
+            var model = id.HasValue ? Repo.GetByKey(id, ModelCoreType.News) : new News { ModelCoreType = Enums.ModelCoreType.News };
             var viewModel = Mapper.Map<News, VMEditNews>(model);
             viewModel.OldTitleUrl = viewModel.TitleUrl;
             if (model.FrontPictureId.HasValue)
@@ -73,7 +74,7 @@ namespace GE.WebAdmin.Controllers
             if (model.Title != null && string.IsNullOrEmpty(model.TitleUrl))
             {
                 var titleUrl = Url.SeoFriendlyUrl(model.Title);
-                var existModel = (_repo as RepoNews).GetByTitleUrl(titleUrl);
+                var existModel = (Repo as RepoNews).GetByTitleUrl(titleUrl);
                 if (existModel != null && existModel.Id != model.Id)
                     ModelState.AddModelError("Title", "Строковый ключ должен быть уникальным");
                 else
@@ -94,13 +95,13 @@ namespace GE.WebAdmin.Controllers
                 if (isNew)
                 {
                     redactModel.UserId = User.Identity.GetUserId();
-                    newModel = _repo.Create(redactModel);
+                    newModel = Repo.Create(redactModel);
                 }
                 else
                 {
                     if (model.TitleUrl != model.OldTitleUrl)
                     {
-                        var existModel = (_repo as RepoNews).GetByTitleUrl(model.TitleUrl);
+                        var existModel = (Repo as RepoNews).GetByTitleUrl(model.TitleUrl);
                         if (existModel != null)
                         {
                             ViewBag.HasError = true;
@@ -110,7 +111,7 @@ namespace GE.WebAdmin.Controllers
                         }
                     }
 
-                    newModel = _repo.Update(redactModel, true, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "DateOfPublication", "UserId", "Foreword",  "ShowFrontPictureOnDetailPage", "CategoryId", "IsTop");
+                    newModel = Repo.Update(redactModel, true, "Title", "TitleUrl", "Show", "GameId", "FrontPictureId", "Html", "DateOfPublication", "UserId", "Foreword",  "ShowFrontPictureOnDetailPage", "CategoryId", "IsTop");
                 }
 
                 return RedirectToAction("index");
@@ -126,7 +127,7 @@ namespace GE.WebAdmin.Controllers
 
         private VMEditNews getPreparedNews(VMEditNews newModel)
         {
-            var old = _repo.GetByKey(newModel.Id, newModel.ModelCoreType);
+            var old = Repo.GetByKey(newModel.Id, newModel.ModelCoreType);
             newModel.Category = old.Category;
             newModel.Game = old.Game;
             return newModel;
@@ -138,7 +139,7 @@ namespace GE.WebAdmin.Controllers
             var repoSeoInfo = new SxRepoSeoTags<DbContext>();
             repoSeoInfo.DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
 
-            _repo.Delete(model.Id, model.ModelCoreType);
+            Repo.Delete(model.Id, model.ModelCoreType);
             return RedirectToAction("index");
         }
     }

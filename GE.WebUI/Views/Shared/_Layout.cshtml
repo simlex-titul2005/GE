@@ -100,15 +100,39 @@
 
         $('#game-list').geGameMenu();
 
-        $(".th-banner img.lazy").Lazy({
-            afterLoad: function (banner) {
-                var id = $(banner).data('id');
+        $('.th-banner').click(function () {
+            $banner = $(this);
+            var href = $banner.attr('data-href');
+            var bannerId = $banner.attr('data-id');
+            $.ajax({
+                method: 'post',
+                url: '@Url.Action("AddClick","Banners")',
+                data:{bannerId:bannerId},
+                complete: function () {
+                    var win = window.open(href, '_blank');
+                    if(win)
+                        win.focus();
+                }
+            });
+        });
+
+        $('.th-banner').hover(function () {
+            $banner = $(this);
+            var bannerId = $banner.attr('data-id');
+            var show = $banner.attr('data-show');
+            if (!show)
+            {
                 $.ajax({
                     method: 'post',
-                    url: '/banners/addshow',
-                    data: { bannerId: id }
+                    url: '@Url.Action("AddShow","Banners")',
+                    data: { bannerId: bannerId },
+                    complete: function () {
+                        $banner.attr('data-show', 'true')
+                    }
                 });
             }
+
+            
         });
 
         $(window).scroll(function () {

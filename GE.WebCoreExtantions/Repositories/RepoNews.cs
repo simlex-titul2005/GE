@@ -1,15 +1,15 @@
 ﻿using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using SX.WebCore.Abstract;
 using SX.WebCore;
 using SX.WebCore.Providers;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using static SX.WebCore.Enums;
+using SX.WebCore.Repositories;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoNews : SxDbRepository<int, News, DbContext>
+    public sealed class RepoNews : SxRepoMaterial<News, DbContext>
     {
         public override IQueryable<News> All
         {

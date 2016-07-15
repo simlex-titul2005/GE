@@ -179,6 +179,7 @@
     <Content Include="content\dist\css\grid-users.min.css" />
     <Content Include="content\dist\css\lightbox.min.css" />
     <Content Include="content\dist\css\login.min.css" />
+    <Content Include="content\dist\css\morris.css" />
     <Content Include="content\dist\css\ps-tree.min.css" />
     <Content Include="content\dist\css\site.min.css" />
     <Content Include="content\dist\css\test-matrix.min.css" />
@@ -196,6 +197,8 @@
     <Content Include="content\dist\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="content\dist\js\lightbox.min.js" />
     <Content Include="content\dist\js\moment-with-locales.min.js" />
+    <Content Include="content\dist\js\morris.min.js" />
+    <Content Include="content\dist\js\raphael.min.js" />
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

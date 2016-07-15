@@ -1,5 +1,4 @@
-﻿using SX.WebCore;
-using SX.WebCore.ViewModels;
+﻿using SX.WebCore.ViewModels;
 using System;
 
 namespace GE.WebUI.Models.Abstract
@@ -20,15 +19,14 @@ namespace GE.WebUI.Models.Abstract
             {
                 return new VMMateriallnfo
                 {
-                    DateOfPublication = this.DateOfPublication,
-                    CommentsCount = this.CommentsCount,
-                    ViewsCount = this.ViewsCount,
-                    LikeUpCount = this.LikeUpCount,
-                    LikeDownCount = this.LikeDownCount
+                    DateOfPublication = DateOfPublication,
+                    CommentsCount = CommentsCount,
+                    ViewsCount = ViewsCount,
+                    LikeUpCount = LikeUpCount,
+                    LikeDownCount = LikeDownCount
                 };
             }
         }
         public SxVMSeoTags SeoTags { get; set; }
-        public SxVideo[] Videos { get; set; }
     }
 }

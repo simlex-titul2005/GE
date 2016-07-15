@@ -394,6 +394,25 @@
                                         </ul>
                                     </li>
                                 }
+                                @if (User.IsInRole("admin"))
+                                {
+                                    <li>
+                                        <a href="#"><i class="fa fa-smile-o"></i> Юмор <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+
+                                            <li>
+                                                <a href="@Url.Action("Index", new { controller="Humor"})">Каталог юмора</a>
+                                            </li>
+
+                                            @if (User.IsInRole("admin"))
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", new { controller = "MaterialCategories", mct = Enums.ModelCoreType.Humor })">Категории юмора</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
                             </ul>
                         </li>
                         @if (User.IsInRole("admin"))

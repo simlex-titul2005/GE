@@ -1,5 +1,4 @@
 ﻿using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Abstract;
 using GE.WebCoreExtantions.Repositories;
 using GE.WebUI.Models;
 using GE.WebUI.Models.Abstract;
@@ -17,41 +16,23 @@ using SX.WebCore.Attrubutes;
 using SX.WebCore.Repositories;
 using SX.WebCore.MvcApplication;
 using SX.WebCore.ViewModels;
+using SX.WebCore.MvcControllers;
+using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
 {
-    public abstract class MaterialsController<TKey, TModel> : BaseController where TModel : SxDbModel<TKey>, IHasGame
+    public abstract class MaterialsController<TModel> : SxMaterialsController<TModel, DbContext>
+        where TModel : SxDbModel<int>
     {
-        private SxDbRepository<TKey, TModel, DbContext> _repo;
         private SxDbRepository<int, Game, DbContext> _repoGame;
-        protected MaterialsController() { }
-        private ModelCoreType _modelCoreType;
-        protected MaterialsController(ModelCoreType modelCoreType)
-        {
-            _repoGame = new RepoGame();
-            _modelCoreType = modelCoreType;
-            switch (_modelCoreType)
-            {
-                case ModelCoreType.Article:
-                    _repo = new RepoArticle() as SxDbRepository<TKey, TModel, DbContext>;
-                    break;
-                case ModelCoreType.News:
-                    _repo = new RepoNews() as SxDbRepository<TKey, TModel, DbContext>;
-                    break;
-                default:
-                    throw new NotSupportedException("Не определен репозиторий");
-            }
+        protected MaterialsController(ModelCoreType mct) :base(mct) {
+            if(_repoGame==null)
+                _repoGame = new RepoGame();
+            WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
-        protected SxDbRepository<TKey, TModel, DbContext> Repository
-        {
-            get
-            {
-                return _repo;
-            }
-        }
-
+       
         [HttpGet]
-        public virtual ViewResult List(SxFilter filter)
+        public virtual ActionResult List(SxFilter filter)
         {
             var routeDataValues = Request.RequestContext.RouteData.Values;
             var gameTitle = (string)routeDataValues["gameTitle"];
@@ -65,19 +46,20 @@ namespace GE.WebUI.Controllers
                 var existGame = (_repoGame as RepoGame).ExistGame(gameTitle);
                 if(!existGame)
                 {
-                    Response.StatusCode = 404;
-                    Response.Clear();
-                    return null;
+                    return new HttpNotFoundResult();
                 }
             }
 
             var pageSize = 10;
-            switch (_modelCoreType)
+            switch (ModelCoreType)
             {
                 case ModelCoreType.Article:
                     pageSize = 9;
                     break;
                 case ModelCoreType.News:
+                    pageSize = 10;
+                    break;
+                case ModelCoreType.Humor:
                     pageSize = 10;
                     break;
             }
@@ -91,11 +73,11 @@ namespace GE.WebUI.Controllers
                 ViewBag.Tag = tag;
             }
 
-            viewModel.Collection = _repo.Query(filter).ToArray();
+            viewModel.Collection = Repo.Query(filter).ToArray();
             viewModel.PagerInfo = new SxExtantions.SxPagerInfo(filter.PagerInfo.Page, pageSize)
             {
                 PagerSize = 3,
-                TotalItems = _repo.Count(filter)
+                TotalItems = Repo.Count(filter)
             };
 
             return View(viewModel);
@@ -112,10 +94,10 @@ namespace GE.WebUI.Controllers
             switch(filter.ModelCoreType)
             {
                 case ModelCoreType.Article:
-                    viewModel = (_repo as RepoArticle).GetLikeMaterial(filter, amount);
+                    viewModel = (Repo as RepoArticle).GetLikeMaterial(filter, amount);
                     break;
                 case ModelCoreType.News:
-                    viewModel = (_repo as RepoNews).GetLikeMaterial(filter, amount);
+                    viewModel = (Repo as RepoNews).GetLikeMaterial(filter, amount);
                     break;
             }
             ViewBag.LikeMatTitle = getLikeMatTitle(filter.ModelCoreType);
@@ -140,13 +122,13 @@ namespace GE.WebUI.Controllers
         public virtual ActionResult Details(int year, string month, string day, string titleUrl)
         {
             VMDetailMaterial model = null;
-            switch (_modelCoreType)
+            switch (ModelCoreType)
             {
                 case ModelCoreType.Article:
-                    model = (_repo as RepoArticle).GetByTitleUrl(year, month, day,titleUrl);
+                    model = (Repo as RepoArticle).GetByTitleUrl<VMDetailArticle>(year, month, day,titleUrl);
                     break;
                 case ModelCoreType.News:
-                    model = (_repo as RepoNews).GetByTitleUrl(year, month, day, titleUrl);
+                    model = (Repo as RepoNews).GetByTitleUrl<VMDetailNews>(year, month, day, titleUrl);
                     break;
             }
             if (model == null)
@@ -189,13 +171,13 @@ namespace GE.WebUI.Controllers
                 {
                     Task.Run(() =>
                     {
-                        switch (_modelCoreType)
+                        switch (ModelCoreType)
                         {
                             case ModelCoreType.Article:
-                                (_repo as RepoArticle).AddUserView(model.Id, model.ModelCoreType);
+                                (Repo as RepoArticle).AddUserView(model.Id, model.ModelCoreType);
                                 break;
                             case ModelCoreType.News:
-                                (_repo as RepoNews).AddUserView(model.Id, model.ModelCoreType);
+                                (Repo as RepoNews).AddUserView(model.Id, model.ModelCoreType);
                                 break;
                         }
                     });
@@ -218,10 +200,10 @@ namespace GE.WebUI.Controllers
             switch(mct)
             {
                 case ModelCoreType.Article:
-                    data = new RepoArticle().GetByDateMaterial(mid, mct, dir, amount);
+                    data = (Repo as RepoArticle).GetByDateMaterial(mid, mct, dir, amount);
                     break;
                 case ModelCoreType.News:
-                    data = new RepoNews().GetByDateMaterial(mid, mct, dir, amount);
+                    data = (Repo as RepoNews).GetByDateMaterial(mid, mct, dir, amount);
                     break;
             }
 
@@ -239,10 +221,10 @@ namespace GE.WebUI.Controllers
             switch (mct)
             {
                 case ModelCoreType.Article:
-                    data = new RepoArticle().GetPopular(mct, mid, amount); ;
+                    data = (Repo as RepoArticle).GetPopular(mct, mid, amount); ;
                     break;
                 case ModelCoreType.News:
-                    data = new RepoNews().GetPopular(mct, mid, amount);
+                    data = (Repo as RepoNews).GetPopular(mct, mid, amount);
                     break;
             }
             ViewData["ModelCoreType"] = mct;

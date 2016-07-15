@@ -11,6 +11,8 @@ namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoArticle : SxRepoMaterial<Article, DbContext>
     {
+        public RepoArticle() : base(ModelCoreType.Article) { }
+
         public override IQueryable<Article> All
         {
             get
@@ -176,14 +178,6 @@ ORDER BY
                     return m;
                 }, new { mid = filter.MaterialId, mct = filter.ModelCoreType, amount= amount }, splitOn: "UserId");
                 return data.ToArray();
-            }
-        }
-
-        public void AddUserView(int mid, ModelCoreType mct)
-        {
-            using (var conn = new SqlConnection(ConnectionString))
-            {
-                conn.Execute("add_material_view @mid, @mct", new { mid = mid, mct = mct });
             }
         }
     }

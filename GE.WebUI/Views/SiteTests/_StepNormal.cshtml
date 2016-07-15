@@ -1,17 +1,18 @@
 ﻿@model SxVMSiteTestAnswer
 @{
     Layout = null;
-    var oldSteps = (SxVMSiteTestStep[])ViewBag.OldSteps;
+    var oldSteps = (SxVMSiteTestStepNormal[])ViewBag.OldSteps;
     var allSubjectsCount = Convert.ToInt32(ViewBag.AllSubjectsCount ?? -1);
     var lettersCount = (int)ViewBag.LettersCount;
-    SxVMSiteTestStep step;
+    SxVMSiteTestStepNormal step;
+    var balsCount = ViewBag.BalsCount == null ? -7.5 : (double)ViewBag.BalsCount;
 }
 
 @lettersCount
 
 @if (allSubjectsCount > oldSteps.Length || allSubjectsCount==-1)
 {
-    using (Ajax.BeginForm("StepNormal", "SiteTests", new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }, new { @autocomplete = "off" }))
+    using (Ajax.BeginForm("StepNormal", new { controller="SiteTests" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }, new { @autocomplete = "off" }))
     {
         <br />
         <blockquote>
@@ -26,6 +27,8 @@
 
         @Html.AntiForgeryToken()
 
+        <input type="hidden" name="balsCount" id="balsCount" value="@balsCount" />
+
         <div class="s">
             @for (int i = 0; i < oldSteps.Length; i++)
             {
@@ -37,7 +40,6 @@
                 }
             }
         </div>
-
         
         <h2 data-subject-id="@Model.Subject.Id"><img style="height:80px; margin-right:30px;" alt="@Model.Subject.Title" src="@(Model.Subject.PictureId.HasValue?Url.Action("Picture","Pictures", new { id=Model.Subject.PictureId}):"/content/dist/i/testsubject.png")" /> @Model.Subject.Title</h2>
 
@@ -73,7 +75,3 @@ else
     </div>
     <br />
 }
-
-<script>
-    lettersCount=@lettersCount;
-</script>

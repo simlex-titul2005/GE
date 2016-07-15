@@ -107,6 +107,7 @@
     <Compile Include="Repositories\RepoAphorism.cs" />
     <Compile Include="Repositories\RepoArticle.cs" />
     <Compile Include="Repositories\RepoGame.cs" />
+    <Compile Include="Repositories\RepoHumor.cs" />
     <Compile Include="Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Repositories\RepoNews.cs" />
   </ItemGroup>

@@ -9,6 +9,8 @@ using SX.WebCore.ViewModels;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using System.Threading.Tasks;
 using GE.WebUI.Models;
+using System;
+using System.Globalization;
 
 namespace GE.WebUI.Controllers
 {
@@ -63,20 +65,22 @@ namespace GE.WebUI.Controllers
                 ViewBag.Breadcrumbs = bc.ToArray();
             }
 
-            var step = new SxVMSiteTestStep();
             if (data.Question.Test.Type == SxSiteTest.SiteTestType.Guess)
             {
+                var step= new SxVMSiteTestStepGuess();
                 step.QuestionId = data.QuestionId;
                 step.IsCorrect = false;
+                ViewBag.OldSteps = new SxVMSiteTestStepGuess[] { step };
             }
             else if(data.Question.Test.Type == SxSiteTest.SiteTestType.Normal)
             {
+                var step = new SxVMSiteTestStepNormal();
                 step.SubjectId = data.SubjectId;
                 step.QuestionId = 0;
                 ViewBag.LettersCount = getSiteTestQuestionsLettersCount(data.Question.Test.Questions);
+                ViewBag.OldSteps = new SxVMSiteTestStepNormal[] { step };
             }
-
-            ViewBag.OldSteps = new SxVMSiteTestStep[] { step };
+            
             var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
             return View(model: viewModel);
         }
@@ -93,14 +97,14 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> StepGuess(List<SxVMSiteTestStep> steps)
+        public async Task<ActionResult> StepGuess(List<SxVMSiteTestStepGuess> steps)
         {
             return await Task.Run(() =>
             {
                 int subjectsCount;
                 var data = _repo.GetGuessStep(steps, out subjectsCount);
                 ViewBag.SubjectsCount = subjectsCount;
-                steps.Add(new SxVMSiteTestStep { QuestionId = data.QuestionId, IsCorrect = false });
+                steps.Add(new SxVMSiteTestStepGuess { QuestionId = data.QuestionId, IsCorrect = false });
                 ViewBag.OldSteps = steps.ToArray();
                 var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
                 return PartialView("_StepGuess", viewModel);
@@ -108,7 +112,7 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> StepNormal(List<SxVMSiteTestStep> steps)
+        public async Task<ActionResult> StepNormal(List<SxVMSiteTestStepNormal> steps, string balsCount)
         {
             return await Task.Run(() =>
             {
@@ -117,10 +121,15 @@ namespace GE.WebUI.Controllers
                 var data = _repo.GetNormalStep(steps, out subjectsCount, out allSubjectsCount);
                 ViewBag.SubjectsCount = subjectsCount;
                 if(data!=null)
-                    steps.Add(new SxVMSiteTestStep { QuestionId = data.QuestionId, SubjectId = data.SubjectId });
+                    steps.Add(new SxVMSiteTestStepNormal { QuestionId = data.QuestionId, SubjectId = data.SubjectId });
                 ViewBag.OldSteps = steps.ToArray();
                 ViewBag.AllSubjectsCount = allSubjectsCount;
                 ViewBag.LettersCount = getSiteTestQuestionsLettersCount(data.Question.Test.Questions);
+
+                var b = double.Parse(balsCount, CultureInfo.InvariantCulture);
+                ViewBag.BalsCount = b;
+
+
                 var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
                 return PartialView("_StepNormal", viewModel);
             });

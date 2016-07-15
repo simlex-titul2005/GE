@@ -17,7 +17,7 @@
     ViewBag.Keywords = ViewBag.Keywords ?? ViewBag.GameTitle ?? ViewBag.Tag;
 }
 
-@Html.Partial("_Breadcrumbs", (VMBreadcrumb[])ViewBag.Breadcrumbs)
+@Html.Partial("_Breadcrumbs", model: (VMBreadcrumb[])ViewBag.Breadcrumbs)
 
 @Html.Partial("_Collection", Model)
 

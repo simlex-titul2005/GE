@@ -263,17 +263,6 @@ GROUP BY
             return data;
         }
 
-        public static VMDetailNews GetByTitleUrl(this WebCoreExtantions.Repositories.RepoNews repo, int year, string month, string day, string titleUrl)
-        {
-            using (var connection = new SqlConnection(repo.ConnectionString))
-            {
-                var data = connection.Query<VMDetailNews>("get_material_by_url @year, @month, @day, @title_url, @mct", new { year = year, month = month, day = day, title_url = titleUrl, mct = ModelCoreType.News }).SingleOrDefault();
-                if (data != null)
-                    data.Videos = connection.Query<SxVideo>("get_material_videos @mid, @mct", new { mid = data.Id, mct=data.ModelCoreType }).ToArray();
-                return data;
-            }
-        }
-
         public static VMLastNews[] GetByDateMaterial(this WebCoreExtantions.Repositories.RepoNews repo, int mid, ModelCoreType mct, bool dir, int amount)
         {
             using (var connection = new SqlConnection(repo.ConnectionString))

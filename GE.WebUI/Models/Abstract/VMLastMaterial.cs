@@ -1,14 +1,13 @@
-﻿using System;
+﻿using SX.WebCore.ViewModels;
+using System;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;
 
 namespace GE.WebUI.Models.Abstract
 {
-    public abstract class VMLastMaterial
+    public abstract class VMLastMaterial : SxVMMaterial
     {
-        public int Id { get; set; }
         public DateTime DateOfPublication { get; set; }
-        public ModelCoreType ModelCoreType { get; set; }
         public DateTime DateCreate { get; set; }
         public string Title { get; set; }
         public string TitleUrl { get; set; }

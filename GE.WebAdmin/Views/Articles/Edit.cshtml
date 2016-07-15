@@ -126,7 +126,7 @@
             <div class="row">
                 <div class="col-md-12">
                     @Html.LabelFor(x => x.Foreword, new { @class = "control-label" })
-                    @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(x => x.Foreword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите начальное описание материала" } })
                     @Html.ValidationMessageFor(x => x.Foreword)
                 </div>
             </div>

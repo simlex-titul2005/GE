@@ -11,6 +11,8 @@ namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoNews : SxRepoMaterial<News, DbContext>
     {
+        public RepoNews() : base(ModelCoreType.News) { }
+
         public override IQueryable<News> All
         {
             get
@@ -150,14 +152,6 @@ ORDER BY
                     return m;
                 }, new { mid = filter.MaterialId, mct = filter.ModelCoreType, amount = amount }, splitOn: "UserId");
                 return data.ToArray();
-            }
-        }
-
-        public void AddUserView(int mid, ModelCoreType mct)
-        {
-            using (var conn = new SqlConnection(ConnectionString))
-            {
-                conn.Execute("add_material_view @mid, @mct", new { mid = mid, mct = mct });
             }
         }
     }

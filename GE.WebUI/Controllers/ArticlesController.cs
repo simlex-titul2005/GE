@@ -7,15 +7,18 @@ using SX.WebCore;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class ArticlesController : MaterialsController<int, Article>
+    public sealed class ArticlesController : MaterialsController<Article>
     {
-        public ArticlesController() : base(Enums.ModelCoreType.Article) { }
+        public ArticlesController() : base(Enums.ModelCoreType.Article) {
+            if (Repo == null)
+                Repo = new RepoArticle();
+        }
 
         [ChildActionOnly]
         public PartialViewResult ForGamersBlock()
         {
             var gameTitle = Request.RequestContext.RouteData.Values["GameTitle"];
-            var viewModel = (base.Repository as RepoArticle).ForGamersBlock((string)gameTitle);
+            var viewModel = (Repo as RepoArticle).ForGamersBlock((string)gameTitle);
             return PartialView("_ForGamersBlock", viewModel);
         }
 
@@ -25,7 +28,7 @@ namespace GE.WebUI.Controllers
         {
             if (!Request.IsAjaxRequest()) return null;
 
-            var viewModel = (Repository as RepoArticle).PreviewMaterials(gt, c, lc);
+            var viewModel = (Repo as RepoArticle).PreviewMaterials(gt, c, lc);
             if (!viewModel.Any())
                 return Content("<div class=\"empty-result\">Данные отсутствуют</div>");
             return PartialView("_Preview", viewModel);
@@ -35,7 +38,7 @@ namespace GE.WebUI.Controllers
         [OutputCache(Duration = 900, VaryByParam = "amount")]
         public PartialViewResult Last(int amount=3)
         {
-            var viewModel = (base.Repository as RepoArticle).Last(amount);
+            var viewModel = (Repo as RepoArticle).Last(amount);
             return PartialView("_Last", viewModel);
         }
     }

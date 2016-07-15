@@ -1,0 +1,47 @@
+﻿@model VMHumor[]
+@{
+    ViewBag.Title = "Юмор";
+}
+
+@section styles{
+    <link href="~/content/dist/css/morris.css" rel="stylesheet" />
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid-humor">
+    @Html.Partial("_GridView", Model)
+</div>
+
+<h2>Статистика добавления юмора</h2>
+<div id="mat-stat" style="height: 250px;"></div>
+
+@section scripts{
+    <script src="~/content/dist/js/raphael.min.js"></script>
+    <script src="~/content/dist/js/morris.min.js"></script>
+    <script>
+        $(function () {
+            $('#grid-humor').sx_gv();
+
+            $.ajax({
+                url: '@Url.Action("DateStatistic", "Humor")',
+                method: 'get',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    new Morris.Bar({
+                        element: 'mat-stat',
+                        data: data,
+                        xkey: 'DateCreate',
+                        ykeys: ['Count'],
+                        labels: ["Количество:"],
+                        xLabelFormat: function (o) {
+                            var d = new Date(parseInt(o.label.substring(6)));
+                            return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
+}

@@ -14,16 +14,6 @@ namespace GE.WebUI
 
             routes.LowercaseUrls = true;
 
-            //#region banners
-            //routes.MapRoute(
-            //    name: null,
-            //    url: "banners/addclick/{bannerId}",
-            //    defaults: new { controller = "Banners", action = "AddClick", area = "" },
-            //    namespaces: _defNamespace,
-            //    constraints: new { httpMethod = new HttpMethodConstraint("post") }
-            //);
-            //#endregion
-
             routes.MapRoute(
                 name: null,
                 url: "robots.txt",
@@ -139,9 +129,7 @@ namespace GE.WebUI
                 namespaces: _defNamespace
             );
             #endregion
-
             
-
             #region employees
             routes.MapRoute(
                 name: null,
@@ -230,11 +218,34 @@ namespace GE.WebUI
             );
             #endregion
 
+            #region humor
+            routes.MapRoute(
+                name: null,
+                url: "humor",
+                defaults: new { controller = "Humor", action = "List", page = 1, area = "" },
+                namespaces: _defNamespace
+            );
+            routes.MapRoute(
+                name: null,
+                url: "humor/page{page}",
+                defaults: new { controller = "Humor", action = "List", page = 1, area = "" },
+                namespaces: _defNamespace
+            );
+            
+            routes.MapRoute(
+                name: null,
+                url: "humor/{year}/{month}/{day}/{titleUrl}",
+                defaults: new { controller = "Humor", action = "Details", area = "" },
+                constraints: new { year = @"\d{4}" },
+                namespaces: _defNamespace
+            );
+            #endregion
+
             #region site tests
             routes.MapRoute(
                 name: null,
                 url: "sitetests",
-                defaults: new { controller = "sitetests", action = "List", page=1, area = "" },
+                defaults: new { controller = "SiteTests", action = "List", page=1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { httpMethod = new HttpMethodConstraint("get") }
             );
@@ -242,7 +253,7 @@ namespace GE.WebUI
             routes.MapRoute(
                 name: null,
                 url: "sitetests/{titleUrl}",
-                defaults: new { controller = "sitetests", action = "details", area = "" },
+                defaults: new { controller = "SiteTests", action = "Details", area = "" },
                 namespaces: _defNamespace,
                 constraints: new { httpMethod=new HttpMethodConstraint("get")}
             );

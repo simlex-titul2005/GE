@@ -14,7 +14,7 @@
     ViewBag.Keywords = ViewBag.Keywords ?? gameName;
 }
 
-@Html.Action("LastGamesNewsBlock", new { controller= "News", lnc= 5 })
+@Html.Action("LastGamesNewsBlock", "News", new { lnc= 5 })
 
 @Html.Action("NewsCategories", new { controller = "News", lnc = 5 })
 

@@ -12,8 +12,12 @@
 
 @Html.Partial("_Breadcrumbs", (VMBreadcrumb[])ViewBag.Breadcrumbs)
 
-@if (Model.Question != null && Model.Question.Test!=null)
+@if (Model.Question != null && Model.Question.Test != null)
 {
+    if (Equals(testType, SxSiteTest.SiteTestType.Normal))
+    {
+        <input type="hidden" name="balsCount" id="balsCount" value="-7.5" />
+    }
     <div id="st-page">
         @if (Equals(testType, SxSiteTest.SiteTestType.Guess))
         {
@@ -24,15 +28,16 @@
             @Html.Partial("_StepNormal", Model)
         }
     </div>
+    
     <div class="text-center">
         @Html.SxShareButtons(global_asax.ShareButtons)
     </div>
+    <br />
 
     @section scripts{
         <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
         <script src="~/content/dist/js/goodshare.min.js"></script>
         <script>
-            var timer;
             $(function () {
                 //guess
                 $('#st-page').on('click', '.sx-indicator > span', function () {
@@ -49,10 +54,6 @@
 });
 
                 //normal
-
-                setProgress(@letterCount, @letterCount);
-
-
                 $('#st-page').on('change', '.test-normal-q-list [type="radio"]', function () {
                     $radio = $(this);
                     var questionId = $radio.attr('id').replace('q-', '');
@@ -69,25 +70,11 @@
                 });
 
                 $('#st-page').on('click', '.test-normal-q-list__dont-btn', function () {
+                    var balsCount = parseFloat($('#balsCount').val());
                     $h4 = $('#st-page [data-subject-id]');
                     $h4.prepend('<i class="fa fa-spinner fa-spin"></i>');
                 });
             });
-
-            function setProgress(maxValue, value)
-            {
-                var percent = value*100/maxValue;
-                console.log(percent);
-                $('.progress-bar').attr('aria-valuenow', value);
-                $('.progress-bar').css({
-                    'width':percent+'%'
-                });
-            }
-
-            timer=setInterval(function(){
-                var value=parseInt($('.progress-bar').attr('aria-valuenow'))-10;
-                setProgress(@letterCount, value);
-            }, 1000);
         </script>
     }
 }

@@ -1,17 +1,14 @@
-﻿using System.Web.Mvc;
-using GE.WebUI.Extantions.Controllers;
-using SX.WebCore.MvcControllers;
+﻿using SX.WebCore.MvcControllers;
 using GE.WebCoreExtantions;
+using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
 {
     public abstract partial class BaseController : SxBaseController<DbContext>
     {
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        public BaseController()
         {
-            base.OnActionExecuting(filterContext);
-
-            this.WriteBreadcrumbs();
+            WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
     }
 }

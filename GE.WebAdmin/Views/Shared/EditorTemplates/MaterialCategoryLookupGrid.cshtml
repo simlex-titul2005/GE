@@ -9,8 +9,9 @@
 
     @Html.SxGridLookup(new SxExtantions.SxGridLookupSettings
 {
-    DataAjaxUrl = "/MaterialCategories/FindTreeView?mct="+ mct,
-    DefaulText = caption == null ? Html.ValueForModel().ToString() : caption
+    DataAjaxUrl = Url.Action("FindTreeView", "MaterialCategories", new { mct=mct }),
+    DefaulText = caption == null ? Html.ValueForModel().ToString() : caption,
+    Placeholder="Выберите категорию материала"
 },
     new VMGame [0]
 )

@@ -201,10 +201,12 @@
     <Compile Include="Controllers\AuthorAphorismsController.cs" />
     <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\HumorController.cs" />
     <Compile Include="Controllers\SiteQuetionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Extantions\Repositories\RepoAphorism.cs" />
+    <Compile Include="Infrastructure\BreadcrumbsManager.cs" />
     <Compile Include="Infrastructure\SiteSettings.cs" />
     <Compile Include="Models\Abstract\VMLastMaterial.cs" />
     <Compile Include="Models\VMAphorismCategory.cs" />
@@ -220,6 +222,7 @@
     <Compile Include="Models\VMLCNBNews.cs" />
     <Content Include="content\dist\css\ap-author-page.min.css" />
     <Content Include="content\dist\css\error-page.min.css" />
+    <Content Include="content\dist\css\humor.min.css" />
     <Content Include="content\dist\css\site.min.css" />
     <Content Include="content\dist\css\test-list.min.css" />
     <Content Include="content\dist\fonts\fontawesome-webfont.eot" />
@@ -367,6 +370,7 @@
     <Content Include="Views\SiteTests\List.cshtml" />
     <Content Include="Views\AuthorAphorisms\Details.cshtml" />
     <Content Include="Views\SiteTests\_StepNormal.cshtml" />
+    <Content Include="Views\Humor\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

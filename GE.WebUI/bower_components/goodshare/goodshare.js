@@ -22,7 +22,7 @@
 		*  Main function
 		*/
 		goodshare = {
-			init: function(_element, _options) {
+		    init: function (_element, _options) {
 				/*
 				 *  Default options:
 				 *
@@ -48,7 +48,7 @@
 			 *  Share link > Vkontakte
 			 *  @see http://vk.com
 			 */
-			vk: function(_options) {
+		    vk: function (_options) {
 				var options = $.extend({
 					url:    location.href,
 					title:  document.title,

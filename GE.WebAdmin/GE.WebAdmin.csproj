@@ -232,6 +232,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
+    <Compile Include="Controllers\HumorController.cs" />
     <Compile Include="Controllers\AuthorAphorismsController.cs" />
     <Compile Include="Controllers\BannerGroupsController.cs" />
     <Compile Include="Controllers\BannersController.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Extantions\Repositories\RepoAphorizm.cs" />
+    <Compile Include="Extantions\Repositories\RepoHumor.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
     <Compile Include="Extantions\Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
@@ -278,6 +280,8 @@
     </Compile>
     <Compile Include="Infrastructure\ReportAdapters\ReportAphorismsAdapter.cs" />
     <Compile Include="Models\VMAphorism.cs" />
+    <Compile Include="Models\VMEditHumor.cs" />
+    <Compile Include="Models\VMHumor.cs" />
     <Compile Include="Models\VMAuthorAphorism.cs" />
     <Compile Include="Models\VMEditAphorism.cs" />
     <Compile Include="Models\VMEditAuthorAphorism.cs" />
@@ -414,6 +418,9 @@
     <Content Include="Views\ShareButtons\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\_OnlineUsers.cshtml" />
+    <Content Include="Views\Humor\_GridView.cshtml" />
+    <Content Include="Views\Humor\Edit.cshtml" />
+    <Content Include="Views\Humor\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

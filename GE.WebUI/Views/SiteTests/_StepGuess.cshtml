@@ -7,7 +7,7 @@
 
 @if (ViewBag.SubjectsCount == null || ViewBag.SubjectsCount > 1)
 {
-    using (Ajax.BeginForm("StepGuess", "SiteTests", new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }))
+    using (Ajax.BeginForm("StepGuess", new { controller="SiteTests" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }))
     {
         <br />
         <blockquote>

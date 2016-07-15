@@ -11,7 +11,8 @@
     @Html.SxGridLookup(new SxExtantions.SxGridLookupSettings
     {
         DataAjaxUrl = "/pictures/findgridview",
-        DefaulText = pictureCaption == null ? Html.ValueForModel().ToString() : pictureCaption.ToString()
+        DefaulText = pictureCaption == null ? Html.ValueForModel().ToString() : pictureCaption.ToString(),
+        Placeholder="Выберите изображение"
     },
     new SxVMPicture[0]
 )

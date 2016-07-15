@@ -4,7 +4,6 @@ using System.Linq;
 using Dapper;
 using GE.WebUI.Models.Abstract;
 using static SX.WebCore.Enums;
-using SX.WebCore;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -132,17 +131,6 @@ ORDER BY
             {
                 var results = conn.Query<VMDetailMaterial>(query, new { amount = amount }).ToArray();
                 return results;
-            }
-        }
-
-        public static VMDetailArticle GetByTitleUrl(this WebCoreExtantions.Repositories.RepoArticle repo, int year, string month, string day, string titleUrl)
-        {
-            using (var conn = new SqlConnection(repo.ConnectionString))
-            {
-                var data=conn.Query<VMDetailArticle>("get_material_by_url @year, @month, @day, @title_url, @mct", new { year=year, month=month, day=day, title_url = titleUrl, mct=ModelCoreType.Article }).SingleOrDefault();
-                if(data!=null)
-                    data.Videos = conn.Query<SxVideo>("get_material_videos @mid, @mct", new { mid = data.Id,  mct=data.ModelCoreType}).ToArray();
-                return data;
             }
         }
 

@@ -7,6 +7,7 @@
     ViewBag.Description = ViewBag.Description ?? Model.Question != null && Model.Question.Test!=null ? Model.Question.Test.Description : "Страница прохождения теста";
     ViewBag.Keywords = ViewBag.Keywords ?? "Игровые тесты, тесты для игр";
     var testType = Model.Question.Test.Type;
+    var letterCount = (int)ViewBag.LettersCount;
 }
 
 @Html.Partial("_Breadcrumbs", (VMBreadcrumb[])ViewBag.Breadcrumbs)
@@ -31,6 +32,7 @@
         <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
         <script src="~/content/dist/js/goodshare.min.js"></script>
         <script>
+            var timer;
             $(function () {
                 //guess
                 $('#st-page').on('click', '.sx-indicator > span', function () {
@@ -47,6 +49,10 @@
 });
 
                 //normal
+
+                setProgress(@letterCount, @letterCount);
+
+
                 $('#st-page').on('change', '.test-normal-q-list [type="radio"]', function () {
                     $radio = $(this);
                     var questionId = $radio.attr('id').replace('q-', '');
@@ -67,6 +73,21 @@
                     $h4.prepend('<i class="fa fa-spinner fa-spin"></i>');
                 });
             });
+
+            function setProgress(maxValue, value)
+            {
+                var percent = value*100/maxValue;
+                console.log(percent);
+                $('.progress-bar').attr('aria-valuenow', value);
+                $('.progress-bar').css({
+                    'width':percent+'%'
+                });
+            }
+
+            timer=setInterval(function(){
+                var value=parseInt($('.progress-bar').attr('aria-valuenow'))-10;
+                setProgress(@letterCount, value);
+            }, 1000);
         </script>
     }
 }

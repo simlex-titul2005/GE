@@ -73,11 +73,23 @@ namespace GE.WebUI.Controllers
             {
                 step.SubjectId = data.SubjectId;
                 step.QuestionId = 0;
+                ViewBag.LettersCount = getSiteTestQuestionsLettersCount(data.Question.Test.Questions);
             }
 
             ViewBag.OldSteps = new SxVMSiteTestStep[] { step };
             var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
             return View(model: viewModel);
+        }
+        private static int getSiteTestQuestionsLettersCount(ICollection<SxSiteTestQuestion> questions)
+        {
+            if (!questions.Any()) return 0;
+
+            var result = 0;
+            foreach (var q in questions)
+            {
+                result += q.Text.Length;
+            }
+            return result;
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -108,6 +120,7 @@ namespace GE.WebUI.Controllers
                     steps.Add(new SxVMSiteTestStep { QuestionId = data.QuestionId, SubjectId = data.SubjectId });
                 ViewBag.OldSteps = steps.ToArray();
                 ViewBag.AllSubjectsCount = allSubjectsCount;
+                ViewBag.LettersCount = getSiteTestQuestionsLettersCount(data.Question.Test.Questions);
                 var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
                 return PartialView("_StepNormal", viewModel);
             });

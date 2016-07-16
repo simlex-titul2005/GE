@@ -3,44 +3,38 @@
     Layout = null;
     var oldSteps = (SxVMSiteTestStepNormal[])ViewBag.OldSteps;
     var allSubjectsCount = Convert.ToInt32(ViewBag.AllSubjectsCount ?? -1);
-    var lettersCount = (int)ViewBag.LettersCount;
     SxVMSiteTestStepNormal step;
-    var balsCount = ViewBag.BalsCount == null ? -7.5 : (double)ViewBag.BalsCount;
 }
 
-@lettersCount
-
-@if (allSubjectsCount > oldSteps.Length || allSubjectsCount==-1)
+@if (allSubjectsCount > oldSteps.Length - 1 || allSubjectsCount == -1)
 {
-    using (Ajax.BeginForm("StepNormal", new { controller="SiteTests" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page" }, new { @autocomplete = "off" }))
+    using (Ajax.BeginForm("StepNormal", new { controller = "SiteTests" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "st-page", OnComplete = "setStepInterval" }, new { @autocomplete = "off" }))
     {
         <br />
         <blockquote>
             @Html.Raw(Model.Question.Test.Description)
         </blockquote>
 
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                <span class="sr-only">100% Complete</span>
-            </div>
-        </div>
-
         @Html.AntiForgeryToken()
 
-        <input type="hidden" name="balsCount" id="balsCount" value="@balsCount" />
-
-        <div class="s">
+        <ul class="s" style="display:none;">
             @for (int i = 0; i < oldSteps.Length; i++)
             {
                 step = oldSteps[i];
-                <input type="hidden" name="[@i].SubjectId" value="@step.SubjectId" />
-                if (step.QuestionId != 0)
-                {
-                    <input type="hidden" name="[@i].QuestionId" value="@step.QuestionId" />
-                }
+                <li class="s-s">
+                    <input type="hidden" name="[@i].SubjectId" value="@step.SubjectId" />
+                    @if (step.QuestionId != 0)
+                    {
+                        <input type="hidden" name="[@i].QuestionId" value="@step.QuestionId" />
+                    }
+                    <input type="hidden" name="[@i].LettersCount" value="@step.LettersCount" />
+                    <input type="hidden" name="[@i].BallsSubjectShow" value="@step.BallsSubjectShow" />
+                    <input type="hidden" name="[@i].BallsGoodRead" value="@step.BallsGoodRead" />
+                    <input type="hidden" name="[@i].BallsBadRead" value="@step.BallsBadRead" />
+                </li>
             }
-        </div>
-        
+        </ul>
+
         <h2 data-subject-id="@Model.Subject.Id"><img style="height:80px; margin-right:30px;" alt="@Model.Subject.Title" src="@(Model.Subject.PictureId.HasValue?Url.Action("Picture","Pictures", new { id=Model.Subject.PictureId}):"/content/dist/i/testsubject.png")" /> @Model.Subject.Title</h2>
 
         if (Model.Question.Test.Questions.Any())
@@ -63,15 +57,40 @@
 }
 else
 {
-    <br />
-    <blockquote>
-        @Html.Raw(Model.Question.Test.Description)
-    </blockquote>
+    <script>
+        continueStep = false;
+    </script>
+    using (Ajax.BeginForm("NormalResults", "SiteTests", new AjaxOptions { OnSuccess="fillNormalResults" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="s" style="display:none;">
+            @for (int i = 0; i < oldSteps.Length; i++)
+            {
+                step = oldSteps[i];
+                <li class="s-s">
+                    <input type="hidden" name="[@i].SubjectId" value="@step.SubjectId" />
+                    @if (step.QuestionId != 0)
+                    {
+                        <input type="hidden" name="[@i].QuestionId" value="@step.QuestionId" />
+                    }
+                    <input type="hidden" name="[@i].LettersCount" value="@step.LettersCount" />
+                    <input type="hidden" name="[@i].BallsSubjectShow" value="@step.BallsSubjectShow" />
+                    <input type="hidden" name="[@i].BallsGoodRead" value="@step.BallsGoodRead" />
+                    <input type="hidden" name="[@i].BallsBadRead" value="@step.BallsBadRead" />
+                </li>
+            }
+        </ul>
+        <br />
+        <blockquote>
+            @Html.Raw(Model.Question.Test.Description)
+        </blockquote>
 
-    <h2>Тест пройден</h2>
-    <br />
-    <div class="text-center">
-        <a class="btn btn-default btn-transparent white" href="@Url.Action("Details", "SiteTests", new { titleUrl=Model.Question.Test.TitleUrl})">Пройти заново</a>
-    </div>
-    <br />
+        <h2>Тест пройден</h2>
+        <br />
+        <div class="text-center">
+            <a class="btn btn-transparent white" href="@Url.Action("Details", "SiteTests", new { titleUrl = Model.Question.Test.TitleUrl })">Пройти заново</a>
+            <button class="btn btn-transparent white" type="submit">Получить результаты</button>
+        </div>
+        <br />
+    }
 }

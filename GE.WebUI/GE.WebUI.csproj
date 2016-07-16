@@ -365,7 +365,6 @@
     <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
     <Content Include="Views\SiteTests\_RandomList.cshtml" />
     <Content Include="Views\SiteTests\Details.cshtml" />
-    <Content Include="Views\SiteTests\Result.cshtml" />
     <Content Include="Views\SiteTests\_StepGuess.cshtml" />
     <Content Include="Views\SiteTests\List.cshtml" />
     <Content Include="Views\AuthorAphorisms\Details.cshtml" />

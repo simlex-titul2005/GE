@@ -25,6 +25,10 @@
                 <p class="text-muted">@Html.Raw(item.Description)</p>
                 <div class="test-item">
                     <a href="@Url.Action("Details","SiteTests", new { titleUrl = item.TitleUrl })" class="btn btn-sm btn-default test-item__btn">Пройти тест <i class="fa fa-angle-double-right"></i></a>
+                    @if (!string.IsNullOrEmpty(item.Rules))
+                    {
+                        <a href="@Url.Action("Rules", "SiteTests", new { siteTestId = item.Id })" class="btn btn-sm btn-default test-item__btn test-rules__btn">Правила <i class="fa fa-eye"></i></a>
+                    }
                 </div>
             </div>
         }
@@ -37,3 +41,38 @@
     }
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-rules">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $('.test-rules__btn').click(function () {
+            var url = $(this).attr('href');
+            $modal = $('#modal-rules');
+            $.ajax({
+                method: 'post',
+                url: url,
+                success: function (result) {
+                    $modal.find('.modal-title').html(result.Title);
+                    $modal.find('.modal-body').html(result.Rules);
+                    $modal.modal('show');
+                }
+            });
+            return false;
+        });
+    </script>
+    }

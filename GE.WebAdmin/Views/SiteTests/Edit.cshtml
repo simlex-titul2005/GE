@@ -97,6 +97,12 @@
                 @Html.ValidationMessageFor(x => x.Description)
             </div>
 
+            <div class="form-group">
+                @Html.LabelFor(x => x.Rules, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Rules, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.Rules)
+            </div>
+
             <div class="modal fade" id="matrixModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -182,11 +188,13 @@
     <script src="~/content/dist/js/lightbox.min.js"></script>
     <script>
         $(function () {
-            if (CKEDITOR.instances['Description']) {
+            if (CKEDITOR.instances['Description'] && CKEDITOR.instances['Rules']) {
                 CKEDITOR.remove(CKEDITOR.instances['Description']);
+                CKEDITOR.remove(CKEDITOR.instances['Rules']);
             }
             CKEDITOR.replace('Description', { height: 400 });
-
+            CKEDITOR.replace('Rules', { height: 400 });
+            
             $('input[name="test-file-input"]').focus(function(){
                 $input=$(this);
                 $file=$('input[type="file"]');

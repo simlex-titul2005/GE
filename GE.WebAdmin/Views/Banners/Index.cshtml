@@ -6,6 +6,7 @@
 @section styles{
     <link rel="stylesheet" href="~/content/dist/css/lightbox.min.css" />
     <link href="~/content/dist/css/grid-banners.min.css" rel="stylesheet" />
+    <link href="~/content/dist/css/morris.css" rel="stylesheet" />
 }
 
 <h2>@ViewBag.Title</h2>
@@ -14,11 +15,31 @@
     @Html.Partial("_gridview", Model)
 </div>
 
+<h2>Статистика</h2>
+<div id="banners-stat" style="height: 250px;"></div>
+
 @section scripts{
+    <script src="~/content/dist/js/raphael.min.js"></script>
+    <script src="~/content/dist/js/morris.min.js"></script>
     <script type="text/javascript" src="~/content/dist/js/lightbox.min.js"></script>
     <script>
         $(function () {
             $('#grid-banners').sx_gv();
+
+             $.ajax({
+                url: '@Url.Action("DateStatistic", "Banners")',
+                method: 'get',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    new Morris.Bar({
+                        element: 'banners-stat',
+                        data: data,
+                        xkey: 'Url',
+                        ykeys: ['ShowsCount', 'ClicksCount'],
+                        labels: ["Показов:", "Кликов:"]
+                    });
+                }
+            });
         });
     </script>
 }

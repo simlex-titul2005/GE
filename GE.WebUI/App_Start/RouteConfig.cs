@@ -244,6 +244,14 @@ namespace GE.WebUI
             #region site tests
             routes.MapRoute(
                 name: null,
+                url: "sitetests/rules/{siteTestId}",
+                defaults: new { controller = "SiteTests", action = "Rules", area = "" },
+                namespaces: _defNamespace,
+                constraints: new { httpMethod = new HttpMethodConstraint("post") }
+            );
+
+            routes.MapRoute(
+                name: null,
                 url: "sitetests",
                 defaults: new { controller = "SiteTests", action = "List", page=1, area = "" },
                 namespaces: _defNamespace,

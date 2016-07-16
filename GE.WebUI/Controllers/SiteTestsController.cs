@@ -1,7 +1,5 @@
 ﻿using GE.WebCoreExtantions;
 using SX.WebCore;
-using SX.WebCore.Abstract;
-using SX.WebCore.Repositories;
 using System.Web.Mvc;
 using System.Linq;
 using System.Collections.Generic;
@@ -9,18 +7,16 @@ using SX.WebCore.ViewModels;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using System.Threading.Tasks;
 using GE.WebUI.Models;
-using System;
-using System.Globalization;
+using SX.WebCore.MvcControllers;
+using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class SiteTestsController : BaseController
+    public sealed class SiteTestsController : SxSiteTestsController<DbContext>
     {
-        private static SxRepoSiteTest<DbContext> _repo;
         public SiteTestsController()
         {
-            if (_repo == null)
-                _repo = new SxRepoSiteTest<DbContext>();
+            WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
 
         [HttpGet]
@@ -28,9 +24,9 @@ namespace GE.WebUI.Controllers
         {
             var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
             var filter = new SxFilter { Order = defaultOrder, OnlyShow = true };
-            filter.PagerInfo.TotalItems = _repo.Count(filter);
+            filter.PagerInfo.TotalItems = Repo.Count(filter);
             ViewBag.Filter = filter;
-            var data = _repo.Query(filter).Select(x => Mapper.Map<SxSiteTest, SxVMSiteTest>(x)).ToArray();
+            var data = Repo.Query(filter).Select(x => Mapper.Map<SxSiteTest, SxVMSiteTest>(x)).ToArray();
 
             var viewModel = new SxPagedCollection<SxVMSiteTest>
             {
@@ -47,14 +43,14 @@ namespace GE.WebUI.Controllers
         [ChildActionOnly]
         public PartialViewResult RandomList()
         {
-            var data = (_repo as SxRepoSiteTest<DbContext>).RandomList();
+            var data = Repo.RandomList();
             return PartialView("_RandomList", data);
         }
 
         [HttpGet]
         public ActionResult Details(string titleUrl)
         {
-            var data = (_repo as SxRepoSiteTest<DbContext>).GetSiteTestPage(titleUrl);
+            var data = Repo.GetSiteTestPage(titleUrl);
             if (data == null) return new HttpNotFoundResult();
 
             var breadcrumbs = (VMBreadcrumb[])ViewBag.Breadcrumbs;
@@ -77,24 +73,14 @@ namespace GE.WebUI.Controllers
                 var step = new SxVMSiteTestStepNormal();
                 step.SubjectId = data.SubjectId;
                 step.QuestionId = 0;
-                ViewBag.LettersCount = getSiteTestQuestionsLettersCount(data.Question.Test.Questions);
+                step.LettersCount = getStepNormalLettersCount(data.Question.Test.Questions);
                 ViewBag.OldSteps = new SxVMSiteTestStepNormal[] { step };
             }
             
             var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
             return View(model: viewModel);
         }
-        private static int getSiteTestQuestionsLettersCount(ICollection<SxSiteTestQuestion> questions)
-        {
-            if (!questions.Any()) return 0;
-
-            var result = 0;
-            foreach (var q in questions)
-            {
-                result += q.Text.Length;
-            }
-            return result;
-        }
+        
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> StepGuess(List<SxVMSiteTestStepGuess> steps)
@@ -102,7 +88,7 @@ namespace GE.WebUI.Controllers
             return await Task.Run(() =>
             {
                 int subjectsCount;
-                var data = _repo.GetGuessStep(steps, out subjectsCount);
+                var data = Repo.GetGuessStep(steps, out subjectsCount);
                 ViewBag.SubjectsCount = subjectsCount;
                 steps.Add(new SxVMSiteTestStepGuess { QuestionId = data.QuestionId, IsCorrect = false });
                 ViewBag.OldSteps = steps.ToArray();
@@ -112,27 +98,37 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> StepNormal(List<SxVMSiteTestStepNormal> steps, string balsCount)
+        public async Task<ActionResult> StepNormal(List<SxVMSiteTestStepNormal> steps)
         {
             return await Task.Run(() =>
             {
                 int subjectsCount;
                 int allSubjectsCount;
-                var data = _repo.GetNormalStep(steps, out subjectsCount, out allSubjectsCount);
+                var data = Repo.GetNormalStep(steps, out subjectsCount, out allSubjectsCount);
                 ViewBag.SubjectsCount = subjectsCount;
                 if(data!=null)
-                    steps.Add(new SxVMSiteTestStepNormal { QuestionId = data.QuestionId, SubjectId = data.SubjectId });
+                    steps.Add(new SxVMSiteTestStepNormal {
+                        SubjectId = data.SubjectId,
+                        QuestionId = 0,
+                        LettersCount=getStepNormalLettersCount(data.Question.Test.Questions)
+                    });
                 ViewBag.OldSteps = steps.ToArray();
                 ViewBag.AllSubjectsCount = allSubjectsCount;
-                ViewBag.LettersCount = getSiteTestQuestionsLettersCount(data.Question.Test.Questions);
-
-                var b = double.Parse(balsCount, CultureInfo.InvariantCulture);
-                ViewBag.BalsCount = b;
-
 
                 var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
                 return PartialView("_StepNormal", viewModel);
             });
+        }
+        private static int getStepNormalLettersCount(ICollection<SxSiteTestQuestion> questions)
+        {
+            if (!questions.Any()) return 0;
+
+            var result = 0;
+            foreach (var q in questions)
+            {
+                result += q.Text.Length;
+            }
+            return result;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace GE.WebUI.Controllers
             WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public ViewResult List(int page = 1)
         {
             var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
@@ -40,14 +40,14 @@ namespace GE.WebUI.Controllers
 #if !DEBUG
         [OutputCache(Duration =900)]
 #endif
-        [ChildActionOnly]
+        [ChildActionOnly, AllowAnonymous]
         public PartialViewResult RandomList()
         {
             var data = Repo.RandomList();
             return PartialView("_RandomList", data);
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public ActionResult Details(string titleUrl)
         {
             var data = Repo.GetSiteTestPage(titleUrl);
@@ -82,7 +82,7 @@ namespace GE.WebUI.Controllers
         }
         
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
         public async Task<ActionResult> StepGuess(List<SxVMSiteTestStepGuess> steps)
         {
             return await Task.Run(() =>
@@ -97,7 +97,7 @@ namespace GE.WebUI.Controllers
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
         public async Task<ActionResult> StepNormal(List<SxVMSiteTestStepNormal> steps)
         {
             return await Task.Run(() =>

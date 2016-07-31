@@ -17,6 +17,7 @@
     SxBanner banner = null;
 }
 
+@Html.AntiForgeryToken()
 <div class="detail-news">
     @Html.Partial("_Breadcrumbs", (VMBreadcrumb[])ViewBag.Breadcrumbs)
 
@@ -30,7 +31,12 @@
         }
         @Html.Raw(Model.Html)
 
-        @Html.SxShareButtons(global_asax.ShareButtons)
+        @Html.SxShareButtons(global_asax.ShareButtons, lbSettings:new SxExtantions.SxLikeButtonsSettings {
+            LikeDownCount=()=>Model.LikeDownCount,
+            LikeUpCount=()=>Model.LikeUpCount,
+            MaterialId=()=>Model.Id,
+            ModelCoreType=Model.ModelCoreType
+        })
     </div>
 
 
@@ -38,10 +44,10 @@
 
     @*aphorisms*@
     <div id="aphorisms">
-        @{Html.RenderAction("random", new { controller = "aphorism" }); }
+       @{Html.RenderAction("Random", "Aphorism"); }
     </div>
 
-    @Html.Action("likematerials", new { controller = "news", materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
+    @Html.Action("LikeMaterials", "News", new { materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
 
     @{
         banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;

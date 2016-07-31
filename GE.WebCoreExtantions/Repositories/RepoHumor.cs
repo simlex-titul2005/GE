@@ -85,7 +85,7 @@ ORDER BY dv.DateCreate DESC";
                         item.VideoLinks = conn.Query<SxVideoLink, SxVideo, SxVideoLink>(queryForVideos, (vl, v) => {
                             vl.Video = v;
                             return vl;
-                        }, new { mid = item.Id, mct = ModelCoreType.Article }).ToArray();
+                        }, new { mid = item.Id, mct = ModelCoreType.Humor }).ToArray();
                     }
                 }
 

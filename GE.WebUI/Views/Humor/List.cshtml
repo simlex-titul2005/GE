@@ -6,11 +6,15 @@
     ViewBag.Description = ViewBag.Description ?? "Качественная коллекция юмора от " + global_asax.SiteSettingsProvider.Get("siteName");
     ViewBag.Keywords = ViewBag.Description ?? "Анекдоты, смешные истории, розыгрыши, шутки, " + global_asax.SiteSettingsProvider.Get("siteName");
     SxHumor item;
+    var length = 1000;
+    var date = DateTime.Now;
 }
 
 @section styles{
     <link href="~/content/dist/css/humor.min.css" rel="stylesheet" />
 }
+
+@Html.Partial("_Breadcrumbs", model: (VMBreadcrumb[])ViewBag.Breadcrumbs)
 
 <div id="humor-page">
     @if (Model.Collection.Any())
@@ -22,14 +26,42 @@
                 <li>
                     <div class="humor-list">
                         <h2 class="humor-list__header">@item.Title</h2>
-                        <div>
-                            @Html.Raw(item.Html)
+                        <div class="humor-list__info">
+                            <ul class="list-unstyled list-inline">
+                                <li>
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>: &nbsp; @((date-item.DateOfPublication).Days) дней назад
+                                </li>
+                                <li>
+                                    <i class="fa fa-eye" aria-hidden="true"></i>: &nbsp; @item.ViewsCount
+                                </li>
+                                <li>
+                                    <i class="fa fa-comments-o" aria-hidden="true"></i>: &nbsp; @item.CommentsCount
+                                </li>
+                            </ul>
                         </div>
-                        @Html.SxShareButtons(global_asax.ShareButtons, new Dictionary<string, SxExtantions.SxShareButtonsSettings> {
-                            {"vk", new SxExtantions.SxShareButtonsSettings { Url= Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
-                            {"fb", new SxExtantions.SxShareButtonsSettings { Url=Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
-                            {"ok", new SxExtantions.SxShareButtonsSettings { Url=Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
-                        })
+                        <div>
+                            @if (item.VideoLinks.Count > 0)
+                            {
+                                <div style="position:relative; height:340px; width:640px; max-width:100%;">
+                                    @Html.SxVideo(item.VideoLinks.First().Video, SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.Raw(item.Html.Length <= length ? item.Html : item.Html.Substring(0, length) + "...")
+                            }
+                        </div>
+                        <div class="text-left">
+                            <br />
+                            <a href="@Url.Action("Details", "Humor", new { year=item.DateCreate.Year, month=item.DateCreate.Month.ToString("00"), day=item.DateCreate.Day.ToString("00"), titleUrl=item.TitleUrl})" class="btn btn-warning">Поделиться</a>
+                        </div>
+
+                        @*<br />
+                            @Html.SxShareButtons(global_asax.ShareButtons, new Dictionary<string, SxExtantions.SxShareButtonsSettings> {
+                                {"vk", new SxExtantions.SxShareButtonsSettings { Url= Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
+                                {"fb", new SxExtantions.SxShareButtonsSettings { Url=Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
+                                {"ok", new SxExtantions.SxShareButtonsSettings { Url=Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
+                            })*@
                     </div>
                 </li>
             }
@@ -37,9 +69,16 @@
         <div class="text-center">
             @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new { page = x }), isAjax: false, htmlAttributes: new { @class = "pagination" })
         </div>
+        <br />
+        <div class="text-center">
+            <a href="@Url.Action("Add","Humor")" class="btn btn-transparent white">Добавить юмор</a>
+        </div>
     }
 </div>
 
+
 @section scripts{
-    <script src="~/content/dist/js/goodshare.min.js"></script>
+    <script type="text/javascript">
+        loadScriptOnce('https://www.youtube.com/iframe_api');
+    </script>
 }

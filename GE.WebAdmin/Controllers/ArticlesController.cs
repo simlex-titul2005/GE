@@ -52,7 +52,7 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public ViewResult Edit(int? id)
         {
-            var model = id.HasValue ? Repo.GetByKey(id, Enums.ModelCoreType.Article) : new Article { ModelCoreType = Enums.ModelCoreType.Article };
+            var model = id.HasValue ? Repo.GetByKey(id, ModelCoreType.Article) : new Article { ModelCoreType = ModelCoreType.Article };
             var viewModel = Mapper.Map<Article, VMEditArticle>(model);
             viewModel.OldTitleUrl = viewModel.TitleUrl;
             if (model.FrontPictureId.HasValue)

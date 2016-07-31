@@ -215,6 +215,8 @@
     <Compile Include="Models\VMAphorism.cs" />
     <Compile Include="Models\VMDetailGame.cs" />
     <Compile Include="Models\VMDetailGameMaterial.cs" />
+    <Compile Include="Models\VMDetailHumor.cs" />
+    <Compile Include="Models\VMEditHumor.cs" />
     <Compile Include="Models\VMEditSiteQuetion.cs" />
     <Compile Include="Models\VMLastNews.cs" />
     <Compile Include="Models\VMLCNB.cs" />
@@ -370,6 +372,8 @@
     <Content Include="Views\AuthorAphorisms\Details.cshtml" />
     <Content Include="Views\SiteTests\_StepNormal.cshtml" />
     <Content Include="Views\Humor\List.cshtml" />
+    <Content Include="Views\Humor\Details.cshtml" />
+    <Content Include="Views\Humor\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

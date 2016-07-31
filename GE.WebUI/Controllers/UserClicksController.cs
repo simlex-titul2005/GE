@@ -34,7 +34,7 @@ namespace GE.WebUI.Controllers
                 switch (uct)
                 {
                     case UserClickType.Like:
-                        var likeDirection = (Enums.LikeDirection)Enum.Parse(typeof(Enums.LikeDirection), Request.Form["likeDirection"] != null ? Request.Form["likeDirection"].ToString() : "0");
+                        var likeDirection = (LikeDirection)Enum.Parse(typeof(LikeDirection), Request.Form["ldir"] != null ? Request.Form["ldir"].ToString() : "0");
                         result = addlike(mid, mct, sessionId, userId, likeDirection);
                         break;
                     default:

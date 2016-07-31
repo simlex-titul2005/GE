@@ -2,18 +2,41 @@
 @import (reference) "sizes.less";
 @import (reference) "../bower_components/bootstrap/less/variables.less";
 
-#humor-page{
-    color:@color-white;
-    margin:@def-pad*2 0;
+#humor-page {
+    color: @color-white;
+    margin: @def-pad*2 0;
 }
 
-.humor-list{
-    font-size:15px;
-    margin-bottom:@def-pad*4;
+.humor-list {
+    font-size: 15px;
+    margin-bottom: @def-pad*6;
 }
 
-.humor-list__header{
-    font-size:18px;
-    font-weight:700;
-    margin-bottom:10px;
+.humor-list__header {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.humor-list__info {
+    margin-bottom: @def-pad;
+    font-size: 12px;
+}
+
+//humor-page
+.humor-page {
+    color: @color-white;
+    font-size: 15px;
+}
+
+.humor-page__info {
+    font-size: 12px;
+}
+
+//humor-page-add
+.humor-page-add {
+    color: @color-white;
+}
+
+.humor-page-add select > option{
+    color:@color-black;
 }

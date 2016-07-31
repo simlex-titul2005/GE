@@ -1,0 +1,57 @@
+﻿@model VMDetailHumor
+@{
+    ViewBag.Title = ViewBag.Title ?? Model.Title;
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.Description = ViewBag.Description ?? Model.Foreword ?? Model.Title;
+    ViewBag.Keywords = ViewBag.Keywords ?? "Анекоды, смешные истории, смешные случаи из жизни";
+    var date = DateTime.Now;
+}
+
+@section styles{
+    <link href="~/content/dist/css/humor.min.css" rel="stylesheet" />
+}
+
+@Html.Partial("_Breadcrumbs", model: (VMBreadcrumb[])ViewBag.Breadcrumbs)
+
+<div class="humor-page">
+    <br />
+    <div class="humor-page__info">
+        <ul class="list-unstyled list-inline">
+            <li>
+                <i class="fa fa-clock-o" aria-hidden="true"></i>: &nbsp; @((date - Model.DateOfPublication).Days) дней назад
+            </li>
+            <li>
+                <i class="fa fa-eye" aria-hidden="true"></i>: &nbsp; @Model.ViewsCount
+            </li>
+            <li>
+                <i class="fa fa-comments-o" aria-hidden="true"></i>: &nbsp; @Model.CommentsCount
+            </li>
+        </ul>
+    </div>
+    @Html.Raw(Model.Html)
+    <br />
+</div>
+
+<div class="text-center">
+    @Html.SxShareButtons(global_asax.ShareButtons, lbSettings: new SxExtantions.SxLikeButtonsSettings
+{
+    LikeDownCount = () => Model.LikeDownCount,
+    LikeUpCount = () => Model.LikeUpCount,
+    MaterialId = () => Model.Id,
+    ModelCoreType = Model.ModelCoreType
+})
+    <br />
+</div>
+
+@Html.Action("Edit", "Comments", new { mid = Model.Id, mct = Model.ModelCoreType })
+
+@section scripts{
+    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/content/dist/js/goodshare.min.js"></script>
+    <script>
+        loadScriptOnce('https://www.youtube.com/iframe_api');
+        $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Id +'&mct=' + '@Model.ModelCoreType');
+    </script>
+}

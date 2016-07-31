@@ -98,8 +98,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="News.cs" />
     <Compile Include="Article.cs" />
-    <Compile Include="Contest.cs" />
-    <Compile Include="ContestPrize.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

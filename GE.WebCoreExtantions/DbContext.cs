@@ -13,8 +13,6 @@ namespace GE.WebCoreExtantions
 
         public DbSet<AuthorAphorism> AuthorAphorisms { get; set; }
 
-        public DbSet<Contest> Contests { get; set; }
-
         public DbSet<Game> Games { get; set; }
 
         public new DbSet<News> News { get; set; }
@@ -22,11 +20,6 @@ namespace GE.WebCoreExtantions
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<ContestPrize>()
-                .HasRequired(x => x.Contest)
-                .WithMany(x=>x.Prizes)
-                .HasForeignKey(x => new { x.ContestId, x.MaterialCoreType });
 
             modelBuilder.Entity<Aphorism>().HasOptional(x => x.Author).WithMany(x => x.Aphorisms).HasForeignKey(x => new { x.AuthorId }).WillCascadeOnDelete(false);
         }

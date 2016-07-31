@@ -1,0 +1,95 @@
+﻿@model VMEditHumor
+@{
+    ViewBag.Title = ViewBag.Title ?? "Добавить юмор";
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.Description = ViewBag.Description ?? "На данной странице Вы можете добавить юмор";
+    ViewBag.Keywords = ViewBag.Keywords ?? "Юмор, анекдоты, смешные истории";
+}
+
+@section styles{
+    <link href="~/content/dist/css/humor.min.css" rel="stylesheet" />
+}
+
+@Html.Partial("_Breadcrumbs", model: (VMBreadcrumb[])ViewBag.Breadcrumbs)
+<br />
+<div class="humor-page-add">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <h2 class="text-success">Поздравляем! Ваш материал успешно добавлен и появиться на сайте после модерации.</h2>
+        <br />
+        <p>Вы можете добавить еще больше юмора в коллекцию @global_asax.SiteSettingsProvider.Get("siteName")! Напоминаем, для того, чтобы ваш юмористический материал вошел в коллекцию, он должен соответствовать определенным правилам.</p>
+    }
+    else
+    {
+        <p>Здравствуйте!</p>
+
+        <p>Мы рады, что вы решили прислать юмористический материал в коллекцию @global_asax.SiteSettingsProvider.Get("siteName")! Обращаем ваше внимание, что весь поступающий юмор проходит проверку (модерацию). Для того, чтобы ваш юмористический материал вошел в коллекцию, он должен соответствовать определенным правилам.</p>
+    }
+    <ol>
+        <li>Материал должен быть действительно смешным, остроумным или интересным.</li>
+        <li>В материале не должна присутствовать нецензурная лексика. В крайнем случае, когда "из песни слов не выкинешь", заменяйте буквы в нецензурном слове символами #$@("@")$% и т.п.</li>
+        <li>Не принимается политический юмор.</li>
+        <li>Не принимается юмор так или иначе оскорбляющий определенных людей и религиозные чувства людей.</li>
+        <li>Не принимаются материалы так или иначе нарушающие законодательство РФ.</li>
+        <li>Не принимаются юмористические материалы с большим количеством ошибок (орфография, пунктуация и т.д.).</li>
+        <li><strong class="text-warning">Внимание!</strong>. Если Вы хотите добавить на сайт смешной видеоролик, просто укажите ссылку на видео.</li>
+    </ol>
+
+    <br />
+
+    <form method="post" action="@Url.Action("Add","Humor")" autocomplete="off" class="transparent">
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CategoryId)
+                    @Html.DropDownListFor(x => x.CategoryId, (SelectListItem[])ViewBag.Categories, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.CategoryId)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Title)
+                    @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите заголовок" } })
+                    @Html.ValidationMessageFor(x => x.Title)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Html)
+            @Html.EditorFor(x => x.Html, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите текст", @style = "min-height:300px;" } })
+            @Html.ValidationMessageFor(x => x.Html)
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.UserName)
+                    @Html.EditorFor(x => x.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите Ваше имя" } })
+                    @Html.ValidationMessageFor(x => x.UserName)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="text-right">
+                        <div class="g-recaptcha" data-sitekey="@ViewBag.SiteSettingsGoogleRecaptchaSiteKey" data-theme="dark"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="text-center">
+                <button type="submit" class="btn btn-transparent white">Добавить</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section scripts{
+    <script src="~/Content/dist/js/jquery.validate.min.js"></script>
+    <script src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+}

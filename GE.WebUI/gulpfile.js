@@ -49,7 +49,6 @@ function createCss() {
         'less/tags-cloud.less',
         'less/like-mats.less',
         'less/by-date-m.less',
-        'less/share42init.less',
         'less/pop-mat.less',
         'less/banners.less',
         'less/identity-page.less',

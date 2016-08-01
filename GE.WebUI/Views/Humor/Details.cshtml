@@ -15,7 +15,7 @@
 
 <div class="humor-page">
     <br />
-    <div class="humor-page__info">
+    <div class="humor-page__info text-muted">
         <ul class="list-unstyled list-inline">
             <li>
                 <i class="fa fa-clock-o" aria-hidden="true"></i>: &nbsp; @((date - Model.DateOfPublication).Days) дней назад
@@ -28,6 +28,7 @@
             </li>
         </ul>
     </div>
+
     @Html.Raw(Model.Html)
     <br />
 </div>

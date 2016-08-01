@@ -39,6 +39,16 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="humor-list__author text-muted">
+                            @if(item.User!=null)
+                            {
+                                <span>Опубликовал: @(item.User.NikName ?? item.User.Email)</span>
+                            }
+                            else
+                            {
+                                <span>Прислал: @(item.UserName)</span>
+                            }
+                        </div>
                         <div>
                             @if (item.VideoLinks.Count > 0)
                             {

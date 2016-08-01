@@ -45,5 +45,8 @@ namespace GE.WebAdmin.Models
 
         [Display(Name = "Показывать в избранных")]
         public bool IsTop { get; set; }
+
+        [Display(Name = "Источник"), MaxLength(255), DataType(DataType.Url)]
+        public string SourceUrl { get; set; }
     }
 }

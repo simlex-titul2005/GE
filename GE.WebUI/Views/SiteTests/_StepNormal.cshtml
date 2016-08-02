@@ -44,8 +44,17 @@
                 @for (int i = 0; i < Model.Question.Test.Questions.Length; i++)
                 {
                     question = Model.Question.Test.Questions[i];
+                    var qTextArray = question.Text.Split('.');
+                    var sb = new System.Text.StringBuilder();
+                    sb.AppendFormat("<span class=\"big\">{0}</span>", qTextArray[0]);
+                    sb.Append("<span class=\"small\">");
+                    for (int y = 1; y < qTextArray.Length; y++)
+                    {
+                        sb.AppendFormat(". {0}", qTextArray[y]);
+                    }
+                    sb.Append("</span>");
                     <li>
-                        <input type="radio" id="q-@question.Id" name="question" /> <label for="q-@question.Id">@question.Text</label>
+                        <input type="radio" id="q-@question.Id" name="question" /> <label for="q-@question.Id">@Html.Raw(sb.ToString())</label>
                     </li>
                 }
             </ul>

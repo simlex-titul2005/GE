@@ -20,7 +20,7 @@
                         <div class="content">
                             <h4>@item.Title</h4>
                             <br />
-                            <p>@item.Description</p>
+                            <p>@(item.Description!=null && item.Description.Length<=200?Html.Raw(item.Description):Html.Raw(item.Description.Substring(0,200)+"..."))</p>
                             <div class="btn-block">
                                 <a href="@Url.Action("Details", new { controller="SiteTests", titleUrl= (string)item.TitleUrl})" class="btn btn-default btn-sm">Пройти тест <i class="fa fa-angle-double-right"></i></a>
                             </div>

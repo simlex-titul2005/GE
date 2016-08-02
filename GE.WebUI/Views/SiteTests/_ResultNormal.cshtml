@@ -1,0 +1,60 @@
+﻿@model SXVMSiteTestResult<SxVMSiteTestResultNormal>
+@{
+    SxVMSiteTestResultNormal item;
+    var colCount = 4;
+    var rowsCount = Math.Ceiling((decimal)Model.Results.Length / colCount);
+}
+
+<h2>Набрано баллов: @Model.BallsCount</h2>
+@if(!User.Identity.IsAuthenticated)
+{
+    <div class="text-warning">Вы не сможете сохранить результаты теста без регистрации на сайте!</div>
+}
+else
+{
+
+}
+<br />
+
+@for (int i = 0; i < rowsCount; i++)
+{
+    var data = Model.Results.Skip(i * colCount).Take(colCount).ToArray();
+    <div class="row">
+        @for (int y = 0; y < colCount; y++)
+        {
+            if (y<=data.Length-1)
+            {
+                item = data[y];
+                var secondCount = item.SecondCount(20);
+                var balsCount = item.Step.BallsSubjectShow + (item.IsCorrect ? item.Step.BallsGoodRead : 0) + item.Step.BallsBadRead;
+                <div class="col-md-3">
+                    <div class="test-result normal">
+                        <h3>@item.SubjectTitle</h3>
+                        <div class="test-result__q" title="@item.QuestionText"><b>Вы ответили:</b> @(item.QuestionText.Length <= 200 ? item.QuestionText : item.QuestionText.Substring(0, 200) + "...")</div>
+                        <div><b>Статус ответа:</b> <span class="@(item.IsCorrect ? "text-success" : "text-danger")">@(item.IsCorrect ? "правильно" : "неправильно")</span></div>
+                        <div><b>Время на ответ:</b> @(secondCount == 0 ? 1 : secondCount) сек.</div>
+                        @if (item.Step.BallsBadRead < 0)
+                        {
+                            <div><b>Вы ответили за:</b> @(-item.Step.BallsBadRead / 3) сек. <span class="text-danger">[@item.Step.BallsBadRead баллов]</span></div>
+                        }
+                        else if (item.IsCorrect)
+                        {
+                            <div><b>Баллы за быстрый ответ:</b> <span class="text-success">[@item.Step.BallsGoodRead баллов]</span></div>
+                        }
+                        <div><b>Всего баллов:</b> <b>@(balsCount)</b></div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-3"></div>
+            }
+        }
+    </div>
+}
+
+<div class="text-center">
+    <br />
+    <a href="@Model.SiteTestUrl" class="btn btn-transparent white">Пройти заново</a>
+</div>
+<br />

@@ -3,7 +3,7 @@
     var isNew = Model.Id == 0;
 }
 
-@using (Ajax.BeginForm("Edit", "SiteTestQuestions", new AjaxOptions { HttpMethod = "post", UpdateTargetId = "grid-test-questions", OnComplete = "$('#test-modal').modal('hide');" }, new { @autocomplete = "off" }))
+@using (Ajax.BeginForm("Edit", new { controller= "SiteTestQuestions" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "grid-test-questions", OnComplete = "$('#test-modal').modal('hide');" }, new { @autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" name="Id" value="@Model.Id" />
@@ -11,7 +11,7 @@
 
     <div class="form-group">
         @Html.LabelFor(x => x.Text, new { @class = "control-label" })
-        @Html.EditorFor(x=>x.Text, new { htmlAttributes= new { @class="form-control", @placeholder="Введите вопрос"} })
+        @Html.EditorFor(x=>x.Text, new { htmlAttributes= new { @class="form-control", @placeholder="Введите вопрос (не больше 500 знаков)"} })
         @Html.ValidationMessageFor(x => x.Text)
     </div>
 

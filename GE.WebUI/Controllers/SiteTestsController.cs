@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using GE.WebUI.Models;
 using SX.WebCore.MvcControllers;
 using GE.WebUI.Infrastructure;
+using SX.WebCore.Attrubutes;
 
 namespace GE.WebUI.Controllers
 {
@@ -97,7 +98,7 @@ namespace GE.WebUI.Controllers
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous, NotLogRequest]
         public async Task<ActionResult> StepNormal(List<SxVMSiteTestStepNormal> steps)
         {
             return await Task.Run(() =>

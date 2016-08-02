@@ -60,7 +60,7 @@ else
     <script>
         continueStep = false;
     </script>
-    using (Ajax.BeginForm("NormalResults", "SiteTests", new AjaxOptions { OnSuccess="fillNormalResults" }))
+    using (Ajax.BeginForm("ResultNormal", "SiteTests", new AjaxOptions { UpdateTargetId = "results" }))
     {
         @Html.AntiForgeryToken()
         <ul class="s" style="display:none;">
@@ -85,12 +85,16 @@ else
             @Html.Raw(Model.Question.Test.Description)
         </blockquote>
 
-        <h2>Тест пройден</h2>
-        <br />
-        <div class="text-center">
-            <a class="btn btn-transparent white" href="@Url.Action("Details", "SiteTests", new { titleUrl = Model.Question.Test.TitleUrl })">Пройти заново</a>
-            <button class="btn btn-transparent white" type="submit">Получить результаты</button>
+        <div id="results">
+            <h2>Тест пройден</h2>
+            <p>Вы можете получить результаты теста прямо сейчас, нажав на кнопку "Получить результаты".</p>
+            <p>Если Вы являетесь зарегистрированным пользователем сайта, результаты пройденного теста автоматически сохраняться и Вы автоматически становитесь участником рейтинга прохождения тестов.</p>
+            <p>Если Вы еще не зарегистрированы на сайте, Вашт результаты отобразятся единожды и Вы не сможете участвовать в рейтинге прохождения тестов. Кроме того, Вы не сможете поделиться результатами теста с друзьями. Для регистрации на сайте пройдите по <a href="@Url.Action("Register", "Account")">этой ссылке</a>.</p>
+            <br />
+            <div class="text-center">
+                <button class="btn btn-transparent white" type="submit">Получить результаты</button>
+            </div>
+            <br />
         </div>
-        <br />
     }
 }

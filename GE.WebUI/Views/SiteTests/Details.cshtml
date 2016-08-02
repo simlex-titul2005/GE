@@ -101,8 +101,6 @@
                         $goodReadInput.val(ballsGoodRead - 3);
                     else
                         $badReadInput.val($badReadInput.val() - 3);
-
-                    //console.log(secondCounter);
                 }, 1000);
             }
 
@@ -111,14 +109,6 @@
                     clearInterval(interval);
                     secondCounter = 0;
                 }
-            }
-
-            function fillNormalResults(result)
-            {
-                $(result).each(function () {
-                    $item = $(this);
-                    console.log($item);
-                });
             }
         </script>
     }

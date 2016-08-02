@@ -31,7 +31,7 @@ ORDER BY dm.DateCreate DESC";
         public override SxHumor[] Query(SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] {
-                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title", "dm.ModelCoreType",
+                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title", "dm.ModelCoreType", "da.UserName",
                 @"(SELECT
        SUBSTRING(
            CASE 
@@ -46,7 +46,7 @@ ORDER BY dm.DateCreate DESC";
                 "dm.DateOfPublication",
                 "dm.ViewsCount",
                 "(SELECT COUNT(1) FROM D_COMMENT dc WHERE dc.MaterialId=dm.Id AND dc.ModelCoreType=dm.ModelCoreType ) AS CommentsCount",
-                "dm.UserId",
+                "anu.Id",
                 "anu.NikName",
             });
             query += @" FROM D_HUMOR AS da
@@ -76,7 +76,7 @@ ORDER BY dv.DateCreate DESC";
                 var data = conn.Query<SxHumor, SxAppUser, SxHumor>(query, (da, anu) => {
                     da.User = anu;
                     return da;
-                }, param: param, splitOn: "UserId");
+                }, param: param);
 
                 if (data.Any())
                 {

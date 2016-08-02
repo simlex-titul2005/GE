@@ -14,15 +14,18 @@
     }
 }
 <div class="ap-list">
-    @if (author != null && author.PictureId.HasValue && !string.IsNullOrWhiteSpace(author.Foreword))
+    @if (author != null && author.PictureId.HasValue)
     {
         <div class="aph-autor-info">
             <figure class="aph-autor-info__img img-circle" style="background-image:url(@Url.Action("Picture","Pictures", new { id=author.PictureId})"></figure>
             <div class="aph-autor-info__fwd">
                 @author.Foreword<br />
             </div>
+            @if (!string.IsNullOrWhiteSpace(author.Foreword))
+            {
             <br />
-            <a href="@Url.Action("Details","AuthorAphorisms", new { titleUrl=author.TitleUrl})" class="btn btn-sm btn-default test-item__btn">Подробнее об авторе <i class="fa fa-angle-double-right"></i></a>
+            <a href="@Url.Action("Details", "AuthorAphorisms", new { titleUrl = author.TitleUrl })" class="btn btn-sm btn-default test-item__btn">Подробнее об авторе <i class="fa fa-angle-double-right"></i></a>
+            }
         </div>
     }
 

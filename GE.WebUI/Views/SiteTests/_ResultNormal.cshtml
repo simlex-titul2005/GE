@@ -6,7 +6,7 @@
 }
 
 <h2>Набрано баллов: @Model.BallsCount</h2>
-@if(!User.Identity.IsAuthenticated)
+@if (!User.Identity.IsAuthenticated)
 {
     <div class="text-warning">Вы не сможете сохранить результаты теста без регистрации на сайте!</div>
 }
@@ -22,11 +22,11 @@ else
     <div class="row">
         @for (int y = 0; y < colCount; y++)
         {
-            if (y<=data.Length-1)
+            if (y <= data.Length - 1)
             {
                 item = data[y];
                 var secondCount = item.SecondCount(20);
-                var balsCount = item.Step.BallsSubjectShow + (item.IsCorrect ? item.Step.BallsGoodRead : 0) + item.Step.BallsBadRead;
+                var balsCount = item.Step.BallsSubjectShow + (item.IsCorrect ? item.Step.BallsGoodRead : 0) + item.Step.BallsBadRead + (item.IsCorrect ? 15 : 0);
                 <div class="col-md-3">
                     <div class="test-result normal">
                         <h3>@item.SubjectTitle</h3>

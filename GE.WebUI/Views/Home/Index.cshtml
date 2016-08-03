@@ -37,6 +37,17 @@
             $('.l-n-b').geLastNewsBlock();
             $('.l-c-n-b').geLastCategoryBlock();
             $('.f-g-b').geFGB(400);
+
+            $('#stRulesModal').on('show.bs.modal', function (event) {
+                var modal = $(this);
+                $button = $(event.relatedTarget);
+                var testTitle = $button.data('test-title');
+                var testRules = $button.data('test-rules');
+                var testUrl = $button.data('test-url');
+                modal.find('.modal-title').html(testTitle);
+                modal.find('.modal-body').html(testRules);
+                modal.find('.url-btn').attr('href', testUrl);
+            })
         });
     </script>
 }

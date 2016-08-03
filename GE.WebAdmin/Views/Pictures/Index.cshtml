@@ -8,9 +8,18 @@
     <link href="~/content/dist/css/grid-pictures.min.css" rel="stylesheet" />
 }
 
+
+
 <h2>@ViewBag.Title</h2>
 <div class="alert alert-warning">
     <strong>Внимание!</strong> При добалении изображений не допускайте разрастания базы данных. Размер добавляемого файла не должен превышать <b>150 kB</b>. Перед добавлением рекомендуется сжать изображение специализированным online-сервисом (например <a href="http://resizepiconline.com" rel="nofollow" target="_blank"><b>http://resizepiconline.com</b></a>)
+</div>
+<div class="text-right">
+    <form method="post" action="@Url.Action("AddMany","Pictures")" enctype="multipart/form-data" id="multiform">
+        @Html.AntiForgeryToken()
+        <input type="file" name="files" id="files" class="hidden" multiple />
+    </form>
+    <a href="javascript:void(0)" class="btn btn-default" onclick="$('#files').click(); return false;"><i class="fa fa-bars" aria-hidden="true"></i> Множественное добавление</a>
 </div>
 <br />
 <div id="grid-pictures">
@@ -22,6 +31,10 @@
     <script>
         $(function () {
             $('#grid-pictures').sx_gv();
+
+            $('#files').change(function () {
+                $('#multiform').submit();
+            });
         });
     </script>
 }

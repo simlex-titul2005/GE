@@ -1,0 +1,32 @@
+﻿@model SxVMPicture[]
+@{
+    ViewBag.Title = "Множественное добавление фото";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form method="post" action="@Url.Action("AddMany","Pictures")" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="file" name="files" id="files" class="hidden" multiple />
+</form>
+
+<div id="grid-pictures">
+    @Html.Partial("_GridViewMany", Model)
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('[type="file"]').change(function (e) {
+                $('form').submit();
+            });
+
+            $('#grid-pictures').sx_gv();
+
+            $('#grid-pictures').on('click', '.sx-gv__create-btn', function () {
+                $('#files').click();
+                return false;
+            });
+        });
+    </script>
+}

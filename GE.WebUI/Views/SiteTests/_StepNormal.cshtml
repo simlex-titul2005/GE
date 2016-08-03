@@ -15,53 +15,72 @@
             @Html.Raw(Model.Question.Test.Description)
         </blockquote>
 
-        @Html.AntiForgeryToken()
+        <div id="results">
+            @Html.AntiForgeryToken()
 
-        <ul class="s" style="display:none;">
-            @for (int i = 0; i < oldSteps.Length; i++)
-            {
-                step = oldSteps[i];
-                <li class="s-s">
-                    <input type="hidden" name="[@i].SubjectId" value="@step.SubjectId" />
-                    @if (step.QuestionId != 0)
-                    {
-                        <input type="hidden" name="[@i].QuestionId" value="@step.QuestionId" />
-                    }
-                    <input type="hidden" name="[@i].LettersCount" value="@step.LettersCount" />
-                    <input type="hidden" name="[@i].BallsSubjectShow" value="@step.BallsSubjectShow" />
-                    <input type="hidden" name="[@i].BallsGoodRead" value="@step.BallsGoodRead" />
-                    <input type="hidden" name="[@i].BallsBadRead" value="@step.BallsBadRead" />
-                </li>
-            }
-        </ul>
-
-        <h2 data-subject-id="@Model.Subject.Id"><img style="height:80px; margin-right:30px;" alt="@Model.Subject.Title" src="@(Model.Subject.PictureId.HasValue?Url.Action("Picture","Pictures", new { id=Model.Subject.PictureId}):"/content/dist/i/testsubject.png")" /> @Model.Subject.Title</h2>
-
-        if (Model.Question.Test.Questions.Any())
-        {
-            SxVMSiteTestQuestion question;
-            <ul class="test-normal-q-list">
-                @for (int i = 0; i < Model.Question.Test.Questions.Length; i++)
+            <ul class="s" style="display:none;">
+                @for (int i = 0; i < oldSteps.Length; i++)
                 {
-                    question = Model.Question.Test.Questions[i];
-                    var qTextArray = question.Text.Split('.');
-                    var sb = new System.Text.StringBuilder();
-                    sb.AppendFormat("<span class=\"big\">{0}</span>", qTextArray[0]);
-                    sb.Append("<span class=\"small\">");
-                    for (int y = 1; y < qTextArray.Length; y++)
-                    {
-                        sb.AppendFormat(". {0}", qTextArray[y]);
-                    }
-                    sb.Append("</span>");
-                    <li>
-                        <input type="radio" id="q-@question.Id" name="question" /> <label for="q-@question.Id">@Html.Raw(sb.ToString())</label>
+                    step = oldSteps[i];
+                    <li class="s-s">
+                        <input type="hidden" name="[@i].SubjectId" value="@step.SubjectId" />
+                        @if (step.QuestionId != 0)
+                        {
+                            <input type="hidden" name="[@i].QuestionId" value="@step.QuestionId" />
+                        }
+                        <input type="hidden" name="[@i].LettersCount" value="@step.LettersCount" />
+                        <input type="hidden" name="[@i].BallsSubjectShow" value="@step.BallsSubjectShow" />
+                        <input type="hidden" name="[@i].BallsGoodRead" value="@step.BallsGoodRead" />
+                        <input type="hidden" name="[@i].BallsBadRead" value="@step.BallsBadRead" />
                     </li>
                 }
             </ul>
-        }
-        <div class="text-center">
-            <button type="submit" class="btn btn-transparent white test-normal-q-list__dont-btn">Пропустить</button>
+
+            <h2 data-subject-id="@Model.Subject.Id">
+                @if (Model.Question.Test.Type != SX.WebCore.SxSiteTest.SiteTestType.NormalImage)
+                {
+                    <img style="height:80px; margin-right:30px;" alt="@Model.Subject.Title" src="@(Model.Subject.PictureId.HasValue ? Url.Action("Picture", "Pictures", new { id = Model.Subject.PictureId }) : "/content/dist/i/testsubject.png")" /> @Model.Subject.Title
+                }
+                else
+                {
+                    <img alt="@Model.Question.Test.Title" src="@Url.Action("Picture", "Pictures", new { id=Model.Subject.PictureId})" />
+                }
+            </h2>
+
+            @if (Model.Question.Test.Questions.Any())
+            {
+                SxVMSiteTestQuestion question;
+                <ul class="test-normal-q-list">
+                    @for (int i = 0; i < Model.Question.Test.Questions.Length; i++)
+                    {
+                        question = Model.Question.Test.Questions[i];
+                        var qTextArray = question.Text.Split('.');
+                        var sb = new System.Text.StringBuilder();
+                        sb.AppendFormat("<span class=\"big\">{0}</span>", qTextArray[0]);
+                        sb.Append("<span class=\"small\">");
+                        for (int y = 1; y < qTextArray.Length; y++)
+                        {
+                            sb.AppendFormat(". {0}", qTextArray[y]);
+                        }
+                        sb.Append("</span>");
+                        <li>
+                            <input type="radio" id="q-@question.Id" name="question" /> <label for="q-@question.Id">@Html.Raw(sb.ToString())</label>
+                        </li>
+                    }
+                </ul>
+            }
+            <div class="text-center">
+                <button type="submit" class="btn btn-success test-normal-q-list__dont-btn"><i class="fa fa-forward" aria-hidden="true"></i> Пропустить</button>
+            </div>
         </div>
+    }
+    using (Ajax.BeginForm("ResultNormal", "SiteTests", new AjaxOptions { UpdateTargetId = "results" , OnSuccess="$(this).remove();" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="text-center">
+            <button type="submit" onclick="$(this).prepend($('.s'));" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Завершить</button>
+        </div>
+        <br />
     }
 }
 else

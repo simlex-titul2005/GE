@@ -20,14 +20,35 @@
                         <div class="content">
                             <h4>@item.Title</h4>
                             <br />
-                            <p>@(item.Description!=null && item.Description.Length<=200?Html.Raw(item.Description):Html.Raw(item.Description.Substring(0,200)+"..."))</p>
+                            @(item.Description != null && item.Description.Length <= 200 ? Html.Raw(item.Description) : Html.Raw(item.Description.Substring(0, 200) + "..."))
                             <div class="btn-block">
-                                <a href="@Url.Action("Details", new { controller="SiteTests", titleUrl= (string)item.TitleUrl})" class="btn btn-default btn-sm">Пройти тест <i class="fa fa-angle-double-right"></i></a>
+                                @if (!string.IsNullOrEmpty(item.Rules))
+                                {
+                                    <a href="@Url.Action("Rules", "SiteTests", new { siteTestId = item.Id })" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#stRulesModal" data-test-title="@item.Title" data-test-rules="@item.Rules" data-test-url="@Url.Action("Details", "SiteTests", new { titleUrl= (string)item.TitleUrl})">Правила</a>
+                                }
+                                <a href="@Url.Action("Details", "SiteTests", new { titleUrl= (string)item.TitleUrl})" class="btn btn-default btn-sm">Пройти тест <i class="fa fa-angle-double-right"></i></a>
                             </div>
                         </div>
                     }
                 </div>
             }
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="stRulesModal" style="color:#000;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        <a href="#" class="btn btn-primary url-btn">Пройти тест</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }

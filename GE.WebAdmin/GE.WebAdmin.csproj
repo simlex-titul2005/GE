@@ -421,6 +421,7 @@
     <Content Include="Views\Humor\_GridView.cshtml" />
     <Content Include="Views\Humor\Edit.cshtml" />
     <Content Include="Views\Humor\Index.cshtml" />
+    <Content Include="Views\Pictures\AddMany.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

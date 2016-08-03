@@ -18,7 +18,7 @@
         {
             @Html.Partial("_StepGuess", Model)
         }
-        else if (Equals(testType, SxSiteTest.SiteTestType.Normal))
+        else if (Equals(testType, SxSiteTest.SiteTestType.Normal) || Equals(testType, SxSiteTest.SiteTestType.NormalImage))
         {
             <script>
                 var continueStep = true;
@@ -26,90 +26,89 @@
             @Html.Partial("_StepNormal", Model)
         }
     </div>
-
-    <div class="text-center">
+    <div class="text-center" style="color:#fff;">
+        <p>Рассказать другу о тесте:</p>
         @Html.SxShareButtons(global_asax.ShareButtons)
     </div>
     <br />
 
-    @section scripts{
-        <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
-        <script src="~/content/dist/js/goodshare.min.js"></script>
-        <script>
-            var interval;
-            var lettersInSecond = 20;//1200 знаков в минуту
-            var secondCounter = 0;
-            $(function () {
-                //guess
-                $('#st-page').on('click', '.sx-indicator > span', function () {
-                    $span = $(this);
-                    $span.closest('.sx-indicator').prepend('<i class="fa fa-spinner fa-spin"></i>');
-                    var id = $span.closest('li').find('.sx-indicator-txt').attr('data-id');
-                    var isCorrect = $span.data('dir') == true;
+        @section scripts{
+            <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
+            <script src="~/content/dist/js/goodshare.min.js"></script>
+            <script>
+                var interval;
+                var lettersInSecond = 20;//1200 знаков в минуту
+                var secondCounter = 0;
+                $(function () {
+                    //guess
+                    $('#st-page').on('click', '.sx-indicator > span', function () {
+                        $span = $(this);
+                        $span.closest('.sx-indicator').prepend('<i class="fa fa-spinner fa-spin"></i>');
+                        var id = $span.closest('li').find('.sx-indicator-txt').attr('data-id');
+                        var isCorrect = $span.data('dir') == true;
 
-                    $form = $span.closest('form');
-                    $input = $form.find('input[data-q-id="' + id + '"]')
-                    $input.val(isCorrect);
+                        $form = $span.closest('form');
+                        $input = $form.find('input[data-q-id="' + id + '"]')
+                        $input.val(isCorrect);
 
-                    $form.submit();
+                        $form.submit();
+                    });
+
+                    //normal
+                    $('#st-page').on('change', '.test-normal-q-list [type="radio"]', function () {
+                        $radio = $(this);
+                        var questionId = $radio.attr('id').replace('q-', '');
+                        $h4 = $('#st-page [data-subject-id]');
+                        $h4.prepend('<i class="fa fa-spinner fa-spin"></i>');
+                        var subjectId = $h4.attr('data-subject-id');
+                        $subject = $('#st-page .s [value="' + subjectId + '"]');
+                        var subjectIndex = $subject.attr('name').replace('.SubjectId', '');
+
+                        $('<input type="hidden" name="' + subjectIndex + '.QuestionId" value="' + questionId + '" />').insertAfter($subject);
+
+                        $form = $radio.closest('form');
+                        $form.submit();
+                    });
+
+                    $('#st-page').on('click', '.test-normal-q-list__dont-btn', function () {
+                        $h4 = $('#st-page [data-subject-id]');
+                        $h4.prepend('<i class="fa fa-spinner fa-spin"></i>');
+                    });
+
+                    setStepInterval();
                 });
 
-                //normal
-                $('#st-page').on('change', '.test-normal-q-list [type="radio"]', function () {
-                    $radio = $(this);
-                    var questionId = $radio.attr('id').replace('q-', '');
-                    $h4 = $('#st-page [data-subject-id]');
-                    $h4.prepend('<i class="fa fa-spinner fa-spin"></i>');
-                    var subjectId = $h4.attr('data-subject-id');
-                    $subject = $('#st-page .s [value="' + subjectId + '"]');
-                    var subjectIndex = $subject.attr('name').replace('.SubjectId', '');
+                function setStepInterval() {
+                    clearStepInterval();
+                    if (!continueStep) {
+                        $('.s-s').last().remove();
+                        return;
+                    }
 
-                    $('<input type="hidden" name="' + subjectIndex + '.QuestionId" value="' + questionId + '" />').insertAfter($subject);
+                    $subject = $('.s-s').last();
+                    $lettersCountInput = $subject.children('[name$="LettersCount"]');
+                    $goodReadInput = $subject.children('[name$="BallsGoodRead"]');
+                    $badReadInput = $subject.children('[name$="BallsBadRead"]');
 
-                    $form = $radio.closest('form');
-                    $form.submit();
-                });
+                    var secondsCount = parseInt(parseInt($lettersCountInput.val()) / lettersInSecond) * 3;
+                    $goodReadInput.val(secondsCount < 15 ? 15 : secondsCount);
+                    interval = setInterval(function () {
+                        secondCounter++;
 
-                $('#st-page').on('click', '.test-normal-q-list__dont-btn', function () {
-                    $h4 = $('#st-page [data-subject-id]');
-                    $h4.prepend('<i class="fa fa-spinner fa-spin"></i>');
-                });
-
-                setStepInterval();
-            });
-
-            function setStepInterval() {
-                clearStepInterval();
-                if (!continueStep)
-                {
-                    $('.s-s').last().remove();
-                    return;
+                        var ballsGoodRead = $goodReadInput.val();
+                        if (ballsGoodRead != 0)
+                            $goodReadInput.val(ballsGoodRead - 3);
+                        else
+                            $badReadInput.val($badReadInput.val() - 3);
+                    }, 1000);
                 }
 
-                $subject = $('.s-s').last();
-                $lettersCountInput = $subject.children('[name$="LettersCount"]');
-                $goodReadInput = $subject.children('[name$="BallsGoodRead"]');
-                $badReadInput = $subject.children('[name$="BallsBadRead"]');
-
-                var secondsCount = parseInt(parseInt($lettersCountInput.val()) / lettersInSecond);
-                $goodReadInput.val(secondsCount * 3);
-                interval = setInterval(function () {
-                    secondCounter++;
-
-                    var ballsGoodRead = $goodReadInput.val();
-                    if (ballsGoodRead != 0)
-                        $goodReadInput.val(ballsGoodRead - 3);
-                    else
-                        $badReadInput.val($badReadInput.val() - 3);
-                }, 1000);
-            }
-
-            function clearStepInterval() {
-                if (interval) {
-                    clearInterval(interval);
-                    secondCounter = 0;
+                function clearStepInterval() {
+                    if (interval) {
+                        clearInterval(interval);
+                        secondCounter = 0;
+                    }
                 }
-            }
-        </script>
-    }
+            </script>
+        }
 }

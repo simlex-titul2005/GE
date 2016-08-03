@@ -69,7 +69,7 @@ namespace GE.WebUI.Controllers
                 step.IsCorrect = false;
                 ViewBag.OldSteps = new SxVMSiteTestStepGuess[] { step };
             }
-            else if(data.Question.Test.Type == SxSiteTest.SiteTestType.Normal)
+            else if(data.Question.Test.Type == SxSiteTest.SiteTestType.Normal || data.Question.Test.Type == SxSiteTest.SiteTestType.NormalImage )
             {
                 var step = new SxVMSiteTestStepNormal();
                 step.SubjectId = data.SubjectId;
@@ -122,7 +122,7 @@ namespace GE.WebUI.Controllers
         }
         private static int getStepNormalLettersCount(ICollection<SxSiteTestQuestion> questions)
         {
-            if (!questions.Any()) return 0;
+            if (questions==null || !questions.Any()) return 0;
 
             var result = 0;
             foreach (var q in questions)

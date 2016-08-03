@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SX.WebCore.Providers;
+@using SX.WebCore;
+@{
     ViewBag.Title = ViewBag.Title ?? "Новости, статьи игровой индустрии";
     var gameName = Request.RequestContext.RouteData.Values["gameTitle"];
     if (gameName != null)
@@ -12,6 +14,9 @@
         ViewBag.Description = "На данной странице вы сможете ознакомиться споследними новостями и статьями, которые были написаны авторами нашего сайта об игре " + gameName;
     }
     ViewBag.Keywords = ViewBag.Keywords ?? gameName;
+
+    var banners = (SxBanner[])ViewBag.PageBanners;
+    SxBanner banner;
 }
 
 @Html.Action("LastGamesNewsBlock", "News", new { lnc= 5 })
@@ -21,6 +26,16 @@
 <div class="text-center all-news-btn">
     <a href="@Url.Action("List", "news")" class="btn btn-default btn-transparent white">Все новости</a>
 </div>
+
+@{
+    banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
+    if (banner != null)
+    {
+        <div style="margin-top:30px;">
+            @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }))
+        </div>
+    }
+}
 
 <section>
     @Html.Action("RandomList", "SiteTests")

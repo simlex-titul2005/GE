@@ -61,6 +61,12 @@
                                 @Html.Raw(item.Html.Length <= length ? item.Html : item.Html.Substring(0, length) + "...")
                             }
                         </div>
+                        @if (!string.IsNullOrEmpty(item.SourceUrl))
+                        {
+                            <div class="humor-list__source">
+                                Источник: <a href="@item.SourceUrl" rel="nofollow" target="_blank">@item.SourceUrl</a>
+                            </div>
+                        }
                         <div class="text-left">
                             <br />
                             <a href="@Url.Action("Details", "Humor", new { year=item.DateCreate.Year, month=item.DateCreate.Month.ToString("00"), day=item.DateCreate.Day.ToString("00"), titleUrl=item.TitleUrl})" class="btn btn-warning">Поделиться</a>

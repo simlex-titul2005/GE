@@ -29,6 +29,7 @@
             EnableEditing = true,
             EditRowUrl = (x) => { return "/banners/edit/" + x.Id; },
             DataAjaxUrl = "/banners",
-            ShowPagerInfo=true
+            ShowPagerInfo=true,
+            RowCssClass = x => { return !string.IsNullOrEmpty(x.Description) ? null : "warning"; }
         }
     )

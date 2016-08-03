@@ -31,7 +31,7 @@ ORDER BY dm.DateCreate DESC";
         public override SxHumor[] Query(SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] {
-                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title", "dm.ModelCoreType", "da.UserName",
+                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title", "dm.ModelCoreType", "da.UserName", "dm.SourceUrl",
                 @"(SELECT
        SUBSTRING(
            CASE 

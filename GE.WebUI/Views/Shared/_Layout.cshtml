@@ -58,6 +58,13 @@
         @Html.Action("GameList", "Games")
 
         <div class="container">
+
+            @if (ViewBag.H1 != null)
+            {
+                <h1 @(ViewBag.H1CssClass != null ? "class=" + ViewBag.H1CssClass : "class=header")>@ViewBag.H1</h1>
+                <br />
+            }
+            
             @{
                 var banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top) : null;
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
@@ -65,12 +72,6 @@
                     @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }))
                     <br>
                 }
-            }
-
-
-            @if (ViewBag.H1 != null)
-            {
-                <h1 @(ViewBag.H1CssClass != null ? "class=" + ViewBag.H1CssClass : "class=header")>@ViewBag.H1</h1>
             }
 
             @RenderBody()

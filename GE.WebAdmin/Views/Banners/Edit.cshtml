@@ -54,7 +54,7 @@
 
     <div class="form-group">
         @Html.LabelFor(x => x.Description)
-        @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание", @style="min-height:300px;" } })
+        @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите описание" } })
         @Html.ValidationMessageFor(x => x.Description)
     </div>
 
@@ -93,8 +93,14 @@
 </form>
 
 @section scripts{
+    <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="~/content/dist/js/lightbox.min.js"></script>
     <script>
+        if (CKEDITOR.instances['Description']) {
+            CKEDITOR.remove(CKEDITOR.instances['Description']);
+        }
+        CKEDITOR.replace('Description', { height: 300 });
+
         $(function () {
             $('#PictureId').sx_gvl();
         });

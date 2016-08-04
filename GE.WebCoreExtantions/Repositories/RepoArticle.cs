@@ -31,7 +31,12 @@ ORDER BY dm.DateCreate DESC";
         public override Article[] Query(SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] {
-                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title", "dm.ModelCoreType",
+                "da.Id",
+                "dm.TitleUrl",
+                "dm.FrontPictureId",
+                "dm.ShowFrontPictureOnDetailPage",
+                "dm.Title",
+                "dm.ModelCoreType",
                 @"(SELECT
        SUBSTRING(
            CASE 
@@ -45,17 +50,25 @@ ORDER BY dm.DateCreate DESC";
                 "dm.DateOfPublication",
                 "dm.ViewsCount",
                 "(SELECT COUNT(1) FROM D_COMMENT dc WHERE dc.MaterialId=dm.Id AND dc.ModelCoreType=dm.ModelCoreType ) AS CommentsCount",
-                "dm.UserId",
+
+                "dst.Id",
+                "dst.H1",
+
+                "anu.Id",
                 "anu.NikName",
-                "da.GameId",
+
+                "dg.Id",
                 "dg.Title",
                 "dg.TitleUrl",
                 "dg.BadPictureId",
             });
-            query +=  @" FROM D_ARTICLE AS da
+            query += @" FROM D_ARTICLE AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.ID
             AND dm.ModelCoreType = da.ModelCoreType
+       LEFT JOIN D_SEO_TAGS AS dst
+            ON  dst.MaterialId = da.ID
+            AND dst.ModelCoreType = da.ModelCoreType
        LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = da.GameId";
@@ -78,11 +91,12 @@ ORDER BY dv.DateCreate DESC";
 
             using (var conn = new SqlConnection(base.ConnectionString))
             {
-                var data = conn.Query<Article, SxAppUser, Game, Article>(query, (da, anu, dg)=> {
+                var data = conn.Query<Article, SxSeoTags, SxAppUser, Game, Article>(query, (da, st, anu, dg)=> {
+                    da.SeoTags = st;
                     da.Game = dg;
                     da.User = anu;
                     return da;
-                }, param: param, splitOn:"UserId, GameId");
+                }, param: param, splitOn:"Id");
 
                 if (data.Any())
                 {

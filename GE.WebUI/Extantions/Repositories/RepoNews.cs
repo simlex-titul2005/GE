@@ -19,8 +19,9 @@ namespace GE.WebUI.Extantions.Repositories
         /// <param name="gc">Кол-во отображаемых игр в правом блоке</param>
         /// <param name="glnc">Кол-во последних новостей для игр в правом блоке</param>
         /// <param name="gtc">Кол-во тегов для игры</param>
+        /// <param name="vc">Кол-во видео для игры</param>
         /// <returns></returns>
-        public static VMLGNB LastGameNewsBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc, int gc, int glnc, int gtc)
+        public static VMLGNB LastGameNewsBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc, int gc, int glnc, int gtc, int vc)
         {
             var model = new VMLGNB(lnc, gc, glnc);
 
@@ -109,6 +110,22 @@ FROM   D_MATERIAL_TAG    AS dmt
 GROUP BY
        dmt.Id";
 
+            var queryGameVideos = @"SELECT TOP(@vc) dv.*,
+       dm.DateCreate      AS MaterialDateCreate,
+       dm.TitleUrl        AS MaterialTitleUrl
+FROM   D_VIDEO            AS dv
+       JOIN D_VIDEO_LINK  AS dvl
+            ON  dvl.VideoId = dv.Id
+       JOIN DV_MATERIAL   AS dm
+            ON  dm.Id = dvl.MaterialId
+            AND dm.ModelCoreType = dvl.ModelCoreType
+            AND dm.Show = 1
+            AND dm.DateOfPublication <= GETDATE()
+       JOIN D_NEWS        AS dn
+            ON  dn.Id = dm.Id
+            AND dn.ModelCoreType = dm.ModelCoreType
+WHERE  dn.GameId = @gameId";
+
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
                 model.News = connection.Query<VMLGNBNews>(queryLastNews, new { lnc = lnc }).ToArray();
@@ -120,6 +137,14 @@ GROUP BY
                         var game = model.Games[i];
                         game.News = connection.Query<VMLGNBNews>(queryGameNews, new { glnc = glnc, gturl = game.TitleUrl }).ToArray();
                         game.Tags = connection.Query<SxVMMaterialTag>(queryGameTags, new { amount = gtc, gturl = game.TitleUrl }).ToArray();
+                        game.Videos = connection.Query(queryGameVideos, new { vc = vc, gameId = game.Id }).Select(x=> new VMLGNBVideo {
+                            MaterialDateCreate =x.MaterialDateCreate,
+                            MaterialTitleUrl =x.MaterialTitleUrl,
+                            Video=new SxVideo {
+                                Id=x.Id,
+                                VideoId=x.VideoId
+                            }
+                        }).ToArray();
                     }
                 }
             }

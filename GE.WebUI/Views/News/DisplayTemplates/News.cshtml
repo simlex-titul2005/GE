@@ -21,7 +21,7 @@
     <div class="col-md-6">
         <div class="content">
             <time>@Model.DateOfPublication.ToString("dd.MM.yyyy")</time>
-            <a class="link" href="@url">@Model.Title</a>
+            <a class="link" title="@(Model.SeoTags!=null? Model.SeoTags.H1:Model.Title)" href="@url">@(Model.SeoTags != null ? Model.SeoTags.H1 : Model.Title)</a>
             <p class="foreword">@Model.Foreword</p>
             <div>
                 @if(Model.User!=null)

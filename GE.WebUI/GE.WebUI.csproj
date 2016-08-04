@@ -290,6 +290,7 @@
     <Compile Include="Models\VMLGNBCloudTag.cs" />
     <Compile Include="Models\VMLGNBGame.cs" />
     <Compile Include="Models\VMLGNBNews.cs" />
+    <Compile Include="Models\VMLGNBVideo.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
     <Compile Include="Models\VMMaterialCategory.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />

@@ -1,8 +1,12 @@
-﻿@model VMLGNB
+﻿@using SX.WebCore;
+@model VMLGNB
 @{
     Layout = null;
     VMLGNBNews news;
     VMLGNBNews gNews;
+    var length = Model.Games.Length > 4 ? 4 : Model.Games.Length;
+    var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
+    var videosAmount = (int)ViewBag.VideosAmount;
 }
 
 <!--last news block-->
@@ -37,15 +41,14 @@
                                 game.FrontPictureId = game.News.Any() && game.News[0].FrontPictureId.HasValue ? game.News[0].FrontPictureId : game.FrontPictureId;
                                 if (game.FrontPictureId.HasValue)
                                 {
-                                    var length = Model.Games.Length > 4 ? 4 : Model.Games.Length;
-                                    var width = Math.Round(100 / (decimal)length, 4).ToString().Replace(',', '.');
+                                    
                                     <li @("style=width:" + width + "%")>
                                         <a href="@Url.Action("List", new { controller = "news", gameTitle = game.TitleUrl })">
                                             <figure data-game-id="@game.Id" style="background:url('@Url.Action("Picture", new { controller="Pictures", id=game.FrontPictureId, height= 220})') center / cover">
-                                                
+
                                             </figure>
                                         </a>
-                                        @if(game.News.Any())
+                                        @if (game.News.Any())
                                         {
                                             <ul class="lgnb-news hidden-xs">
                                                 @for (int y = 0; y < game.News.Length; y++)
@@ -59,9 +62,28 @@
                                         }
                                         @if (game.Tags.Any())
                                         {
+                                            <div class="videos">
+                                                <div class="videos-block">
+                                                    <h4>Видео @game.Title</h4>
+                                                    <ul>
+                                                        @for (int y = 0; y < game.Videos.Length; y++)
+                                                        {
+                                                            var video = game.Videos[y];
+                                                            <li style="width:@(Math.Round(100 / (decimal)videosAmount, 4).ToString().Replace(',', '.'))%;">
+                                                                <div class="g-video">
+                                                                    @Html.SxVideo(game.Videos[y].Video, SX.WebCore.Providers.SxVideoProvider.VideoQuality.Default, url: Url.Action("Details", "News", new { year= video.MaterialDateCreate.Year, month=video.MaterialDateCreate.Month.ToString("00"), day=video.MaterialDateCreate.Day.ToString("00"), titleUrl=video.MaterialTitleUrl }))
+                                                                </div>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (game.Tags.Any())
+                                        {
                                             <div class="tags">
-                                                <h4>@game.Title</h4>
-                                                @Html.Partial("~/Views/MaterialTags/_TagsCloud.cshtml", game.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action("List", "News") } })
+                                                <h4>Теги @game.Title</h4>
+                                                @Html.Partial("~/Views/MaterialTags/_TagsCloud.cshtml", game.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action("List", "News") }, { "Videos", game.Videos } })
                                             </div>
                                         }
                                     </li>
@@ -69,8 +91,8 @@
                             }
                         }
                     </ul>
-                    <div class="lgnb-tags">
-                        
+                    <div class="lgnb-dropdown">
+
                     </div>
                 </div>
             </div>

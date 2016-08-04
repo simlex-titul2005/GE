@@ -33,7 +33,7 @@
         </div>
     }
 
-    <a class="link" href="@url" title="@Model.Title">@Model.Title</a>
+    <a class="link" href="@url" title="@(Model.SeoTags != null ? Model.SeoTags.H1 : Model.Title)">@(Model.SeoTags != null ? Model.SeoTags.H1 : Model.Title)</a>
     <p class="foreword">
         @Model.Foreword
     </p>

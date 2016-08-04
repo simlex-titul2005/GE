@@ -31,7 +31,12 @@ ORDER BY dm.DateCreate DESC";
         public override News[] Query(SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] {
-                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title", "dm.ModelCoreType",
+                "da.Id",
+                "dm.TitleUrl",
+                "dm.FrontPictureId",
+                "dm.ShowFrontPictureOnDetailPage",
+                "dm.Title",
+                "dm.ModelCoreType",
                 "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount",
                 @"(SELECT
        SUBSTRING(
@@ -42,12 +47,28 @@ ORDER BY dm.DateCreate DESC";
            0,
            200
        ))                 AS Foreword",
-                "dm.DateCreate", "dm.DateOfPublication", "dm.ViewsCount", "dm.UserId", "anu.NikName", "da.GameId", "dg.Title", "dg.TitleUrl", "dg.BadPictureId"
+                "dm.DateCreate",
+                "dm.DateOfPublication",
+                "dm.ViewsCount",
+
+                "dst.Id",
+                "dst.H1",
+
+                "anu.Id",
+                "anu.NikName",
+
+                "dg.Id",
+                "dg.Title",
+                "dg.TitleUrl",
+                "dg.BadPictureId"
             });
             query += @" FROM D_NEWS AS da
        JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.ID
             AND dm.ModelCoreType = da.ModelCoreType
+       LEFT JOIN D_SEO_TAGS AS dst
+            ON  dst.MaterialId = da.ID
+            AND dst.ModelCoreType = da.ModelCoreType
        LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
        LEFT JOIN D_GAME  AS dg
             ON  dg.Id = da.GameId";
@@ -62,12 +83,13 @@ ORDER BY dm.DateCreate DESC";
 
             using (var conn = new SqlConnection(base.ConnectionString))
             {
-                var data = conn.Query<News, SxAppUser, Game, News>(query, (da, anu, dg) =>
+                var data = conn.Query<News, SxSeoTags, SxAppUser, Game, News>(query, (da, st, anu, dg) =>
                 {
+                    da.SeoTags = st;
                     da.Game = dg;
                     da.User = anu;
                     return da;
-                }, param: param, splitOn: "UserId, GameId");
+                }, param: param, splitOn: "Id");
 
                 return data.ToArray();
             }

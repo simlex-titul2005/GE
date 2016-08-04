@@ -25,7 +25,7 @@
             });
 
             $this.mouseleave(function () {
-                $(this).find('.lgnb-tags').hide();
+                //$(this).find('.lgnb-dropdown').hide();
             });
 
             setFigures($this.find('.games > li'));
@@ -35,10 +35,12 @@
             $(e).mouseenter(function () {
                 if (width < 768) return;
 
-                var $wrapper = $(this).closest('.games-wrapper');
-                var $tags = $(this).children('.tags').html();
-                var $t = $wrapper.find('.lgnb-tags');
-                $t.html($tags);
+                $wrapper = $(this).closest('.games-wrapper');
+                $videos = $(this).children('.videos').html();
+                $tags = $(this).children('.tags').html();
+
+                $t = $wrapper.find('.lgnb-dropdown');
+                $t.html($videos + $tags);
                 $t.show();
                 $t.find('.tags-block').show();
             });

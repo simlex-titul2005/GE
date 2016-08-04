@@ -26,7 +26,7 @@
             });
 
             $this.mouseleave(function () {
-                $(this).find('.lgnb-tags').hide();
+                $(this).find('.lgnb-dropdown').hide();
             });
 
             setFigures($this.find('.sub-gategories > li'));
@@ -38,7 +38,7 @@
 
                 var $wrapper = $(this).closest('.category-wrapper');
                 var $tags = $(this).children('.tags').html();
-                var $t = $wrapper.find('.lgnb-tags');
+                var $t = $wrapper.find('.lgnb-dropdown');
                 $t.html($tags);
                 $t.show();
                 $t.find('.tags-block').show();

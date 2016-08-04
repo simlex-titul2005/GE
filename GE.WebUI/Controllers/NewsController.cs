@@ -15,12 +15,13 @@ namespace GE.WebUI.Controllers
         }
 
 #if !DEBUG
-        [OutputCache(Duration = 900, VaryByParam = "lnc;gc;glnc;gtc")]
+        [OutputCache(Duration = 900, VaryByParam = "lnc;gc;glnc;gtc;vc")]
 #endif
         [ChildActionOnly]
-        public PartialViewResult LastGamesNewsBlock(int lnc = 5, int gc = 4, int glnc = 3, int gtc = 20)
+        public PartialViewResult LastGamesNewsBlock(int lnc = 5, int gc = 4, int glnc = 3, int gtc = 20, int vc=6)
         {
-            var viewModel = (Repo as RepoNews).LastGameNewsBlock(lnc, gc, glnc, gtc);
+            ViewBag.VideosAmount = vc;
+            var viewModel = (Repo as RepoNews).LastGameNewsBlock(lnc, gc, glnc, gtc, vc);
             return PartialView("_LastNewsBlock", viewModel);
         }
 

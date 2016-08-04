@@ -75,9 +75,8 @@
             </div>
         </div>
     }
-    using (Ajax.BeginForm("ResultNormal", "SiteTests", new AjaxOptions { UpdateTargetId = "results" , OnSuccess="$(this).remove();" }))
+    using (Ajax.BeginForm("ResultNormal", "SiteTests", new AjaxOptions { UpdateTargetId = "results", OnSuccess = "$(this).remove();" }))
     {
-        @Html.AntiForgeryToken()
         <div class="text-center">
             <button type="submit" onclick="$(this).prepend($('.s'));" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Завершить</button>
         </div>

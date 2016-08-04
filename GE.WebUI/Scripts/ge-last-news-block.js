@@ -25,7 +25,7 @@
             });
 
             $this.mouseleave(function () {
-                //$(this).find('.lgnb-dropdown').hide();
+                $(this).find('.lgnb-dropdown').hide();
             });
 
             setFigures($this.find('.games > li'));

@@ -20,13 +20,22 @@ namespace GE.WebUI.Extantions.Repositories
                     a.Author = au;
                     return a;
                 }, new { title_url = titleUrl, author_amount = tfaAmount, cat_amount = tcAmount }, splitOn:"Id").ToArray();
-                var model = data.SingleOrDefault(x => x.Flag == VMAphorism.AphorismFlag.ForThis);
-                viewModel.Aphorism = model;
-                viewModel.TopForAuthor = data.Where(x => x.Flag == VMAphorism.AphorismFlag.ForAuthor).ToArray();
-                viewModel.TopForCategory = data.Where(x => x.Flag == VMAphorism.AphorismFlag.ForCategory).ToArray();
+
+                if (data == null)
+                    viewModel = null;
+                else
+                {
+
+                    var model = data.SingleOrDefault(x => x.Flag == VMAphorism.AphorismFlag.ForThis);
+                    viewModel.Aphorism = model;
+                    viewModel.TopForAuthor = data.Where(x => x.Flag == VMAphorism.AphorismFlag.ForAuthor).ToArray();
+                    viewModel.TopForCategory = data.Where(x => x.Flag == VMAphorism.AphorismFlag.ForCategory).ToArray();
+                }
+
+                return viewModel;
             }
 
-            return viewModel;
+            
         }
 
         public static VMAphorismCategory[] GetAphorismCategories(this RepoAphorism repo, string cur=null)

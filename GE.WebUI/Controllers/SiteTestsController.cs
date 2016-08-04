@@ -83,7 +83,7 @@ namespace GE.WebUI.Controllers
         }
         
 
-        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous, NotLogRequest]
         public async Task<ActionResult> StepGuess(List<SxVMSiteTestStepGuess> steps)
         {
             return await Task.Run(() =>

@@ -69,7 +69,7 @@
     <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            $('section[id^="comments-"]').load('@Url.Action("List", "Comments", new {mid= Model.Aphorism.Id, mct= Enums.ModelCoreType.Aphorism })');
+            $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Aphorism.Id +'&mct=' + '@Enums.ModelCoreType.Aphorism');
         });
     </script>
 }

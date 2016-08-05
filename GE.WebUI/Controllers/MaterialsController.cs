@@ -157,11 +157,11 @@ namespace GE.WebUI.Controllers
             if (model.GameTitleUrl != null)
                 ViewBag.GameName = model.GameTitleUrl.ToLowerInvariant();
 
-            var breadcrumbs = (VMBreadcrumb[])ViewBag.Breadcrumbs;
+            var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
             if (breadcrumbs != null)
             {
                 var bc = breadcrumbs.ToList();
-                bc.Add(new VMBreadcrumb { Title = ViewBag.Title });
+                bc.Add(new SxVMBreadcrumb { Title = ViewBag.Title });
                 ViewBag.Breadcrumbs = bc.ToArray();
             }
 

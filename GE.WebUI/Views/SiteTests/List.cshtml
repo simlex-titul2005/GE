@@ -12,7 +12,7 @@
     <link href="~/content/dist/css/test-list.min.css" rel="stylesheet" />
 }
 
-@Html.Partial("_Breadcrumbs", (VMBreadcrumb[])ViewBag.Breadcrumbs)
+@Html.Partial("_Breadcrumbs", (SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
 <div class="test-list">
     @if (Model.Collection.Any())

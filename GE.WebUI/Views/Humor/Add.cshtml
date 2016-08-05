@@ -10,7 +10,7 @@
     <link href="~/content/dist/css/humor.min.css" rel="stylesheet" />
 }
 
-@Html.Partial("_Breadcrumbs", model: (VMBreadcrumb[])ViewBag.Breadcrumbs)
+@Html.Partial("_Breadcrumbs", model: (SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 <br />
 <div class="humor-page-add">
     @if (TempData["SuccessMessage"] != null)

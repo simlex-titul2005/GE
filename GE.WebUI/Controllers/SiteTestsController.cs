@@ -54,11 +54,11 @@ namespace GE.WebUI.Controllers
             var data = Repo.GetSiteTestPage(titleUrl);
             if (data == null) return new HttpNotFoundResult();
 
-            var breadcrumbs = (VMBreadcrumb[])ViewBag.Breadcrumbs;
+            var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
             if (breadcrumbs != null)
             {
                 var bc = breadcrumbs.ToList();
-                bc.Add(new VMBreadcrumb { Title = data.Question.Test.Title });
+                bc.Add(new SxVMBreadcrumb { Title = data.Question.Test.Title });
                 ViewBag.Breadcrumbs = bc.ToArray();
             }
 

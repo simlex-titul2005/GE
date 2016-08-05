@@ -1,11 +1,11 @@
 ﻿using System.Web.Mvc;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
-using GE.WebUI.Models;
 using System.Linq;
 using System.Configuration;
 using SX.WebCore.Repositories;
 using GE.WebCoreExtantions;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
@@ -23,11 +23,11 @@ namespace GE.WebUI.Controllers
                 Value=x.Id,
                 Text=x.Title
             }).ToArray();
-            var breadcrumbs = (VMBreadcrumb[])ViewBag.Breadcrumbs;
+            var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
             if (breadcrumbs != null)
             {
                 var bc = breadcrumbs.ToList();
-                bc.Add(new VMBreadcrumb { Title = "Добавить юмор" });
+                bc.Add(new SxVMBreadcrumb { Title = "Добавить юмор" });
                 ViewBag.Breadcrumbs = bc.ToArray();
             }
 

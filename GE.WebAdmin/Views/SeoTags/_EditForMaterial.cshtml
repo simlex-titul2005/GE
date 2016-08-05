@@ -49,6 +49,6 @@
 @if (!isNew)
 {
     <div id="seo-kw">
-        @Html.Action("index", new { controller = "SeoKeywords", stid = Model.Id })
+        @Html.Action("Index", "SeoKeywords", new { stid = Model.Id })
     </div>
 }

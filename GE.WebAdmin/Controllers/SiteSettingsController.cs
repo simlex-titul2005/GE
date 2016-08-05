@@ -1,6 +1,7 @@
 ﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using SX.WebCore;
+using SX.WebCore.MvcControllers;
 using SX.WebCore.Repositories;
 using SX.WebCore.Resources;
 using System;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
-    public sealed class SiteSettingsController : SX.WebCore.MvcControllers.SxSiteSettingsController<WebCoreExtantions.DbContext>
+    public sealed class SiteSettingsController : SxSiteSettingsController<DbContext>
     {
         #region Начальная иконка
         [Authorize(Roles = "admin")]

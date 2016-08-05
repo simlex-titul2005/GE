@@ -9,7 +9,7 @@
 {
     <div class="text-right">
         <div class="form-group">
-            <form method="post" action="/redirects/delete">
+            <form method="post" action="@(Url.Action("Delete","Redirects"))">
                 @Html.HiddenFor(x => x.Id)
                 @Html.AntiForgeryToken()
                 <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить редирект</button>
@@ -18,7 +18,7 @@
     </div>
 }
 
-<form method="post" action="/redirects/edit">
+<form method="post" action="@(Url.Action("Edit","Redirects"))">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
 

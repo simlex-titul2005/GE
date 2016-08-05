@@ -12,10 +12,10 @@
                     new SxExtantions.SxGridViewColumn<SxVM301Redirect>{FieldName="NewUrl", Caption="Новый адрес"}
                 },
                 EnableCreating = true,
-                CreateRowUrl = "/redirects/edit",
+                CreateRowUrl = Url.Action("Edit", "Redirects"),
                 EnableEditing = true,
-                EditRowUrl = (x) => { return "/redirects/edit/" + x.Id; },
-                DataAjaxUrl = "/redirects",
-                ShowPagerInfo=true
+                EditRowUrl = x => { return Url.Action("Edit", "Redirects", new { id = x.Id }); },
+                DataAjaxUrl = Url.Action("Index", "Redirects"),
+                ShowPagerInfo = true
             }
     )

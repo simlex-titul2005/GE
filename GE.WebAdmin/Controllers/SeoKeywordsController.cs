@@ -1,6 +1,9 @@
-﻿namespace GE.WebAdmin.Controllers
+﻿using GE.WebCoreExtantions;
+using SX.WebCore.MvcControllers;
+
+namespace GE.WebAdmin.Controllers
 {
-    public partial class SeoKeywordsController : SX.WebCore.MvcControllers.SxSeoKeywordsController<WebCoreExtantions.DbContext>
+    public sealed class SeoKeywordsController : SxSeoKeywordsController<DbContext>
     {
         
     }

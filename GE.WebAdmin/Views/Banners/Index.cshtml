@@ -1,6 +1,9 @@
 ﻿@model SxVMBanner[]
 @{
     ViewBag.Title = "Баннеры";
+    var showsCount = (int)ViewBag.ShowsCount;
+    var clicksCount = (int)ViewBag.ClicksCount;
+    var ctr = showsCount == 0 ? 0 : Math.Round((decimal)clicksCount * 100 / showsCount,2);
 }
 
 @section styles{
@@ -11,6 +14,23 @@
 
 <h2>@ViewBag.Title</h2>
 <br />
+<table class="table table-condensed table-bordered table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>Всго показов</th>
+            <th>Всего кликов</th>
+            <th>Общий CTR, %</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@showsCount</td>
+            <td>@clicksCount</td>
+            <td>@ctr</td>
+        </tr>
+    </tbody>
+</table>
+
 <div id="grid-banners">
     @Html.Partial("_gridview", Model)
 </div>

@@ -69,7 +69,7 @@
                 var banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top) : null;
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
-                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }))
+                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b=> { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
                     <br>
                 }
             }
@@ -82,7 +82,7 @@
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     <br />
-                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", new { controller = "Pictures", id = b.PictureId }))
+                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", new { controller = "Pictures", id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
                 }
             }
         </div>
@@ -101,7 +101,7 @@
 
         $('#game-list').geGameMenu();
 
-        $('.th-banner').click(function () {
+        @*$('.th-banner').click(function () {
             $banner = $(this);
             var href = $banner.attr('data-href');
             var bannerId = $banner.attr('data-id');
@@ -115,7 +115,7 @@
                         win.focus();
                 }
             });
-        });
+        });*@
 
         $('.th-banner').hover(function () {
             $banner = $(this);

@@ -129,7 +129,16 @@ namespace GE.WebUI
                 namespaces: _defNamespace
             );
             #endregion
-            
+
+            #region banners
+            routes.MapRoute(
+                name: null,
+                url: "Banners/Click/{bannerId}",
+                defaults: new { controller = "Banners", action = "Click", area = "" },
+                namespaces: _defNamespace
+            );
+            #endregion
+
             #region employees
             routes.MapRoute(
                 name: null,

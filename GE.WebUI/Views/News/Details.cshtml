@@ -54,7 +54,7 @@
         if (banner != null)
         {
             <div style="margin-top:30px;">
-                @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }))
+                @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
             </div>
         }
     }

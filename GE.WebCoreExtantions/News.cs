@@ -1,5 +1,6 @@
 ﻿using GE.WebCoreExtantions.Abstract;
 using SX.WebCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 
@@ -10,6 +11,9 @@ namespace GE.WebCoreExtantions
     {
         public virtual Game Game { get; set; }
         public int? GameId { get; set; }
+
+        [MaxLength(100)]
+        public string GameVersion { get; set; }
 
         [NotMapped]
         public int CommentsCount { get; set; }

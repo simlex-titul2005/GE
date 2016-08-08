@@ -15,6 +15,9 @@ namespace GE.WebAdmin.Models
         [UIHint("GameLookupGrid"), Display(Name = "Игра")]
         public int? GameId { get; set; }
 
+        [MaxLength(100), Display(Name = "Версия игры")]
+        public string GameVersion { get; set; }
+
         [MaxLength(255)]
         public string OldTitleUrl { get; set; }
     }

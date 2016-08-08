@@ -16,6 +16,9 @@ namespace GE.WebAdmin.Models
         [UIHint("GameLookupGrid"), Display(Name = "Игра")]
         public int? GameId { get; set; }
 
+        [MaxLength(100), Display(Name ="Версия игры")]
+        public string GameVersion { get; set; }
+
         [Display(Name = "Тип статьи")]
         public string ArticleTypeName { get; set; }
 

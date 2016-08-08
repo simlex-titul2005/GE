@@ -12,6 +12,9 @@
         <br />
         <blockquote>
             @Html.Raw(Model.Question.Test.Description)
+            <div class="step__test-info">
+                Просмотров: <span>@Model.Question.Test.ViewsCount</span>
+            </div>
         </blockquote>
 
         @Html.AntiForgeryToken()

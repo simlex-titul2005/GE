@@ -70,18 +70,11 @@
                 @Html.ValidationMessageFor(x => x.Place)
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-8">
             <div class="form-group">
-                @Html.LabelFor(x => x.ControllerName)
-                @Html.EditorFor(x => x.ControllerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите контроллер" } })
-                @Html.ValidationMessageFor(x => x.ControllerName)
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                @Html.LabelFor(x => x.ActionName)
-                @Html.EditorFor(x => x.ActionName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите действие" } })
-                @Html.ValidationMessageFor(x => x.ActionName)
+                @Html.LabelFor(x => x.RawUrl)
+                @Html.EditorFor(x => x.RawUrl, new { htmlAttributes = new { @class = "form-control", @placeholder = "Введите внутренний адрес страницы" } })
+                @Html.ValidationMessageFor(x => x.RawUrl)
             </div>
         </div>
     </div>
@@ -95,6 +88,8 @@
 @section scripts{
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="~/content/dist/js/lightbox.min.js"></script>
+    <script src="~/content/dist/js/jquery.validate.min.js"></script>
+    <script src="~/content/dist/js/jquery.validate.unobtrusive.min.js"></script>
     <script>
         if (CKEDITOR.instances['Description']) {
             CKEDITOR.remove(CKEDITOR.instances['Description']);

@@ -146,6 +146,44 @@
             else sticky.removeClass('fixed');
         });
 
+        $(function () {
+            $('.sx-rating ').mouseleave(function () {
+                $items = $(this).find('a');
+                var curIndex = parseInt($(this).attr('data-value')) - 1;
+                fillRating($items, curIndex);
+            });
+
+            $('.sx-rating a').click(function (event) {
+                alert('Функционал еще не реализован');
+                event.stopPropagation();
+                return false;
+            });
+
+            $('.sx-rating a').mouseenter(function () {
+                $a = $(this);
+                $items = $a.closest('ul').find('a');
+                var curIndex = $a.attr('data-index');
+                fillRating($items, curIndex);
+            });
+        });
+
+        function fillRating(items, curIndex)
+        {
+            $items = $(items);
+            $items.each(function () {
+                var index = $(this).attr('data-index');
+                $i = $(this).find('i');
+                if (index <= curIndex) {
+                    $i.removeClass('fa-star-o');
+                    $i.addClass('fa-star');
+                }
+                else {
+                    $i.removeClass('fa-star');
+                    $i.addClass('fa-star-o');
+                }
+            });
+        }
+
     </script>
     @RenderSection("scripts", false)
 </body>

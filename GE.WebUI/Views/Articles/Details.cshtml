@@ -23,7 +23,7 @@
     @Html.Partial("_Foreword", Model)
 
     <div class="m-html">
-        @Html.Action("Popular", "Articles", new { mct = Model.ModelCoreType, mid = Model.Id, amount = 4 })
+        @Html.Action("Popular", "Articles", new { mct = Model.ModelCoreType, mid = Model.Id, amount = 4, value=1 })
         @if (Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage)
         {
             <img class="f-picture" alt="@Model.Title" src="@Url.Action("Picture", "Pictures", new { id= Model.FrontPictureId })" />

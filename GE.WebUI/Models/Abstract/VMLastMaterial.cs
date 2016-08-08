@@ -31,5 +31,6 @@ namespace GE.WebUI.Models.Abstract
         public int CommentsCount { get; set; }
         public int LikesCount { get; set; }
         public int ViewsCount { get; set; }
+        public int Rating { get; set; }
     }
 }

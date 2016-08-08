@@ -49,7 +49,7 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpGet, AllowAnonymous]
-        public ActionResult Details(string titleUrl)
+        public async Task<ActionResult> Details(string titleUrl)
         {
             var data = Repo.GetSiteTestPage(titleUrl);
             if (data == null) return new HttpNotFoundResult();
@@ -79,6 +79,9 @@ namespace GE.WebUI.Controllers
             }
             
             var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
+            if(viewModel.Question!=null && viewModel.Question.Test!=null)
+                viewModel.Question.Test.ViewsCount= await Repo.AddShow(viewModel.Question.Test.Id);
+
             return View(model: viewModel);
         }
         

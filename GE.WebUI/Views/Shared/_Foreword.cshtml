@@ -14,4 +14,6 @@
         <br />
         Автор материала: <strong>@Model.UserNikName</strong>
     </p>
+    <p>Рейтинг:</p>
+    @Html.SxRating(Model.Rating, Url.Action("AddRating", "Rating", new { mid = Model.Id, mct = Model.ModelCoreType }))
 </blockquote>

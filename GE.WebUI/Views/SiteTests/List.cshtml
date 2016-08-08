@@ -22,8 +22,11 @@
             item = Model.Collection[i];
             <div class="test-item">
                 <h2>@item.Title</h2>
+                <div class="test-item__info">
+                    Просмотров: <span>@item.ViewsCount</span>
+                </div>
                 <p class="text-muted">@Html.Raw(item.Description)</p>
-                <div class="test-item">
+                <div>
                     <a href="@Url.Action("Details","SiteTests", new { titleUrl = item.TitleUrl })" class="btn btn-sm btn-default test-item__btn">Пройти тест <i class="fa fa-angle-double-right"></i></a>
                     @if (!string.IsNullOrEmpty(item.Rules))
                     {

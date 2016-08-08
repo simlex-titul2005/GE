@@ -250,6 +250,15 @@ namespace GE.WebUI
             );
             #endregion
 
+            #region rating
+            routes.MapRoute(
+                name: null,
+                url: "Rating/AddRating/{mct}/{mid}",
+                defaults: new { controller = "Rating", action = "AddRating", area = "" },
+                namespaces: _defNamespace
+            );
+            #endregion
+
             #region site tests
             routes.MapRoute(
                 name: null,

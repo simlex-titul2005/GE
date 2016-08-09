@@ -51,6 +51,14 @@
                 }
             </h2>
 
+            @if (Model.Question.Test.Type == SX.WebCore.SxSiteTest.SiteTestType.NormalImage)
+            {
+                <div class="test-normal-s__desc">
+                    @Html.Raw(Model.Subject.Description)
+                </div>
+            }
+            
+
             @if (Model.Question.Test.Questions.Any())
             {
                 SxVMSiteTestQuestion question;

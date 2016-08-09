@@ -19,6 +19,11 @@
         @Html.LabelFor(x => x.PictureId, new { @class = "control-label" })
         @Html.EditorFor(x => x.PictureId)
         @Html.ValidationMessageFor(x => x.PictureId)
+        @if(Model.Picture!=null)
+        {
+            <br />
+            <img alt="@Model.Picture.Caption" src="@Url.Action("Picture","Pictures", new { id=Model.Picture.Id})" style="max-height:140px;" />
+        }
     </div>
 
     <div class="form-group">

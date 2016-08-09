@@ -74,7 +74,7 @@ namespace GE.WebUI.Controllers
                 var step = new SxVMSiteTestStepNormal();
                 step.SubjectId = data.SubjectId;
                 step.QuestionId = 0;
-                step.LettersCount = getStepNormalLettersCount(data.Question.Test.Questions);
+                step.LettersCount = getStepNormalLettersCount(data);
                 ViewBag.OldSteps = new SxVMSiteTestStepNormal[] { step };
             }
             
@@ -114,7 +114,7 @@ namespace GE.WebUI.Controllers
                     steps.Add(new SxVMSiteTestStepNormal {
                         SubjectId = data.SubjectId,
                         QuestionId = 0,
-                        LettersCount=getStepNormalLettersCount(data.Question.Test.Questions)
+                        LettersCount=getStepNormalLettersCount(data)
                     });
                 ViewBag.OldSteps = steps.ToArray();
                 ViewBag.AllSubjectsCount = allSubjectsCount;
@@ -123,8 +123,10 @@ namespace GE.WebUI.Controllers
                 return PartialView("_StepNormal", viewModel);
             });
         }
-        private static int getStepNormalLettersCount(ICollection<SxSiteTestQuestion> questions)
+        private static int getStepNormalLettersCount(SxSiteTestAnswer answer)
         {
+            var test = answer.Question.Test;
+            var questions = test.Questions;
             if (questions==null || !questions.Any()) return 0;
 
             var result = 0;
@@ -132,6 +134,10 @@ namespace GE.WebUI.Controllers
             {
                 result += q.Text.Length;
             }
+
+            if (test.Type == SxSiteTest.SiteTestType.NormalImage && answer.Subject != null && answer.Subject.Description != null)
+                result += answer.Subject.Description.Length;
+
             return result;
         }
     }

@@ -11,7 +11,6 @@ namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoAphorism : SxDbRepository<int, Aphorism, DbContext>
     {
-
         public override Aphorism[] Query(SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] { "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount", "dm.*", "dmc.Id", "dmc.Title", "da.AuthorId", "daa.Id", "daa.Name" });

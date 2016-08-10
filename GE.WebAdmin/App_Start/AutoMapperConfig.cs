@@ -15,6 +15,11 @@ namespace GE.WebAdmin
             {
                 return new MapperConfiguration(cfg =>
                 {
+                    //affiliate link
+                    cfg.CreateMap<SxAffiliateLink, SxVMAffiliateLink>();
+                    cfg.CreateMap<SxAffiliateLink, SxVMEditAffiliateLink>();
+                    cfg.CreateMap<SxVMEditAffiliateLink, SxAffiliateLink>();
+
                     //article
                     cfg.CreateMap<Article, VMArticle>();
                     cfg.CreateMap<Article, VMEditArticle>();

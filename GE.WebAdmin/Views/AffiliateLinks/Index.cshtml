@@ -1,0 +1,16 @@
+﻿@model SxVMAffiliateLink[]
+@{
+    ViewBag.Title = "Партнерские ссылки";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div id="grid">
+    @Html.Partial("_GridView", Model)
+</div>
+
+@section scripts{
+    <script>
+        $('#grid').sx_gv();
+    </script>
+}

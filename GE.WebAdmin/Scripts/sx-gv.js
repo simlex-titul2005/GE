@@ -8,6 +8,7 @@
 
             $this.on('click', '.sx-gv__pager a', function () {
                 $a = $(this);
+                $("<i></i>").addClass('fa fa-spinner fa-spin').prependTo($a);
                 $grid = $a.closest('.sx-gv');
                 var isActive = $a.closest('li').hasClass('active');
                 if (!isActive) {

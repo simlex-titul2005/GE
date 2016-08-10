@@ -52,9 +52,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li>
-                        <form method="post" action="@Url.Action("LogOff","Account")" class="hidden">
-                            @Html.AntiForgeryToken()
-                        </form>
+                        <form method="post" action="@Url.Action("LogOff","Account")" class="hidden"></form>
                         <a href="javascript:void(0)" onclick="$(this).prev('form').submit();">Выход</a>
                     </li>
                 }

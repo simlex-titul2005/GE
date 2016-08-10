@@ -231,6 +231,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AffiliateLinksController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
     <Compile Include="Controllers\HumorController.cs" />
     <Compile Include="Controllers\AuthorAphorismsController.cs" />
@@ -422,6 +423,9 @@
     <Content Include="Views\Humor\Edit.cshtml" />
     <Content Include="Views\Humor\Index.cshtml" />
     <Content Include="Views\Pictures\AddMany.cshtml" />
+    <Content Include="Views\AffiliateLinks\_GridView.cshtml" />
+    <Content Include="Views\AffiliateLinks\Edit.cshtml" />
+    <Content Include="Views\AffiliateLinks\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

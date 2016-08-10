@@ -255,7 +255,8 @@ namespace GE.WebUI
                 name: null,
                 url: "Rating/AddRating/{mct}/{mid}",
                 defaults: new { controller = "Rating", action = "AddRating", area = "" },
-                namespaces: _defNamespace
+                namespaces: _defNamespace,
+                constraints: new { httpMethod = new HttpMethodConstraint("get") }
             );
             #endregion
 

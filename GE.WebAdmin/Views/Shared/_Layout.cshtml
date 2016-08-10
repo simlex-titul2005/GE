@@ -21,8 +21,6 @@
     @RenderSection("styles", false)
 </head>
 <body>
-    @*<div class="small">Уважаемые пользователи! О всех ошибках и пожеланиях просьба сообщать на <a href="mailto:simlex.dev.2014@gmail.com">мыло</a>! Иногда можете попасть на перезаливку сайта и прочие неудобства...<br />
-        Пока определить, какую активность вы совершаете в админ-панеле, не могу. Не стесняемся. Для всего напишу мануалы, чтобы удобно организовать работу</div>*@
     <div id="wrapper">
 
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -450,10 +448,13 @@
                                 <a href="#"><i class="fa fa-cube fa-fw"></i> Монетизация<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="@Url.Action("Index", new { controller= "Banners" })"> Список баннеров</a>
+                                        <a href="@Url.Action("Index", "Banners")"> Список баннеров</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("Index", new { controller= "BannerGroups" })"> Группы баннеров</a>
+                                        <a href="@Url.Action("Index", "BannerGroups")"> Группы баннеров</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "AffiliateLinks")"> Партнерские ссылки</a>
                                     </li>
                                 </ul>
                             </li>

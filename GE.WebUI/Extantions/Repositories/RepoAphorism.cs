@@ -13,7 +13,7 @@ namespace GE.WebUI.Extantions.Repositories
             var viewModel = new VMDetailAphorism();
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var data = conn.Query<VMAphorism, VMMaterialCategory, VMAuthorAphorism, VMAphorism>("get_aphorism_page_model @title_url, @author_amount, @cat_amount", (a, c, au)=> {
+                var data = conn.Query<VMAphorism, VMMaterialCategory, VMAuthorAphorism, VMAphorism>("dbo.get_aphorism_page_model @title_url, @author_amount, @cat_amount", (a, c, au)=> {
                     a.CategoryId = c.Id;
                     a.Category = c;
                     a.AuthorId = au.Id;

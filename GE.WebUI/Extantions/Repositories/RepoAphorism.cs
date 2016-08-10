@@ -16,7 +16,7 @@ namespace GE.WebUI.Extantions.Repositories
                 var data = conn.Query<VMAphorism, VMMaterialCategory, VMAuthorAphorism, VMAphorism>("dbo.get_aphorism_page_model @title_url, @author_amount, @cat_amount", (a, c, au)=> {
                     a.CategoryId = c.Id;
                     a.Category = c;
-                    a.AuthorId = au.Id;
+                    a.AuthorId = a?.Id;
                     a.Author = au;
                     return a;
                 }, new { title_url = titleUrl, author_amount = tfaAmount, cat_amount = tcAmount }, splitOn:"Id").ToArray();
@@ -28,7 +28,7 @@ namespace GE.WebUI.Extantions.Repositories
 
                     var model = data.SingleOrDefault(x => x.Flag == VMAphorism.AphorismFlag.ForThis);
                     viewModel.Aphorism = model;
-                    viewModel.TopForAuthor = data.Where(x => x.Flag == VMAphorism.AphorismFlag.ForAuthor).ToArray();
+                    viewModel.TopForAuthor = data.Where(x => x.Flag == VMAphorism.AphorismFlag.ForAuthor && x.Author!=null).ToArray();
                     viewModel.TopForCategory = data.Where(x => x.Flag == VMAphorism.AphorismFlag.ForCategory).ToArray();
                 }
 

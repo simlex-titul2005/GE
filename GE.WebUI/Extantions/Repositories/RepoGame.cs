@@ -84,6 +84,8 @@ ORDER BY
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
                 viewModel = conn.Query<VMDetailGame>("get_game_by_url @titleUrl", new { titleUrl=titleUrl}).SingleOrDefault();
+                if (viewModel == null) return null;
+
                 viewModel.Materials = conn.Query<VMDetailGameMaterial>("get_game_materials @titleUrl, @amount", new { titleUrl = titleUrl, amount = amount }).ToArray();
                 viewModel.Videos = conn.Query<SxVideo>("get_game_videos @titleUrl", new { titleUrl = titleUrl }).ToArray();
                 if(viewModel.Videos.Any())

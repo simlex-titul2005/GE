@@ -234,6 +234,7 @@
     <Content Include="content\dist\fonts\fontawesome-webfont.woff" />
     <Content Include="content\dist\fonts\fontawesome-webfont.woff2" />
     <Content Include="content\dist\fonts\FontAwesome.otf" />
+    <Content Include="content\dist\i\404.jpg" />
     <Content Include="content\dist\i\article-empty.png" />
     <Content Include="content\dist\i\faveicon.png" />
     <Content Include="content\dist\i\logo.png" />

@@ -1,44 +1,20 @@
 ﻿@{
+    Layout = "~/Views/Shared/_Errors.cshtml";
     ViewBag.Title = "Ошибка сервера";
 }
 
-<div class="error-page server">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="err-txt">
-                Ошибка
-            </div>
-        </div>
-        <div class="col-md-6">
-            &nbsp;
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="err-code">
-                500
-            </div>
-        </div>
-        <div class="col-md-6">
-            &nbsp;
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            Непредвиденная ошибка сервера<br />
-            Мы уже работаем над устранением причин
-        </div>
-        <div class="col-md-6">
-            &nbsp;
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <br />
-            <a href="/" class="btn btn-default btn-transparent dark-blue">Продолжить серфинг</a>
-        </div>
-        <div class="col-md-6">
-            &nbsp;
-        </div>
-    </div>
-</div>
+<div class="e-txt">Ошибка <span class="e-num">500</span></div>
+<div class="e-mes">Непредвиденная ошибка сервера. Мы уже работаем над усранением ошибки.</div>
+
+<ul class="e-menu">
+    <li>
+        <a href="/">На главную</a>
+    </li>
+    <li>
+        <a href="@Url.Action("List", "News")">Новости</a>
+    </li>
+    <li>
+        <a href="@Url.Action("List", "Articles")">Статьи</a>
+    </li>
+
+</ul>

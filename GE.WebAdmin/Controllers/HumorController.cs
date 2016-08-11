@@ -130,15 +130,5 @@ namespace GE.WebAdmin.Controllers
             newModel.Category = old.Category;
             return newModel;
         }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Delete(VMEditHumor model)
-        {
-            var repoSeoInfo = new SxRepoSeoTags<DbContext>();
-            repoSeoInfo.DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
-
-            Repo.Delete(model.Id, model.ModelCoreType);
-            return RedirectToAction("index");
-        }
     }
 }

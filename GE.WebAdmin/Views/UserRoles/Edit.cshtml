@@ -5,7 +5,7 @@
 }
 
 <h2>@ViewBag.Title</h2>
-@if (!isNew)
+@if (!isNew && User.IsInRole("architect"))
 {
     <div class="form-group">
         <form method="post" action="/userroles/delete">

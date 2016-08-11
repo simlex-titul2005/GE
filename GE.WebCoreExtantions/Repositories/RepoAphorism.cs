@@ -59,7 +59,6 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId ";
                 return data.ToArray();
             }
         }
-
         private static string getAphorismsWhereString(SxFilter filter, out object param)
         {
             param = null;
@@ -85,6 +84,20 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId ";
             };
 
             return query.ToString();
+        }
+
+        public override void Delete(Aphorism model)
+        {
+            var sb = new StringBuilder();
+            sb.Append(" BEGIN TRANSACTION ");
+            sb.Append(" DELETE FROM DV_MATERIAL WHERE Id=@id AND ModelCoreType=@mct ");
+            sb.Append(" DELETE FROM D_APHORISM WHERE Id=@id ");
+            sb.Append(" COMMIT TRANSACTION ");
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Execute(sb.ToString(), new { id = model.Id, mct = model.ModelCoreType });
+            }
         }
 
         public Aphorism GetRandom(int? id = null)

@@ -79,18 +79,19 @@ namespace GE.WebAdmin
                     cfg.CreateMap<SxVMEditShareButton, SxShareButton>();
 
                     //manuals
-                    cfg.CreateMap<SxManual, VMManual>();
-                    cfg.CreateMap<SxManual, VMEditManual>();
-                    cfg.CreateMap<VMEditManual, SxManual>();
+                    cfg.CreateMap<SxManual, SxVMManual>();
+                    cfg.CreateMap<SxManual, SxVMEditManual>();
+                    cfg.CreateMap<SxVMEditManual, SxManual>();
 
                     //material category
+                    cfg.CreateMap<SxMaterialCategory, SxVMMaterialCategory>();
                     cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
+                    cfg.CreateMap<SxVMMaterialCategory, SxMaterialCategory>();
                     cfg.CreateMap<VMMaterialCategory, SxMaterialCategory>();
+                    cfg.CreateMap<SxMaterialCategory, SxVMEditMaterialCategory>();
                     cfg.CreateMap<SxMaterialCategory, VMEditMaterialCategory>();
+                    cfg.CreateMap<SxVMEditMaterialCategory, SxMaterialCategory>();
                     cfg.CreateMap<VMEditMaterialCategory, SxMaterialCategory>();
-
-                    cfg.CreateMap<MaterialCategory, VMEditMaterialCategory>();
-                    cfg.CreateMap<VMEditMaterialCategory, MaterialCategory>();
 
                     //material tags
                     cfg.CreateMap<SxMaterialTag, SxVMMaterialTag>();

@@ -1,6 +1,9 @@
-﻿namespace GE.WebAdmin.Controllers
+﻿using GE.WebCoreExtantions;
+using SX.WebCore.MvcControllers;
+
+namespace GE.WebAdmin.Controllers
 {
-    public partial class BannerGroupsController :SX.WebCore.MvcControllers.SxBannerGroupsController<WebCoreExtantions.DbContext>
+    public sealed class BannerGroupsController : SxBannerGroupsController<DbContext>
     {
         
     }

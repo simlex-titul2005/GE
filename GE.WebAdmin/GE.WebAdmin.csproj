@@ -213,9 +213,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
-    <Content Include="scripts\site.js" />
-    <Content Include="scripts\sx-gv.js" />
-    <Content Include="scripts\sx-gvl.js" />
     <Content Include="Views\SiteSettings\EditEmptyGame.cshtml" />
     <Content Include="Views\VideoLinks\_GridView.cshtml" />
     <Content Include="Views\VideoLinks\_GridViewNotLinked.cshtml" />
@@ -272,7 +269,6 @@
     <Compile Include="Extantions\Repositories\RepoAphorizm.cs" />
     <Compile Include="Extantions\Repositories\RepoHumor.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
-    <Compile Include="Extantions\Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Extantions\Repositories\RepoGame.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Global.asax.cs">
@@ -285,14 +281,12 @@
     <Compile Include="Models\VMAuthorAphorism.cs" />
     <Compile Include="Models\VMEditAphorism.cs" />
     <Compile Include="Models\VMEditAuthorAphorism.cs" />
-    <Compile Include="Models\VMEditManual.cs" />
     <Compile Include="Models\VMEditMaterialCategory.cs" />
     <Compile Include="Models\VMClick.cs" />
     <Compile Include="Models\VMClickType.cs" />
     <Compile Include="Models\VMEditClickType.cs" />
     <Compile Include="Models\VMEditNewsRubric.cs" />
     <Compile Include="Models\VMEditNews.cs" />
-    <Compile Include="Models\VMManual.cs" />
     <Compile Include="Models\VMMaterialCategory.cs" />
     <Compile Include="Models\VMNewsRubric.cs" />
     <Compile Include="Models\VMNews.cs" />

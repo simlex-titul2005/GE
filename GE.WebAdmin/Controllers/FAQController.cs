@@ -1,6 +1,9 @@
-﻿namespace GE.WebAdmin.Controllers
+﻿using GE.WebCoreExtantions;
+using SX.WebCore.MvcControllers;
+
+namespace GE.WebAdmin.Controllers
 {
-    public partial class FAQController : SX.WebCore.MvcControllers.SxFAQController<WebCoreExtantions.DbContext>
+    public sealed class FAQController : SxFAQController<DbContext>
     {
         
     }

@@ -15,7 +15,7 @@ using SX.WebCore;
 namespace GE.WebAdmin.Controllers
 {
     [Authorize(Roles = "admin")]
-    public partial class AphorismsController : BaseController
+    public sealed class AphorismsController : BaseController
     {
         private static int _pageSize = 10;
         private static RepoAphorism _repo;
@@ -26,7 +26,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpGet]
-        public virtual ViewResult Index(int page = 1, string curCat=null)
+        public ViewResult Index(int page = 1, string curCat=null)
         {
             if(curCat != null)
             {
@@ -44,7 +44,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost]
-        public virtual PartialViewResult Index(string curCat, VMAphorism filterModel, SxOrder order, int page = 1)
+        public PartialViewResult Index(string curCat, VMAphorism filterModel, SxOrder order, int page = 1)
         {
             filterModel.CategoryId = curCat;
             ViewBag.CategoryId = curCat;
@@ -57,7 +57,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpGet]
-        public virtual ViewResult Edit(string cat, ModelCoreType mct, int? id = null)
+        public ViewResult Edit(string cat, ModelCoreType mct, int? id = null)
         {
             var data = id.HasValue ? _repo.GetByKey(id, mct) : new Aphorism { CategoryId = cat, Show=true };
             if (data.Author != null)
@@ -67,7 +67,7 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(VMEditAphorism model)
+        public ActionResult Edit(VMEditAphorism model)
         {
             if (string.IsNullOrEmpty(model.TitleUrl))
             {
@@ -98,18 +98,27 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual RedirectToRouteResult Delete(string cat, int id, ModelCoreType mct)
+        public ActionResult Delete(string cat, int id, ModelCoreType mct)
         {
-            _repo.Delete(id, mct);
-            return RedirectToAction("index", new { curCat= cat });
+            var data = _repo.GetByKey(id, mct);
+            if (data == null)
+                return new HttpNotFoundResult();
+
+            _repo.Delete(new Aphorism
+            {
+                Id=id,
+                ModelCoreType=mct
+            });
+            return RedirectToAction("Index", new { curCat= cat });
         }
 
         [HttpPost]
-        public virtual void Report()
+        public ActionResult Report()
         {
             using (var ra = new ReportAphorismsAdapter())
             {
                 ra.SendReport(Response, "aphorisms");
+                return new EmptyResult();
             }
         }
     }

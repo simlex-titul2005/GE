@@ -3,7 +3,7 @@ using SX.WebCore.MvcControllers;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class BannersController : SxBannersController<DbContext>
+    public sealed class BannersController : SxBannersController<DbContext>
     {
         
     }

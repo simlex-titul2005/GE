@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SX.WebCore.Abstract;
+using System;
 using System.Linq;
 using static SX.WebCore.Enums;
 
 namespace GE.WebAdmin.Models
 {
-    public sealed class VMMaterialCategory
+    public sealed class VMMaterialCategory : IHierarchy<VMMaterialCategory>
     {
         public VMMaterialCategory()
         {

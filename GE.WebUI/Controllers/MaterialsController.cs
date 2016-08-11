@@ -22,7 +22,7 @@ using GE.WebUI.Infrastructure;
 namespace GE.WebUI.Controllers
 {
     public abstract class MaterialsController<TModel> : SxMaterialsController<TModel, DbContext>
-        where TModel : SxDbModel<int>
+        where TModel : SxMaterial
     {
         private SxDbRepository<int, Game, DbContext> _repoGame;
         protected MaterialsController(ModelCoreType mct) : base(mct)

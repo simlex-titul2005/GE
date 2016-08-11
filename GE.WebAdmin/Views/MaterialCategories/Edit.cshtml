@@ -1,10 +1,9 @@
 ﻿@model VMEditMaterialCategory
 @{
     var isNew = Model.Id == null;
-    Enums.ModelCoreType mct = ViewBag.ModelCoreType;
     ViewBag.Title = isNew ? "Добавить категорию" : "Редактировать категорию \"" + Model.Title + "\"";
     ViewBag.GameTitle = isNew || !Model.GameId.HasValue ? null : Model.Game.Title;
-    var forAphorism = Model.ModelCoreType == SX.WebCore.Enums.ModelCoreType.Aphorism;
+    var forAphorism = Model.ModelCoreType == Enums.ModelCoreType.Aphorism;
 }
 
 @section styles{
@@ -27,15 +26,15 @@
     </div>
 }
 
-<form method="post" action="@Url.Action("edit", new { controller="MaterialCategories"})" autocomplete="off">
+<form method="post" action="@Url.Action("Edit", "MaterialCategories")" autocomplete="off">
     @Html.AntiForgeryToken()
+    
+    @Html.HiddenFor(x => x.ParentCategoryId)
+    @Html.HiddenFor(x => x.ModelCoreType)
     @if (!isNew && !User.IsInRole("architect"))
     {
         @Html.HiddenFor(x => x.Id)
     }
-
-    @Html.HiddenFor(x => x.ParentCategoryId)
-    @Html.HiddenFor(x => x.ModelCoreType)
 
     @if (!isNew && User.IsInRole("architect"))
     {
@@ -81,7 +80,7 @@
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
-        @Html.ActionLink("Назад", "index", new { controller = "MaterialCategories", mct = mct }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Назад", "Index", "MaterialCategories", new { mct = Model.ModelCoreType }, new { @class = "btn btn-default" })
     </div>
 </form>
 

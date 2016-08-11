@@ -1,6 +1,9 @@
-﻿namespace GE.WebAdmin.Controllers
+﻿using GE.WebCoreExtantions;
+using SX.WebCore.MvcControllers;
+
+namespace GE.WebAdmin.Controllers
 {
-    public partial class EmployeesController : SX.WebCore.MvcControllers.SxEmployeesController<WebCoreExtantions.DbContext>
+    public sealed class EmployeesController : SxEmployeesController<DbContext>
     {
         
     }

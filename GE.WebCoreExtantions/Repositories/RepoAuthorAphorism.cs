@@ -39,11 +39,11 @@ namespace GE.WebCoreExtantions.Repositories
             }
         }
 
-        public override void Delete(params object[] id)
+        public override void Delete(AuthorAphorism model)
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                conn.Execute("del_author_aphorism @authorId", new { authorId = id[0] });
+                conn.Execute("del_author_aphorism @authorId", new { authorId = model.Id });
             }
         }
 

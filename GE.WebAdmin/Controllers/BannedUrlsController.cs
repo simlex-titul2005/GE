@@ -1,6 +1,9 @@
-﻿namespace GE.WebAdmin.Controllers
+﻿using GE.WebCoreExtantions;
+using SX.WebCore.MvcControllers;
+
+namespace GE.WebAdmin.Controllers
 {
-    public partial class BannedUrlsController : SX.WebCore.MvcControllers.SxBannedUrlsController<WebCoreExtantions.DbContext>
+    public sealed class BannedUrlsController : SxBannedUrlsController<DbContext>
     {
         
     }

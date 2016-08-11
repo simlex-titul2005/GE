@@ -1,12 +1,18 @@
 ﻿using Dapper;
 using SX.WebCore;
+using SX.WebCore.Repositories;
 using System.Data.SqlClient;
 using System.Linq;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoMaterialCategory : SX.WebCore.Repositories.SxRepoMaterialCategory<DbContext>
+    public sealed class RepoMaterialCategory : SxRepoMaterialCategory<DbContext>
     {
+        public override SxMaterialCategory Create(SxMaterialCategory model)
+        {
+            return base.Create(model);
+        }
+
         public new MaterialCategory GetByKey(params object[] id)
         {
             var query = @"SELECT *
@@ -20,11 +26,10 @@ WHERE  dmc.Id = @id";
             using (var conn = new SqlConnection(ConnectionString))
             {
                 var data = conn.Query<MaterialCategory, Game, SxPicture, MaterialCategory>(query, (c, g, p)=> {
-                    c.FrontPicture = p;
-                    c.GameId = g.Id;
                     c.Game = g;
+                    c.FrontPicture = p;
                     return c;
-                }, new { id = (string)id[0] }, splitOn: "GameId,FrontPictureId").SingleOrDefault();
+                }, new { id = id[0] }, splitOn: "Id").SingleOrDefault();
                 return data;
             }
         }

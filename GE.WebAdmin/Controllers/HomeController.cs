@@ -1,12 +1,11 @@
-﻿using GE.WebCoreExtantions;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class HomeController : BaseController
+    public sealed class HomeController : BaseController
     {
         [HttpGet]
-        public virtual ViewResult Index()
+        public ViewResult Index()
         {
             return View();
         }

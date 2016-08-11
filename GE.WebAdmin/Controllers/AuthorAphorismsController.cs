@@ -98,12 +98,14 @@ namespace GE.WebAdmin.Controllers
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(VMEditAuthorAphorism model)
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(AuthorAphorism model)
         {
-            _repo.Delete(model.Id);
-            return RedirectToAction("index");
+            if (await _repo.GetByKeyAsync(model.Id) == null)
+                return new HttpNotFoundResult();
+
+            await _repo.DeleteAsync(model);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

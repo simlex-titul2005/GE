@@ -56,6 +56,7 @@
                 var page = $grid.find('.sx-gv__pager li.active a').data('page');
 
                 getGridViewData($grid, page);
+                //replaceGridViewFind($grid);
                 event.preventDefault();
                 return false;
             });
@@ -138,3 +139,10 @@ function getGridViewData(grid, page, order) {
         }
     });
 }
+
+//function replaceGridViewFind(grid)
+//{
+//    $grid = $(grid);
+//    $filterRowInputs = $grid.find('.sx-gv__filter-row input');
+//    console.log($filterRowInputs);
+//}

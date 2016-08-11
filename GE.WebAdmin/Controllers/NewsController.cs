@@ -132,15 +132,5 @@ namespace GE.WebAdmin.Controllers
             newModel.Game = old.Game;
             return newModel;
         }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(VMEditNews model)
-        {
-            var repoSeoInfo = new SxRepoSeoTags<DbContext>();
-            repoSeoInfo.DeleteMaterialSeoInfo(model.Id, model.ModelCoreType);
-
-            Repo.Delete(model.Id, model.ModelCoreType);
-            return RedirectToAction("index");
-        }
     }
 }

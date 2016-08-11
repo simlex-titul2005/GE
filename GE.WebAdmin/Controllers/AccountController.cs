@@ -9,7 +9,7 @@ using SX.WebCore;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class AccountController : SX.WebCore.MvcControllers.SxAccountController<WebCoreExtantions.DbContext>
+    public sealed class AccountController : SX.WebCore.MvcControllers.SxAccountController<WebCoreExtantions.DbContext>
     {
         protected override Action<SxVMLogin> ActionLogin
         {

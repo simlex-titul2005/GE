@@ -1,206 +1,35 @@
 ﻿using GE.WebAdmin.Models;
 using GE.WebCoreExtantions;
 using SX.WebCore;
-using SX.WebCore.Abstract;
-using System;
-using System.Linq;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;
-using GE.WebAdmin.Extantions.Repositories;
 using GE.WebCoreExtantions.Repositories;
+using SX.WebCore.MvcControllers;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class MaterialCategoriesController : BaseController
+    public sealed class MaterialCategoriesController : SxMaterialCategoriesController<DbContext, VMMaterialCategory>
     {
         private static RepoMaterialCategory _repo;
-        public MaterialCategoriesController()
+        public MaterialCategoriesController() : base()
         {
-            if(_repo==null)
+            if (_repo == null)
                 _repo = new RepoMaterialCategory();
         }
 
         [HttpGet]
-        public virtual ActionResult Index(ModelCoreType mct)
-        {
-            var filter = new SxFilter { ModelCoreType = mct };
-            var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
-            var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
-            for (int i = 0; i < parents.Length; i++)
-            {
-                var parent = parents[i];
-                parent.Level = 1;
-                updateTreeNodeLevel(parent.Id, data, 1);
-                fillMaterialCategory(parent, null, data);
-            }
-
-            ViewBag.MaxTreeViewLevel = data.Any() ? data.Max(x => x.Level) : 1;
-            ViewBag.ModelCoreType = mct;
-            ViewBag.PageTitle = getPageTitle(mct);
-
-            return View(parents);
-        }
-
-        private static void fillMaterialCategory(VMMaterialCategory pg, VMMaterialCategory parent, VMMaterialCategory[] all)
-        {
-            var children = all.Where(x => x.ParentCategoryId == pg.Id).ToArray();
-            if (!children.Any()) return;
-
-            for (int i = 0; i < children.Length; i++)
-            {
-                var child = children[i];
-                child.Level = pg.Level + 1;
-                updateTreeNodeLevel(child.Id, all, child.Level);
-                fillMaterialCategory(child, pg, all);
-            }
-
-            pg.ChildCategories = children.OrderBy(x => x.Title).ToArray();
-        }
-        private static void updateTreeNodeLevel(string id, VMMaterialCategory[] all, int level)
-        {
-            all.Single(x => x.Id == id).Level = level;
-        }
-        private static string getPageTitle(ModelCoreType mct)
-        {
-            switch (mct)
-            {
-                case ModelCoreType.Article:
-                    return "Категории статей";
-                case ModelCoreType.News:
-                    return "Категории новостей";
-                case ModelCoreType.Manual:
-                    return "Справочные категории";
-                case ModelCoreType.Aphorism:
-                    return "Категории афоризмов";
-                default:
-                    return "Категоря материалов не определена";
-            }
-        }
-
-        [HttpGet]
-        public virtual ActionResult Edit(ModelCoreType mct, string pcid = null, string id = null)
+        public sealed override ActionResult Edit(ModelCoreType mct, string pcid = null, string id = null)
         {
             var data = string.IsNullOrEmpty(id) ? new MaterialCategory { ModelCoreType = mct, ParentCategoryId = pcid } : _repo.GetByKey(id);
-            var viewModel = Mapper.Map<MaterialCategory, VMEditMaterialCategory>(data);
-            ViewBag.ModelCoreType = mct;
+            var viewModel = Mapper.Map<SxMaterialCategory, VMEditMaterialCategory>(data);
+
             if (data.FrontPictureId.HasValue)
-                ViewBag.FrontPictureIdCaption = data.FrontPicture.Caption;
-            if (data.GameId.HasValue)
-                ViewBag.GameTitle = data.Game.Title;
+                ViewData["FrontPictureIdCaption"] = data.FrontPicture.Caption;
+
+            if (viewModel.GameId.HasValue)
+                ViewBag.GameTitle = viewModel.Game.Title;
+
             return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(VMEditMaterialCategory model)
-        {
-            ViewBag.ModelCoreType = model.ModelCoreType;
-
-            var oldId = Request.Form["OldId"];
-            var isNew = model.Id == null && oldId == null;
-            var id = Url.SeoFriendlyUrl(model.Title);
-
-            if (isNew || oldId != model.Id)
-            {
-                if (isNew || model.Id == null)
-                    model.Id = id;
-
-                ModelState["Id"].Errors.Clear();
-
-                if (isNew)
-                {
-                    var exist = _repo.GetByKey(id);
-                    if (exist != null)
-                        ModelState.AddModelError("Id", "Категория с таким ключем уже существует");
-                }
-            }
-
-            var redactModel = Mapper.Map<VMEditMaterialCategory, MaterialCategory>(model);
-            redactModel.GameId = redactModel.GameId == 0 ? (int?)null : redactModel.GameId;
-
-            if (ModelState.IsValid)
-            {
-                SxMaterialCategory newModel = null;
-                if (isNew)
-                    newModel = _repo.Create(redactModel);
-                else
-                {
-                    if (User.IsInRole("architect"))
-                        newModel = (_repo as RepoMaterialCategory).Update(redactModel, new object[] { oldId }, true, "Id", "Title", "FrontPictureId", "ModelCoreType", "GameId");
-                    else
-                        newModel = (_repo as RepoMaterialCategory).Update(redactModel, true, "Title", "FrontPictureId", "ModelCoreType", "GameId");
-                }
-                return RedirectToAction("index", new { mct= model.ModelCoreType } );
-            }
-            else
-            {
-                return View(model);
-            }
-        }
-
-        public virtual RedirectToRouteResult Delete(VMEditMaterialCategory model)
-        {
-            var mct = model.ModelCoreType;
-            _repo.Delete(model.Id);
-            return RedirectToAction("index", new { mct =mct});
-        }
-
-        [HttpPost]
-        public virtual PartialViewResult FindTreeView(ModelCoreType mct)
-        {
-            var filter = new SxFilter { ModelCoreType = mct };
-            var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
-            var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
-            for (int i = 0; i < parents.Length; i++)
-            {
-                var parent = parents[i];
-                parent.Level = 1;
-                updateTreeNodeLevel(parent.Id, data, 1);
-                fillMaterialCategory(parent, null, data);
-            }
-
-            ViewBag.MaxTreeViewLevel = data.Any() ? data.Max(x => x.Level) : 1;
-            ViewBag.ModelCoreType = mct;
-            ViewBag.PageTitle = getPageTitle(mct);
-
-            return PartialView("_TreeView", parents);
-        }
-
-        [HttpGet]
-        public virtual PartialViewResult TreeViewMenu(ModelCoreType mct, string cur = null)
-        {
-            ViewBag.CurrentCategory = cur;
-
-            var filter = new SxFilter { ModelCoreType = mct };
-            var data = (_repo as RepoMaterialCategory).QueryForAdmin(filter);
-            var parents = data.Where(x => x.ParentCategoryId == null).ToArray();
-            for (int i = 0; i < parents.Length; i++)
-            {
-                var parent = parents[i];
-                parent.Level = 1;
-                updateTreeNodeLevel(parent.Id, data, 1);
-                fillMaterialCategory(parent, null, data);
-            }
-
-            ViewBag.MaxTreeViewLevel = data.Any() ? data.Max(x => x.Level) : 1;
-            ViewBag.ModelCoreType = mct;
-            ViewBag.PageTitle = getPageTitle(mct);
-            ViewBag.TreeViewMenuFuncContent = TreeViewMenuFuncContent(mct);
-
-            return PartialView("~/views/MaterialCategories/_TreeViewMenu.cshtml", parents);
-        }
-
-        private Func<VMMaterialCategory, string> TreeViewMenuFuncContent(ModelCoreType mct)
-        {
-            switch (mct)
-            {
-                case ModelCoreType.Aphorism:
-                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action("index", new { controller= "Aphorisms", curCat= x.Id } ), x.Title);
-                case ModelCoreType.Manual:
-                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action("index", new { controller = "FAQ", curCat = x.Id }), x.Title);
-                default:
-                    return null;
-            }
         }
     }
 }

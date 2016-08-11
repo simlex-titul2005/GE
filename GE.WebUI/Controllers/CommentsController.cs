@@ -82,8 +82,7 @@ namespace GE.WebUI.Controllers
         private VMComment[] getResult(int mid, ModelCoreType mct)
         {
             var filter = new SxFilter { MaterialId = mid, ModelCoreType = mct };
-            var data = _repo.Query(filter).ToArray();
-            var viewModel = data.Select(x => Mapper.Map<SxComment, VMComment>(x)).ToArray();
+            var viewModel = _repo.Read(filter).Select(x => Mapper.Map<SxComment, VMComment>(x)).ToArray();
             return viewModel;
         }
     }

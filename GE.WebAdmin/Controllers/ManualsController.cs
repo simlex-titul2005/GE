@@ -25,11 +25,11 @@ namespace GE.WebAdmin.Controllers
         {
             var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
             var filter = new SxFilter(page, _pageSize) { Order=defaultOrder};
-            filter.PagerInfo.TotalItems = _repo.Count(filter);
+
+            var viewModel = _repo.Read(filter).Select(x=>Mapper.Map<SxManual, VMManual>(x)).ToArray();
+
             ViewBag.Filter = filter;
 
-            var viewModel = _repo.Query(filter).ToArray()
-                .Select(x=>Mapper.Map<SxManual, VMManual>(x)).ToArray();
             return View(viewModel);
         }
 
@@ -38,11 +38,10 @@ namespace GE.WebAdmin.Controllers
         {
             var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
             var filter = new SxFilter(page, _pageSize) { Order = order==null || order.Direction==SortDirection.Unknown?defaultOrder:order, WhereExpressionObject = filterModel };
-            filter.PagerInfo.TotalItems = _repo.Count(filter);
-            ViewBag.Filter = filter;
 
-            var viewModel = _repo.Query(filter).ToArray()
-                .Select(x => Mapper.Map<SxManual, VMManual>(x)).ToArray();
+            var viewModel = _repo.Read(filter).Select(x => Mapper.Map<SxManual, VMManual>(x)).ToArray();
+
+            ViewBag.Filter = filter;
 
             return PartialView("_GridView", viewModel);
         }

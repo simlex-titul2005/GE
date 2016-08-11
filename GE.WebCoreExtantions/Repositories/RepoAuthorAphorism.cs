@@ -4,44 +4,38 @@ using SX.WebCore.Abstract;
 using SX.WebCore.Providers;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoAuthorAphorism : SxDbRepository<int, AuthorAphorism, DbContext>
     {
-
-        public override AuthorAphorism[] Query(SxFilter filter)
+        public override AuthorAphorism[] Read(SxFilter filter)
         {
-            var query = SxQueryProvider.GetSelectString();
-            query += @" FROM D_AUTHOR_APHORISM AS daa";
+            var sb = new StringBuilder();
+            sb.Append(SxQueryProvider.GetSelectString());
+            sb.Append(@" FROM D_AUTHOR_APHORISM AS daa ");
 
             object param = null;
-            query += getAuthorAphorismsWhereString(filter, out param);
+            var gws = getAuthorAphorismsWhereString(filter, out param);
+            sb.Append(gws);
 
             var defaultOrder = new SxOrder { FieldName = "daa.Name", Direction = SortDirection.Asc };
-            query += SxQueryProvider.GetOrderString(defaultOrder, filter.Order);
+            sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
 
-            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
+            sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
 
-            using (var conn = new SqlConnection(base.ConnectionString))
-            {
-                var data = conn.Query<AuthorAphorism>(query, param: param);
-                return data.ToArray();
-            }
-        }
-
-        public override int Count(SxFilter filter)
-        {
-            var query = @"SELECT COUNT(1) FROM D_AUTHOR_APHORISM AS daa ";
-
-            object param = null;
-            query += getAuthorAphorismsWhereString(filter, out param);
+            //count
+            var sbCount = new StringBuilder();
+            sbCount.Append(@"SELECT COUNT(1) FROM D_AUTHOR_APHORISM AS daa ");
+            sbCount.Append(gws);
 
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<int>(query, param: param).Single();
-                return data;
+                var data = conn.Query<AuthorAphorism>(sb.ToString(), param: param);
+                filter.PagerInfo.TotalItems = conn.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
+                return data.ToArray();
             }
         }
 

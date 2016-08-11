@@ -18,7 +18,7 @@ namespace GE.WebAdmin.Controllers
     public partial class AphorismsController : BaseController
     {
         private static int _pageSize = 10;
-        private static SxDbRepository<int, Aphorism, DbContext> _repo;
+        private static RepoAphorism _repo;
         public AphorismsController()
         {
             if(_repo==null)
@@ -36,11 +36,8 @@ namespace GE.WebAdmin.Controllers
 
             ViewBag.CategoryId = curCat;
             var filter = new SxFilter(page, _pageSize) { WhereExpressionObject=new VMAphorism { CategoryId= curCat } };
-            var totalItems = (_repo as RepoAphorism).Count(filter);
-            filter.PagerInfo.TotalItems = totalItems;
+            var data = _repo.Read(filter);
             ViewBag.Filter = filter;
-
-            var data = (_repo as RepoAphorism).Query(filter).ToArray();
             var viewModel = data.Select(x=>Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
 
             return View(viewModel);
@@ -53,11 +50,8 @@ namespace GE.WebAdmin.Controllers
             ViewBag.CategoryId = curCat;
 
             var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
-            var totalItems = (_repo as RepoAphorism).Count(filter);
-            filter.PagerInfo.TotalItems = totalItems;
+            var viewModel = _repo.Read(filter).Select(x => Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
             ViewBag.Filter = filter;
-
-            var viewModel = (_repo as RepoAphorism).Query(filter).ToArray().Select(x => Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
 
             return PartialView("~/views/Aphorisms/_GridView.cshtml", viewModel);
         }
@@ -78,7 +72,7 @@ namespace GE.WebAdmin.Controllers
             if (string.IsNullOrEmpty(model.TitleUrl))
             {
                 var titleUrl = Url.SeoFriendlyUrl(model.Title);
-                var existModel = (_repo as RepoAphorism).GetByTitleUrl(titleUrl);
+                var existModel = _repo.GetByTitleUrl(titleUrl);
                 if (existModel != null && existModel.Id != model.Id)
                     ModelState.AddModelError("Title", "Строковый ключ должен быть уникальным");
                 else

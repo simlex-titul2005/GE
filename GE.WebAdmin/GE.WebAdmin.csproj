@@ -203,7 +203,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
-    <Content Include="packages.config" />
     <Content Include="content\dist\fonts\fontawesome-webfont.eot" />
     <Content Include="content\dist\fonts\fontawesome-webfont.ttf" />
     <Content Include="content\dist\fonts\fontawesome-webfont.woff" />

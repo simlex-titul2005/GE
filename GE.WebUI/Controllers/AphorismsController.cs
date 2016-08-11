@@ -1,11 +1,11 @@
-﻿using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
+﻿using GE.WebCoreExtantions.Repositories;
 using GE.WebUI.Models;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using System.Linq;
 using SX.WebCore;
 using System.Threading.Tasks;
+using GE.WebCoreExtantions;
 
 namespace GE.WebUI.Controllers
 {
@@ -68,13 +68,11 @@ namespace GE.WebUI.Controllers
                 WhereExpressionObject = new VMAphorism { CategoryId = categoryId, Author = new VMAuthorAphorism { TitleUrl = author } },
                 OnlyShow = true
             };
-            var totalItems = (_repo as RepoAphorism).Count(filter);
-            filter.PagerInfo.TotalItems = totalItems;
             filter.PagerInfo.PagerSize = 5;
+            var data = _repo.Read(filter);
+
             ViewBag.PagerInfo = filter.PagerInfo;
             
-
-            var data = _repo.Query(filter).ToArray();
             var viewModel = data.Select(x => Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
             return View(viewModel);
         }

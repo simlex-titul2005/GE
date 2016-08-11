@@ -74,11 +74,11 @@ namespace GE.WebUI.Controllers
                 ViewBag.Tag = tag;
             }
 
-            viewModel.Collection = Repo.Query(filter).ToArray();
+            viewModel.Collection = Repo.Read(filter);
             viewModel.PagerInfo = new SxExtantions.SxPagerInfo(filter.PagerInfo.Page, pageSize)
             {
                 PagerSize = 3,
-                TotalItems = Repo.Count(filter)
+                TotalItems = filter.PagerInfo.TotalItems
             };
 
             return View(viewModel);

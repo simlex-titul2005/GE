@@ -4,6 +4,7 @@ using SX.WebCore.Providers;
 using SX.WebCore.Repositories;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using static SX.WebCore.Enums;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
@@ -28,9 +29,10 @@ ORDER BY dm.DateCreate DESC";
             }
         }
 
-        public override SxHumor[] Query(SxFilter filter)
+        public override SxHumor[] Read(SxFilter filter)
         {
-            var query = SxQueryProvider.GetSelectString(new string[] {
+            var sb = new StringBuilder();
+            sb.Append(SxQueryProvider.GetSelectString(new string[] {
                 "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title", "dm.ModelCoreType", "da.UserName", "dm.SourceUrl",
                 @"(SELECT
        SUBSTRING(
@@ -48,88 +50,69 @@ ORDER BY dm.DateCreate DESC";
                 "(SELECT COUNT(1) FROM D_COMMENT dc WHERE dc.MaterialId=dm.Id AND dc.ModelCoreType=dm.ModelCoreType ) AS CommentsCount",
                 "anu.Id",
                 "anu.NikName",
-            });
-            query += @" FROM D_HUMOR AS da
-       JOIN DV_MATERIAL  AS dm
+            }));
+            sb.Append(@" FROM D_HUMOR AS da ");
+            var joinString = @" JOIN DV_MATERIAL  AS dm
             ON  dm.Id = da.ID
             AND dm.ModelCoreType = da.ModelCoreType
-       LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId";
-
-            var queryForVideos = @"SELECT TOP(1) * 
-FROM   D_VIDEO_LINK  AS dvl
-       JOIN D_VIDEO  AS dv
-            ON  dv.Id = dvl.VideoId
-WHERE  dvl.MaterialId = @mid
-       AND dvl.ModelCoreType = @mct
-ORDER BY dv.DateCreate DESC";
+       LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId ";
+            sb.Append(joinString);
 
             object param = null;
-            query += getHumorWhereString(filter, out param);
+            var gws = getHumorWhereString(filter, out param);
+            sb.Append(gws);
 
             var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
-            query += SxQueryProvider.GetOrderString(defaultOrder, filter.Order);
+            sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
 
-            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
+            sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
+
+            //count
+            var sbCount = new StringBuilder();
+            sbCount.Append(@"SELECT COUNT(1) FROM D_HUMOR AS da ");
+            sbCount.Append(joinString);
+            sbCount.Append(gws);
 
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<SxHumor, SxAppUser, SxHumor>(query, (da, anu) => {
+                var data = conn.Query<SxHumor, SxAppUser, SxHumor>(sb.ToString(), (da, anu) => {
                     da.User = anu;
                     return da;
                 }, param: param);
 
+                //video
                 if (data.Any())
                 {
                     foreach (var item in data)
                     {
-                        item.VideoLinks = conn.Query<SxVideoLink, SxVideo, SxVideoLink>(queryForVideos, (vl, v) => {
+                        item.VideoLinks = conn.Query<SxVideoLink, SxVideo, SxVideoLink>("dbo.get_first_material_video @mid, @mct", (vl, v) => {
                             vl.Video = v;
                             return vl;
                         }, new { mid = item.Id, mct = ModelCoreType.Humor }).ToArray();
                     }
                 }
 
-
+                filter.PagerInfo.TotalItems = conn.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
                 return data.ToArray();
-            }
-        }
-
-        public override int Count(SxFilter filter)
-        {
-            var query = @"SELECT COUNT(1) FROM D_HUMOR AS da
-       JOIN DV_MATERIAL  AS dm
-            ON  dm.Id = da.ID
-            AND dm.ModelCoreType = da.ModelCoreType
-       LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId";
-
-            object param = null;
-            query += getHumorWhereString(filter, out param);
-
-            using (var conn = new SqlConnection(ConnectionString))
-            {
-                var data = conn.Query<int>(query, param: param).SingleOrDefault();
-                return data;
             }
         }
 
         private static string getHumorWhereString(SxFilter filter, out object param)
         {
             param = null;
-            string query = null;
-            query += " WHERE dm.DateOfPublication <= GETDATE() AND dm.Show=1 ";
+            var query = new StringBuilder();
+            query.Append(" WHERE dm.DateOfPublication <= GETDATE() AND dm.Show=1 ");
             if (!string.IsNullOrEmpty(filter.Tag))
             {
-                query += @" AND (dm.Id IN (SELECT dmt.MaterialId
-                  FROM D_MATERIAL_TAG AS dmt WHERE dmt.MaterialId = dm.Id AND dmt.ModelCoreType = dm.ModelCoreType AND dmt.Id=N''+@tag+'')) ";
+                query.Append(" AND (dm.Id IN (SELECT dmt.MaterialId FROM D_MATERIAL_TAG AS dmt WHERE dmt.MaterialId = dm.Id AND dmt.ModelCoreType = dm.ModelCoreType AND dmt.Id=N''+@tag+'')) ");
 
                 param = new
                 {
                     tag = filter.Tag
                 };
             }
-            
 
-            return query;
+            return query.ToString();
         }
     }
 }

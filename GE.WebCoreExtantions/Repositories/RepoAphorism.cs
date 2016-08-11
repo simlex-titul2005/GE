@@ -4,6 +4,7 @@ using SX.WebCore.Abstract;
 using SX.WebCore.Providers;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using static SX.WebCore.Enums;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
@@ -11,25 +12,42 @@ namespace GE.WebCoreExtantions.Repositories
 {
     public sealed class RepoAphorism : SxDbRepository<int, Aphorism, DbContext>
     {
-        public override Aphorism[] Query(SxFilter filter)
+        public override Aphorism[] Read(SxFilter filter)
         {
-            var query = SxQueryProvider.GetSelectString(new string[] { "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount", "dm.*", "dmc.Id", "dmc.Title", "da.AuthorId", "daa.Id", "daa.Name" });
-            query += @" FROM D_APHORISM AS da
-JOIN DV_MATERIAL AS dm ON dm.Id = da.Id AND dm.ModelCoreType = da.ModelCoreType
+            var sb = new StringBuilder();
+            sb.Append(SxQueryProvider.GetSelectString(new string[] {
+                "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount",
+                "dm.*",
+                "dmc.Id",
+                "dmc.Title",
+                "da.AuthorId",
+                "daa.Id",
+                "daa.Name"
+            }));
+            sb.Append(@" FROM D_APHORISM AS da ");
+            var joinString = @" JOIN DV_MATERIAL AS dm ON dm.Id = da.Id AND dm.ModelCoreType = da.ModelCoreType
 JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId
-LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
+LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId ";
+            sb.Append(joinString);
 
             object param = null;
-            query += getAphorismsWhereString(filter, out param);
+            var gws = getAphorismsWhereString(filter, out param);
+            sb.Append(gws);
 
             var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
-            query += SxQueryProvider.GetOrderString(defaultOrder, filter.Order);
+            sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
 
-            query += " OFFSET " + filter.PagerInfo.SkipCount + " ROWS FETCH NEXT " + filter.PagerInfo.PageSize + " ROWS ONLY";
+            sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
 
-            using (var conn = new SqlConnection(base.ConnectionString))
+            //count
+            var sbCount = new StringBuilder();
+            sbCount.Append(@"SELECT COUNT(1) FROM D_APHORISM AS da ");
+            sbCount.Append(joinString);
+            sbCount.Append(gws);
+
+            using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>(query, (a, c, aa) =>
+                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>(sb.ToString(), (a, c, aa) =>
                 {
                     a.CategoryId = c.Id;
                     a.AuthorId = aa.Id;
@@ -37,38 +55,21 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
                     a.Author = aa;
                     return a;
                 }, param: param, splitOn: "CategoryId, AuthorId");
-
+                filter.PagerInfo.TotalItems = conn.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
                 return data.ToArray();
-            }
-        }
-
-        public override int Count(SxFilter filter)
-        {
-            var query = @"SELECT COUNT(1) FROM D_APHORISM AS da
-JOIN DV_MATERIAL AS dm ON dm.Id = da.Id AND dm.ModelCoreType = da.ModelCoreType
-JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId
-LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
-
-            object param = null;
-            query += getAphorismsWhereString(filter, out param);
-
-            using (var conn = new SqlConnection(ConnectionString))
-            {
-                var data = conn.Query<int>(query, param: param).Single();
-                return data;
             }
         }
 
         private static string getAphorismsWhereString(SxFilter filter, out object param)
         {
             param = null;
-            string query = null;
-            query += " WHERE (dm.CategoryId=@cid OR @cid IS NULL) ";
-            query += " AND (dm.Title LIKE '%'+@title+'%' OR @title IS NULL) ";
-            query += " AND (daa.TitleUrl=@titleUrl OR @titleUrl IS NULL) ";
-            query += " AND (dm.Html LIKE '%'+@html+'%' OR @html IS NULL) ";
+            var query = new StringBuilder();
+            query.Append(" WHERE (dm.CategoryId=@cid OR @cid IS NULL) ");
+            query.Append(" AND (dm.Title LIKE '%'+@title+'%' OR @title IS NULL) ");
+            query.Append(" AND (daa.TitleUrl=@titleUrl OR @titleUrl IS NULL) ");
+            query.Append(" AND (dm.Html LIKE '%'+@html+'%' OR @html IS NULL) ");
             if (filter.OnlyShow==true)
-                query += " AND (dm.Show=1) ";
+                query.Append(" AND (dm.Show=1) ");
 
             var cid = filter.WhereExpressionObject != null && filter.WhereExpressionObject.CategoryId != null ? (string)filter.WhereExpressionObject.CategoryId : null;
             var title = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Title != null ? (string)filter.WhereExpressionObject.Title : null;
@@ -83,14 +84,14 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
                 html = html
             };
 
-            return query;
+            return query.ToString();
         }
 
         public Aphorism GetRandom(int? id = null)
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>("get_random_aphorism @mid", (a, c, aa) =>
+                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>("dbo.get_random_aphorism @mid", (a, c, aa) =>
                 {
                     a.Author = aa;
                     a.Category = c;
@@ -104,7 +105,7 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId";
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                conn.Execute("add_material_view @mid, @mct", new { mid = mid, mct = mct });
+                conn.Execute("dbo.add_material_view @mid, @mct", new { mid = mid, mct = mct });
             }
         }
     }

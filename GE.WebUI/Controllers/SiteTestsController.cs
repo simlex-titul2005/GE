@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using SX.WebCore.ViewModels;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using System.Threading.Tasks;
-using GE.WebUI.Models;
 using SX.WebCore.MvcControllers;
 using GE.WebUI.Infrastructure;
 using SX.WebCore.Attrubutes;
@@ -25,15 +24,16 @@ namespace GE.WebUI.Controllers
         {
             var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
             var filter = new SxFilter { Order = defaultOrder, OnlyShow = true };
-            filter.PagerInfo.TotalItems = Repo.Count(filter);
-            ViewBag.Filter = filter;
-            var data = Repo.Query(filter).Select(x => Mapper.Map<SxSiteTest, SxVMSiteTest>(x)).ToArray();
+
+            var data = Repo.Read(filter).Select(x => Mapper.Map<SxSiteTest, SxVMSiteTest>(x)).ToArray();
 
             var viewModel = new SxPagedCollection<SxVMSiteTest>
             {
                 Collection = data,
                 PagerInfo = filter.PagerInfo
             };
+
+            ViewBag.Filter = filter;
 
             return View(model: viewModel);
         }

@@ -250,7 +250,6 @@
     <Content Include="content\dist\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="Global.asax" />
-    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>

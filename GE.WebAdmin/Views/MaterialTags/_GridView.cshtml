@@ -29,8 +29,8 @@
             Columns = new SxExtantions.SxGridViewColumn<SxVMMaterialTag>[]{
                 new SxExtantions.SxGridViewColumn<SxVMMaterialTag>{ FieldName ="Id", Caption ="Значение"
             } },
-            DataAjaxUrl = "/MaterialTags?mid=" + mid + "&mct=" + mct,
+            DataAjaxUrl ="/materialtags?mid="+mid+"&mct="+mct,
             EnableDeleting=true,
-            DeleteRowUrl = x => { return "/MaterialTags/delete?Id=" + x.Id+"&MaterialId="+mid+"&ModelCoreType="+mct; }
+            DeleteRowUrl = x => { return Url.Action("Delete", "MaterialTags", new { Id = x.Id, MaterialId=mid, ModelCoreType = mct }); }
         }
     )

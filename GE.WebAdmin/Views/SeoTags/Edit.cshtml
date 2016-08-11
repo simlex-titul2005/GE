@@ -7,11 +7,15 @@
 <br />
 @if (!isNew)
 {
-    <form method="post" action="@Url.Action("Delete","SeoTags")">
-        @Html.HiddenFor(x => x.Id)
-        @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-danger pull-right" onclick="if(!confirm('Удалить запись?')) return false;">Удалить</button>
-    </form>
+    <div class="form-group">
+        <div class="text-right">
+            <form method="post" action="@Url.Action("Delete","SeoTags")">
+                @Html.HiddenFor(x => x.Id)
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger" onclick="if(!confirm('Удалить запись?')) return false;">Удалить</button>
+            </form>
+        </div>
+    </div>
 }
 <form method="post" action="@Url.Action("Edit","SeoTags")">
     @Html.AntiForgeryToken()

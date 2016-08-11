@@ -8,7 +8,7 @@
         new SxExtantions.SxGridViewSettings<SxVMBannerGroup>
         {
             Columns = new SxExtantions.SxGridViewColumn<SxVMBannerGroup>[]{
-                new SxExtantions.SxGridViewColumn<SxVMBannerGroup>{FieldName="Id", Caption="Идентификатор"},
+                new SxExtantions.SxGridViewColumn<SxVMBannerGroup>{FieldName="Id", Caption="Идентификатор", Template=x=> { return "<b class=\"text-info\">"+x.Id+"</b>"; } },
                 new SxExtantions.SxGridViewColumn<SxVMBannerGroup>{FieldName="Title", Caption="Заголовок"},
                 new SxExtantions.SxGridViewColumn<SxVMBannerGroup>{FieldName="Description", Caption="Описание"}
             },

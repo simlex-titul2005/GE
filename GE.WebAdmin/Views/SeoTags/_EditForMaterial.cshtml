@@ -9,12 +9,12 @@
 @if (!isNew)
 {
     <div class="text-right">
-        @using (Ajax.BeginForm("DeleteForMaterial", new { controller = "SeoTags" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo" }))
+        @using (Ajax.BeginForm("DeleteForMaterial", new { controller = "SeoTags" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo" }, new { @autocomplete = "off" }))
         {
             @Html.AntiForgeryToken()
-            <input type="hidden" name="Id" value="@Model.Id" autocomplete="off" />
-            <input type="hidden" name="MaterialId" value="@Model.MaterialId" autocomplete="off" />
-            <input type="hidden" name="ModelCoreType" value="@Model.ModelCoreType" autocomplete="off" />
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="MaterialId" value="@Model.MaterialId"/>
+            <input type="hidden" name="ModelCoreType" value="@Model.ModelCoreType" />
             <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить теги?')) { return false;}">Удалить</button>
         }
     </div>
@@ -25,12 +25,12 @@
     <p class="text-success">@TempData["ModelSeoInfoRedactInfo"]</p>
 }
 
-@using (Ajax.BeginForm("EditForMaterial", new { controller = "SeoTags" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seo" }))
+@using (Ajax.BeginForm("EditForMaterial", new { controller = "SeoTags" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "grid-seo-tags" }, new { @autocomplete="off"}))
 {
     @Html.AntiForgeryToken()
-    <input type="hidden" name="Id" value="@Model.Id" autocomplete="off" />
-    <input type="hidden" name="MaterialId" value="@Model.MaterialId" autocomplete="off" />
-    <input type="hidden" name="ModelCoreType" value="@Model.ModelCoreType" autocomplete="off" />
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="MaterialId" value="@Model.MaterialId" />
+    <input type="hidden" name="ModelCoreType" value="@Model.ModelCoreType" />
 
 
     @Html.Partial("_GeneralEdit")
@@ -44,7 +44,6 @@
         </div>
     </div>
 }
-
 
 @if (!isNew)
 {

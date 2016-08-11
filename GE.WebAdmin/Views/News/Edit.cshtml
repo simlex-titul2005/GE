@@ -172,7 +172,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div id="grid-mat-tags">
-                        @Html.Action("index", new { controller = "MaterialTags", mid = Model.Id, mct = Model.ModelCoreType })
+                        @Html.Action("index", "MaterialTags", new { mid = Model.Id, mct = Model.ModelCoreType })
                     </div>
                 </div>
             </div>
@@ -180,8 +180,8 @@
         <div role="tabpanel" class="tab-pane" id="seo">
             <div class="row">
                 <div class="col-md-12">
-                    <div id="grid-mat-tags">
-                        @Html.Action("EditForMaterial", new { controller = "SeoTags", mid = Model.Id, mct = Model.ModelCoreType, id = Model.SeoTagsId })
+                    <div id="grid-seo-tags">
+                        @Html.Action("EditForMaterial", "SeoTags", new { mid = Model.Id, mct = Model.ModelCoreType, id = Model.SeoTagsId })
                     </div>
                 </div>
             </div>

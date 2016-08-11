@@ -179,7 +179,7 @@
         <div role="tabpanel" class="tab-pane @(uriFragmet=="seo"? "active":null)" id="seo">
             <div class="row">
                 <div class="col-md-12">
-                    <div id="grid-mat-tags">
+                    <div id="grid-seo-tags">
                         @Html.Action("EditForMaterial", new { controller = "SeoTags", mid = Model.Id, mct = Model.ModelCoreType, id = Model.SeoTagsId })
                     </div>
                 </div>
@@ -276,6 +276,5 @@
                 });
             })
         });
-
     </script>
 }

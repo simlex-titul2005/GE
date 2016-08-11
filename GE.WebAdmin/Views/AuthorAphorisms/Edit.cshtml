@@ -11,16 +11,17 @@
 <h2>@ViewBag.Title</h2>
 @if (!isNew)
 {
-    <div class="text-right">
-        <form method="post" action="delete">
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(x => x.Id)
-            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить</button>
-        </form>
+    <div class="form-group">
+        <div class="text-right">
+            <form method="post" action="@Url.Action("Delete", "AuthorAphorisms")">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.Id)
+                <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить</button>
+            </form>
+        </div>
     </div>
 }
-<br />
-<form method="post" action="edit" autocomplete="off">
+<form method="post" action="@Url.Action("Edi", "AuthorAphorisms")" autocomplete="off">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
 

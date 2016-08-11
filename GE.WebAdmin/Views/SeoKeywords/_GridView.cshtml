@@ -24,8 +24,8 @@
                 Columns = new SxExtantions.SxGridViewColumn<SxVMSeoKeyword>[]{
                     new SxExtantions.SxGridViewColumn<SxVMSeoKeyword>{FieldName="Value", Caption="Ключевое слово"}
                 },
-                DataAjaxUrl = Url.Action("Index", "SeoKeywords", new { stid = seoTagsId }),
+                DataAjaxUrl = "/seokeywords?stid="+ seoTagsId,
                 EnableDeleting = true,
-                DeleteRowUrl = x => { return Url.Action("Delete", "SeoKeywords", new { id = x.Id, SeoTagsId = seoTagsId }); }
+                DeleteRowUrl = x => { return Url.Action("Delete", "SeoKeywords", new { Id= x.Id, SeoTagsId= seoTagsId }); }
             }
     )

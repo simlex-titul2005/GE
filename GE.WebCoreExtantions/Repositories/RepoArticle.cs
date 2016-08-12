@@ -183,5 +183,16 @@ ORDER BY
                 return data.ToArray();
             }
         }
+
+        public override void Delete(Article model)
+        {
+            var query = "DELETE FROM D_ARTICLE WHERE Id=@mid AND ModelCoreType=@mct";
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Execute(query, new { mid = model.Id, mct = model.ModelCoreType });
+            }
+
+            base.Delete(model);
+        }
     }
 }

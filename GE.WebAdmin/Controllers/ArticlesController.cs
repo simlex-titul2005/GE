@@ -5,13 +5,13 @@ using SX.WebCore;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using Microsoft.AspNet.Identity;
-using SX.WebCore.Repositories;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
-using SX.WebCore.MvcControllers;
 using static SX.WebCore.Enums;
+using SX.WebCore.MvcControllers;
 
 namespace GE.WebAdmin.Controllers
 {
+    [Authorize(Roles = "author-article")]
     public sealed class ArticlesController : SxMaterialsController<Article, DbContext>
     {
         public ArticlesController():base(ModelCoreType.Article)

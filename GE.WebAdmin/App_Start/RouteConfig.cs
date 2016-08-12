@@ -16,7 +16,7 @@ namespace GE.WebAdmin
             routes.MapRoute(
                 name: null,
                 url: "sitetests/testmatrix/{testId}/{page}",
-                defaults: new { controller = "sitetests", action = "testmatrix", area = "" },
+                defaults: new { controller = "SiteTests", action = "TestMatrix", area = "" },
                 namespaces: _defNamespace
             );
 

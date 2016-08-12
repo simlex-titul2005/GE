@@ -105,7 +105,6 @@ ORDER BY dm.DateCreate DESC";
                 return data.ToArray();
             }
         }
-
         private static string getNewsWhereString(SxFilter filter, out object param)
         {
             param = null;
@@ -165,6 +164,17 @@ ORDER BY
                 }, new { mid = filter.MaterialId, mct = filter.ModelCoreType, amount = amount }, splitOn: "UserId");
                 return data.ToArray();
             }
+        }
+
+        public override void Delete(News model)
+        {
+            var query = "DELETE FROM D_NEWS WHERE Id=@mid AND ModelCoreType=@mct";
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Execute(query, new { mid = model.Id, mct = model.ModelCoreType });
+            }
+
+            base.Delete(model);
         }
     }
 }

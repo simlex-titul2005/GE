@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using SX.WebCore;
-using SX.WebCore.Abstract;
 using SX.WebCore.Providers;
+using SX.WebCore.Repositories;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,8 +10,10 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoAphorism : SxDbRepository<int, Aphorism, DbContext>
+    public sealed class RepoAphorism : SxRepoMaterial<Aphorism, DbContext>
     {
+        public RepoAphorism() : base(ModelCoreType.Aphorism) { }
+
         public override Aphorism[] Read(SxFilter filter)
         {
             var sb = new StringBuilder();
@@ -86,20 +88,6 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId ";
             return query.ToString();
         }
 
-        public override void Delete(Aphorism model)
-        {
-            var sb = new StringBuilder();
-            sb.Append(" BEGIN TRANSACTION ");
-            sb.Append(" DELETE FROM DV_MATERIAL WHERE Id=@id AND ModelCoreType=@mct ");
-            sb.Append(" DELETE FROM D_APHORISM WHERE Id=@id ");
-            sb.Append(" COMMIT TRANSACTION ");
-
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Execute(sb.ToString(), new { id = model.Id, mct = model.ModelCoreType });
-            }
-        }
-
         public Aphorism GetRandom(int? id = null)
         {
             using (var conn = new SqlConnection(ConnectionString))
@@ -114,12 +102,15 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId ";
             }
         }
 
-        public void AddUserView(int mid, ModelCoreType mct)
+        public override void Delete(Aphorism model)
         {
-            using (var conn = new SqlConnection(ConnectionString))
+            var query = "DELETE FROM D_APHORISM WHERE Id=@mid AND ModelCoreType=@mct";
+            using (var connection = new SqlConnection(ConnectionString))
             {
-                conn.Execute("dbo.add_material_view @mid, @mct", new { mid = mid, mct = mct });
+                connection.Execute(query, new { mid = model.Id, mct = model.ModelCoreType });
             }
+
+            base.Delete(model);
         }
     }
 }

@@ -17,10 +17,10 @@
 @if (Model.Id != 0 && User.IsInRole("admin"))
 {
     <div class="text-right">
-        <form method="post" action="@Url.Action("delete", "articles")">
+        <form method="post" action="@Url.Action("Delete", "Articles")">
+            @Html.AntiForgeryToken()
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.ModelCoreType)
-            @Html.AntiForgeryToken()
             <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить статью</button>
         </form>
     </div>
@@ -42,7 +42,7 @@
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane @(uriFragmet==null || uriFragmet=="params"? "active":null)" id="params">
         <h2>Основные параметры материала</h2>
-        <form method="post" action="edit" autocomplete="off">
+        <form method="post" action="@Url.Action("Edit", "Articles")" autocomplete="off">
             @Html.AntiForgeryToken()
 
             @Html.HiddenFor(x => x.Id)

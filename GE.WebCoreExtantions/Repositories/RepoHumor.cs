@@ -96,7 +96,6 @@ ORDER BY dm.DateCreate DESC";
                 return data.ToArray();
             }
         }
-
         private static string getHumorWhereString(SxFilter filter, out object param)
         {
             param = null;
@@ -113,6 +112,17 @@ ORDER BY dm.DateCreate DESC";
             }
 
             return query.ToString();
+        }
+
+        public override void Delete(SxHumor model)
+        {
+            var query = "DELETE FROM D_HUMOR WHERE Id=@mid AND ModelCoreType=@mct";
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Execute(query, new { mid = model.Id, mct = model.ModelCoreType });
+            }
+
+            base.Delete(model);
         }
     }
 }

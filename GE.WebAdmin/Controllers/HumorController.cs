@@ -52,7 +52,7 @@ namespace GE.WebAdmin.Controllers
         [HttpGet]
         public ViewResult Edit(int? id)
         {
-            var model = id.HasValue ? Repo.GetByKey(id, ModelCoreType.Humor) : new SxHumor ();
+            var model = id.HasValue ? Repo.GetByKey(id, ModelCoreType.Humor) : new SxHumor();
             var viewModel = Mapper.Map<SxHumor, VMEditHumor>(model);
             viewModel.OldTitleUrl = viewModel.TitleUrl;
             if (model.FrontPictureId.HasValue)

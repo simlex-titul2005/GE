@@ -35,8 +35,8 @@
    {
        LikeDownCount = () => Model.LikeDownCount,
        LikeUpCount = () => Model.LikeUpCount,
-       MaterialId = () => Model.Id,
-       ModelCoreType = Model.ModelCoreType
+       UrlUp = () => Url.Action("AddLike", "Articles", new { mid = Model.Id, ld = "true" }),
+       UrlDown = () => Url.Action("AddLike", "Articles", new { mid = Model.Id, ld = "false" })
    })
     </div>
 

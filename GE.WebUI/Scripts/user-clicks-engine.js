@@ -1,25 +1,15 @@
 ﻿/// <reference path="../bower_components/jquery/dist/jquery.min.js" />
 
-function sendUserClick(mid, mct, uct) {
-    var aft = $('input[name="__RequestVerificationToken"]').val();
-    $.ajax({
-        method: 'post',
-        url: '/userclicks/click',
-        data: { __RequestVerificationToken: aft, mid: mid, mct: mct, uct: uct },
-        success: function (data) {
-            return data;
-        }
-    });
-}
-
-function sendLikeButtonClick(element, mid, mct, uct, ldir) {
+//send like
+function sendLike(element) {
     $btn = $(element);
+    var url = $btn.attr('data-url');
     $badge = $btn.find('.share-buttons__counter');
     var aft = $('input[name="__RequestVerificationToken"]').val();
     $.ajax({
         method: 'post',
-        url: '/userclicks/click',
-        data: { __RequestVerificationToken: aft, mid: mid, mct: mct, uct: uct, ldir: ldir },
+        url: url,
+        data: { __RequestVerificationToken: aft },
         success: function (data) {
             $badge.html(data);
         }

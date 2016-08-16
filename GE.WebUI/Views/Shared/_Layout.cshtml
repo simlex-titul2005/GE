@@ -9,6 +9,7 @@
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
     var bannerControllerBlackList = new string[] { "employees", "account", "error", "sitequetions" };
+    SxBanner banner = null;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +67,7 @@
             }
             
             @{
-                var banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top) : null;
+                banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top) : null;
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b=> { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })

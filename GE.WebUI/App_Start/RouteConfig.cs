@@ -28,6 +28,14 @@ namespace GE.WebUI
                 namespaces: _defNamespace
             );
 
+            routes.MapRoute(
+                name: null,
+                url: "{controller}/AddLike/{mid}/{ld}",
+                defaults: new { controller = "Articles", action = "AddLike", area = "" },
+                namespaces: _defNamespace,
+                constraints: new { httpMethod = new HttpMethodConstraint("post") }
+            );
+
             #region aphorisms
 
             routes.MapRoute(

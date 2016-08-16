@@ -32,11 +32,11 @@
         @Html.Raw(Model.Html)
 
         @Html.SxShareButtons(global_asax.ShareButtons, lbSettings:new SxExtantions.SxLikeButtonsSettings {
-            LikeDownCount=()=>Model.LikeDownCount,
-            LikeUpCount=()=>Model.LikeUpCount,
-            MaterialId=()=>Model.Id,
-            ModelCoreType=Model.ModelCoreType
-        })
+       LikeDownCount=()=>Model.LikeDownCount,
+       LikeUpCount=()=>Model.LikeUpCount,
+       UrlUp = () => Url.Action("AddLike", "News", new { mid = Model.Id, ld = "true" }),
+       UrlDown = () => Url.Action("AddLike", "News", new { mid = Model.Id, ld = "false" })
+   })
     </div>
 
 

@@ -1,8 +1,8 @@
-﻿using GE.WebUI.Models.Abstract;
+﻿using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Models
 {
-    public sealed class VMDetailHumor : VMDetailMaterial
+    public sealed class VMDetailHumor : SxVMMaterial
     {
         public string UserName { get; set; }
     }

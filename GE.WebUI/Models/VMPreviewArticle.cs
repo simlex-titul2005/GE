@@ -1,22 +1,15 @@
-﻿using GE.WebUI.Models.Abstract;
+﻿using System.Web.Mvc;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Models
 {
-    public class VMPreviewArticle : VMLastMaterial
+    public class VMPreviewArticle : SxVMMaterial
     {
-        public string UserName { get; set; }
-        public string GameTitle { get; set; }
-        public VMMateriallnfo Info
+        public int? GameId { get; set; }
+        public VMGame Game { get; set; }
+        public override string Url(UrlHelper url)
         {
-            get
-            {
-                return new VMMateriallnfo
-                {
-                    CommentsCount=this.CommentsCount,
-                    DateOfPublication =this.DateOfPublication,
-                    ViewsCount=this.ViewsCount
-                };
-            }
+            return url.Action("Details", "Articles", new { year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
         }
     }
 }

@@ -288,23 +288,11 @@ GROUP BY
             return data;
         }
 
-        public static VMLastNews[] GetByDateMaterial(this WebCoreExtantions.Repositories.RepoNews repo, int mid, ModelCoreType mct, bool dir, int amount)
+        public static VMMaterial[] GetPopular(this WebCoreExtantions.Repositories.RepoNews repo, ModelCoreType mct, int mid, int amount)
         {
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                var data = connection.Query<VMLastNews, VMUser, VMLastNews>("get_other_materials @mid, @mct, @dir, @amount", (m, u) => {
-                    m.Author = u;
-                    return m;
-                }, new { mid = mid, mct = mct, dir = dir, amount = amount }, splitOn: "UserId").ToArray();
-                return data;
-            }
-        }
-
-        public static VMLastNews[] GetPopular(this WebCoreExtantions.Repositories.RepoNews repo, ModelCoreType mct, int mid, int amount)
-        {
-            using (var connection = new SqlConnection(repo.ConnectionString))
-            {
-                var data = connection.Query<VMLastNews>("get_popular_materials @mid, @mct, @amount", new { mct = mct, mid=mid, amount =amount }).ToArray();
+                var data = connection.Query<VMMaterial>("get_popular_materials @mid, @mct, @amount", new { mct = mct, mid=mid, amount =amount }).ToArray();
                 return data;
             }
         }

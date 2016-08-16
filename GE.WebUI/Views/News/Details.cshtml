@@ -1,7 +1,7 @@
 ﻿@using SX.WebCore.Providers;
 @using SX.WebCore;
 
-@model VMDetailNews
+@model VMMaterial
 @{
     var title = ViewBag.Title;
     var h1 = ViewBag.H1;
@@ -38,7 +38,6 @@
        UrlDown = () => Url.Action("AddLike", "News", new { mid = Model.Id, ld = "false" })
    })
     </div>
-
 
     @Html.Partial("_MaterialInfo", Model)
 

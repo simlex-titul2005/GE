@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SX.WebCore.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,7 +24,7 @@ namespace GE.WebUI.Models
     {
         public VMFGBGame()
         {
-            MaterialCategories = new VMMaterialCategory[0];
+            MaterialCategories = new SxVMMaterialCategory[0];
         }
         public int Id { get; set; }
         public Guid FrontPictureId { get; set; }
@@ -31,7 +32,7 @@ namespace GE.WebUI.Models
         public string TitleUrl { get; set; }
         public string Description { get; set; }
 
-        public VMMaterialCategory[] MaterialCategories { get; set; }
+        public SxVMMaterialCategory[] MaterialCategories { get; set; }
         public int MaterialCategoryLength { get { return MaterialCategories.Length; } }
         public bool HasMaterialCategories { get { return MaterialCategories.Length != 0; } }
     }

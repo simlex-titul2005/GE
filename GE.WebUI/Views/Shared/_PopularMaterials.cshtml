@@ -1,4 +1,4 @@
-﻿@model GE.WebUI.Models.Abstract.VMLastMaterial[]
+﻿@model VMMaterial[]
 @{
     Layout = null;
     var mct = ViewData["ModelCoreType"] == null ? SX.WebCore.Enums.ModelCoreType.Unknown : (SX.WebCore.Enums.ModelCoreType)ViewData["ModelCoreType"];
@@ -21,7 +21,7 @@
                                 <i class="fa fa-comments-o"></i>: @item.CommentsCount
                             </li>
                             <li>
-                                <i class="fa fa-thumbs-up "></i>: @item.LikesCount
+                                <i class="fa fa-thumbs-up "></i>: @item.LikeUpCount
                             </li>
                             <li>
                                 <i class="fa fa-eye"></i>: @item.ViewsCount

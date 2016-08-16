@@ -1,8 +1,18 @@
-﻿@model VMDetailMaterial
+﻿@model VMMaterial
 @{
     Layout = null;
 }
 
 <div class="m-info">
-    @Html.DisplayFor(x => Model.Info)
+    <ul class="mat-info">
+        <li>
+            <i class="fa fa-clock-o"></i>: @(Model.DateOfPublication.ToString("dd.MM.yyy"))
+        </li>
+        <li>
+            <i class="fa fa-eye"></i>: @Model.ViewsCount
+        </li>
+        <li>
+            <i class="fa fa-comments-o"></i>: @Model.CommentsCount
+        </li>
+    </ul>
 </div>

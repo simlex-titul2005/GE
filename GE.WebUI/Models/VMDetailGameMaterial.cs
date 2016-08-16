@@ -1,9 +1,9 @@
-﻿using GE.WebUI.Models.Abstract;
+﻿using SX.WebCore.ViewModels;
 using System.Web.Mvc;
 
 namespace GE.WebUI.Models
 {
-    public sealed class VMDetailGameMaterial : VMDetailMaterial
+    public sealed class VMDetailGameMaterial : SxVMMaterial
     {
         public string GetUrl(UrlHelper urlHelper)
         {

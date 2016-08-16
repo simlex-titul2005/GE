@@ -1,8 +1,4 @@
-﻿@model VMDetailMaterial
-@{
-    Layout = null;
-}
-
+﻿@model VMMaterial
 
 <blockquote class="mat-fwd">
     <h2 class="ann">Аннотация</h2>
@@ -12,7 +8,10 @@
         <br />
         Отредактировано: <strong>@Model.DateUpdate.ToString("dd.MM.yyyy hh:mm")</strong>
         <br />
-        Автор материала: <strong>@Model.UserNikName</strong>
+        @if (Model.User != null)
+        {
+            <div>Автор материала: <strong>@Model.User.NikName</strong></div>
+        }
     </p>
     <p>Рейтинг:</p>
     @Html.SxRating(Model.Rating, Url.Action("AddRating", "Rating", new { mid = Model.Id, mct = Model.ModelCoreType }))

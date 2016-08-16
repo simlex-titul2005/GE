@@ -6,6 +6,7 @@ using System.Linq;
 using SX.WebCore;
 using System.Threading.Tasks;
 using GE.WebCoreExtantions;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
@@ -83,12 +84,12 @@ namespace GE.WebUI.Controllers
             return RedirectToAction("List", new { author = author, html = html });
         }
 
-        private VMMaterialCategory getCurrentCategory(string categoryId=null)
+        private SxVMMaterialCategory getCurrentCategory(string categoryId=null)
         {
             if (categoryId == null) return null;
 
             var data = new RepoMaterialCategory().GetByKey(categoryId);
-            return Mapper.Map<MaterialCategory, VMMaterialCategory>(data);
+            return Mapper.Map<MaterialCategory, SxVMMaterialCategory>(data);
         }
     }
 }

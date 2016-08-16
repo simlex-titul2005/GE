@@ -1,15 +1,17 @@
-﻿@model dynamic[]
+﻿@using SX.WebCore;
+@model VMMaterial[]
 @{
     Layout = null;
     var colCount = 3;
     var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
-    dynamic item;
+    SxVMMaterial item;
+    Enums.ModelCoreType mct = ViewBag.ModelCoreType;
 }
 
 @if (Model.Any())
 {
     <div class="like-mats">
-        <h3 class="header">@ViewBag.LikeMatTitle</h3>
+        <h3 class="header">@mct</h3>
         <br />
         @for (int r = 0; r < rowsCount; r++)
                 {
@@ -20,27 +22,17 @@
                     if (c < items.Length)
                     {
                         item = items[c];
-                        var date = (DateTime)item.DateCreate;
-                        var mct = (SX.WebCore.Enums.ModelCoreType)item.ModelCoreType;
-                        var titleUrl = (string)item.TitleUrl;
-                        string url = "#";
-                        switch (mct)
-                        {
-                            case SX.WebCore.Enums.ModelCoreType.Article:
-                                url = Url.Action("Details", "Articles", new { year = item.DateCreate.Year, month = item.DateCreate.Month.ToString("00"), day = item.DateCreate.Day.ToString("00"), titleUrl = item.TitleUrl });
-                                break;
-                            case SX.WebCore.Enums.ModelCoreType.News:
-                                url = Url.Action("Details", "News", new { year = item.DateCreate.Year, month = item.DateCreate.Month.ToString("00"), day = item.DateCreate.Day.ToString("00"), titleUrl = item.TitleUrl });
-                                break;
-                        }
                         <div class="col-md-4">
                             <div class="like-mat" onclick="changeLocation(this)" title="@item.Title">
                                 <div><time>@item.DateCreate</time></div>
-                                <div><a href="@url">@item.Title</a></div>
+                                <div><a href="@item.Url(Url)">@item.Title</a></div>
                                 <p>@item.Foreword</p>
-                                <div class="author">
-                                    Автор: <strong><i>@item.User.NikName</i></strong>
-                                </div>
+                                @if (item.User != null)
+                                {
+                                    <div class="author">
+                                        Автор: <strong><i>@item.User.NikName</i></strong>
+                                    </div>
+                                }
                             </div>
                         </div>
                     }

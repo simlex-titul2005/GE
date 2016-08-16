@@ -209,7 +209,6 @@
     <Compile Include="Extantions\Repositories\RepoAphorism.cs" />
     <Compile Include="Infrastructure\BreadcrumbsManager.cs" />
     <Compile Include="Infrastructure\SiteSettings.cs" />
-    <Compile Include="Models\Abstract\VMLastMaterial.cs" />
     <Compile Include="Models\VMAphorismCategory.cs" />
     <Compile Include="Models\VMAuthorAphorism.cs" />
     <Compile Include="Models\VMDetailAphorism.cs" />
@@ -219,7 +218,6 @@
     <Compile Include="Models\VMDetailHumor.cs" />
     <Compile Include="Models\VMEditHumor.cs" />
     <Compile Include="Models\VMEditSiteQuetion.cs" />
-    <Compile Include="Models\VMLastNews.cs" />
     <Compile Include="Models\VMLCNB.cs" />
     <Compile Include="Models\VMLCNBCategory.cs" />
     <Compile Include="Models\VMLCNBNews.cs" />
@@ -283,7 +281,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\SiteMapProvider.cs" />
-    <Compile Include="Models\Abstract\VMDetailMaterial.cs" />
     <Compile Include="Models\VMExternalLoginConfirmation.cs" />
     <Compile Include="Models\VMExternalLoginList.cs" />
     <Compile Include="Models\VMLGNB.cs" />
@@ -292,14 +289,11 @@
     <Compile Include="Models\VMLGNBNews.cs" />
     <Compile Include="Models\VMLGNBVideo.cs" />
     <Compile Include="Models\VMLoginModel.cs" />
-    <Compile Include="Models\VMMaterialCategory.cs" />
+    <Compile Include="Models\VMMaterial.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMMenuItem.cs" />
     <Compile Include="Models\VMComment.cs" />
-    <Compile Include="Models\VMDetailNews.cs" />
-    <Compile Include="Models\VMDetailArticle.cs" />
     <Compile Include="Models\VMEditComment.cs" />
-    <Compile Include="Models\VMMateriallnfo.cs" />
     <Compile Include="Models\VMFGBlock.cs" />
     <Compile Include="Models\VMGameMenu .cs" />
     <Compile Include="Models\VMMenu.cs" />
@@ -320,10 +314,8 @@
     <Content Include="Views\News\_LastNewsBlock.cshtml" />
     <Content Include="Views\Articles\_ForGamersBlock.cshtml" />
     <Content Include="Views\Articles\_Preview.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\VMMateriallnfo.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_SocialIconsMenu.cshtml" />
-    <Content Include="Views\Articles\_Last.cshtml" />
     <Content Include="Views\News\List.cshtml" />
     <Content Include="Views\Games\DisplayTemplates\VMImgGame.cshtml" />
     <Content Include="Views\Articles\_Collection.cshtml" />
@@ -345,7 +337,6 @@
     <Content Include="Views\Shared\_LikeMaterial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Shared\_MaterialInfo.cshtml" />
     <Content Include="Views\Games\_LastMaterials.cshtml" />
     <Content Include="Views\News\_LastCategoryBlock.cshtml" />
     <Content Include="Views\News\_NewsCategories.cshtml" />
@@ -378,6 +369,8 @@
     <Content Include="Views\Humor\Add.cshtml" />
     <Content Include="Views\SiteTests\_ResultNormal.cshtml" />
     <Content Include="Views\Shared\_Rating.cshtml" />
+    <Content Include="Views\Shared\_MaterialInfo.cshtml" />
+    <Content Include="Views\Articles\_Last.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

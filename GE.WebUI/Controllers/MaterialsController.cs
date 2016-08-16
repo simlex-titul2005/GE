@@ -1,7 +1,6 @@
 ﻿using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using GE.WebUI.Models;
-using GE.WebUI.Models.Abstract;
 using SX.WebCore;
 using SX.WebCore.Abstract;
 using SX.WebCore.HtmlHelpers;
@@ -21,7 +20,7 @@ using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
 {
-    public abstract class MaterialsController<TModel> : SxMaterialsController<TModel, DbContext>
+    public class MaterialsController<TModel> : SxMaterialsController<TModel, DbContext>
         where TModel : SxMaterial
     {
         private SxDbRepository<int, Game, DbContext> _repoGame;
@@ -88,48 +87,16 @@ namespace GE.WebUI.Controllers
         [OutputCache(Duration =900, VaryByParam ="MaterialId;ModelCoreType")]
 #endif
         [HttpGet]
-        [ChildActionOnly]
-        public virtual PartialViewResult LikeMaterials(SxFilter filter, int amount = 10)
-        {
-            dynamic[] viewModel = null;
-            switch (filter.ModelCoreType)
-            {
-                case ModelCoreType.Article:
-                    viewModel = (Repo as RepoArticle).GetLikeMaterial(filter, amount);
-                    break;
-                case ModelCoreType.News:
-                    viewModel = (Repo as RepoNews).GetLikeMaterial(filter, amount);
-                    break;
-            }
-            ViewBag.LikeMatTitle = getLikeMatTitle(filter.ModelCoreType);
-
-            return PartialView("~/views/Shared/_LikeMaterial.cshtml", viewModel);
-        }
-
-        private static string getLikeMatTitle(ModelCoreType mct)
-        {
-            switch (mct)
-            {
-                case ModelCoreType.News:
-                    return "Эту новость хорошо дополняют";
-                case ModelCoreType.Article:
-                    return "Эту статью хорошо дополняют";
-                default:
-                    return "Похожие материалы";
-            }
-        }
-
-        [HttpGet]
         public virtual ActionResult Details(int year, string month, string day, string titleUrl)
         {
-            VMDetailMaterial model = null;
+            SxVMMaterial model = null;
             switch (ModelCoreType)
             {
                 case ModelCoreType.Article:
-                    model = (Repo as RepoArticle).GetByTitleUrl<VMDetailArticle>(year, month, day, titleUrl);
+                    model = (Repo as RepoArticle).GetByTitleUrl<VMMaterial>(year, month, day, titleUrl);
                     break;
                 case ModelCoreType.News:
-                    model = (Repo as RepoNews).GetByTitleUrl<VMDetailNews>(year, month, day, titleUrl);
+                    model = (Repo as RepoNews).GetByTitleUrl<VMMaterial>(year, month, day, titleUrl);
                     break;
                 case ModelCoreType.Humor:
                     model = (Repo as RepoHumor).GetByTitleUrl<VMDetailHumor>(year, month, day, titleUrl);
@@ -154,8 +121,8 @@ namespace GE.WebUI.Controllers
             CultureInfo ci = new CultureInfo("en-US");
             ViewBag.LastModified = model.DateUpdate.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'", ci);
 
-            if (model.GameTitleUrl != null)
-                ViewBag.GameName = model.GameTitleUrl.ToLowerInvariant();
+            //if (model.GameTitleUrl != null)
+            //    ViewBag.GameName = model.GameTitleUrl.ToLower();
 
             var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
             if (breadcrumbs != null)
@@ -190,24 +157,6 @@ namespace GE.WebUI.Controllers
 #if !DEBUG
                 [OutputCache(Duration =900, VaryByParam ="mid;mct;dir;amount")]
 #endif
-        [HttpGet, NotLogRequest]
-        public virtual PartialViewResult ByDateMaterial(int mid, ModelCoreType mct, bool dir = false, int amount = 3)
-        {
-            ViewBag.ModelCoreType = mct;
-            VMLastMaterial[] data = null;
-            switch (mct)
-            {
-                case ModelCoreType.Article:
-                    data = (Repo as RepoArticle).GetByDateMaterial(mid, mct, dir, amount);
-                    break;
-                case ModelCoreType.News:
-                    data = (Repo as RepoNews).GetByDateMaterial(mid, mct, dir, amount);
-                    break;
-            }
-
-            return PartialView("~/views/shared/_bydatematerial.cshtml", data);
-        }
-
 
 #if !DEBUG
         [OutputCache(Duration =900, VaryByParam ="mct;mid;amount")]
@@ -215,7 +164,7 @@ namespace GE.WebUI.Controllers
         [HttpGet, ChildActionOnly]
         public virtual PartialViewResult Popular(ModelCoreType mct, int mid, int amount = 4)
         {
-            VMLastMaterial[] data = null;
+            VMMaterial[] data = null;
             switch (mct)
             {
                 case ModelCoreType.Article:
@@ -228,6 +177,22 @@ namespace GE.WebUI.Controllers
             ViewData["ModelCoreType"] = mct;
 
             return PartialView("~/views/shared/_popularmaterials.cshtml", data);
+        }
+
+        public override PartialViewResult LikeMaterials(SxFilter filter, int amount = 10)
+        {
+            var data = Repo.GetLikeMaterial(filter, amount);
+            var viewModel = data.Select(x => Mapper.Map<SxVMMaterial, VMMaterial>(x)).ToArray();
+            ViewBag.ModelCoreType = filter.ModelCoreType;
+            return PartialView("~/Views/Shared/_LikeMaterial.cshtml", viewModel);
+        }
+
+        public override PartialViewResult ByDateMaterial(int mid, ModelCoreType mct, bool dir = false, int amount = 3)
+        {
+            var data = Repo.GetByDateMaterials(mid, mct, dir, amount);
+            var viewModel = data.Select(x => Mapper.Map<SxVMMaterial, VMMaterial>(x)).ToArray();
+            ViewBag.ModelCoreType = mct;
+            return PartialView("~/Views/Shared/_ByDateMaterial.cshtml", viewModel);
         }
     }
 }

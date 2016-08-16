@@ -1,20 +1,12 @@
 ﻿@model News
 @{
-    Layout = null;
-    var info = new VMMateriallnfo
-    {
-        DateOfPublication = Model.DateOfPublication,
-        CommentsCount = Model.CommentsCount,
-        ViewsCount = Model.ViewsCount
-    };
-
     var url = Model.Url(Url);
     var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.GoodPictureId : Guid.Empty);
 }
 
 <div class="row">
     <div class="col-md-6 hidden-sm">
-        <figure class="mat-f-p" style="background-image:url(@(Model.FrontPictureId != null?@Url.Action("Picture", new { controller="Pictures", id=picureId, height=300 }):"~/Content/dist/i/article-empty.png"))">
+        <figure class="mat-f-p" style="background-image:url(@(Model.FrontPictureId != null?@Url.Action("Picture", "Pictures", new { id=picureId, height=300 }):"~/Content/dist/i/article-empty.png"))">
            
         </figure>
     </div>

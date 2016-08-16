@@ -22,7 +22,7 @@ namespace GE.WebUI
                     cfg.CreateMap<AuthorAphorism, VMAuthorAphorism>();
 
                     //articles
-                    cfg.CreateMap<Article, VMDetailArticle>();
+                    cfg.CreateMap<Article, SxVMMaterial>();
 
                     //employees
                     cfg.CreateMap<SxEmployee, SxVMEmployee>();
@@ -35,8 +35,11 @@ namespace GE.WebUI
                     cfg.CreateMap<Game, VMGame>();
                     cfg.CreateMap<Game, VMDetailGame>();
 
+                    //material
+                    cfg.CreateMap<SxVMMaterial, VMMaterial>();
+
                     //material category
-                    cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
+                    cfg.CreateMap<SxMaterialCategory, SxVMMaterialCategory>();
 
                     //material category
                     cfg.CreateMap<SxPicture, SxVMPicture>();

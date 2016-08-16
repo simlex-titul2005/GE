@@ -123,7 +123,6 @@ ORDER BY dv.DateCreate DESC";
                 return data.ToArray();
             }
         }
-
         private static string getArticleWhereString(SxFilter filter, out object param)
         {
             param = null;
@@ -148,40 +147,6 @@ ORDER BY dv.DateCreate DESC";
             }
 
             return query.ToString();
-        }
-
-        public Article[] GetLikeMaterial(SxFilter filter, int amount)
-        {
-            var query = @"SELECT DISTINCT TOP(@amount)
-       dm.DateCreate,
-       dm.TitleUrl,
-       dm.Title,
-       dm.ModelCoreType,
-       SUBSTRING(dm.Foreword, 0, 200)  AS Foreword,
-       dm.UserId,
-       anu.NikName
-FROM   D_MATERIAL_TAG    AS dmt
-       JOIN DV_MATERIAL  AS dm
-            ON  dm.Id = dmt.MaterialId
-            AND dm.ModelCoreType = dmt.ModelCoreType
-            AND dm.Id NOT IN (@mid)
-       JOIN AspNetUsers  AS anu
-            ON  anu.Id = dm.UserId
-WHERE  dmt.Id IN (SELECT dmt2.Id
-                  FROM   D_MATERIAL_TAG AS dmt2
-                  WHERE  dmt2.MaterialId = @mid
-                         AND dmt2.ModelCoreType = @mct)
-ORDER BY
-       dm.DateCreate DESC";
-
-            using (var conn = new SqlConnection(this.ConnectionString))
-            {
-                var data = conn.Query<Article, SxAppUser, Article>(query, (m, u) => {
-                    m.User = u;
-                    return m;
-                }, new { mid = filter.MaterialId, mct = filter.ModelCoreType, amount= amount }, splitOn: "UserId");
-                return data.ToArray();
-            }
         }
 
         public override void Delete(Article model)

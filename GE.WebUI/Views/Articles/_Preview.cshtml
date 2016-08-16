@@ -18,18 +18,28 @@
                     <h5 class="title">
                         <a href="@m.Url(Url)" target="_blank">@m.Title</a>
                     </h5>
-                    @Html.DisplayFor(x => m.Info)
+                    <ul class="mat-info">
+                        <li>
+                            <i class="fa fa-clock-o"></i>: @(m.DateOfPublication.ToString("dd.MM.yyy"))
+                        </li>
+                        <li>
+                            <i class="fa fa-eye"></i>: @m.ViewsCount
+                        </li>
+                        <li>
+                            <i class="fa fa-comments-o"></i>: @m.CommentsCount
+                        </li>
+                    </ul>
                     <p class="foreword">
                         @m.Foreword
                     </p>
                     <div>
-                        @if(!string.IsNullOrEmpty(m.UserName))
+                        @if(m.User!=null)
                         {
-                            <div><i>Автор: <strong>@m.UserName</strong></i></div>
+                            <div><i>Автор: <strong>@m.User.NikName</strong></i></div>
                         }
-                        @if (!string.IsNullOrEmpty(m.GameTitle))
+                        @if (m.Game!=null)
                         {
-                            <div><i>Игра: <strong>@m.GameTitle</strong></i></div>
+                            <div><i>Игра: <strong>@m.Game.Title</strong></i></div>
                         }
                     </div>
                 </div>

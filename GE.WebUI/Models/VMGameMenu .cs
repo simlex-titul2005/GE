@@ -1,7 +1,6 @@
-﻿using GE.WebUI.Models.Abstract;
+﻿using SX.WebCore.ViewModels;
 using System;
-using System.Linq;
-using static SX.WebCore.Enums;
+using System.Web.Mvc;
 
 namespace GE.WebUI.Models
 {
@@ -98,8 +97,19 @@ namespace GE.WebUI.Models
         public int IconHeight { get; set; }
     }
 
-    public sealed class VMImgGameMaterial : VMLastMaterial
+    public sealed class VMImgGameMaterial : SxVMMaterial
     {
-
+        public override string Url(UrlHelper url)
+        {
+            switch(ModelCoreType)
+            {
+                case SX.WebCore.Enums.ModelCoreType.Article:
+                    return url.Action("Details", "Articles", new { year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
+                case SX.WebCore.Enums.ModelCoreType.News:
+                    return url.Action("Details", "News", new { year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
+                default:
+                    return "#";
+            }
+        }
     }
 }

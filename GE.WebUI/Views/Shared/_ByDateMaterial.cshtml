@@ -1,4 +1,4 @@
-﻿@model GE.WebUI.Models.Abstract.VMLastMaterial[]
+﻿@model VMMaterial[]
 @{
     Layout = null;
     var itemsCount = 3;
@@ -30,9 +30,12 @@
                         <div class="date">@item.DateOfPublication</div>
                         <h4 class="title"><a href="@item.Url(Url)">@item.Title</a></h4>
                         <div class="fw">@item.Foreword</div>
+                        @if (item.User != null)
+                        {
                         <div class="author">
-                            Автор: <strong>@item.Author.NikName</strong>
+                            Автор: <strong>@item.User.NikName</strong>
                         </div>
+                        }
                     </div>
                 }
             </div>

@@ -2,8 +2,8 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using GE.WebUI.Models.Abstract;
 using static SX.WebCore.Enums;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Extantions.Repositories
 {
@@ -72,7 +72,7 @@ GROUP BY
                     FrontPictureId = game.FrontPictureId,
                     Title = game.Title,
                     TitleUrl=game.TitleUrl,
-                    MaterialCategories= categories.Select(x=>new VMMaterialCategory { Id=x.Id, Title=x.Title}).ToArray()
+                    MaterialCategories= categories.Select(x=>new SxVMMaterialCategory { Id=x.Id, Title=x.Title}).ToArray()
                 };
             }
 
@@ -86,16 +86,16 @@ GROUP BY
             return viewModel;
         }
 
-        public static VMPreviewArticle[] PreviewMaterials(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle, string categoryId, int lettersCount=200)
+        public static VMMaterial[] PreviewMaterials(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle, string categoryId, int lettersCount=200)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var data=conn.Query<VMPreviewArticle>(_queryPreviewMaterials, new { gameTitle = gameTitle, categoryId = categoryId, lettersCount=lettersCount }).ToArray();
+                var data=conn.Query<VMMaterial>(_queryPreviewMaterials, new { gameTitle = gameTitle, categoryId = categoryId, lettersCount=lettersCount }).ToArray();
                 return data;
             }
         }
 
-        public static VMDetailMaterial[] Last(this WebCoreExtantions.Repositories.RepoArticle repo, int amount)
+        public static VMMaterial[] Last(this WebCoreExtantions.Repositories.RepoArticle repo, int amount)
         {
             var query = @"SELECT TOP(@amount) *
 FROM   (
@@ -129,28 +129,16 @@ ORDER BY
        x.DateCreate DESC";
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var results = conn.Query<VMDetailMaterial>(query, new { amount = amount }).ToArray();
-                return results;
+                var data = conn.Query<VMMaterial>(query, new { amount = amount });
+                return data.ToArray();
             }
         }
 
-        public static VMLastNews[] GetByDateMaterial(this WebCoreExtantions.Repositories.RepoArticle repo, int mid, ModelCoreType mct, bool dir, int amount)
+        public static VMMaterial[] GetPopular(this WebCoreExtantions.Repositories.RepoArticle repo, ModelCoreType mct, int mid, int amount)
         {
             using (var connection = new SqlConnection(repo.ConnectionString))
             {
-                var data = connection.Query<VMLastNews, VMUser, VMLastNews>("get_other_materials @mid, @mct, @dir, @amount", (m, u) => {
-                    m.Author = u;
-                    return m;
-                }, new { mid = mid, mct = mct, dir= dir, amount= amount }, splitOn: "UserId").ToArray();
-                return data;
-            }
-        }
-
-        public static VMLastNews[] GetPopular(this WebCoreExtantions.Repositories.RepoArticle repo, ModelCoreType mct, int mid, int amount)
-        {
-            using (var connection = new SqlConnection(repo.ConnectionString))
-            {
-                var data = connection.Query<VMLastNews>("get_popular_materials @mid, @mct, @amount", new { mct = mct, mid = mid, amount = amount }).ToArray();
+                var data = connection.Query<VMMaterial>("dbo.get_popular_materials @mid, @mct, @amount", new { mct = mct, mid = mid, amount = amount }).ToArray();
                 return data;
             }
         }

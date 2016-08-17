@@ -3,15 +3,12 @@ using GE.WebCoreExtantions.Repositories;
 using GE.WebUI.Models;
 using SX.WebCore;
 using SX.WebCore.Abstract;
-using SX.WebCore.HtmlHelpers;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using GE.WebUI.Extantions.Repositories;
 using static SX.WebCore.Enums;
 using System.Globalization;
-using SX.WebCore.Attrubutes;
 using SX.WebCore.Repositories;
 using SX.WebCore.MvcApplication;
 using SX.WebCore.ViewModels;
@@ -20,7 +17,7 @@ using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
 {
-    public class MaterialsController<TModel> : SxMaterialsController<TModel, DbContext>
+    public class MaterialsController<TModel> : SxMaterialsController<TModel, VMMaterial, DbContext>
         where TModel : SxMaterial
     {
         private SxDbRepository<int, Game, DbContext> _repoGame;
@@ -29,58 +26,39 @@ namespace GE.WebUI.Controllers
             if (_repoGame == null)
                 _repoGame = new RepoGame();
             WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
+            BeforeSelectListAction = beforeSelectListAction;
         }
 
-        [HttpGet]
-        public virtual ActionResult List(SxFilter filter)
+        private bool beforeSelectListAction(SxFilter filter)
         {
             var routeDataValues = Request.RequestContext.RouteData.Values;
             var gameTitle = (string)routeDataValues["gameTitle"];
             ViewBag.GameTitle = gameTitle;
-            var page = routeDataValues["page"] != null ? Convert.ToInt32(routeDataValues["page"]) : 1;
-            filter.PagerInfo.Page = page;
             filter.AddintionalInfo = new object[] { gameTitle };
-
             if (gameTitle != null)
             {
                 var existGame = (_repoGame as RepoGame).ExistGame(gameTitle);
                 if (!existGame)
                 {
-                    return new HttpNotFoundResult();
+                    return false;
                 }
             }
 
-            var pageSize = 10;
+
             switch (ModelCoreType)
             {
                 case ModelCoreType.Article:
-                    pageSize = 9;
+                    filter.PagerInfo.PageSize = 9;
                     break;
                 case ModelCoreType.News:
-                    pageSize = 10;
+                    filter.PagerInfo.PageSize = 10;
                     break;
                 case ModelCoreType.Humor:
-                    pageSize = 10;
+                    filter.PagerInfo.PageSize = 10;
                     break;
             }
 
-            var viewModel = new SxExtantions.SxPagedCollection<TModel>();
-            filter.PagerInfo.PageSize = pageSize;
-            var tag = Request.QueryString.Get("tag");
-            if (!string.IsNullOrEmpty(tag))
-            {
-                filter.Tag = tag;
-                ViewBag.Tag = tag;
-            }
-
-            viewModel.Collection = Repo.Read(filter);
-            viewModel.PagerInfo = new SxExtantions.SxPagerInfo(filter.PagerInfo.Page, pageSize)
-            {
-                PagerSize = 3,
-                TotalItems = filter.PagerInfo.TotalItems
-            };
-
-            return View(viewModel);
+            return true;
         }
 
 #if !DEBUG
@@ -89,17 +67,17 @@ namespace GE.WebUI.Controllers
         [HttpGet]
         public virtual ActionResult Details(int year, string month, string day, string titleUrl)
         {
-            SxVMMaterial model = null;
+            VMMaterial model =null;
             switch (ModelCoreType)
             {
                 case ModelCoreType.Article:
-                    model = (Repo as RepoArticle).GetByTitleUrl<VMMaterial>(year, month, day, titleUrl);
+                    model = Repo.GetByTitleUrl(year, month, day, titleUrl);
                     break;
                 case ModelCoreType.News:
-                    model = (Repo as RepoNews).GetByTitleUrl<VMMaterial>(year, month, day, titleUrl);
+                    model = Repo.GetByTitleUrl(year, month, day, titleUrl);
                     break;
                 case ModelCoreType.Humor:
-                    model = (Repo as RepoHumor).GetByTitleUrl<VMDetailHumor>(year, month, day, titleUrl);
+                    model = Repo.GetByTitleUrl(year, month, day, titleUrl);
                     break;
             }
 
@@ -121,8 +99,8 @@ namespace GE.WebUI.Controllers
             CultureInfo ci = new CultureInfo("en-US");
             ViewBag.LastModified = model.DateUpdate.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'", ci);
 
-            //if (model.GameTitleUrl != null)
-            //    ViewBag.GameName = model.GameTitleUrl.ToLower();
+            if(model.Game != null)
+                ViewBag.GameName = model.Game.TitleUrl.ToLower();
 
             var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
             if (breadcrumbs != null)
@@ -135,64 +113,12 @@ namespace GE.WebUI.Controllers
             //update views count
             Task.Run(() =>
             {
-                switch (ModelCoreType)
-                {
-                    case ModelCoreType.Article:
-                        (Repo as RepoArticle).AddUserView(model.Id, model.ModelCoreType);
-                        break;
-                    case ModelCoreType.News:
-                        (Repo as RepoNews).AddUserView(model.Id, model.ModelCoreType);
-                        break;
-                    case ModelCoreType.Humor:
-                        (Repo as RepoHumor).AddUserView(model.Id, model.ModelCoreType);
-                        break;
-                }
+                Repo.AddUserView(model.Id, model.ModelCoreType);
             });
 
             model.ViewsCount = model.ViewsCount + 1;
 
             return View(model);
-        }
-
-#if !DEBUG
-                [OutputCache(Duration =900, VaryByParam ="mid;mct;dir;amount")]
-#endif
-
-#if !DEBUG
-        [OutputCache(Duration =900, VaryByParam ="mct;mid;amount")]
-#endif
-        [HttpGet, ChildActionOnly]
-        public virtual PartialViewResult Popular(ModelCoreType mct, int mid, int amount = 4)
-        {
-            VMMaterial[] data = null;
-            switch (mct)
-            {
-                case ModelCoreType.Article:
-                    data = (Repo as RepoArticle).GetPopular(mct, mid, amount); ;
-                    break;
-                case ModelCoreType.News:
-                    data = (Repo as RepoNews).GetPopular(mct, mid, amount);
-                    break;
-            }
-            ViewData["ModelCoreType"] = mct;
-
-            return PartialView("~/views/shared/_popularmaterials.cshtml", data);
-        }
-
-        public override PartialViewResult LikeMaterials(SxFilter filter, int amount = 10)
-        {
-            var data = Repo.GetLikeMaterial(filter, amount);
-            var viewModel = data.Select(x => Mapper.Map<SxVMMaterial, VMMaterial>(x)).ToArray();
-            ViewBag.ModelCoreType = filter.ModelCoreType;
-            return PartialView("~/Views/Shared/_LikeMaterial.cshtml", viewModel);
-        }
-
-        public override PartialViewResult ByDateMaterial(int mid, ModelCoreType mct, bool dir = false, int amount = 3)
-        {
-            var data = Repo.GetByDateMaterials(mid, mct, dir, amount);
-            var viewModel = data.Select(x => Mapper.Map<SxVMMaterial, VMMaterial>(x)).ToArray();
-            ViewBag.ModelCoreType = mct;
-            return PartialView("~/Views/Shared/_ByDateMaterial.cshtml", viewModel);
         }
     }
 }

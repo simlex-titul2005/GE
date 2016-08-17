@@ -2,7 +2,7 @@
 @{
     var pagerInfo = (SxExtantions.SxPagerInfo)ViewBag.PagerInfo;
     var author = (VMAuthorAphorism)ViewBag.Author;
-    var category = (VMMaterialCategory)ViewBag.Category;
+    var category = (SxVMMaterialCategory)ViewBag.Category;
     var emptyTitle = "Факты, афоризмы, короткие высказывания, шутки";
 
     ViewBag.Title = ViewBag.Title ?? category!=null? category.Title+". "+ emptyTitle : author!=null?author.Name+". "+ emptyTitle : "Факты, афоризмы, короткие высказывания, шутки";

@@ -7,10 +7,12 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 using static SX.WebCore.Enums;
 using SX.WebCore.Repositories;
 using System.Text;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoArticle : SxRepoMaterial<Article, DbContext>
+    public sealed class RepoArticle<TViewModel> : SxRepoMaterial<Article, TViewModel, DbContext>
+        where TViewModel: SxVMMaterial
     {
         public RepoArticle() : base(ModelCoreType.Article) { }
 

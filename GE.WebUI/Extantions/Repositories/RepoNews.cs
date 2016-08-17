@@ -21,7 +21,7 @@ namespace GE.WebUI.Extantions.Repositories
         /// <param name="gtc">Кол-во тегов для игры</param>
         /// <param name="vc">Кол-во видео для игры</param>
         /// <returns></returns>
-        public static VMLGNB LastGameNewsBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc, int gc, int glnc, int gtc, int vc)
+        public static VMLGNB LastGameNewsBlock(this WebCoreExtantions.Repositories.RepoNews<VMMaterial> repo, int lnc, int gc, int glnc, int gtc, int vc)
         {
             var model = new VMLGNB(lnc, gc, glnc);
 
@@ -161,7 +161,7 @@ WHERE  dn.GameId = @gameId";
         /// <param name="clnc">Кол-во последних новостей подкатегорий</param>
         /// <param name="ctc">Кол-во тегов пордкатегории</param>
         /// <returns></returns>
-        public static VMLCNB LastCategoryBlock(this WebCoreExtantions.Repositories.RepoNews repo, int lnc, int clnc, int ctc)
+        public static VMLCNB LastCategoryBlock(this WebCoreExtantions.Repositories.RepoNews<VMMaterial> repo, int lnc, int clnc, int ctc)
         {
             var queryForCategory = @"SELECT dmc.Title, dmc.Id
 FROM   D_MATERIAL_CATEGORY  AS dmc
@@ -288,7 +288,7 @@ GROUP BY
             return data;
         }
 
-        public static VMMaterial[] GetPopular(this WebCoreExtantions.Repositories.RepoNews repo, ModelCoreType mct, int mid, int amount)
+        public static VMMaterial[] GetPopular(this WebCoreExtantions.Repositories.RepoNews<VMMaterial> repo, ModelCoreType mct, int mid, int amount)
         {
             using (var connection = new SqlConnection(repo.ConnectionString))
             {

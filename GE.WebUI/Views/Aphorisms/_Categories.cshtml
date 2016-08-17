@@ -1,7 +1,7 @@
 ﻿@model VMAphorismCategory[]
 @{
     Layout = null;
-    var cat = (VMMaterialCategory)ViewContext.ParentActionViewContext.ViewBag.CurrentAphorismCategory;
+    var cat = (SxVMMaterialCategory)ViewContext.ParentActionViewContext.ViewBag.CurrentAphorismCategory;
     VMAphorismCategory category;
     VMAphorismCategory author;
 }

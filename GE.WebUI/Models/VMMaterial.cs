@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace GE.WebUI.Models
 {
-    public sealed class VMMaterial : SxVMMaterial
+    public class VMMaterial : SxVMMaterial
     {
         public override string Url(UrlHelper url)
         {

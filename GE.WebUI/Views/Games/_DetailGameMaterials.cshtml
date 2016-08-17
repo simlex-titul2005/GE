@@ -1,4 +1,4 @@
-﻿@model VMDetailGameMaterial[]
+﻿@model VMMaterial[]
 @{ 
     Layout = null;
     var mct = (SX.WebCore.Enums.ModelCoreType)ViewData["ModelCoreType"];
@@ -24,7 +24,7 @@
             break;
     }
 
-    VMDetailGameMaterial item;
+    VMMaterial item;
 }
 
 @if (Model.Any())

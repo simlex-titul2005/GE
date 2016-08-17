@@ -17,11 +17,11 @@ namespace GE.WebUI.Models
 
         public Guid? FrontPictureId { get; set; }
 
-        public VMDetailGameMaterial[] Materials { get; set; }
-        public VMDetailGameMaterial[] GetMaterialsByCoreType(ModelCoreType mct)
+        public VMMaterial[] Materials { get; set; }
+        public VMMaterial[] GetMaterialsByCoreType(ModelCoreType mct)
         {
             var data = Materials == null || !Materials.Any()
-                ? new VMDetailGameMaterial[0]
+                ? new VMMaterial[0]
                 : Materials.Where(x => x.ModelCoreType == mct).ToArray();
 
             return data;

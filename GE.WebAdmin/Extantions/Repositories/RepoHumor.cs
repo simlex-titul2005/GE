@@ -6,12 +6,13 @@ using SX.WebCore.Providers;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static SxHumor GetByTitleUrl(this RepoHumor repo, string titleUrl)
+        public static SxHumor GetByTitleUrl(this RepoHumor<SxVMMaterial> repo, string titleUrl)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
@@ -23,7 +24,7 @@ WHERE dm.TitleUrl=@TITLE_URL";
             }
         }
 
-        public static VMHumor[] QueryForAdmin(this RepoHumor repo, SxFilter filter)
+        public static VMHumor[] QueryForAdmin(this RepoHumor<SxVMMaterial> repo, SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] { "da.Id", "dm.DateCreate", "dm.DateOfPublication", "dm.Title", "dm.SeoTagsId", "dm.Show" });
             query += " FROM D_HUMOR AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType ";
@@ -43,7 +44,7 @@ WHERE dm.TitleUrl=@TITLE_URL";
             }
         }
 
-        public static int FilterCount(this RepoHumor repo, SxFilter filter)
+        public static int FilterCount(this RepoHumor<SxVMMaterial> repo, SxFilter filter)
         {
             var query = @"SELECT COUNT(1) FROM D_HUMOR AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType ";
 

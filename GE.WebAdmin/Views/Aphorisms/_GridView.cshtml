@@ -22,9 +22,9 @@
             },
                     DataAjaxUrl = "/aphorisms?curCat=" + categoryId,
                     EnableCreating=true,
-                    CreateRowUrl= "/aphorisms/edit?curCat=" + categoryId+"&mct="+Enums.ModelCoreType.Aphorism,
+                    CreateRowUrl= Url.Action("Edit", "Aphorisms", new { cat= categoryId, mct= Enums.ModelCoreType.Aphorism }),
                     EnableEditing=true,
-                    EditRowUrl = x => { return "/aphorisms/edit/"+x.Id+"?curCat=" + categoryId + "&mct=" + Enums.ModelCoreType.Aphorism; },
+                    EditRowUrl = x => { return Url.Action("Edit", "Aphorisms", new { cat = categoryId, mct = Enums.ModelCoreType.Aphorism, id=x.Id }); },
                     RowCssClass = x => { return !x.Show ? "warning" : null; },
                     ShowPagerInfo=true
                 }

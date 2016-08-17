@@ -2,7 +2,7 @@
 @model VMDetailAphorism
 @{
     var author = (VMAuthorAphorism)ViewBag.Author;
-    var category = (VMMaterialCategory)ViewBag.Category;
+    var category = (SxVMMaterialCategory)ViewBag.Category;
     ViewBag.Title = ViewBag.Title ?? Model.Aphorism.Title;
     ViewBag.PageImage = author != null && author.PictureId.HasValue
         ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = author.PictureId }))

@@ -11,7 +11,7 @@ namespace GE.WebUI.Extantions.Repositories
     {
         private static readonly string _queryPreviewMaterials = @"get_preview_materials @lettersCount, @gameTitle, @categoryId";
 
-        public static VMFGBlock ForGamersBlock(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle=null)
+        public static VMFGBlock ForGamersBlock(this WebCoreExtantions.Repositories.RepoArticle<VMMaterial> repo, string gameTitle=null)
         {
             var viewModel = new VMFGBlock() { SelectedGameTitle= gameTitle };
             dynamic[] result = null;
@@ -79,14 +79,14 @@ GROUP BY
             query = _queryPreviewMaterials;
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
-                var articles = conn.Query<VMPreviewArticle>(query, new { gameTitle = gameTitle, categoryId = (string)null, lettersCount = 200 }).ToArray();
+                var articles = conn.Query<VMMaterial>(query, new { gameTitle = gameTitle, categoryId = (string)null, lettersCount = 200 }).ToArray();
                 viewModel.Articles = articles;
             }
 
             return viewModel;
         }
 
-        public static VMMaterial[] PreviewMaterials(this WebCoreExtantions.Repositories.RepoArticle repo, string gameTitle, string categoryId, int lettersCount=200)
+        public static VMMaterial[] PreviewMaterials(this WebCoreExtantions.Repositories.RepoArticle<VMMaterial> repo, string gameTitle, string categoryId, int lettersCount=200)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
@@ -95,7 +95,7 @@ GROUP BY
             }
         }
 
-        public static VMMaterial[] Last(this WebCoreExtantions.Repositories.RepoArticle repo, int amount)
+        public static VMMaterial[] Last(this WebCoreExtantions.Repositories.RepoArticle<VMMaterial> repo, int amount)
         {
             var query = @"SELECT TOP(@amount) *
 FROM   (
@@ -134,7 +134,7 @@ ORDER BY
             }
         }
 
-        public static VMMaterial[] GetPopular(this WebCoreExtantions.Repositories.RepoArticle repo, ModelCoreType mct, int mid, int amount)
+        public static VMMaterial[] GetPopular(this WebCoreExtantions.Repositories.RepoArticle<VMMaterial> repo, ModelCoreType mct, int mid, int amount)
         {
             using (var connection = new SqlConnection(repo.ConnectionString))
             {

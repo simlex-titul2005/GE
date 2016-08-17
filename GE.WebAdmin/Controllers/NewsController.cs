@@ -5,19 +5,19 @@ using SX.WebCore;
 using System.Web.Mvc;
 using GE.WebAdmin.Extantions.Repositories;
 using Microsoft.AspNet.Identity;
-using SX.WebCore.Repositories;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using SX.WebCore.MvcControllers;
 using static SX.WebCore.Enums;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebAdmin.Controllers
 {
-    public partial class NewsController : SxMaterialsController<News, DbContext>
+    public partial class NewsController : SxMaterialsController<News, SxVMMaterial, DbContext>
     {
         public NewsController() : base(ModelCoreType.News)
         {
             if (Repo == null)
-                Repo = new RepoNews();
+                Repo = new RepoNews<SxVMMaterial>();
         }
 
         private static int _pageSize = 20;
@@ -27,11 +27,11 @@ namespace GE.WebAdmin.Controllers
         {
             var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
             var filter = new SxFilter(page, _pageSize) { Order = defaultOrder };
-            var totalItems = (Repo as RepoNews).FilterCount(filter);
+            var totalItems = (Repo as RepoNews<SxVMMaterial>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.Filter = filter;
 
-            var viewModel = (Repo as RepoNews).QueryForAdmin(filter);
+            var viewModel = (Repo as RepoNews<SxVMMaterial>).QueryForAdmin(filter);
             return View(viewModel);
         }
 
@@ -40,11 +40,11 @@ namespace GE.WebAdmin.Controllers
         {
             var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
             var filter = new SxFilter(page, _pageSize) { Order = order == null || order.Direction == SortDirection.Unknown ? defaultOrder : order, WhereExpressionObject = filterModel };
-            var totalItems = (Repo as RepoNews).FilterCount(filter);
+            var totalItems = (Repo as RepoNews<SxVMMaterial>).FilterCount(filter);
             filter.PagerInfo.TotalItems = totalItems;
             ViewBag.Filter = filter;
 
-            var viewModel = (Repo as RepoNews).QueryForAdmin(filter);
+            var viewModel = (Repo as RepoNews<SxVMMaterial>).QueryForAdmin(filter);
 
             return PartialView("_GridView", viewModel);
         }
@@ -74,7 +74,7 @@ namespace GE.WebAdmin.Controllers
             if (model.Title != null && string.IsNullOrEmpty(model.TitleUrl))
             {
                 var titleUrl = Url.SeoFriendlyUrl(model.Title);
-                var existModel = (Repo as RepoNews).GetByTitleUrl(titleUrl);
+                var existModel = (Repo as RepoNews<SxVMMaterial>).GetByTitleUrl(titleUrl);
                 if (existModel != null && existModel.Id != model.Id)
                     ModelState.AddModelError("Title", "Строковый ключ должен быть уникальным");
                 else
@@ -101,7 +101,7 @@ namespace GE.WebAdmin.Controllers
                 {
                     if (model.TitleUrl != model.OldTitleUrl)
                     {
-                        var existModel = (Repo as RepoNews).GetByTitleUrl(model.TitleUrl);
+                        var existModel = (Repo as RepoNews<SxVMMaterial>).GetByTitleUrl(model.TitleUrl);
                         if (existModel != null)
                         {
                             ViewBag.HasError = true;
@@ -119,7 +119,7 @@ namespace GE.WebAdmin.Controllers
             else
             {
                 ViewBag.HasError = true;
-                ViewBag.ModelCoreType = Enums.ModelCoreType.News;
+                ViewBag.ModelCoreType = ModelCoreType.News;
                 model = isNew ? model : getPreparedNews(model);
                 return View(model);
             }

@@ -1,11 +1,11 @@
 ﻿@using SX.WebCore;
-@model SxExtantions.SxPagedCollection<SxHumor>
+@model SxExtantions.SxPagedCollection<VMMaterial>
 @{
     ViewBag.Title = ViewBag.Title ?? "Коллекция юмора от " + global_asax.SiteSettingsProvider.Get("siteName");
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? "Качественная коллекция юмора от " + global_asax.SiteSettingsProvider.Get("siteName");
     ViewBag.Keywords = ViewBag.Description ?? "Анекдоты, смешные истории, розыгрыши, шутки, " + global_asax.SiteSettingsProvider.Get("siteName");
-    SxHumor item;
+    VMMaterial item;
     var length = 1000;
     var date = DateTime.Now;
 }
@@ -39,21 +39,24 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="humor-list__author text-muted">
-                            @if(item.User!=null)
-                            {
-                                <span>Опубликовал: @(item.User.NikName ?? item.User.Email)</span>
-                            }
-                            else
-                            {
-                                <span>Прислал: @(item.UserName)</span>
-                            }
-                        </div>
+                        @if (item.User != null)
+                        {
+                            <div class="humor-list__author text-muted">
+                                @if (item.User.Id != null)
+                                {
+                                    <span>Опубликовал: @(item.User.NikName ?? item.User.Email)</span>
+                                }
+                                else
+                                {
+                                    <span>Прислал: @(item.User.NikName)</span>
+                                }
+                            </div>
+                        }
                         <div>
-                            @if (item.VideoLinks.Count > 0)
+                            @if (item.Videos.Length > 0)
                             {
-                                <div style="position:relative; height:340px; width:640px; max-width:100%;">
-                                    @Html.SxVideo(item.VideoLinks.First().Video, SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
+                                <div style="position:relative; height:340px; width:100%; max-width:100%;">
+                                    @Html.SxVideo(item.Videos.First(), SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
                                 </div>
                             }
                             else
@@ -67,19 +70,35 @@
                                 Источник: <a href="@item.SourceUrl" rel="nofollow" target="_blank">@item.SourceUrl</a>
                             </div>
                         }
-                        <div class="text-left">
-                            <br />
-                            <a href="@Url.Action("Details", "Humor", new { year=item.DateCreate.Year, month=item.DateCreate.Month.ToString("00"), day=item.DateCreate.Day.ToString("00"), titleUrl=item.TitleUrl})" class="btn btn-warning">Поделиться</a>
-                        </div>
+                        
 
-                        @*<br />
+                        <br />
+                        <div class="text-center">
                             @Html.SxShareButtons(global_asax.ShareButtons, new Dictionary<string, SxExtantions.SxShareButtonsSettings> {
                                 {"vk", new SxExtantions.SxShareButtonsSettings { Url= Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
                                 {"fb", new SxExtantions.SxShareButtonsSettings { Url=Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
                                 {"ok", new SxExtantions.SxShareButtonsSettings { Url=Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
-                            })*@
+                            }, new SxExtantions.SxLikeButtonsSettings
+                            {
+                                LikeUpCount = () => item.LikeUpCount,
+                                UrlUp = () => Url.Action("AddLike", "Humor", new { mid = item.Id, ld = true }),
+                                LikeDownCount = () => item.LikeDownCount,
+                                UrlDown = () => Url.Action("AddLike", "Humor", new { mid = item.Id, ld = false })
+                            })
+                        </div>
+                        
+                        <div class="text-center">
+                                <br />
+                                <a href="@Url.Action("Details", "Humor", new { year=item.DateCreate.Year, month=item.DateCreate.Month.ToString("00"), day=item.DateCreate.Day.ToString("00"), titleUrl=item.TitleUrl})" class="btn btn-warning">Поделиться</a>
+                            </div>
                     </div>
                 </li>
+                if (i!=0 && i % 5 == 0)
+                {
+                    var banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
+                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                    @Html.Raw("<br/>")
+                }
             }
         </ul>
         <div class="text-center">
@@ -94,6 +113,7 @@
 
 
 @section scripts{
+    <script src="~/content/dist/js/goodshare.min.js"></script>
     <script type="text/javascript">
         loadScriptOnce('https://www.youtube.com/iframe_api');
     </script>

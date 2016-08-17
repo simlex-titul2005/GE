@@ -1,16 +1,17 @@
-﻿@model News
+﻿@model VMMaterial
 @{
     var url = Model.Url(Url);
     var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.GoodPictureId : Guid.Empty);
 }
 
 <div class="row">
+    @if (Model.FrontPictureId.HasValue)
+    {
     <div class="col-md-6 hidden-sm">
-        <figure class="mat-f-p" style="background-image:url(@(Model.FrontPictureId != null?@Url.Action("Picture", "Pictures", new { id=picureId, height=300 }):"~/Content/dist/i/article-empty.png"))">
-           
-        </figure>
+        <figure class="mat-f-p" style="background-image:url(@(Model.FrontPictureId != null ? @Url.Action("Picture", "Pictures", new { id = picureId, height = 300 }) : "~/Content/dist/i/article-empty.png"))"></figure>
     </div>
-    <div class="col-md-6">
+    }
+    <div class="col-md-@(Model.FrontPictureId.HasValue?6:12)">
         <div class="content">
             <time>@Model.DateOfPublication.ToString("dd.MM.yyyy")</time>
             <a class="link" title="@(Model.SeoTags!=null? Model.SeoTags.H1:Model.Title)" href="@url">@(Model.SeoTags != null ? Model.SeoTags.H1 : Model.Title)</a>
@@ -20,7 +21,7 @@
                 {
                     <i>Автор: <strong>@Model.User.NikName</strong></i>
                 }
-                @if(Model.Game!=null && Model.Game.TitleUrl!=null)
+                @if(Model.Game!=null)
                 {
                     <i>; игра: <strong>@Model.Game.Title</strong></i>
                 }

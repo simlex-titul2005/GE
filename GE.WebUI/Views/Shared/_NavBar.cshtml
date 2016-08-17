@@ -24,21 +24,19 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Главная <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/">Вернутся на главную</a></li>
-                        <li><a href="#">Выбрать игру</a></li>
                         <li><a href="@Url.Action("List", "News")">Почитать новости</a></li>
                         <li><a href="@Url.Action("List", "Articles")">Почитать статьи</a></li>
                         <li><a href="@Url.Action("List", "Aphorisms")">Кратко о главном</a></li>
                         <li><a href="@Url.Action("Edit", "SiteQuetions")">Обратная связь</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="@Url.Action("List", "News")">Новости</a>
-                </li>
-                <li>
-                    <a href="@Url.Action("List", "Articles")">Статьи</a>
-                </li>
-                <li>
-                    <a href="@Url.Action("List", "Aphorisms")">Кратко</a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Материалы <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("List", "News")">Новости</a></li>
+                        <li><a href="@Url.Action("List", "Articles")">Статьи</a></li>
+                        <li><a href="@Url.Action("List", "Aphorisms")">Кратко</a></li>
+                    </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Развлечения <span class="caret"></span></a>

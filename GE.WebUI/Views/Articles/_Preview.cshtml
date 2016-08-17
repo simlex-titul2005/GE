@@ -1,9 +1,9 @@
-﻿@model VMPreviewArticle[]
+﻿@model VMMaterial[]
 @{
     Layout = null;
     var colCount = 2;
     var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
-    VMPreviewArticle m;
+    VMMaterial m;
 }
 
 @for (int y = 0; y < rowsCount; y++)

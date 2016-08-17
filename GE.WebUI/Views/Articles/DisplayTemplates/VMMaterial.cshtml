@@ -1,13 +1,6 @@
-﻿@model Article
+﻿@model VMMaterial
 @{
     Layout = null;
-    var info = new VMMateriallnfo
-    {
-        DateOfPublication = Model.DateOfPublication,
-        CommentsCount = Model.CommentsCount,
-        ViewsCount = Model.ViewsCount
-    };
-
     var url = Model.Url(Url);
     var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.BadPictureId : Guid.Empty);
 }
@@ -25,9 +18,9 @@
 </figure>
 
 <div class="content">
-    @if (Model.VideoLinks.Count > 0)
+    @if (Model.Videos.Length > 0)
     {
-        var video = Model.VideoLinks.First().Video;
+        var video = Model.Videos.First();
         <div class="list-video">
             @Html.SxVideo(video, SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
         </div>
@@ -52,7 +45,7 @@
 </div>
 <div class="info">
     <div class="row">
-        <div class="col-md-6">@Html.DisplayFor(x => info)</div>
+        <div class="col-md-6">@Html.Partial("_MaterialInfo", Model)</div>
         <div class="col-md-6"><a class="btn btn-default btn-transparent muted-blue" href="@Model.Url(Url)">Подробнее</a></div>
     </div>
 </div>

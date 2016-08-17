@@ -2,6 +2,7 @@
 using SX.WebCore;
 using SX.WebCore.Providers;
 using SX.WebCore.Repositories;
+using SX.WebCore.ViewModels;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoAphorism : SxRepoMaterial<Aphorism, DbContext>
+    public sealed class RepoAphorism : SxRepoMaterial<Aphorism, SxVMMaterial, DbContext>
     {
         public RepoAphorism() : base(ModelCoreType.Aphorism) { }
 

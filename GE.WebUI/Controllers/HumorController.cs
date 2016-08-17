@@ -6,6 +6,7 @@ using System.Configuration;
 using SX.WebCore.Repositories;
 using GE.WebCoreExtantions;
 using SX.WebCore.ViewModels;
+using GE.WebUI.Models;
 
 namespace GE.WebUI.Controllers
 {
@@ -13,7 +14,7 @@ namespace GE.WebUI.Controllers
     {
         public HumorController() : base(Enums.ModelCoreType.Humor) {
             if (Repo == null)
-                Repo = new RepoHumor();
+                Repo = new RepoHumor<VMMaterial>();
         }
 
         public override ViewResult Add()

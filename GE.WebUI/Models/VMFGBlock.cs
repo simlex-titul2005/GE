@@ -1,8 +1,5 @@
 ﻿using SX.WebCore.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace GE.WebUI.Models
 {
@@ -16,7 +13,7 @@ namespace GE.WebUI.Models
         public VMFGBGame[] Games { get; set; }
         public int GameLength { get { return Games.Length; } }
         public bool HasGames { get { return GameLength != 0; } }
-        public VMPreviewArticle[] Articles { get; set; }
+        public VMMaterial[] Articles { get; set; }
         public string SelectedGameTitle { get; set; }
     }
 

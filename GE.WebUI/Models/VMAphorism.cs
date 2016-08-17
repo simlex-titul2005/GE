@@ -1,8 +1,6 @@
-﻿using SX.WebCore.ViewModels;
-
-namespace GE.WebUI.Models
+﻿namespace GE.WebUI.Models
 {
-    public sealed class VMAphorism : SxVMMaterial
+    public sealed class VMAphorism : VMMaterial
     {
         public VMAuthorAphorism Author { get; set; }
         public int? AuthorId { get; set; }

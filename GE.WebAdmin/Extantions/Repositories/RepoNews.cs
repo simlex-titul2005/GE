@@ -4,6 +4,7 @@ using GE.WebCoreExtantions;
 using GE.WebCoreExtantions.Repositories;
 using SX.WebCore;
 using SX.WebCore.Providers;
+using SX.WebCore.ViewModels;
 using System.Data.SqlClient;
 using System.Linq;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
@@ -12,7 +13,7 @@ namespace GE.WebAdmin.Extantions.Repositories
 {
     public static partial class RepositoryExtantions
     {
-        public static News GetByTitleUrl(this RepoNews repo, string titleUrl)
+        public static News GetByTitleUrl(this RepoNews<SxVMMaterial> repo, string titleUrl)
         {
             using (var conn = new SqlConnection(repo.ConnectionString))
             {
@@ -24,7 +25,7 @@ WHERE dm.TitleUrl=@TITLE_URL";
             }
         }
 
-        public static VMNews[] QueryForAdmin(this RepoNews repo, SxFilter filter)
+        public static VMNews[] QueryForAdmin(this RepoNews<SxVMMaterial> repo, SxFilter filter)
         {
             var query = SxQueryProvider.GetSelectString(new string[] { "da.Id", "dm.DateCreate", "dm.DateOfPublication", "dm.Title", "dm.SeoTagsId", "dm.Show" });
             query += " FROM D_NEWS AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType LEFT JOIN D_GAME AS dg ON dg.ID = da.GameId ";
@@ -44,7 +45,7 @@ WHERE dm.TitleUrl=@TITLE_URL";
             }
         }
 
-        public static int FilterCount(this RepoNews repo, SxFilter filter)
+        public static int FilterCount(this RepoNews<SxVMMaterial> repo, SxFilter filter)
         {
             var query = @"SELECT COUNT(1) FROM D_NEWS AS da JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType ";
 

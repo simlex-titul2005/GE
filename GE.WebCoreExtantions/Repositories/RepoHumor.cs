@@ -2,6 +2,7 @@
 using SX.WebCore;
 using SX.WebCore.Providers;
 using SX.WebCore.Repositories;
+using SX.WebCore.ViewModels;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebCoreExtantions.Repositories
 {
-    public sealed class RepoHumor: SxRepoMaterial<SxHumor, DbContext>
+    public sealed class RepoHumor<TViewModel>: SxRepoMaterial<SxHumor, TViewModel, DbContext>
+        where TViewModel: SxVMMaterial
     {
         public RepoHumor() : base(ModelCoreType.Humor) { }
 
@@ -33,7 +35,16 @@ ORDER BY dm.DateCreate DESC";
         {
             var sb = new StringBuilder();
             sb.Append(SxQueryProvider.GetSelectString(new string[] {
-                "da.Id", "dm.TitleUrl", "dm.FrontPictureId", "dm.ShowFrontPictureOnDetailPage", "dm.Title", "dm.ModelCoreType", "da.UserName", "dm.SourceUrl",
+                "da.Id",
+                "dm.TitleUrl",
+                "dm.FrontPictureId",
+                "dm.ShowFrontPictureOnDetailPage",
+                "dm.Title",
+                "dm.ModelCoreType",
+                "da.UserName",
+                "dm.SourceUrl",
+                "dm.LikeUpCount",
+                "dm.LikeDownCount",
                 @"(SELECT
        SUBSTRING(
            CASE 

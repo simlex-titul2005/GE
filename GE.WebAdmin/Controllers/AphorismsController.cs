@@ -57,8 +57,10 @@ namespace GE.WebAdmin.Controllers
         }
 
         [HttpGet]
-        public ViewResult Edit(string cat, ModelCoreType mct, int? id = null)
+        public ActionResult Edit(string cat, ModelCoreType mct, int? id = null)
         {
+            if (cat == null) return new HttpNotFoundResult();
+
             var data = id.HasValue ? _repo.GetByKey(id, mct) : new Aphorism { CategoryId = cat, Show=true };
             if (data.Author != null)
                 ViewBag.AuthorName = data.Author.Name;

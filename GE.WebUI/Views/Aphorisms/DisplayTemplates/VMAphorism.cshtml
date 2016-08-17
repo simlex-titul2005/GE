@@ -5,7 +5,7 @@
 
 <div class="content">
     <div class="info">
-        @Html.DisplayFor(x => Model.Info)
+        @Html.Partial("_MaterialInfo", Model)
     </div>
     @if (!string.IsNullOrEmpty(Model.SourceUrl))
     {

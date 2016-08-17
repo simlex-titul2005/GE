@@ -214,8 +214,6 @@
     <Compile Include="Models\VMDetailAphorism.cs" />
     <Compile Include="Models\VMAphorism.cs" />
     <Compile Include="Models\VMDetailGame.cs" />
-    <Compile Include="Models\VMDetailGameMaterial.cs" />
-    <Compile Include="Models\VMDetailHumor.cs" />
     <Compile Include="Models\VMEditHumor.cs" />
     <Compile Include="Models\VMEditSiteQuetion.cs" />
     <Compile Include="Models\VMLCNB.cs" />
@@ -297,7 +295,6 @@
     <Compile Include="Models\VMFGBlock.cs" />
     <Compile Include="Models\VMGameMenu .cs" />
     <Compile Include="Models\VMMenu.cs" />
-    <Compile Include="Models\VMPreviewArticle.cs" />
     <Compile Include="Models\VMSearchResult.cs" />
     <Compile Include="Models\VMUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -319,9 +316,9 @@
     <Content Include="Views\News\List.cshtml" />
     <Content Include="Views\Games\DisplayTemplates\VMImgGame.cshtml" />
     <Content Include="Views\Articles\_Collection.cshtml" />
-    <Content Include="Views\Articles\DisplayTemplates\Article.cshtml" />
+    <Content Include="Views\Articles\DisplayTemplates\VMMaterial.cshtml" />
     <Content Include="Views\News\_Collection.cshtml" />
-    <Content Include="Views\News\DisplayTemplates\News.cshtml" />
+    <Content Include="Views\News\DisplayTemplates\VMMaterial.cshtml" />
     <Content Include="Views\Articles\Details.cshtml" />
     <Content Include="Views\News\Details.cshtml" />
     <Content Include="Views\Shared\_Breadcrumbs.cshtml" />
@@ -355,7 +352,7 @@
     <Content Include="Views\SiteQuetions\Edit.cshtml" />
     <Content Include="Views\Games\Details.cshtml" />
     <Content Include="Views\Games\_DetailGameMaterials.cshtml" />
-    <Content Include="Views\Games\DisplayTemplates\VMDetailGameMaterial.cshtml" />
+    <Content Include="Views\Games\DisplayTemplates\VMMaterial.cshtml" />
     <Content Include="Views\Employees\List.cshtml" />
     <Content Include="Views\Aphorisms\DisplayTemplates\VMAphorism.cshtml" />
     <Content Include="Views\SiteTests\_RandomList.cshtml" />

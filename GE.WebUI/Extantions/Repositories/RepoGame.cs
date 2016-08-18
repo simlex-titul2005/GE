@@ -88,8 +88,12 @@ ORDER BY
 
                 viewModel.Materials = conn.Query<VMMaterial>("get_game_materials @titleUrl, @amount", new { titleUrl = titleUrl, amount = amount }).ToArray();
                 viewModel.Videos = conn.Query<SxVideo>("get_game_videos @titleUrl", new { titleUrl = titleUrl }).ToArray();
-                if(viewModel.Videos.Any())
-                    viewModel.FullDescription = SxBBCodeParser.ReplaceVideo(viewModel.FullDescription, viewModel.Videos);
+                if (viewModel.Videos.Any())
+                {
+                    var html = viewModel.FullDescription;
+                    SxBBCodeParser.ReplaceVideo(ref html, viewModel.Videos);
+                    viewModel.FullDescription = html;
+                }
                 if(viewModel.Materials.Any())
                 {
                     for (int i = 0; i < viewModel.Materials.Length; i++)

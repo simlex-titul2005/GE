@@ -83,9 +83,10 @@ namespace GE.WebUI.Controllers
 
             if (model == null) return new HttpNotFoundResult();
 
-            var html = SxBBCodeParser.GetHtml(model.Html);
-            html = SxBBCodeParser.ReplaceBanners(html, SxApplication<DbContext>.GetBanners(), (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }));
-            html = SxBBCodeParser.ReplaceVideo(html, model.Videos);
+            var html = model.Html;
+            SxBBCodeParser.ReplaceValutes(ref html);
+            SxBBCodeParser.ReplaceBanners(ref html, SxApplication<DbContext>.GetBanners(), (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }));
+            SxBBCodeParser.ReplaceVideo(ref html, model.Videos);
             model.Html = html;
 
             var seoInfoRepo = new SxRepoSeoTags<DbContext>();

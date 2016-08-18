@@ -25,7 +25,7 @@
     <p class="text-success">@TempData["ModelSeoInfoRedactInfo"]</p>
 }
 
-@using (Ajax.BeginForm("EditForMaterial", new { controller = "SeoTags" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "grid-seo-tags" }, new { @autocomplete="off"}))
+@using (Ajax.BeginForm("EditForMaterial", new { controller = "SeoTags" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "grid-seo-tags", OnSuccess= "$('#seo-kw').sx_gv()" }, new { @autocomplete="off"}))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" name="Id" value="@Model.Id" />

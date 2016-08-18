@@ -288,6 +288,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\ReportAdapters\ReportAphorismsAdapter.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoPicture.cs" />
     <Compile Include="Models\VMAphorism.cs" />
     <Compile Include="Models\VMEditHumor.cs" />
     <Compile Include="Models\VMHumor.cs" />
@@ -432,6 +433,7 @@
     <Content Include="Views\AffiliateLinks\_GridView.cshtml" />
     <Content Include="Views\AffiliateLinks\Edit.cshtml" />
     <Content Include="Views\AffiliateLinks\Index.cshtml" />
+    <Content Include="Views\Pictures\_FreePictures.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -31,16 +31,16 @@
     "composer.json"
   ],
   "dependencies": {
-    "jquery": "~2.2.1"
+    "jquery": "~2.2.3"
   },
-  "version": "2.4.3",
-  "_release": "2.4.3",
+  "version": "2.5.2",
+  "_release": "2.5.2",
   "_resolution": {
     "type": "version",
-    "tag": "v2.4.3",
-    "commit": "6083a9efa2af5f8459d7dfac83f69175dcc55cc2"
+    "tag": "v2.5.2",
+    "commit": "ba21a8ea77bcecf8d23ec156ae8b2c0ae82167ba"
   },
   "_source": "https://github.com/onokumus/metisMenu.git",
-  "_target": "2.4.3",
+  "_target": "2.5.2",
   "_originalSource": "metisMenu"
 }

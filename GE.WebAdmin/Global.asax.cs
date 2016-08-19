@@ -17,7 +17,6 @@ namespace GE.WebAdmin
             args.WebApiConfigRegister = WebApiConfig.Register;
             args.RegisterRoutes = RouteConfig.RegisterRoutes;
             args.MapperConfiguration = AutoMapperConfig.MapperConfigurationInstance;
-            args.LogDirectory = null;
             args.LoggingRequest = false;
             base.Application_Start(sender, args);
 

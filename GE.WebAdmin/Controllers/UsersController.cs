@@ -1,9 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using GE.WebCoreExtantions;
+using SX.WebCore.MvcControllers;
+using System.Web.Mvc;
 
 namespace GE.WebAdmin.Controllers
 {
     [Authorize(Roles = "admin")]
-    public partial class UsersController : SX.WebCore.MvcControllers.SxUsersController<WebCoreExtantions.DbContext>
+    public partial class UsersController : SxUsersController<DbContext>
     {
         
     }

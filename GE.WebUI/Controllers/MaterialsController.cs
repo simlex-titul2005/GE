@@ -85,7 +85,7 @@ namespace GE.WebUI.Controllers
 
             var html = model.Html;
             SxBBCodeParser.ReplaceValutes(ref html);
-            SxBBCodeParser.ReplaceBanners(ref html, SxApplication<DbContext>.GetBanners(), (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }));
+            SxBBCodeParser.ReplaceBanners(ref html, SxApplication<DbContext>.BannerProvider.BannerCollection, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }));
             SxBBCodeParser.ReplaceVideo(ref html, model.Videos);
             model.Html = html;
 

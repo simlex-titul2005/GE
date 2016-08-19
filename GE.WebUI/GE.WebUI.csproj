@@ -201,9 +201,10 @@
     <Compile Include="Controllers\AuthorAphorismsController.cs" />
     <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\ForAuthorsController.cs" />
     <Compile Include="Controllers\HumorController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
-    <Compile Include="Controllers\SiteQuetionsController.cs" />
+    <Compile Include="Controllers\SiteQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Extantions\Repositories\RepoAphorism.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Models\VMLCNBCategory.cs" />
     <Compile Include="Models\VMLCNBNews.cs" />
     <Content Include="content\dist\css\ap-author-page.min.css" />
+    <Content Include="content\dist\css\author-page.min.css" />
     <Content Include="content\dist\css\error-page.min.css" />
     <Content Include="content\dist\css\humor.min.css" />
     <Content Include="content\dist\css\site.min.css" />
@@ -348,7 +350,7 @@
     <Content Include="Views\Comments\_Edit.cshtml" />
     <Content Include="Views\Comments\_List.cshtml" />
     <Content Include="Views\Comments\DisplayTemplates\VMComment.cshtml" />
-    <Content Include="Views\SiteQuetions\Edit.cshtml" />
+    <Content Include="Views\SiteQuestions\Edit.cshtml" />
     <Content Include="Views\Games\Details.cshtml" />
     <Content Include="Views\Games\_DetailGameMaterials.cshtml" />
     <Content Include="Views\Games\DisplayTemplates\VMMaterial.cshtml" />
@@ -367,6 +369,7 @@
     <Content Include="Views\Shared\_Rating.cshtml" />
     <Content Include="Views\Shared\_MaterialInfo.cshtml" />
     <Content Include="Views\Articles\_Last.cshtml" />
+    <Content Include="Views\ForAuthors\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

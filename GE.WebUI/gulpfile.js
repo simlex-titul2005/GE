@@ -88,7 +88,8 @@ function createCss() {
        'less/error-page.less',
        'less/test-list.less',
        'less/ap-author-page.less',
-       'less/humor.less'
+       'less/humor.less',
+       'less/author-page.less'
     ])
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))

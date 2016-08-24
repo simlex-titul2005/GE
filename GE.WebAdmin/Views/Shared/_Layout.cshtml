@@ -31,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">@SX.WebCore.Resources.Settings.adminPanelName @SX.WebCore.Resources.Settings.adminPanelVersion</a><br />
+                <a class="navbar-brand" href="/">@SX.WebCore.Resources.Settings.adminPanelName @SX.WebCore.Resources.Settings.adminPanelVersion</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
@@ -162,7 +162,6 @@
                     </ul>
                     <!-- /.dropdown-tasks -->
                 </li>
-                <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -222,7 +221,6 @@
                     </ul>
                     <!-- /.dropdown-alerts -->
                 </li>
-                <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -236,10 +234,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <form method="post" action="@Url.Action("logoff", new { controller="account"})" style="display:none;">
-                                @Html.AntiForgeryToken()
-                            </form>
-                            <a href="javascript:void(0)" onclick="if(confirm('Вы действительно хотите покинуть панель управления?')){$(this).prev('form').submit();}"><i class="fa fa-sign-out fa-fw"></i> Выйти</a>
+                            <a href="#" data-target="#modal-signout" data-toggle="modal"><i class="fa fa-sign-out fa-fw"></i> Выйти</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -476,11 +471,14 @@
                                             <a href="@Url.Action("GetLog", new { controller="Logs", siteName="game-exe"})"> Скачать лог</a>
                                         </li>
                                     }
-                                    @if (MvcApplication.SiteDomain != null)
-                                    {
-                                        <li>
-                                            <a href="@(string.Format("{0}/api/logs", MvcApplication.SiteDomain))"> Скачать лог сайта</a>
-                                        </li>
+                                    @{
+                                        var siteDomain = MvcApplication.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteDomain);
+                                        if (siteDomain != null)
+                                        {
+                                            <li>
+                                                <a href="@(string.Format("{0}/api/logs", siteDomain))"> Скачать лог сайта</a>
+                                            </li>
+                                        }
                                     }
                                 </ul>
                             </li>
@@ -520,8 +518,8 @@
                         <li>
                             <a href="@Url.Action("Index", "Chat")"><i class="fa fa fa-comments-o fa-fw"></i> Чат</a>
                         </li>
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
             </div>
         </nav>
 
@@ -546,6 +544,28 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
                     <button type="button" class="btn btn-primary"><i class="fa fa-envelope-o" aria-hidden="true"></i> Отправить разработчику</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    @*signout panel*@
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal-signout">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="post" action="@Url.Action("Logoff", "Account")">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Выход</h4>
+                    </div>
+                    <div class="modal-body" style="overflow:hidden; overflow-y:auto; max-height:300px;">
+                        Вы действительно хотите покинуть панель управления?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
+                        <button type="submit" class="btn btn-primary">Да</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

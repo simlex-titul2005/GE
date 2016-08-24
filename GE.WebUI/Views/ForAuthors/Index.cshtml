@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = ViewBag.Title ?? "Авторам";
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.Description = ViewBag.Description ?? "Предложение от game-exe о сотрудничестве для авторов";
+    ViewBag.Keywords = ViewBag.Keywords ?? "game-exe.com, предложения, статьи, новости";
+}
+
+@section styles{
+    <link href="~/content/dist/css/author-page.min.css" rel="stylesheet" />
+}
+
+<div class="author-page">
+    <p>Для авторов у нас так же есть предложение: вы пишете новости и/или статьи для сайта, пользователи их расшаривают, переходят на сайт, мы делимся частью прибыли. </p>
+    <p>Отличная возможность для начинающих авторов определиться со стилем и начать составлять свое портфолио.</p>
+    <p>Статьи могут быть не только на игровые тематики.</p>
+    <p>Важно отметить, что все размещенные на сайте статьи на условиях данной партнерки являются собственностью авторов, вы можете забрать свои статьи в любой момент.</p>
+    <p>Сайт предоставляет вам место для размещения и возможность заработать.</p>
+    <p>Мы никак не претендуем на права на ваше творчество, пока они не выкуплены, либо не получены сайтом на других условиях.</p>
+    <p>Чтобы стать участников партнерской программы необходима <a href="@Url.Action("Register", "Account")">регистрация</a> на сайте.</p>
+    <p>При возникновении вопросов Вы можете обратиться по адресу <a href="mailto:admin@game-exe.com">admin@game-exe.com</a> или воспользоваться <a href="@Url.Action("Edit", "SiteQuestions")" target="_blank">формой обратной связи</a></p>
+
+    <div class="text-center">
+        <br />
+        @Html.SxShareButtons(global_asax.ShareButtons)
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/content/dist/js/goodshare.min.js"></script>
+}

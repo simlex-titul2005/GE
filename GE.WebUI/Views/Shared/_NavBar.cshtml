@@ -27,7 +27,7 @@
                         <li><a href="@Url.Action("List", "News")">Почитать новости</a></li>
                         <li><a href="@Url.Action("List", "Articles")">Почитать статьи</a></li>
                         <li><a href="@Url.Action("List", "Aphorisms")">Кратко о главном</a></li>
-                        <li><a href="@Url.Action("Edit", "SiteQuetions")">Обратная связь</a></li>
+                        <li><a href="@Url.Action("Edit", "SiteQuestions")">Обратная связь</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -45,6 +45,7 @@
                         <li><a href="@Url.Action("List", "Humor")">Юмор</a></li>
                     </ul>
                 </li>
+                <li><a href="@Url.Action("Index", "ForAuthors")">Авторам</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated)

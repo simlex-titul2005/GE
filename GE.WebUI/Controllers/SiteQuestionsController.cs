@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class SiteQuetionsController : BaseController
+    public sealed class SiteQuestionsController : BaseController
     {
         [HttpGet]
         public ActionResult Edit()

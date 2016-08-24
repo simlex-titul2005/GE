@@ -9,8 +9,6 @@ namespace GE.WebAdmin
 {
     public class MvcApplication : SxApplication<WebCoreExtantions.DbContext>
     {
-        private static DateTime _lastStartDate;
-
         protected override void Application_Start(object sender, EventArgs e)
         {
             var args = new SxApplicationEventArgs();
@@ -20,18 +18,8 @@ namespace GE.WebAdmin
             args.LoggingRequest = false;
             base.Application_Start(sender, args);
 
-            _lastStartDate = DateTime.Now;
             Database.SetInitializer<WebCoreExtantions.DbContext>(null);
             var siteDomainItem = new SxRepoSiteSetting<WebCoreExtantions.DbContext>().GetByKey(Settings.siteDomain);
-            SiteDomain = siteDomainItem?.Value;
-        }
-
-        public static DateTime LastStartDate
-        {
-            get
-            {
-                return _lastStartDate;
-            }
         }
 
         protected override void Session_Start()

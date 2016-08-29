@@ -291,8 +291,6 @@
     <Compile Include="Models\VMMaterial.cs" />
     <Compile Include="Models\VMMaterialTag.cs" />
     <Compile Include="Models\VMMenuItem.cs" />
-    <Compile Include="Models\VMComment.cs" />
-    <Compile Include="Models\VMEditComment.cs" />
     <Compile Include="Models\VMFGBlock.cs" />
     <Compile Include="Models\VMGameMenu .cs" />
     <Compile Include="Models\VMMenu.cs" />

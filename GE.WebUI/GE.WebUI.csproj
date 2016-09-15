@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -21,6 +22,8 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="App_global.asax.q4elfc9a">
+      <HintPath>C:\Users\SimakinAS\AppData\Local\Temp\Temporary ASP.NET Files\root\a099a7ce\_shadow\65461d1e\3696\App_global.asax.q4elfc9a.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
@@ -56,6 +62,10 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
@@ -197,7 +207,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AphorismController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
-    <Compile Include="Controllers\api\LogsController.cs" />
     <Compile Include="Controllers\AuthorAphorismsController.cs" />
     <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -205,21 +214,64 @@
     <Compile Include="Controllers\HumorController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SiteQuestionsController.cs" />
+    <Compile Include="Controllers\SiteTestQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
+    <Compile Include="Controllers\SiteTestSubjectsController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
-    <Compile Include="Extantions\Repositories\RepoAphorism.cs" />
     <Compile Include="Infrastructure\BreadcrumbsManager.cs" />
-    <Compile Include="Infrastructure\SiteSettings.cs" />
-    <Compile Include="Models\VMAphorismCategory.cs" />
-    <Compile Include="Models\VMAuthorAphorism.cs" />
-    <Compile Include="Models\VMDetailAphorism.cs" />
-    <Compile Include="Models\VMAphorism.cs" />
-    <Compile Include="Models\VMDetailGame.cs" />
-    <Compile Include="Models\VMEditHumor.cs" />
-    <Compile Include="Models\VMEditSiteQuetion.cs" />
-    <Compile Include="Models\VMLCNB.cs" />
-    <Compile Include="Models\VMLCNBCategory.cs" />
-    <Compile Include="Models\VMLCNBNews.cs" />
+    <Compile Include="Infrastructure\DbContext.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoAphorism.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoArticle.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoAuthorAphorism.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoGame.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoHumor.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoMaterialCategory.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoNews.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoSiteTest.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoSiteTestSubject.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Aphorism.cs" />
+    <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\AuthorAphorism.cs" />
+    <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\Humor.cs" />
+    <Compile Include="Models\MaterialCategory.cs" />
+    <Compile Include="Models\News.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoSiteTestQuestion.cs" />
+    <Compile Include="Models\SiteTest.cs" />
+    <Compile Include="Models\SiteTestAnswer.cs" />
+    <Compile Include="Models\SiteTestQuestion.cs" />
+    <Compile Include="Models\SiteTestStep.cs" />
+    <Compile Include="Models\SiteTestSubject.cs" />
+    <Compile Include="ViewModels\VMAphorismCategory.cs" />
+    <Compile Include="ViewModels\VMDetailAphorism.cs" />
+    <Compile Include="ViewModels\VMDetailGame.cs" />
+    <Compile Include="ViewModels\VMLCNB.cs" />
+    <Compile Include="ViewModels\VMLCNBCategory.cs" />
+    <Compile Include="ViewModels\VMLCNBNews.cs" />
+    <Compile Include="ViewModels\Abstracts\VMMaterial.cs" />
+    <Compile Include="ViewModels\VMAphorism.cs" />
+    <Compile Include="ViewModels\VMArticle.cs" />
+    <Compile Include="ViewModels\VMAuthorAphorism.cs" />
+    <Compile Include="ViewModels\VMFGBGame.cs" />
+    <Compile Include="ViewModels\VMGame.cs" />
+    <Compile Include="ViewModels\VMGameMenu .cs" />
+    <Compile Include="ViewModels\VMGameMenuEmptyGame.cs" />
+    <Compile Include="ViewModels\VMGameMenuGame.cs" />
+    <Compile Include="ViewModels\VMGameMenuImgGame.cs" />
+    <Compile Include="ViewModels\VMGameMenuImgGameMaterial.cs" />
+    <Compile Include="ViewModels\VMHumor.cs" />
+    <Compile Include="ViewModels\VMMaterialCategory.cs" />
+    <Compile Include="ViewModels\VMNews.cs" />
+    <Compile Include="ViewModels\VMSearchResult.cs" />
+    <Compile Include="ViewModels\VMSiteTest.cs" />
+    <Compile Include="ViewModels\VMSiteTestAnswer.cs" />
+    <Compile Include="ViewModels\VMSiteTestQuestion.cs" />
+    <Compile Include="ViewModels\VMSiteTestResult.cs" />
+    <Compile Include="ViewModels\VMSiteTestResultNormal.cs" />
+    <Compile Include="ViewModels\VMSiteTestStepGuess.cs" />
+    <Compile Include="ViewModels\VMSiteTestStepNormal.cs" />
+    <Compile Include="ViewModels\VMSiteTestSubject.cs" />
     <Content Include="content\dist\css\ap-author-page.min.css" />
     <Content Include="content\dist\css\author-page.min.css" />
     <Content Include="content\dist\css\error-page.min.css" />
@@ -249,14 +301,13 @@
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
+    <Content Include="packages.config" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AutoMapperConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
@@ -273,29 +324,15 @@
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SeoController.cs" />
-    <Compile Include="Extantions\Repositories\RepoArticle.cs" />
-    <Compile Include="Extantions\Repositories\RepoGame.cs" />
-    <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\SiteMapProvider.cs" />
-    <Compile Include="Models\VMExternalLoginConfirmation.cs" />
-    <Compile Include="Models\VMExternalLoginList.cs" />
-    <Compile Include="Models\VMLGNB.cs" />
-    <Compile Include="Models\VMLGNBCloudTag.cs" />
-    <Compile Include="Models\VMLGNBGame.cs" />
-    <Compile Include="Models\VMLGNBNews.cs" />
-    <Compile Include="Models\VMLGNBVideo.cs" />
-    <Compile Include="Models\VMLoginModel.cs" />
-    <Compile Include="Models\VMMaterial.cs" />
-    <Compile Include="Models\VMMaterialTag.cs" />
-    <Compile Include="Models\VMMenuItem.cs" />
-    <Compile Include="Models\VMFGBlock.cs" />
-    <Compile Include="Models\VMGameMenu .cs" />
-    <Compile Include="Models\VMMenu.cs" />
-    <Compile Include="Models\VMSearchResult.cs" />
-    <Compile Include="Models\VMUser.cs" />
+    <Compile Include="ViewModels\VMLGNB.cs" />
+    <Compile Include="ViewModels\VMLGNBCloudTag.cs" />
+    <Compile Include="ViewModels\VMLGNBGame.cs" />
+    <Compile Include="ViewModels\VMLGNBNews.cs" />
+    <Compile Include="ViewModels\VMLGNBVideo.cs" />
+    <Compile Include="ViewModels\VMFGBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -313,7 +350,7 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_SocialIconsMenu.cshtml" />
     <Content Include="Views\News\List.cshtml" />
-    <Content Include="Views\Games\DisplayTemplates\VMImgGame.cshtml" />
+    <Content Include="Views\Games\DisplayTemplates\VMGameMenuImgGame.cshtml" />
     <Content Include="Views\Articles\_Collection.cshtml" />
     <Content Include="Views\Articles\DisplayTemplates\VMMaterial.cshtml" />
     <Content Include="Views\News\_Collection.cshtml" />
@@ -330,7 +367,7 @@
     <Content Include="Views\Shared\_SocNetButtons.cshtml" />
     <Content Include="Views\Shared\_Foreword.cshtml" />
     <Content Include="Views\MaterialTags\_TagsCloud.cshtml" />
-    <Content Include="Views\Shared\_LikeMaterial.cshtml" />
+    <Content Include="Views\Shared\_LikeMaterials.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Games\_LastMaterials.cshtml" />
@@ -375,15 +412,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\SX.WebCore\SX.WebCore\SX.WebCore.csproj">
       <Project>{daf1a092-ded8-4c43-b08d-20e55c6f03a2}</Project>
       <Name>SX.WebCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GE.WebCoreExtantions\GE.WebCoreExtantions.csproj">
-      <Project>{bf57645e-fa93-44aa-8c87-7f1bdd240dc2}</Project>
-      <Name>GE.WebCoreExtantions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -414,6 +446,12 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

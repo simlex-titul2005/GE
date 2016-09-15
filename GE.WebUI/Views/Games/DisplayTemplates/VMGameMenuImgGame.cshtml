@@ -1,0 +1,22 @@
+﻿@model VMGameMenuImgGame
+@{
+    Layout = null;
+    var loadImg = ViewData["LoadImg"] != null ? (bool)ViewData["LoadImg"] : false;
+    var materials = ViewData["Materials"] as VMGameMenuImgGameMaterial[];
+}
+
+<div class="game-good-img">
+    <figure>
+        <img alt="@Model.Title - новости" @(string.Format("{0}={1}", loadImg?"src":"data-src", Model.GoodPictureUrl+"?width="+Model.ImgWidth)) />
+    </figure>
+    @Html.Partial("_LastMaterials", materials.Where(x=>x.ModelCoreType==SX.WebCore.Enums.ModelCoreType.News).ToArray())
+</div>
+<div class="game-bad-img">
+    <figure>
+        <img alt="@Model.Title - статьи" @(string.Format("{0}={1}", loadImg ? "src" : "data-src", Model.BadPictureUrl+"?width="+Model.ImgWidth)) />
+    </figure>
+    @Html.Partial("_LastMaterials", materials.Where(x => x.ModelCoreType == SX.WebCore.Enums.ModelCoreType.Article).ToArray())
+</div>
+<div class="game-icon-wrapper">
+    <img alt="@Model.Title - иконка" @(string.Format("{0}={1}", loadImg ? "src" : "data-src", Model.IconUrl+"?height="+Model.IconHeight)) />
+</div>

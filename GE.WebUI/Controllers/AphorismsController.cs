@@ -1,28 +1,27 @@
-﻿using GE.WebCoreExtantions.Repositories;
-using GE.WebUI.Models;
+﻿using GE.WebUI.Models;
 using System.Web.Mvc;
-using GE.WebUI.Extantions.Repositories;
 using System.Linq;
 using SX.WebCore;
 using System.Threading.Tasks;
-using GE.WebCoreExtantions;
 using SX.WebCore.ViewModels;
+using GE.WebUI.Infrastructure.Repositories;
+using GE.WebUI.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class AphorismsController : BaseController
     {
-        private static RepoAphorism _repo;
-        public AphorismsController()
+        private static RepoAphorism _repo = new RepoAphorism();
+        public RepoAphorism Repo
         {
-            if(_repo==null)
-                _repo = new RepoAphorism();
+            get { return _repo; }
+            set { _repo = value; }
         }
 
         [HttpGet]
         public ActionResult Details(string categoryId, string titleUrl)
         {
-            var viewModel = _repo.GetByTitleUrl(categoryId, titleUrl);
+            var viewModel = Repo.GetByTitleUrl(categoryId, titleUrl);
 
             if (viewModel == null || viewModel.Aphorism == null)
                 return new HttpNotFoundResult();
@@ -70,11 +69,10 @@ namespace GE.WebUI.Controllers
                 OnlyShow = true
             };
             filter.PagerInfo.PagerSize = 5;
-            var data = _repo.Read(filter);
+            var viewModel = _repo.Read(filter);
 
             ViewBag.PagerInfo = filter.PagerInfo;
             
-            var viewModel = data.Select(x => Mapper.Map<Aphorism, VMAphorism>(x)).ToArray();
             return View(viewModel);
         }
 

@@ -2,7 +2,7 @@
  *  @author Interactive agency «Central marketing» http://centralmarketing.ru
  *  @copyright Copyright (c) 2016, Interactive agency «Central marketing»
  *  @license http://opensource.org/licenses/MIT The MIT License (MIT)
- *  @version 3.2.8 at 27/03/2016 (16:50)
+ *  @version 3.2.9 at 12/09/2016 (22:45)
  *
  *  goodshare.js
  *
@@ -83,7 +83,7 @@
 					url:    location.href,
 					title:  document.title
 				}, _options);
-				return 'http://www.facebook.com/sharer.php?'
+				return 'https://facebook.com/sharer/sharer.php?'
 					+ 'u=' + encodeURIComponent(options.url);
 			},
 			/*
@@ -523,8 +523,8 @@
 			 */
 			if (existCount('[data-counter="fb"]')) {
 				$.getJSON('https://graph.facebook.com/?id=' + encodeURIComponent(location.href) + '&callback=?', function(response) {
-					if (response.shares === undefined) $('[data-counter="fb"]').text('0');
-					else $('[data-counter="fb"]').text(roundCount(response.shares));
+					if (response.share === undefined) $('[data-counter="fb"]').text('0');
+					else $('[data-counter="fb"]').text(roundCount(response.share.share_count));
 				});
 			};
 			/*

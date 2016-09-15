@@ -23,14 +23,14 @@
                 <div class="date">@Model.DateOfPublication</div>
                 <div class="title">
                     <h4>
-                        <a href="@Model.Url(Url)">@Model.Title</a>
+                        <a href="@Model.GetUrl(Url)">@Model.Title</a>
                     </h4>
                 </div>
                 <div class="fwd">
                     @Html.Raw(Model.Foreword)
                 </div>
                 <div class="details">
-                    <a href="@Model.Url(Url)" class="btn btn-default">Подробнее</a>
+                    <a href="@Model.GetUrl(Url)" class="btn btn-default">Подробнее</a>
                 </div>
                 <div class="info">
                     @Html.Partial("_MaterialInfo", Model)

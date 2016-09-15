@@ -1,10 +1,10 @@
 ﻿@using SX.WebCore;
-@model SxExtantions.SxPagedCollection<VMMaterial>
+@model SxExtantions.SxPagedCollection<VMHumor>
 @{
-    ViewBag.Title = ViewBag.Title ?? "Коллекция юмора от " + global_asax.SiteSettingsProvider.Get("siteName");
+    ViewBag.Title = ViewBag.Title ?? "Коллекция юмора от " + global_asax.SiteSettingsProvider.Get("siteName").Value;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
-    ViewBag.Description = ViewBag.Description ?? "Качественная коллекция юмора от " + global_asax.SiteSettingsProvider.Get("siteName");
-    ViewBag.Keywords = ViewBag.Description ?? "Анекдоты, смешные истории, розыгрыши, шутки, " + global_asax.SiteSettingsProvider.Get("siteName");
+    ViewBag.Description = ViewBag.Description ?? "Качественная коллекция юмора от " + global_asax.SiteSettingsProvider.Get("siteName").Value;
+    ViewBag.Keywords = ViewBag.Description ?? "Анекдоты, смешные истории, розыгрыши, шутки, " + global_asax.SiteSettingsProvider.Get("siteName").Value;
     VMMaterial item;
     var length = 1000;
     var date = DateTime.Now;
@@ -95,7 +95,7 @@
                 </li>
                 if (i!=0 && i % 5 == 0)
                 {
-                    var banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
+                    var banner = ViewBag.PageBanners != null ? ((SxVMBanner[])ViewBag.PageBanners).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
                     @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
                     @Html.Raw("<br/>")
                 }

@@ -1,7 +1,6 @@
 ﻿@{
-    Layout = null;
-    var siteName = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteName);
-    var logoUrl = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteLogoPath) });
+    var siteName = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteName).Value;
+    var logoUrl = Url.Action("Picture", "Pictures", new { id = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteLogoPath).Value });
 }
 <footer>
     <div class="shadow"></div>
@@ -38,7 +37,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <h6 class="header">Последние публикации</h6>
-                    @Html.Action("Last", "Articles", new { amount = 3 })
+                    @*@Html.Action("Last", "Articles", new { amount = 3 })*@
                 </div>
                 <div class="col-md-4">
                     <ul class="menu">
@@ -84,7 +83,7 @@
                 <div class="col-md-3">
                     <div class="first">
                         <a href="/">
-                            <img alt="@siteName.Value" src="@logoUrl">
+                            <img alt="@siteName" src="@logoUrl">
                         </a>
                     </div>
                 </div>

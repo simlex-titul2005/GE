@@ -13,8 +13,8 @@
         : Model.Videos.Length > 0
         ? SxVideoProvider.GetVideoImageUrl(Model.Videos[0].VideoId, SxVideoProvider.VideoQuality.Medium)
         : null;
-    var banners = (SxBanner[])ViewBag.PageBanners;
-    SxBanner banner = null;
+    var banners = (SxVMBanner[])ViewBag.PageBanners;
+    SxVMBanner banner = null;
 }
 
 <div class="detail-article">

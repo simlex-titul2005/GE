@@ -1,4 +1,4 @@
-﻿using GE.WebCoreExtantions;
+﻿using GE.WebUI.Infrastructure;
 using SX.WebCore.MvcControllers;
 
 namespace GE.WebUI.Controllers

@@ -91,23 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IHasGame.cs" />
-    <Compile Include="Aphorism.cs" />
-    <Compile Include="AuthorAphorism.cs" />
-    <Compile Include="MaterialCategory.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="News.cs" />
-    <Compile Include="Article.cs" />
-    <Compile Include="DbContext.cs" />
-    <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\RepoAuthorAphorism.cs" />
-    <Compile Include="Repositories\RepoAphorism.cs" />
-    <Compile Include="Repositories\RepoArticle.cs" />
-    <Compile Include="Repositories\RepoGame.cs" />
-    <Compile Include="Repositories\RepoHumor.cs" />
-    <Compile Include="Repositories\RepoMaterialCategory.cs" />
-    <Compile Include="Repositories\RepoNews.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -118,6 +102,9 @@
       <Project>{daf1a092-ded8-4c43-b08d-20e55c6f03a2}</Project>
       <Name>SX.WebCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

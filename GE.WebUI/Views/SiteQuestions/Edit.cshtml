@@ -1,11 +1,11 @@
-﻿@model VMEditSiteQuetion
+﻿@model SxVMSiteQuestion
 @{
     var title = "Форма обратной связи";
     ViewBag.Title = title;
     ViewBag.H1 = ViewBag.H1 ?? title;
     ViewBag.H1CssClass = "hidden";
     ViewBag.Description = ViewBag.Description ?? "На данной страницы Вы можете задать любые вопросы, сделать предложения по сайту или предъявить претензию владельцам ресурса";
-    ViewBag.Keywords = ViewBag.Keywords ?? string.Format("{0}, вопросы, предложения, претензии", GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteName));
+    ViewBag.Keywords = ViewBag.Keywords ?? string.Format("{0}, вопросы, предложения, претензии", global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteName).Value);
     var message = TempData["Message"];
 }
 

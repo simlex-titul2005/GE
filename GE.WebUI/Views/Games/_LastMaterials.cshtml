@@ -1,7 +1,6 @@
-﻿@model VMImgGameMaterial[]
+﻿@model VMGameMenuImgGameMaterial[]
 @{
-    Layout = null;
-    VMImgGameMaterial item;
+    VMGameMenuImgGameMaterial item = null;
 }
 @if (Model.Any())
 {
@@ -12,7 +11,7 @@
                 item = Model[i];
                 <li>
                     <span class="time">@item.DateOfPublication.ToString("dd.MM.yyyy")</span><br />
-                    <a href="@item.Url(Url)">@item.Title</a>
+                    <a href="@item.GetUrl(Url)">@item.Title</a>
                 </li>
             }
         </ul>

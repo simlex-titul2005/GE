@@ -1,6 +1,5 @@
 ﻿@model VMMaterial[]
 @{
-    Layout = null;
     var mct = ViewData["ModelCoreType"] == null ? SX.WebCore.Enums.ModelCoreType.Unknown : (SX.WebCore.Enums.ModelCoreType)ViewData["ModelCoreType"];
 }
 
@@ -15,7 +14,7 @@
                 <div class="col-md-3">
                     <div class="content">
                         <div class="date">@item.DateOfPublication.ToString("dd.MM.yyyy")</div>
-                        <h4 class="title"><a href="@item.Url(Url)">@item.Title</a></h4>
+                        <h4 class="title"><a href="@item.GetUrl(Url)">@item.Title</a></h4>
                         <ul class="list-unstyled list-inline info">
                             <li>
                                 <i class="fa fa-comments-o"></i>: @item.CommentsCount

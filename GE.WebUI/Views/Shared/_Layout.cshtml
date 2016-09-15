@@ -1,15 +1,15 @@
 ﻿@using SX.WebCore;
 @{
     Layout = null;
-    var bgUrl = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteBgPath) });
-    var logoPath = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteLogoPath) });
-    var iconPath = Url.Action("Picture", "Pictures", new { id = GE.WebUI.Infrastructure.SiteSettings.Get(SX.WebCore.Resources.Settings.siteFaveiconPath) });
+    var bgUrl = Url.Action("Picture", "Pictures", new { id = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteBgPath).Value });
+    var logoPath = Url.Action("Picture", "Pictures", new { id = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteLogoPath).Value });
+    var iconPath = Url.Action("Picture", "Pictures", new { id = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteFaveiconPath).Value });
     var bg = string.IsNullOrEmpty(bgUrl) ? null : string.Format("style=background:url('{0}');", bgUrl);
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
     var bannerControllerBlackList = new string[] { "employees", "account", "error", "sitequestions", "forauthors" };
-    SxBanner banner = null;
+    SxVMBanner banner = null;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +67,7 @@
             }
             
             @{
-                banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top) : null;
+                banner = ViewBag.PageBanners != null ? ((SxVMBanner[])ViewBag.PageBanners).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top) : null;
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b=> { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
@@ -79,7 +79,7 @@
 
 
             @{
-                banner = ViewBag.PageBanners != null ? (ViewBag.PageBanners as SxBanner[]).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom) : null;
+                banner = ViewBag.PageBanners != null ? ((SxVMBanner[])ViewBag.PageBanners).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom) : null;
                 if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
                 {
                     <br />

@@ -1,5 +1,4 @@
-﻿using GE.WebCoreExtantions;
-using SX.WebCore.MvcControllers;
+﻿using SX.WebCore.MvcControllers;
 using SX.WebCore.ViewModels;
 using System.Collections.Generic;
 

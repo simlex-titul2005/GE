@@ -1,18 +1,17 @@
-﻿using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
-using SX.WebCore;
+﻿using SX.WebCore;
 using System.Web.Mvc;
-using GE.WebUI.Extantions.Repositories;
 using GE.WebUI.Models;
+using GE.WebUI.Infrastructure.Repositories;
+using GE.WebUI.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class NewsController : MaterialsController<News>
+    public sealed class NewsController : MaterialsController<News, VMNews>
     {
         public NewsController() : base(Enums.ModelCoreType.News)
         {
-            if(Repo==null)
-                Repo = new RepoNews<VMMaterial>();
+            //if(Repo==null)
+            //    Repo = new RepoNews<VMMaterial>();
         }
 
 #if !DEBUG
@@ -22,7 +21,7 @@ namespace GE.WebUI.Controllers
         public PartialViewResult LastGamesNewsBlock(int lnc = 5, int gc = 4, int glnc = 3, int gtc = 20, int vc=6)
         {
             ViewBag.VideosAmount = vc;
-            var viewModel = (Repo as RepoNews<VMMaterial>).LastGameNewsBlock(lnc, gc, glnc, gtc, vc);
+            var viewModel = (Repo as RepoNews).LastGameNewsBlock(lnc, gc, glnc, gtc, vc);
             return PartialView("_LastNewsBlock", viewModel);
         }
 
@@ -32,7 +31,7 @@ namespace GE.WebUI.Controllers
         [ChildActionOnly]
         public PartialViewResult NewsCategories(int lnc = 5, int clnc = 3, int ctc = 20)
         {
-            var data = (Repo as RepoNews<VMMaterial>).LastCategoryBlock(lnc, clnc, ctc);
+            var data = (Repo as RepoNews).LastCategoryBlock(lnc, clnc, ctc);
             return PartialView("_NewsCategories", data);
         }
     }

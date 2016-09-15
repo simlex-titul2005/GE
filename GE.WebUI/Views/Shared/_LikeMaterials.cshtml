@@ -1,0 +1,47 @@
+﻿@using SX.WebCore;
+@model VMMaterial[]
+@{
+    Layout = null;
+    var colCount = 3;
+    var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
+    SxVMMaterial item;
+    Enums.ModelCoreType mct = ViewBag.ModelCoreType;
+}
+
+@if (Model.Any())
+{
+    <div class="like-mats">
+        <h3 class="header">@mct</h3>
+        <br />
+        @for (int r = 0; r < rowsCount; r++)
+                {
+                    var items = Model.Skip(r * colCount).Take(colCount).ToArray();
+            <div class="row">
+                @for (int c = 0; c < colCount; c++)
+                {
+                    if (c < items.Length)
+                    {
+                        item = items[c];
+                        <div class="col-md-4">
+                            <div class="like-mat" onclick="changeLocation(this)" title="@item.Title">
+                                <div><time>@item.DateCreate</time></div>
+                                <div><a href="@item.GetUrl(Url)">@item.Title</a></div>
+                                <p>@item.Foreword</p>
+                                @if (item.User != null)
+                                {
+                                    <div class="author">
+                                        Автор: <strong><i>@item.User.NikName</i></strong>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-4"></div>
+                    }
+                }
+            </div>
+        }
+    </div>
+}

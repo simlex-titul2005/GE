@@ -1,17 +1,17 @@
-﻿using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
+﻿using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.Models;
+using GE.WebUI.ViewModels;
 using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class AuthorAphorismsController : BaseController
     {
-        private static RepoAuthorAphorism _repo;
-        public AuthorAphorismsController()
+        private static RepoAuthorAphorism _repo=new RepoAuthorAphorism();
+        public static RepoAuthorAphorism Repo
         {
-            if (_repo == null)
-                _repo = new RepoAuthorAphorism();
+            get { return _repo; }
+            set { _repo = value; }
         }
 
         [HttpGet]

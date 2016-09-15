@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 using Dapper;
-using GE.WebUI.Models;
+using GE.WebUI.ViewModels;
 
 namespace GE.WebUI.Controllers
 {

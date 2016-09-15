@@ -1,19 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using SX.WebCore.MvcControllers;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class ErrorController : Controller
+    public sealed class ErrorController : SxErrorsController
     {
-        public ActionResult NotFound()
-        {
-            Response.StatusCode = 404;
-            return View();
-        }
-
-        public ActionResult ServerError()
-        {
-            Response.StatusCode = 500;
-            return View();
-        }
+        
     }
 }

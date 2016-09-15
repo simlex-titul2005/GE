@@ -1,20 +1,13 @@
-﻿using GE.WebCoreExtantions;
-using SX.WebCore;
-using SX.WebCore.Repositories;
+﻿using SX.WebCore;
+using SX.WebCore.MvcControllers;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class MaterialTagsController : BaseController
+    public sealed class MaterialTagsController : SxMaterialTagsController<SxDbContext>
     {
-        private static SxRepoMaterialTag<DbContext> _repo;
-        public MaterialTagsController()
-        {
-            if(_repo==null)
-                _repo = new SxRepoMaterialTag<DbContext>();
-        }
-
+        
 #if !DEBUG
         [OutputCache(Duration =900, VaryByParam = "mid;mct")]
 #endif
@@ -22,7 +15,7 @@ namespace GE.WebUI.Controllers
         public PartialViewResult List(int mid, ModelCoreType mct, int maxFs=30, int amount=50)
         {
             var filter = new SxFilter(1, 10) { MaterialId= mid, ModelCoreType=mct };
-            var viewModel = _repo.GetCloud(filter);
+            var viewModel = Repo.GetCloud(filter);
             string url = "#";
             switch(mct)
             {

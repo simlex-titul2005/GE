@@ -1,6 +1,6 @@
-﻿using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
+﻿using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.Models;
+using GE.WebUI.ViewModels;
 using SX.WebCore.Attrubutes;
 using System.Web.Mvc;
 
@@ -8,11 +8,11 @@ namespace GE.WebUI.Controllers
 {
     public sealed class AphorismController : BaseController
     {
-        private static RepoAphorism _repo;
-        public AphorismController()
+        private static RepoAphorism _repo = new RepoAphorism();
+        public RepoAphorism Repo
         {
-            if(_repo==null)
-                _repo = new RepoAphorism();
+            get { return _repo; }
+            set { _repo = value; }
         }
 
         [HttpGet, NotLogRequest]

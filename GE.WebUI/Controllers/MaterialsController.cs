@@ -1,30 +1,24 @@
-﻿using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
-using GE.WebUI.Models;
-using SX.WebCore;
+﻿using SX.WebCore;
 using SX.WebCore.Abstract;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using GE.WebUI.Extantions.Repositories;
 using static SX.WebCore.Enums;
-using System.Globalization;
-using SX.WebCore.Repositories;
-using SX.WebCore.MvcApplication;
-using SX.WebCore.ViewModels;
 using SX.WebCore.MvcControllers;
 using GE.WebUI.Infrastructure;
+using GE.WebUI.ViewModels.Abstracts;
+using SX.WebCore.ViewModels;
+using System.Globalization;
+using System.Linq;
+using SX.WebCore.MvcApplication;
+using System.Threading.Tasks;
 
 namespace GE.WebUI.Controllers
 {
-    public class MaterialsController<TModel> : SxMaterialsController<TModel, VMMaterial, DbContext>
+    public abstract class MaterialsController<TModel, TViewModel> : SxMaterialsController<TModel, TViewModel, DbContext>
         where TModel : SxMaterial
+        where TViewModel : VMMaterial, new()
     {
-        private SxDbRepository<int, Game, DbContext> _repoGame;
         protected MaterialsController(ModelCoreType mct) : base(mct)
         {
-            if (_repoGame == null)
-                _repoGame = new RepoGame();
             WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
             BeforeSelectListAction = beforeSelectListAction;
         }
@@ -37,7 +31,7 @@ namespace GE.WebUI.Controllers
             filter.AddintionalInfo = new object[] { gameTitle };
             if (gameTitle != null)
             {
-                var existGame = (_repoGame as RepoGame).ExistGame(gameTitle);
+                var existGame = GamesController.Repo.ExistGame(gameTitle);
                 if (!existGame)
                 {
                     return false;
@@ -67,7 +61,7 @@ namespace GE.WebUI.Controllers
         [HttpGet]
         public virtual ActionResult Details(int year, string month, string day, string titleUrl)
         {
-            VMMaterial model =null;
+            VMMaterial model = null;
             switch (ModelCoreType)
             {
                 case ModelCoreType.Article:
@@ -85,12 +79,11 @@ namespace GE.WebUI.Controllers
 
             var html = model.Html;
             SxBBCodeParser.ReplaceValutes(ref html);
-            SxBBCodeParser.ReplaceBanners(ref html, SxApplication<DbContext>.BannerProvider.BannerCollection, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }));
+            SxBBCodeParser.ReplaceBanners(ref html, SxMvcApplication<DbContext>.BannerProvider.BannerCollection, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }));
             SxBBCodeParser.ReplaceVideo(ref html, model.Videos);
             model.Html = html;
 
-            var seoInfoRepo = new SxRepoSeoTags<DbContext>();
-            var matSeoInfo = Mapper.Map<SxSeoTags, SxVMSeoTags>(seoInfoRepo.GetSeoTags(model.Id, model.ModelCoreType));
+            var matSeoInfo = Mapper.Map<SxSeoTags, SxVMSeoTags>(SxSeoTagsController<DbContext>.Repo.GetSeoTags(model.Id, model.ModelCoreType));
 
             ViewBag.Title = ViewBag.Title ?? (matSeoInfo != null ? matSeoInfo.SeoTitle : null) ?? model.Title;
             ViewBag.Description = ViewBag.Description ?? (matSeoInfo != null ? matSeoInfo.SeoDescription : null) ?? model.Foreword;
@@ -100,7 +93,7 @@ namespace GE.WebUI.Controllers
             CultureInfo ci = new CultureInfo("en-US");
             ViewBag.LastModified = model.DateUpdate.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'", ci);
 
-            if(model.Game != null)
+            if (model.Game != null)
                 ViewBag.GameName = model.Game.TitleUrl.ToLower();
 
             var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;

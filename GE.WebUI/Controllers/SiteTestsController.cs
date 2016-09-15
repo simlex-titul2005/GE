@@ -1,144 +1,339 @@
-﻿using GE.WebCoreExtantions;
-using SX.WebCore;
-using System.Web.Mvc;
-using System.Linq;
-using System.Collections.Generic;
-using SX.WebCore.ViewModels;
-using static SX.WebCore.HtmlHelpers.SxExtantions;
-using System.Threading.Tasks;
-using SX.WebCore.MvcControllers;
-using GE.WebUI.Infrastructure;
+﻿using GE.WebUI.Infrastructure.Repositories;
+using GE.WebUI.Models;
+using GE.WebUI.ViewModels;
+using OfficeOpenXml;
 using SX.WebCore.Attrubutes;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
-namespace GE.WebUI.Controllers
+namespace SX.WebCore.MvcControllers
 {
-    public sealed class SiteTestsController : SxSiteTestsController<DbContext>
+    [Authorize(Roles = "admin")]
+    public abstract class SiteTestsController<TDbContext> : SxBaseController<TDbContext> where TDbContext : SxDbContext
     {
-        public SiteTestsController()
+        private static RepoSiteTest _repo=new RepoSiteTest();
+        public static RepoSiteTest Repo
         {
-            WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
+            get { return _repo; }
+            set { _repo = value; }
         }
 
-        [HttpGet, AllowAnonymous]
-        public ViewResult List(int page = 1)
+        private static int _pageSize = 20;
+
+        [HttpGet]
+        public virtual ActionResult Index(int page = 1)
         {
-            var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
-            var filter = new SxFilter { Order = defaultOrder, OnlyShow = true };
+            var order = new SxOrder { FieldName = "Title", Direction = SortDirection.Asc };
+            var filter = new SxFilter(page, _pageSize) { Order = order };
 
-            var data = Repo.Read(filter).Select(x => Mapper.Map<SxSiteTest, SxVMSiteTest>(x)).ToArray();
-
-            var viewModel = new SxPagedCollection<SxVMSiteTest>
-            {
-                Collection = data,
-                PagerInfo = filter.PagerInfo
-            };
+            var viewModel = _repo.Read(filter);
+            if (page > 1 && !viewModel.Any())
+                return new HttpNotFoundResult();
 
             ViewBag.Filter = filter;
 
-            return View(model: viewModel);
+            return View(viewModel);
         }
 
-#if !DEBUG
-        [OutputCache(Duration =900)]
-#endif
-        [ChildActionOnly, AllowAnonymous]
-        public PartialViewResult RandomList()
+        [HttpPost]
+        public virtual async Task<ActionResult> Index(VMSiteTest filterModel, SxOrder order, int page = 1)
         {
-            var data = Repo.RandomList();
-            return PartialView("_RandomList", data);
+            var filter = new SxFilter(page, _pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel };
+
+            var viewModel = await _repo.ReadAsync(filter);
+            if (page > 1 && !viewModel.Any())
+                return new HttpNotFoundResult();
+
+            ViewBag.Filter = filter;
+
+            return PartialView("_GridView", viewModel);
         }
 
-        [HttpGet, AllowAnonymous]
-        public async Task<ActionResult> Details(string titleUrl)
+        [HttpPost]
+        public virtual async Task<ActionResult> FindGridView(VMSiteTest filterModel, SxOrder order, int page = 1, int pageSize = 10)
         {
-            var data = Repo.GetSiteTestPage(titleUrl);
-            if (data == null) return new HttpNotFoundResult();
+            var filter = new SxFilter(page, pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel };
 
-            var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
-            if (breadcrumbs != null)
-            {
-                var bc = breadcrumbs.ToList();
-                bc.Add(new SxVMBreadcrumb { Title = data.Question.Test.Title });
-                ViewBag.Breadcrumbs = bc.ToArray();
-            }
+            var viewModel = await _repo.ReadAsync(filter);
+            if (page > 1 && !viewModel.Any())
+                return new HttpNotFoundResult();
 
-            if (data.Question.Test.Type == SxSiteTest.SiteTestType.Guess)
-            {
-                var step= new SxVMSiteTestStepGuess();
-                step.QuestionId = data.QuestionId;
-                step.IsCorrect = false;
-                ViewBag.OldSteps = new SxVMSiteTestStepGuess[] { step };
-            }
-            else if(data.Question.Test.Type == SxSiteTest.SiteTestType.Normal || data.Question.Test.Type == SxSiteTest.SiteTestType.NormalImage )
-            {
-                var step = new SxVMSiteTestStepNormal();
-                step.SubjectId = data.SubjectId;
-                step.QuestionId = 0;
-                step.LettersCount = getStepNormalLettersCount(data);
-                ViewBag.OldSteps = new SxVMSiteTestStepNormal[] { step };
-            }
-            
-            var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
-            if(viewModel.Question!=null && viewModel.Question.Test!=null)
-                viewModel.Question.Test.ViewsCount= await Repo.AddShow(viewModel.Question.Test.Id);
+            ViewBag.Filter = filter;
 
-            return View(model: viewModel);
+            return PartialView("_FindGridView", viewModel);
         }
-        
 
-        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous, NotLogRequest]
-        public async Task<ActionResult> StepGuess(List<SxVMSiteTestStepGuess> steps)
+        [HttpGet]
+        public virtual ViewResult Edit(int? id)
+        {
+            var model = id.HasValue ? _repo.GetByKey(id) : new SiteTest();
+            return View(Mapper.Map<SiteTest, VMSiteTest>(model));
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual ActionResult Edit(VMSiteTest model)
+        {
+            var isArchitect = User.IsInRole("architect");
+            var isNew = model.Id == 0;
+            if (isNew)
+            {
+                model.TitleUrl = Url.SeoFriendlyUrl(model.Title);
+                if (_repo.All.SingleOrDefault(x => x.TitleUrl == model.TitleUrl) != null)
+                    ModelState.AddModelError("Title", "Модель с таким текстовым ключем уже существует");
+                else
+                    ModelState["TitleUrl"].Errors.Clear();
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(model.TitleUrl))
+                {
+                    var url = Url.SeoFriendlyUrl(model.Title);
+                    if (_repo.All.SingleOrDefault(x => x.TitleUrl == url && x.Id != model.Id) != null)
+                        ModelState.AddModelError(isArchitect ? "TitleUrl" : "Title", "Модель с таким текстовым ключем уже существует");
+                    else
+                    {
+                        model.TitleUrl = url;
+                        ModelState["TitleUrl"].Errors.Clear();
+                    }
+                }
+            }
+
+            var redactModel = Mapper.Map<VMSiteTest, SiteTest>(model);
+            if (ModelState.IsValid)
+            {
+                SiteTest newModel = null;
+                if (isNew)
+                    newModel = _repo.Create(redactModel);
+                else
+                {
+                    var old = _repo.All.SingleOrDefault(x => x.TitleUrl == model.TitleUrl && x.Id != model.Id);
+                    if (old != null)
+                        ModelState.AddModelError(isArchitect ? "TitleUrl" : "Title", "Модель с таким текстовым ключем уже существует");
+                    if (isArchitect)
+                        newModel = _repo.Update(redactModel, true, "Title", "Description", "Rules", "Type", "TitleUrl", "Show", "ShowSubjectDesc");
+                    else
+                        newModel = _repo.Update(redactModel, true, "Title", "Description", "Rules", "Show", "ShowSubjectDesc");
+                }
+                return RedirectToAction("Index");
+            }
+            else
+                return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> Delete(SiteTest model)
+        {
+            if (await _repo.GetByKeyAsync(model.Id) == null)
+                return new HttpNotFoundResult();
+
+            await _repo.DeleteAsync(model);
+            return RedirectToAction("Index");
+        }
+
+        private readonly int _matrixPageSize = 7;
+        [HttpGet]
+        public virtual async Task<PartialViewResult> TestMatrix(int testId, int page = 1)
         {
             return await Task.Run(() =>
             {
-                int subjectsCount;
-                var data = Repo.GetGuessStep(steps, out subjectsCount);
-                ViewBag.SubjectsCount = subjectsCount;
-                steps.Add(new SxVMSiteTestStepGuess { QuestionId = data.QuestionId, IsCorrect = false });
-                ViewBag.OldSteps = steps.ToArray();
-                var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
-                return PartialView("_StepGuess", viewModel);
+                var count = 0;
+                var data = _repo.GetMatrix(testId, out count, page, _matrixPageSize);
+                ViewBag.Count = count;
+                ViewBag.PageSize = _matrixPageSize;
+                ViewBag.TestId = testId;
+                ViewBag.Page = page;
+                return PartialView("_Matrix", data);
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous, NotLogRequest]
-        public async Task<ActionResult> StepNormal(List<SxVMSiteTestStepNormal> steps)
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual JsonResult RevertMatrixValue(string subjectTitle, string questionText, int value)
+        {
+            Task.Run(() =>
+            {
+                _repo.RevertMatrixValue(subjectTitle, questionText, value);
+            });
+            return Json(value == 0 ? 1 : 0);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual async Task<RedirectToRouteResult> LoadFromFile(HttpPostedFileBase file)
+        {
+            var test = new SiteTestModel();
+            var questions = new List<string>();
+            var subjects = new List<string>();
+
+            using (var excel = new ExcelPackage(file.InputStream))
+            {
+                var ws = excel.Workbook.Worksheets.First();
+
+                var range = ws.Cells["A1"];
+                test.Title = range.Value.ToString().Trim();
+
+                range = ws.Cells["B1"];
+                test.Desc = range.Value?.ToString().Trim();
+
+                //questions
+                range = ws.Cells["C1"];
+                var startRow = range.Start.Row;
+                var startColumn = range.Start.Column;
+                var count = 0;
+                while (range.Value != null)
+                {
+                    count++;
+                    questions.Add(range.Value.ToString().Trim());
+                    range = ws.Cells[startRow, startColumn + count];
+                }
+                test.Questions = questions.ToArray();
+                count = 0;
+
+                range = ws.Cells["A2"];
+                startRow = range.Start.Row;
+                startColumn = range.Start.Column;
+                while (range.Value != null)
+                {
+                    count++;
+                    subjects.Add(range.Value.ToString().Trim());
+                    range = ws.Cells[startRow + count, startColumn];
+                }
+                test.Subjects = subjects.ToArray();
+
+                range = ws.Cells["A2"];
+                TestAnswer answer;
+                string subjectTitle;
+                string subjectDesc;
+                for (int i = 0; i < test.Subjects.Length; i++)
+                {
+                    subjectTitle = range.Value.ToString().Trim();
+
+                    startColumn++;
+                    range = ws.Cells[startRow, startColumn];
+                    subjectDesc = range.Value?.ToString().Trim();
+
+                    for (int y = 0; y < test.Questions.Length; y++)
+                    {
+                        startColumn++;
+                        range = ws.Cells[startRow, startColumn];
+                        answer = new TestAnswer
+                        {
+                            SubjectTitle = subjectTitle,
+                            SubjectDesc = subjectDesc,
+                            Question = test.Questions[y],
+                            IsCorrect = range.Value != null && range.Value.ToString() == "1" ? true : false
+                        };
+                        test.Answers.Add(answer);
+                    }
+                    startRow++;
+                    startColumn = 1;
+                    range = ws.Cells[startRow, startColumn];
+                }
+
+                var id = await writeSiteTestToDb(test);
+                return RedirectToAction("edit", new { id = id });
+            }
+        }
+        private class SiteTestModel
+        {
+            public SiteTestModel()
+            {
+                Questions = new string[0];
+                Subjects = new string[0];
+                Answers = new List<TestAnswer>();
+            }
+            public string Title { get; set; }
+            public string Desc { get; set; }
+            public string[] Questions { get; set; }
+            public string[] Subjects { get; set; }
+            public List<TestAnswer> Answers { get; set; }
+        }
+        private struct TestAnswer
+        {
+            public string SubjectTitle { get; set; }
+            public string SubjectDesc { get; set; }
+            public string Question { get; set; }
+            public bool IsCorrect { get; set; }
+        }
+        private async Task<int> writeSiteTestToDb(SiteTestModel test)
         {
             return await Task.Run(() =>
             {
-                int subjectsCount;
-                int allSubjectsCount;
-                var data = Repo.GetNormalStep(steps, out subjectsCount, out allSubjectsCount);
-                ViewBag.SubjectsCount = subjectsCount;
-                if(data!=null)
-                    steps.Add(new SxVMSiteTestStepNormal {
-                        SubjectId = data.SubjectId,
-                        QuestionId = 0,
-                        LettersCount=getStepNormalLettersCount(data)
-                    });
-                ViewBag.OldSteps = steps.ToArray();
-                ViewBag.AllSubjectsCount = allSubjectsCount;
+                var testId = Repo.Create(new SiteTest { Title = test.Title, Description = test.Desc }).Id;
+                TestAnswer answer;
+                string sTitle;
+                string q;
+                SiteTestSubject subject;
+                SiteTestQuestion question;
+                for (int i = 0; i < test.Subjects.Length; i++)
+                {
+                    sTitle = test.Subjects[i];
+                    subject = SiteTestSubjectsController<TDbContext>.Repo.Create(new SiteTestSubject { Title = sTitle, TestId = testId });
+                    for (int y = 0; y < test.Questions.Length; y++)
+                    {
+                        q = test.Questions[y];
+                        answer = test.Answers.Where(x => x.SubjectTitle == sTitle && x.Question == q).SingleOrDefault();
+                        question = SiteTestQuestionsController<TDbContext>.Repo.Create(new SiteTestQuestion { Text = q, TestId = testId });
+                        if (answer.IsCorrect)
+                            Repo.RevertMatrixValue(sTitle, q, 0);
+                    }
+                }
 
-                var viewModel = Mapper.Map<SxSiteTestAnswer, SxVMSiteTestAnswer>(data);
-                return PartialView("_StepNormal", viewModel);
+                return testId;
             });
         }
-        private static int getStepNormalLettersCount(SxSiteTestAnswer answer)
+
+        [HttpPost, NotLogRequest, AllowAnonymous]
+        public virtual async Task<JsonResult> Rules(int siteTestId)
         {
-            var test = answer.Question.Test;
-            var questions = test.Questions;
-            if (questions==null || !questions.Any()) return 0;
-
-            var result = 0;
-            foreach (var q in questions)
+            return await Task.Run(() =>
             {
-                result += q.Text.Length;
-            }
+                var data = _repo.GetSiteTestRules(siteTestId);
+                return Json(new
+                {
+                    Title = data.Title,
+                    Rules = data.Rules
+                });
+            });
+        }
 
-            if (test.Type == SxSiteTest.SiteTestType.NormalImage && answer.Subject != null && answer.Subject.Description != null)
-                result += answer.Subject.Description.Length;
+        [HttpPost, AllowAnonymous]
+        public async Task<PartialViewResult> ResultNormal(List<VMSiteTestStepNormal> steps)
+        {
+            return await Task.Run(() =>
+            {
+                var validSteps = steps.Where(x => x.QuestionId != 0).ToArray();
+                SiteTestAnswer answer;
+                VMSiteTestStepNormal userAnswer;
+                var result = new VMSiteTestResult<VMSiteTestResultNormal>();
+                var data = _repo.GetNormalResults(steps.First().SubjectId);
+                var test = data.First().Question.Test;
+                result.SiteTestTitle = test.Title;
+                result.SiteTestUrl = Url.Action("Details", "SiteTests", new { titleUrl = test.TitleUrl });
+                result.Results = new VMSiteTestResultNormal[validSteps.Length];
 
-            return result;
+                for (int i = 0; i < validSteps.Length; i++)
+                {
+                    userAnswer = validSteps[i];
+                    answer = data.First(x => x.SubjectId == userAnswer.SubjectId);
+
+                    result.Results[i] = new VMSiteTestResultNormal
+                    {
+                        SubjectTitle = answer.Subject.Title,
+                        QuestionText = data.First(x => x.QuestionId == userAnswer.QuestionId).Question.Text,
+                        IsCorrect = answer.QuestionId == userAnswer.QuestionId,
+                        Step = userAnswer
+                    };
+
+                    var isCorrect = answer.QuestionId == userAnswer.QuestionId;
+                    result.BallsCount += userAnswer.BallsSubjectShow + (isCorrect ? userAnswer.BallsGoodRead : 0) + userAnswer.BallsBadRead + (isCorrect ? 15 : 0);
+                }
+
+
+                return PartialView("_ResultNormal", result);
+            });
         }
     }
 }

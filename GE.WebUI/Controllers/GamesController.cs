@@ -1,23 +1,19 @@
-﻿using GE.WebCoreExtantions;
-using GE.WebCoreExtantions.Repositories;
-using GE.WebUI.Models;
-using SX.WebCore;
-using SX.WebCore.Abstract;
-using System.Web.Mvc;
-using GE.WebUI.Extantions.Repositories;
+﻿using System.Web.Mvc;
 using System.Linq;
-using SX.WebCore.Repositories;
+using GE.WebUI.Infrastructure.Repositories;
+using SX.WebCore.MvcControllers;
+using GE.WebUI.Infrastructure;
+using GE.WebUI.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class GamesController : BaseController
     {
-        private SxDbRepository<int, Game, DbContext> _repo;
-        private SxDbRepository<string, SxSiteSetting, DbContext> _repoSetting;
-        public GamesController()
+        private static RepoGame _repo = new RepoGame();
+        public static RepoGame Repo
         {
-            _repo = new RepoGame();
-            _repoSetting = new SxRepoSiteSetting<DbContext>();
+            get { return _repo; }
+            set { _repo = value; }
         }
 
         private const string __emptyGameIconPath = "emptyGameIconPath";
@@ -43,10 +39,10 @@ namespace GE.WebUI.Controllers
 
             var viewModel = (_repo as RepoGame).GetGameMenu(imgWidth, iconHeight, gnc, gameName == null ? (string)null : (string)gameName);
 
-            var emptyGameIconPath = _repoSetting.GetByKey(__emptyGameIconPath);
-            var emptyGameGoodImagePath = _repoSetting.GetByKey(__emptyGameGoodImagePath);
-            var emptyGameBadImagePath = _repoSetting.GetByKey(__emptyGameBadImagePath);
-            viewModel.EmptyGame = new VMEmptyGame
+            var emptyGameIconPath = SxSiteSettingsController<DbContext>.Repo.GetByKey(__emptyGameIconPath)?.Value;
+            var emptyGameGoodImagePath = SxSiteSettingsController<DbContext>.Repo.GetByKey(__emptyGameGoodImagePath)?.Value;
+            var emptyGameBadImagePath = SxSiteSettingsController<DbContext>.Repo.GetByKey(__emptyGameBadImagePath)?.Value;
+            viewModel.EmptyGame = new VMGameMenuEmptyGame
             {
                 IconPath = emptyGameIconPath != null ? Url.Action("Picture", "Pictures", new { id = emptyGameIconPath }) : null,
                 GoodImagePath = emptyGameGoodImagePath != null ? Url.Action("Picture", "Pictures", new { id = emptyGameGoodImagePath }) : null,

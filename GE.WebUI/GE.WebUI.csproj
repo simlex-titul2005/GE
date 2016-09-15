@@ -205,6 +205,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\AphorismController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
     <Compile Include="Controllers\AuthorAphorismsController.cs" />
@@ -246,6 +249,7 @@
     <Compile Include="ViewModels\VMAphorismCategory.cs" />
     <Compile Include="ViewModels\VMDetailAphorism.cs" />
     <Compile Include="ViewModels\VMDetailGame.cs" />
+    <Compile Include="ViewModels\VMEditHumor.cs" />
     <Compile Include="ViewModels\VMLCNB.cs" />
     <Compile Include="ViewModels\VMLCNBCategory.cs" />
     <Compile Include="ViewModels\VMLCNBNews.cs" />
@@ -300,6 +304,7 @@
     <Content Include="content\dist\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Views\Articles\List.cshtml">
@@ -384,7 +389,7 @@
     <Content Include="Views\Aphorisms\List.cshtml" />
     <Content Include="Views\Comments\_Edit.cshtml" />
     <Content Include="Views\Comments\_List.cshtml" />
-    <Content Include="Views\Comments\DisplayTemplates\VMComment.cshtml" />
+    <Content Include="Views\Comments\DisplayTemplates\SxVMComment.cshtml" />
     <Content Include="Views\SiteQuestions\Edit.cshtml" />
     <Content Include="Views\Games\Details.cshtml" />
     <Content Include="Views\Games\_DetailGameMaterials.cshtml" />
@@ -420,6 +425,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Areas\Admin\Views\SiteTests\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

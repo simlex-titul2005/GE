@@ -17,21 +17,6 @@ namespace GE.WebUI.Infrastructure.Repositories
     {
         public RepoHumor() : base(ModelCoreType.Humor) { }
 
-//        public override IQueryable<SxHumor> All
-//        {
-//            get
-//            {
-//                using (var conn = new SqlConnection(base.ConnectionString))
-//                {
-//                    var query = @"SELECT * FROM D_HUMOR AS dh
-//JOIN DV_MATERIAL AS dm ON dm.ID = dh.ID AND dm.ModelCoreType = dh.ModelCoreType
-//ORDER BY dm.DateCreate DESC";
-
-//                    return conn.Query<SxHumor>(query).AsQueryable();
-//                }
-//            }
-//        }
-
         public override VMHumor[] Read(SxFilter filter)
         {
             var sb = new StringBuilder();

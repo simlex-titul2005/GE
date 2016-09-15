@@ -18,21 +18,6 @@ namespace GE.WebUI.Infrastructure.Repositories
     {
         public RepoNews() : base(ModelCoreType.News) { }
 
-//        public override IQueryable<News> All
-//        {
-//            get
-//            {
-//                using (var conn = new SqlConnection(base.ConnectionString))
-//                {
-//                    var query = @"SELECT*FROM D_NEWS AS dn
-//JOIN DV_MATERIAL AS dm ON dm.ID = dn.ID AND dm.ModelCoreType = dn.ModelCoreType
-//ORDER BY dm.DateCreate DESC";
-
-//                    return conn.Query<News>(query).AsQueryable();
-//                }
-//            }
-//        }
-
         public override VMNews[] Read(SxFilter filter)
         {
             var sb = new StringBuilder();

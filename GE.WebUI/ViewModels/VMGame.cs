@@ -1,4 +1,5 @@
 ﻿using SX.WebCore.ViewModels;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace GE.WebUI.ViewModels
@@ -23,10 +24,13 @@ namespace GE.WebUI.ViewModels
 
         public string FullDescription { get; set; }
 
+        public Guid? FrontPictureId { get; set; }
         public SxVMPicture FrontPicture { get; set; }
 
+        public Guid? GoodPictureId { get; set; }
         public SxVMPicture GoodPicture { get; set; }
 
+        public Guid? BadPictureId { get; set; }
         public SxVMPicture BadPicture { get; set; }
     }
 }

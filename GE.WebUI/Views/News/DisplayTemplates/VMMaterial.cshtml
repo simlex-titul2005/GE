@@ -1,6 +1,6 @@
 ﻿@model VMMaterial
 @{
-    var url = Model.Url(Url);
+    var url = Model.GetUrl(Url);
     var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.GoodPictureId : Guid.Empty);
 }
 
@@ -26,7 +26,7 @@
                     <i>; игра: <strong>@Model.Game.Title</strong></i>
                 }
             </div>
-            <a href="@Model.Url(Url)" class="btn btn-default btn-transparent muted-blue visible-xs">Подробнее</a>
+            <a href="@Model.GetUrl(Url)" class="btn btn-default btn-transparent muted-blue visible-xs">Подробнее</a>
         </div>
     </div>
 </div>

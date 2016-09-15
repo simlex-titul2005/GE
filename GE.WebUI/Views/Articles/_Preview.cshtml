@@ -1,6 +1,5 @@
 ﻿@model VMMaterial[]
 @{
-    Layout = null;
     var colCount = 2;
     var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
     VMMaterial m;
@@ -16,7 +15,7 @@
             <div class="col-md-6">
                 <div class="pv-article">
                     <h5 class="title">
-                        <a href="@m.Url(Url)" target="_blank">@m.Title</a>
+                        <a href="@m.GetUrl(Url)" target="_blank">@m.Title</a>
                     </h5>
                     <ul class="mat-info">
                         <li>

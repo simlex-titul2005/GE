@@ -1,6 +1,5 @@
 ﻿@model VMLCNBCategory
 @{
-    Layout = null;
     VMLCNBNews news;
     VMLCNBNews cNews;
 }
@@ -19,7 +18,7 @@
                             {
                                 news = Model.News[i];
                                 <li>
-                                    <a @(news.CategoryId != null?string.Format("data-category-id={0}", news.CategoryId):null) href="@news.Url(Url)">
+                                    <a @(news.CategoryId != null?string.Format("data-category-id={0}", news.CategoryId):null) href="@news.GetUrl(Url)">
                                         <span class="date">@news.DateOfPublication.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
                                     </a>
                                 </li>
@@ -51,7 +50,7 @@
                                                 {
                                                     cNews = subCategory.News[y];
                                                     <li>
-                                                        <a href="@cNews.Url(Url)">@cNews.Title</a>
+                                                        <a href="@cNews.GetUrl(Url)">@cNews.Title</a>
                                                     </li>
                                                 }
                                             </ul>

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GE.WebUI.Models
+namespace GE.WebUI.ViewModels
 {
     public sealed class VMEditHumor
     {

@@ -1,15 +1,16 @@
 ﻿using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
+using SX.WebCore;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
-namespace SX.WebCore.MvcControllers
+namespace GE.WebUI.Controllers
 {
     [Authorize(Roles = "admin")]
-    public abstract class SiteTestQuestionsController<TDbContext> : SxBaseController<TDbContext> where TDbContext : SxDbContext
+    public sealed class SiteTestQuestionsController : BaseController
     {
         private static RepoSiteTestQuestion _repo=new RepoSiteTestQuestion();
         public static RepoSiteTestQuestion Repo
@@ -21,7 +22,7 @@ namespace SX.WebCore.MvcControllers
         private static int _pageSize = 10;
 
         [HttpPost]
-        public virtual ActionResult Index(int testId, VMSiteTestQuestion filterModel, SxOrder order, int page = 1)
+        public ActionResult Index(int testId, VMSiteTestQuestion filterModel, SxOrder order, int page = 1)
         {
             var defaultOrder = new SxOrder { FieldName = "Text", Direction = SortDirection.Asc };
             var filter = new SxFilter(page, _pageSize) { Order = order == null || order.Direction == SortDirection.Unknown ? defaultOrder : order, WhereExpressionObject = filterModel, AddintionalInfo = new object[] { testId } };
@@ -36,7 +37,7 @@ namespace SX.WebCore.MvcControllers
         }
 
         [HttpGet]
-        public virtual ActionResult Edit(int testId, int? id)
+        public ActionResult Edit(int testId, int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id) : new SiteTestQuestion() { TestId = testId };
             if (id.HasValue)
@@ -64,7 +65,7 @@ namespace SX.WebCore.MvcControllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(VMSiteTestQuestion model)
+        public ActionResult Edit(VMSiteTestQuestion model)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +85,7 @@ namespace SX.WebCore.MvcControllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual async Task<PartialViewResult> Delete(SiteTestQuestion model)
+        public async Task<PartialViewResult> Delete(SiteTestQuestion model)
         {
             var testId = model.TestId;
             await _repo.DeleteAsync(model);

@@ -10,8 +10,8 @@ namespace GE.WebUI.Controllers
     {
         public NewsController() : base(Enums.ModelCoreType.News)
         {
-            //if(Repo==null)
-            //    Repo = new RepoNews<VMMaterial>();
+            if (Repo == null || !(Repo is RepoNews))
+                Repo = new RepoNews();
         }
 
 #if !DEBUG

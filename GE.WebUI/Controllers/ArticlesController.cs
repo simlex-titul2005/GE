@@ -4,6 +4,7 @@ using SX.WebCore;
 using GE.WebUI.Models;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
+using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
 {
@@ -12,6 +13,8 @@ namespace GE.WebUI.Controllers
         public ArticlesController() : base(Enums.ModelCoreType.Article) {
             if (Repo == null || !(Repo is RepoArticle))
                 Repo = new RepoArticle();
+
+            WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
 
         [ChildActionOnly]

@@ -27,6 +27,9 @@
                         case "articles":
                             url = actionName == "List" || actionName == "index" ? Url.Action(actionName, new { controller = controllerName, gameTitle = item.TitleUrl }) : Url.Action("List", new { controller = controllerName, gameTitle = item.TitleUrl });
                             break;
+                        case "forauthors":
+                            url = Url.Action("Details", "Games", new { titleUrl = item.TitleUrl });
+                            break;
                         case "games":
                             url = Url.Action("Details", "Games", new { titleUrl = item.TitleUrl });
                             break;
@@ -35,6 +38,9 @@
                             break;
                         case "news":
                             url = actionName == "List" || actionName == "index" ? Url.Action(actionName, new { controller = controllerName, gameTitle = item.TitleUrl }) : Url.Action("List", new { controller = controllerName, gameTitle = item.TitleUrl });
+                            break;
+                        case "sitequestions":
+                            url = Url.Action("Details", "Games", new { titleUrl = item.TitleUrl });
                             break;
                         case "sitetests":
                             url = Url.Action("Details", "Games", new { titleUrl = item.TitleUrl });

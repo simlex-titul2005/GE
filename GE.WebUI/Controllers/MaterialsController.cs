@@ -17,9 +17,9 @@ namespace GE.WebUI.Controllers
         where TModel : SxMaterial
         where TViewModel : VMMaterial, new()
     {
+
         protected MaterialsController(ModelCoreType mct) : base(mct)
         {
-            WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
             BeforeSelectListAction = beforeSelectListAction;
         }
 

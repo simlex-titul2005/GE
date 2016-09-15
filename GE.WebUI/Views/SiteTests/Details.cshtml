@@ -1,6 +1,4 @@
-﻿@using SX.WebCore;
-
-@model SxVMSiteTestAnswer
+﻿@model VMSiteTestAnswer
 @{
     ViewBag.Title = Model.Question != null && Model.Question.Test != null ? Model.Question.Test.Title : "Страница прохождения теста";
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
@@ -14,11 +12,11 @@
 @if (Model.Question != null && Model.Question.Test != null)
 {
     <div id="st-page">
-        @if (Equals(testType, SxSiteTest.SiteTestType.Guess))
+        @if (Equals(testType, SiteTest.SiteTestType.Guess))
         {
             @Html.Partial("_StepGuess", Model)
         }
-        else if (Equals(testType, SxSiteTest.SiteTestType.Normal) || Equals(testType, SxSiteTest.SiteTestType.NormalImage))
+        else if (Equals(testType, SiteTest.SiteTestType.Normal) || Equals(testType, SiteTest.SiteTestType.NormalImage))
         {
             <script>
                 var continueStep = true;

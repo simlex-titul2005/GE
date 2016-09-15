@@ -1,8 +1,7 @@
-﻿@model SxVMSiteTestAnswer
+﻿@model VMSiteTestAnswer
 @{
-    Layout = null;
-    var oldSteps = (SxVMSiteTestStepGuess[])ViewBag.OldSteps;
-    SxVMSiteTestStepGuess step;
+    var oldSteps = (VMSiteTestStepGuess[])ViewBag.OldSteps;
+    VMSiteTestStepGuess step;
 }
 
 @if (ViewBag.SubjectsCount == null || ViewBag.SubjectsCount > 1)
@@ -30,8 +29,8 @@
         </div>
 
         @Html.SxIndicatorGroup(
-            new SxVMSiteTestAnswer[] { Model },
-            new SxExtantions.SxIndicatorGroupSettings<SxVMSiteTestAnswer>
+            new VMSiteTestAnswer[] { Model },
+            new SxExtantions.SxIndicatorGroupSettings<VMSiteTestAnswer>
             {
                 FuncGetLabel = x => x.Question.Text,
                 FuncGetId = x => x.Question.Id.ToString()

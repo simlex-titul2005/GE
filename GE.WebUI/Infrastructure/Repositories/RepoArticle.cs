@@ -18,21 +18,6 @@ namespace GE.WebUI.Infrastructure.Repositories
     {
         public RepoArticle() : base(ModelCoreType.Article) { }
 
-//        public override IQueryable<Article> All
-//        {
-//            get
-//            {
-//                using (var conn = new SqlConnection(base.ConnectionString))
-//                {
-//                    var query = @"SELECT * FROM D_ARTICLE AS da
-//JOIN DV_MATERIAL AS dm ON dm.ID = da.ID AND dm.ModelCoreType = da.ModelCoreType
-//ORDER BY dm.DateCreate DESC";
-
-//                    return conn.Query<Article>(query).AsQueryable();
-//                }
-//            }
-//        }
-
         public override VMArticle[] Read(SxFilter filter)
         {
             var sb = new StringBuilder();
@@ -95,14 +80,6 @@ namespace GE.WebUI.Infrastructure.Repositories
             sbCount.Append(joinString);
             sbCount.Append(gws);
 
-            var queryForVideos = @"SELECT TOP(1) * 
-FROM   D_VIDEO_LINK  AS dvl
-       JOIN D_VIDEO  AS dv
-            ON  dv.Id = dvl.VideoId
-WHERE  dvl.MaterialId = @mid
-       AND dvl.ModelCoreType = @mct
-ORDER BY dv.DateCreate DESC";
-
             using (var conn = new SqlConnection(ConnectionString))
             {
                 var data = conn.Query<VMArticle, SxVMSeoTags, SxVMAppUser, VMGame, VMArticle>(sb.ToString(), (da, st, anu, dg) => {
@@ -117,7 +94,7 @@ ORDER BY dv.DateCreate DESC";
                 {
                     foreach (var item in data)
                     {
-                        item.Videos = conn.Query<SxVMVideo>(queryForVideos, new { mid = item.Id, mct = Enums.ModelCoreType.Article }).ToArray();
+                        item.Videos = conn.Query<SxVMVideo>("dbo.get_first_material_video @mid, @mct", new { mid = item.Id, mct = ModelCoreType.Article }).ToArray();
                     }
                 }
                 filter.PagerInfo.TotalItems = conn.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();

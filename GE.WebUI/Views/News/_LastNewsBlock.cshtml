@@ -1,7 +1,5 @@
-﻿@using SX.WebCore;
-@model VMLGNB
+﻿@model VMLGNB
 @{
-    Layout = null;
     VMLGNBNews news;
     VMLGNBNews gNews;
     var length = Model.Games.Length > 4 ? 4 : Model.Games.Length;
@@ -22,7 +20,7 @@
                         {
                             news = Model.News[i];
                             <li>
-                                <a href="@news.Url(Url)" data-game-id="@news.GameId">
+                                <a href="@news.GetUrl(Url)" data-game-id="@news.GameId">
                                     <span class="date">@news.DateOfPublication.ToString("dd.MM.yyy")</span> <span class="title">@news.Title</span>
                                 </a>
                             </li>
@@ -55,7 +53,7 @@
                                                 {
                                                     gNews = game.News[y];
                                                     <li>
-                                                        <a href="@gNews.Url(Url)">@gNews.Title</a>
+                                                        <a href="@gNews.GetUrl(Url)">@gNews.Title</a>
                                                     </li>
                                                 }
                                             </ul>

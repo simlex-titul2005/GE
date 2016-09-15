@@ -1,4 +1,4 @@
-﻿@model SxExtantions.SxPagedCollection<VMMaterial>
+﻿@model SxExtantions.SxPagedCollection<VMNews>
 @{
     var title = ViewBag.Title;
     var h1 = ViewBag.H1;
@@ -19,4 +19,4 @@
 
 @Html.Partial("_Breadcrumbs", model: (SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
-@Html.Partial("~/Views/News/_Collection.cshtml", Model)
+@Html.Partial("_Collection", Model)

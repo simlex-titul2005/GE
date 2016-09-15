@@ -1,7 +1,6 @@
 ﻿@model VMMaterial
 @{
-    Layout = null;
-    var url = Model.Url(Url);
+    var url = Model.GetUrl(Url);
     var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.BadPictureId : Guid.Empty);
 }
 
@@ -46,6 +45,6 @@
 <div class="info">
     <div class="row">
         <div class="col-md-6">@Html.Partial("_MaterialInfo", Model)</div>
-        <div class="col-md-6"><a class="btn btn-default btn-transparent muted-blue" href="@Model.Url(Url)">Подробнее</a></div>
+        <div class="col-md-6"><a class="btn btn-default btn-transparent muted-blue" href="@Model.GetUrl(Url)">Подробнее</a></div>
     </div>
 </div>

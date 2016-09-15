@@ -1,9 +1,8 @@
-﻿@model SxVMSiteTestAnswer
+﻿@model VMSiteTestAnswer
 @{
-    Layout = null;
-    var oldSteps = (SxVMSiteTestStepNormal[])ViewBag.OldSteps;
+    var oldSteps = (VMSiteTestStepNormal[])ViewBag.OldSteps;
     var allSubjectsCount = Convert.ToInt32(ViewBag.AllSubjectsCount ?? -1);
-    SxVMSiteTestStepNormal step;
+    VMSiteTestStepNormal step;
 }
 
 @if (allSubjectsCount > oldSteps.Length - 1 || allSubjectsCount == -1)
@@ -41,7 +40,7 @@
             </ul>
 
             <h2 data-subject-id="@Model.Subject.Id">
-                @if (Model.Question.Test.Type != SX.WebCore.SxSiteTest.SiteTestType.NormalImage)
+                @if (Model.Question.Test.Type != SiteTest.SiteTestType.NormalImage)
                 {
                     <img style="height:80px; margin-right:30px;" alt="@Model.Subject.Title" src="@(Model.Subject.PictureId.HasValue ? Url.Action("Picture", "Pictures", new { id = Model.Subject.PictureId }) : "/content/dist/i/testsubject.png")" /> @Model.Subject.Title
                 }
@@ -51,7 +50,7 @@
                 }
             </h2>
 
-            @if (Model.Question.Test.Type == SX.WebCore.SxSiteTest.SiteTestType.NormalImage)
+            @if (Model.Question.Test.Type == SiteTest.SiteTestType.NormalImage)
             {
                 <div class="test-normal-s__desc">
                     @Html.Raw(Model.Subject.Description)
@@ -61,7 +60,7 @@
 
             @if (Model.Question.Test.Questions.Any())
             {
-                SxVMSiteTestQuestion question;
+                VMSiteTestQuestion question;
                 <ul class="test-normal-q-list">
                     @for (int i = 0; i < Model.Question.Test.Questions.Length; i++)
                     {

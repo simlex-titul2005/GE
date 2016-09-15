@@ -28,7 +28,7 @@
                             </div>
                         }
                         <div class="date">@item.DateOfPublication</div>
-                        <h4 class="title"><a href="@item.Url(Url)">@item.Title</a></h4>
+                        <h4 class="title"><a href="@item.GetUrl(Url)">@item.Title</a></h4>
                         <div class="fw">@item.Foreword</div>
                         @if (item.User != null)
                         {

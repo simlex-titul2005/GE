@@ -3,7 +3,7 @@ using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
 {
-    public abstract partial class BaseController : SxBaseController<DbContext>
+    public abstract class BaseController : SxBaseController<DbContext>
     {
         public BaseController()
         {

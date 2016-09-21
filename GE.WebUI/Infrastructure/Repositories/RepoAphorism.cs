@@ -12,7 +12,7 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
-    public sealed class RepoAphorism : SxRepoMaterial<Aphorism, VMAphorism, DbContext>
+    public sealed class RepoAphorism : SxRepoMaterial<Aphorism, VMAphorism>
     {
         public RepoAphorism() : base(ModelCoreType.Aphorism) { }
 

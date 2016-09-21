@@ -1,17 +1,8 @@
-﻿using SX.WebCore;
-using System.Web.Mvc;
-using static SX.WebCore.Enums;
-using SX.WebCore.Attrubutes;
-using System.Linq;
-using SX.WebCore.Repositories;
-using Microsoft.AspNet.Identity;
-using GE.WebUI.Infrastructure;
-using SX.WebCore.MvcControllers;
-using SX.WebCore.ViewModels;
+﻿using SX.WebCore.MvcControllers;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class CommentsController : SxCommentsController<DbContext>
+    public sealed class CommentsController : SxCommentsController
     {
     //    [HttpGet, NotLogRequest]
     //    public new PartialViewResult List(int mid, ModelCoreType mct, int page=1)

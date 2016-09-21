@@ -14,7 +14,7 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
-    public sealed class RepoArticle : SxRepoMaterial<Article, VMArticle, DbContext>
+    public sealed class RepoArticle : SxRepoMaterial<Article, VMArticle>
     {
         public RepoArticle() : base(ModelCoreType.Article) { }
 

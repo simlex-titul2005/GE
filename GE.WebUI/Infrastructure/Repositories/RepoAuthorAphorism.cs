@@ -2,8 +2,8 @@
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
-using SX.WebCore.Abstract;
 using SX.WebCore.Providers;
+using SX.WebCore.Repositories.Abstract;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -11,7 +11,7 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
-    public sealed class RepoAuthorAphorism : SxDbRepository<int, AuthorAphorism, DbContext, VMAuthorAphorism>
+    public sealed class RepoAuthorAphorism : SxDbRepository<int, AuthorAphorism, VMAuthorAphorism>
     {
         public override VMAuthorAphorism[] Read(SxFilter filter)
         {

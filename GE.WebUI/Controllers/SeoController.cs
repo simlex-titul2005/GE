@@ -1,9 +1,8 @@
-﻿using GE.WebUI.Infrastructure;
-using SX.WebCore.MvcControllers;
+﻿using SX.WebCore.MvcControllers;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class SeoController : SxSeoController<DbContext>
+    public sealed class SeoController : SxSeoController
     {
 //        private static ISxSiteMapProvider _smProvider;
 //        public SeoController()

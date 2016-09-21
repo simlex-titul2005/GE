@@ -1,12 +1,11 @@
-﻿using GE.WebUI.Infrastructure;
-using SX.WebCore;
+﻿using SX.WebCore;
 using SX.WebCore.MvcControllers;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class EmployeesController : SxEmployeesController<DbContext>
+    public sealed class EmployeesController : SxEmployeesController
     {
 
         private static readonly int _pageSize = 10;

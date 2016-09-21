@@ -14,7 +14,7 @@ using GE.WebUI.ViewModels.Abstracts;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
-    public sealed class RepoNews : SxRepoMaterial<News, VMNews, DbContext>
+    public sealed class RepoNews : SxRepoMaterial<News, VMNews>
     {
         public RepoNews() : base(ModelCoreType.News) { }
 

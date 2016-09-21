@@ -5,16 +5,24 @@ using GE.WebUI.Models;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
 using GE.WebUI.Infrastructure;
+using SX.WebCore.Repositories;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class ArticlesController : MaterialsController<Article, VMArticle>
     {
-        public ArticlesController() : base(Enums.ModelCoreType.Article) {
-            if (Repo == null || !(Repo is RepoArticle))
-                Repo = new RepoArticle();
-
+        private static RepoArticle _repo = new RepoArticle();
+        public ArticlesController() : base(Enums.ModelCoreType.Article)
+        {
             WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
+        }
+
+        public override SxRepoMaterial<Article, VMArticle> Repo
+        {
+            get
+            {
+                return _repo;
+            }
         }
 
         [ChildActionOnly]

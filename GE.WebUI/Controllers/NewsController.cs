@@ -3,15 +3,20 @@ using System.Web.Mvc;
 using GE.WebUI.Models;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
+using SX.WebCore.Repositories;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class NewsController : MaterialsController<News, VMNews>
     {
-        public NewsController() : base(Enums.ModelCoreType.News)
+        private static RepoNews _repo = new RepoNews();
+        public NewsController() : base(Enums.ModelCoreType.News) { }
+        public override SxRepoMaterial<News, VMNews> Repo
         {
-            if (Repo == null || !(Repo is RepoNews))
-                Repo = new RepoNews();
+            get
+            {
+                return _repo;
+            }
         }
 
 #if !DEBUG

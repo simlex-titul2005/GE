@@ -13,7 +13,7 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
-    public sealed class RepoHumor: SxRepoMaterial<Humor, VMHumor, DbContext>
+    public sealed class RepoHumor: SxRepoMaterial<Humor, VMHumor>
     {
         public RepoHumor() : base(ModelCoreType.Humor) { }
 

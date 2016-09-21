@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace GE.WebUI.Controllers
 {
-    public abstract class MaterialsController<TModel, TViewModel> : SxMaterialsController<TModel, TViewModel, DbContext>
+    public abstract class MaterialsController<TModel, TViewModel> : SxMaterialsController<TModel, TViewModel>
         where TModel : SxMaterial
         where TViewModel : VMMaterial, new()
     {
@@ -79,11 +79,11 @@ namespace GE.WebUI.Controllers
 
             var html = model.Html;
             SxBBCodeParser.ReplaceValutes(ref html);
-            SxBBCodeParser.ReplaceBanners(ref html, SxMvcApplication<DbContext>.BannerProvider.BannerCollection, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }));
+            SxBBCodeParser.ReplaceBanners(ref html, SxMvcApplication.BannerProvider.BannerCollection, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }));
             SxBBCodeParser.ReplaceVideo(ref html, model.Videos);
             model.Html = html;
 
-            var matSeoInfo = Mapper.Map<SxSeoTags, SxVMSeoTags>(SxSeoTagsController<DbContext>.Repo.GetSeoTags(model.Id, model.ModelCoreType));
+            var matSeoInfo = Mapper.Map<SxSeoTags, SxVMSeoTags>(SxSeoTagsController.Repo.GetSeoTags(model.Id, model.ModelCoreType));
 
             ViewBag.Title = ViewBag.Title ?? (matSeoInfo != null ? matSeoInfo.SeoTitle : null) ?? model.Title;
             ViewBag.Description = ViewBag.Description ?? (matSeoInfo != null ? matSeoInfo.SeoDescription : null) ?? model.Foreword;

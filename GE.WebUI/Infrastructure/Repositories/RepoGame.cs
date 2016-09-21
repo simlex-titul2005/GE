@@ -1,5 +1,4 @@
-﻿using SX.WebCore.Abstract;
-using GE.WebUI.Models;
+﻿using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using System.Data.SqlClient;
 using Dapper;
@@ -7,10 +6,11 @@ using System.Linq;
 using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
 using SX.WebCore;
+using SX.WebCore.Repositories.Abstract;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
-    public sealed class RepoGame : SxDbRepository<int, Game, DbContext, VMGame>
+    public sealed class RepoGame : SxDbRepository<int, Game, VMGame>
     {
         //        public override IQueryable<Game> All
         //        {

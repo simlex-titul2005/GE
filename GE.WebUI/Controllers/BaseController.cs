@@ -1,9 +1,9 @@
-﻿using SX.WebCore.MvcControllers;
-using GE.WebUI.Infrastructure;
+﻿using GE.WebUI.Infrastructure;
+using SX.WebCore.MvcControllers.Abstract;
 
 namespace GE.WebUI.Controllers
 {
-    public abstract class BaseController : SxBaseController<DbContext>
+    public abstract class BaseController : SxBaseController
     {
         public BaseController()
         {

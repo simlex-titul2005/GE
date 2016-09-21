@@ -2,8 +2,8 @@
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
-using SX.WebCore.Abstract;
 using SX.WebCore.Providers;
+using SX.WebCore.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +15,7 @@ using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
-    public sealed class RepoSiteTest : SxDbRepository<int, SiteTest, DbContext, VMSiteTest>
+    public sealed class RepoSiteTest : SxDbRepository<int, SiteTest, VMSiteTest>
     {
         public override VMSiteTest[] Read(SxFilter filter)
         {

@@ -2,7 +2,6 @@
 using System.Linq;
 using GE.WebUI.Infrastructure.Repositories;
 using SX.WebCore.MvcControllers;
-using GE.WebUI.Infrastructure;
 using GE.WebUI.ViewModels;
 
 namespace GE.WebUI.Controllers
@@ -39,9 +38,9 @@ namespace GE.WebUI.Controllers
 
             var viewModel = (_repo as RepoGame).GetGameMenu(imgWidth, iconHeight, gnc, gameName == null ? (string)null : (string)gameName);
 
-            var emptyGameIconPath = SxSiteSettingsController<DbContext>.Repo.GetByKey(__emptyGameIconPath)?.Value;
-            var emptyGameGoodImagePath = SxSiteSettingsController<DbContext>.Repo.GetByKey(__emptyGameGoodImagePath)?.Value;
-            var emptyGameBadImagePath = SxSiteSettingsController<DbContext>.Repo.GetByKey(__emptyGameBadImagePath)?.Value;
+            var emptyGameIconPath = SxSiteSettingsController.Repo.GetByKey(__emptyGameIconPath)?.Value;
+            var emptyGameGoodImagePath = SxSiteSettingsController.Repo.GetByKey(__emptyGameGoodImagePath)?.Value;
+            var emptyGameBadImagePath = SxSiteSettingsController.Repo.GetByKey(__emptyGameBadImagePath)?.Value;
             viewModel.EmptyGame = new VMGameMenuEmptyGame
             {
                 IconPath = emptyGameIconPath != null ? Url.Action("Picture", "Pictures", new { id = emptyGameIconPath }) : null,

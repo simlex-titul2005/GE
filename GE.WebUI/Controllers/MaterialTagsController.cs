@@ -6,7 +6,7 @@ using static SX.WebCore.Enums;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class MaterialTagsController : SxMaterialTagsController<DbContext>
+    public sealed class MaterialTagsController : SxMaterialTagsController
     {
         
 #if !DEBUG

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
-    public sealed class RepoMaterialCategory : SxRepoMaterialCategory<DbContext>
+    public sealed class RepoMaterialCategory : SxRepoMaterialCategory
     {
         public override SxMaterialCategory Create(SxMaterialCategory model)
         {

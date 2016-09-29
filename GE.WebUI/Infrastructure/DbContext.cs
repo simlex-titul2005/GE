@@ -20,6 +20,8 @@ namespace GE.WebUI.Infrastructure
 
         public new DbSet<News> News { get; set; }
 
+        public new DbSet<SiteService> SiteServices { get; set; }
+
         public DbSet<SiteTest> SiteTests { get; set; }
 
         public DbSet<SiteTestQuestion> SiteTestQuestions { get; set; }

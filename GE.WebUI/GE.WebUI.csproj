@@ -219,6 +219,7 @@
     <Compile Include="Controllers\SiteTestQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\SiteTestSubjectsController.cs" />
+    <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Infrastructure\BreadcrumbsManager.cs" />
     <Compile Include="Infrastructure\DbContext.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Models\MaterialCategory.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTestQuestion.cs" />
+    <Compile Include="Models\SiteService.cs" />
     <Compile Include="Models\SiteTest.cs" />
     <Compile Include="Models\SiteTestAnswer.cs" />
     <Compile Include="Models\SiteTestQuestion.cs" />
@@ -281,12 +283,6 @@
     <Content Include="content\dist\css\humor.min.css" />
     <Content Include="content\dist\css\site.min.css" />
     <Content Include="content\dist\css\test-list.min.css" />
-    <Content Include="content\dist\fonts\fontawesome-webfont.eot" />
-    <Content Include="content\dist\fonts\fontawesome-webfont.svg" />
-    <Content Include="content\dist\fonts\fontawesome-webfont.ttf" />
-    <Content Include="content\dist\fonts\fontawesome-webfont.woff" />
-    <Content Include="content\dist\fonts\fontawesome-webfont.woff2" />
-    <Content Include="content\dist\fonts\FontAwesome.otf" />
     <Content Include="content\dist\i\404.jpg" />
     <Content Include="content\dist\i\article-empty.png" />
     <Content Include="content\dist\i\faveicon.png" />
@@ -298,9 +294,6 @@
     <Content Include="content\dist\js\ge-last-category-block.min.js" />
     <Content Include="content\dist\js\ge-last-news-block.min.js" />
     <Content Include="content\dist\js\goodshare.min.js" />
-    <Content Include="content\dist\js\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="content\dist\js\jquery.validate.min.js" />
-    <Content Include="content\dist\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -429,6 +422,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Admin\Views\SiteTests\" />
+    <Folder Include="Views\StaticContent\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

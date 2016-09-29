@@ -119,7 +119,7 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId ";
             using (var conn = new SqlConnection(ConnectionString))
             {
                 var data = conn.Query<VMAphorism, VMMaterialCategory, VMAuthorAphorism, VMAphorism>("dbo.get_aphorism_page_model @title_url, @author_amount, @cat_amount", (a, c, au) => {
-                    a.CategoryId = c.Id;
+                    a.CategoryId = c.Id.ToString();
                     a.Category = c;
                     a.Author = au;
                     return a;

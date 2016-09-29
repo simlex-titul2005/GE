@@ -19,15 +19,8 @@ function clear() {
     ]);
 }
 
-function createFonts() {
-    gulp.src([
-        'bower_components/font-awesome/fonts/**/*'
-    ])
-        .pipe(gulp.dest('content/dist/fonts'));
-}
-
 function createCss() {
-    var lessStream = gulp.src([
+    gulp.src([
         'less/article.less',
         'less/bootstrap-ext.less',
         'less/comments.less',
@@ -67,21 +60,8 @@ function createCss() {
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(concat('sitecss.css'));
-
-    var cssStream = gulp.src([
-        'bower_components/bootstrap/dist/css/bootstrap.min.css',
-        'bower_components/font-awesome/css/font-awesome.min.css',
-    ])
-        .pipe(concat('css.css'));
-
-    merge(cssStream, lessStream)
-        .pipe(order([
-            'css.css',
-            'sitecss.css'
-        ]))
-            .pipe(concat('site.min.css'))
-            .pipe(gulp.dest('content/dist/css'));
+        .pipe(concat('site.min.css'))
+        .pipe(gulp.dest('content/dist/css'));
 
     //by one less
     gulp.src([
@@ -101,28 +81,15 @@ function createCss() {
 }
 
 function createJs() {
-    var js = gulp.src([
-        'bower_components/jquery/dist/jquery.min.js',
-        'bower_components/bootstrap/dist/js/bootstrap.min.js'
-    ])
-        .pipe(concat('js.js'));
-
-    var sitejs = gulp.src([
+    gulp.src([
         'scripts/ge-game-menu.js',
         'scripts/find-engine.js',
         'scripts/user-clicks-engine.js',
         'scripts/site.js'
     ])
         .pipe(uglify())
-        .pipe(concat('sitejs.js'));
-
-    merge(js, sitejs)
-        .pipe(order([
-            'js.js',
-            'sitejs.js'
-        ]))
-            .pipe(concat('site.min.js'))
-            .pipe(gulp.dest('content/dist/js'));
+        .pipe(concat('site.min.js'))
+        .pipe(gulp.dest('content/dist/js'));
 
 
     //by one js
@@ -140,9 +107,6 @@ function createJs() {
         .pipe(gulp.dest('content/dist/js'));
 
     gulp.src([
-        'bower_components/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js',
-        'bower_components/jquery-validation/dist/jquery.validate.min.js',
-        'bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js',
         'bower_components/goodshare/goodshare.min.js'
     ])
         .pipe(gulp.dest('content/dist/js'));
@@ -156,7 +120,6 @@ gulp.task('watch', function (cb) {
     ], function () {
         clear();
         createCss();
-        createFonts();
         createJs();
     });
 });

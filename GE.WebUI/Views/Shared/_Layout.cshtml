@@ -44,6 +44,7 @@
 
     <link rel="shortcut icon" href="@(iconPath ?? "~/content/dist/i/faveicon.png")" type="image/png" />
 
+    <link href="@Url.Action("Css", "StaticContent", new { name="[bootstrap][font-awesome]"})" rel="stylesheet" />
     <link href="~/Content/dist/css/site.min.css" rel="stylesheet" />
     @RenderSection("styles", false)
 
@@ -91,6 +92,7 @@
     @Html.Partial("_Footer")
 
     @Html.Partial("_Analytics")
+    <script src="@Url.Action("Js", "StaticContent", new { name="[jquery][bootstrap]"})"></script>
     <script src="~/Content/dist/js/site.min.js"></script>
     <script type="text/javascript">
         var $WIDTH_SX = 768;

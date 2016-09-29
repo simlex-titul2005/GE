@@ -205,8 +205,30 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AffiliateLinksController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannedUrlsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannerGroupsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannersController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LogsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuItemsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NetsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PicturesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RedirectsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RequestsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SeoController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SeoTagsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShareButtonsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SiteNetsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteTestsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StatisticsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserRolesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ValutesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VideosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SeoWordCounterController.cs" />
     <Compile Include="Controllers\AphorismController.cs" />
     <Compile Include="Controllers\AphorismsController.cs" />
     <Compile Include="Controllers\AuthorAphorismsController.cs" />
@@ -223,6 +245,7 @@
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Infrastructure\BreadcrumbsManager.cs" />
     <Compile Include="Infrastructure\DbContext.cs" />
+    <Compile Include="Infrastructure\Managers\SeoWordCounter.cs" />
     <Compile Include="Infrastructure\Repositories\RepoAphorism.cs" />
     <Compile Include="Infrastructure\Repositories\RepoArticle.cs" />
     <Compile Include="Infrastructure\Repositories\RepoAuthorAphorism.cs" />
@@ -269,6 +292,7 @@
     <Compile Include="ViewModels\VMMaterialCategory.cs" />
     <Compile Include="ViewModels\VMNews.cs" />
     <Compile Include="ViewModels\VMSearchResult.cs" />
+    <Compile Include="ViewModels\VMSeoPhrase.cs" />
     <Compile Include="ViewModels\VMSiteTest.cs" />
     <Compile Include="ViewModels\VMSiteTestAnswer.cs" />
     <Compile Include="ViewModels\VMSiteTestQuestion.cs" />
@@ -297,6 +321,8 @@
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\SeoWordCounter\_Table.cshtml" />
+    <Content Include="Areas\Admin\Views\SeoWordCounter\Index.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Views\Articles\List.cshtml">
@@ -420,8 +446,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Admin\Views\SiteTests\" />
     <Folder Include="Views\StaticContent\" />
   </ItemGroup>
   <PropertyGroup>

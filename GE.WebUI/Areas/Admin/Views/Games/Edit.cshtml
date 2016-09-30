@@ -1,0 +1,129 @@
+﻿@model VMGame
+@{
+    var isNew = Model.Id == 0;
+}
+
+@section styles{
+    <link href="@Url.Action("Css", "StaticContent", new { name="lightbox", area=""})" rel="stylesheet" />
+}
+
+<h2>
+    @(Model.Id == 0 ? "Добавить игру" : "Редактировать игру")
+</h2>
+@if (Model.Id != 0)
+{
+    <div class="form-group">
+        <div class="text-right">
+            <form method="post" action="@Url.Action("Delete")">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.Id)
+                <button type="button" class="btn btn-danger" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить игру</button>
+            </form>
+        </div>
+    </div>
+}
+
+<form method="post" action="@Url.Action("Edit")" autocomplete="off">
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="row">
+        <div class="col-md-9">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Title, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.Title)
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(x => x.TitleAbbr, new { @class = "control-label" })
+                @Html.EditorFor(x => x.TitleAbbr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.TitleAbbr)
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Show, new { @class = "control-label" })
+                @Html.EditorFor(x => x.Show, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.Show)
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+        @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.TitleUrl)
+        <div class="text-info">Ключ учавствует при формировании ссылок сайта. По-умолчанию задается равным наименованию игры.</div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Description, new { @class = "control-label" })
+        @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.Description)
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
+                @if (Model.FrontPictureId.HasValue)
+                {
+                    <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Иконка @Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.FrontPictureId"><i class="fa fa-picture-o"></i></a>
+                }
+                @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.FrontPictureId)
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(x => x.GoodPictureId, new { @class = "control-label" })
+                @if (Model.FrontPictureId.HasValue)
+                {
+                    <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Иконка для новостей @Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.GoodPictureId"><i class="fa fa-picture-o"></i></a>
+                }
+                @Html.EditorFor(x => x.GoodPictureId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.GoodPictureId)
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(x => x.BadPictureId, new { @class = "control-label" })
+                @if (Model.FrontPictureId.HasValue)
+                {
+                    <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Иконка для статей @Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.BadPictureId"><i class="fa fa-picture-o"></i></a>
+                }
+                @Html.EditorFor(x => x.BadPictureId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.BadPictureId)
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.FullDescription, new { @class = "control-label" })
+        @Html.EditorFor(x => x.FullDescription, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.FullDescription)
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
+        <a class="btn btn-default" href="@Url.Action("Index")">Назад</a>
+    </div>
+</form>
+
+@section scripts{
+    <script src="@Url.Action("Js", "StaticContent", new { name="lightbox", area=""})"></script>
+    <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+        if (CKEDITOR.instances['FullDescription']) {
+            CKEDITOR.remove(CKEDITOR.instances['FullDescription']);
+        }
+        CKEDITOR.replace('FullDescription', { height: 400 });
+
+        $(function () {
+            $('#FrontPictureId, #GoodPictureId, #BadPictureId').sx_gvl();
+        });
+    </script>
+}

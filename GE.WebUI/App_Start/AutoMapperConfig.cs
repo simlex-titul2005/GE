@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI
 {
@@ -15,6 +16,13 @@ namespace GE.WebUI
             //author aphorism
             cfg.CreateMap<AuthorAphorism, VMAuthorAphorism>();
             cfg.CreateMap<VMAuthorAphorism, AuthorAphorism>();
+
+            //game
+            cfg.CreateMap<Game, VMGame>();
+            cfg.CreateMap<VMGame, Game>();
+
+            //material category
+            cfg.CreateMap<SxVMMaterialCategory, VMMaterialCategory>();
 
             //site test
             cfg.CreateMap<SiteTest, VMSiteTest>();

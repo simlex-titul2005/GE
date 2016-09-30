@@ -7,25 +7,77 @@ using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
 using SX.WebCore;
 using SX.WebCore.Repositories.Abstract;
+using System.Text;
+using SX.WebCore.Providers;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoGame : SxDbRepository<int, Game, VMGame>
     {
-        //        public override IQueryable<Game> All
-        //        {
-        //            get
-        //            {
-        //                using (var conn = new SqlConnection(base.ConnectionString))
-        //                {
-        //                    var result = conn.Query<Game>(@"SELECT *
-        //FROM   D_GAME                  dg
-        //ORDER BY
-        //       dg.[TITLE]");
-        //                    return result.AsQueryable();
-        //                }
-        //            }
-        //        }
+        public override VMGame[] Read(SxFilter filter)
+        {
+            var sb = new StringBuilder();
+            sb.Append(SxQueryProvider.GetSelectString());
+            sb.Append(" FROM D_GAME AS dg ");
+
+            object param = null;
+            var gws = getGamesWhereString(filter, out param);
+            sb.Append(gws);
+
+            var defaultOrder = new SxOrder { FieldName = "dg.Title", Direction = SortDirection.Asc };
+            sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
+
+            sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
+
+            //count
+            var sbCount = new StringBuilder();
+            sbCount.Append("SELECT COUNT(1) FROM D_GAME AS dg ");
+            sbCount.Append(gws);
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+
+                filter.PagerInfo.TotalItems = connection.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
+                var data= connection.Query<VMGame>(sb.ToString(), param: param);
+                return data.ToArray();
+            }
+        }
+        private static string getGamesWhereString(SxFilter filter, out object param)
+        {
+            param = null;
+            var query = new StringBuilder();
+            query.Append(" WHERE (dg.Title LIKE '%'+@title+'%' OR @title IS NULL) ");
+            query.Append(" AND (dg.TitleAbbr LIKE '%'+@titleAbbr+'%' OR @titleAbbr IS NULL) ");
+            query.Append(" AND (dg.Description LIKE '%'+@desc+'%' OR @desc IS NULL) ");
+
+            string title = filter.WhereExpressionObject?.Title;
+            string titleAbbr = filter.WhereExpressionObject?.TitleAbbr;
+            string desc = filter.WhereExpressionObject?.Description;
+
+            param = new
+            {
+                title = title,
+                titleAbbr = titleAbbr,
+                desc = desc
+            };
+
+            return query.ToString();
+        }
+
+        public sealed override Game GetByKey(params object[] id)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var data = connection.Query<Game, SxPicture, SxPicture, SxPicture, Game>("dbo.get_game @id", (g, p1, p2, p3)=> {
+                    g.FrontPicture = p1;
+                    g.GoodPicture = p2;
+                    g.BadPicture = p3;
+                    return g;
+                }, new { id = id[0] }, splitOn:"Id");
+                return data.SingleOrDefault();
+            }
+        }
 
         public bool ExistGame(string titleUrl)
         {

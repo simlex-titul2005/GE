@@ -245,7 +245,6 @@
     <Compile Include="Controllers\AuthorAphorismsController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\MaterialCategoriesController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
@@ -253,7 +252,6 @@
     <Compile Include="Extantions\Repositories\RepoAphorizm.cs" />
     <Compile Include="Extantions\Repositories\RepoHumor.cs" />
     <Compile Include="Extantions\Repositories\RepoArticle.cs" />
-    <Compile Include="Extantions\Repositories\RepoGame.cs" />
     <Compile Include="Extantions\Repositories\RepoNews.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -291,9 +289,6 @@
     <Content Include="Views\Articles\_GridView.cshtml" />
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
-    <Content Include="Views\Games\_GridView.cshtml" />
-    <Content Include="Views\Games\Edit.cshtml" />
-    <Content Include="Views\Games\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\News\_GridView.cshtml" />
     <Content Include="Views\News\Edit.cshtml" />
@@ -315,7 +310,6 @@
     <Content Include="Views\MaterialCategories\_TreeViewEditable.cshtml" />
     <Content Include="Views\MaterialCategories\Edit.cshtml" />
     <Content Include="Views\MaterialCategories\_TreeView.cshtml" />
-    <Content Include="Views\Games\_FindGridView.cshtml" />
     <Content Include="Views\Users\_UserRoles.cshtml" />
     <Content Include="Views\Users\_UserInfo.cshtml" />
     <Content Include="Views\Valutes\Index.cshtml" />

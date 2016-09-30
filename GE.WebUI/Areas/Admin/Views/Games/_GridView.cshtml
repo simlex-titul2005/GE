@@ -1,0 +1,22 @@
+﻿@model VMGame[]
+
+@Html.SxGridView(Model,
+    new SxExtantions.SxGridViewSettings<VMGame>
+    {
+        Columns = new SxExtantions.SxGridViewColumn<VMGame>[]{
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Title", Caption="Наименование игры"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Description", Caption="Описание"},
+            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Show", Caption="Показывать", Template=(m)=> {
+                return m.Show? "Да":"Нет";
+            }}
+        },
+        DataAjaxUrl=Url.Action("Index", "Games"),
+        RowCssClass = x => { return !x.Show ? "warning" : null; },
+        EnableCreating=true,
+        CreateRowUrl= Url.Action("Edit", "Games"),
+        EnableEditing=true,
+        EditRowUrl = x =>{ return Url.Action("Edit", "Games", new { id=x.Id }); },
+        ShowPagerInfo=true
+    }
+    )

@@ -1,6 +1,5 @@
 ﻿@model VMAphorism[]
 @{
-    Layout = null;
     string categoryId = ViewBag.CategoryId;
 }
 
@@ -20,7 +19,7 @@
                 return a.Show?"Да":"Нет";
             } }
             },
-                    DataAjaxUrl = "/aphorisms?curCat=" + categoryId,
+                    DataAjaxUrl = Url.Action("Index", "Aphorisms", new { curCat= categoryId }),
                     EnableCreating=true,
                     CreateRowUrl= Url.Action("Edit", "Aphorisms", new { cat= categoryId, mct= Enums.ModelCoreType.Aphorism }),
                     EnableEditing=true,

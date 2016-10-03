@@ -71,18 +71,17 @@ namespace GE.WebUI.Areas.Admin.Controllers
         //        return View(model);
         //}
 
-        //[HttpPost, AllowAnonymous]
-        //public PartialViewResult FindGridView(VMGame filterModel, SxOrder order, int page = 1, int pageSize = 10)
-        //{
-        //    var defaultOrder = new SxOrder { FieldName = "Title", Direction = SortDirection.Asc };
-        //    var filter = new SxFilter(page, pageSize) { WhereExpressionObject = filterModel, Order = order == null || order.Direction == SortDirection.Unknown ? defaultOrder : order };
-        //    var totalItems = (_repo as RepoGame).FilterCount(filter);
-        //    filter.PagerInfo.TotalItems = totalItems;
-        //    ViewBag.Filter = filter;
+        [HttpPost, AllowAnonymous]
+        public async Task<ActionResult> FindGridView(VMGame filterModel, SxOrder order, int page = 1, int pageSize = 10)
+        {
+            var defaultOrder = new SxOrder { FieldName = "Title", Direction = SortDirection.Asc };
+            var filter = new SxFilter(page, pageSize) { WhereExpressionObject = filterModel, Order = order == null || order.Direction == SortDirection.Unknown ? defaultOrder : order };
 
-        //    var viewModel = (_repo as RepoGame).QueryForAdmin(filter);
+            var viewModel = await Repo.ReadAsync(filter);
 
-        //    return PartialView("~/views/Games/_FindGridView.cshtml", viewModel);
-        //}
+            ViewBag.Filter = filter;
+
+            return PartialView("_FindGridView", viewModel);
+        }
     }
 }

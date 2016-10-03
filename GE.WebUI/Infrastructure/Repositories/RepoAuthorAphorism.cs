@@ -40,6 +40,24 @@ namespace GE.WebUI.Infrastructure.Repositories
                 return data.ToArray();
             }
         }
+        private static string getAuthorAphorismsWhereString(SxFilter filter, out object param)
+        {
+            param = null;
+            var query = new StringBuilder();
+            query.Append(" WHERE (daa.Name LIKE '%'+@name+'%' OR @name IS NULL) ");
+            query.Append(" AND (daa.Description LIKE '%'+@desc+'%' OR @desc IS NULL) ");
+
+            string name = filter.WhereExpressionObject?.Name;
+            string desc = filter.WhereExpressionObject?.Description;
+
+            param = new
+            {
+                name = name,
+                desc = desc
+            };
+
+            return query.ToString();
+        }
 
         public override void Delete(AuthorAphorism model)
         {
@@ -49,28 +67,9 @@ namespace GE.WebUI.Infrastructure.Repositories
             }
         }
 
-        private static string getAuthorAphorismsWhereString(SxFilter filter, out object param)
-        {
-            param = null;
-            string query = null;
-            query += " WHERE (daa.Name LIKE '%'+@name+'%' OR @name IS NULL) ";
-            query += " AND (daa.Description LIKE '%'+@desc+'%' OR @desc IS NULL) ";
-
-            var name = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Name != null ? (string)filter.WhereExpressionObject.Name : null;
-            var desc = filter.WhereExpressionObject != null && filter.WhereExpressionObject.Description != null ? (string)filter.WhereExpressionObject.Description : null;
-
-            param = new
-            {
-                name = name,
-                desc = desc
-            };
-
-            return query;
-        }
-
         public AuthorAphorism GetByTitleUrl(string titleUrl)
         {
-            var query = @"SELECT*FROM D_AUTHOR_APHORISM AS daa
+            var query = @"SELECT TOP(1) * FROM D_AUTHOR_APHORISM AS daa
 LEFT JOIN D_PICTURE AS dp ON dp.Id = daa.PictureId
 WHERE daa.TitleUrl=@titleUrl";
 

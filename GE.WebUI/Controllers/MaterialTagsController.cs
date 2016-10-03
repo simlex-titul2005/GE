@@ -1,5 +1,4 @@
-﻿using GE.WebUI.Infrastructure;
-using SX.WebCore;
+﻿using SX.WebCore;
 using SX.WebCore.MvcControllers;
 using System.Web.Mvc;
 using static SX.WebCore.Enums;

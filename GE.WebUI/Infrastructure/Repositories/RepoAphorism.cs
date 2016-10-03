@@ -142,6 +142,16 @@ LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id = da.AuthorId ";
 
         }
 
+        public VMAphorism GetExistsModel(string titleUrl)
+        {
+            var query = "SELECT TOP(1) * FROM D_APHORISM AS da WHERE da.TitleUrl=@titleUrl";
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var data = connection.Query<VMAphorism>(query, new { titleUrl = titleUrl });
+                return data.SingleOrDefault();
+            }
+        }
+
         public VMAphorismCategory[] GetAphorismCategories(string cur = null)
         {
             dynamic[] data;

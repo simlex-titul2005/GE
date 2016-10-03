@@ -1,9 +1,11 @@
 ﻿using SX.WebCore;
 using SX.WebCore.ViewModels;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace GE.WebUI.ViewModels.Abstracts
 {
+    [MetadataType(typeof(VMMaterialMetadata))]
     public class VMMaterial : SxVMMaterial
     {
         public int? GameId { get; set; }
@@ -21,5 +23,10 @@ namespace GE.WebUI.ViewModels.Abstracts
                     return "#";
             }
         }
+    }
+
+    public class VMMaterialMetadata : SxVMMaterialMetadata
+    {
+        
     }
 }

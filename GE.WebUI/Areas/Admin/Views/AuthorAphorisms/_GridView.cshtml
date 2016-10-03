@@ -1,0 +1,21 @@
+﻿@model VMAuthorAphorism[]
+
+@Html.SxGridView(Model,
+        new SxExtantions.SxGridViewSettings<VMAuthorAphorism>
+        {
+            Columns = new SxExtantions.SxGridViewColumn<VMAuthorAphorism>[]{
+                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="PictureId", Caption="Фото", Template=(a)=> {
+                    return a.PictureId.HasValue? string.Format("<figure class=\"img-circle\" style=\"background-image:url('{0}')\" ></figure>", Url.Action("Picture", "Pictures", new { id=a.PictureId})):null;
+                }, ColumnCssClass=x=> { return "col-aa col-cm"; } },
+                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="Name", Caption="Имя"},
+                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="TitleUrl", Caption="Строковый ключ"},
+                new SxExtantions.SxGridViewColumn<VMAuthorAphorism>{FieldName="Foreword", Caption="Краткое описание"}
+            },
+            DataAjaxUrl = Url.Action("Index", "AuthorAphorisms"),
+            EnableCreating = true,
+            CreateRowUrl = Url.Action("Edit", "AuthorAphorisms"),
+            EnableEditing = true,
+            EditRowUrl = x => { return Url.Action("Edit", "AuthorAphorisms", new { id=x.Id }); },
+            ShowPagerInfo = true
+        }
+    )

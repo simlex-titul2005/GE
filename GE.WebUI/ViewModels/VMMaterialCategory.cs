@@ -1,15 +1,10 @@
-﻿using SX.WebCore.Abstract;
-using SX.WebCore.ViewModels;
-using System;
+﻿using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.ViewModels
 {
-    public sealed class VMMaterialCategory : SxVMMaterialCategory, IHierarchy<VMMaterialCategory>
+    public sealed class VMMaterialCategory : SxVMMaterialCategory
     {
+        public int? GameId { get; set; }
         public VMGame Game { get; set; }
-
-        public new VMMaterialCategory[] Childs { get; set; }
-
-        public new Func<VMMaterialCategory, string> FuncGetTitle { get; set; } = x => { return x.Title; };
     }
 }

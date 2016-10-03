@@ -10,7 +10,7 @@
             Columns = new SxExtantions.SxGridViewColumn<VMGame>[]{
             new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Title", Caption="Наименование" }
         },
-            DataAjaxUrl="/games/findgridview",
+            DataAjaxUrl = Url.Action("FindGridView", "Games"),
             RowId = x => { return x.Id.ToString(); },
             RowText = x => { return x.Title; }
         }

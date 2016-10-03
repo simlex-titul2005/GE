@@ -1,20 +1,20 @@
-﻿@model SxVMSiteTest[]
+﻿@model VMSiteTest[]
 @{
     Layout = null;
 }
 
 
 @Html.SxGridView(Model,
-        new SxExtantions.SxGridViewSettings<SxVMSiteTest>
+        new SxExtantions.SxGridViewSettings<VMSiteTest>
         {
-            Columns = new SxExtantions.SxGridViewColumn<SxVMSiteTest>[]{
-                new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="DateCreate", Caption="Дата создания"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Title", Caption="Заголовок"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Description", Caption="Описание"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Type", Caption="Тип теста"},new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Id", Caption="Правила", Template=x=> {
+            Columns = new SxExtantions.SxGridViewColumn<VMSiteTest>[]{
+                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="DateCreate", Caption="Дата создания"},
+                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Description", Caption="Описание"},
+                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Type", Caption="Тип теста"},new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Id", Caption="Правила", Template=x=> {
                     return string.IsNullOrEmpty(x.Rules)?"<em class=\"text-warning\" data-toggle=\"tooltip\" title=\"Необходимо задать правила теста, чтобы не вводить пользователей в заблуждение\">не заданы правила теста</em>":"<div class=\"text-center\"><a class=\"rules-btn\" href=\""+Url.Action("Rules","SiteTests", new { siteTestId=x.Id})+"\" data-toggle=\"tooltip\" title=\"Показать правила\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></a></div>";
                 } },
-                new SxExtantions.SxGridViewColumn<SxVMSiteTest>{FieldName="Show", Caption="Показывать", Template=x=> { return x.Show?"Да":"Нет"; } },
+                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Show", Caption="Показывать", Template=x=> { return x.Show?"Да":"Нет"; } },
             },
             EnableCreating = true,
             CreateRowUrl = Url.Action("Edit", "Sitetests"),

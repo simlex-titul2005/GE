@@ -2,11 +2,8 @@
 using System.Linq;
 using Dapper;
 using SX.WebCore;
-using SX.WebCore.Providers;
-using static SX.WebCore.HtmlHelpers.SxExtantions;
 using static SX.WebCore.Enums;
 using SX.WebCore.Repositories;
-using System.Text;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore.ViewModels;
@@ -20,105 +17,112 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public override VMNews[] Read(SxFilter filter)
         {
-            var sb = new StringBuilder();
-            sb.Append(SxQueryProvider.GetSelectString(new string[] {
-                "da.Id",
-                "dm.TitleUrl",
-                "dm.FrontPictureId",
-                "dm.ShowFrontPictureOnDetailPage",
-                "dm.Title",
-                "dm.ModelCoreType",
-                "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount",
-                @"(SELECT
-       SUBSTRING(
-           CASE 
-                WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
-                ELSE dbo.func_strip_html(dm.HTML)
-           END,
-           0,
-           200
-       ))                 AS Foreword",
-                "dm.DateCreate",
-                "dm.DateOfPublication",
-                "dm.ViewsCount",
-
-                "dst.Id",
-                "dst.H1",
-
-                "anu.Id",
-                "anu.NikName",
-
-                "dg.Id",
-                "dg.Title",
-                "dg.TitleUrl",
-                "dg.BadPictureId"
-            }));
-            sb.Append(" FROM D_NEWS AS da ");
-            var joinString = @" JOIN DV_MATERIAL  AS dm
-            ON  dm.Id = da.ID
-            AND dm.ModelCoreType = da.ModelCoreType
-       LEFT JOIN D_SEO_TAGS AS dst
-            ON  dst.MaterialId = da.ID
-            AND dst.ModelCoreType = da.ModelCoreType
-       LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
-       LEFT JOIN D_GAME  AS dg
-            ON  dg.Id = da.GameId ";
-            sb.Append(joinString);
-
-            object param = null;
-            var gws = getNewsWhereString(filter, out param);
-            sb.Append(gws);
-
-            var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
-            sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
-
-            sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
-
-            //count
-            var sbCount = new StringBuilder();
-            sbCount.Append(@"SELECT COUNT(1) FROM D_NEWS AS da ");
-            sbCount.Append(joinString);
-            sbCount.Append(gws);
-
-            using (var conn = new SqlConnection(ConnectionString))
-            {
-                var data = conn.Query<VMNews, SxVMSeoTags, SxVMAppUser, VMGame, VMNews>(sb.ToString(), (da, st, anu, dg) =>
-                {
-                    da.SeoTags = st;
-                    da.Game = dg;
-                    da.User = anu;
-                    return da;
-                }, param: param, splitOn: "Id");
-
-                filter.PagerInfo.TotalItems = conn.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
-                return data.ToArray();
-            }
+            filter.OnlyShow = false;
+            filter.WithComments = false;
+            return base.Read(filter);
         }
-        private static string getNewsWhereString(SxFilter filter, out object param)
-        {
-            param = null;
-            var query = new StringBuilder();
-            query.Append(" WHERE (dg.TitleUrl LIKE '%'+@gtu+'%' OR @gtu IS NULL) AND dm.DateOfPublication <= GETDATE() AND dm.Show=1 ");
-            if (filter.Tag!=null && !string.IsNullOrEmpty(filter.Tag.Id))
-            {
-                query.Append(" AND (dm.Id IN (SELECT dmt.MaterialId FROM D_MATERIAL_TAG AS dmt WHERE dmt.MaterialId = dm.Id AND dmt.ModelCoreType = dm.ModelCoreType AND dmt.Id=N''+@tag+'')) ");
 
-                param = new
-                {
-                    gtu = (string)(filter.AddintionalInfo == null || filter.AddintionalInfo[0] == null ? null : filter.AddintionalInfo[0]),
-                    tag = filter.Tag
-                };
-            }
-            else
-            {
-                param = new
-                {
-                    gtu = (string)(filter.AddintionalInfo == null || filter.AddintionalInfo[0] == null ? null : filter.AddintionalInfo[0])
-                };
-            }
+        // public override VMNews[] Read(SxFilter filter)
+        // {
+        //     var sb = new StringBuilder();
+        //     sb.Append(SxQueryProvider.GetSelectString(new string[] {
+        //         "da.Id",
+        //         "dm.TitleUrl",
+        //         "dm.FrontPictureId",
+        //         "dm.ShowFrontPictureOnDetailPage",
+        //         "dm.Title",
+        //         "dm.ModelCoreType",
+        //         "dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount",
+        //         @"(SELECT
+        //SUBSTRING(
+        //    CASE 
+        //         WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
+        //         ELSE dbo.func_strip_html(dm.HTML)
+        //    END,
+        //    0,
+        //    200
+        //))                 AS Foreword",
+        //         "dm.DateCreate",
+        //         "dm.DateOfPublication",
+        //         "dm.ViewsCount",
 
-            return query.ToString();
-        }
+        //         "dst.Id",
+        //         "dst.H1",
+
+        //         "anu.Id",
+        //         "anu.NikName",
+
+        //         "dg.Id",
+        //         "dg.Title",
+        //         "dg.TitleUrl",
+        //         "dg.BadPictureId"
+        //     }));
+        //     sb.Append(" FROM D_NEWS AS da ");
+        //     var joinString = @" JOIN DV_MATERIAL  AS dm
+        //     ON  dm.Id = da.ID
+        //     AND dm.ModelCoreType = da.ModelCoreType
+        //LEFT JOIN D_SEO_TAGS AS dst
+        //     ON  dst.MaterialId = da.ID
+        //     AND dst.ModelCoreType = da.ModelCoreType
+        //LEFT JOIN AspNetUsers AS anu ON anu.Id=dm.UserId
+        //LEFT JOIN D_GAME  AS dg
+        //     ON  dg.Id = da.GameId ";
+        //     sb.Append(joinString);
+
+        //     object param = null;
+        //     var gws = getNewsWhereString(filter, out param);
+        //     sb.Append(gws);
+
+        //     var defaultOrder = new SxOrder { FieldName = "dm.DateCreate", Direction = SortDirection.Desc };
+        //     sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
+
+        //     sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
+
+        //     //count
+        //     var sbCount = new StringBuilder();
+        //     sbCount.Append(@"SELECT COUNT(1) FROM D_NEWS AS da ");
+        //     sbCount.Append(joinString);
+        //     sbCount.Append(gws);
+
+        //     using (var conn = new SqlConnection(ConnectionString))
+        //     {
+        //         var data = conn.Query<VMNews, SxVMSeoTags, SxVMAppUser, VMGame, VMNews>(sb.ToString(), (da, st, anu, dg) =>
+        //         {
+        //             da.SeoTags = st;
+        //             da.Game = dg;
+        //             da.User = anu;
+        //             return da;
+        //         }, param: param, splitOn: "Id");
+
+        //         filter.PagerInfo.TotalItems = conn.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
+        //         return data.ToArray();
+        //     }
+        // }
+        // private static string getNewsWhereString(SxFilter filter, out object param)
+        // {
+        //     param = null;
+        //     var query = new StringBuilder();
+        //     query.Append(" WHERE (dg.TitleUrl LIKE '%'+@gtu+'%' OR @gtu IS NULL) AND dm.DateOfPublication <= GETDATE() AND dm.Show=1 ");
+        //     if (filter.Tag!=null && !string.IsNullOrEmpty(filter.Tag.Id))
+        //     {
+        //         query.Append(" AND (dm.Id IN (SELECT dmt.MaterialId FROM D_MATERIAL_TAG AS dmt WHERE dmt.MaterialId = dm.Id AND dmt.ModelCoreType = dm.ModelCoreType AND dmt.Id=N''+@tag+'')) ");
+
+        //         param = new
+        //         {
+        //             gtu = (string)(filter.AddintionalInfo == null || filter.AddintionalInfo[0] == null ? null : filter.AddintionalInfo[0]),
+        //             tag = filter.Tag
+        //         };
+        //     }
+        //     else
+        //     {
+        //         param = new
+        //         {
+        //             gtu = (string)(filter.AddintionalInfo == null || filter.AddintionalInfo[0] == null ? null : filter.AddintionalInfo[0])
+        //         };
+        //     }
+
+        //     return query.ToString();
+        // }
 
         public override void Delete(News model)
         {
@@ -289,7 +293,7 @@ WHERE  dn.GameId = @gameId";
 FROM   D_MATERIAL_CATEGORY  AS dmc
        JOIN D_NEWS          AS dn
             ON  dn.ModelCoreType = dmc.ModelCoreType
-WHERE  dmc.ParentCategoryId IS NULL
+WHERE  dmc.ParentId IS NULL
 GROUP BY
        dmc.Title, dmc.Id";
 
@@ -297,7 +301,7 @@ GROUP BY
        dmc.Title,
        dmc.FrontPictureId
 FROM   D_MATERIAL_CATEGORY AS dmc
-WHERE  dmc.ParentCategoryId = @cat_id
+WHERE  dmc.ParentId = @cat_id
 ORDER BY dmc.Title";
 
             var queryForSubCategoryNews = @"SELECT TOP(@clnc)
@@ -314,29 +318,29 @@ WHERE  dm.CategoryId = @cat_id
 ORDER BY
        dm.DateOfPublication DESC";
 
-            var queryForLastNews = @"WITH tree(ModelCoreType, Id, ParentCategoryId, Title, [Level]) AS
+            var queryForLastNews = @"WITH tree(ModelCoreType, Id, ParentId, Title, [Level]) AS
      (
          SELECT dmc1.ModelCoreType,
                 dmc1.Id,
-                dmc1.ParentCategoryId,
+                dmc1.ParentId,
                 dmc1.Title,
                 CASE 
                      WHEN dmc1.Id = @cat_id
          OR @cat_id IS NULL THEN 1 ELSE 2 END 
             FROM D_MATERIAL_CATEGORY AS dmc1
             WHERE (
-                (dmc1.Id = @cat_id OR dmc1.ParentCategoryId = @cat_id)
+                (dmc1.Id = @cat_id OR dmc1.ParentId = @cat_id)
                 OR @cat_id IS NULL
             )
             UNION ALL
             SELECT dmc2.ModelCoreType,
                    dmc2.Id,
-                   dmc2.ParentCategoryId,
+                   dmc2.ParentId,
                    dmc2.Title,
                    t.[Level] + 1
             FROM   D_MATERIAL_CATEGORY  AS dmc2
                    JOIN tree            AS t
-                        ON  t.Id = dmc2.ParentCategoryId
+                        ON  t.Id = dmc2.ParentId
      )
 
 SELECT TOP(@lnc) dm.DateOfPublication,

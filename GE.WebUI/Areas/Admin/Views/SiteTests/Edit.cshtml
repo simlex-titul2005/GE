@@ -1,11 +1,11 @@
-﻿@model SxVMEditSiteTest
+﻿@model VMSiteTest
 @{
     var isNew = Model.Id == 0;
     ViewBag.Title = Model.Id == 0 ? "Добавить тест сайта" : "Редактировать тест \"" + Model.Title + "\"";
 }
 
 @section styles{
-    <link href="~/content/dist/css/lightbox.min.css" rel="stylesheet" />
+    <link href="@Url.Action("Css", "StaticContent", new { area="", name="lightbox"})" rel="stylesheet" />
     <link href="~/content/dist/css/test-matrix.min.css" rel="stylesheet" />
 }
 
@@ -16,7 +16,7 @@
     <div class="form-group">
         @if (!isNew)
         {
-            <form method="post" action="/sitetests/delete">
+            <form method="post" action="@Url.Action("Delete")">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(x => x.Id)
                 <button type="submit" class="btn btn-danger" onclick="if(!confirm('Удалить запись?')){return false;}">Удалить тест</button>
@@ -91,7 +91,7 @@
                 @Html.HiddenFor(x => x.TitleUrl)
             }
 
-            @if (Model.Type == SxSiteTest.SiteTestType.NormalImage)
+            @if (Model.Type == SiteTest.SiteTestType.NormalImage)
             {
                 <div class="form-group">
                     @Html.LabelFor(x => x.ShowSubjectDesc, new { @class = "control-label" })
@@ -131,7 +131,7 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">@(Model.Id == 0 ? "Добавить" : "Сохранить")</button>
-                @Html.RouteLink("Назад", new { action = "Index" }, new { @class = "btn btn-default" })
+                <a href="@Url.Action("Index")" class="btn btn-default">Назад</a>
             </div>
         </form>
     </div>

@@ -8,7 +8,7 @@
 
     @Html.SxGridLookup(new SxExtantions.SxGridLookupSettings
 {
-    DataAjaxUrl = "/games/findgridview",
+    DataAjaxUrl = Url.Action("FindGridView", "Games"),
     DefaulText = caption == null ? Html.ValueForModel().ToString() : caption
 },
     new VMGame [0]

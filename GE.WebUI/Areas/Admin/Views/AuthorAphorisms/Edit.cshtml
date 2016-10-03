@@ -1,11 +1,11 @@
-﻿@model VMEditAuthorAphorism
+﻿@model VMAuthorAphorism
 @{
     var isNew = Model.Id == 0;
     ViewBag.Title = isNew ? "Добавить автора афоризмов" : "Редактировать автора афоризмов \"" + Model.Name + "\"";
 }
 
 @section styles{
-    <link href="~/content/dist/css/lightbox.min.css" rel="stylesheet" />
+    <link href="@Url.Action("Css", "StaticContent", new { area="", name="lightbox"})" rel="stylesheet" />
 }
 
 <h2>@ViewBag.Title</h2>
@@ -21,7 +21,7 @@
         </div>
     </div>
 }
-<form method="post" action="@Url.Action("Edi", "AuthorAphorisms")" autocomplete="off">
+<form method="post" action="@Url.Action("Edit", "AuthorAphorisms")" autocomplete="off">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
 
@@ -78,9 +78,7 @@
 </form>
 
 @section scripts{
-    <script src="~/content/dist/js/jquery.validate.min.js"></script>
-    <script src="~/content/dist/js/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/content/dist/js/lightbox.min.js"></script>
+<script src="@Url.Action("Js", "StaticContent", new { area="", name="[jquery.validate][jquery.validate.unobtrusive][lightbox]"})"></script>
     <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
     <script>
         if (CKEDITOR.instances['Description']) {

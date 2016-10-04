@@ -6,18 +6,18 @@
 
 
 @Html.SxGridView(Model,
-        new SxExtantions.SxGridViewSettings<SxVMSiteTestQuestion>
+        new SxExtantions.SxGridViewSettings<VMSiteTestQuestion>
         {
-            Columns = new SxExtantions.SxGridViewColumn<SxVMSiteTestQuestion>[]{
-                new SxExtantions.SxGridViewColumn<SxVMSiteTestQuestion>{FieldName="Text", Caption="Текст"}
+            Columns = new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>[]{
+                new SxExtantions.SxGridViewColumn<VMSiteTestQuestion>{FieldName="Text", Caption="Текст"}
             },
-            DataAjaxUrl = "/sitetestquestions?testId="+ testId,
+            DataAjaxUrl = Url.Action("Index", "SiteTestQuestions", new { testId=testId}),
             EnableCreating=true,
-            CreateRowUrl= "/sitetestquestions/edit?testId=" + testId,
+            CreateRowUrl= Url.Action("Edit", "SiteTestQuestions", new { testId = testId }),
             EnableDeleting =true,
-            DeleteRowUrl = x => { return "/sitetestquestions/delete/" + x.Id+"?testId="+testId; },
+            DeleteRowUrl = x => { return Url.Action("Delete", "SiteTestQuestions", new { id=x.Id, testId = testId }); },
             EnableEditing=true,
-            EditRowUrl = x => { return "/sitetestquestions/edit/"+x.Id+"?testId=" + testId; },
+            EditRowUrl = x => { return Url.Action("Edit", "SiteTestQuestions", new { id = x.Id, testId = testId }); },
             ShowPagerInfo=true
         }
     )

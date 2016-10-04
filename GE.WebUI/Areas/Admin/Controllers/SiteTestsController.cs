@@ -73,7 +73,19 @@ namespace GE.WebUI.Areas.Admin.Controllers
         public ViewResult Edit(int? id)
         {
             var model = id.HasValue ? _repo.GetByKey(id) : new SiteTest();
-            return View(Mapper.Map<SiteTest, VMSiteTest>(model));
+            var viewModel = new VMSiteTest() {
+                DateCreate=model.DateCreate,
+                Description=model.Description,
+                Id=model.Id,
+                Rules=model.Rules,
+                Show=model.Show,
+                ShowSubjectDesc=model.ShowSubjectDesc,
+                Title=model.Title,
+                TitleUrl=model.TitleUrl,
+                Type=model.Type,
+                ViewsCount=model.ViewsCount
+            };
+            return View(viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -81,28 +93,9 @@ namespace GE.WebUI.Areas.Admin.Controllers
         {
             var isArchitect = User.IsInRole("architect");
             var isNew = model.Id == 0;
-            if (isNew)
-            {
+
+            if (isNew || (!isNew && string.IsNullOrEmpty(model.TitleUrl)))
                 model.TitleUrl = Url.SeoFriendlyUrl(model.Title);
-                if (_repo.All.SingleOrDefault(x => x.TitleUrl == model.TitleUrl) != null)
-                    ModelState.AddModelError("Title", "Модель с таким текстовым ключем уже существует");
-                else
-                    ModelState["TitleUrl"].Errors.Clear();
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(model.TitleUrl))
-                {
-                    var url = Url.SeoFriendlyUrl(model.Title);
-                    if (_repo.All.SingleOrDefault(x => x.TitleUrl == url && x.Id != model.Id) != null)
-                        ModelState.AddModelError(isArchitect ? "TitleUrl" : "Title", "Модель с таким текстовым ключем уже существует");
-                    else
-                    {
-                        model.TitleUrl = url;
-                        ModelState["TitleUrl"].Errors.Clear();
-                    }
-                }
-            }
 
             var redactModel = Mapper.Map<VMSiteTest, SiteTest>(model);
             if (ModelState.IsValid)
@@ -112,9 +105,6 @@ namespace GE.WebUI.Areas.Admin.Controllers
                     newModel = _repo.Create(redactModel);
                 else
                 {
-                    var old = _repo.All.SingleOrDefault(x => x.TitleUrl == model.TitleUrl && x.Id != model.Id);
-                    if (old != null)
-                        ModelState.AddModelError(isArchitect ? "TitleUrl" : "Title", "Модель с таким текстовым ключем уже существует");
                     if (isArchitect)
                         newModel = _repo.Update(redactModel, true, "Title", "Description", "Rules", "Type", "TitleUrl", "Show", "ShowSubjectDesc");
                     else

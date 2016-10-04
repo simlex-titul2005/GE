@@ -147,13 +147,14 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<SiteTest>("dbo.add_site_test @title, @desc, @rules, @titleUrl, @type", new
+                var data = conn.Query<SiteTest>("dbo.add_site_test @title, @desc, @rules, @titleUrl, @type, @show", new
                 {
                     title = model.Title,
                     desc = model.Description,
                     rules = model.Rules,
                     titleUrl = UrlHelperExtensions.SeoFriendlyUrl(model.Title),
-                    type = model.Type
+                    type = model.Type,
+                    show=model.Show
                 }).SingleOrDefault();
 
                 return data;

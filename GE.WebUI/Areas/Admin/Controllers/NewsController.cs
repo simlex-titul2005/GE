@@ -1,20 +1,20 @@
 ﻿using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
-using SX.WebCore.MvcControllers;
 using SX.WebCore.Repositories;
 using GE.WebUI.Infrastructure.Repositories;
 using System.Web.Mvc;
 
 namespace GE.WebUI.Areas.Admin.Controllers
 {
-    public sealed class NewsController : SxMaterialsController<News, VMNews>
+    public sealed class NewsController : MaterialsController<News, VMNews>
     {
+        private static RepoNews _repo = new RepoNews();
         public NewsController() : base(SX.WebCore.Enums.ModelCoreType.News) { }
         public override SxRepoMaterial<News, VMNews> Repo
         {
             get
             {
-                return new RepoNews();
+                return _repo;
             }
         }
 

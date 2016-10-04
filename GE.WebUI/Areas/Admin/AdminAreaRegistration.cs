@@ -21,6 +21,12 @@ namespace GE.WebUI.Areas.Admin
             );
 
             context.MapRoute(
+                name: null,
+                url: "SiteTests/TestMatrix/{testId}/{page}",
+                defaults: new { controller = "SiteTests", action = "TestMatrix" }
+            );
+
+            context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }

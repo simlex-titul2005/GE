@@ -26,11 +26,15 @@ namespace GE.WebUI
             cfg.CreateMap<Game, VMGame>();
             cfg.CreateMap<VMGame, Game>();
 
+            //humor
+            cfg.CreateMap<Humor, VMHumor>();
+            cfg.CreateMap<VMHumor, Humor>();
+
             //material category
             cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
             cfg.CreateMap<SxVMMaterialCategory, VMMaterialCategory>();
-            cfg.CreateMap<VMMaterialCategory, SxMaterialCategory>()
-                .ForMember(d => d.ParentId, d => d.MapFrom(s => s.ParentId == null ? null : s.ParentId.ToString()));
+            cfg.CreateMap<VMMaterialCategory, SxMaterialCategory>();
+                //.ForMember(d => d.ParentId, d => d.MapFrom(s => s.ParentId == null ? null : s.ParentId.ToString()));
 
             //news
             cfg.CreateMap<News, VMNews>();

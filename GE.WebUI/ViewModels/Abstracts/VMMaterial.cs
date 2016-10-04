@@ -11,6 +11,8 @@ namespace GE.WebUI.ViewModels.Abstracts
         public int? GameId { get; set; }
         public VMGame Game { get; set; }
 
+        public string GameVersion { get; set; }
+
         public sealed override string GetUrl(UrlHelper urlHelper)
         {
             switch (ModelCoreType)
@@ -27,6 +29,17 @@ namespace GE.WebUI.ViewModels.Abstracts
 
     public class VMMaterialMetadata : SxVMMaterialMetadata
     {
-        
+        [Display(Name = "Игра"), UIHint("_GameLookupGrid")]
+        public int? GameId { get; set; }
+
+        [MaxLength(100, ErrorMessageResourceType = typeof(SX.WebCore.Resources.Messages), ErrorMessageResourceName = "MaxLengthField")]
+        [Display(Name = "Версия игры")]
+        public string GameVersion { get; set; }
+
+        [Display(Name = "Показывать")]
+        public new bool Show { get; set; }
+
+        [Display(Name = "Показывать в избранных")]
+        public new bool IsTop { get; set; }
     }
 }

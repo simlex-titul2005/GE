@@ -1,20 +1,21 @@
 ﻿using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
-using SX.WebCore.MvcControllers;
 using SX.WebCore.Repositories;
 using GE.WebUI.Infrastructure.Repositories;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace GE.WebUI.Areas.Admin.Controllers
 {
-    public sealed class ArticlesController : SxMaterialsController<Article, VMArticle>
+    public sealed class ArticlesController : MaterialsController<Article, VMArticle>
     {
+        private static RepoArticle _repo = new RepoArticle();
         public ArticlesController() : base(SX.WebCore.Enums.ModelCoreType.Article) { }
         public override SxRepoMaterial<Article, VMArticle> Repo
         {
             get
             {
-                return new RepoArticle();
+                return _repo;
             }
         }
 

@@ -59,14 +59,14 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             @Html.LabelFor(x => x.Type, new { @class = "control-label" })
-                            @Html.EnumDropDownListFor(x => x.Type, new { @class = "form-control"})
+                            @Html.EnumDropDownListFor(x => x.Type, new { @class = "form-control" })
                             @Html.ValidationMessageFor(x => x.Type)
                         </div>
                     </div>
                 }
                 else
                 {
-                    @Html.HiddenFor(x=>x.Type)
+                    @Html.HiddenFor(x => x.Type)
                 }
                 <div class="col-md-2">
                     <div class="form-group">
@@ -190,11 +190,10 @@
 
 
 @section scripts{
-    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
-    <script src="~/content/dist/js/jquery.validate.min.js"></script>
-    <script src="~/content/dist/js/jquery.validate.unobtrusive.min.js"></script>
-    <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
-    <script src="~/content/dist/js/lightbox.min.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { area="", name="jquery.validate"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { area="", name="jquery.validate.unobtrusive"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { area="", name="lightbox"})"></script>
+    <script src="~/bower_components/ckeditor/ckeditor.js"></script>
 
     <script>
         $(function () {
@@ -204,42 +203,15 @@
             }
             CKEDITOR.replace('Description', { height: 300 });
             CKEDITOR.replace('Rules', { height: 300 });
-            
-            $('input[name="test-file-input"]').focus(function(){
-                $input=$(this);
-                $file=$('input[type="file"]');
-                $file.trigger('click');
-            });
 
-            $('input[type="file"]').change(function(){
-                var file=this.files[0];
-                var name=file.name;
-                $('input[name="test-file-input"]').val(name);
-                $(this).closest('form').submit();
-            });
+            $('#grid-test-questions, #grid-test-subjects').sx_gv();
 
-            $('a[href="#questions"]').on('shown.bs.tab', function (e) {
-                $a=$(this);
-                $.ajax({
-                    method: 'post',
-                    url: '/sitetestquestions?testId='+@Model.Id,
-                    beforeSend:function(){
-                        $('<i class="fa fa-spinner fa-spin"></i>').prependTo($a);
-                    },
-                    success:function(result){
-                        $('#grid-test-questions').html(result);
-                    },
-                    complete:function(){
-                        $a.find('i').remove();
-                    }
-                });
-            })
-
+            //subjects
             $('a[href="#subjects"]').on('shown.bs.tab', function (e) {
                 $a=$(this);
                 $.ajax({
                     method: 'post',
-                    url: '/sitetestsubjects?testId='+@Model.Id,
+                    url: '@Url.Action("Index", "SiteTestSubjects", new { testId=Model.Id})',
                     beforeSend:function(){
                         $('<i class="fa fa-spinner fa-spin"></i>').prependTo($a);
                     },
@@ -252,28 +224,7 @@
                 });
             })
 
-            $('a[href="#matrix"]').on('shown.bs.tab', function (e) {
-                $a=$(this);
-                $.ajax({
-                    method: 'get',
-                    url: '/sitetests/testmatrix?testId='+@Model.Id,
-                    beforeSend:function(){
-                        $('<i class="fa fa-spinner fa-spin"></i>').prependTo($a);
-                    },
-                    success:function(result){
-                        $('#matrix').html(result);
-                    },
-                    complete:function(){
-                        $a.find('i').remove();
-                        $('#matrix td:not(.matrix__first-column):contains(1)').addClass('success');
-                        $('[data-toggle="tooltip"]').tooltip({container:'body'});
-                    }
-                });
-            })
-
-            $('#grid-test-questions, #grid-test-subjects').sx_gv();
-
-            $('#grid-test-subjects').on('click', '.sx-gv__create-btn', function(){
+            $('#grid-test-subjects').on('click', '.sx-gv__create-btn', function () {
                 $modal=$('#test-modal');
                 $header=$modal.find('.modal-header h4');
                 $body=$modal.find('.modal-body');
@@ -293,27 +244,7 @@
                         CKEDITOR.replace('subject.Description', { height: 300 });
                         $body.find('#PictureId').sx_gvl();
                         $modal.modal('show');
-                    }
-                });
-
-                return false;
-            });
-
-            $('#grid-test-questions').on('click', '.sx-gv__create-btn', function(){
-                $modal=$('#test-modal');
-                $header=$modal.find('.modal-header h4');
-                $body=$modal.find('.modal-body');
-                $header.html('Добавить вопрос теста "@Model.Title"');
-                var href=$(this).attr('href');
-                $.ajax({
-                    method:'get',
-                    url:href,
-                    success:function(result)
-                    {
-                        $body.html(result);
-                    },
-                    complete:function(){
-                        $modal.modal('show');
+                        $modal.tooltip();
                     }
                 });
 
@@ -346,6 +277,45 @@
                 return false;
             });
 
+            //questions
+            $('a[href="#questions"]').on('shown.bs.tab', function (e) {
+                $a=$(this);
+                $.ajax({
+                    method: 'post',
+                    url: '@Url.Action("Index", "SiteTestQuestions", new { testId = Model.Id })',
+                    beforeSend:function(){
+                        $('<i class="fa fa-spinner fa-spin"></i>').prependTo($a);
+                    },
+                    success:function(result){
+                        $('#grid-test-questions').html(result);
+                    },
+                    complete:function(){
+                        $a.find('i').remove();
+                    }
+                });
+            })
+
+            $('#grid-test-questions').on('click', '.sx-gv__create-btn', function(){
+                $modal=$('#test-modal');
+                $header=$modal.find('.modal-header h4');
+                $body=$modal.find('.modal-body');
+                $header.html('Добавить вопрос теста "@Model.Title"');
+                var href=$(this).attr('href');
+                $.ajax({
+                    method:'get',
+                    url:href,
+                    success:function(result)
+                    {
+                        $body.html(result);
+                    },
+                    complete:function(){
+                        $modal.modal('show');
+                    }
+                });
+
+                return false;
+            });
+            
             $('#grid-test-questions').on('click', '.sx-gv__edit-btn', function(){
                 $modal=$('#test-modal');
                 $header=$modal.find('.modal-header h4');
@@ -366,6 +336,40 @@
 
                 return false;
             });
+
+            //load from file
+            $('input[name="test-file-input"]').focus(function(){
+                $input=$(this);
+                $file=$('input[type="file"]');
+                $file.trigger('click');
+            });
+
+            $('input[type="file"]').change(function(){
+                var file=this.files[0];
+                var name=file.name;
+                $('input[name="test-file-input"]').val(name);
+                $(this).closest('form').submit();
+            });
+
+            //matrix
+            $('a[href="#matrix"]').on('shown.bs.tab', function (e) {
+                $a=$(this);
+                $.ajax({
+                    method: 'get',
+                    url: '@Url.Action("TestMatrix", "SiteTests", new { testId = Model.Id })',
+                    beforeSend:function(){
+                        $('<i class="fa fa-spinner fa-spin"></i>').prependTo($a);
+                    },
+                    success:function(result){
+                        $('#matrix').html(result);
+                    },
+                    complete:function(){
+                        $a.find('i').remove();
+                        $('#matrix td:not(.matrix__first-column):contains(1)').addClass('success');
+                        $('[data-toggle="tooltip"]').tooltip({container:'body'});
+                    }
+                });
+            })
 
             $('#matrix').on('click', 'td:not(.matrix__first-column)', function(){
                 $td=$(this);

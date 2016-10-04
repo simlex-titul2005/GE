@@ -12,6 +12,7 @@ namespace GE.WebUI.Controllers
     public sealed class ArticlesController : MaterialsController<Article, VMArticle>
     {
         private static RepoArticle _repo = new RepoArticle();
+
         public ArticlesController() : base(Enums.ModelCoreType.Article)
         {
             WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
@@ -33,7 +34,7 @@ namespace GE.WebUI.Controllers
             return PartialView("_ForGamersBlock", viewModel);
         }
 
-        [OutputCache(Duration =900, VaryByParam = "gt;c;lc")]
+        [OutputCache(Duration = 900, VaryByParam = "gt;c;lc")]
         [HttpGet]
         public ActionResult Preview(string gt, string c, int lc)
         {
@@ -47,7 +48,7 @@ namespace GE.WebUI.Controllers
 
         [ChildActionOnly]
         [OutputCache(Duration = 900, VaryByParam = "amount")]
-        public PartialViewResult Last(int amount=3)
+        public PartialViewResult Last(int amount = 3)
         {
             var viewModel = (Repo as RepoArticle).Last(amount);
             return PartialView("_Last", viewModel);

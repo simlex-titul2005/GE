@@ -6,12 +6,12 @@
 
 
 @Html.SxGridView(Model,
-        new SxExtantions.SxGridViewSettings<SxVMSiteTestSubject>
+        new SxExtantions.SxGridViewSettings<VMSiteTestSubject>
         {
-            Columns = new SxExtantions.SxGridViewColumn<SxVMSiteTestSubject>[]{
-                new SxExtantions.SxGridViewColumn<SxVMSiteTestSubject>{FieldName="Title", Caption="Заголовок"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTestSubject>{FieldName="Description", Caption="Описание"},
-                new SxExtantions.SxGridViewColumn<SxVMSiteTestSubject>{FieldName="PictureId", Caption="Картинка", Template=x=> {
+            Columns = new SxExtantions.SxGridViewColumn<VMSiteTestSubject>[]{
+                new SxExtantions.SxGridViewColumn<VMSiteTestSubject>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGridViewColumn<VMSiteTestSubject>{FieldName="Description", Caption="Описание"},
+                new SxExtantions.SxGridViewColumn<VMSiteTestSubject>{FieldName="PictureId", Caption="Картинка", Template=x=> {
                     return x.Picture==null? null: string.Format("<a data-lightbox=\"roadtrip\" data-title=\"{0}\" data-toggle=\"tooltip\" title=\"Помотреть картинку\" href=\"/pictures/picture/{1}\"><i class=\"fa fa-picture-o\"></i></a>", x.Title, x.PictureId);
                 }}
             },

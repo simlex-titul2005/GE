@@ -216,8 +216,10 @@
     <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
     <Compile Include="Areas\Admin\Controllers\GamesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HumorController.cs" />
     <Compile Include="Areas\Admin\Controllers\LogsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MaterialCategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MaterialsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MaterialTagsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuItemsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NetsController.cs" />
@@ -232,7 +234,9 @@
     <Compile Include="Areas\Admin\Controllers\ShareButtonsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteNetsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteSettingsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SiteTestQuestionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteTestsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SiteTestSubjectsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRolesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
@@ -249,9 +253,7 @@
     <Compile Include="Controllers\HumorController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SiteQuestionsController.cs" />
-    <Compile Include="Controllers\SiteTestQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
-    <Compile Include="Controllers\SiteTestSubjectsController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Infrastructure\BreadcrumbsManager.cs" />
@@ -262,6 +264,7 @@
     <Compile Include="Infrastructure\Repositories\RepoAuthorAphorism.cs" />
     <Compile Include="Infrastructure\Repositories\RepoGame.cs" />
     <Compile Include="Infrastructure\Repositories\RepoHumor.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoMaterial.cs" />
     <Compile Include="Infrastructure\Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Infrastructure\Repositories\RepoNews.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTest.cs" />
@@ -318,6 +321,7 @@
     <Content Include="content\dist\css\humor.min.css" />
     <Content Include="content\dist\css\site.min.css" />
     <Content Include="content\dist\css\test-list.min.css" />
+    <Content Include="content\dist\css\test-matrix.min.css" />
     <Content Include="content\dist\i\404.jpg" />
     <Content Include="content\dist\i\article-empty.png" />
     <Content Include="content\dist\i\faveicon.png" />
@@ -356,8 +360,10 @@
     <Content Include="Areas\Admin\Views\Aphorisms\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Aphorisms\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Articles\EditorTemplates\VMArticle.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_GameLookupGrid.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\_GameLookupGrid.cshtml" />
     <Content Include="Areas\Admin\Views\News\EditorTemplates\VMNews.cshtml" />
+    <Content Include="Areas\Admin\Views\Humor\EditorTemplates\VMHumor.cshtml" />
+    <Content Include="Areas\Admin\Views\MaterialCategories\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />

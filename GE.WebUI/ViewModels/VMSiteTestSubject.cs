@@ -21,7 +21,7 @@ namespace GE.WebUI.ViewModels
         public int TestId { get; set; }
 
         public SxVMPicture Picture { get; set; }
-        [Display(Name = "Картинка"), UIHint("PicturesLookupGrid")]
+        [Display(Name = "Картинка"), UIHint("_PicturesLookupGrid")]
         public Guid? PictureId { get; set; }
     }
 }

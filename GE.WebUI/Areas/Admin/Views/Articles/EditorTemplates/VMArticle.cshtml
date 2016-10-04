@@ -6,6 +6,7 @@
 <form method="post" action="@Url.Action("Edit")">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x=>x.UserId)
 
     <div class="form-group">
         <div class="row">

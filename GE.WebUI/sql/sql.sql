@@ -32,6 +32,145 @@ END
 GO
 
 /*******************************************
+ * Детализированная страница по игре
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_game_by_url', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_game_by_url;
+GO
+CREATE PROCEDURE dbo.get_game_by_url
+	@titleUrl VARCHAR(50)
+AS
+BEGIN
+	SELECT *
+	FROM   D_GAME AS dg
+	WHERE  dg.TitleUrl = @titleUrl
+	       AND dg.Show = 1
+END
+GO
+
+/*******************************************
+ * Последние материалы по игре
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_game_materials', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_game_materials;
+GO
+CREATE PROCEDURE dbo.get_game_materials
+	@titleUrl VARCHAR(50),
+	@amount INT
+AS
+BEGIN
+	SELECT x.Id,
+	       x.ModelCoreType,
+	       x.Title,
+	       x.TitleUrl,
+	       x.DateCreate,
+	       x.DateOfPublication,
+	       x.ViewsCount,
+	       CASE 
+	            WHEN x.ModelCoreType = 6 THEN x.Html
+	            ELSE x.Foreword
+	       END  AS Foreword,
+	       CASE 
+	            WHEN x.ModelCoreType = 6 THEN x.PictureId
+	            ELSE x.FrontPictureId
+	       END  AS FrontPictureId,
+	       x.CategoryId,
+	       (
+	           SELECT TOP(1) dvl.VideoId
+	           FROM   D_VIDEO_LINK AS dvl
+	           WHERE  dvl.MaterialId = x.Id
+	                  AND dvl.ModelCoreType = x.ModelCoreType
+	       )    AS TopVideoId,
+	       dbo.get_comments_count(x.Id, x.ModelCoreType) AS CommentsCount
+	FROM   (
+	           SELECT TOP(@amount) dm.*,
+	                  NULL              AS PictureId,
+	                  dn.GameId
+	           FROM   D_NEWS            AS dn
+	                  JOIN DV_MATERIAL  AS dm
+	                       ON  dm.Id = dn.Id
+	                       AND dm.ModelCoreType = dn.ModelCoreType
+	                  JOIN D_GAME       AS dg
+	                       ON  dg.Id = dn.GameId
+	                       AND dg.TitleUrl = @titleUrl
+	                       AND dg.Show = 1
+	           WHERE  dm.Show = 1
+	                  AND dm.DateOfPublication <= GETDATE()
+	           ORDER BY
+	                  dm.DateOfPublication DESC
+	           UNION ALL
+	           SELECT TOP(@amount) dm.*,
+	                  NULL              AS PictureId,
+	                  da.GameId
+	           FROM   D_ARTICLE         AS da
+	                  JOIN DV_MATERIAL  AS dm
+	                       ON  dm.Id = da.Id
+	                       AND dm.ModelCoreType = da.ModelCoreType
+	                  JOIN D_GAME       AS dg
+	                       ON  dg.Id = da.GameId
+	                       AND dg.TitleUrl = @titleUrl
+	                       AND dg.Show = 1
+	           WHERE  dm.Show = 1
+	                  AND dm.DateOfPublication <= GETDATE()
+	           ORDER BY
+	                  dm.DateOfPublication DESC
+	           UNION ALL
+	           SELECT TOP(@amount) dm.*,
+	                  daa.PictureId,
+	                  dmc.GameId
+	           FROM   D_APHORISM        AS da2
+	                  LEFT JOIN D_AUTHOR_APHORISM AS daa
+	                       ON  daa.Id = da2.AuthorId
+	                  JOIN DV_MATERIAL  AS dm
+	                       ON  dm.Id = da2.Id
+	                       AND dm.ModelCoreType = da2.ModelCoreType
+	                  JOIN D_MATERIAL_CATEGORY AS dmc
+	                       ON  dmc.Id = dm.CategoryId
+	                  JOIN D_GAME       AS dg
+	                       ON  dg.Id = dmc.GameId
+	                       AND dg.Show = 1
+	                       AND dg.TitleUrl = @titleUrl
+	           WHERE  dm.Show = 1
+	                  AND dm.DateOfPublication <= GETDATE()
+	           ORDER BY
+	                  dm.DateOfPublication DESC
+	       )    AS x
+END
+GO
+
+/*******************************************
+ * Получить видео для игры
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_game_videos', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_game_videos;
+GO
+CREATE PROCEDURE dbo.get_game_videos(@titleUrl VARCHAR(50))
+AS
+BEGIN
+	SELECT dv.*
+	FROM   D_VIDEO                AS dv
+	       JOIN D_VIDEO_LINK      AS dvl
+	            ON  dvl.VideoId = dv.Id
+	       LEFT JOIN DV_MATERIAL  AS dm
+	            ON  dm.Id = dvl.MaterialId
+	            AND dm.ModelCoreType = dvl.ModelCoreType
+	            AND dm.Show = 1
+	            AND dm.DateOfPublication <= GETDATE()
+	       LEFT JOIN D_NEWS       AS dn
+	            ON  dn.Id = dm.Id
+	            AND dn.ModelCoreType = dm.ModelCoreType
+	       LEFT JOIN D_ARTICLE    AS da
+	            ON  da.Id = dm.Id
+	            AND da.ModelCoreType = dm.ModelCoreType
+	       LEFT JOIN D_GAME       AS dg
+	            ON  (dg.Id = dn.GameId OR dg.Id = da.GameId)
+	            AND dg.Show = 1
+	WHERE  (dn.GameId IS NOT NULL OR da.GameId IS NOT NULL)
+	       AND dg.TitleUrl = @titleUrl
+END
+GO
+
+/*******************************************
  * Добавить категорию материалов (переопределено)
  *******************************************/
 IF OBJECT_ID(N'dbo.add_material_category', N'P') IS NOT NULL
@@ -752,5 +891,59 @@ BEGIN
 	            ON  dst.Id = dstq.TestId
 	            AND dst.Id = @testId
 	WHERE  dsta.IsCorrect = 1
+END
+GO
+
+/*******************************************
+ * Превью материалов
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_preview_materials', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_preview_materials;
+GO
+CREATE PROCEDURE dbo.get_preview_materials(
+    @lettersCount     INT,
+    @gameTitle        VARCHAR(100),
+    @categoryId       VARCHAR(100)
+)
+AS
+BEGIN
+	SELECT TOP(8) da.Id,
+	       dm.Title,
+	       dm.TitleUrl,
+	       dm.DateCreate,
+	       dm.ModelCoreType,
+	       dm.DateOfPublication,
+	       dm.ViewsCount,
+	       dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount,
+	       CASE 
+	            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
+	            ELSE SUBSTRING(dbo.func_strip_html(dm.Html), 0, @lettersCount) +
+	                 '...'
+	       END                    AS Foreword,
+	       anu.NikName            AS UserName,
+	       dg.Title               AS GameTitle
+	FROM   D_ARTICLE              AS da
+	       JOIN DV_MATERIAL       AS dm
+	            ON  dm.Id = da.Id
+	            AND dm.ModelCoreType = da.ModelCoreType
+	            AND (dm.Show = 1 AND dm.DateOfPublication <= GETDATE())
+	       LEFT JOIN AspNetUsers  AS anu
+	            ON  anu.Id = dm.UserId
+	       LEFT JOIN D_GAME       AS dg
+	            ON  dg.Id = da.GameId
+	WHERE  (@gameTitle IS NULL)
+	       OR  (
+	               @gameTitle IS NOT NULL
+	               AND @categoryId IS NULL
+	               AND dg.TitleUrl = @gameTitle
+	           )
+	       OR  (
+	               @gameTitle IS NOT NULL
+	               AND @categoryId IS NOT NULL
+	               AND dg.TitleUrl = @gameTitle
+	               AND dm.CategoryId = @categoryId
+	           )
+	ORDER BY
+	       dm.DateCreate DESC
 END
 GO

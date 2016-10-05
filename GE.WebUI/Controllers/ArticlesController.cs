@@ -6,6 +6,8 @@ using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
 using GE.WebUI.Infrastructure;
 using SX.WebCore.Repositories;
+using GE.WebUI.ViewModels.Abstracts;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
@@ -47,10 +49,31 @@ namespace GE.WebUI.Controllers
         }
 
         [ChildActionOnly]
-        [OutputCache(Duration = 900, VaryByParam = "amount")]
-        public PartialViewResult Last(int amount = 3)
+#if !DEBUG
+        [OutputCache(Duration = 900)]
+#endif
+        public override PartialViewResult Last(Enums.ModelCoreType? mct = default(Enums.ModelCoreType?), int amount = 5, int? mid = default(int?))
         {
-            var viewModel = (Repo as RepoArticle).Last(amount);
+            var data = (Repo as RepoArticle).Last(mct, amount, mid, new Enums.ModelCoreType[] {
+                Enums.ModelCoreType.Article,
+                Enums.ModelCoreType.News
+            });
+            var viewModel = new VMMaterial[data.Length];
+            SxVMMaterial item = null;
+            for (int i = 0; i < data.Length; i++)
+            {
+                item = data[i];
+                switch(item.ModelCoreType)
+                {
+                    case Enums.ModelCoreType.Article:
+                        viewModel[i] = new VMArticle { Title = item.Title, TitleUrl = item.TitleUrl, DateCreate = item.DateCreate, ModelCoreType=item.ModelCoreType };
+                        break;
+                    case Enums.ModelCoreType.News:
+                        viewModel[i] = new VMNews { Title = item.Title, TitleUrl = item.TitleUrl, DateCreate = item.DateCreate, ModelCoreType = item.ModelCoreType };
+                        break;
+                }
+            }
+
             return PartialView("_Last", viewModel);
         }
     }

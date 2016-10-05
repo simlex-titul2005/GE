@@ -9,19 +9,6 @@ namespace GE.WebUI
 
         public static void PreRouteAction(RouteCollection routes)
         {
-
-        }
-
-        public static void PostRouteAction(RouteCollection routes)
-        {
-            routes.MapRoute(
-                        name: null,
-                        url: "{controller}/AddLike/{mid}/{ld}",
-                        defaults: new { controller = "Articles", action = "AddLike", area = "" },
-                        namespaces: _defNamespace,
-                        constraints: new { httpMethod = new HttpMethodConstraint("post") }
-                    );
-
             #region aphorisms
 
             routes.MapRoute(
@@ -70,10 +57,29 @@ namespace GE.WebUI
                 namespaces: _defNamespace,
                 constraints: new { action = "^Details" }
             );
-
-
-
             #endregion
+
+            #region games
+            routes.MapRoute(
+                name: null,
+                url: "Games/{titleUrl}",
+                defaults: new { controller = "Games", action = "Details", area = "" },
+                namespaces: _defNamespace
+            );
+            #endregion
+        }
+
+        public static void PostRouteAction(RouteCollection routes)
+        {
+            routes.MapRoute(
+                        name: null,
+                        url: "{controller}/AddLike/{mid}/{ld}",
+                        defaults: new { controller = "Articles", action = "AddLike", area = "" },
+                        namespaces: _defNamespace,
+                        constraints: new { httpMethod = new HttpMethodConstraint("post") }
+                    );
+
+            
 
             #region articles
             routes.IgnoreRoute("articles/details/{id}");
@@ -138,15 +144,6 @@ namespace GE.WebUI
                 name: null,
                 url: "employees",
                 defaults: new { controller = "employees", action = "List", area = "" },
-                namespaces: _defNamespace
-            );
-            #endregion
-
-            #region games
-            routes.MapRoute(
-                name: null,
-                url: "Games/{titleUrl}",
-                defaults: new { controller = "Games", action = "Details", area = "" },
                 namespaces: _defNamespace
             );
             #endregion
@@ -244,23 +241,10 @@ namespace GE.WebUI
 
             routes.MapRoute(
                 name: null,
-                url: "home/{gameTitle}",
+                url: "Home/{gameTitle}",
                 defaults: new { controller = "home", action = "index", gameTitle = UrlParameter.Optional, area = "" },
                 namespaces: _defNamespace
             );
         }
-
-        //public class AphorismConstraint : IRouteConstraint
-        //{
-        //    private string titleUrl;
-        //    public AphorismConstraint(string titleUrl)
-        //    {
-        //        this.titleUrl = titleUrl;
-        //    }
-        //    public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
-        //    {
-        //        return !titleUrl.Contains("page");
-        //    }
-        //}
     }
 }

@@ -215,6 +215,7 @@
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
     <Compile Include="Areas\Admin\Controllers\GamesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GoogleBannersController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HumorController.cs" />
     <Compile Include="Areas\Admin\Controllers\LogsController.cs" />
@@ -284,6 +285,7 @@
     <Compile Include="Models\SiteTestQuestion.cs" />
     <Compile Include="Models\SiteTestStep.cs" />
     <Compile Include="Models\SiteTestSubject.cs" />
+    <Compile Include="Infrastructure\ModelBinders\VMMaterialCategoryModelBinder.cs" />
     <Compile Include="ViewModels\VMAphorismCategory.cs" />
     <Compile Include="ViewModels\VMDetailAphorism.cs" />
     <Compile Include="ViewModels\VMDetailGame.cs" />
@@ -357,13 +359,14 @@
     <Content Include="Areas\Admin\Views\AuthorAphorisms\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AuthorAphorisms\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Aphorisms\_GridView.cshtml" />
-    <Content Include="Areas\Admin\Views\Aphorisms\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Aphorisms\EditorTemplates\VMAphorism.cshtml" />
     <Content Include="Areas\Admin\Views\Aphorisms\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Articles\EditorTemplates\VMArticle.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\_GameLookupGrid.cshtml" />
     <Content Include="Areas\Admin\Views\News\EditorTemplates\VMNews.cshtml" />
     <Content Include="Areas\Admin\Views\Humor\EditorTemplates\VMHumor.cshtml" />
     <Content Include="Areas\Admin\Views\MaterialCategories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Aphorisms\EditorTemplates\_AuthorAphorismLookupGrid.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />
@@ -496,6 +499,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Views\GoogleBanners\" />
+    <Folder Include="Views\GoogleBanners\" />
     <Folder Include="Views\StaticContent\" />
   </ItemGroup>
   <PropertyGroup>

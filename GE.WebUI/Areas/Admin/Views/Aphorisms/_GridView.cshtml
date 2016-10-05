@@ -5,27 +5,26 @@
 
 @if (categoryId != null)
 {
-    @Html.SxGridView(Model,
-                new SxExtantions.SxGridViewSettings<VMAphorism>
-                {
-                    Columns = new SxExtantions.SxGridViewColumn<VMAphorism>[]{
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"},
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Name", Caption="Автор",Template=(a)=> {
-                return a.Author!=null? a.Author.Name:null;
-            } },
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Foreword", Caption="Вступление"},
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
-            new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Show", Caption="Показывать", Template=(a)=> {
-                return a.Show?"Да":"Нет";
-            } }
+    @Html.SxGridView(Model, new SxExtantions.SxGridViewSettings<VMAphorism>
+{
+    Columns = new SxExtantions.SxGridViewColumn<VMAphorism>[]{
+                new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Title", Caption="Заголовок"},
+                new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="AuthorName", Caption="Автор",Template=(a)=> {
+                    return a.Author!=null? a.Author.Name:null;
+                } },
+                new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Foreword", Caption="Вступление"},
+                new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Html", Caption="Содержание"},
+                new SxExtantions.SxGridViewColumn<VMAphorism>{FieldName="Show", Caption="Показывать", Template=(a)=> {
+                    return a.Show?"Да":"Нет";
+                } }
             },
-                    DataAjaxUrl = Url.Action("Index", "Aphorisms", new { curCat= categoryId }),
-                    EnableCreating=true,
-                    CreateRowUrl= Url.Action("Edit", "Aphorisms", new { cat= categoryId, mct= Enums.ModelCoreType.Aphorism }),
-                    EnableEditing=true,
-                    EditRowUrl = x => { return Url.Action("Edit", "Aphorisms", new { cat = categoryId, mct = Enums.ModelCoreType.Aphorism, id=x.Id }); },
-                    RowCssClass = x => { return !x.Show ? "warning" : null; },
-                    ShowPagerInfo=true
-                }
-        )
+    DataAjaxUrl = Url.Action("Index", "Aphorisms", new { curCat = categoryId }),
+    EnableCreating = true,
+    CreateRowUrl = Url.Action("Edit", "Aphorisms", new { cat = categoryId, mct = Enums.ModelCoreType.Aphorism }),
+    EnableEditing = true,
+    EditRowUrl = x => { return Url.Action("Edit", "Aphorisms", new { cat = categoryId, mct = Enums.ModelCoreType.Aphorism, id = x.Id }); },
+    RowCssClass = x => { return !x.Show ? "warning" : null; },
+    ShowPagerInfo = true
+}
+    )
 }

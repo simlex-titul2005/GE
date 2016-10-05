@@ -1,25 +1,25 @@
-﻿@model VMEditAphorism
+﻿@model VMAphorism
 @{
     var isNew = Model.Id == 0;
-    ViewBag.Title = isNew ? "Добавить афоризм" : "Редактировать афоризм \"" + Model.Title + "\"";
-    ViewBag.AuthorAphorism = isNew || !Model.AuthorId.HasValue ? null : Model.Author.Name;
 }
 
-<h2>@ViewBag.Title</h2>
-@if (!isNew)
-{
-    <div class="text-right">
-        <form method="post" action="@Url.Action("delete", new { controller="Aphorisms", cat=Model.CategoryId, id=Model.Id, mct=Enums.ModelCoreType.Aphorism })">
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-danger" onclick="if (!confirm('Удалить запись?')) { return false;}">Удалить афоризм</button>
-        </form>
-    </div>
-}
-<br />
-<form method="post" action="@Url.Action("edit")">
+<form method="post" action="@Url.Action("Edit")">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
-    @Html.HiddenFor(x => x.CategoryId)
+    <input type="hidden" name="CategoryId" value="@ViewBag.CategoryId" />
+
+    @if (User.IsInRole("architect") && !isNew)
+    {
+    <div class="form-group">
+        @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+        @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.TitleUrl)
+    </div>
+    }
+    else
+    {
+        @Html.HiddenFor(x=>x.TitleUrl)
+    }
 
     <div class="row">
         <div class="col-md-6">
@@ -69,22 +69,6 @@
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">@(isNew ? "Добавить" : "Сохранить")</button>
-        @Html.ActionLink("Назад", "index", new{controller= "Aphorisms", curCat= Model.CategoryId }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Назад", "index", new { controller = "Aphorisms", curCat = Model.CategoryId }, new { @class = "btn btn-default" })
     </div>
 </form>
-
-@section scripts{
-    <script type="text/javascript" src="~/bower_components/ckeditor/ckeditor.js"></script>
-<script src="~/content/dist/js/jquery.validate.min.js"></script>
-<script src="~/content/dist/js/jquery.validate.unobtrusive.min.js"></script>
-    <script type="text/javascript">
-        if (CKEDITOR.instances['Html']) {
-            CKEDITOR.remove(CKEDITOR.instances['Html']);
-        }
-        CKEDITOR.replace('Html', { height: 400 });
-
-        $(function () {
-            $('#AuthorId').sx_gvl();
-        });
-    </script>
-}

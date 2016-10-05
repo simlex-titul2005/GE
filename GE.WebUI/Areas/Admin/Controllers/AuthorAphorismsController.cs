@@ -113,24 +113,24 @@ namespace GE.WebUI.Areas.Admin.Controllers
             return PartialView("_FindGridView", viewModel);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> GenerateTitleUrl()
-        {
-            return await Task.Run(() =>
-            {
+        //[HttpPost]
+        //public async Task<ActionResult> GenerateTitleUrl()
+        //{
+        //    return await Task.Run(() =>
+        //    {
 
-                using (var dbContext = new DbContext())
-                {
-                    foreach (var empty in dbContext.AuthorAphorisms.Where(x => x.TitleUrl == null || x.TitleUrl == "" && x.Name != null))
-                    {
-                        empty.TitleUrl = UrlHelperExtensions.SeoFriendlyUrl(empty.Name);
-                        empty.Foreword = empty.Description == null ? "Не задано описание для автора афоризмов" : empty.Description.Length <= 400 ? empty.Description : empty.Description.Substring(0, 400);
-                    }
-                    dbContext.SaveChanges();
-                }
+        //        using (var dbContext = new DbContext())
+        //        {
+        //            foreach (var empty in dbContext.AuthorAphorisms.Where(x => x.TitleUrl == null || x.TitleUrl == "" && x.Name != null))
+        //            {
+        //                empty.TitleUrl = UrlHelperExtensions.SeoFriendlyUrl(empty.Name);
+        //                empty.Foreword = empty.Description == null ? "Не задано описание для автора афоризмов" : empty.Description.Length <= 400 ? empty.Description : empty.Description.Substring(0, 400);
+        //            }
+        //            dbContext.SaveChanges();
+        //        }
 
-                return RedirectToAction("Index");
-            });
-        }
+        //        return RedirectToAction("Index");
+        //    });
+        //}
     }
 }

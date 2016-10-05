@@ -54,15 +54,19 @@ namespace GE.WebUI.Infrastructure.Repositories
 
             using (var connection = new SqlConnection(ConnectionString))
             {
+                filter.PagerInfo.TotalItems = connection.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
                 var data = connection.Query<VMHumor, SxVMMaterialCategory, SxVMAppUser, SxVMPicture, SxVMSeoTags, VMHumor>(sb.ToString(), (m, c, u, p, st) => {
                     m.Category = c;
                     m.User = u;
                     m.FrontPicture = p;
                     m.SeoTags = st;
                     return m;
-                }, param: param, splitOn: "Id");
-                filter.PagerInfo.TotalItems = connection.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
-                return data.ToArray();
+                }, param: param, splitOn: "Id").ToArray();
+
+                if (filter.WidthVideos==true && data.Any())
+                    FillMaterialsVideo(connection, ref data);
+                
+                return data;
             }
         }
         private static string getMaterialsWhereString(SxFilter filter, out object param)

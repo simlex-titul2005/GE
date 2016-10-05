@@ -1,7 +1,7 @@
 ﻿@model VMAphorism[]
 @{
     ViewBag.Title = "Афоризмы";
-    SxMaterialCategory category = ViewBag.Category;
+    VMMaterialCategory category = ViewBag.Category;
 }
 
 @section styles{
@@ -9,6 +9,7 @@
         .sx-tv a{
             text-decoration:none;
             transition:all .2s;
+            display:block;
         }
         .sx-tv tr:hover a{
             font-weight:700;
@@ -22,25 +23,15 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<div class="form-group">
-    <br />
-    <div class="text-left">
-        <form method="post" action="@Url.Action("Report", "Aphorisms")">
-            <button class="btn btn-default" type="submit"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Отчет</button>
-        </form>
-    </div>
-</div>
 
 <div class="row">
     <div class="col-md-3">
-        @Html.Action("TreeViewMenu", new { controller = "MaterialCategories", mct = Enums.ModelCoreType.Aphorism })
+        <h4 class="header">Категории</h4>
+        @Html.Action("TreeViewMenu", "MaterialCategories", new { mct = Enums.ModelCoreType.Aphorism })
     </div>
     <div class="col-md-9">
         <div class="content">
-            @if (category != null)
-            {
-                <h4 class="header">@category.Title</h4>
-            }
+            <h4 class="header">@(category==null? "Категория не указана":category.Title)</h4>
             <div id="grid-aphorisms">
                 @Html.Partial("_GridView", Model)
             </div>

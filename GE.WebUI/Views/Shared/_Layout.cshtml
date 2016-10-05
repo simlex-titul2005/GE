@@ -1,4 +1,4 @@
-﻿@using SX.WebCore;
+﻿﻿@using SX.WebCore;
 @{
     Layout = null;
     var bgUrl = Url.Action("Picture", "Pictures", new { id = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteBgPath).Value });
@@ -9,6 +9,7 @@
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
     var bannerControllerBlackList = new string[] { "employees", "account", "error", "sitequestions", "forauthors" };
+    var pageBanners = (SxVMBanner[])ViewBag.PageBanners;
     SxVMBanner banner = null;
 }
 <!DOCTYPE html>
@@ -66,12 +67,12 @@
                 <h1 @(ViewBag.H1CssClass != null ? "class=" + ViewBag.H1CssClass : "class=header")>@ViewBag.H1</h1>
                 <br />
             }
-            
+
             @{
-                banner = ViewBag.PageBanners != null ? ((SxVMBanner[])ViewBag.PageBanners).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top) : null;
-                if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
+                banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top);
+                if (banner != null && !bannerControllerBlackList.Contains(controllerName))
                 {
-                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b=> { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                    @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
                     <br>
                 }
             }
@@ -80,11 +81,11 @@
 
 
             @{
-                banner = ViewBag.PageBanners != null ? ((SxVMBanner[])ViewBag.PageBanners).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom) : null;
-                if (!bannerControllerBlackList.Contains(controllerName) && banner != null)
+                banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom);
+                if (banner != null && !bannerControllerBlackList.Contains(controllerName))
                 {
-                    <br />
-                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", new { controller = "Pictures", id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                    @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                    <br>
                 }
             }
         </div>
@@ -120,7 +121,7 @@
                 });
             }
 
-            
+
         });
 
         $(window).scroll(function () {
@@ -172,6 +173,10 @@
         }
 
     </script>
+    @if (pageBanners.SingleOrDefault(x => x.Type == SxBanner.BannerType.Google) != null)
+    {
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    }
     @RenderSection("scripts", false)
 </body>
 </html>

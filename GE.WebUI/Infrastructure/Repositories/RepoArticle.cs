@@ -7,6 +7,7 @@ using System.Linq;
 using static SX.WebCore.Enums;
 using System;
 using System.Collections.Generic;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {

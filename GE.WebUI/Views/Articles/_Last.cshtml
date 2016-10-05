@@ -1,6 +1,6 @@
 ﻿@model VMMaterial[]
 @{
-    VMMaterial item;
+    VMMaterial item=null;
 }
 
 <ul class="last-articles">
@@ -8,7 +8,7 @@
     {
         item = Model[i];
         <li>
-            <a title="@item.Title" href="@item.Url(Url)">@item.Title</a>
+            <a title="@item.Title" href="@item.GetUrl(Url)">@item.Title</a>
         </li>
     }
 </ul>

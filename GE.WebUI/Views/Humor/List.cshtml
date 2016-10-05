@@ -72,7 +72,7 @@
                         }
                         
 
-                        <br />
+                        @*<br />
                         <div class="text-center">
                             @Html.SxShareButtons(global_asax.ShareButtons, new Dictionary<string, SxExtantions.SxShareButtonsSettings> {
                                 {"vk", new SxExtantions.SxShareButtonsSettings { Url= Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
@@ -85,7 +85,7 @@
                                 LikeDownCount = () => item.LikeDownCount,
                                 UrlDown = () => Url.Action("AddLike", "Humor", new { mid = item.Id, ld = false })
                             })
-                        </div>
+                        </div>*@
                         
                         <div class="text-center">
                                 <br />

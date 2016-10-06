@@ -96,7 +96,10 @@
                 if (i!=0 && i % 5 == 0)
                 {
                     var banner = ViewBag.PageBanners != null ? ((SxVMBanner[])ViewBag.PageBanners).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
-                    @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                    if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+                    {
+                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                    }
                     @Html.Raw("<br/>")
                 }
             }

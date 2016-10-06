@@ -9,51 +9,58 @@ namespace GE.WebUI
 
         public static void PreRouteAction(RouteCollection routes)
         {
+            routes.MapRoute(
+                name: null,
+                url: "Home",
+                defaults: new { controller = "Home", action = "Index", area = "" },
+                namespaces: _defNamespace
+            );
+
             #region aphorisms
 
             routes.MapRoute(
                 name: null,
-                url: "authoraphorisms/{titleUrl}",
-                defaults: new { controller = "authoraphorisms", action = "Details", area = "" },
+                url: "AuthorAphorisms/{titleUrl}",
+                defaults: new { controller = "AuthorAphorisms", action = "Details", area = "" },
                 namespaces: _defNamespace
             );
 
             routes.MapRoute(
                 name: null,
-                url: "aphorisms",
-                defaults: new { controller = "aphorisms", action = "List", categoryId = (string)null, page = 1, area = "" },
+                url: "Aphorisms",
+                defaults: new { controller = "Aphorisms", action = "List", categoryId = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { action = "^List" }
             );
 
             routes.MapRoute(
                 name: null,
-                url: "aphorisms/page{page}",
-                defaults: new { controller = "aphorisms", action = "List", categoryId = (string)null, page = 1, area = "" },
+                url: "Aphorisms/Page{page}",
+                defaults: new { controller = "Aphorisms", action = "List", categoryId = (string)null, page = 1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { action = "^List" }
             );
 
             routes.MapRoute(
                 name: null,
-                url: "aphorisms/{categoryId}",
-                defaults: new { controller = "aphorisms", action = "List", page = 1, area = "" },
+                url: "Aphorisms/{categoryId}",
+                defaults: new { controller = "Aphorisms", action = "List", page = 1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { action = "^List" }
             );
 
             routes.MapRoute(
                 name: null,
-                url: "aphorisms/{categoryId}/page{page}",
-                defaults: new { controller = "aphorisms", action = "List", page = 1, area = "" },
+                url: "Aphorisms/{categoryId}/page{page}",
+                defaults: new { controller = "Aphorisms", action = "List", page = 1, area = "" },
                 namespaces: _defNamespace,
                 constraints: new { action = "^List" }
             );
 
             routes.MapRoute(
                 name: null,
-                url: "aphorisms/{categoryId}/{titleUrl}",
-                defaults: new { controller = "aphorisms", action = "details", area = "" },
+                url: "Aphorisms/{categoryId}/{titleUrl}",
+                defaults: new { controller = "Aphorisms", action = "Details", area = "" },
                 namespaces: _defNamespace,
                 constraints: new { action = "^Details" }
             );
@@ -65,6 +72,32 @@ namespace GE.WebUI
                 url: "Games/{titleUrl}",
                 defaults: new { controller = "Games", action = "Details", area = "" },
                 namespaces: _defNamespace
+            );
+            #endregion
+
+            #region site test
+            routes.MapRoute(
+                name: null,
+                url: "sitetests/rules/{siteTestId}",
+                defaults: new { controller = "SiteTests", action = "Rules", area = "" },
+                namespaces: _defNamespace,
+                constraints: new { httpMethod = new HttpMethodConstraint("post") }
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "sitetests",
+                defaults: new { controller = "SiteTests", action = "List", page = 1, area = "" },
+                namespaces: _defNamespace,
+                constraints: new { httpMethod = new HttpMethodConstraint("get") }
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: "sitetests/{titleUrl}",
+                defaults: new { controller = "SiteTests", action = "Details", area = "" },
+                namespaces: _defNamespace,
+                constraints: new { httpMethod = new HttpMethodConstraint("get") }
             );
             #endregion
         }
@@ -213,31 +246,7 @@ namespace GE.WebUI
             );
             #endregion
 
-            #region site test
-            routes.MapRoute(
-                name: null,
-                url: "sitetests/rules/{siteTestId}",
-                defaults: new { controller = "SiteTests", action = "Rules", area = "" },
-                namespaces: _defNamespace,
-                constraints: new { httpMethod = new HttpMethodConstraint("post") }
-            );
-
-            routes.MapRoute(
-                name: null,
-                url: "sitetests",
-                defaults: new { controller = "SiteTests", action = "List", page = 1, area = "" },
-                namespaces: _defNamespace,
-                constraints: new { httpMethod = new HttpMethodConstraint("get") }
-            );
-
-            routes.MapRoute(
-                name: null,
-                url: "sitetests/{titleUrl}",
-                defaults: new { controller = "SiteTests", action = "Details", area = "" },
-                namespaces: _defNamespace,
-                constraints: new { httpMethod = new HttpMethodConstraint("get") }
-            );
-            #endregion
+            
 
             routes.MapRoute(
                 name: null,

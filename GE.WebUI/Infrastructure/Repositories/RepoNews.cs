@@ -8,6 +8,8 @@ using SX.WebCore.ViewModels;
 using GE.WebUI.ViewModels.Abstracts;
 using System;
 using System.Collections.Generic;
+using SX.WebCore;
+using System.Text;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -107,7 +109,8 @@ ORDER BY
        dm.DateOfPublication DESC";
 
             var queryGameTags = @"SELECT TOP(@amount)
-       dmt.Id            AS Title,
+       dmt.Id,
+       dmt.Title,
        COUNT(dmt.Id)     AS [Count],
        1                 AS IsCurrent
 FROM   D_MATERIAL_TAG    AS dmt
@@ -123,7 +126,7 @@ FROM   D_MATERIAL_TAG    AS dmt
             ON  dg.Id = dn.GameId
             AND dg.TitleUrl = @gturl
 GROUP BY
-       dmt.Id";
+       dmt.Id, dmt.Title";
 
             var queryGameVideos = @"SELECT TOP(@vc) dv.*,
        dm.DateCreate      AS MaterialDateCreate,
@@ -324,6 +327,17 @@ GROUP BY
                     model.Game = new Game { Id = data.Id, Title = data.Title };
                     model.GameId = data.Id;
                     model.GameVersion = GetGameVesion(model.ModelCoreType, data);
+                };
+            }
+        }
+
+        protected override Action<SxFilter, StringBuilder> ChangeJoinBody
+        {
+            get
+            {
+                return (filter, sb) => {
+                    sb.Append(" JOIN D_NEWS AS dn ON dn.Id=dm.Id AND dn.ModelCoreType=dm.ModelCoreType ");
+                    sb.Append(" LEFT JOIN D_GAME AS dg ON dg.Id=dn.GameId ");
                 };
             }
         }

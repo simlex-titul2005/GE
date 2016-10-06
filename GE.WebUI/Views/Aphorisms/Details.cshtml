@@ -8,7 +8,7 @@
         ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = author.PictureId }))
         : null;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
-    ViewBag.Description = ViewBag.Description ?? (author != null? author.Name+". ":null)+"Афоризмы, короткие изречения великих людей, коротко о главном";
+    ViewBag.Description = ViewBag.Description ?? (author != null ? author.Name + ". " : null) + "Афоризмы, короткие изречения великих людей, коротко о главном";
 
 }
 
@@ -32,7 +32,7 @@
                     </figure>
                 }
                 @Html.Raw(Model.Aphorism.Html)
-                <h4 class="small">@(author==null?"Аноним": author.Name)</h4>
+                <h4 class="small">@(author == null ? "Аноним" : author.Name)</h4>
             </blockquote>
             @Html.SxShareButtons(global_asax.ShareButtons)
 
@@ -64,9 +64,9 @@
 
 @section scripts{
     <script src="~/content/dist/js/goodshare.min.js"></script>
-    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.unobtrusive-ajax"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
     <script type="text/javascript">
         $(function () {
             $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Aphorism.Id +'&mct=' + '@Enums.ModelCoreType.Aphorism');

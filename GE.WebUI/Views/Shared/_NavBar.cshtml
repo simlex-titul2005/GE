@@ -28,6 +28,10 @@
                         <li><a href="@Url.Action("List", "Articles")">Почитать статьи</a></li>
                         <li><a href="@Url.Action("List", "Aphorisms")">Кратко о главном</a></li>
                         <li><a href="@Url.Action("Edit", "SiteQuestions")">Обратная связь</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a href="@Url.Action("Index", "Home", new { area="Admin"})">Панель управления</a></li>
+                        }
                     </ul>
                 </li>
                 <li class="dropdown">

@@ -47,9 +47,9 @@
 @Html.Action("Edit", "Comments", new { mid = Model.Id, mct = Model.ModelCoreType })
 
 @section scripts{
-    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.unobtrusive-ajax"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
     <script src="~/content/dist/js/goodshare.min.js"></script>
     <script>
         loadScriptOnce('https://www.youtube.com/iframe_api');

@@ -7,7 +7,9 @@ using System.Linq;
 using static SX.WebCore.Enums;
 using System;
 using System.Collections.Generic;
-using SX.WebCore.ViewModels;
+using SX.WebCore;
+using System.Text;
+using System.Web;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -169,6 +171,17 @@ ORDER BY
                     model.Game = new Game { Id = data.Id, Title = data.Title };
                     model.GameId = data.Id;
                     model.GameVersion = GetGameVesion(model.ModelCoreType, data);
+                };
+            }
+        }
+
+        protected override Action<SxFilter, StringBuilder> ChangeJoinBody
+        {
+            get
+            {
+                return (filter, sb)=> {
+                    sb.Append(" JOIN D_ARTICLE AS da ON da.Id=dm.Id AND da.ModelCoreType=dm.ModelCoreType ");
+                    sb.Append(" LEFT JOIN D_GAME AS dg ON dg.Id=da.GameId ");
                 };
             }
         }

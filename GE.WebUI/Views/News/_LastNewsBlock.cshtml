@@ -41,7 +41,7 @@
                                 {
                                     
                                     <li @("style=width:" + width + "%")>
-                                        <a href="@Url.Action("List", new { controller = "news", gameTitle = game.TitleUrl })">
+                                        <a href="@Url.Action("List", "News", new { gameTitle = game.TitleUrl })">
                                             <figure data-game-id="@game.Id" style="background:url('@Url.Action("Picture", new { controller="Pictures", id=game.FrontPictureId, height= 220})') center / cover">
 
                                             </figure>

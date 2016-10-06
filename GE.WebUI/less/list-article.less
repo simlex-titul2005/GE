@@ -99,6 +99,59 @@
     }
 }
 
+.list-article .info > .row {
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        display: table;
+        width: 100%;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        display: table;
+        width: 100%;
+    }
+
+    @media (min-width: @screen-lg-min) {
+        display: table;
+        width: 100%;
+    }
+}
+
+.list-article .info > .row > div {
+
+    @media (max-width: @screen-xs-max) {
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        display: table-cell;
+        vertical-align: bottom;
+        float: none;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        display: table-cell;
+        vertical-align: bottom;
+        float: none;
+    }
+
+    @media (min-width: @screen-lg-min) {
+        display: table-cell;
+        vertical-align: bottom;
+        float: none;
+    }
+}
+
+.list-article .info > .row > div:last-child > .btn {
+    max-width:100%;
+    width:100%;
+    @media (max-width: @screen-xs-max) {
+        vertical-align:auto;
+        float:left;
+    }
+}
+
 .list-article ul {
     list-style: none;
     padding: 0;

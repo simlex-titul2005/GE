@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 04.10.2016 11:30:30
+ * Time: 06.10.2016 12:41:38
  ************************************************************/
 
 /*******************************************
@@ -334,10 +334,10 @@ CREATE PROCEDURE dbo.get_material_games
 AS
 BEGIN
 	SELECT TOP(2)
-		dg.Id,
-		dg.Title,
-		da.GameVersion AS ArticleGameVersion,
-		dn.GameVersion AS NewsGameVersion
+	       dg.Id,
+	       dg.Title,
+	       da.GameVersion       AS ArticleGameVersion,
+	       dn.GameVersion       AS NewsGameVersion
 	FROM   DV_MATERIAL          AS dm
 	       LEFT JOIN D_ARTICLE  AS da
 	            ON  da.ModelCoreType = dm.ModelCoreType
@@ -900,11 +900,10 @@ GO
 IF OBJECT_ID(N'dbo.get_preview_materials', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_preview_materials;
 GO
-CREATE PROCEDURE dbo.get_preview_materials(
-    @lettersCount     INT,
-    @gameTitle        VARCHAR(100),
-    @categoryId       VARCHAR(100)
-)
+CREATE PROCEDURE dbo.get_preview_materials
+	@lettersCount INT,
+	@gameTitle VARCHAR(100),
+	@categoryId VARCHAR(100)
 AS
 BEGIN
 	SELECT TOP(8) da.Id,
@@ -945,5 +944,57 @@ BEGIN
 	           )
 	ORDER BY
 	       dm.DateCreate DESC
+END
+GO
+
+/*******************************************
+ * Обогатить материалы играми
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_material_games', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_material_games;
+GO
+CREATE PROCEDURE dbo.get_material_games
+	@mct INT,
+	@ids NVARCHAR(MAX)
+AS
+BEGIN
+	SELECT dm.Id,
+	       dm.ModelCoreType,
+	       dg.*
+	FROM   DV_MATERIAL          AS dm
+	       LEFT JOIN D_ARTICLE  AS da
+	            ON  da.ModelCoreType = dm.ModelCoreType
+	            AND da.Id = dm.Id
+	       LEFT JOIN D_NEWS     AS dn
+	            ON  dn.ModelCoreType = dm.ModelCoreType
+	            AND dn.Id = dm.Id
+	       JOIN D_GAME          AS dg
+	            ON  dg.Id = da.GameId OR dg.Id = dn.GameId
+	WHERE  dm.ModelCoreType = @mct
+	       AND dm.Id IN (SELECT fsi.[Value]
+	                     FROM   dbo.func_split_int(@ids) AS fsi)
+END
+GO
+
+/*******************************************
+ * Обогатить афоризмы авторами
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_aphorisms_authors', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_aphorisms_authors;
+GO
+CREATE PROCEDURE dbo.get_aphorisms_authors
+	@ids NVARCHAR(MAX)
+AS
+BEGIN
+	SELECT dm.Id,
+	       daa.*
+	FROM   DV_MATERIAL             AS dm
+	       JOIN D_APHORISM         AS da
+	            ON  da.Id = dm.Id
+	            AND da.ModelCoreType = dm.ModelCoreType
+	       JOIN D_AUTHOR_APHORISM  AS daa
+	            ON  daa.Id = da.AuthorId
+	WHERE  dm.Id IN (SELECT fsi.[Value]
+	                 FROM   dbo.func_split_int(@ids) AS fsi)
 END
 GO

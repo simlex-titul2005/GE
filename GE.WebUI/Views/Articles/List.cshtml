@@ -2,27 +2,22 @@
 @{
     var title = ViewBag.Title;
     var h1 = ViewBag.H1;
-    ViewBag.Title = title ?? (ViewBag.Tag != null ? "Последние статьи c тегом " + (string)ViewBag.Tag : "Статьи");
+    var tag = (SxVMMaterialTag)ViewBag.Tag;
+    ViewBag.Title = title ?? (tag != null ? "Последние статьи c тегом " + tag.Title : "Статьи");
     if (title == null && ViewBag.GameTitle != null)
     {
         ViewBag.Title = "Последние статьи по игре " + ViewBag.GameTitle;
     }
-    ViewBag.H1 = h1 ?? (ViewBag.Tag != null ? "Статьи про " + (string)ViewBag.Tag : ViewBag.Title);
+    ViewBag.H1 = h1 ?? (tag != null ? "Статьи про " + tag.Title : ViewBag.Title);
     ViewBag.H1CssClass = "header";
-    ViewBag.Description = ViewBag.Description ?? (ViewBag.Tag != null ? "На данной странице вы сможете найти абсолютно все новости и статьи, которые были написаны авторами нашего сайта по запросу " + (string)ViewBag.Tag : null);
+    ViewBag.Description = ViewBag.Description ?? (tag != null ? "На данной странице вы сможете найти абсолютно все новости и статьи, которые были написаны авторами нашего сайта по запросу " + tag.Title : null);
     if (ViewBag.Description == null && ViewBag.GameTitle != null)
     {
         ViewBag.Description = "На данной странице вы сможете ознакомиться споследними статьями, которые были написаны авторами нашего сайта об игре " + ViewBag.GameTitle;
     }
-    ViewBag.Keywords = ViewBag.Keywords ?? ViewBag.GameTitle ?? ViewBag.Tag;
+    ViewBag.Keywords = ViewBag.Keywords ?? ViewBag.GameTitle ?? (tag != null ? tag.Title : null);
 }
 
 @Html.Partial("_Breadcrumbs", model: (SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
 @Html.Partial("_Collection", Model)
-
-@section scripts{
-    <script type="text/javascript">
-        loadScriptOnce('https://www.youtube.com/iframe_api');
-    </script>
-}

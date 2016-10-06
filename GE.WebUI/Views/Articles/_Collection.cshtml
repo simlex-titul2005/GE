@@ -2,6 +2,7 @@
 @{
     Layout = null;
     var gameTitle = (string)ViewBag.GameTitle;
+    var tag = (SxVMMaterialTag)ViewBag.Tag;
 }
 
 @if (Model.Length != 0)
@@ -9,7 +10,7 @@
     <div class="list-article-container">
         @Html.SxList(Model, new SxExtantions.SxListSettings { ColCount = 3, CellCssStyle = "list-article" })
         <div class="text-center">
-            @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new { gameTitle=gameTitle, page=x}), isAjax: false, htmlAttributes: new { @class = "pagination" })
+            @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new { gameTitle = gameTitle, page = x, tag = tag != null ? tag.Id : null }), isAjax: false, htmlAttributes: new { @class = "pagination" })
         </div>
     </div>
 }

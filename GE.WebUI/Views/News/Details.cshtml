@@ -10,7 +10,7 @@
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
     ViewBag.PageImage = Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage
         ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = Model.FrontPictureId }))
-        : Model.Videos.Length>0
+        : Model.Videos.Length > 0
         ? SxVideoProvider.GetVideoImageUrl(Model.Videos[0].VideoId, SxVideoProvider.VideoQuality.Medium)
         : null;
     var banners = (SxVMBanner[])ViewBag.PageBanners;
@@ -31,9 +31,10 @@
         }
         @Html.Raw(Model.Html)
 
-        @Html.SxShareButtons(global_asax.ShareButtons, lbSettings:new SxExtantions.SxLikeButtonsSettings {
-       LikeDownCount=()=>Model.LikeDownCount,
-       LikeUpCount=()=>Model.LikeUpCount,
+        @Html.SxShareButtons(global_asax.ShareButtons, lbSettings: new SxExtantions.SxLikeButtonsSettings
+   {
+       LikeDownCount = () => Model.LikeDownCount,
+       LikeUpCount = () => Model.LikeUpCount,
        UrlUp = () => Url.Action("AddLike", "News", new { mid = Model.Id, ld = "true" }),
        UrlDown = () => Url.Action("AddLike", "News", new { mid = Model.Id, ld = "false" })
    })
@@ -43,7 +44,7 @@
 
     @*aphorisms*@
     <div id="aphorisms">
-       @{Html.RenderAction("Random", "Aphorism"); }
+        @{Html.RenderAction("Random", "Aphorism"); }
     </div>
 
     @Html.Action("LikeMaterials", "News", new { materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
@@ -52,9 +53,12 @@
         banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
         if (banner != null)
         {
-            <div style="margin-top:30px;">
-                @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
-            </div>
+            if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+            {
+                <div style="margin-top:30px;">
+                    @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                </div>
+            }
         }
     }
 
@@ -71,9 +75,9 @@
 
 
 @section scripts{
-    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.unobtrusive-ajax"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
     <script type="text/javascript" src="~/Content/dist/js/ge-aphorisms.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/currency-provider.min.js"></script>
     <script src="~/content/dist/js/goodshare.min.js"></script>

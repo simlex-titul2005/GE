@@ -21,6 +21,8 @@ namespace GE.WebUI.ViewModels.Abstracts
                     return urlHelper.Action("Details", "Articles", new { year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
                 case Enums.ModelCoreType.News:
                     return urlHelper.Action("Details", "News", new { year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
+                case Enums.ModelCoreType.Humor:
+                    return urlHelper.Action("Details", "Humor", new { year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
                 case Enums.ModelCoreType.Aphorism:
                     return urlHelper.Action("Details", "Aphorisms", new { categoryId=CategoryId, titleUrl =TitleUrl });
                 default:

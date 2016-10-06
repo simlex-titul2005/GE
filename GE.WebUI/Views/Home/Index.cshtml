@@ -30,9 +30,12 @@
     banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
     if (banner != null)
     {
-        <div style="margin-top:30px;">
-            @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
-        </div>
+        if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+        {
+            <div style="margin-top:30px;">
+                @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+            </div>
+        }
     }
 }
 

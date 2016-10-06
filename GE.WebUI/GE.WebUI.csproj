@@ -481,6 +481,7 @@
     <Content Include="Views\Shared\_MaterialInfo.cshtml" />
     <Content Include="Views\Articles\_Last.cshtml" />
     <Content Include="Views\ForAuthors\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\RELEASE.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

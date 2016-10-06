@@ -23,7 +23,7 @@
     @Html.Partial("_Foreword", Model)
 
     <div class="m-html">
-        @Html.Action("Popular", "Articles", new { mct = Model.ModelCoreType, mid = Model.Id, amount = 4, value=1 })
+        @Html.Action("Popular", "Articles", new { mct = Model.ModelCoreType, mid = Model.Id, amount = 4, value = 1 })
         @if (Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage)
         {
             <img class="f-picture" alt="@Model.Title" src="@Url.Action("Picture", "Pictures", new { id= Model.FrontPictureId })" />
@@ -53,9 +53,12 @@
         banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
         if (banner != null)
         {
-            <div style="margin-top:30px;">
-                @Html.SxThroughBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
-            </div>
+            if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+            {
+                <div style="margin-top:30px;">
+                    @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                </div>
+            }
         }
     }
 
@@ -71,9 +74,9 @@
 </div>
 
 @section scripts{
-    <script src="~/content/dist/js/jquery.unobtrusive-ajax.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.unobtrusive-ajax"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
     <script type="text/javascript" src="~/Content/dist/js/currency-provider.min.js"></script>
     <script type="text/javascript" src="~/Content/dist/js/ge-aphorisms.min.js"></script>
     <script src="~/content/dist/js/goodshare.min.js"></script>

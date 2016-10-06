@@ -9,7 +9,7 @@
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
     var bannerControllerBlackList = new string[] { "employees", "account", "error", "sitequestions", "forauthors" };
-    var pageBanners = (SxVMBanner[])ViewBag.PageBanners;
+    var pageBanners = ViewBag.PageBanners==null?new SxVMBanner[0]:(SxVMBanner[])ViewBag.PageBanners;
     SxVMBanner banner = null;
 }
 <!DOCTYPE html>
@@ -45,14 +45,10 @@
 
     <link rel="shortcut icon" href="@(iconPath ?? "~/content/dist/i/faveicon.png")" type="image/png" />
 
-    <link href="@Url.Action("Css", "StaticContent", new { name="[bootstrap][font-awesome]"})" rel="stylesheet" />
+    <link href="@Url.Action("Css", "StaticContent", new { name="bootstrap"})" rel="stylesheet" />
+    <link href="@Url.Action("Css", "StaticContent", new { name="font-awesome"})" rel="stylesheet" />
     <link href="~/Content/dist/css/site.min.css" rel="stylesheet" />
     @RenderSection("styles", false)
-
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body @(bg ?? null)>
     @Html.Partial("_NavBar")
@@ -72,8 +68,11 @@
                 banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top);
                 if (banner != null && !bannerControllerBlackList.Contains(controllerName))
                 {
-                    @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
-                    <br>
+                    if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+                    {
+                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                        <br>
+                    }
                 }
             }
 
@@ -84,8 +83,11 @@
                 banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom);
                 if (banner != null && !bannerControllerBlackList.Contains(controllerName))
                 {
-                    @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
-                    <br>
+                    if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+                    {
+                        <br />
+                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                    }
                 }
             }
         </div>
@@ -93,7 +95,8 @@
     @Html.Partial("_Footer")
 
     @Html.Partial("_Analytics")
-    <script src="@Url.Action("Js", "StaticContent", new { name="[jquery][bootstrap]"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="bootstrap"})"></script>
     <script src="~/Content/dist/js/site.min.js"></script>
     <script type="text/javascript">
         var $WIDTH_SX = 768;
@@ -173,7 +176,7 @@
         }
 
     </script>
-    @if (pageBanners.SingleOrDefault(x => x.Type == SxBanner.BannerType.Google) != null)
+    @if (pageBanners.FirstOrDefault(x => x.Type == SxBanner.BannerType.Google) != null)
     {
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     }

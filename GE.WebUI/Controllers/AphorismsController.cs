@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using SX.WebCore.ViewModels;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
+using System;
 
 namespace GE.WebUI.Controllers
 {
@@ -56,11 +57,25 @@ namespace GE.WebUI.Controllers
         [HttpGet]
         public ViewResult List(string categoryId = null, int page = 1)
         {
+            var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
+
             var author = Request.QueryString["author"];
-            if (!string.IsNullOrWhiteSpace(author))
-                ViewBag.Author = Mapper.Map<AuthorAphorism, VMAuthorAphorism>(new RepoAuthorAphorism().GetByTitleUrl(author));
-            if(!string.IsNullOrWhiteSpace(categoryId))
-                ViewBag.Category = getCurrentCategory(categoryId);
+            if (!string.IsNullOrEmpty(author))
+            {
+                var a=Mapper.Map<AuthorAphorism, VMAuthorAphorism>(new RepoAuthorAphorism().GetByTitleUrl(author));
+                ViewBag.Author = a;
+                Array.Resize(ref breadcrumbs, breadcrumbs.Length + 1);
+                breadcrumbs[breadcrumbs.Length - 1] = new SxVMBreadcrumb { Title = a.Name, Url = null };
+            }
+            if (!string.IsNullOrEmpty(categoryId))
+            {
+                var c=getCurrentCategory(categoryId);
+                ViewBag.Category = c;
+                Array.Resize(ref breadcrumbs, breadcrumbs.Length + 1);
+                breadcrumbs[breadcrumbs.Length - 1] = new SxVMBreadcrumb { Title = c.Title, Url = null };
+            }
+
+            ViewBag.Breadcrumbs = breadcrumbs;
 
 
             var filter = new SxFilter(page, _pageSize) {

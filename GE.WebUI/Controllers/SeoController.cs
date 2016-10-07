@@ -17,16 +17,16 @@ namespace GE.WebUI.Controllers
 
         private string getSeoItemUrl(dynamic model)
         {
-            var mct = (ModelCoreType)model.ModelCoreType;
+            var mct = (byte)model.ModelCoreType;
             switch (mct)
             {
-                case ModelCoreType.Article:
+                case (byte)ModelCoreType.Article:
                     return new VMArticle { DateCreate = model.DateCreate, TitleUrl = model.TitleUrl, ModelCoreType = mct }.GetUrl(Url);
-                case ModelCoreType.News:
+                case (byte)ModelCoreType.News:
                     return new VMNews { DateCreate = model.DateCreate, TitleUrl = model.TitleUrl, ModelCoreType = mct }.GetUrl(Url);
-                case ModelCoreType.Aphorism:
+                case 6://aphorism
                     return new VMAphorism { TitleUrl=model.TitleUrl, CategoryId=model.CategoryId, ModelCoreType=mct }.GetUrl(Url);
-                case ModelCoreType.Humor:
+                case 7://humor
                     return new VMHumor { DateCreate = model.DateCreate, TitleUrl = model.TitleUrl, ModelCoreType = mct }.GetUrl(Url);
                 default:
                     return null;

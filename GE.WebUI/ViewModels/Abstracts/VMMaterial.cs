@@ -17,13 +17,13 @@ namespace GE.WebUI.ViewModels.Abstracts
         {
             switch (ModelCoreType)
             {
-                case Enums.ModelCoreType.Article:
+                case (byte)Enums.ModelCoreType.Article:
                     return urlHelper.Action("Details", "Articles", new { year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
-                case Enums.ModelCoreType.News:
+                case (byte)Enums.ModelCoreType.News:
                     return urlHelper.Action("Details", "News", new { year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
-                case Enums.ModelCoreType.Humor:
+                case 7://humor
                     return urlHelper.Action("Details", "Humor", new { year = DateCreate.Year, month = DateCreate.Month.ToString("00"), day = DateCreate.Day.ToString("00"), titleUrl = TitleUrl });
-                case Enums.ModelCoreType.Aphorism:
+                case 6://aphorism
                     return urlHelper.Action("Details", "Aphorisms", new { categoryId=CategoryId, titleUrl =TitleUrl });
                 default:
                     return "#";

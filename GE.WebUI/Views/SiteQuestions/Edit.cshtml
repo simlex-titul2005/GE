@@ -62,6 +62,6 @@
 }
 
 @section scripts{
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
 }

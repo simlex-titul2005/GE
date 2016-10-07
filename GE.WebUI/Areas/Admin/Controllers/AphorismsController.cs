@@ -14,7 +14,8 @@ namespace GE.WebUI.Areas.Admin.Controllers
     public sealed class AphorismsController : MaterialsController<Aphorism, VMAphorism>
     {
         private static RepoAphorism _repo = new RepoAphorism();
-        public AphorismsController() : base(ModelCoreType.Aphorism) { }
+        //TODO: изменить 6
+        public AphorismsController() : base(6/*ModelCoreType.Aphorism*/) { }
         public override SxRepoMaterial<Aphorism, VMAphorism> Repo
         {
             get

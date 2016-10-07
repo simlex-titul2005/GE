@@ -15,7 +15,7 @@ namespace GE.WebUI.Controllers
     {
         private static RepoArticle _repo = new RepoArticle();
 
-        public ArticlesController() : base(Enums.ModelCoreType.Article)
+        public ArticlesController() : base((byte)Enums.ModelCoreType.Article)
         {
             WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
@@ -52,11 +52,11 @@ namespace GE.WebUI.Controllers
 #if !DEBUG
         [OutputCache(Duration = 900)]
 #endif
-        public override PartialViewResult Last(Enums.ModelCoreType? mct = default(Enums.ModelCoreType?), int amount = 5, int? mid = default(int?))
+        public override PartialViewResult Last(byte? mct = default(byte?), int amount = 5, int? mid = default(int?))
         {
-            var data = (Repo as RepoArticle).Last(mct, amount, mid, new Enums.ModelCoreType[] {
-                Enums.ModelCoreType.Article,
-                Enums.ModelCoreType.News
+            var data = (Repo as RepoArticle).Last(mct, amount, mid, new byte[] {
+                (byte)Enums.ModelCoreType.Article,
+                (byte)Enums.ModelCoreType.News
             });
             var viewModel = new VMMaterial[data.Length];
             SxVMMaterial item = null;
@@ -65,10 +65,10 @@ namespace GE.WebUI.Controllers
                 item = data[i];
                 switch(item.ModelCoreType)
                 {
-                    case Enums.ModelCoreType.Article:
+                    case (byte)Enums.ModelCoreType.Article:
                         viewModel[i] = new VMArticle { Title = item.Title, TitleUrl = item.TitleUrl, DateCreate = item.DateCreate, ModelCoreType=item.ModelCoreType };
                         break;
-                    case Enums.ModelCoreType.News:
+                    case (byte)Enums.ModelCoreType.News:
                         viewModel[i] = new VMNews { Title = item.Title, TitleUrl = item.TitleUrl, DateCreate = item.DateCreate, ModelCoreType = item.ModelCoreType };
                         break;
                 }

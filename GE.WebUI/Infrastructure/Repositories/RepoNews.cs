@@ -1,7 +1,6 @@
 ﻿using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using static SX.WebCore.Enums;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore.ViewModels;
@@ -15,7 +14,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoNews : RepoMaterial<News, VMNews>
     {
-        public RepoNews() : base(ModelCoreType.News, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
+        public RepoNews() : base((byte)Enums.ModelCoreType.News, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
 
         public override void Delete(News model)
         {
@@ -300,7 +299,7 @@ GROUP BY
                             }
                         }
 
-                        category.News = connection.Query<VMLCNBNews>(queryForLastNews, new { lnc = lnc, mct = ModelCoreType.News, cat_id = category.Id }).ToArray();
+                        category.News = connection.Query<VMLCNBNews>(queryForLastNews, new { lnc = lnc, mct = (byte)Enums.ModelCoreType.News, cat_id = category.Id }).ToArray();
                     }
                 }
             }
@@ -308,7 +307,7 @@ GROUP BY
             return data;
         }
 
-        public VMMaterial[] GetPopular(ModelCoreType mct, int mid, int amount)
+        public VMMaterial[] GetPopular(byte mct, int mid, int amount)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -323,10 +322,13 @@ GROUP BY
             {
                 return (connection, model) =>
                 {
-                    var data = connection.Query<dynamic>("dbo.get_material_games @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
-                    model.Game = new Game { Id = data.Id, Title = data.Title };
-                    model.GameId = data.Id;
-                    model.GameVersion = GetGameVesion(model.ModelCoreType, data);
+                    var data = connection.Query<dynamic>("dbo.get_material_game @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
+                    if (data != null)
+                    {
+                        model.Game = new Game { Id = data.Id, Title = data.Title };
+                        model.GameId = data.Id;
+                        model.GameVersion = GetGameVesion(model.ModelCoreType, data);
+                    }
                 };
             }
         }

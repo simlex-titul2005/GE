@@ -22,6 +22,12 @@ namespace GE.WebUI.Areas.Admin
 
             context.MapRoute(
                 name: null,
+                url: "AuthorAphorisms/FindGridView",
+                defaults: new { controller = "AuthorAphorisms", action = "FindGridView" }
+            );
+
+            context.MapRoute(
+                name: null,
                 url: "SiteTests/TestMatrix/{testId}/{page}",
                 defaults: new { controller = "SiteTests", action = "TestMatrix" }
             );

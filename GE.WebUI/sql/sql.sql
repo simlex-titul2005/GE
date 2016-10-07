@@ -323,12 +323,12 @@ END
 GO
 
 /*******************************************
-* получить игры для материалов
+* получить игру для материалов
 *******************************************/
-IF OBJECT_ID(N'dbo.get_material_games', N'P') IS NOT NULL
-    DROP PROCEDURE dbo.get_material_games;
+IF OBJECT_ID(N'dbo.get_material_game', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_material_game;
 GO
-CREATE PROCEDURE dbo.get_material_games
+CREATE PROCEDURE dbo.get_material_game
 	@id INT,
 	@mct INT
 AS

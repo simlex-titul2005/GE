@@ -10,7 +10,7 @@ namespace GE.WebUI.Controllers
     public sealed class NewsController : MaterialsController<News, VMNews>
     {
         private static RepoNews _repo = new RepoNews();
-        public NewsController() : base(Enums.ModelCoreType.News) { }
+        public NewsController() : base((byte)Enums.ModelCoreType.News) { }
         public override SxRepoMaterial<News, VMNews> Repo
         {
             get

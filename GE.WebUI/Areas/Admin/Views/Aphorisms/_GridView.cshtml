@@ -20,9 +20,9 @@
             },
     DataAjaxUrl = Url.Action("Index", "Aphorisms", new { curCat = categoryId }),
     EnableCreating = true,
-    CreateRowUrl = Url.Action("Edit", "Aphorisms", new { cat = categoryId, mct = Enums.ModelCoreType.Aphorism }),
+    CreateRowUrl = Url.Action("Edit", "Aphorisms", new { cat = categoryId, mct = 6/*aphorism*/ }),
     EnableEditing = true,
-    EditRowUrl = x => { return Url.Action("Edit", "Aphorisms", new { cat = categoryId, mct = Enums.ModelCoreType.Aphorism, id = x.Id }); },
+    EditRowUrl = x => { return Url.Action("Edit", "Aphorisms", new { cat = categoryId, mct = 6/*aphorism*/, id = x.Id }); },
     RowCssClass = x => { return !x.Show ? "warning" : null; },
     ShowPagerInfo = true
 }

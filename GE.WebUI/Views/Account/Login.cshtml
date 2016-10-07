@@ -11,12 +11,12 @@
     <div class="wrapper">
         @*<div class="row">
             <div class="col-md-8">*@
-                <section id="loginForm">
-                    <h2>@ViewBag.Title</h2>
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal transparent", role = "form" }))
+        <section id="loginForm">
+            <h2>@ViewBag.Title</h2>
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal transparent", role = "form" }))
             {
-                        @Html.AntiForgeryToken()
-                        <br />
+                @Html.AntiForgeryToken()
+                <br />
                         <div class="form-group">
                             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
@@ -51,20 +51,20 @@
                             <p>
                                 @Html.ActionLink("Forgot your password?", "ForgotPassword")
                             </p>*@
-                    }
-                </section>
-            @*</div>
-            <div class="col-md-4">
-                <section id="socialLoginForm">
-                    @Html.Partial("_ExternalLoginsListPartial", new VMExternalLoginList { ReturnUrl = ViewBag.ReturnUrl })
-                </section>
-            </div>
-        </div>*@
+            }
+        </section>
+        @*</div>
+                <div class="col-md-4">
+                    <section id="socialLoginForm">
+                        @Html.Partial("_ExternalLoginsListPartial", new VMExternalLoginList { ReturnUrl = ViewBag.ReturnUrl })
+                    </section>
+                </div>
+            </div>*@
     </div>
 </div>
 
 
 @section Scripts {
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
 }

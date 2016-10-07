@@ -2,13 +2,13 @@
 @{
     Layout = null;
     var itemsCount = 3;
-    SX.WebCore.Enums.ModelCoreType mct = ViewBag.ModelCoreType;
+    byte mct = ViewBag.ModelCoreType;
     var first = Model.FirstOrDefault();
     var last = Model.LastOrDefault();
 }
 
 <div class="by-date-m">
-    <h3 class="header">Другие @(mct == SX.WebCore.Enums.ModelCoreType.Article ? "статьи" : "новости")</h3>
+    <h3 class="header">Другие @(mct == (byte)SX.WebCore.Enums.ModelCoreType.Article ? "статьи" : "новости")</h3>
     <div class="row">
         @for (int i = 0; i < itemsCount; i++)
         {
@@ -16,7 +16,7 @@
                 @if (i < Model.Length)
                 {
                     var item = Model[i];
-                    var link = string.Format("/{0}/bydatematerial?mid={1}&mct={2}&dir={3}", mct == SX.WebCore.Enums.ModelCoreType.Article ? "articles" : "news", i == 0 ? first.Id : last.Id, mct, i == 0?bool.FalseString.ToLower():bool.TrueString.ToLower());
+                    var link = string.Format("/{0}/bydatematerial?mid={1}&mct={2}&dir={3}", mct == (byte)SX.WebCore.Enums.ModelCoreType.Article ? "articles" : "news", i == 0 ? first.Id : last.Id, mct, i == 0?bool.FalseString.ToLower():bool.TrueString.ToLower());
                     <div class="content @(i==0?"first":i==itemsCount-1?"last":null)">
                         @if (i == 0 || i == itemsCount - 1)
                         {

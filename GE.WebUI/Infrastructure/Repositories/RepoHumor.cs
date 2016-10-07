@@ -3,7 +3,6 @@ using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using static SX.WebCore.Enums;
 using System;
 using System.Linq;
 using SX.WebCore;
@@ -16,7 +15,8 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoHumor: RepoMaterial<Humor, VMHumor>
     {
-        public RepoHumor() : base(ModelCoreType.Humor, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
+        //TODO: Изменить 7 для юмора
+        public RepoHumor() : base(7/*humor*/, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
 
         public override VMHumor[] Read(SxFilter filter)
         {
@@ -89,7 +89,8 @@ namespace GE.WebUI.Infrastructure.Repositories
                 title = title,
                 fwd = fwd,
                 cat = cat,
-                mct = ModelCoreType.Humor,
+                //TODO: изменить 7 для юмора
+                mct = 7,//humor
                 show = filter.OnlyShow == true ? true : (bool?)null
             };
 

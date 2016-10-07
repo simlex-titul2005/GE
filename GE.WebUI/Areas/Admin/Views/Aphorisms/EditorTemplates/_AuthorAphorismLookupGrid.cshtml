@@ -8,7 +8,7 @@
 
     @Html.SxGridLookup(new SxExtantions.SxGridLookupSettings
 {
-    DataAjaxUrl = Url.Action("FindGridView", "AuthorAphorisms"),
+    DataAjaxUrl = Url.Action("FindGridView", "AuthorAphorisms", new { area="Admin"}),
     DefaulText = caption == null ? Html.ValueForModel().ToString() : caption
 },
     new VMAuthorAphorism [0]

@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
-using static SX.WebCore.Enums;
 using System.Data.SqlClient;
 using GE.WebUI.ViewModels;
 using System.Linq;
@@ -19,7 +18,7 @@ namespace GE.WebUI.Infrastructure.Repositories
         where TViewModel : VMMaterial
     {
         private Dictionary<string, object> _filterSettings;
-        public RepoMaterial(ModelCoreType mct, Dictionary<string, object> filterSettings) : base(mct)
+        public RepoMaterial(byte mct, Dictionary<string, object> filterSettings) : base(mct)
         {
             _filterSettings = filterSettings;
         }
@@ -31,13 +30,13 @@ namespace GE.WebUI.Infrastructure.Repositories
             return base.Read(filter);
         }
 
-        protected static string GetGameVesion(ModelCoreType mct, dynamic data)
+        protected static string GetGameVesion(byte mct, dynamic data)
         {
             switch (mct)
             {
-                case ModelCoreType.Article:
+                case (byte)Enums.ModelCoreType.Article:
                     return data.ArticleGameVersion;
-                case ModelCoreType.News:
+                case (byte)Enums.ModelCoreType.News:
                     return data.NewsGameVersion;
                 default:
                     return null;

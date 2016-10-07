@@ -4,18 +4,16 @@ using GE.WebUI.ViewModels;
 using GE.WebUI.ViewModels.Abstracts;
 using System.Data.SqlClient;
 using System.Linq;
-using static SX.WebCore.Enums;
 using System;
 using System.Collections.Generic;
 using SX.WebCore;
 using System.Text;
-using System.Web;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoArticle : RepoMaterial<Article, VMArticle>
     {
-        public RepoArticle() : base(ModelCoreType.Article, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
+        public RepoArticle() : base((byte)Enums.ModelCoreType.Article, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
 
         public override void Delete(Article model)
         {
@@ -153,7 +151,7 @@ ORDER BY
             }
         }
 
-        public VMMaterial[] GetPopular(ModelCoreType mct, int mid, int amount)
+        public VMMaterial[] GetPopular(byte mct, int mid, int amount)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -167,10 +165,13 @@ ORDER BY
             get
             {
                 return (connection, model) => {
-                    var data = connection.Query<dynamic>("dbo.get_material_games @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
-                    model.Game = new Game { Id = data.Id, Title = data.Title };
-                    model.GameId = data.Id;
-                    model.GameVersion = GetGameVesion(model.ModelCoreType, data);
+                    var data = connection.Query<dynamic>("dbo.get_material_game @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
+                    if (data != null)
+                    {
+                        model.Game = new Game { Id = data.Id, Title = data.Title };
+                        model.GameId = data.Id;
+                        model.GameVersion = GetGameVesion(model.ModelCoreType, data);
+                    }
                 };
             }
         }

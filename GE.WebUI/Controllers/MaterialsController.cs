@@ -18,7 +18,7 @@ namespace GE.WebUI.Controllers
         where TViewModel : VMMaterial, new()
     {
 
-        protected MaterialsController(ModelCoreType mct) : base(mct)
+        protected MaterialsController(byte mct) : base(mct)
         {
             BeforeSelectListAction = beforeSelectListAction;
         }
@@ -41,13 +41,14 @@ namespace GE.WebUI.Controllers
 
             switch (ModelCoreType)
             {
-                case ModelCoreType.Article:
+                case (byte)Enums.ModelCoreType.Article:
                     filter.PagerInfo.PageSize = 9;
                     break;
-                case ModelCoreType.News:
+                case (byte)Enums.ModelCoreType.News:
                     filter.PagerInfo.PageSize = 10;
                     break;
-                case ModelCoreType.Humor:
+                    //TODO: убрать 7
+                case 7/*ModelCoreType.Humor*/:
                     filter.PagerInfo.PageSize = 10;
                     break;
             }
@@ -64,13 +65,14 @@ namespace GE.WebUI.Controllers
             VMMaterial model = null;
             switch (ModelCoreType)
             {
-                case ModelCoreType.Article:
+                case (byte)Enums.ModelCoreType.Article:
                     model = Repo.GetByTitleUrl(year, month, day, titleUrl);
                     break;
-                case ModelCoreType.News:
+                case (byte)Enums.ModelCoreType.News:
                     model = Repo.GetByTitleUrl(year, month, day, titleUrl);
                     break;
-                case ModelCoreType.Humor:
+                //TODO: убрать 7
+                case 7/*ModelCoreType.Humor*/:
                     model = Repo.GetByTitleUrl(year, month, day, titleUrl);
                     break;
             }

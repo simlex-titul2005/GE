@@ -50,7 +50,7 @@
 
     <div class="form-group">
         @Html.LabelFor(x => x.UserName) <span class="text-info">(если есть)</span>
-        <input type="text" id="@Html.IdFor(x=>x.UserName)" name="@Html.NameFor(x=>x.User)" value="@Html.ValueFor(x=>x.UserName)" class="form-control" @(!User.IsInRole("architect")?"disabled":null) />
+        <input type="text" id="@Html.IdFor(x=>x.UserName)" name="@Html.NameFor(x=>x.UserName)" value="@Html.ValueFor(x=>x.UserName)" class="form-control" @(!User.IsInRole("architect")?"disabled":null) />
         @Html.ValidationMessageFor(x => x.UserName)
     </div>
 

@@ -11,10 +11,10 @@
         string url = null;
         switch(item.ModelCoreType)
         {
-            case SX.WebCore.Enums.ModelCoreType.Article:
+            case (byte)SX.WebCore.Enums.ModelCoreType.Article:
                 url = Url.Action("Details", "Articles", new { year = item.DateCreate.Year, month = item.DateCreate.Month.ToString("00"), day = item.DateCreate.Day.ToString("00"), titleUrl=item.TitleUrl });
                 break;
-            case SX.WebCore.Enums.ModelCoreType.News:
+            case (byte)SX.WebCore.Enums.ModelCoreType.News:
                 url = Url.Action("Details", "News", new { year = item.DateCreate.Year, month = item.DateCreate.Month.ToString("00"), day = item.DateCreate.Day.ToString("00"), titleUrl = item.TitleUrl });
                 break;
         }

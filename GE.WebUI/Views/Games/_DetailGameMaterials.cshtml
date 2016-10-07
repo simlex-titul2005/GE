@@ -1,20 +1,20 @@
 ﻿@model VMMaterial[]
 @{ 
     Layout = null;
-    var mct = (SX.WebCore.Enums.ModelCoreType)ViewData["ModelCoreType"];
+    var mct = (byte)ViewData["ModelCoreType"];
     var materialsTitle = string.Empty;
     var allUrl = string.Empty;
     switch (mct)
     {
-        case SX.WebCore.Enums.ModelCoreType.News:
+        case (byte)SX.WebCore.Enums.ModelCoreType.News:
             materialsTitle = "Последние новости";
             allUrl = Url.Action("List", "News");
             break;
-        case SX.WebCore.Enums.ModelCoreType.Article:
+        case (byte)SX.WebCore.Enums.ModelCoreType.Article:
             materialsTitle = "Последние статьи";
             allUrl = Url.Action("List", "Articles");
             break;
-        case SX.WebCore.Enums.ModelCoreType.Aphorism:
+        case 6/*aphorism*/:
             materialsTitle = "Последние афоризмы к игре "+ ViewBag.GameTitle;
             allUrl = Url.Action("List", "Aphorisms");
             break;

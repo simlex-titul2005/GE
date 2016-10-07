@@ -12,17 +12,17 @@ namespace GE.WebUI.Controllers
         [OutputCache(Duration =900, VaryByParam = "mid;mct")]
 #endif
         [HttpGet, AllowAnonymous]
-        public PartialViewResult List(int mid, ModelCoreType mct, int maxFs=30, int amount=50)
+        public PartialViewResult List(int mid, byte mct, int maxFs=30, int amount=50)
         {
             var filter = new SxFilter(1, 10) { MaterialId= mid, ModelCoreType=mct };
             var viewModel = Repo.GetCloud(filter);
             string url = "#";
             switch(mct)
             {
-                case ModelCoreType.Article:
+                case (byte)ModelCoreType.Article:
                     url = Url.Action("List","Articles");
                     break;
-                case ModelCoreType.News:
+                case (byte)ModelCoreType.News:
                     url = Url.Action("List", "News");
                     break;
             }

@@ -1,8 +1,6 @@
 ﻿using GE.WebUI.ViewModels;
 using SX.WebCore.MvcControllers;
 using GE.WebUI.Infrastructure.Repositories;
-using System.Web.Mvc;
-using SX.WebCore;
 using SX.WebCore.ViewModels;
 using System;
 using static SX.WebCore.Enums;
@@ -17,13 +15,13 @@ namespace GE.WebUI.Areas.Admin.Controllers
                 Repo = new RepoMaterialCategory();
         }
 
-        protected override Func<SxVMMaterialCategory, string> TreeViewMenuFuncContent(ModelCoreType mct)
+        protected override Func<SxVMMaterialCategory, string> TreeViewMenuFuncContent(byte mct)
         {
             switch (mct)
             {
-                case ModelCoreType.Aphorism:
+                case 6://aphorism
                     return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action("Index", "Aphorisms", new { curCat = x.Id }), x.Title);
-                case ModelCoreType.Manual:
+                case (byte)ModelCoreType.Manual:
                     return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action("Index", "FAQ", new { curCat = x.Id }), x.Title);
                 default:
                     return null;

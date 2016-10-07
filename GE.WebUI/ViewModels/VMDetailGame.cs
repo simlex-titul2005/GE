@@ -2,7 +2,6 @@
 using SX.WebCore.ViewModels;
 using System;
 using System.Linq;
-using static SX.WebCore.Enums;
 
 namespace GE.WebUI.ViewModels
 {
@@ -19,7 +18,7 @@ namespace GE.WebUI.ViewModels
         public Guid? FrontPictureId { get; set; }
 
         public VMMaterial[] Materials { get; set; }
-        public VMMaterial[] GetMaterialsByCoreType(ModelCoreType mct)
+        public VMMaterial[] GetMaterialsByCoreType(byte mct)
         {
             var data = Materials == null || !Materials.Any()
                 ? new VMMaterial[0]

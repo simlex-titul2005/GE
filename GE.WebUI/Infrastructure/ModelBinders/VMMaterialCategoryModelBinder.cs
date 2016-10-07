@@ -24,7 +24,7 @@ namespace GE.WebUI.Infrastructure.ModelBinders
             model.GameId = string.IsNullOrEmpty(value) ? (int?)null : int.Parse(value);
 
             value = GetValue(bindingContext, searchPrefix, "ModelCoreType");
-            model.ModelCoreType = (SX.WebCore.Enums.ModelCoreType)Enum.Parse(typeof(SX.WebCore.Enums.ModelCoreType), value);
+            model.ModelCoreType = Convert.ToByte(value);
 
             value = GetValue(bindingContext, searchPrefix, "OldId");
             model.OldId = value;

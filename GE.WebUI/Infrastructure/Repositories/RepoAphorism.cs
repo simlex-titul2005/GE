@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using static SX.WebCore.Enums;
 using System.Text;
 using System.Web;
 
@@ -14,7 +13,8 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoAphorism : RepoMaterial<Aphorism, VMAphorism>
     {
-        public RepoAphorism() : base(ModelCoreType.Aphorism, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
+        //TODO: изменить 6
+        public RepoAphorism() : base(6/*ModelCoreType.Aphorism*/, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
 
         public Aphorism GetRandom(int? id = null)
         {

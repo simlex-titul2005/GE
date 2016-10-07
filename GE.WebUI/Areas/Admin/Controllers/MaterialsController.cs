@@ -1,7 +1,6 @@
 ﻿using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.Abstract;
 using SX.WebCore.MvcControllers;
-using static SX.WebCore.Enums;
 using System.Linq;
 using System;
 
@@ -11,7 +10,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         where TModel : SxMaterial
         where TViewModel : VMMaterial, new()
     {
-        public MaterialsController(ModelCoreType mct) : base(mct) { }
+        public MaterialsController(byte mct) : base(mct) { }
 
         protected override string[] PropsForUpdate
         {

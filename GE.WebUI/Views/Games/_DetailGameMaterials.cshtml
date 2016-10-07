@@ -1,7 +1,7 @@
 ﻿@model VMMaterial[]
 @{ 
     Layout = null;
-    var mct = (byte)ViewData["ModelCoreType"];
+    var mct = Convert.ToByte(ViewData["ModelCoreType"]);
     var materialsTitle = string.Empty;
     var allUrl = string.Empty;
     switch (mct)

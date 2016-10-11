@@ -56,7 +56,7 @@ namespace GE.WebUI.Controllers
 
         private static int _pageSize = 20;
         [HttpGet]
-        public ViewResult List(string categoryId = null, int page = 1)
+        public ActionResult List(string categoryId = null, int page = 1)
         {
             var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
 
@@ -64,6 +64,9 @@ namespace GE.WebUI.Controllers
             if (!string.IsNullOrEmpty(author))
             {
                 var a=Mapper.Map<AuthorAphorism, VMAuthorAphorism>(new RepoAuthorAphorism().GetByTitleUrl(author));
+                if (!string.IsNullOrEmpty(author) && a == null)
+                    return new HttpNotFoundResult();
+
                 ViewBag.Author = a;
                 Array.Resize(ref breadcrumbs, breadcrumbs.Length + 1);
                 breadcrumbs[breadcrumbs.Length - 1] = new SxVMBreadcrumb { Title = a.Name, Url = null };

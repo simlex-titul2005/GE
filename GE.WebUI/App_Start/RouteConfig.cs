@@ -9,6 +9,8 @@ namespace GE.WebUI
 
         public static void PreRouteAction(RouteCollection routes)
         {
+            routes.IgnoreRoute("Articles/Details/{id}");
+
             routes.MapRoute(
                 name: null,
                 url: "Home",
@@ -107,8 +109,6 @@ namespace GE.WebUI
             
 
             #region articles
-            routes.IgnoreRoute("articles/details/{id}");
-
             routes.MapRoute(
                 name: null,
                 url: "articles/bydatematerial",

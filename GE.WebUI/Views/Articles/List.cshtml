@@ -21,3 +21,9 @@
 @Html.Partial("_Breadcrumbs", model: (SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
 @Html.Partial("_Collection", Model)
+
+@section scripts{
+    <script>
+        loadScriptOnce('https://www.youtube.com/iframe_api');
+    </script>
+}

@@ -998,3 +998,75 @@ BEGIN
 	                 FROM   dbo.func_split_int(@ids) AS fsi)
 END
 GO
+
+/*******************************************
+* Получить случайный афоризм
+*******************************************/
+IF OBJECT_ID(N'dbo.get_random_aphorism', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_random_aphorism;
+GO
+CREATE PROCEDURE dbo.get_random_aphorism
+	@mid INT
+AS
+BEGIN
+	SELECT TOP(1) *
+	FROM   D_APHORISM                   AS da
+	       JOIN DV_MATERIAL             AS dm
+	            ON  dm.Id = da.Id
+	            AND dm.ModelCoreType = da.ModelCoreType
+	       JOIN D_MATERIAL_CATEGORY     AS dmc
+	            ON  dmc.Id = dm.CategoryId
+	       LEFT JOIN D_AUTHOR_APHORISM  AS daa
+	            ON  daa.Id = da.AuthorId
+	WHERE  (@mid IS NULL)
+	       OR  (@mid IS NOT NULL AND da.Id NOT IN (@mid))
+	       AND dm.CategoryId IS NOT NULL
+	ORDER BY
+	       NEWID()
+END
+GO
+
+/*******************************************
+* получить категории афоризмов
+*******************************************/
+IF OBJECT_ID(N'dbo.get_aphorism_categories', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_aphorism_categories;
+GO
+CREATE PROCEDURE dbo.get_aphorism_categories
+	@cur NVARCHAR(100)
+AS
+BEGIN
+	WITH c(Id, Title, [Ref]) AS (
+	         SELECT dmc.Id               AS Id,
+	                dmc.Title,
+	                NULL                 AS [Ref]
+	         FROM   D_MATERIAL_CATEGORY  AS dmc
+	                JOIN DV_MATERIAL     AS dm
+	                     ON  dm.CategoryId = dmc.Id
+	                JOIN D_APHORISM      AS da
+	                     ON  da.ModelCoreType = dm.ModelCoreType
+	                     AND da.Id = dm.Id
+	         GROUP BY
+	                dmc.Id,
+	                dmc.Title
+	         UNION ALL
+	         SELECT daa.TitleUrl       AS Id,
+	                daa.Name,
+	                CategoryId         AS [Ref]
+	         FROM   D_AUTHOR_APHORISM  AS daa
+	                JOIN D_APHORISM    AS da
+	                     ON  da.AuthorId = daa.Id
+	                JOIN DV_MATERIAL   AS dm
+	                     ON  dm.Id = da.Id
+	                     AND dm.ModelCoreType = da.ModelCoreType
+	                     AND dm.CategoryId = CategoryId
+	         GROUP BY
+	                daa.TitleUrl,
+	                daa.Name,
+	                CategoryId
+	     )
+	
+	SELECT *
+	FROM   c AS c
+END
+GO

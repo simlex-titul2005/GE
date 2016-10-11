@@ -1,9 +1,9 @@
 ﻿﻿@using SX.WebCore;
 @{
     Layout = null;
-    var bgUrl = Url.Action("Picture", "Pictures", new { id = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteBgPath).Value });
-    var logoPath = Url.Action("Picture", "Pictures", new { id = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteLogoPath).Value });
-    var iconPath = Url.Action("Picture", "Pictures", new { id = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteFaveiconPath).Value });
+    var bgUrl = Url.Action("Picture", "Pictures", new { id = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider[SX.WebCore.Resources.Settings.siteBgPath]?.Value });
+    var logoPath = Url.Action("Picture", "Pictures", new { id = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider[SX.WebCore.Resources.Settings.siteLogoPath]?.Value });
+    var iconPath = Url.Action("Picture", "Pictures", new { id = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider[SX.WebCore.Resources.Settings.siteFaveiconPath]?.Value });
     var bg = string.IsNullOrEmpty(bgUrl) ? null : string.Format("style=background:url('{0}');", bgUrl);
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];

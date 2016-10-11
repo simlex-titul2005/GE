@@ -83,6 +83,7 @@ namespace GE.WebUI.Controllers
             SxBBCodeParser.ReplaceValutes(ref html);
             SxBBCodeParser.ReplaceBanners(ref html, SxMvcApplication.BannerProvider.BannerCollection, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }));
             SxBBCodeParser.ReplaceVideo(ref html, model.Videos);
+            SxBBCodeParser.ReplaceImages(ref html, model.Pictures);
             model.Html = html;
 
             var matSeoInfo = Mapper.Map<SxSeoTags, SxVMSeoTags>(SxSeoTagsController.Repo.GetSeoTags(model.Id, model.ModelCoreType));

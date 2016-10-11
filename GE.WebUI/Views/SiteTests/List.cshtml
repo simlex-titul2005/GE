@@ -30,7 +30,7 @@
                     <a href="@Url.Action("Details","SiteTests", new { titleUrl = item.TitleUrl })" class="btn btn-sm btn-default test-item__btn">Пройти тест <i class="fa fa-angle-double-right"></i></a>
                     @if (!string.IsNullOrEmpty(item.Rules))
                     {
-                        <a href="@Url.Action("Rules", "SiteTests", new { siteTestId = item.Id })" class="btn btn-sm btn-default test-item__btn test-rules__btn">Правила <i class="fa fa-eye"></i></a>
+                        <a href="#" data-test-id="@item.Id" class="btn btn-sm btn-default test-item__btn test-rules__btn">Правила <i class="fa fa-eye"></i></a>
                     }
                 </div>
             </div>
@@ -64,11 +64,12 @@
 @section scripts{
     <script>
         $('.test-rules__btn').click(function () {
-            var url = $(this).attr('href');
+            var testId = $(this).attr('data-test-id');
             $modal = $('#modal-rules');
             $.ajax({
                 method: 'post',
-                url: url,
+                url: '@Url.Action("Rules", "SiteTests")',
+                data:{testId: testId},
                 success: function (result) {
                     $modal.find('.modal-title').html(result.Title);
                     $modal.find('.modal-body').html(result.Rules);

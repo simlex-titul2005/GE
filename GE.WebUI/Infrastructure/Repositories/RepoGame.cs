@@ -10,6 +10,8 @@ using SX.WebCore.Repositories.Abstract;
 using System.Text;
 using SX.WebCore.Providers;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
+using SX.WebCore.Repositories;
+using System.Data;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -151,29 +153,51 @@ ORDER BY
         public VMDetailGame GetGameDetails(string titleUrl, int amount = 10)
         {
             var viewModel = new VMDetailGame();
-            using (var conn = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
-                viewModel = conn.Query<VMDetailGame>("get_game_by_url @titleUrl", new { titleUrl = titleUrl }).SingleOrDefault();
+                viewModel = connection.Query<VMDetailGame>("get_game_by_url @titleUrl", new { titleUrl = titleUrl }).SingleOrDefault();
                 if (viewModel == null) return null;
 
-                viewModel.Materials = conn.Query<VMMaterial>("get_game_materials @titleUrl, @amount", new { titleUrl = titleUrl, amount = amount }).ToArray();
-                viewModel.Videos = conn.Query<SxVMVideo>("get_game_videos @titleUrl", new { titleUrl = titleUrl }).ToArray();
+                viewModel.Materials = connection.Query<VMMaterial>("get_game_materials @titleUrl, @amount", new { titleUrl = titleUrl, amount = amount }).ToArray();
+                viewModel.Videos = connection.Query<SxVMVideo>("get_game_videos @titleUrl", new { titleUrl = titleUrl }).ToArray();
                 if (viewModel.Videos.Any())
                 {
                     var html = viewModel.FullDescription;
                     SxBBCodeParser.ReplaceVideo(ref html, viewModel.Videos);
                     viewModel.FullDescription = html;
                 }
+
                 if (viewModel.Materials.Any())
-                {
-                    for (int i = 0; i < viewModel.Materials.Length; i++)
-                    {
-                        var material = viewModel.Materials[i];
-                        material.Videos = conn.Query<SxVMVideo>("get_material_videos @mid, @mct", new { mid = material.Id, mct = material.ModelCoreType }).ToArray();
-                    }
-                }
+                    fillMaterialsVideo(connection, viewModel.Materials);
 
                 return viewModel;
+            }
+        }
+
+        private static void fillMaterialsVideo(SqlConnection connection, VMMaterial[] materials)
+        {
+            VMMaterial item = null;
+
+            var table = new DataTable();
+            table.Columns.Add("Materialid", typeof(int));
+            table.Columns.Add("ModelCoreType", typeof(int));
+
+            for (int i = 0; i < materials.Length; i++)
+            {
+                item = materials[i];
+                table.Rows.Add(item.Id, (int)item.ModelCoreType);
+            }
+
+            var videoLinks = connection.Query<SxVideoLink, SxVideo, SxVideoLink>("dbo.get_materials_videos", (vl, v) =>
+            {
+                vl.Video = v;
+                return vl;
+            }, new { materials = table.AsTableValuedParameter("dbo.ForSelectMaterialVideos") }, commandType: CommandType.StoredProcedure, splitOn: "Id").ToArray();
+
+            for (int i = 0; i < materials.Length; i++)
+            {
+                item = materials[i];
+                item.Videos = videoLinks.Where(x => Equals(x.MaterialId, item.Id) && x.ModelCoreType == item.ModelCoreType).Select(x => Mapper.Map<SxVideo, SxVMVideo>(x.Video)).ToArray();
             }
         }
     }

@@ -186,5 +186,16 @@ namespace GE.WebUI.Controllers
                 return PartialView("_ResultNormal", result);
             });
         }
+
+        [HttpPost, NotLogRequest, AllowAnonymous]
+        public async Task<JsonResult> Rules(int testId)
+        {
+            var data = await _repo.GetSiteTestRulesAsync(testId);
+            return Json(new
+            {
+                Title = data.Title,
+                Rules = data.Rules
+            });
+        }
     }
 }

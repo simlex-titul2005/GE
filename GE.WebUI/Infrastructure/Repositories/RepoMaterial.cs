@@ -10,6 +10,7 @@ using System.Web;
 using System.Data.SqlClient;
 using GE.WebUI.ViewModels;
 using System.Linq;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -99,6 +100,36 @@ namespace GE.WebUI.Infrastructure.Repositories
                     }
                 };
             }
+        }
+
+        public override SxVMMaterial[] GetPopular(int? mct = default(int?), int? mid = default(int?), int amount = 10, DateTime? dateBegin = default(DateTime?), DateTime? dateEnd = default(DateTime?))
+        {
+            var data = base.GetPopular(mct, mid, amount, dateBegin, dateEnd);
+            var viewData = new VMMaterial[data.Length];
+            for (int i = 0; i < data.Length; i++)
+            {
+                viewData[i] = getFromMaterial(data[i]);
+            }
+
+            return viewData;
+        }
+
+        private static VMMaterial getFromMaterial(SxVMMaterial model)
+        {
+            return new VMMaterial
+            {
+                Id = model.Id,
+                DateCreate = model.DateCreate,
+                DateOfPublication = model.DateOfPublication,
+                ModelCoreType = model.ModelCoreType,
+                CategoryId = model.CategoryId,
+                Title = model.Title,
+                TitleUrl = model.TitleUrl,
+                CommentsCount=model.CommentsCount,
+                LikeUpCount=model.LikeUpCount,
+                LikeDownCount=model.LikeDownCount,
+                ViewsCount=model.ViewsCount
+            };
         }
     }
 }

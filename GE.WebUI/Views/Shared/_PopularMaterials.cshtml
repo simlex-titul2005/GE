@@ -1,12 +1,12 @@
 ﻿@model VMMaterial[]
 @{
-    var mct = ViewData["ModelCoreType"] == null ? SX.WebCore.Enums.ModelCoreType.Unknown : (SX.WebCore.Enums.ModelCoreType)ViewData["ModelCoreType"];
+    var inNewTab = Convert.ToBoolean(ViewBag.InNewTab);
 }
 
 @if (Model.Any())
 {
     <div class="pop-mat">
-        <h3>Полулярные @(ViewData["ModelCoreType"] == null ? "материалы" : mct == SX.WebCore.Enums.ModelCoreType.News ? "новости" : "статьи")</h3>
+        <h3 class="pop-mat__header">@ViewBag.PopularMaterialTitle</h3>
         <div class="row">
             @for (int i = 0; i < Model.Length; i++)
             {
@@ -14,7 +14,9 @@
                 <div class="col-md-3">
                     <div class="content">
                         <div class="date">@item.DateOfPublication.ToString("dd.MM.yyyy")</div>
-                        <h4 class="title"><a href="@item.GetUrl(Url)">@item.Title</a></h4>
+                        <h4 class="title">
+                            <a href="@item.GetUrl(Url)" @(inNewTab?"target=_blank":null)>@item.Title</a>
+                        </h4>
                         <ul class="list-unstyled list-inline info">
                             <li>
                                 <i class="fa fa-comments-o"></i>: @item.CommentsCount

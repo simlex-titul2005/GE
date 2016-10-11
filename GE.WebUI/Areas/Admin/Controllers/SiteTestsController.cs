@@ -277,20 +277,15 @@ namespace GE.WebUI.Areas.Admin.Controllers
             });
         }
 
-        [HttpPost, NotLogRequest, AllowAnonymous]
-        public async Task<JsonResult> Rules(int siteTestId)
+        [HttpPost]
+        public async Task<JsonResult> Rules(int testId)
         {
-            return await Task.Run(() =>
+            var data = await _repo.GetSiteTestRulesAsync(testId);
+            return Json(new
             {
-                var data = _repo.GetSiteTestRules(siteTestId);
-                return Json(new
-                {
-                    Title = data.Title,
-                    Rules = data.Rules
-                });
+                Title = data.Title,
+                Rules = data.Rules
             });
         }
-
-        
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using SX.WebCore;
 using GE.WebUI.Models;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
@@ -8,18 +7,17 @@ using GE.WebUI.Infrastructure;
 using SX.WebCore.Repositories;
 using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
+using System;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class ArticlesController : MaterialsController<Article, VMArticle>
     {
         private static RepoArticle _repo = new RepoArticle();
-
-        public ArticlesController() : base((byte)Enums.ModelCoreType.Article)
+        public ArticlesController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Article)])
         {
             WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
-
         public override SxRepoMaterial<Article, VMArticle> Repo
         {
             get
@@ -55,9 +53,10 @@ namespace GE.WebUI.Controllers
         public override PartialViewResult Last(byte? mct = default(byte?), int amount = 5, int? mid = default(int?))
         {
             var data = (Repo as RepoArticle).Last(mct, amount, mid, new byte[] {
-                (byte)Enums.ModelCoreType.Article,
-                (byte)Enums.ModelCoreType.News
+                MvcApplication.ModelCoreTypeProvider[nameof(Article)],
+                MvcApplication.ModelCoreTypeProvider[nameof(News)]
             });
+
             var viewModel = new VMMaterial[data.Length];
             SxVMMaterial item = null;
             for (int i = 0; i < data.Length; i++)
@@ -65,16 +64,21 @@ namespace GE.WebUI.Controllers
                 item = data[i];
                 switch(item.ModelCoreType)
                 {
-                    case (byte)Enums.ModelCoreType.Article:
+                    case 1:
                         viewModel[i] = new VMArticle { Title = item.Title, TitleUrl = item.TitleUrl, DateCreate = item.DateCreate, ModelCoreType=item.ModelCoreType };
                         break;
-                    case (byte)Enums.ModelCoreType.News:
+                    case 2:
                         viewModel[i] = new VMNews { Title = item.Title, TitleUrl = item.TitleUrl, DateCreate = item.DateCreate, ModelCoreType = item.ModelCoreType };
                         break;
                 }
             }
 
             return PartialView("_Last", viewModel);
+        }
+
+        public sealed override PartialViewResult Popular(int? mct = default(int?), int? mid = default(int?), int amount = 4)
+        {
+            throw new NotImplementedException("Популярные статьи реализованы в контроллере Новостей");
         }
     }
 }

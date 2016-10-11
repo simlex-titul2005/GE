@@ -154,7 +154,7 @@ namespace GE.WebUI.Infrastructure.Repositories
                     rules = model.Rules,
                     titleUrl = UrlHelperExtensions.SeoFriendlyUrl(model.Title),
                     type = model.Type,
-                    show=model.Show
+                    show = model.Show
                 }).SingleOrDefault();
 
                 return data;
@@ -241,13 +241,16 @@ namespace GE.WebUI.Infrastructure.Repositories
             }
         }
 
-        public SiteTest GetSiteTestRules(int siteTestId)
+        public async Task<SiteTest> GetSiteTestRulesAsync(int siteTestId)
         {
-            using (var conn = new SqlConnection(ConnectionString))
+            return await Task.Run(() =>
             {
-                var data = conn.Query<SiteTest>("dbo.get_site_test_rules @testId", new { testId = siteTestId }).SingleOrDefault();
-                return data;
-            }
+                using (var conn = new SqlConnection(ConnectionString))
+                {
+                    var data = conn.Query<SiteTest>("dbo.get_site_test_rules @testId", new { testId = siteTestId }).SingleOrDefault();
+                    return data;
+                }
+            });
         }
 
         public async Task<int> AddShow(int testId)

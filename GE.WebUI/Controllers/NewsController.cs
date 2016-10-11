@@ -39,5 +39,26 @@ namespace GE.WebUI.Controllers
             var data = (Repo as RepoNews).LastCategoryBlock(lnc, clnc, ctc);
             return PartialView("_NewsCategories", data);
         }
+
+        public sealed override PartialViewResult Popular(int? mct = default(int?), int? mid = default(int?), int amount = 4)
+        {
+            string title = "Популяные ";
+            switch(mct)
+            {
+                case 1:
+                    title += "статьи";
+                    break;
+                case 2:
+                    title += "новости";
+                    break;
+                default:
+                    title += "материалы";
+                    break;
+            }
+
+            ViewBag.PopularMaterialTitle = title;
+            ViewBag.InNewTab = mct == null;
+            return base.Popular(mct, mid, amount);
+        }
     }
 }

@@ -19,7 +19,8 @@
         <div class="foreword">
             @(Model.Foreword.Length>=100?Model.Foreword.Substring(0, 100)+"...": Model.Foreword)
             <br />
-            <a class="btn btn-default btn-sm" href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})">Подробнее <i class="fa fa fa-angle-double-right"></i></a>
+            <a class="btn btn-primary btn-sm" href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})">Комментировать, Шарить, Оценить <i class="fa fa fa-angle-double-right"></i></a>
+            <a class="btn btn-default btn-sm" href="#">Следуюший</a>
         </div>
     </div>
 </div>

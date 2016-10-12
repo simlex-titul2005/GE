@@ -1,17 +1,17 @@
 ﻿@model VMMaterial
 @{
     var url = Model.GetUrl(Url);
-    var picureId = Model.FrontPictureId != null ? Model.FrontPictureId : (Model.Game != null ? Model.Game.BadPictureId : Guid.Empty);
 }
 
 <figure class="mat-f-p">
-    @if (picureId.HasValue)
+    @if (Model.FrontPicture != null)
     {
-        <img alt="@Model.Title" src="@Url.Action("Picture", "Pictures", new { id=picureId, width= 300}))" />
+        <img alt="@Model.Title" src="@Url.Action("Picture", "Pictures", new { id=Model.FrontPicture.Id, width= 300}))" />
     }
     else
     {
-        <img alt="@Model.Title" src="~/Content/dist/i/article-empty.png" />
+        var defPicturIdeSetting = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider["empty-article-picture-id"]?.Value;
+        <img alt="@Model.Title" src="@(defPicturIdeSetting!=null?Url.Action("Picture", "Pictures", new { id=defPicturIdeSetting}) : "~/Content/dist/i/article-empty.png")" />
     }
     <i class="text-muted small hidden-sm">Инфорграфика по статистике для статьи в разработке</i><br />
 </figure>

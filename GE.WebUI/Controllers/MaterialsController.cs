@@ -1,9 +1,7 @@
 ﻿using SX.WebCore;
 using SX.WebCore.Abstract;
 using System.Web.Mvc;
-using static SX.WebCore.Enums;
 using SX.WebCore.MvcControllers;
-using GE.WebUI.Infrastructure;
 using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
 using System.Globalization;
@@ -103,17 +101,23 @@ namespace GE.WebUI.Controllers
             if (breadcrumbs != null)
             {
                 var bc = breadcrumbs.ToList();
+                if(model.Category!=null)
+                    bc.Add(new SxVMBreadcrumb { Title = model.Category.Title, Url=Url.Action("Index", new { cat=model.Category.Id }) });
+
                 bc.Add(new SxVMBreadcrumb { Title = ViewBag.Title });
                 ViewBag.Breadcrumbs = bc.ToArray();
             }
 
-            //update views count
-            Task.Run(() =>
+            if (!Request.IsLocal)
             {
-                Repo.AddUserView(model.Id, model.ModelCoreType);
-            });
+                //update views count
+                Task.Run(() =>
+                {
+                    Repo.AddUserView(model.Id, model.ModelCoreType);
+                });
 
-            model.ViewsCount = model.ViewsCount + 1;
+                model.ViewsCount = model.ViewsCount + 1;
+            }
 
             return View(model);
         }

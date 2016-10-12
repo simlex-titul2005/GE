@@ -38,4 +38,5 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.language = 'ru';
 	config.extraPlugins = 'justify';
+	config.allowedContent = true;
 };

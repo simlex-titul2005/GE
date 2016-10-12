@@ -192,7 +192,7 @@ ORDER BY
             {
                 vl.Video = v;
                 return vl;
-            }, new { materials = table.AsTableValuedParameter("dbo.ForSelectMaterialVideos") }, commandType: CommandType.StoredProcedure, splitOn: "Id").ToArray();
+            }, new { materials = table.AsTableValuedParameter("dbo.ForSelectMaterials") }, commandType: CommandType.StoredProcedure, splitOn: "Id").ToArray();
 
             for (int i = 0; i < materials.Length; i++)
             {

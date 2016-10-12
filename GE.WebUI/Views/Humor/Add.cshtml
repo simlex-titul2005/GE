@@ -4,6 +4,7 @@
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? "На данной странице Вы можете добавить юмор";
     ViewBag.Keywords = ViewBag.Keywords ?? "Юмор, анекдоты, смешные истории";
+    var siteName = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider["siteName"]?.Value;
 }
 
 @section styles{
@@ -17,13 +18,13 @@
     {
         <h2 class="text-success">Поздравляем! Ваш материал успешно добавлен и появиться на сайте после модерации.</h2>
         <br />
-        <p>Вы можете добавить еще больше юмора в коллекцию @global_asax.SiteSettingsProvider.Get("siteName")! Напоминаем, для того, чтобы ваш юмористический материал вошел в коллекцию, он должен соответствовать определенным правилам.</p>
+        <p>Вы можете добавить еще больше юмора в коллекцию @siteName! Напоминаем, для того, чтобы ваш юмористический материал вошел в коллекцию, он должен соответствовать определенным правилам.</p>
     }
     else
     {
         <p>Здравствуйте!</p>
 
-        <p>Мы рады, что вы решили прислать юмористический материал в коллекцию @global_asax.SiteSettingsProvider.Get("siteName")! Обращаем ваше внимание, что весь поступающий юмор проходит проверку (модерацию). Для того, чтобы ваш юмористический материал вошел в коллекцию, он должен соответствовать определенным правилам.</p>
+        <p>Мы рады, что вы решили прислать юмористический материал в коллекцию @siteName! Обращаем ваше внимание, что весь поступающий юмор проходит проверку (модерацию). Для того, чтобы ваш юмористический материал вошел в коллекцию, он должен соответствовать определенным правилам.</p>
     }
     <ol>
         <li>Материал должен быть действительно смешным, остроумным или интересным.</li>
@@ -89,7 +90,7 @@
 </div>
 
 @section scripts{
-    <script src="~/Content/dist/js/jquery.validate.min.js"></script>
-    <script src="~/Content/dist/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 }

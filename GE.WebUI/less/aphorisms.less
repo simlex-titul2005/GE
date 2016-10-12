@@ -36,6 +36,19 @@
 .aphorism .aph-html {
     min-height: @aph-html-img-size;
     margin-top: @def-pad;
+    @media (max-width: @screen-xs-max) {
+        text-align:center;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .aphorism .aph-html > figure {
@@ -47,14 +60,55 @@
     display: inline-block;
     float: left;
     margin-right: @def-pad*3;
+    @media (max-width: @screen-xs-max) {
+        float:none;
+        margin-right: 0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .aphorism .aph-html > .foreword {
     font-size: 18px;
+    margin-left:115px;
+    @media (max-width: @screen-xs-max) {
+        margin-left:0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .aphorism .aph-html > .foreword .btn {
     margin-top: @def-pad;
+    @media (max-width: @screen-xs-max) {
+        width:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 //ap-author-list

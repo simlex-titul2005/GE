@@ -1,6 +1,6 @@
 ﻿@{
-    var siteName = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteName).Value;
-    var logoUrl = Url.Action("Picture", "Pictures", new { id = global_asax.SiteSettingsProvider.Get(SX.WebCore.Resources.Settings.siteLogoPath).Value });
+    var siteName = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider[SX.WebCore.Resources.Settings.siteName]?.Value;
+    var logoPictureId = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider[SX.WebCore.Resources.Settings.siteLogoPath]?.Value;
 }
 <nav class="navbar navbar-default">
     <div class="container">
@@ -12,9 +12,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
-                <img alt="@siteName" src="@logoUrl">
-            </a>
+            @if (logoPictureId != null)
+            {
+                <a class="navbar-brand" href="/">
+                    <img alt="@siteName" src="@Url.Action("Picture", "Pictures", new { id=logoPictureId })">
+                </a>
+            }
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -47,6 +50,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="@Url.Action("List", "SiteTests")">Тесты</a></li>
                         <li><a href="@Url.Action("List", "Humor")">Юмор</a></li>
+                        <li><a href="@Url.Action("List", "Articles", new { cat="populiarnoe"})">Популярное</a></li>
                     </ul>
                 </li>
                 <li><a href="@Url.Action("Index", "ForAuthors")">Авторам</a></li>

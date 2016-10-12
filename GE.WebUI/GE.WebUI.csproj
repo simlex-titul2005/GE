@@ -273,6 +273,7 @@
     <Compile Include="Infrastructure\Repositories\RepoMaterial.cs" />
     <Compile Include="Infrastructure\Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Infrastructure\Repositories\RepoNews.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoPicture.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTest.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTestSubject.cs" />
     <Compile Include="Migrations\Configuration.cs" />

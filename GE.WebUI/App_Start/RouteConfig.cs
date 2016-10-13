@@ -10,6 +10,7 @@ namespace GE.WebUI
         public static void PreRouteAction(RouteCollection routes)
         {
             routes.IgnoreRoute("Articles/Details/{id}");
+            routes.IgnoreRoute("News/Details/{id}");
 
             routes.MapRoute(
                 name: null,

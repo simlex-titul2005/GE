@@ -8,6 +8,7 @@ using System.Linq;
 using static SX.WebCore.Enums;
 using System.Threading.Tasks;
 using System;
+using SX.WebCore.DbModels;
 
 namespace GE.WebUI.Areas.Admin.Controllers
 {

@@ -1,5 +1,5 @@
-﻿using SX.WebCore;
-using SX.WebCore.Abstract;
+﻿using SX.WebCore.DbModels;
+using SX.WebCore.DbModels.Abstract;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

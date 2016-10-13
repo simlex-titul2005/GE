@@ -1,5 +1,4 @@
 ﻿using SX.WebCore;
-using SX.WebCore.Abstract;
 using System.Web.Mvc;
 using SX.WebCore.MvcControllers;
 using GE.WebUI.ViewModels.Abstracts;
@@ -8,6 +7,8 @@ using System.Globalization;
 using System.Linq;
 using SX.WebCore.MvcApplication;
 using System.Threading.Tasks;
+using SX.WebCore.DbModels.Abstract;
+using SX.WebCore.DbModels;
 
 namespace GE.WebUI.Controllers
 {

@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore;
-using SX.WebCore.Abstract;
 using SX.WebCore.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Data.SqlClient;
 using GE.WebUI.ViewModels;
 using System.Linq;
 using SX.WebCore.ViewModels;
+using SX.WebCore.DbModels.Abstract;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {

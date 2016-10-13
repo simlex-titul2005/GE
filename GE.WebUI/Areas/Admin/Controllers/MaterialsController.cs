@@ -1,8 +1,8 @@
 ﻿using GE.WebUI.ViewModels.Abstracts;
-using SX.WebCore.Abstract;
 using SX.WebCore.MvcControllers;
 using System.Linq;
 using System;
+using SX.WebCore.DbModels.Abstract;
 
 namespace GE.WebUI.Areas.Admin.Controllers
 {

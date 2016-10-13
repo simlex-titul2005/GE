@@ -12,6 +12,7 @@ using SX.WebCore.Providers;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using SX.WebCore.Repositories;
 using System.Data;
+using SX.WebCore.DbModels;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {

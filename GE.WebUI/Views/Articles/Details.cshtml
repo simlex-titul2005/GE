@@ -50,10 +50,10 @@
     @Html.Action("LikeMaterials", "Articles", new { materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
 
     @{
-        banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
+        banner = banners != null ? banners.SingleOrDefault(x => x.Place == SX.WebCore.DbModels.SxBanner.BannerPlace.Intermediate) : null;
         if (banner != null)
         {
-            if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+            if (!(Equals(banner.Type, SX.WebCore.DbModels.SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SX.WebCore.DbModels.SxBanner.BannerType.Html))
             {
                 <div style="margin-top:30px;">
                     @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })

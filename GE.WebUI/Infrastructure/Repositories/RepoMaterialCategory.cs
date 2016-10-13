@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System;
 using System.Text;
+using SX.WebCore.DbModels;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {

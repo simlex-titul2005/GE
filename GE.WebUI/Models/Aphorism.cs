@@ -1,4 +1,4 @@
-﻿using SX.WebCore.Abstract;
+﻿using SX.WebCore.DbModels.Abstract;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GE.WebUI.Models

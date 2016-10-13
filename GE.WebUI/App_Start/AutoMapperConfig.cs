@@ -2,6 +2,7 @@
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
+using SX.WebCore.DbModels;
 using SX.WebCore.ViewModels;
 
 namespace GE.WebUI

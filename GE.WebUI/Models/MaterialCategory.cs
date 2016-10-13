@@ -1,4 +1,4 @@
-﻿using SX.WebCore;
+﻿using SX.WebCore.DbModels;
 
 namespace GE.WebUI.Models
 {

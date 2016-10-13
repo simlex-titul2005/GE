@@ -1,4 +1,4 @@
-﻿using SX.WebCore.Abstract;
+﻿using SX.WebCore.DbModels.Abstract;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

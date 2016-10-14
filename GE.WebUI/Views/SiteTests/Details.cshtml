@@ -26,7 +26,7 @@
     </div>
     <div class="text-center" style="color:#fff;">
         <p>Рассказать другу о тесте:</p>
-        @Html.SxShareButtons(global_asax.ShareButtons)
+        @Html.SxShareButtons(SX.WebCore.MvcApplication.SxMvcApplication.ShareButtons)
     </div>
     <br />
 
@@ -35,7 +35,7 @@
         <script src="~/content/dist/js/goodshare.min.js"></script>
         <script>
             var interval;
-            var lettersInSecond = 20;//1200 знаков в минуту
+            var lettersInSecond =@(Model.Question?.Test?.Settings?.LettersInSecond ?? 20);//1200 знаков в минуту
             var secondCounter = 0;
             $(function () {
                 //guess
@@ -88,16 +88,23 @@
                 $goodReadInput = $subject.children('[name$="BallsGoodRead"]');
                 $badReadInput = $subject.children('[name$="BallsBadRead"]');
 
-                var secondsCount = parseInt(parseInt($lettersCountInput.val()) / lettersInSecond) * 3;
-                $goodReadInput.val(secondsCount < 15 ? 15 : secondsCount);
+                var secondsCount = parseInt(parseInt($lettersCountInput.val()) / lettersInSecond) * @(Model.Question?.Test?.Settings?.BalsForOneSecond ?? 3);
+
+                //Время на ответ по-умолчанию
+                var dqs=@(Model.Question?.Test?.Settings?.DefQuestionSeconds ?? 15);
+
+                $goodReadInput.val(secondsCount < dqs ? dqs : secondsCount);
                 interval = setInterval(function () {
                     secondCounter++;
 
+                    //Кол-во баллов, онимаемых каждую секунду после завершения времени на ответ
+                    var oetbc=@(Model.Question?.Test?.Settings?.OnEndTimeBalsCount ?? 3);
+
                     var ballsGoodRead = $goodReadInput.val();
                     if (ballsGoodRead != 0)
-                        $goodReadInput.val(ballsGoodRead - 3);
+                        $goodReadInput.val(ballsGoodRead - oetbc);
                     else
-                        $badReadInput.val($badReadInput.val() - 3);
+                        $badReadInput.val($badReadInput.val() - oetbc);
                 }, 1000);
             }
 

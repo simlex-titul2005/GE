@@ -45,5 +45,7 @@ namespace GE.WebUI.ViewModels
 
         [Display(Name = "Показывать описания объектов")]
         public bool ShowSubjectDesc { get; set; }
+
+        public VMSiteTestSetting Settings { get; set; }
     }
 }

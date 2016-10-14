@@ -80,13 +80,14 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<SiteTestAnswer, SiteTestQuestion, SiteTestSubject, SiteTest, SiteTestAnswer>("dbo.get_site_test_page @titleUrl", (a, q, s, t) =>
+                var data = conn.Query<SiteTestAnswer, SiteTestQuestion, SiteTestSubject, SiteTest, SiteTestSetting, SiteTestAnswer>("dbo.get_site_test_page @titleUrl", (a, q, s, t, ts) =>
                 {
+                    t.Settings = ts;
                     a.Question = q;
                     q.Test = t;
                     a.Subject = s;
                     return a;
-                }, new { titleUrl = titleUrl }, splitOn: "Id").SingleOrDefault();
+                }, new { titleUrl = titleUrl }, splitOn: "Id,TestId").SingleOrDefault();
 
                 if (data == null)
                     return null;
@@ -229,13 +230,14 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<SiteTestAnswer, SiteTestQuestion, SiteTestSubject, SiteTest, SiteTestAnswer>("dbo.get_site_test_normal_results @subjectId", (a, q, s, t) =>
+                var data = conn.Query<SiteTestAnswer, SiteTestQuestion, SiteTestSubject, SiteTest, SiteTestSetting, SiteTestAnswer>("dbo.get_site_test_normal_results @subjectId", (a, q, s, t, ts) =>
                 {
+                    t.Settings = ts;
                     a.Question = q;
                     q.Test = t;
                     a.Subject = s;
                     return a;
-                }, new { subjectId = subjectId });
+                }, new { subjectId = subjectId }, splitOn:"Id,TestId");
 
                 return data.ToArray();
             }
@@ -263,6 +265,15 @@ namespace GE.WebUI.Infrastructure.Repositories
                     return data.SingleOrDefault();
                 }
             });
+        }
+
+        public sealed override SiteTest GetByKey(params object[] id)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var data = connection.Query<SiteTest>("dbo.get_site_test @testId", new { testId = id[0] });
+                return data.SingleOrDefault();
+            }
         }
     }
 }

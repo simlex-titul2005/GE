@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Text;
 using SX.WebCore.Repositories;
+using Dapper;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -21,6 +23,20 @@ SELECT dg.GoodPictureId  AS Id FROM D_GAME AS dg WHERE dg.GoodPictureId IS NOT N
 UNION ALL
 SELECT dg.BadPictureId  AS Id FROM D_GAME AS dg WHERE dg.BadPictureId IS NOT NULL) AS x
 GROUP BY x.Id");
+                };
+            }
+        }
+
+        protected override Action<SqlConnection> BeforeDeleteAction
+        {
+            get
+            {
+                return (connection) =>
+                {
+                    var query = new StringBuilder();
+                    query.AppendLine("UPDATE D_AUTHOR_APHORISM SET PictureId = NULL WHERE PictureId = @pictureId");
+                    query.AppendLine("UPDATE D_SITE_TEST_SUBJECT SET ictureId = NULL WHERE PictureId = @pictureId");
+                    connection.Execute(query.ToString());
                 };
             }
         }

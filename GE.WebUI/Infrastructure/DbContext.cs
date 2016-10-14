@@ -33,6 +33,8 @@ namespace GE.WebUI.Infrastructure
             modelBuilder.Entity<SiteTestAnswer>().HasKey(x => new { x.QuestionId, x.SubjectId });
             modelBuilder.Entity<SiteTestAnswer>().HasRequired(x => x.Question).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<SiteTestAnswer>().HasRequired(x => x.Subject).WithMany().WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SiteTestSetting>().HasKey(x=>x.TestId).HasRequired(x => x.Test).WithOptional(x=>x.Settings).WillCascadeOnDelete(true);
         }
     }
 }

@@ -53,6 +53,10 @@ namespace GE.WebUI
             cfg.CreateMap<SiteTestQuestion, VMSiteTestQuestion>();
             cfg.CreateMap<VMSiteTestQuestion, SiteTestQuestion>();
 
+            //site test setting
+            cfg.CreateMap<SiteTestSetting, VMSiteTestSetting>();
+            cfg.CreateMap<VMSiteTestSetting, SiteTestSetting>();
+
             //site test subject
             cfg.CreateMap<SiteTestSubject, VMSiteTestSubject>();
             cfg.CreateMap<VMSiteTestSubject, SiteTestSubject>();

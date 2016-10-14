@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 06.10.2016 12:41:38
+ * Time: 14.10.2016 12:20:40
  ************************************************************/
 
 /*******************************************
@@ -634,15 +634,17 @@ CREATE PROCEDURE dbo.get_site_test_page
 AS
 BEGIN
 	SELECT TOP(1) *
-	FROM   D_SITE_TEST_ANSWER         AS dsta
-	       JOIN D_SITE_TEST_QUESTION  AS dstq
+	FROM   D_SITE_TEST_ANSWER             AS dsta
+	       JOIN D_SITE_TEST_QUESTION      AS dstq
 	            ON  dstq.Id = dsta.QuestionId
-	       JOIN D_SITE_TEST_SUBJECT   AS dsts
+	       JOIN D_SITE_TEST_SUBJECT       AS dsts
 	            ON  dsts.Id = dsta.SubjectId
-	       JOIN D_SITE_TEST           AS dst
+	       JOIN D_SITE_TEST               AS dst
 	            ON  dst.Id = dstq.TestId
 	            AND dst.TitleUrl = @titleUrl
 	            AND dst.Show = 1
+	       LEFT JOIN D_SITE_TEST_SETTING  AS dsts2
+	            ON  dsts2.TestId = dst.Id
 	ORDER BY
 	       NEWID()
 END
@@ -890,6 +892,7 @@ BEGIN
 	       JOIN D_SITE_TEST           AS dst
 	            ON  dst.Id = dstq.TestId
 	            AND dst.Id = @testId
+	            LEFT JOIN D_SITE_TEST_SETTING AS dsts2 ON dsts2.TestId = dst.Id
 	WHERE  dsta.IsCorrect = 1
 END
 GO
@@ -1068,5 +1071,242 @@ BEGIN
 	
 	SELECT *
 	FROM   c AS c
+END
+GO
+
+/*******************************************
+* получиь тест
+*******************************************/
+IF OBJECT_ID(N'dbo.get_site_test', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_site_test;
+GO
+CREATE PROCEDURE dbo.get_site_test
+	@testId INT
+AS
+BEGIN
+	SELECT TOP(2) *
+	FROM   D_SITE_TEST AS dst
+	WHERE  dst.Id = @testId
+END
+GO
+
+/*******************************************
+* получиь настройку теста
+*******************************************/
+IF OBJECT_ID(N'dbo.get_site_test_setting', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_site_test_setting;
+GO
+CREATE PROCEDURE dbo.get_site_test_setting
+	@testId INT
+AS
+BEGIN
+	SELECT TOP(2) *
+	FROM   D_SITE_TEST_SETTING AS dsts
+	WHERE  dsts.TestId = @testId
+END
+GO
+
+/*******************************************
+* сохранить настройку теста
+*******************************************/
+IF OBJECT_ID(N'dbo.save_site_test_setting', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.save_site_test_setting;
+GO
+CREATE PROCEDURE dbo.save_site_test_setting
+	@testId INT,
+	@lc INT,
+	@oetbc INT,
+	@bfos INT,
+	@dqs INT,
+	@dsab INT
+AS
+BEGIN
+	DECLARE @date DATETIME = GETDATE();
+	
+	IF NOT EXISTS (
+	       SELECT TOP(1) dsts.TestId
+	       FROM   D_SITE_TEST_SETTING AS dsts
+	       WHERE  dsts.TestId = @testId
+	   )
+	BEGIN
+	    INSERT INTO D_SITE_TEST_SETTING
+	      (
+	        TestId,
+	        DateCreate,
+	        DateUpdate,
+	        LettersInSecond,
+	        OnEndTimeBalsCount,
+	        BalsForOneSecond,
+	        DefQuestionSeconds,
+	        DefCorrectAnswerBals
+	      )
+	    VALUES
+	      (
+	        @testId,
+	        @date,
+	        @date,
+	        @lc,
+	        @oetbc,
+	        @bfos,
+	        @dqs,
+	        @dsab
+	      )
+	END
+	ELSE
+	BEGIN
+		UPDATE D_SITE_TEST_SETTING
+		SET    DateUpdate             = @date,
+		       LettersInSecond        = @lc,
+		       OnEndTimeBalsCount     = @oetbc,
+		       BalsForOneSecond       = @bfos,
+		       DefQuestionSeconds     = @dqs,
+		       DefCorrectAnswerBals   = @dsab
+		WHERE  TestId                 = @testId
+	END
+	
+	EXEC dbo.get_site_test_setting @testId
+	END
+	GO
+
+/*******************************************
+ * Матрица ответов для тестов
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_site_test_matrix', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_site_test_matrix;
+GO
+CREATE PROCEDURE dbo.get_site_test_matrix
+	@testId INT,
+	@page INT = 1,
+	@pageSize INT = 10,
+	@count INT OUTPUT
+AS
+BEGIN
+	DECLARE @x         NVARCHAR(MAX) = '',
+	        @title     NVARCHAR(400)
+	
+	SET @page = (@page -1) * @pageSize
+	
+	DECLARE c CURSOR  
+	FOR
+	    SELECT dsts.Title
+	    FROM   D_SITE_TEST_SUBJECT AS dsts
+	    WHERE  dsts.TestId = @testId
+	    GROUP BY
+	           dsts.Title
+	
+	OPEN c
+	FETCH NEXT FROM c INTO @title
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	    SET @x = @x + ',[' + @title + ']'
+	    FETCH NEXT FROM c INTO @title
+	END
+	CLOSE c
+	DEALLOCATE c
+	
+	IF (@x <> '')
+	BEGIN
+	    SET @x = RIGHT(@x, LEN(@x) -1)
+	    
+	    EXEC (
+	             'SELECT *
+FROM   (
+           SELECT dsts.Title,
+                  dstq.[Text],
+                  dsta.IsCorrect
+           FROM   D_SITE_TEST_SUBJECT AS dsts
+                  JOIN D_SITE_TEST_QUESTION AS dstq
+                       ON  dstq.TestId = ' + @testId +
+	             '
+                  LEFT JOIN D_SITE_TEST_ANSWER AS dsta
+                       ON  dsta.SubjectId = dsts.Id
+                       AND dsta.QuestionId = dstq.Id
+           WHERE  dsts.TestId = ' + @testId +
+	             '
+       ) t
+       PIVOT(
+           SUM(IsCorrect) FOR t.Title IN (' + @x +
+	             ')
+       ) p ORDER BY p.[Text] OFFSET ' + @page + ' ROWS FETCH NEXT ' + @pageSize 
+	             +
+	             ' ROWS ONLY'
+	         )
+	END
+	
+	SELECT @count = COUNT(1)
+	FROM   D_SITE_TEST_QUESTION AS dstq
+	WHERE  dstq.TestId = @testId
+	
+	RETURN
+END
+GO
+
+/*******************************************
+ * Реверт значения матрицы теста 
+ *******************************************/
+IF OBJECT_ID(N'dbo.revert_site_test_matrix_value', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.revert_site_test_matrix_value;
+GO
+CREATE PROCEDURE dbo.revert_site_test_matrix_value
+	@subjectTitle NVARCHAR(400),
+	@questionText NVARCHAR(500),
+	@value INT
+AS
+BEGIN
+	UPDATE D_SITE_TEST_ANSWER
+	SET    IsCorrect = @value
+	WHERE  Id IN (SELECT dsta.Id
+	              FROM   D_SITE_TEST_ANSWER AS dsta
+	                     JOIN D_SITE_TEST_QUESTION AS dstq
+	                          ON  dstq.Id = dsta.QuestionId
+	                          AND dstq.[Text] = @questionText
+	                     JOIN D_SITE_TEST_SUBJECT AS dsts
+	                          ON  dsts.Id = dsta.SubjectId
+	                          AND dsts.Title = @subjectTitle)
+END
+GO
+
+/*******************************************
+ * Добавить просмотр теста
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_site_test_show', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_site_test_show;
+GO
+CREATE PROCEDURE dbo.add_site_test_show
+	@testId INT
+AS
+BEGIN
+	DECLARE @oldViewsCount INT
+	SELECT TOP 1 @oldViewsCount = dst.ViewsCount
+	FROM   D_SITE_TEST AS dst
+	WHERE  dst.Id = @testId
+	
+	UPDATE D_SITE_TEST
+	SET    ViewsCount = @oldViewsCount + 1
+	WHERE  Id = @testId
+	
+	SELECT @oldViewsCount + 1
+END
+GO
+
+/*******************************************
+ * Блок случайных тестов
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_random_site_tests', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_random_site_tests;
+GO
+CREATE PROCEDURE dbo.get_random_site_tests
+	@amount INT
+AS
+BEGIN
+	SELECT TOP(@amount)
+	       dst.Title,
+	       dst.[Description],
+	       dst.TitleUrl,
+	       dst.Rules
+	FROM   D_SITE_TEST AS dst
+	WHERE  dst.Show = 1
+	ORDER BY
+	       NEWID()
 END
 GO

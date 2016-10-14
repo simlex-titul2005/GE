@@ -7,10 +7,14 @@
 @section styles{
     <link href="@Url.Action("Css", "StaticContent", new { area="", name="lightbox"})" rel="stylesheet" />
     <link href="~/content/dist/css/test-matrix.min.css" rel="stylesheet" />
+    <style>
+        .settings-alert-info{
+            min-height:92px;
+        }
+    </style>
 }
 
 <h2>@ViewBag.Title</h2>
-
 
 <div class="text-right">
     <div class="form-group">
@@ -26,12 +30,13 @@
 </div>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">Основные параметры</a></li>
+    <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> Основные параметры</a></li>
     @if (!isNew)
     {
-        <li role="presentation"><a href="#subjects" aria-controls="subjects" role="tab" data-toggle="tab">Объекты теста</a></li>
-        <li role="presentation"><a href="#questions" aria-controls="questions" role="tab" data-toggle="tab">Вопросы теста</a></li>
-        <li role="presentation"><a href="#matrix" aria-controls="matrix" role="tab" data-toggle="tab">Матрица ответов</a></li>
+        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-wrench fa-fw"  aria-hidden="true"></i> Настройки теста</a></li>
+        <li role="presentation"><a href="#subjects" aria-controls="subjects" role="tab" data-toggle="tab"><i class="fa fa-object-group" aria-hidden="true"></i> Объекты теста</a></li>
+        <li role="presentation"><a href="#questions" aria-controls="questions" role="tab" data-toggle="tab"><i class="fa fa-question" aria-hidden="true"></i> Вопросы теста</a></li>
+        <li role="presentation"><a href="#matrix" aria-controls="matrix" role="tab" data-toggle="tab"><i class="fa fa-clone" aria-hidden="true"></i> Матрица ответов</a></li>
     }
     else
     {
@@ -40,8 +45,8 @@
 </ul>
 
 <div class="tab-content">
+    <br />
     <div role="tabpanel" class="tab-pane active" id="general">
-        <br />
         <form method="post" action="edit">
             @Html.AntiForgeryToken()
             @Html.HiddenFor(x => x.Id)
@@ -137,14 +142,17 @@
     </div>
     @if (!isNew)
     {
+        <div role="tabpanel" class="tab-pane" id="settings">
+            <div id="site-test-settings">
+
+            </div>
+        </div>
         <div role="tabpanel" class="tab-pane" id="subjects">
-            <br />
             <div id="grid-test-subjects">
 
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="questions">
-            <br />
             <div id="grid-test-questions">
 
             </div>
@@ -219,7 +227,7 @@
                         $('#grid-test-subjects').html(result);
                     },
                     complete:function(){
-                        $a.find('i').remove();
+                        $a.find('.fa-spinner').remove();
                     }
                 });
             })
@@ -290,7 +298,7 @@
                         $('#grid-test-questions').html(result);
                     },
                     complete:function(){
-                        $a.find('i').remove();
+                        $a.find('.fa-spinner').remove();
                     }
                 });
             })
@@ -424,6 +432,24 @@
                 $('.matrix__first-column').closest('tr').removeClass(css);
                 $tr.addClass(css);
             });
+
+            //settings
+            $('a[href="#settings"]').on('shown.bs.tab', function (e) {
+                $a = $(this);
+                $.ajax({
+                    method: 'get',
+                    url: '@Url.Action("Edit", "SiteTestSettings", new { testId = Model.Id })',
+                    beforeSend: function () {
+                        $('<i class="fa fa-spinner fa-spin"></i>').prependTo($a);
+                    },
+                    success: function (result) {
+                        $('#site-test-settings').html(result);
+                    },
+                    complete: function () {
+                        $a.find('.fa-spinner').remove();
+                    }
+                });
+            })
         });
     </script>
 }

@@ -47,5 +47,7 @@ namespace GE.WebUI.Models
         public int ViewsCount { get; set; }
 
         public bool ShowSubjectDesc { get; set; }
+
+        public virtual SiteTestSetting Settings { get; set; }
     }
 }

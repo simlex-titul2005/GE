@@ -1,0 +1,70 @@
+﻿@model VMSiteTestSetting
+
+<div class="alert alert-warning">
+    <p><strong>Внимание!</strong> При отсутствии настройки, подставляется значение по-умолчанию, заданное в теле страницы прохождения теста.</p>
+</div>
+
+@using (Ajax.BeginForm("Edit", new { controller = "SiteTestSettings" }, new AjaxOptions(), new { @autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x=>x.TestId)
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.LettersInSecond)
+                    <div class="alert alert-info settings-alert-info">
+                        <p>20 по-умолчанию или 1200 знаков в минуту.<br />Регулирует время, отведенное на ответ</p>
+                    </div>
+                    @Html.EditorFor(x => x.LettersInSecond, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.LettersInSecond)
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.BalsForOneSecond)
+                    <div class="alert alert-info settings-alert-info">
+                        <p>3 по-умолчанию.<br />Этот параметр регулирует кол-во балов, <b>прибавляемых</b> за каждую секунду, оставшуюся на ответ в случает правильного ответа<br /></p>
+                    </div>
+                    @Html.EditorFor(x => x.BalsForOneSecond, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.BalsForOneSecond)
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.OnEndTimeBalsCount)
+                    <div class="alert alert-info settings-alert-info">
+                        <p>3 по-умолчанию.<br />Этот параметр регулирует кол-во балов, <b>отнимаемых</b> за каждую секунду, прошедшую после окончания времени на ответ<br /></p>
+                    </div>
+                    @Html.EditorFor(x => x.OnEndTimeBalsCount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.OnEndTimeBalsCount)
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.DefQuestionSeconds)
+                    <div class="alert alert-info settings-alert-info">
+                        <p>15 по-умолчанию.<br />Параметр применяется только в том случае, если вычисленное время на ответ <b>меньше</b> заданного параметра.</p>
+                    </div>
+                    @Html.EditorFor(x => x.DefQuestionSeconds, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.DefQuestionSeconds)
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.DefCorrectAnswerBals)
+                    <div class="alert alert-info settings-alert-info">
+                        <p>15 по-умолчанию.<br /></p>
+                    </div>
+                    @Html.EditorFor(x => x.DefCorrectAnswerBals, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.DefCorrectAnswerBals)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+}

@@ -242,6 +242,7 @@
     <Compile Include="Areas\Admin\Controllers\SiteSettingsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteTestQuestionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteTestsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SiteTestSettingsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteTestSubjectsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRolesController.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="Infrastructure\Repositories\RepoNews.cs" />
     <Compile Include="Infrastructure\Repositories\RepoPicture.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTest.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoSiteTestSetting.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTestSubject.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Aphorism.cs" />
@@ -288,6 +290,7 @@
     <Compile Include="Models\SiteTest.cs" />
     <Compile Include="Models\SiteTestAnswer.cs" />
     <Compile Include="Models\SiteTestQuestion.cs" />
+    <Compile Include="Models\SiteTestSetting.cs" />
     <Compile Include="Models\SiteTestStep.cs" />
     <Compile Include="Models\SiteTestSubject.cs" />
     <Compile Include="Infrastructure\ModelBinders\VMMaterialCategoryModelBinder.cs" />
@@ -319,6 +322,7 @@
     <Compile Include="ViewModels\VMSiteTestQuestion.cs" />
     <Compile Include="ViewModels\VMSiteTestResult.cs" />
     <Compile Include="ViewModels\VMSiteTestResultNormal.cs" />
+    <Compile Include="ViewModels\VMSiteTestSetting.cs" />
     <Compile Include="ViewModels\VMSiteTestStepGuess.cs" />
     <Compile Include="ViewModels\VMSiteTestStepNormal.cs" />
     <Compile Include="ViewModels\VMSiteTestSubject.cs" />
@@ -372,6 +376,7 @@
     <Content Include="Areas\Admin\Views\Humor\EditorTemplates\VMHumor.cshtml" />
     <Content Include="Areas\Admin\Views\MaterialCategories\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Aphorisms\EditorTemplates\_AuthorAphorismLookupGrid.cshtml" />
+    <Content Include="Areas\Admin\Views\SiteTestSettings\_Edit.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />
@@ -503,9 +508,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Views\GoogleBanners\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

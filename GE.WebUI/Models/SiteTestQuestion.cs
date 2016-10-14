@@ -10,7 +10,7 @@ namespace GE.WebUI.Models
         [Required, MaxLength(500)]
         public string Text { get; set; }
 
-        public virtual SiteTest Test { get; set; }
         public int TestId { get; set; }
+        public virtual SiteTest Test { get; set; }
     }
 }

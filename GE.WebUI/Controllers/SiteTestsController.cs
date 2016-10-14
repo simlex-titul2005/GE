@@ -179,7 +179,7 @@ namespace GE.WebUI.Controllers
                     };
 
                     var isCorrect = answer.QuestionId == userAnswer.QuestionId;
-                    result.BallsCount += userAnswer.BallsSubjectShow + (isCorrect ? userAnswer.BallsGoodRead : 0) + userAnswer.BallsBadRead + (isCorrect ? 15 : 0);
+                    result.BallsCount += userAnswer.BallsSubjectShow + (isCorrect ? userAnswer.BallsGoodRead : 0) + userAnswer.BallsBadRead + (isCorrect ? (test?.Settings?.DefCorrectAnswerBals ?? 15) : 0);
                 }
 
 

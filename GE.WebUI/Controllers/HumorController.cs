@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using SX.WebCore;
 using System.Linq;
 using System.Configuration;
 using SX.WebCore.ViewModels;
@@ -14,8 +13,7 @@ namespace GE.WebUI.Controllers
     public sealed class HumorController : MaterialsController<Humor, VMHumor>
     {
         private static RepoHumor _repo = new RepoHumor();
-        //TODO: изменить 7
-        public HumorController() : base(7/*Enums.ModelCoreType.Humor*/) { }
+        public HumorController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]) { }
 
         public override SxRepoMaterial<Humor, VMHumor> Repo
         {
@@ -28,8 +26,7 @@ namespace GE.WebUI.Controllers
         public override ViewResult Add()
         {
             ViewBag.SiteSettingsGoogleRecaptchaSiteKey = ConfigurationManager.AppSettings["SiteSettingsGoogleRecaptchaSiteKey"];
-            //TODO: изменить 7
-            ViewBag.Categories = SxMaterialCategoriesController<SxVMMaterialCategory>.Repo.GetByModelCoreType(7/*Enums.ModelCoreType.Humor*/).Select(x=>new SelectListItem {
+            ViewBag.Categories = SxMaterialCategoriesController<SxVMMaterialCategory>.Repo.GetByModelCoreType(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]).Select(x=>new SelectListItem {
                 Value=x.Id,
                 Text=x.Title
             }).ToArray();

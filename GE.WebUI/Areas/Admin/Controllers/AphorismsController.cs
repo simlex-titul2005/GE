@@ -5,7 +5,6 @@ using GE.WebUI.Infrastructure.Repositories;
 using System.Web.Mvc;
 using SX.WebCore;
 using System.Linq;
-using static SX.WebCore.Enums;
 using System.Threading.Tasks;
 using System;
 using SX.WebCore.DbModels;
@@ -15,8 +14,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
     public sealed class AphorismsController : MaterialsController<Aphorism, VMAphorism>
     {
         private static RepoAphorism _repo = new RepoAphorism();
-        //TODO: изменить 6
-        public AphorismsController() : base(6/*ModelCoreType.Aphorism*/) { }
+        public AphorismsController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)]) { }
         public override SxRepoMaterial<Aphorism, VMAphorism> Repo
         {
             get

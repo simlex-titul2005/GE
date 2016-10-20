@@ -14,8 +14,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoAphorism : RepoMaterial<Aphorism, VMAphorism>
     {
-        //TODO: изменить 6
-        public RepoAphorism() : base(6/*ModelCoreType.Aphorism*/, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
+        public RepoAphorism() : base(MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)], new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
 
         public Aphorism GetRandom(int? id = null)
         {

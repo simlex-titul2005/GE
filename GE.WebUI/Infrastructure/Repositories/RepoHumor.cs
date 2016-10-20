@@ -15,8 +15,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoHumor: RepoMaterial<Humor, VMHumor>
     {
-        //TODO: Изменить 7 для юмора
-        public RepoHumor() : base(7/*humor*/, new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
+        public RepoHumor() : base(MvcApplication.ModelCoreTypeProvider[nameof(Humor)], new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
 
         public override VMHumor[] Read(SxFilter filter)
         {
@@ -89,8 +88,7 @@ namespace GE.WebUI.Infrastructure.Repositories
                 title = title,
                 fwd = fwd,
                 cat = cat,
-                //TODO: изменить 7 для юмора
-                mct = 7,//humor
+                mct = MvcApplication.ModelCoreTypeProvider[nameof(Humor)],
                 show = filter.OnlyShow == true ? true : (bool?)null
             };
 

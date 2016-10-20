@@ -11,8 +11,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
     public sealed class HumorController : MaterialsController<Humor, VMHumor>
     {
         private static RepoHumor _repo = new RepoHumor();
-        //TODO: изменить 7
-        public HumorController() : base(7/*Enums.ModelCoreType.Humor*/) { }
+        public HumorController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]) { }
         public override SxRepoMaterial<Humor, VMHumor> Repo
         {
             get

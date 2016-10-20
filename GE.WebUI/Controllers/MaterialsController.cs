@@ -40,14 +40,14 @@ namespace GE.WebUI.Controllers
 
             switch (ModelCoreType)
             {
-                case (byte)Enums.ModelCoreType.Article:
+                case 1://article
                     filter.PagerInfo.PageSize = 9;
                     break;
-                case (byte)Enums.ModelCoreType.News:
+                case 2://news
                     filter.PagerInfo.PageSize = 10;
                     break;
-                    //TODO: убрать 7
-                case 7/*ModelCoreType.Humor*/:
+                //TODO: убрать 7
+                case 7://humor
                     filter.PagerInfo.PageSize = 10;
                     break;
             }
@@ -64,14 +64,14 @@ namespace GE.WebUI.Controllers
             VMMaterial model = null;
             switch (ModelCoreType)
             {
-                case (byte)Enums.ModelCoreType.Article:
+                case 1://article
                     model = Repo.GetByTitleUrl(year, month, day, titleUrl);
                     break;
-                case (byte)Enums.ModelCoreType.News:
+                case 2://news
                     model = Repo.GetByTitleUrl(year, month, day, titleUrl);
                     break;
                 //TODO: убрать 7
-                case 7/*ModelCoreType.Humor*/:
+                case 7://humor
                     model = Repo.GetByTitleUrl(year, month, day, titleUrl);
                     break;
             }

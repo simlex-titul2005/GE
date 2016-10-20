@@ -36,8 +36,7 @@ namespace GE.WebUI.Controllers
             {
                 Task.Run(() =>
                 {
-                    //TODO: изменить 6
-                    (_repo as RepoAphorism).AddUserView(viewModel.Aphorism.Id, 6/*Enums.ModelCoreType.Aphorism*/);
+                    (_repo as RepoAphorism).AddUserView(viewModel.Aphorism.Id, MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)]);
                 });
             }
             return View(viewModel);

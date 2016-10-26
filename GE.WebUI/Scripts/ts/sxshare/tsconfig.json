@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "removeComments": true,
+    "target": "es5",
+    "outFile": "../../sxshare.js"
+  },
+  "files": [
+    "sxshare.ts"
+  ],
+  "compileOnSave": true
+}

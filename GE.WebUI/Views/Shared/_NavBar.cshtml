@@ -1,6 +1,6 @@
 ﻿@{
-    var siteName = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider[SX.WebCore.Resources.Settings.siteName]?.Value;
-    var logoPictureId = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider[SX.WebCore.Resources.Settings.siteLogoPath]?.Value;
+    var siteName = SiteSettingsProvider["sitename"]?.Value;
+    var logoPictureId = SiteSettingsProvider["sitelogopath"]?.Value;
 }
 <nav class="navbar navbar-default">
     <div class="container">

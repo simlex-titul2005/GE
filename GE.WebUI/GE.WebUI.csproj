@@ -260,6 +260,7 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ForAuthorsController.cs" />
     <Compile Include="Controllers\HumorController.cs" />
+    <Compile Include="Controllers\MaterialCategoriesController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SiteQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
@@ -355,7 +356,6 @@
     <Content Include="Areas\Admin\Views\Games\_GridView.cshtml" />
     <Content Include="Areas\Admin\Views\Games\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Games\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\SiteTests\_FindGridView.cshtml" />
     <Content Include="Areas\Admin\Views\SiteTests\_GridView.cshtml" />
     <Content Include="Areas\Admin\Views\SiteTests\_Matrix.cshtml" />
@@ -379,6 +379,7 @@
     <Content Include="Areas\Admin\Views\MaterialCategories\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Aphorisms\EditorTemplates\_AuthorAphorismLookupGrid.cshtml" />
     <Content Include="Areas\Admin\Views\SiteTestSettings\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />
@@ -511,7 +512,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

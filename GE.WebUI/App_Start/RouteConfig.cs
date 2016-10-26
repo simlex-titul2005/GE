@@ -12,13 +12,6 @@ namespace GE.WebUI
             routes.IgnoreRoute("Articles/Details/{id}");
             routes.IgnoreRoute("News/Details/{id}");
 
-            routes.MapRoute(
-                name: null,
-                url: "Home",
-                defaults: new { controller = "Home", action = "Index", area = "" },
-                namespaces: _defNamespace
-            );
-
             #region aphorisms
 
             routes.MapRoute(

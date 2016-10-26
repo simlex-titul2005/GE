@@ -3,7 +3,6 @@ using System.Linq;
 using System.Configuration;
 using SX.WebCore.ViewModels;
 using GE.WebUI.Models;
-using SX.WebCore.MvcControllers;
 using GE.WebUI.ViewModels;
 using GE.WebUI.Infrastructure.Repositories;
 using SX.WebCore.Repositories;
@@ -26,7 +25,7 @@ namespace GE.WebUI.Controllers
         public override ViewResult Add()
         {
             ViewBag.SiteSettingsGoogleRecaptchaSiteKey = ConfigurationManager.AppSettings["SiteSettingsGoogleRecaptchaSiteKey"];
-            ViewBag.Categories = SxMaterialCategoriesController<SxVMMaterialCategory>.Repo.GetByModelCoreType(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]).Select(x=>new SelectListItem {
+            ViewBag.Categories = MaterialCategoriesController.Repo.GetByModelCoreType(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]).Select(x=>new SelectListItem {
                 Value=x.Id,
                 Text=x.Title
             }).ToArray();

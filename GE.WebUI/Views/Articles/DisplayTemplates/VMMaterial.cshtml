@@ -10,7 +10,7 @@
     }
     else
     {
-        var defPicturIdeSetting = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider["empty-article-picture-id"]?.Value;
+        var defPicturIdeSetting = SiteSettingsProvider["empty-article-picture-id"]?.Value;
         <img alt="@Model.Title" src="@(defPicturIdeSetting!=null?Url.Action("Picture", "Pictures", new { id=defPicturIdeSetting}) : "~/Content/dist/i/article-empty.png")" />
     }
     <i class="text-muted small hidden-sm">Инфорграфика по статистике для статьи в разработке</i><br />

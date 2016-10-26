@@ -2,7 +2,7 @@
 @{
     var isNew = Model.Id == null;
     ViewBag.Title = isNew ? "Добавить категорию" : "Редактировать категорию \"" + Model.Title + "\"";
-    var forAphorism = Model.ModelCoreType == Enums.ModelCoreType.Aphorism;
+    var forAphorism = Model.ModelCoreType == ModelCoreTypeProvider[nameof(Aphorism)];
 }
 @section styles{
     <link href="@Url.Action("Css", "StaticContent", new { name= "lightbox", area="" })" rel="stylesheet" />
@@ -55,10 +55,6 @@
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
-                    @if (Model.FrontPictureId.HasValue)
-                    {
-                        <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Иконка @Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.FrontPictureId"><i class="fa fa-picture-o"></i></a>
-                    }
                     @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Выберите изображение" } })
                     @Html.ValidationMessageFor(x => x.FrontPictureId)
                 </div>
@@ -75,10 +71,6 @@
     {
         <div class="form-group">
             @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
-            @if (Model.FrontPictureId.HasValue)
-            {
-                <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Иконка @Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.FrontPictureId"><i class="fa fa-picture-o"></i></a>
-            }
             @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Выберите изображение" } })
             @Html.ValidationMessageFor(x => x.FrontPictureId)
         </div>

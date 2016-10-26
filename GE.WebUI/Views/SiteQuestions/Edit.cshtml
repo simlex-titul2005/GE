@@ -5,7 +5,7 @@
     ViewBag.H1 = ViewBag.H1 ?? title;
     ViewBag.H1CssClass = "hidden";
     ViewBag.Description = ViewBag.Description ?? "На данной страницы Вы можете задать любые вопросы, сделать предложения по сайту или предъявить претензию владельцам ресурса";
-    ViewBag.Keywords = ViewBag.Keywords ?? string.Format("{0}, вопросы, предложения, претензии", SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider[SX.WebCore.Resources.Settings.siteName]?.Value);
+    ViewBag.Keywords = ViewBag.Keywords ?? string.Format("{0}, вопросы, предложения, претензии", SiteSettingsProvider[SX.WebCore.Resources.Settings.sitename]?.Value);
     var message = TempData["Message"];
 }
 

@@ -1,31 +1,49 @@
 ﻿using GE.WebUI.ViewModels;
 using SX.WebCore.MvcControllers;
 using GE.WebUI.Infrastructure.Repositories;
-using SX.WebCore.ViewModels;
+using GE.WebUI.Models;
 using System;
-using static SX.WebCore.Enums;
+using System.Web.Mvc;
 
 namespace GE.WebUI.Areas.Admin.Controllers
 {
-    public sealed class MaterialCategoriesController : SxMaterialCategoriesController<VMMaterialCategory>
+    public sealed class MaterialCategoriesController : SxMaterialCategoriesController<MaterialCategory, VMMaterialCategory>
     {
         public MaterialCategoriesController()
         {
-            if (Repo == null || !(Repo is RepoMaterialCategory))
+            if (Repo == null || (Repo as RepoMaterialCategory)==null)
                 Repo = new RepoMaterialCategory();
         }
 
-        protected override Func<SxVMMaterialCategory, string> TreeViewMenuFuncContent(byte mct)
+        protected override Action<MaterialCategory> AfterSelectRedactModel
         {
-            switch (mct)
+            get
             {
-                case 6://aphorism
-                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action("Index", "Aphorisms", new { curCat = x.Id }), x.Title);
-                case (byte)ModelCoreType.Manual:
-                    return (x) => string.Format("<a href=\"{0}\">{1}</a>", Url.Action("Index", "FAQ", new { curCat = x.Id }), x.Title);
-                default:
-                    return null;
+                return (data)=> {
+                    ViewBag.GameTitle = data.Game?.Title;
+                };
             }
+        }
+
+        public override ActionResult Index(byte? mct, int page = 1)
+        {
+            switch(mct)
+            {
+                case 1:
+                    ViewBag.PageTitle = "Категории статей";
+                    break;
+                case 2:
+                    ViewBag.PageTitle = "Категории новостей";
+                    break;
+                case 6:
+                    ViewBag.PageTitle = "Категории афоризмов";
+                    break;
+                case 7:
+                    ViewBag.PageTitle = "Категории юмора";
+                    break;
+            }
+
+            return base.Index(mct, page);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@using SX.WebCore;
 @model SxExtantions.SxPagedCollection<VMHumor>
 @{
-    var siteName = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider["siteName"]?.Value;
+    var siteName = SiteSettingsProvider["siteName"]?.Value;
     ViewBag.Title = ViewBag.Title ?? "Коллекция юмора от " + siteName;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? "Качественная коллекция юмора от " + siteName;

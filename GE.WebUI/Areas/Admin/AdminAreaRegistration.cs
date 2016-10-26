@@ -15,9 +15,9 @@ namespace GE.WebUI.Areas.Admin
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                null,
-                "Admin",
-                new { controller = "Home", action = "Index" }
+                name: null,
+                url: "Admin",
+                defaults: new { controller = "Home", action = "Index" }
             );
 
             context.MapRoute(

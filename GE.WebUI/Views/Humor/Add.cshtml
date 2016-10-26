@@ -4,7 +4,7 @@
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? "На данной странице Вы можете добавить юмор";
     ViewBag.Keywords = ViewBag.Keywords ?? "Юмор, анекдоты, смешные истории";
-    var siteName = SX.WebCore.MvcApplication.SxMvcApplication.SiteSettingsProvider["siteName"]?.Value;
+    var siteName = SiteSettingsProvider["siteName"]?.Value;
 }
 
 @section styles{

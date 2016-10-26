@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
-using SX.WebCore;
-using SX.WebCore.DbModels;
-using SX.WebCore.ViewModels;
 
 namespace GE.WebUI
 {
@@ -32,10 +29,9 @@ namespace GE.WebUI
             cfg.CreateMap<VMHumor, Humor>();
 
             //material category
-            cfg.CreateMap<SxMaterialCategory, VMMaterialCategory>();
-            cfg.CreateMap<SxVMMaterialCategory, VMMaterialCategory>();
-            cfg.CreateMap<VMMaterialCategory, SxMaterialCategory>();
-                //.ForMember(d => d.ParentId, d => d.MapFrom(s => s.ParentId == null ? null : s.ParentId.ToString()));
+            cfg.CreateMap<MaterialCategory, VMMaterialCategory>();
+            cfg.CreateMap<VMMaterialCategory, MaterialCategory>()
+                .ForMember(d => d.ParentId, d => d.MapFrom(s => (string)s.ParentId));
 
             //news
             cfg.CreateMap<News, VMNews>();

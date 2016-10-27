@@ -34,7 +34,7 @@
 </div>
 
 <div class="text-center">
-    @Html.SxShareButtons(global_asax.ShareButtons, lbSettings: new SxExtantions.SxLikeButtonsSettings
+    @Html.SxShareButtons(lbSettings: new SxExtantions.SxLikeButtonsSettings
 {
     LikeDownCount = () => Model.LikeDownCount,
     LikeUpCount = () => Model.LikeUpCount,
@@ -50,7 +50,7 @@
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery.unobtrusive-ajax"})"></script>
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
-    <script src="~/content/dist/js/goodshare.min.js"></script>
+    <script src="~/Scripts/sxshare.js"></script>
     <script>
         loadScriptOnce('https://www.youtube.com/iframe_api');
         $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Id +'&mct=' + '@Model.ModelCoreType');

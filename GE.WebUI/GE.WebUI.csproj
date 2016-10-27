@@ -348,7 +348,6 @@
     <Content Include="content\dist\js\ge-for-gamers-block.min.js" />
     <Content Include="content\dist\js\ge-last-category-block.min.js" />
     <Content Include="content\dist\js\ge-last-news-block.min.js" />
-    <Content Include="content\dist\js\goodshare.min.js" />
     <Content Include="content\dist\js\site.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -498,7 +497,6 @@
     <Content Include="Views\Articles\_Last.cshtml" />
     <Content Include="Views\ForAuthors\Index.cshtml" />
     <None Include="Properties\PublishProfiles\RELEASE.pubxml" />
-    <Content Include="Scripts\ts\sxshare\tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -516,10 +514,6 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Scripts\ts\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\ts\sxshare\sxshare.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -106,12 +106,6 @@ function createJs() {
             suffix: '.min'
         }))
         .pipe(gulp.dest('content/dist/js'));
-
-    gulp.src([
-        'bower_components/goodshare/goodshare.min.js'
-    ])
-        .pipe(gulp.dest('content/dist/js'));
-
 }
 
 gulp.task('watch', function (cb) {

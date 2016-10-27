@@ -26,13 +26,13 @@
     </div>
     <div class="text-center" style="color:#fff;">
         <p>Рассказать другу о тесте:</p>
-        @Html.SxShareButtons(SX.WebCore.MvcApplication.SxMvcApplication.ShareButtons)
+        @Html.SxShareButtons()
     </div>
     <br />
 
     @section scripts{
         <script src="@Url.Action("Js", "StaticContent", new { name="jquery.unobtrusive-ajax"})"></script>
-        <script src="~/content/dist/js/goodshare.min.js"></script>
+        <script src="~/Scripts/sxshare.js"></script>
         <script>
             var interval;
             var lettersInSecond =@(Model.Question?.Test?.Settings?.LettersInSecond ?? 20);//1200 знаков в минуту

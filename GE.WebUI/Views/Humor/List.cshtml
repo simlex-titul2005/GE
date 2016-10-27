@@ -73,24 +73,19 @@
                         }
                         
 
-                        @*<br />
+                        <br />
                         <div class="text-center">
-                            @Html.SxShareButtons(global_asax.ShareButtons, new Dictionary<string, SxExtantions.SxShareButtonsSettings> {
-                                {"vk", new SxExtantions.SxShareButtonsSettings { Url= Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
-                                {"fb", new SxExtantions.SxShareButtonsSettings { Url=Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
-                                {"ok", new SxExtantions.SxShareButtonsSettings { Url=Url.ContentAbsUrl(Url.Action("Details", "Humor")), Title=item.Title, Text=item.Foreword } },
-                            }, new SxExtantions.SxLikeButtonsSettings
-                            {
-                                LikeUpCount = () => item.LikeUpCount,
-                                UrlUp = () => Url.Action("AddLike", "Humor", new { mid = item.Id, ld = true }),
-                                LikeDownCount = () => item.LikeDownCount,
-                                UrlDown = () => Url.Action("AddLike", "Humor", new { mid = item.Id, ld = false })
-                            })
-                        </div>*@
+                            @Html.SxShareButtons(options:new SxExtantions.SxShareButtonOption {
+                           Url= Url.ContentAbsUrl(item.GetUrl(Url)),
+                           Title=item.Title,
+                           Description=item.Foreword ?? item.GetForewordFromHtml(300),
+                           Image=item.FrontPictureId.HasValue? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id=item.FrontPictureId})):null
+                       })
+                        </div>
                         
                         <div class="text-center">
                                 <br />
-                                <a href="@Url.Action("Details", "Humor", new { year=item.DateCreate.Year, month=item.DateCreate.Month.ToString("00"), day=item.DateCreate.Day.ToString("00"), titleUrl=item.TitleUrl})" class="btn btn-warning">Поделиться</a>
+                                <a href="@item.GetUrl(Url)" class="btn btn-warning">Поделиться</a>
                             </div>
                     </div>
                 </li>
@@ -117,7 +112,7 @@
 
 
 @section scripts{
-    <script src="~/content/dist/js/goodshare.min.js"></script>
+    <script src="~/Scripts/sxshare.js"></script>
     <script type="text/javascript">
         loadScriptOnce('https://www.youtube.com/iframe_api');
     </script>

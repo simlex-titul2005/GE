@@ -34,7 +34,7 @@
                 @Html.Raw(Model.Aphorism.Html)
                 <h4 class="small">@(author == null ? "Аноним" : author.Name)</h4>
             </blockquote>
-            @Html.SxShareButtons(global_asax.ShareButtons)
+            @Html.SxShareButtons()
 
             @Html.Action("Edit", "Comments", new { mid = Model.Aphorism.Id, mct = 6/*aphorism*/ }))
 
@@ -63,10 +63,10 @@
 </div>
 
 @section scripts{
-    <script src="~/content/dist/js/goodshare.min.js"></script>
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery.unobtrusive-ajax"})"></script>
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
+    <script src="~/Scripts/sxshare.js"></script>
     <script type="text/javascript">
         $(function () {
             $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Aphorism.Id +'&mct=6'/*aphorism*/);

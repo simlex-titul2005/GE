@@ -164,7 +164,7 @@ ORDER BY
                 if (viewModel.Videos.Any())
                 {
                     var html = viewModel.FullDescription;
-                    SxBBCodeParser.ReplaceVideo(ref html, viewModel.Videos);
+                    SxBBCodeParser.ReplaceVideos(ref html, viewModel.Videos);
                     viewModel.FullDescription = html;
                 }
 

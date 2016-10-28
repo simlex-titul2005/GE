@@ -1,4 +1,5 @@
 ﻿@model SxExtantions.SxPagedCollection<VMNews>
+
 @{
     var title = ViewBag.Title;
     var h1 = ViewBag.H1;
@@ -6,18 +7,18 @@
     ViewBag.Title = title ?? (tag != null ? "Последние новости c тегом " + tag.Title : "Новости");
     if (title == null && ViewBag.GameTitle != null)
     {
-        ViewBag.Title="Последние новости по игре " + ViewBag.GameTitle;
+        ViewBag.Title = "Последние новости по игре " + ViewBag.GameTitle;
     }
-    ViewBag.H1 = h1 ?? (ViewBag.Tag!=null? "Новости про "+ tag.Title : ViewBag.Title);
+    ViewBag.H1 = h1 ?? (ViewBag.Tag != null ? "Новости про " + tag.Title : ViewBag.Title);
     ViewBag.H1CssClass = "header";
-    ViewBag.Description = ViewBag.Description ?? (tag != null ? "На данной странице вы сможете найти абсолютно все новости и статьи, которые были написаны авторами нашего сайта по запросу "+ tag.Title : null);
-    if(ViewBag.Description==null && ViewBag.GameTitle != null)
+    ViewBag.Description = ViewBag.Description ?? (tag != null ? "На данной странице вы сможете найти абсолютно все новости и статьи, которые были написаны авторами нашего сайта по запросу " + tag.Title : null);
+    if (ViewBag.Description == null && ViewBag.GameTitle != null)
     {
         ViewBag.Description = "На данной странице вы сможете ознакомиться споследними новостями, которые были написаны авторами нашего сайта об игре " + ViewBag.GameTitle;
     }
-    ViewBag.Keywords = ViewBag.Keywords ?? ViewBag.GameTitle ?? (tag!=null ? tag.Title:null);
+    ViewBag.Keywords = ViewBag.Keywords ?? ViewBag.GameTitle ?? (tag != null ? tag.Title : null);
 }
 
-@Html.Partial("_Breadcrumbs", model: (SxVMBreadcrumb[])ViewBag.Breadcrumbs)
+@Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
 @Html.Partial("_Collection", Model)

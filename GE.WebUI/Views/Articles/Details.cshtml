@@ -18,7 +18,7 @@
 }
 
 <div class="detail-article">
-    @Html.Partial("_Breadcrumbs", (SxVMBreadcrumb[])ViewBag.Breadcrumbs)
+    @Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
     @Html.Partial("_Foreword", Model)
 

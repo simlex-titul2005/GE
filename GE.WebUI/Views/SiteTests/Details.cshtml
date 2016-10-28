@@ -7,7 +7,7 @@
     var testType = Model.Question.Test.Type;
 }
 
-@Html.Partial("_Breadcrumbs", (SxVMBreadcrumb[])ViewBag.Breadcrumbs)
+@Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
 @if (Model.Question != null && Model.Question.Test != null)
 {

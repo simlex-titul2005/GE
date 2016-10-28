@@ -14,7 +14,7 @@
 }
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head itemscope itemtype="http://schema.org/WebSite">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,7 +37,8 @@
         <meta http-equiv="last-modified" content="@ViewBag.LastModified" />
     }
     <meta property="og:url" content="@Request.Url" />
-    <title>@ViewBag.Title</title>
+    <title itemprop="name">@ViewBag.Title</title>
+    <link rel="canonical" href="@(Url.ContentAbsUrl(Request.RawUrl))" itemprop="url" />
     <meta property="og:title" content="@ViewBag.Title" />
     <meta property="og:image" content="@(ViewBag.PageImage!=null ? ViewBag.PageImage: Url.ContentAbsUrl(logoPath ?? "/content/dist/i/faveicon.png"))" />
 

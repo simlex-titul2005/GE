@@ -232,12 +232,10 @@ namespace GE.WebUI
             );
             #endregion
 
-            
-
             routes.MapRoute(
                 name: null,
                 url: "Home/{gameTitle}",
-                defaults: new { controller = "home", action = "index", gameTitle = UrlParameter.Optional, area = "" },
+                defaults: new { controller = "Home", action = "Index", gameTitle = UrlParameter.Optional, area = "" },
                 namespaces: _defNamespace
             );
         }

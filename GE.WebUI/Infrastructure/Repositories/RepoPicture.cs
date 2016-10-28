@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Text;
 using SX.WebCore.Repositories;
 using Dapper;
+using SX.WebCore.DbModels;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -12,7 +13,8 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             get
             {
-                return sb => {
+                return sb =>
+                {
                     sb.AppendLine("INSERT INTO @result SELECT aa.PictureId FROM D_AUTHOR_APHORISM AS aa WHERE aa.PictureId IS NOT NULL");
                     sb.AppendLine("INSERT INTO @result SELECT dsts.PictureId FROM D_SITE_TEST_SUBJECT AS dsts WHERE dsts.PictureId IS NOT NULL");
                     sb.AppendLine(@"INSERT INTO @result
@@ -27,16 +29,16 @@ GROUP BY x.Id");
             }
         }
 
-        protected override Action<SqlConnection> BeforeDeleteAction
+        protected override Action<SqlConnection, SxPicture> BeforeDeleteAction
         {
             get
             {
-                return (connection) =>
+                return (connection, model) =>
                 {
                     var query = new StringBuilder();
                     query.AppendLine("UPDATE D_AUTHOR_APHORISM SET PictureId = NULL WHERE PictureId = @pictureId");
-                    query.AppendLine("UPDATE D_SITE_TEST_SUBJECT SET ictureId = NULL WHERE PictureId = @pictureId");
-                    connection.Execute(query.ToString());
+                    query.AppendLine("UPDATE D_SITE_TEST_SUBJECT SET PictureId = NULL WHERE PictureId = @pictureId");
+                    connection.Execute(query.ToString(), new { pictureId = model.Id });
                 };
             }
         }

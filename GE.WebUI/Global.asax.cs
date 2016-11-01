@@ -12,23 +12,24 @@ namespace GE.WebUI
 
         protected override void Application_Start(object sender, EventArgs e)
         {
-            var args = new SxApplicationEventArgs
+            var args = new SxApplicationEventArgs(
+                    defaultSiteName: "game-exe.com",
+                    getDbContextInstance: () => { return new DbContext(); },
+                    getModelCoreTypeName: getModelCoreTypeName,
+                    customModelCoreTypes: new Dictionary<string, byte>
+                    {
+                        [nameof(Aphorism)] = 6,
+                        [nameof(Humor)] = 7
+                    }
+                )
             {
-                DefaultSiteName="game-exe.com",
-                GetDbContextInstance = () => { return new DbContext(); },
                 WebApiConfigRegister = WebApiConfig.Register,
                 MapperConfigurationExpression = AutoMapperConfig.Register,
 
                 //routes
                 DefaultControllerNamespaces = _defNamespace,
                 PreRouteAction=RouteConfig.PreRouteAction,
-                PostRouteAction = RouteConfig.PostRouteAction,
-
-                CustomModelCoreTypes=new Dictionary<string, byte> {
-                    [nameof(Aphorism)]=6,
-                    [nameof(Humor)]=7
-                },
-                ModelCoreTypeNameFunc= getModelCoreTypeName
+                PostRouteAction = RouteConfig.PostRouteAction
             };
 
             base.Application_Start(sender, args);
@@ -40,6 +41,14 @@ namespace GE.WebUI
             {
                 default:
                     return null;
+                case 1:
+                    return "Статья";
+                case 2:
+                    return "Новость";
+                case 6:
+                    return "Афоризм";
+                case 7:
+                    return "Юмор";
             }
         }
     }

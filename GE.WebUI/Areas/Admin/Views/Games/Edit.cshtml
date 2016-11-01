@@ -69,10 +69,6 @@
         <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(x => x.FrontPictureId, new { @class = "control-label" })
-                @if (Model.FrontPictureId.HasValue)
-                {
-                    <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Иконка @Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.FrontPictureId"><i class="fa fa-picture-o"></i></a>
-                }
                 @Html.EditorFor(x => x.FrontPictureId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(x => x.FrontPictureId)
             </div>
@@ -80,10 +76,6 @@
         <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(x => x.GoodPictureId, new { @class = "control-label" })
-                @if (Model.FrontPictureId.HasValue)
-                {
-                    <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Иконка для новостей @Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.GoodPictureId"><i class="fa fa-picture-o"></i></a>
-                }
                 @Html.EditorFor(x => x.GoodPictureId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(x => x.GoodPictureId)
             </div>
@@ -91,10 +83,6 @@
         <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(x => x.BadPictureId, new { @class = "control-label" })
-                @if (Model.FrontPictureId.HasValue)
-                {
-                    <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Иконка для статей @Model.Title" data-toggle="tooltip" title="" href="/pictures/picture/@Model.BadPictureId"><i class="fa fa-picture-o"></i></a>
-                }
                 @Html.EditorFor(x => x.BadPictureId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(x => x.BadPictureId)
             </div>

@@ -1,13 +1,14 @@
 ﻿using SX.WebCore;
+using SX.WebCore.DbModels;
 using SX.WebCore.MvcControllers;
+using SX.WebCore.ViewModels;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers
 {
-    public sealed class EmployeesController : SxEmployeesController
+    public sealed class EmployeesController : SxEmployeesController<SxEmployee, SxVMEmployee>
     {
-
         private static readonly int _pageSize = 10;
 #if !DEBUG
         [OutputCache(Duration =900)]

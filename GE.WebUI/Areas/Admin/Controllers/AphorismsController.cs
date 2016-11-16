@@ -51,13 +51,13 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [NonAction]
-        public override Task<ActionResult> Index(VMAphorism filterModel, SxOrder order, int page = 1)
+        public override Task<ActionResult> Index(VMAphorism filterModel, SX.WebCore.SxOrderItem order, int page = 1)
         {
             return base.Index(filterModel, order, page);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(string curCat, VMAphorism filterModel, SxOrder order, int page = 1)
+        public async Task<ActionResult> Index(string curCat, VMAphorism filterModel, SX.WebCore.SxOrderItem order, int page = 1)
         {
             filterModel.CategoryId = curCat;
             ViewBag.CategoryId = curCat;

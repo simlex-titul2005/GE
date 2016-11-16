@@ -19,7 +19,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public ViewResult Index(int page = 1)
         {
-            var filter = new SxFilter(page, _pageSize) { Order = new SxOrder { FieldName = "Name", Direction = SortDirection.Asc } };
+            var filter = new SxFilter(page, _pageSize) { Order = new SxOrderItem { FieldName = "Name", Direction = SortDirection.Asc } };
             var viewModel = Repo.Read(filter);
             ViewBag.Filter = filter;
 
@@ -28,7 +28,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Index(VMAuthorAphorism filterModel, SxOrder order, int page = 1)
+        public PartialViewResult Index(VMAuthorAphorism filterModel, SxOrderItem order, int page = 1)
         {
             var filter = new SxFilter(page, _pageSize) { Order = order, WhereExpressionObject = filterModel };
             var viewModel = Repo.Read(filter);
@@ -100,9 +100,9 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult FindGridView(VMAuthorAphorism filterModel, SxOrder order, int page = 1, int pageSize = 10)
+        public PartialViewResult FindGridView(VMAuthorAphorism filterModel, SxOrderItem order, int page = 1, int pageSize = 10)
         {
-            var defaultOrder = new SxOrder { FieldName = "Name", Direction = SortDirection.Asc };
+            var defaultOrder = new SxOrderItem { FieldName = "Name", Direction = SortDirection.Asc };
             var filter = new SxFilter(page, pageSize) { WhereExpressionObject = filterModel, Order = order == null || order.Direction == SortDirection.Unknown ? defaultOrder : order };
             filter.PagerInfo.PagerSize = 5;
 

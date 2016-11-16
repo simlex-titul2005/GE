@@ -29,7 +29,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Index(int page = 1)
         {
-            var order = new SxOrder { FieldName = "Title", Direction = SortDirection.Asc };
+            var order = new SxOrderItem { FieldName = "Title", Direction = SortDirection.Asc };
             var filter = new SxFilter(page, _pageSize) { Order = order };
 
             var viewModel = _repo.Read(filter);
@@ -42,7 +42,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(VMSiteTest filterModel, SxOrder order, int page = 1)
+        public async Task<ActionResult> Index(VMSiteTest filterModel, SxOrderItem order, int page = 1)
         {
             var filter = new SxFilter(page, _pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel };
 
@@ -56,7 +56,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> FindGridView(VMSiteTest filterModel, SxOrder order, int page = 1, int pageSize = 10)
+        public async Task<ActionResult> FindGridView(VMSiteTest filterModel, SxOrderItem order, int page = 1, int pageSize = 10)
         {
             var filter = new SxFilter(page, pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel };
 

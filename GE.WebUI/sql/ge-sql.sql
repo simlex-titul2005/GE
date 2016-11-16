@@ -797,7 +797,7 @@ BEGIN
 	            ON  dm.Id = da.Id
 	            AND dm.ModelCoreType = da.ModelCoreType
 	            AND (dm.Show = 1 AND dm.DateOfPublication <= GETDATE())
-	       LEFT JOIN AspNetUsers  AS anu
+	       LEFT JOIN D_USER  AS anu
 	            ON  anu.Id = dm.UserId
 	       LEFT JOIN D_GAME       AS dg
 	            ON  dg.Id = da.GameId

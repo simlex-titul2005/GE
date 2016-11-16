@@ -16,7 +16,6 @@ namespace GE.WebUI.Controllers
         where TModel : SxMaterial
         where TViewModel : VMMaterial, new()
     {
-
         protected MaterialsController(byte mct) : base(mct)
         {
             BeforeSelectListAction = beforeSelectListAction;

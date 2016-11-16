@@ -24,7 +24,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             var gws = getAuthorAphorismsWhereString(filter, out param);
             sb.Append(gws);
 
-            var defaultOrder = new SxOrder { FieldName = "daa.Name", Direction = SortDirection.Asc };
+            var defaultOrder = new SxOrderItem { FieldName = "daa.Name", Direction = SortDirection.Asc };
             sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
 
             sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);

@@ -30,7 +30,7 @@ namespace GE.WebUI.Controllers
         [HttpGet]
         public ViewResult List(int page = 1)
         {
-            var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
+            var defaultOrder = new SxOrderItem { FieldName = "DateCreate", Direction = SortDirection.Desc };
             var filter = new SxFilter { Order = defaultOrder, OnlyShow = true };
 
             var data = Repo.Read(filter);

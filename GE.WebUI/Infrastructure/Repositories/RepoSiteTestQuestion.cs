@@ -26,7 +26,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             var gws = getSiteTestQuestionWhereString(filter, out param);
             sb.Append(gws);
 
-            var defaultOrder = new SxOrder { FieldName = "dstq.DateCreate", Direction = SortDirection.Desc };
+            var defaultOrder = new SxOrderItem { FieldName = "dstq.DateCreate", Direction = SortDirection.Desc };
             sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
 
             sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);

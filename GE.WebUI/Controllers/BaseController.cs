@@ -7,7 +7,7 @@ namespace GE.WebUI.Controllers
     {
         public BaseController()
         {
-            WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
+            FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
     }
 }

@@ -6,14 +6,13 @@ namespace GE.WebUI.Infrastructure
 {
     public static class BreadcrumbsManager
     {
-        public static void WriteBreadcrumbs(SxBaseController controller)
+        public static void WriteBreadcrumbs(SxBaseController controller, HashSet<SxVMBreadcrumb> breadcrumbs)
         {
             if (controller.ControllerContext.IsChildAction) return;
 
             var routes = controller.ControllerContext.RequestContext.RouteData.Values;
             var gameName = routes["game"] != null && !string.IsNullOrEmpty(routes["game"].ToString()) ? routes["game"].ToString() : null;
 
-            var breadcrumbs = new List<SxVMBreadcrumb>();
             breadcrumbs.Add(new SxVMBreadcrumb { Title = "Главная", Url = "/" });
 
             switch (controller.SxControllerName)
@@ -62,8 +61,6 @@ namespace GE.WebUI.Infrastructure
                         breadcrumbs.Add(new SxVMBreadcrumb { Title = "Тесты", Url = controller.Url.Action("List", "SiteTests") });
                     break;
             }
-
-            controller.ViewBag.Breadcrumbs = breadcrumbs.ToArray();
         }
     }
 }

@@ -24,9 +24,9 @@ namespace GE.WebUI.Areas.Admin.Controllers
         private static int _pageSize = 10;
 
         [HttpPost]
-        public async Task<ActionResult> Index(int testId, VMSiteTestSubject filterModel, SxOrder order, int page = 1)
+        public async Task<ActionResult> Index(int testId, VMSiteTestSubject filterModel, SX.WebCore.SxOrderItem order, int page = 1)
         {
-            var defaultOrder = new SxOrder { FieldName = "dstq.Title", Direction = SortDirection.Asc };
+            var defaultOrder = new SX.WebCore.SxOrderItem { FieldName = "dstq.Title", Direction = SortDirection.Asc };
             var filter = new SxFilter(page, _pageSize) { Order = order == null || order.Direction == SortDirection.Unknown ? defaultOrder : order, WhereExpressionObject = filterModel, AddintionalInfo = new object[] { testId } };
 
             var viewModel = await _repo.ReadAsync(filter);
@@ -107,7 +107,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
 
         private PartialViewResult getResult(int testId)
         {
-            var defaultOrder = new SxOrder { FieldName = "dstq.Title", Direction = SortDirection.Asc };
+            var defaultOrder = new SX.WebCore.SxOrderItem { FieldName = "dstq.Title", Direction = SortDirection.Asc };
             var filter = new SxFilter(1, _pageSize) { Order = defaultOrder, AddintionalInfo = new object[] { testId } };
             var viewModel = _repo.Read(filter);
             ViewBag.Filter = filter;

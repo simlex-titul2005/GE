@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using GE.WebUI.Models;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
-using GE.WebUI.Infrastructure;
 using SX.WebCore.Repositories;
 using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
@@ -14,10 +13,7 @@ namespace GE.WebUI.Controllers
     public sealed class ArticlesController : MaterialsController<Article, VMArticle>
     {
         private static RepoArticle _repo = new RepoArticle();
-        public ArticlesController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Article)])
-        {
-            WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
-        }
+        public ArticlesController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Article)]) { }
         public override SxRepoMaterial<Article, VMArticle> Repo
         {
             get

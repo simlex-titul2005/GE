@@ -18,7 +18,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Index(int page = 1)
         {
-            var order = new SxOrder { FieldName = "Title", Direction = SortDirection.Desc };
+            var order = new SxOrderItem { FieldName = "Title", Direction = SortDirection.Desc };
             var filter = new SxFilter(page, _pageSize) { Order = order };
 
             var viewModel = Repo.Read(filter);
@@ -31,7 +31,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(VMGame filterModel, SxOrder order, int page = 1)
+        public async Task<ActionResult> Index(VMGame filterModel, SxOrderItem order, int page = 1)
         {
             var filter = new SxFilter(page, _pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel };
 
@@ -72,9 +72,9 @@ namespace GE.WebUI.Areas.Admin.Controllers
         //}
 
         [HttpPost, AllowAnonymous]
-        public async Task<ActionResult> FindGridView(VMGame filterModel, SxOrder order, int page = 1, int pageSize = 10)
+        public async Task<ActionResult> FindGridView(VMGame filterModel, SxOrderItem order, int page = 1, int pageSize = 10)
         {
-            var defaultOrder = new SxOrder { FieldName = "Title", Direction = SortDirection.Asc };
+            var defaultOrder = new SxOrderItem { FieldName = "Title", Direction = SortDirection.Asc };
             var filter = new SxFilter(page, pageSize) { WhereExpressionObject = filterModel, Order = order == null || order.Direction == SortDirection.Unknown ? defaultOrder : order };
 
             var viewModel = await Repo.ReadAsync(filter);

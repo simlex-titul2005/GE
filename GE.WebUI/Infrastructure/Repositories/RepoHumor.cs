@@ -30,7 +30,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             }));
             sb.Append(" FROM DV_MATERIAL AS dm ");
             sb.Append(" LEFT JOIN D_MATERIAL_CATEGORY AS dmc ON dmc.Id = dm.CategoryId ");
-            sb.Append(" LEFT JOIN AspNetUsers AS anu ON anu.Id = dm.UserId ");
+            sb.Append(" LEFT JOIN D_USER AS anu ON anu.Id = dm.UserId ");
             sb.Append(" LEFT JOIN D_PICTURE AS dp ON dp.Id = dm.FrontPictureId ");
             sb.Append(" LEFT JOIN D_SEO_TAGS AS dst ON (dst.ModelCoreType=dm.ModelCoreType AND dst.MaterialId=dm.Id AND dst.MaterialId IS NOT NULL) ");
 
@@ -38,7 +38,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             var gws = getMaterialsWhereString(filter, out param);
             sb.Append(gws);
 
-            var defaultOrder = new SxOrder { FieldName = "DateCreate", Direction = SortDirection.Desc };
+            var defaultOrder = new SxOrderItem { FieldName = "DateCreate", Direction = SortDirection.Desc };
             sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order, new System.Collections.Generic.Dictionary<string, string> {
                 { "DateCreate", "dm.[DateCreate]"},
                 { "Title","dm.[Title]"}

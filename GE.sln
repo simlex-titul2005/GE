@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.WebUI", "GE.WebUI\GE.Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SX.WebCore", "..\SX.WebCore\SX.WebCore\SX.WebCore.csproj", "{DAF1A092-DED8-4C43-B08D-20E55C6F03A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SX.Analytics", "..\SX.WebCore\SX.Analytics\SX.Analytics.csproj", "{0F22C6F1-8110-4C0E-AB1B-0900EF62F438}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SX.Tests", "..\SX.WebCore\SX.Tests\SX.Tests.csproj", "{0A2C56CC-0423-4B54-9162-02DBA1D3A683}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DAF1A092-DED8-4C43-B08D-20E55C6F03A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAF1A092-DED8-4C43-B08D-20E55C6F03A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAF1A092-DED8-4C43-B08D-20E55C6F03A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F22C6F1-8110-4C0E-AB1B-0900EF62F438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F22C6F1-8110-4C0E-AB1B-0900EF62F438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F22C6F1-8110-4C0E-AB1B-0900EF62F438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F22C6F1-8110-4C0E-AB1B-0900EF62F438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A2C56CC-0423-4B54-9162-02DBA1D3A683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A2C56CC-0423-4B54-9162-02DBA1D3A683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A2C56CC-0423-4B54-9162-02DBA1D3A683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A2C56CC-0423-4B54-9162-02DBA1D3A683}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

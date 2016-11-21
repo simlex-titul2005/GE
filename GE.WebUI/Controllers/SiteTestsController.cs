@@ -1,4 +1,5 @@
-﻿using GE.WebUI.Infrastructure.Repositories;
+﻿using GE.WebUI.Infrastructure;
+using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
@@ -24,7 +25,7 @@ namespace GE.WebUI.Controllers
 
         public SiteTestsController()
         {
-            //WriteBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
+            FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
 
         [HttpGet]
@@ -62,14 +63,6 @@ namespace GE.WebUI.Controllers
             var data = Repo.GetSiteTestPage(titleUrl);
             if (data == null) return new HttpNotFoundResult();
 
-            var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
-            if (breadcrumbs != null)
-            {
-                var bc = breadcrumbs.ToList();
-                bc.Add(new SxVMBreadcrumb { Title = data.Question.Test.Title });
-                ViewBag.Breadcrumbs = bc.ToArray();
-            }
-
             if (data.Question.Test.Type == SiteTest.SiteTestType.Guess)
             {
                 var step = new VMSiteTestStepGuess();
@@ -92,7 +85,6 @@ namespace GE.WebUI.Controllers
 
             return View(model: viewModel);
         }
-
 
         [HttpPost, ValidateAntiForgeryToken, NotLogRequest]
         public async Task<ActionResult> StepGuess(List<VMSiteTestStepGuess> steps)

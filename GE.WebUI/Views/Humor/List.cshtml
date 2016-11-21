@@ -1,7 +1,7 @@
 ﻿@using SX.WebCore;
 @model SxExtantions.SxPagedCollection<VMHumor>
 @{
-    var siteName = SiteSettingsProvider["siteName"]?.Value;
+    var siteName = SiteSettingsProvider["sitename"]?.Value;
     ViewBag.Title = ViewBag.Title ?? "Коллекция юмора от " + siteName;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? "Качественная коллекция юмора от " + siteName;
@@ -13,101 +13,108 @@
 
 @section styles{
     <link href="~/content/dist/css/humor.min.css" rel="stylesheet" />
+    <link href="~/content/dist/css/yt-videos.min.css" rel="stylesheet" />
 }
 
 @Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
 <div id="humor-page">
-    @if (Model.Collection.Any())
-    {
-        <ul class="list-unstyled">
-            @for (int i = 0; i < Model.Collection.Length; i++)
+    <div class="row">
+        <div class="col-md-9">
+            @if (Model.Collection.Any())
             {
-                item = Model.Collection[i];
-                <li>
-                    <div class="humor-list">
-                        <h2 class="humor-list__header">@item.Title</h2>
-                        <div class="humor-list__info">
-                            <ul class="list-unstyled list-inline">
-                                <li>
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>: &nbsp; @((date-item.DateOfPublication).Days) дней назад
-                                </li>
-                                <li>
-                                    <i class="fa fa-eye" aria-hidden="true"></i>: &nbsp; @item.ViewsCount
-                                </li>
-                                <li>
-                                    <i class="fa fa-comments-o" aria-hidden="true"></i>: &nbsp; @item.CommentsCount
-                                </li>
-                            </ul>
-                        </div>
-                        @if (item.User != null)
-                        {
-                            <div class="humor-list__author text-muted">
-                                @if (item.User.Id != null)
-                                {
-                                    <span>Опубликовал: @(item.User.NikName ?? item.User.Email)</span>
-                                }
-                                else
-                                {
-                                    <span>Прислал: @(item.User.NikName)</span>
-                                }
-                            </div>
-                        }
-                        <div>
-                            @if (item.Videos.Length > 0)
-                            {
-                                <div style="position:relative; height:340px; width:100%; max-width:100%;">
-                                    @Html.SxVideo(item.Videos.First(), SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
-                                </div>
-                            }
-                            else
-                            {
-                                @Html.Raw(item.Html.Length <= length ? item.Html : item.Html.Substring(0, length) + "...")
-                            }
-                        </div>
-                        @if (!string.IsNullOrEmpty(item.SourceUrl))
-                        {
-                            <div class="humor-list__source">
-                                Источник: <a href="@item.SourceUrl" rel="nofollow" target="_blank">@item.SourceUrl</a>
-                            </div>
-                        }
-                        
-
-                        <br />
-                        <div class="text-center">
-                            @Html.SxShareButtons(options:new SxExtantions.SxShareButtonOption {
-                           Url= Url.ContentAbsUrl(item.GetUrl(Url)),
-                           Title=item.Title,
-                           Description=item.Foreword ?? item.GetForewordFromHtml(300),
-                           Image=item.FrontPictureId.HasValue? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id=item.FrontPictureId})):null
-                       })
-                        </div>
-                        
-                        <div class="text-center">
-                                <br />
-                                <a href="@item.GetUrl(Url)" class="btn btn-warning">Поделиться</a>
-                            </div>
-                    </div>
-                </li>
-                if (i!=0 && i % 5 == 0)
-                {
-                    var banner = ViewBag.PageBanners != null ? ((SxVMBanner[])ViewBag.PageBanners).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
-                    if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+                <ul class="list-unstyled">
+                    @for (int i = 0; i < Model.Collection.Length; i++)
                     {
-                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                        item = Model.Collection[i];
+                        <li>
+                            <div class="humor-list">
+                                <h2 class="humor-list__header">@item.Title</h2>
+                                <div class="humor-list__info">
+                                    <ul class="list-unstyled list-inline">
+                                        <li>
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>: &nbsp; @((date - item.DateOfPublication).Days) дней назад
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-eye" aria-hidden="true"></i>: &nbsp; @item.ViewsCount
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-comments-o" aria-hidden="true"></i>: &nbsp; @item.CommentsCount
+                                        </li>
+                                    </ul>
+                                </div>
+                                @if (item.User != null)
+                                {
+                                    <div class="humor-list__author text-muted">
+                                        @if (item.User.Id != null)
+                                        {
+                                            <span>Опубликовал: @(item.User.NikName ?? item.User.Email)</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Прислал: @(item.User.NikName)</span>
+                                        }
+                                    </div>
+                                }
+                                <div>
+                                    @if (item.Videos.Length > 0)
+                                    {
+                                        <div style="position:relative; height:340px; width:100%; max-width:100%;">
+                                            @Html.SxVideo(item.Videos.First(), SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw(item.Html.Length <= length ? item.Html : item.Html.Substring(0, length) + "...")
+                                    }
+                                </div>
+                                @if (!string.IsNullOrEmpty(item.SourceUrl))
+                                {
+                                    <div class="humor-list__source">
+                                        Источник: <a href="@item.SourceUrl" rel="nofollow" target="_blank">@item.SourceUrl</a>
+                                    </div>
+                                }
+
+
+                                <br />
+                                <div class="text-center">
+                                    @Html.SxShareButtons(options: new SxExtantions.SxShareButtonOption
+                               {
+                                   Url = Url.ContentAbsUrl(item.GetUrl(Url)),
+                                   Title = item.Title,
+                                   Description = item.Foreword ?? item.GetForewordFromHtml(300),
+                                   Image = item.FrontPictureId.HasValue ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = item.FrontPictureId })) : null
+                               })
+                                </div>
+
+                                <div class="text-center">
+                                    <br />
+                                    <a href="@item.GetUrl(Url)" class="btn btn-warning">Поделиться</a>
+                                </div>
+                            </div>
+                        </li>
                     }
-                    @Html.Raw("<br/>")
-                }
+                </ul>
+                <div class="text-center">
+                    @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new { page = x }), isAjax: false, htmlAttributes: new { @class = "pagination" })
+                </div>
+                <br />
+                <div class="text-center">
+                    <a href="@Url.Action("Add","Humor")" class="btn btn-transparent white">Добавить юмор</a>
+                </div>
             }
-        </ul>
-        <div class="text-center">
-            @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new { page = x }), isAjax: false, htmlAttributes: new { @class = "pagination" })
         </div>
-        <br />
-        <div class="text-center">
-            <a href="@Url.Action("Add","Humor")" class="btn btn-transparent white">Добавить юмор</a>
+        <div class="col-md-3">
+            <h3>Популярное на Youtube</h3>
+            <div id="humor-yt-videos">
+                <div class="text-center">
+                    <br />
+                    <i class="fa fa-spinner fa-spin"></i>
+                    <br />
+                </div>
+            </div>
         </div>
-    }
+    </div>
 </div>
 
 
@@ -115,5 +122,15 @@
     <script src="~/Scripts/sxshare.js"></script>
     <script type="text/javascript">
         loadScriptOnce('https://www.youtube.com/iframe_api');
+
+        $(function () {
+            getVideosFromYoutube();
+        });
+
+        function getVideosFromYoutube() {
+            $.get('@Url.Action("PopularForHumor", "YoutubeVideos", new { amount=12})', function (result) {
+                $('#humor-yt-videos').html(result);
+            });
+        }
     </script>
 }

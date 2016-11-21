@@ -6,13 +6,16 @@ using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using GE.WebUI.Infrastructure.Repositories;
 using SX.WebCore.Repositories;
+using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class HumorController : MaterialsController<Humor, VMHumor>
     {
         private static RepoHumor _repo = new RepoHumor();
-        public HumorController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]) { }
+        public HumorController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]) {
+            FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
+        }
 
         public override SxRepoMaterial<Humor, VMHumor> Repo
         {

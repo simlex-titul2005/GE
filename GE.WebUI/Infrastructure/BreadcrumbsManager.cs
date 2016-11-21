@@ -43,6 +43,11 @@ namespace GE.WebUI.Infrastructure
                     break;
                 case "humor":
                     breadcrumbs.Add(new SxVMBreadcrumb { Title = "Юмор", Url = controller.Url.Action("List", "Humor") });
+                    if (Equals("details", controller.SxActionName))
+                    {
+                        var model = (ViewModels.VMHumor)controller.SxModel;
+                        breadcrumbs.Add(new SxVMBreadcrumb { Title = model.Title, Url = model.GetUrl(controller.Url) });
+                    }
                     break;
                 case "news":
                     if (controller.SxActionName == "list")
@@ -57,8 +62,17 @@ namespace GE.WebUI.Infrastructure
                     }
                     break;
                 case "sitetests":
-                    if (controller.SxActionName == "list" || controller.SxActionName == "details")
-                        breadcrumbs.Add(new SxVMBreadcrumb { Title = "Тесты", Url = controller.Url.Action("List", "SiteTests") });
+                    breadcrumbs.Add(new SxVMBreadcrumb { Title = "Тесты", Url = controller.Url.Action("List", "SiteTests") });
+                    if (controller.SxActionName == "details")
+                    {
+                        var model = (ViewModels.VMSiteTestAnswer)controller.SxModel;
+                        var test = model?.Question?.Test;
+                        if (test != null)
+                            breadcrumbs.Add(new SxVMBreadcrumb { Title = test.Title, Url = controller.Url.Action("Details", "SiteTests", new { titleUrl = test.TitleUrl }) });
+                    }
+                    break;
+                case "youtubevideos":
+                    breadcrumbs.Add(new SxVMBreadcrumb { Title = "Поулярное видео", Url = controller.Url.Action("List", "YoutubeVideos", new { amount = 9, cat = 20 }) });
                     break;
             }
         }

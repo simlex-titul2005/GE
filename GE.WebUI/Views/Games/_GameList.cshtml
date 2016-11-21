@@ -36,6 +36,9 @@
                         case "home":
                             url = Url.Action("Details", "Games", new { titleUrl = item.TitleUrl });
                             break;
+                        case "humor":
+                            url = Url.Action("Details", "Games", new { titleUrl = item.TitleUrl });
+                            break;
                         case "news":
                             url = actionName == "List" || actionName == "index" ? Url.Action(actionName, new { controller = controllerName, gameTitle = item.TitleUrl }) : Url.Action("List", new { controller = controllerName, gameTitle = item.TitleUrl });
                             break;

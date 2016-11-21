@@ -88,6 +88,10 @@ namespace GE.WebUI
                 constraints: new { httpMethod = new HttpMethodConstraint("get") }
             );
             #endregion
+
+            #region youtube videos
+            routes.MapRoute(name: null, url: "YoutubeVideos", defaults: new { controller = "YoutubeVideos", action = "List", amount = 9, cat=20, area = "" }, namespaces: _defNamespace);
+            #endregion
         }
 
         public static void PostRouteAction(RouteCollection routes)
@@ -100,7 +104,7 @@ namespace GE.WebUI
                         constraints: new { httpMethod = new HttpMethodConstraint("post") }
                     );
 
-            
+
 
             #region articles
             routes.MapRoute(

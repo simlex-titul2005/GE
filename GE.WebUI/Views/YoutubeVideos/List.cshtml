@@ -1,0 +1,47 @@
+﻿@model SX.WebCore.ViewModels.Youtube.SxVMYoutubeVideo[]
+@{
+    SxVMVideo item = null;
+    ViewBag.H1 = ViewBag.H1 ?? "Поулярные видео в категории Gaming";
+    var colCount = 3;
+    var rowsCount = Model.Length / colCount;
+}
+
+@section styles{
+    <link href="~/content/dist/css/yt-videos.min.css" rel="stylesheet" />
+}
+
+@Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
+
+<div class="yt-videos-list">
+    @for (int i = 1; i <= rowsCount; i++)
+    {
+        var data = Model.Skip((i - 1) * colCount).Take(colCount).ToArray();
+
+        <div class="row">
+            @for (int y = 0; y < data.Length; y++)
+                {
+                    item = data[y].ConvertedVideo;
+                <div class="col-md-4">
+                    <div class="yt-videos-list__item">
+                        <div style="position:relative; height:150px; margin-bottom:30px;">
+                            @Html.SxVideo(item, SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
+                        </div>
+
+                        <div class="yt-videos-list__info">
+                            <h2>@item.Title</h2>
+                            Опубликовано: @item.DateCreate.ToString("dd-MM-yyyy hh:mm")<br />
+                            Источник: <a href="@item.VideoUrl" target="_blank">@item.VideoUrl</a><br />
+                            Канал: <a href="@item.VideoChannelUrl" target="_blank">@item.VideoChannelUrl</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script>
+        loadScriptOnce('https://www.youtube.com/iframe_api');
+    </script>
+}

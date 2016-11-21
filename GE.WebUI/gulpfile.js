@@ -70,7 +70,8 @@ function createCss() {
        'less/ap-author-page.less',
        'less/humor.less',
        'less/author-page.less',
-       'less/test-matrix.less'
+       'less/test-matrix.less',
+       'less/yt-videos.less'
     ])
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))

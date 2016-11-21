@@ -1,0 +1,38 @@
+﻿@model SX.WebCore.ViewModels.Youtube.SxVMYoutubeVideo[]
+@{
+    var date = (DateTimeOffset)ViewBag.Date;
+}
+
+<p class="text-muted" style="font-size:.9em;">
+    <i class="fa fa-clock-o" aria-hidden="true"></i> Следующее обновление:<br />
+    @date
+</p>
+
+@if (Model.Any())
+{
+    SxVMVideo item = null;
+    for (int i = 0; i < Model.Length; i++)
+    {
+        item = Model[i].ConvertedVideo;
+
+        <div class="humor-yt-item">
+
+            <div class="humor-yt-item__video">
+                @Html.SxVideo(item, SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
+            </div>
+
+            <h3 class="humor-yt-item__title">@item.Title</h3>
+
+            Канал: <a href="@item.VideoChannelUrl" target="_blank">@item.VideoChannelUrl</a>
+        </div>
+
+        if (i % 6 == 1)
+        {
+            var banner = ViewBag.PageBanners != null ? ((SxVMBanner[])ViewBag.PageBanners).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
+            if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+            {
+                @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+            }
+        }
+    }
+}

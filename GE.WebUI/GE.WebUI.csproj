@@ -214,6 +214,8 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AffiliateLinksController.cs" />
     <Compile Include="Areas\Admin\Controllers\AphorismsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApiParametersController.cs" />
     <Compile Include="Areas\Admin\Controllers\ArticlesController.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthorAphorismsController.cs" />
     <Compile Include="Areas\Admin\Controllers\BannedUrlsController.cs" />
@@ -263,12 +265,12 @@
     <Compile Include="Controllers\ForAuthorsController.cs" />
     <Compile Include="Controllers\HumorController.cs" />
     <Compile Include="Controllers\MaterialCategoriesController.cs" />
-    <Compile Include="Controllers\NetMaterialsController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SiteQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
+    <Compile Include="Controllers\YoutubeVideosController.cs" />
     <Compile Include="Infrastructure\BreadcrumbsManager.cs" />
     <Compile Include="Infrastructure\DbContext.cs" />
     <Compile Include="Infrastructure\Managers\SeoWordCounter.cs" />
@@ -339,6 +341,7 @@
     <Content Include="content\dist\css\site.min.css" />
     <Content Include="content\dist\css\test-list.min.css" />
     <Content Include="content\dist\css\test-matrix.min.css" />
+    <Content Include="content\dist\css\yt-videos.min.css" />
     <Content Include="content\dist\i\404.jpg" />
     <Content Include="content\dist\i\article-empty.png" />
     <Content Include="content\dist\i\faveicon.png" />
@@ -498,7 +501,8 @@
     <Content Include="Views\Articles\_Last.cshtml" />
     <Content Include="Views\ForAuthors\Index.cshtml" />
     <None Include="Properties\PublishProfiles\RELEASE.pubxml" />
-    <Content Include="Views\NetMaterials\Popular.cshtml" />
+    <Content Include="Views\YoutubeVideos\List.cshtml" />
+    <Content Include="Views\YoutubeVideos\_PopularForHumor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -37,7 +37,7 @@ namespace GE.WebUI.Controllers
             };
 
             var viewModel = await Repo.GetPopularAsync(filter);
-            ViewBag.Date = DateTime.UtcNow.AddHours(2);
+            ViewBag.Date = DateTime.UtcNow.AddHours(2).ToString("yyyy-MM-dd hh:mm:ss");
 
             return PartialView("_PopularForHumor", viewModel);
         }

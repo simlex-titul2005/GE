@@ -87,10 +87,13 @@
                                })
                                 </div>
 
-                                <div class="text-center">
-                                    <br />
-                                    <a href="@item.GetUrl(Url)" class="btn btn-warning">Поделиться</a>
-                                </div>
+                                @if (item.Html.Length > length)
+                                {
+                                    <div class="text-center">
+                                        <br />
+                                        <a href="@item.GetUrl(Url)" class="btn btn-warning">Читать до конца</a>
+                                    </div>
+                                }
                             </div>
                         </li>
                     }

@@ -18,9 +18,16 @@ namespace GE.WebUI.Infrastructure
             switch (controller.SxControllerName)
             {
                 case "aphorisms":
-                    if (controller.SxActionName == "list" || controller.SxActionName == "details")
+                    breadcrumbs.Add(new SxVMBreadcrumb { Title = "Афоризмы", Url = controller.Url.Action("List", "Aphorisms") });
+                    if (controller.SxActionName == "list")
                     {
-                        breadcrumbs.Add(new SxVMBreadcrumb { Title = "Афоризмы", Url = controller.Url.Action("List", "Aphorisms") });
+                        var author = (ViewModels.VMAuthorAphorism)controller.ViewBag.Author;
+                        if(author!=null)
+                            breadcrumbs.Add(new SxVMBreadcrumb { Title = author.Name, Url = controller.Url.Action("List", "Aphorisms", new { author=author.TitleUrl }) });
+
+                        var category = (SxVMMaterialCategory)controller.ViewBag.Category;
+                        if(category!=null)
+                            breadcrumbs.Add(new SxVMBreadcrumb { Title = category.Title, Url = controller.Url.Action("List", "Aphorisms", new { categoryId = category.Id }) });
                     }
                     break;
                 case "articles":

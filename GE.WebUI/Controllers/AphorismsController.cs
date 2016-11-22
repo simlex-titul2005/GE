@@ -6,6 +6,7 @@ using SX.WebCore.ViewModels;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
 using System;
+using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
 {
@@ -16,6 +17,11 @@ namespace GE.WebUI.Controllers
         {
             get { return _repo; }
             set { _repo = value; }
+        }
+
+        public AphorismsController()
+        {
+            FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
 
         [HttpGet]
@@ -57,29 +63,23 @@ namespace GE.WebUI.Controllers
         [HttpGet]
         public ActionResult List(string categoryId = null, int page = 1)
         {
-            var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
+            //var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
 
             var author = Request.QueryString["author"];
             if (!string.IsNullOrEmpty(author))
             {
-                var a=Mapper.Map<AuthorAphorism, VMAuthorAphorism>(new RepoAuthorAphorism().GetByTitleUrl(author));
-                if (!string.IsNullOrEmpty(author) && a == null)
-                    return new HttpNotFoundResult();
-
-                ViewBag.Author = a;
-                Array.Resize(ref breadcrumbs, breadcrumbs.Length + 1);
-                breadcrumbs[breadcrumbs.Length - 1] = new SxVMBreadcrumb { Title = a.Name, Url = null };
+                var a = AuthorAphorismsController.Repo.GetByTitleUrl(author);
+                if (a == null) return new HttpNotFoundResult();
+                ViewBag.Author = Mapper.Map<AuthorAphorism, VMAuthorAphorism>(a);
             }
             if (!string.IsNullOrEmpty(categoryId))
             {
                 var c=getCurrentCategory(categoryId);
+                if (c == null) return new HttpNotFoundResult();
                 ViewBag.Category = c;
-                Array.Resize(ref breadcrumbs, breadcrumbs.Length + 1);
-                breadcrumbs[breadcrumbs.Length - 1] = new SxVMBreadcrumb { Title = c.Title, Url = null };
             }
 
-            ViewBag.Breadcrumbs = breadcrumbs;
-
+            //ViewBag.Breadcrumbs = breadcrumbs;
 
             var filter = new SxFilter(page, _pageSize) {
                 WhereExpressionObject = new VMAphorism { CategoryId = categoryId, Author = new VMAuthorAphorism { TitleUrl = author } },
@@ -103,7 +103,7 @@ namespace GE.WebUI.Controllers
         {
             if (categoryId == null) return null;
 
-            var data = new RepoMaterialCategory().GetByKey(categoryId);
+            var data = MaterialCategoriesController.Repo.GetByKey(categoryId);
             return Mapper.Map<MaterialCategory, SxVMMaterialCategory>(data);
         }
     }

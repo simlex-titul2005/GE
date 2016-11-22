@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 14.10.2016 12:20:40
+ * Time: 22.11.2016 12:00:54
  ************************************************************/
 
 /*******************************************
@@ -752,15 +752,16 @@ BEGIN
 	WHERE  dsts.Id = @subjectId
 	
 	SELECT *
-	FROM   D_SITE_TEST_ANSWER         AS dsta
-	       JOIN D_SITE_TEST_QUESTION  AS dstq
+	FROM   D_SITE_TEST_ANSWER             AS dsta
+	       JOIN D_SITE_TEST_QUESTION      AS dstq
 	            ON  dstq.Id = dsta.QuestionId
-	       JOIN D_SITE_TEST_SUBJECT   AS dsts
+	       JOIN D_SITE_TEST_SUBJECT       AS dsts
 	            ON  dsts.Id = dsta.SubjectId
-	       JOIN D_SITE_TEST           AS dst
+	       JOIN D_SITE_TEST               AS dst
 	            ON  dst.Id = dstq.TestId
 	            AND dst.Id = @testId
-	            LEFT JOIN D_SITE_TEST_SETTING AS dsts2 ON dsts2.TestId = dst.Id
+	       LEFT JOIN D_SITE_TEST_SETTING  AS dsts2
+	            ON  dsts2.TestId = dst.Id
 	WHERE  dsta.IsCorrect = 1
 END
 GO
@@ -789,17 +790,17 @@ BEGIN
 	            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
 	            ELSE SUBSTRING(dbo.func_strip_html(dm.Html), 0, @lettersCount) +
 	                 '...'
-	       END                    AS Foreword,
-	       anu.NikName            AS UserName,
-	       dg.Title               AS GameTitle
-	FROM   D_ARTICLE              AS da
-	       JOIN DV_MATERIAL       AS dm
+	       END               AS Foreword,
+	       anu.NikName       AS UserName,
+	       dg.Title          AS GameTitle
+	FROM   D_ARTICLE         AS da
+	       JOIN DV_MATERIAL  AS dm
 	            ON  dm.Id = da.Id
 	            AND dm.ModelCoreType = da.ModelCoreType
 	            AND (dm.Show = 1 AND dm.DateOfPublication <= GETDATE())
 	       LEFT JOIN D_USER  AS anu
 	            ON  anu.Id = dm.UserId
-	       LEFT JOIN D_GAME       AS dg
+	       LEFT JOIN D_GAME  AS dg
 	            ON  dg.Id = da.GameId
 	WHERE  (@gameTitle IS NULL)
 	       OR  (
@@ -1022,19 +1023,19 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		UPDATE D_SITE_TEST_SETTING
-		SET    DateUpdate             = @date,
-		       LettersInSecond        = @lc,
-		       OnEndTimeBalsCount     = @oetbc,
-		       BalsForOneSecond       = @bfos,
-		       DefQuestionSeconds     = @dqs,
-		       DefCorrectAnswerBals   = @dsab
-		WHERE  TestId                 = @testId
+	    UPDATE D_SITE_TEST_SETTING
+	    SET    DateUpdate               = @date,
+	           LettersInSecond          = @lc,
+	           OnEndTimeBalsCount       = @oetbc,
+	           BalsForOneSecond         = @bfos,
+	           DefQuestionSeconds       = @dqs,
+	           DefCorrectAnswerBals     = @dsab
+	    WHERE  TestId                   = @testId
 	END
 	
 	EXEC dbo.get_site_test_setting @testId
-	END
-	GO
+END
+GO
 
 /*******************************************
  * Матрица ответов для тестов
@@ -1176,5 +1177,150 @@ BEGIN
 	WHERE  dst.Show = 1
 	ORDER BY
 	       NEWID()
+END
+GO
+
+/*******************************************
+ * добавить популярные видео с youtube
+ *******************************************/
+IF OBJECT_ID(N'dbo.save_popular_youtube_videos', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.save_popular_youtube_videos;
+GO
+ 
+IF TYPE_ID(N'dbo.PopularYoutubeVideos') IS NOT NULL
+    DROP TYPE dbo.PopularYoutubeVideos
+GO
+
+CREATE TYPE dbo.PopularYoutubeVideos AS TABLE(
+                                                 Id NVARCHAR(128),
+                                                 Title NVARCHAR(400),
+                                                 ChannelId NVARCHAR(100),
+                                                 ChannelTitle NVARCHAR(400)
+                                             )
+GO 
+
+CREATE PROCEDURE dbo.save_popular_youtube_videos
+	@videos PopularYoutubeVideos READONLY
+AS
+BEGIN
+	DECLARE @date DATETIME = GETDATE();
+	
+	BEGIN TRANSACTION
+	INSERT INTO D_POPULAR_YOUTUBE_VIDEO
+	  (
+	    Id,
+	    Title,
+	    ChannelId,
+	    ChannelTitle,
+	    Rating,
+	    DateUpdate,
+	    DateCreate
+	  )
+	SELECT v.Id,
+	       v.Title,
+	       v.ChannelId,
+	       v.ChannelTitle,
+	       0,
+	       @date,
+	       @date
+	FROM   @videos AS v
+	WHERE  v.Id NOT IN (SELECT dpv.Id
+	                    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv)
+	
+	UPDATE D_POPULAR_YOUTUBE_VIDEO
+	SET    Rating = dpv.Rating + 1
+	FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
+	WHERE  dpv.Id IN (SELECT v.Id
+	                  FROM   @videos AS v)
+	
+	COMMIT TRANSACTION
+END
+GO
+
+/*******************************************
+ * архив популярных видео youtube
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_popular_youtube_videos_archive', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_popular_youtube_videos_archive;
+GO
+CREATE PROCEDURE dbo.get_popular_youtube_videos_archive
+AS
+BEGIN
+	SELECT YEAR(x.[Date])   AS [Year],
+	       MONTH(x.[Date])  AS [Month],
+	       DAY(x.[Date])    AS [Day]
+	FROM   (
+	           SELECT CONVERT(DATE, dpv.DateUpdate) AS [Date]
+	           FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
+	           GROUP BY
+	                  CONVERT(DATE, dpv.DateUpdate)
+	       )                AS x
+	ORDER BY
+	       1,
+	       2,
+	       3
+END
+GO
+
+/*******************************************
+ * список архивных видео с youtube за период
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_popular_youtube_video_archive_list', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_popular_youtube_video_archive_list;
+GO
+CREATE PROCEDURE dbo.get_popular_youtube_video_archive_list
+	@year INT,
+	@month INT,
+	@day INT,
+	@amount INT
+AS
+BEGIN
+	IF (@year IS NULL AND @month IS NULL AND @day IS NULL)
+	    SELECT TOP(@amount) * 
+	    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
+	    ORDER BY
+	           dpv.Rating
+	ELSE 
+	IF (@year IS NOT NULL AND @month IS NULL AND @day IS NULL)
+	    SELECT TOP(@amount) * 
+	    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
+	    WHERE  YEAR(dpv.DateCreate) = @year
+	           OR  YEAR(dpv.DateUpdate) = @year
+	    ORDER BY
+	           dpv.Rating
+	ELSE 
+	IF (@year IS NOT NULL AND @month IS NOT NULL AND @day IS NULL)
+	    SELECT TOP(@amount) * 
+	    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
+	    WHERE  (
+	               YEAR(dpv.DateCreate) = @year
+	               AND MONTH(dpv.DateCreate) = @month
+	           )
+	           OR  (
+	                   YEAR(dpv.DateUpdate) = @year
+	                   AND MONTH(dpv.DateUpdate) = @month
+	               )
+	    ORDER BY
+	           dpv.Rating
+	ELSE 
+	IF (
+	       @year IS NOT NULL
+	       AND @month IS NOT NULL
+	       AND @day IS NOT NULL
+	   )
+	    SELECT TOP(@amount) * 
+	    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
+	    WHERE  (
+	               YEAR(dpv.DateCreate) = @year
+	               AND MONTH(dpv.DateCreate) = @month
+	               AND DAY(dpv.DateCreate) = @day
+	           )
+	           OR  (
+	                   YEAR(dpv.DateUpdate) = @year
+	                   AND MONTH(dpv.DateUpdate) = @month
+	                   AND DAY(dpv.DateUpdate) = @day
+	               )
+	    ORDER BY
+	           dpv.Rating
 END
 GO

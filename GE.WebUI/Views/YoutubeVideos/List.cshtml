@@ -1,9 +1,9 @@
-﻿@model SX.WebCore.ViewModels.Youtube.SxVMYoutubeVideo[]
+﻿@model SxVMVideo[]
 @{
-    SxVMVideo item = null;
-    ViewBag.H1 = ViewBag.H1 ?? "Поулярные видео в категории Gaming";
-    var colCount = 3;
-    var rowsCount = Model.Length / colCount;
+    ViewBag.Title = ViewBag.Title ?? "Поулярные видео в категории Gaming";
+    ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
+    ViewBag.Description = ViewBag.Description ?? ViewBag.Title;
+    ViewBag.Keywords = ViewBag.Keywords ?? ViewBag.Title;
 }
 
 @section styles{
@@ -11,37 +11,60 @@
 }
 
 @Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
-
 <div class="yt-videos-list">
-    @for (int i = 1; i <= rowsCount; i++)
-    {
-        var data = Model.Skip((i - 1) * colCount).Take(colCount).ToArray();
-
-        <div class="row">
-            @for (int y = 0; y < data.Length; y++)
-                {
-                    item = data[y].ConvertedVideo;
-                <div class="col-md-4">
-                    <div class="yt-videos-list__item">
-                        <div style="position:relative; height:150px; margin-bottom:30px;">
-                            @Html.SxVideo(item, SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
-                        </div>
-
-                        <div class="yt-videos-list__info">
-                            <h2>@item.Title</h2>
-                            Опубликовано: @item.DateCreate.ToString("dd-MM-yyyy hh:mm")<br />
-                            Источник: <a href="@item.VideoUrl" target="_blank">@item.VideoUrl</a><br />
-                            Канал: <a href="@item.VideoChannelUrl" target="_blank">@item.VideoChannelUrl</a>
-                        </div>
-                    </div>
-                </div>
-            }
+    <div class="row">
+        <div class="col-md-9">
+            <h2>Популярное сейчас</h2>
+            <br />
+            @Html.Partial("_List", Model)
         </div>
-    }
+        <div class="col-md-3">
+            <h2>Архив</h2>
+            <br />
+            <div id="yt-archive">
+                <br />
+                <div class="text-center">
+                    <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts{
     <script>
         loadScriptOnce('https://www.youtube.com/iframe_api');
+        $(function () {
+            $('#yt-archive').on('click', 'a', function () {
+                getArchiveList($(this));
+                return false;
+            });
+
+            getArchive();
+        });
+
+        function getArchive() {
+            $.get('@Url.Action("Archive")', function (result) {
+                $('#yt-archive').html(result);
+            });
+        }
+
+        function getArchiveList(a) {
+            var $a = $(a);
+            var url = $a.attr('data-url');
+
+            $.ajax({
+                method: 'get',
+                url: url,
+                beforeSend: function () {
+                    $('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>').appendTo($a);
+                },
+                success: function (result) {
+                    $('#yt-videos-list').html(result);
+                    $a.find('.fa-spinner').remove();
+                }
+            });
+        }
     </script>
 }

@@ -1,12 +1,4 @@
 ﻿@model SX.WebCore.ViewModels.Youtube.SxVMYoutubeVideo[]
-@{
-    var date = ViewBag.Date;
-}
-
-<p class="text-muted" style="font-size:.9em;" id="humor-yt-timer" data-date="@date">
-    <i class="fa fa-clock-o" aria-hidden="true"></i> Следующее обновление:<br />
-    <span id="humor-yt-timer-value">@date</span>
-</p>
 
 @if (Model.Any())
 {
@@ -26,12 +18,14 @@
             Канал: <a href="@item.VideoChannelUrl" target="_blank">@item.VideoChannelUrl</a>
         </div>
 
-        if (i % 6 == 1)
+        if ((i+1) % 6 == 0)
         {
             var banner = ViewBag.PageBanners != null ? ((SxVMBanner[])ViewBag.PageBanners).SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Right) : null;
-            if (banner!=null && (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html)))
+            if (banner != null && (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html)))
             {
-                @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                <div class="humor-yt-item__banner">
+                    @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                </div>
             }
         }
     }

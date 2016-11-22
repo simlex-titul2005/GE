@@ -1,5 +1,6 @@
 ﻿using GE.WebUI.Models;
 using SX.WebCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 
 namespace GE.WebUI.Infrastructure
@@ -20,6 +21,8 @@ namespace GE.WebUI.Infrastructure
 
         public new DbSet<News> News { get; set; }
 
+        public DbSet<PopularYoutubeVideo> PopularYoutubeVideos { get; set; }
+
         public DbSet<SiteTest> SiteTests { get; set; }
 
         public DbSet<SiteTestQuestion> SiteTestQuestions { get; set; }
@@ -35,6 +38,8 @@ namespace GE.WebUI.Infrastructure
             modelBuilder.Entity<SiteTestAnswer>().HasRequired(x => x.Subject).WithMany().WillCascadeOnDelete(false);
 
             modelBuilder.Entity<SiteTestSetting>().HasKey(x=>x.TestId).HasRequired(x => x.Test).WithOptional(x=>x.Settings).WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<PopularYoutubeVideo>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

@@ -283,6 +283,7 @@
     <Compile Include="Infrastructure\Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Infrastructure\Repositories\RepoNews.cs" />
     <Compile Include="Infrastructure\Repositories\RepoPicture.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoPopularYoutubeVideo.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTest.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTestSetting.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTestSubject.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Models\MaterialCategory.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTestQuestion.cs" />
+    <Compile Include="Models\PopularYoutubeVideo.cs" />
     <Compile Include="Models\SiteTest.cs" />
     <Compile Include="Models\SiteTestAnswer.cs" />
     <Compile Include="Models\SiteTestQuestion.cs" />
@@ -302,6 +304,7 @@
     <Compile Include="Models\SiteTestStep.cs" />
     <Compile Include="Models\SiteTestSubject.cs" />
     <Compile Include="Infrastructure\ModelBinders\VMMaterialCategoryModelBinder.cs" />
+    <Compile Include="ViewModels\VMPopularYoutubeVideoArchiveItem.cs" />
     <Compile Include="ViewModels\VMAphorismCategory.cs" />
     <Compile Include="ViewModels\VMDetailAphorism.cs" />
     <Compile Include="ViewModels\VMDetailGame.cs" />
@@ -503,6 +506,8 @@
     <None Include="Properties\PublishProfiles\RELEASE.pubxml" />
     <Content Include="Views\YoutubeVideos\List.cshtml" />
     <Content Include="Views\YoutubeVideos\_PopularForHumor.cshtml" />
+    <Content Include="Views\YoutubeVideos\_Archive.cshtml" />
+    <Content Include="Views\YoutubeVideos\_List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

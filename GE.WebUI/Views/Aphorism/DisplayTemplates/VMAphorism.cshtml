@@ -17,7 +17,15 @@
             </figure>
         }
         <div class="foreword">
-            @(Model.Foreword.Length>=100?Model.Foreword.Substring(0, 100)+"...": Model.Foreword)
+            @Html.Raw(Model.Html)
+            <br />
+            @Html.SxShareButtons(options: new SxExtantions.SxShareButtonOption
+       {
+           Url = Model.GetUrl(Url),
+           Title = Model.Author?.Name ?? Model.Title,
+           Description = Model.Author?.Name ?? Model.GetForewordFromHtml(200),
+           Image = Model.Author != null && Model.Author.PictureId.HasValue ? Url.Action("Picture", "Pictures", new { id = Model.Author.PictureId }) : string.Empty
+       })
             <br />
             <a class="btn btn-primary btn-sm" href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})">Комментировать, Шарить, Оценить <i class="fa fa fa-angle-double-right"></i></a>
             <a class="btn btn-default btn-sm" href="#">Следуюший</a>

@@ -1228,7 +1228,8 @@ BEGIN
 	                    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv)
 	
 	UPDATE D_POPULAR_YOUTUBE_VIDEO
-	SET    Rating = dpv.Rating + 1
+	SET    Rating = dpv.Rating + 1,
+	       DateUpdate = @date
 	FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
 	WHERE  dpv.Id IN (SELECT v.Id
 	                  FROM   @videos AS v)

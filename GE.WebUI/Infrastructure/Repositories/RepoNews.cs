@@ -260,7 +260,8 @@ ORDER BY
        dm.DateOfPublication     DESC";
 
             var queryForTags = @"SELECT TOP(@amount)
-       dmt.Id            AS Title,
+       dmt.Id,
+       dmt.Title,
        COUNT(dmt.Id)     AS [Count],
        1                 AS IsCurrent
 FROM   D_MATERIAL_TAG    AS dmt
@@ -274,7 +275,7 @@ FROM   D_MATERIAL_TAG    AS dmt
             AND dm.DateOfPublication <= GETDATE()
 WHERE  dm.CategoryId = @cat_id
 GROUP BY
-       dmt.Id";
+       dmt.Id, dmt.Title";
 
             var data = new VMLCNB();
 

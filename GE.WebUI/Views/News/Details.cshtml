@@ -47,7 +47,7 @@
         @{Html.RenderAction("Random", "Aphorism"); }
     </div>
 
-    @Html.Action("LikeMaterials", "News", new { materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
+    @Html.Action("SimilarMaterials", "News", new { MaterialId = Model.Id, ModelCoreType = Model.ModelCoreType, amount = 9 })
 
     @{
         banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
@@ -62,7 +62,10 @@
         }
     }
 
-    @Html.Action("List", "MaterialTags", new { mid = Model.Id, mct = Model.ModelCoreType, maxFs = 30 })
+    @if (Model.MaterialTags.Any())
+    {
+        @Html.Partial("_TagsCloud", Model.MaterialTags, new ViewDataDictionary { { "TagsShowHeader", true}, { "TagsMaxFs", 30 }, { "ControllerName", "News"}, { "ActionName", "List" } })
+    }
 
     <div id="by-date-mat">
         @Html.Action("ByDateMaterial", "News", new { mid = Model.Id, mct = Model.ModelCoreType })
@@ -78,9 +81,8 @@
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery.unobtrusive-ajax"})"></script>
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate"})"></script>
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery.validate.unobtrusive"})"></script>
-    <script type="text/javascript" src="~/Content/dist/js/ge-aphorisms.min.js"></script>
-    <script type="text/javascript" src="~/Content/dist/js/currency-provider.min.js"></script>
-
+    <script src="~/Content/dist/js/ge-aphorisms.min.js"></script>
+    <script src="~/Content/dist/js/currency-provider.min.js"></script>
     <script src="~/Scripts/sxshare.js"></script>
 
     <script type="text/javascript">

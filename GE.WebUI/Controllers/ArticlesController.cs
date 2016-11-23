@@ -7,6 +7,7 @@ using SX.WebCore.Repositories;
 using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
 using System;
+using SX.WebCore;
 
 namespace GE.WebUI.Controllers
 {
@@ -48,7 +49,7 @@ namespace GE.WebUI.Controllers
 #endif
         public override PartialViewResult Last(byte? mct = default(byte?), int amount = 5, int? mid = default(int?))
         {
-            var data = (Repo as RepoArticle).Last(mct, amount, mid, new byte[] {
+            var data = (Repo as RepoArticle).GetLast(mct, amount, mid, new byte[] {
                 MvcApplication.ModelCoreTypeProvider[nameof(Article)],
                 MvcApplication.ModelCoreTypeProvider[nameof(News)]
             });
@@ -75,6 +76,16 @@ namespace GE.WebUI.Controllers
         public sealed override PartialViewResult Popular(int? mct = default(int?), int? mid = default(int?), int amount = 4)
         {
             throw new NotImplementedException("Популярные статьи реализованы в контроллере Новостей");
+        }
+
+#if !DEBUG
+        OutputCache(Duration = 3600)
+#endif
+        [ChildActionOnly]
+        public override PartialViewResult SimilarMaterials(SxFilter filter, int amount = 10)
+        {
+            ViewBag.SimilarMaterialHeader = "Похожие статьи";
+            return base.SimilarMaterials(filter, amount);
         }
     }
 }

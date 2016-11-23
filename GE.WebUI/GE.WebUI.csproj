@@ -419,7 +419,6 @@
     <Compile Include="Controllers\MaterialsController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\MaterialTagsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -466,8 +465,8 @@
     <Content Include="Views\Shared\_Errors.cshtml" />
     <Content Include="Views\Shared\_SocNetButtons.cshtml" />
     <Content Include="Views\Shared\_Foreword.cshtml" />
-    <Content Include="Views\MaterialTags\_TagsCloud.cshtml" />
-    <Content Include="Views\Shared\_LikeMaterials.cshtml" />
+    <Content Include="Views\Shared\_TagsCloud.cshtml" />
+    <Content Include="Views\Shared\_SimilarMaterials.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Games\_LastMaterials.cshtml" />

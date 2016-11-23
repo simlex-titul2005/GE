@@ -4,15 +4,20 @@
     Layout = null;
     var colCount = 3;
     var rowsCount = (int)Math.Ceiling((decimal)Model.Length / colCount);
-    SxVMMaterial item;
-    byte mct = ViewBag.ModelCoreType;
+    
+    string header = ViewBag.SimilarMaterialHeader;
 }
 
 @if (Model.Any())
 {
+    SxVMMaterial item=null;
     <div class="like-mats">
-        <h3 class="header">@mct</h3>
+        @if (!string.IsNullOrEmpty(header))
+        {
+        <h3 class="header">@header</h3>
         <br />
+        }
+
         @for (int r = 0; r < rowsCount; r++)
                 {
                     var items = Model.Skip(r * colCount).Take(colCount).ToArray();

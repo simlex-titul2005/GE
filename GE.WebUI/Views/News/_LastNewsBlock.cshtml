@@ -81,7 +81,7 @@
                                         {
                                             <div class="tags">
                                                 <h4>Теги @game.Title</h4>
-                                                @Html.Partial("~/Views/MaterialTags/_TagsCloud.cshtml", game.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action("List", "News") }, { "Videos", game.Videos } })
+                                                @Html.Partial("_TagsCloud", game.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "Videos", game.Videos }, { "ControllerName", "News"}, { "ActionName", "List" } })
                                             </div>
                                         }
                                     </li>

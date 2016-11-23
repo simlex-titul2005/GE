@@ -60,5 +60,15 @@ namespace GE.WebUI.Controllers
             ViewBag.InNewTab = mct == null;
             return base.Popular(mct, mid, amount);
         }
+
+#if !DEBUG
+        OutputCache(Duration = 3600)
+#endif
+        [ChildActionOnly]
+        public override PartialViewResult SimilarMaterials(SxFilter filter, int amount = 10)
+        {
+            ViewBag.SimilarMaterialHeader = "Похожие новости";
+            return base.SimilarMaterials(filter, amount);
+        }
     }
 }

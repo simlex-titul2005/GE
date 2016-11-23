@@ -1,0 +1,21 @@
+﻿@model SxVMMaterialTag[]
+@{
+    Layout = null;
+    var routeDataValues = Request.RequestContext.RouteData.Values;
+    var maxFs = (int)ViewData["TagsMaxFs"];
+    var controllerName = (string)ViewData["ControllerName"] ?? (string)routeDataValues["controller"];
+    var actionName = (string)ViewData["ActionName"] ?? (string)routeDataValues["action"];
+    var showHeader = Convert.ToBoolean(ViewData["TagsShowHeader"]);
+}
+
+@if (Model.Any())
+{
+    <div class="tags-block">
+
+        @if (showHeader)
+        {
+            <h3 class="header">Облако тегов</h3>
+        }
+        @Html.SxTagsCloud(Model, x => Url.Action(actionName, controllerName, new { tag = x.Id }), maxFs, showCount: false)
+    </div>
+}

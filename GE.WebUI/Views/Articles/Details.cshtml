@@ -47,13 +47,13 @@
         @{Html.RenderAction("Random", "Aphorism"); }
     </div>
 
-    @Html.Action("LikeMaterials", "Articles", new { materialId = Model.Id, modelCoreType = Model.ModelCoreType, amount = 9 })
+    @Html.Action("SimilarMaterials", "Articles", new { MaterialId = Model.Id, ModelCoreType = Model.ModelCoreType, amount = 9 })
 
     @{
         banner = banners != null ? banners.SingleOrDefault(x => x.Place == SX.WebCore.DbModels.SxBanner.BannerPlace.Intermediate) : null;
         if (banner != null)
         {
-            if (!(Equals(banner.Type, SX.WebCore.DbModels.SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SX.WebCore.DbModels.SxBanner.BannerType.Html))
+            if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SX.WebCore.DbModels.SxBanner.BannerType.Html))
             {
                 <div style="margin-top:30px;">
                     @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
@@ -62,7 +62,10 @@
         }
     }
 
-    @Html.Action("List", "MaterialTags", new { mid = Model.Id, mct = Model.ModelCoreType, maxFs = 30 })
+    @if (Model.MaterialTags.Any())
+    {
+        @Html.Partial("_TagsCloud", Model.MaterialTags, new ViewDataDictionary { { "TagsShowHeader", true }, { "TagsMaxFs", 30 }, { "ControllerName", "Articles" }, { "ActionName", "List" } })
+    }
 
     <div id="by-date-mat">
         @Html.Action("ByDateMaterial", "Articles", new { mid = Model.Id, mct = Model.ModelCoreType })

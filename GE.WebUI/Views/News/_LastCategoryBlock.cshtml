@@ -59,7 +59,7 @@
                                         {
                                             <div class="tags">
                                                 <h4>@subCategory.Title</h4>
-                                                @Html.Partial("~/Views/MaterialTags/_TagsCloud.cshtml", subCategory.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "TagsUrl", Url.Action("List", "News") } })
+                                                @Html.Partial("_TagsCloud", subCategory.Tags, new ViewDataDictionary { { "TagsMaxFs", 14 }, { "ControllerName", "News" }, { "ActionName", "List" } })
                                             </div>
                                         }
                                     </li>

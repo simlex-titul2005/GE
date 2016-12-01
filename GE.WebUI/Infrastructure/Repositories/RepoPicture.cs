@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Text;
-using SX.WebCore.Repositories;
+using SX.WebCore.SxRepositories;
 using Dapper;
 using SX.WebCore.DbModels;
 

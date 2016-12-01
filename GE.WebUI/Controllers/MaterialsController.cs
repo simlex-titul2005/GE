@@ -18,7 +18,7 @@ namespace GE.WebUI.Controllers
     {
         protected MaterialsController(byte mct) : base(mct)
         {
-            BeforeSelectListAction = beforeSelectListAction;
+            BeforeSelectListFunction = beforeSelectListAction;
         }
 
         private bool beforeSelectListAction(SxFilter filter)

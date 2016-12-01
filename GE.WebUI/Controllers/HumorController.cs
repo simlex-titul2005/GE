@@ -5,7 +5,7 @@ using SX.WebCore.ViewModels;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using GE.WebUI.Infrastructure.Repositories;
-using SX.WebCore.Repositories;
+using SX.WebCore.SxRepositories;
 using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers

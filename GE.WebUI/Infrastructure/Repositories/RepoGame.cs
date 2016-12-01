@@ -6,11 +6,11 @@ using System.Linq;
 using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
 using SX.WebCore;
-using SX.WebCore.Repositories.Abstract;
+using SX.WebCore.SxRepositories.Abstract;
 using System.Text;
-using SX.WebCore.Providers;
+using SX.WebCore.SxProviders;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
-using SX.WebCore.Repositories;
+using SX.WebCore.SxRepositories;
 using System.Data;
 using SX.WebCore.DbModels;
 

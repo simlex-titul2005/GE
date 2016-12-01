@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
-using SX.WebCore.Repositories;
+using SX.WebCore.SxRepositories;
 using System.Linq;
 using Dapper;
 

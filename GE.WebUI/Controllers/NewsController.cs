@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using GE.WebUI.Models;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
-using SX.WebCore.Repositories;
+using SX.WebCore.SxRepositories;
 
 namespace GE.WebUI.Controllers
 {

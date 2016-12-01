@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using SX.WebCore;
 using System.Text;
-using SX.WebCore.Providers;
+using SX.WebCore.SxProviders;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using SX.WebCore.ViewModels;
 

@@ -1,6 +1,6 @@
 ﻿using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
-using SX.WebCore.Repositories;
+using SX.WebCore.SxRepositories;
 using GE.WebUI.Infrastructure.Repositories;
 using System.Web.Mvc;
 using System.Linq;

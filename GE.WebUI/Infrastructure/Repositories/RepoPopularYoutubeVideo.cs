@@ -1,5 +1,5 @@
 ﻿using GE.WebUI.Models;
-using SX.WebCore.Repositories.Abstract;
+using SX.WebCore.SxRepositories.Abstract;
 using SX.WebCore.ViewModels;
 using System.Data.SqlClient;
 using System.Threading.Tasks;

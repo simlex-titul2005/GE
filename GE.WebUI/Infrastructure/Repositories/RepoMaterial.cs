@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore;
-using SX.WebCore.Repositories;
+using SX.WebCore.SxRepositories;
 using System;
 using System.Collections.Generic;
 using System.Text;

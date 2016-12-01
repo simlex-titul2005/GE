@@ -60,7 +60,7 @@
                                     @if (item.Videos.Length > 0)
                                     {
                                         <div style="position:relative; height:340px; width:100%; max-width:100%;">
-                                            @Html.SxVideo(item.Videos.First(), SX.WebCore.Providers.SxVideoProvider.VideoQuality.Medium)
+                                            @Html.SxVideo(item.Videos.First(), SX.WebCore.SxProviders.SxVideoProvider.VideoQuality.Medium)
                                         </div>
                                     }
                                     else

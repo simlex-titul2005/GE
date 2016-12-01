@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using GE.WebUI.Models;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
-using SX.WebCore.Repositories;
+using SX.WebCore.SxRepositories;
 using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
 using System;

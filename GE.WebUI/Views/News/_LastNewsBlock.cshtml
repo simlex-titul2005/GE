@@ -69,7 +69,7 @@
                                                             var video = game.Videos[y];
                                                             <li style="width:@(Math.Round(100 / (decimal)videosAmount, 4).ToString().Replace(',', '.'))%;">
                                                                 <div class="g-video">
-                                                                    @Html.SxVideo(game.Videos[y].Video, SX.WebCore.Providers.SxVideoProvider.VideoQuality.Default, url: Url.Action("Details", "News", new { year= video.MaterialDateCreate.Year, month=video.MaterialDateCreate.Month.ToString("00"), day=video.MaterialDateCreate.Day.ToString("00"), titleUrl=video.MaterialTitleUrl }))
+                                                                    @Html.SxVideo(game.Videos[y].Video, SX.WebCore.SxProviders.SxVideoProvider.VideoQuality.Default, url: Url.Action("Details", "News", new { year= video.MaterialDateCreate.Year, month=video.MaterialDateCreate.Month.ToString("00"), day=video.MaterialDateCreate.Day.ToString("00"), titleUrl=video.MaterialTitleUrl }))
                                                                 </div>
                                                             </li>
                                                         }

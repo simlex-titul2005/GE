@@ -2,8 +2,8 @@
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
-using SX.WebCore.Providers;
-using SX.WebCore.Repositories.Abstract;
+using SX.WebCore.SxProviders;
+using SX.WebCore.SxRepositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Data;

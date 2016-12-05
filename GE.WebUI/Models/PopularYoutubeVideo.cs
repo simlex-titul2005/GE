@@ -13,7 +13,7 @@ namespace GE.WebUI.Models
         [Required, MaxLength(100)]
         public string ChannelId { get; set; }
 
-        [Required, MaxLength(400)]
+        [MaxLength(400)]
         public string ChannelTitle { get; set; }
 
         public int Rating { get; set; }

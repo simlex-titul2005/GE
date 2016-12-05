@@ -1,4 +1,4 @@
-﻿using SX.WebCore.Managers;
+﻿using SX.WebCore.SxManagers;
 using SX.WebCore.ViewModels;
 using System.Configuration;
 using System.Text;

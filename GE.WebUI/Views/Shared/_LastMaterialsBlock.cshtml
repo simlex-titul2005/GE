@@ -1,0 +1,41 @@
+﻿@model VMLastMaterialsBlock
+@{ 
+    var blockHeader = ViewBag.BlockHeader ?? "Не задан заголовок блока последних материалов";
+}
+
+<div class="lmb">
+    <h2 class="lmb__header">@blockHeader</h2>
+    <div class="lmb__content">
+        <div class="lmb__part left">
+            <ul>
+                @for (int i = 0; i < Model.Materials.Length; i++)
+                {
+                    var item = Model.Materials[i];
+                    <li class="lmb__mat-item">
+                        <a href="@item.GetUrl(Url)" target="_blank">
+                            <span>@item.DateOfPublication.ToString("dd.MM.yyyy")</span>
+                            <span>@item.Title</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="lmb__part right">
+            <div class="lmb__part-wrapper">
+                <ul>
+                    @for (int i = 0; i < Model.Games.Length; i++)
+                    {
+                        var item = Model.Games[i];
+                        var materials = Model.GameMaterials.Where(x => Equals(item.Id, x.GameId)).ToArray();
+                        var first = materials.FirstOrDefault(x => Equals(item.Id, x.GameId));
+                        <li>
+                            <a href="@Url.Action("Details", "Games", new { titleUrl=item.TitleUrl})" target="_blank">
+                                <img alt="@item.Title" src="@(Url.Action("Picture", "Pictures", new { id = first!=null && first.FrontPictureId.HasValue ? first.FrontPictureId : item.FrontPictureId }))" />
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

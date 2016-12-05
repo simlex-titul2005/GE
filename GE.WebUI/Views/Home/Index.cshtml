@@ -18,13 +18,17 @@
     SxVMBanner banner;
 }
 
+@Html.Action("LastMaterialsBlock", "Articles", new {
+    bh="Последние статьи"
+})
+
 @Html.Action("LastGamesNewsBlock", "News", new { lnc= 5 })
 
-@Html.Action("NewsCategories", new { controller = "News", lnc = 5 })
+@*@Html.Action("NewsCategories", new { controller = "News", lnc = 5 })*@
 
-<div class="text-center all-news-btn">
+@*<div class="text-center all-news-btn">
     <a href="@Url.Action("List", "News")" class="btn btn-default btn-transparent white">Все новости</a>
-</div>
+</div>*@
 
 @{
     banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
@@ -39,11 +43,11 @@
     }
 }
 
-<section>
+@*<section>
     @Html.Action("RandomList", "SiteTests")
 </section>
 
-@Html.Action("ForGamersBlock", "Articles")
+@Html.Action("ForGamersBlock", "Articles")*@
 
 @section scripts{
     <script type="text/javascript" src="~/Content/dist/js/ge-last-news-block.min.js"></script>

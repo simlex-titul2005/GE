@@ -305,6 +305,7 @@
     <Compile Include="Models\SiteTestStep.cs" />
     <Compile Include="Models\SiteTestSubject.cs" />
     <Compile Include="Infrastructure\ModelBinders\VMMaterialCategoryModelBinder.cs" />
+    <Compile Include="ViewModels\VMLastMaterialsBlock.cs" />
     <Compile Include="ViewModels\VMPopularYoutubeVideoArchiveItem.cs" />
     <Compile Include="ViewModels\VMAphorismCategory.cs" />
     <Compile Include="ViewModels\VMDetailAphorism.cs" />
@@ -510,6 +511,7 @@
     <Content Include="Views\YoutubeVideos\_PopularForHumor.cshtml" />
     <Content Include="Views\YoutubeVideos\_Archive.cshtml" />
     <Content Include="Views\YoutubeVideos\_List.cshtml" />
+    <Content Include="Views\Shared\_LastMaterialsBlock.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -530,6 +532,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Subscribers\" />
+    <Folder Include="less\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

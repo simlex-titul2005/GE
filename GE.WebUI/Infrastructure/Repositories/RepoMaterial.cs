@@ -131,5 +131,40 @@ namespace GE.WebUI.Infrastructure.Repositories
                 ViewsCount=model.ViewsCount
             };
         }
+
+        public VMLastMaterialsBlock GetLastMaterialBlock(int lmc = 5, int gc = 4, int lgmc = 3, int gtc = 20)
+        {
+            var gamesSql = @"SELECT DISTINCT TOP(@amount) dg.*, dp.Id FROM DV_MATERIAL AS dm
+LEFT JOIN D_ARTICLE AS da ON da.ModelCoreType = dm.ModelCoreType AND da.Id = dm.Id
+LEFT JOIN D_NEWS AS dn ON dn.ModelCoreType = dm.ModelCoreType AND dn.Id = dm.Id
+JOIN D_GAME AS dg ON dg.Id = da.GameId OR dg.Id=dn.GameId
+LEFT JOIN D_PICTURE AS dp ON dp.Id=dg.FrontPictureId
+WHERE dg.Show=1 AND dm.Show=1 AND dm.DateOfPublication<=GETDATE()
+ORDER BY dg.Title";
+
+            var materialsSql = @"SELECT TOP(@amount) dm.Id, dm.ModelCoreType, dm.Title, dm.DateCreate, dm.FrontPictureId
+  FROM DV_MATERIAL AS dm
+LEFT JOIN D_ARTICLE AS da ON da.ModelCoreType = dm.ModelCoreType AND da.Id = dm.Id
+LEFT JOIN D_NEWS AS dn ON dn.ModelCoreType = dm.ModelCoreType AND dn.Id = dm.Id
+LEFT JOIN D_PICTURE AS dp ON dp.Id = dm.FrontPictureId
+JOIN D_GAME AS dg ON dg.Id = da.GameId OR dg.Id=dn.GameId AND dg.Show=1
+WHERE dm.Show=1 AND dm.DateOfPublication<=GETDATE() AND dn.GameId IN (SELECT fsi.[Value]
+                      FROM dbo.func_split_int(@gameIds) AS fsi)
+ORDER BY dm.DateOfPublication DESC";
+
+            var model = new VMLastMaterialsBlock();
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                model.Materials = Read(new SxFilter(1, lmc) {  OnlyShow=true });
+                model.Games = connection.Query<VMGame, SxVMPicture, VMGame>(gamesSql, (g,p)=> {
+                    g.FrontPicture = p;
+                    return g;
+                }, new { amount = gc }, splitOn:"Id").ToArray();
+
+                var gameIds = model.Games.Select(x => x.Id.ToString()).Aggregate((s, b) => s + "," + b);
+                model.Materials = connection.Query<VMMaterial>(materialsSql, new { amount = lgmc, gameIds = gameIds }).ToArray();
+            }
+            return model;
+        }
     }
 }

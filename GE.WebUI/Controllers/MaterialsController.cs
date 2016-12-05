@@ -5,10 +5,10 @@ using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
 using System.Globalization;
 using System.Linq;
-using SX.WebCore.MvcApplication;
 using System.Threading.Tasks;
 using SX.WebCore.DbModels.Abstract;
 using SX.WebCore.DbModels;
+using GE.WebUI.Infrastructure.Repositories;
 
 namespace GE.WebUI.Controllers
 {
@@ -118,6 +118,17 @@ namespace GE.WebUI.Controllers
             }
 
             return View(model);
+        }
+
+#if !DEBUG
+        [OutputCache(Duration =900, VaryByParam ="mct;lmc;gc;lgmc;gtc")]
+#endif
+        [ChildActionOnly]
+        public virtual ActionResult LastMaterialsBlock(int lmc = 5, int gc = 4, int lgmc = 3, int gtc = 20, string bh=null)
+        {
+            ViewBag.BlockHeader = bh;
+            var viewModel = (Repo as RepoMaterial<TModel, TViewModel>).GetLastMaterialBlock(lmc, gc, lgmc, gtc);
+            return PartialView("_LastMaterialsBlock", viewModel);
         }
     }
 }

@@ -29,6 +29,7 @@ function createCss() {
         'less/forum.less',
         'less/game-list.less',
         'less/last-news-block.less',
+        'less/last-mat-block.less',
         'less/last-category-news-block.less',
         'less/list-article.less',
         'less/list-news.less',

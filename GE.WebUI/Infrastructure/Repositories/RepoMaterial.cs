@@ -3,7 +3,6 @@ using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore;
 using SX.WebCore.SxRepositories;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.Data.SqlClient;
@@ -18,18 +17,7 @@ namespace GE.WebUI.Infrastructure.Repositories
         where TModel : SxMaterial
         where TViewModel : VMMaterial
     {
-        private Dictionary<string, object> _filterSettings;
-        public RepoMaterial(byte mct, Dictionary<string, object> filterSettings) : base(mct)
-        {
-            _filterSettings = filterSettings;
-        }
-
-        public override TViewModel[] Read(SxFilter filter)
-        {
-            filter.OnlyShow = (bool)_filterSettings["OnlyShow"];
-            filter.WithComments = (bool)_filterSettings["WithComments"];
-            return base.Read(filter);
-        }
+        public RepoMaterial(byte mct) : base(mct) { }
 
         protected static string GetGameVesion(byte mct, dynamic data)
         {

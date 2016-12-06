@@ -4,7 +4,6 @@ using GE.WebUI.ViewModels;
 using SX.WebCore;
 using SX.WebCore.DbModels;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -14,7 +13,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoAphorism : RepoMaterial<Aphorism, VMAphorism>
     {
-        public RepoAphorism() : base(MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)], new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
+        public RepoAphorism() : base(MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)]) { }
 
         public Aphorism GetRandom(int? id = null)
         {

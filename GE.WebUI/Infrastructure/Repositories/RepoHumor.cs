@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System;
 using System.Linq;
@@ -15,7 +14,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoHumor: RepoMaterial<Humor, VMHumor>
     {
-        public RepoHumor() : base(MvcApplication.ModelCoreTypeProvider[nameof(Humor)], new Dictionary<string, object> { ["OnlyShow"] = false, ["WithComments"] = false }) { }
+        public RepoHumor() : base(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]) { }
 
         public override VMHumor[] Read(SxFilter filter)
         {

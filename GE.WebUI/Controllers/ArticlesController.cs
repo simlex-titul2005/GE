@@ -79,7 +79,7 @@ namespace GE.WebUI.Controllers
         }
 
 #if !DEBUG
-        OutputCache(Duration = 3600)
+        [OutputCache(Duration = 3600)]
 #endif
         [ChildActionOnly]
         public override PartialViewResult SimilarMaterials(SxFilter filter, int amount = 10)

@@ -506,12 +506,12 @@
     <Content Include="Views\Shared\_MaterialInfo.cshtml" />
     <Content Include="Views\Articles\_Last.cshtml" />
     <Content Include="Views\ForAuthors\Index.cshtml" />
-    <None Include="Properties\PublishProfiles\RELEASE.pubxml" />
     <Content Include="Views\YoutubeVideos\List.cshtml" />
     <Content Include="Views\YoutubeVideos\_PopularForHumor.cshtml" />
     <Content Include="Views\YoutubeVideos\_Archive.cshtml" />
     <Content Include="Views\YoutubeVideos\_List.cshtml" />
     <Content Include="Views\Shared\_LastMaterialsBlock.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

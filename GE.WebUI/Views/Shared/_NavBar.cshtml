@@ -63,7 +63,7 @@
                         <form method="post" action="@Url.Action("LogOff","Account")" class="hidden">
                             @Html.AntiForgeryToken()
                         </form>
-                        <a href="javascript:void(0)" onclick="$(this).prev('form').submit();">Выход</a>
+                        <a href="#" onclick="$(this).prev('form').submit(); return false;">Выход</a>
                     </li>
                 }
                 else

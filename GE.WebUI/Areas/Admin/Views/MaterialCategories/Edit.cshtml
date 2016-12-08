@@ -87,7 +87,8 @@
     <script src="@Url.Action("Js", "StaticContent", new { name = "jquery.validate.unobtrusive",  area="" })"></script>
     <script>
         $(function () {
-            $('#FrontPictureId, #GameId').sx_gvl();
+            var glPictures = new SxGridLookup('#FrontPictureId');
+            var glGames = new SxGridLookup('#GameId');
         });
     </script>
 }

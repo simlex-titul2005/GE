@@ -49,10 +49,6 @@
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(x => x.PictureId, new { @class = "control-label" })
-                @if (Model.PictureId.HasValue)
-                {
-                    <a data-original-title="Помотреть картинку" onclick="x()" data-lightbox="roadtrip" data-title="Фото @Model.Name" data-toggle="tooltip" title="" href="/pictures/picture/@Model.PictureId"><i class="fa fa-picture-o"></i></a>
-                }
                 @Html.EditorFor(x => x.PictureId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(x => x.PictureId)
             </div>
@@ -87,7 +83,7 @@
         CKEDITOR.replace('Description', { height: 400 });
 
         $(function () {
-            $("#PictureId").sx_gvl();
+            var glPictures = new SxGridLookup('#PictureId');
         });
     </script>
 }

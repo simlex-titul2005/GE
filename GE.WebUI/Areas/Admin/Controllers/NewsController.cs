@@ -29,7 +29,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
 
         public override ActionResult Edit(int? id = default(int?))
         {
-            ViewBag.Scripts = "$('#GameId').sx_gvl()";
+            ViewBag.Scripts = "var gvlGames = new SxGridLookup('#GameId');";
             ViewBag.Title = _title;
             return base.Edit(id);
         }

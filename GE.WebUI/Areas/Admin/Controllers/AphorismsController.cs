@@ -85,7 +85,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
         public override ActionResult Edit(int? id = default(int?))
         {
-            ViewBag.Scripts = "$('#AuthorId').sx_gvl();";
+            ViewBag.Scripts = "var gridAuthors=new SxGridView('#AuthorId');";
             return base.Edit(id);
         }
 

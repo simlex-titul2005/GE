@@ -111,7 +111,9 @@
         CKEDITOR.replace('FullDescription', { height: 400 });
 
         $(function () {
-            $('#FrontPictureId, #GoodPictureId, #BadPictureId').sx_gvl();
+            var glFrontPictureGrid = new SxGridLookup('#FrontPictureId');
+            var glGoodPictureGrid = new SxGridLookup('#GoodPictureId');
+            var glBadPictureGrid = new SxGridLookup('#BadPictureId');
         });
     </script>
 }

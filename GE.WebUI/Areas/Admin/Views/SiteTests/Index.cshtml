@@ -8,7 +8,7 @@
     <strong>Внимание!</strong> Алгоритм занесеня тестов в БД на данный момент охватывает все представленные на сайте тесты.<br /> Тип теста необходим только для того, чтобы определить способ прохождения теста. Тип теста задается при создании и не может быть мзмененн при редактировании.<br /> Редактирования типа теста у существующего теста доступно только для роли "architect". Внимательно ознакомьтесь с инструкцией занесения тестов по типам!
 </div>
 <div id="site-tests">
-    @Html.Partial("_gridview", Model)
+    @Html.Partial("_GridView", Model)
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modal-rules">
@@ -31,7 +31,7 @@
 @section scripts{
     <script>
         $(function () {
-            $('#site-tests').sx_gv();
+            var gridTests = new SxGridView('#site-tests');
 
             $('#site-tests').on('click', '.rules-btn', function () {
                 var url = $(this).attr('href');

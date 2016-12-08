@@ -212,7 +212,8 @@
             CKEDITOR.replace('Description', { height: 300 });
             CKEDITOR.replace('Rules', { height: 300 });
 
-            $('#grid-test-questions, #grid-test-subjects').sx_gv();
+            var gridTestQuestions = new SxGridView('#grid-test-questions');
+            var gridTestSubjects = new SxGridView('#grid-test-subjects');
 
             //subjects
             $('a[href="#subjects"]').on('shown.bs.tab', function (e) {
@@ -250,7 +251,7 @@
                             CKEDITOR.remove(CKEDITOR.instances['subject.Description']);
                         }
                         CKEDITOR.replace('subject.Description', { height: 300 });
-                        $body.find('#PictureId').sx_gvl();
+                        var gl = new SxGridLookup($body.find('#PictureId'));
                         $modal.modal('show');
                         $modal.tooltip();
                     }
@@ -277,7 +278,7 @@
                             CKEDITOR.remove(CKEDITOR.instances['subject.Description']);
                         }
                         CKEDITOR.replace('subject.Description', { height: 300 });
-                        $body.find('#PictureId').sx_gvl();
+                        var gl = new SxGridLookup($body.find('#PictureId'));
                         $modal.modal('show');
                     }
                 });

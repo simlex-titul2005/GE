@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 22.11.2016 12:00:54
+ * Time: 08.12.2016 17:03:24
  ************************************************************/
 
 /*******************************************
@@ -1277,13 +1277,13 @@ CREATE PROCEDURE dbo.get_popular_youtube_video_archive_list
 AS
 BEGIN
 	IF (@year IS NULL AND @month IS NULL AND @day IS NULL)
-	    SELECT TOP(@amount) * 
+	    SELECT TOP(@amount) *
 	    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
 	    ORDER BY
 	           dpv.Rating
 	ELSE 
 	IF (@year IS NOT NULL AND @month IS NULL AND @day IS NULL)
-	    SELECT TOP(@amount) * 
+	    SELECT TOP(@amount) *
 	    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
 	    WHERE  YEAR(dpv.DateCreate) = @year
 	           OR  YEAR(dpv.DateUpdate) = @year
@@ -1291,7 +1291,7 @@ BEGIN
 	           dpv.Rating
 	ELSE 
 	IF (@year IS NOT NULL AND @month IS NOT NULL AND @day IS NULL)
-	    SELECT TOP(@amount) * 
+	    SELECT TOP(@amount) *
 	    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
 	    WHERE  (
 	               YEAR(dpv.DateCreate) = @year
@@ -1309,7 +1309,7 @@ BEGIN
 	       AND @month IS NOT NULL
 	       AND @day IS NOT NULL
 	   )
-	    SELECT TOP(@amount) * 
+	    SELECT TOP(@amount) *
 	    FROM   D_POPULAR_YOUTUBE_VIDEO AS dpv
 	    WHERE  (
 	               YEAR(dpv.DateCreate) = @year
@@ -1323,5 +1323,25 @@ BEGIN
 	               )
 	    ORDER BY
 	           dpv.Rating
+END
+GO
+
+/*******************************************
+ * Получить избранный категории материалов
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_feautured_material_categories', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_feautured_material_categories;
+GO
+CREATE PROCEDURE dbo.get_feautured_material_categories
+	@amount INT
+AS
+BEGIN
+	SELECT TOP(@amount) dmc.*,
+	       dp.Id,
+	       dp.Caption
+	FROM   D_MATERIAL_CATEGORY  AS dmc
+	       JOIN D_PICTURE       AS dp
+	            ON  dp.Id = dmc.FrontPictureId
+	WHERE  dmc.IsFeatured = 1
 END
 GO

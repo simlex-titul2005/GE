@@ -6,5 +6,7 @@ namespace GE.WebUI.Models
     {
         public virtual Game Game { get; set; }
         public int? GameId { get; set; }
+
+        public bool IsFeatured { get; set; }
     }
 }

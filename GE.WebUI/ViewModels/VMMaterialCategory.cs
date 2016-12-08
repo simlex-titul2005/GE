@@ -11,5 +11,8 @@ namespace GE.WebUI.ViewModels
         [Display(Name="Игра"), UIHint("_GameLookupGrid")]
         public int? GameId { get; set; }
         public VMGame Game { get; set; }
+
+        [Display(Name = "Показывать в избранных")]
+        public bool IsFeatured { get; set; }
     }
 }

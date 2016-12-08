@@ -1,0 +1,16 @@
+﻿@model VMMaterialCategory[]
+@if (Model.Any())
+{
+    VMMaterialCategory item = null;
+    <div class="featured-mc">
+        <h2 class="header">Интересные категории</h2>
+        @for (int i = 0; i < Model.Length; i++)
+        {
+            item = Model[i];
+            <div class="featured-mc__item">
+                <h4>@item.Title</h4>
+                <img alt="@item.FrontPicture.Caption" src="@Url.Action("Picture", "Pictures", new { id=item.FrontPictureId})" />
+            </div>
+        }
+    </div>
+}

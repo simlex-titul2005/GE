@@ -4,6 +4,7 @@ using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.Models;
 using System;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace GE.WebUI.Areas.Admin.Controllers
 {
@@ -44,6 +45,13 @@ namespace GE.WebUI.Areas.Admin.Controllers
             }
 
             return base.Index(mct, page);
+        }
+
+        public override async Task<ActionResult> Edit(VMMaterialCategory model)
+        {
+            var isFeatured = Convert.ToBoolean(Request.Form.Get(nameof(model.IsFeatured)));
+            model.IsFeatured = isFeatured;
+            return await base.Edit(model);
         }
     }
 }

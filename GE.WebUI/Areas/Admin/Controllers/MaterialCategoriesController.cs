@@ -50,7 +50,20 @@ namespace GE.WebUI.Areas.Admin.Controllers
         public override async Task<ActionResult> Edit(VMMaterialCategory model)
         {
             var isFeatured = Convert.ToBoolean(Request.Form.Get(nameof(model.IsFeatured)));
+            var desc = Request.Form.Get(nameof(model.Description));
             model.IsFeatured = isFeatured;
+            model.Description = desc;
+
+            if (model.IsFeatured)
+            {
+                if(string.IsNullOrEmpty(model.Description))
+                    ModelState.AddModelError(nameof(model.Description), "Для избранных категорий поле обязательно для заполнения");
+                if(!model.FrontPictureId.HasValue)
+                    ModelState.AddModelError(nameof(model.FrontPictureId), "Для избранных категорий поле обязательно для заполнения");
+
+            }
+
+            if (!ModelState.IsValid) return View(model);
             return await base.Edit(model);
         }
     }

@@ -5,12 +5,18 @@
     var tag = (SxVMMaterialTag)ViewBag.Tag;
 }
 
-@if (Model.Length != 0)
+@if (Model.Collection.Any())
 {
     <div class="list-article-container">
         @Html.SxList(Model, new SxExtantions.SxListSettings { ColCount = 3, CellCssStyle = "list-article" })
         <div class="text-center">
             @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new { gameTitle = gameTitle, page = x, tag = tag != null ? tag.Id : null }), isAjax: false, htmlAttributes: new { @class = "pagination" })
         </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        Статей по данному запросу пока нет на сайте
     </div>
 }

@@ -17,6 +17,7 @@ namespace GE.WebUI.Controllers
 #if !DEBUG
         [OutputCache(Duration = 3600, VaryByParam ="amount")]
 #endif
+        [AllowAnonymous]
         public PartialViewResult Featured(int amount)
         {
             var viewModel = (Repo as RepoMaterialCategory).GetFeatured(amount);

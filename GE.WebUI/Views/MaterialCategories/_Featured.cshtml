@@ -1,15 +1,35 @@
 ﻿@model VMMaterialCategory[]
+
 @if (Model.Any())
 {
+    var colCount = 2;
+    var rowsCount = Math.Ceiling((double)Model.Length / colCount);
     VMMaterialCategory item = null;
+
     <div class="featured-mc">
-        <h2 class="header">Интересные категории</h2>
-        @for (int i = 0; i < Model.Length; i++)
+        @for (int i = 1; i <= rowsCount; i++)
         {
-            item = Model[i];
-            <div class="featured-mc__item">
-                <h4>@item.Title</h4>
-                <img alt="@item.FrontPicture.Caption" src="@Url.Action("Picture", "Pictures", new { id=item.FrontPictureId})" />
+            var data = Model.Skip((i - 1) * colCount).Take(colCount).ToArray();
+            <div class="row">
+                @for (int y = 0; y < colCount; y++)
+                {
+                    item = data.Length > y ? data[y] : null;
+                    <div class="col-md-@(Math.Ceiling((double)12/colCount))">
+                        @if (item != null)
+                        {
+                            <div class="featured-mc__item">
+                                <a href="@item.Url(Url)" class="featured-mc__link"></a>
+                                <img alt="@item.Title" src="@Url.Action("Picture", "Pictures", new { id = item.FrontPictureId })" class="featured-mc__img" />
+                                <div class="featured-mc__content">
+                                    <h4 class="featured-mc__title">@item.Title</h4>
+                                    <div class="featured-mc__desc">
+                                        @item.Description
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
             </div>
         }
     </div>

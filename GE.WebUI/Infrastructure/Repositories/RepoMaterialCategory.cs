@@ -32,15 +32,12 @@ namespace GE.WebUI.Infrastructure.Repositories
             {
                 return (connection, model, data) =>
                 {
-                    if (!Equals(model.IsFeatured, data.IsFeatured))
-                    {
-                        var query = "UPDATE D_MATERIAL_CATEGORY SET IsFeatured=@feauture WHERE Id=@id";
-                        connection.Execute(query, new { feauture = model.IsFeatured, id = model.Id });
-                    }
+                    var query = "UPDATE D_MATERIAL_CATEGORY SET IsFeatured=@feauture, Description=@desc WHERE Id=@id";
+                    connection.Execute(query, new { feauture = model.IsFeatured, id = model.Id, desc=model.Description });
 
                     if (model.GameId.HasValue)
                     {
-                        var query = "UPDATE D_MATERIAL_CATEGORY SET GameId=@gameId WHERE Id=@categoryId; SELECT * FROM D_GAME AS dg WHERE dg.Id=@gameId";
+                        query = "UPDATE D_MATERIAL_CATEGORY SET GameId=@gameId WHERE Id=@categoryId; SELECT * FROM D_GAME AS dg WHERE dg.Id=@gameId";
                         var game = connection.Query<Game>(query, new { gameId = model.GameId, categoryId = model.Id }).SingleOrDefault();
                         data.Game = game;
                     }

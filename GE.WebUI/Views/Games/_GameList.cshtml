@@ -72,4 +72,8 @@
             @Html.DisplayFor(x => Model[gameName], new { LoadImg = true, Materials = Model.Materials })
         </div>
     </div>
+    <div class="container">
+        @Html.Action("Featured", "MaterialCategories", new { amount = 4 })
+    </div>
 </div>
+

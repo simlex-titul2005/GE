@@ -45,31 +45,28 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ViewResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
-            var model = id.HasValue ? Repo.GetByKey(id) : new Game();
+            var model = id.HasValue ? await Repo.GetByKeyAsync(id) : new Game();
+            if (id.HasValue && model == null) return new HttpNotFoundResult();
             ViewData["FrontPictureIdCaption"] = model.FrontPicture?.Caption;
             ViewData["GoodPictureIdCaption"] = model.GoodPicture?.Caption;
             ViewData["BadPictureIdCaption"] = model.BadPicture?.Caption;
             return View(Mapper.Map<Game, VMGame>(model));
         }
 
-        //[HttpPost, ValidateAntiForgeryToken]
-        //public ActionResult Edit(VMEditGame model)
-        //{
-        //    var redactModel = Mapper.Map<VMEditGame, Game>(model);
-        //    if (ModelState.IsValid)
-        //    {
-        //        Game newModel = null;
-        //        if (model.Id == 0)
-        //            newModel = _repo.Create(redactModel);
-        //        else
-        //            newModel = _repo.Update(redactModel, true, "Title", "TitleAbbr", "Description", "Show", "FrontPictureId", "GoodPictureId", "BadPictureId", "TitleUrl", "FullDescription");
-        //        return RedirectToAction("index");
-        //    }
-        //    else
-        //        return View(model);
-        //}
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(VMGame model)
+        {
+            if (ModelState.IsValid)
+            {
+                var redactModel = Mapper.Map<VMGame, Game>(model);
+                redactModel=model.Id==0? Repo.Create(redactModel): Repo.Update(redactModel);
+                return RedirectToAction("Index");
+            }
+            else
+                return View(model);
+        }
 
         [HttpPost, AllowAnonymous]
         public async Task<ActionResult> FindGridView(VMGame filterModel, SxOrderItem order, int page = 1, int pageSize = 10)

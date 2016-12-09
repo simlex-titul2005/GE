@@ -27,7 +27,7 @@ BEGIN
 	            ON  dp2.Id = dg.GoodPictureId
 	       LEFT JOIN D_PICTURE  AS dp3
 	            ON  dp3.Id = dg.BadPictureId
-	WHERE  dg.Id = 1
+	WHERE  dg.Id = @id
 END
 GO
 

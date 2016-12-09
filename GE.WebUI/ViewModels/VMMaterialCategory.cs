@@ -14,5 +14,16 @@ namespace GE.WebUI.ViewModels
 
         [Display(Name = "Показывать в избранных")]
         public bool IsFeatured { get; set; }
+
+        public string Url(UrlHelper url)
+        {
+            var result = "#";
+            switch(ModelCoreType)
+            {
+                default: break;
+                case 1: result = url.Action("List", "Articles", new { category = Id }); break;
+            }
+            return result;
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var redactModel = Mapper.Map<VMGame, Game>(model);
-                redactModel=model.Id==0? Repo.Create(redactModel): Repo.Update(redactModel);
+                redactModel=model.Id==0? await Repo.CreateAsync(redactModel): await Repo.UpdateAsync(redactModel);
                 return RedirectToAction("Index");
             }
             else

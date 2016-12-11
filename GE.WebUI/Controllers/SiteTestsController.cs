@@ -4,7 +4,6 @@ using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
 using SX.WebCore.Attrubutes;
-using SX.WebCore.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

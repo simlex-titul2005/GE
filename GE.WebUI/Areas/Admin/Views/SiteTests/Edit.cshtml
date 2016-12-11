@@ -84,16 +84,32 @@
 
             @if (!isNew && User.IsInRole("architect"))
             {
-                <div class="form-group">
-                    @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
-                    <span class="text-info"> (применяется для уникальной идентификации материала)</span>
-                    @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(x => x.TitleUrl)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.TitleUrl, new { @class = "control-label" })
+                            <span class="text-info"> (применяется для уникальной идентификации материала)</span>
+                            @Html.EditorFor(x => x.TitleUrl, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(x => x.TitleUrl)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ViewOnMainPage, new { @class = "control-label" })
+                            @Html.EditorFor(x => x.ViewOnMainPage, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(x => x.ViewOnMainPage)
+                        </div>
+                    </div>
                 </div>
             }
             else
             {
                 @Html.HiddenFor(x => x.TitleUrl)
+                <div class="form-group">
+                    @Html.LabelFor(x => x.ViewOnMainPage, new { @class = "control-label" })
+                    @Html.EditorFor(x => x.ViewOnMainPage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.ViewOnMainPage)
+                </div>
             }
 
             @if (Model.Type == SiteTest.SiteTestType.NormalImage)

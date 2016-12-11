@@ -15,6 +15,7 @@
                     return string.IsNullOrEmpty(x.Rules)?"<em class=\"text-warning\" data-toggle=\"tooltip\" title=\"Необходимо задать правила теста, чтобы не вводить пользователей в заблуждение\">не заданы правила теста</em>":"<div class=\"text-center\"><a class=\"rules-btn\" href=\""+Url.Action("Rules","SiteTests", new { testId=x.Id})+"\" data-toggle=\"tooltip\" title=\"Показать правила\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></a></div>";
                 } },
                 new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="Show", Caption="Показывать", Template=x=> { return x.Show?"Да":"Нет"; } },
+                new SxExtantions.SxGridViewColumn<VMSiteTest>{FieldName="ViewOnMainPage", Caption="Показывать на главной", Template=x=> { return x.ViewOnMainPage?"Да":"Нет"; } },
             },
             EnableCreating = true,
             CreateRowUrl = Url.Action("Edit", "Sitetests"),

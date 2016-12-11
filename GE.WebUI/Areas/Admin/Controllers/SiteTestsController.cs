@@ -70,20 +70,22 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ViewResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
-            var model = id.HasValue ? _repo.GetByKey(id) : new SiteTest();
+            var data = id.HasValue ? await Repo.GetByKeyAsync(id) : new SiteTest();
+            if (id.HasValue && data == null) return new HttpNotFoundResult();
             var viewModel = new VMSiteTest() {
-                DateCreate=model.DateCreate,
-                Description=model.Description,
-                Id=model.Id,
-                Rules=model.Rules,
-                Show=model.Show,
-                ShowSubjectDesc=model.ShowSubjectDesc,
-                Title=model.Title,
-                TitleUrl=model.TitleUrl,
-                Type=model.Type,
-                ViewsCount=model.ViewsCount
+                DateCreate=data.DateCreate,
+                Description=data.Description,
+                Id=data.Id,
+                Rules=data.Rules,
+                Show=data.Show,
+                ShowSubjectDesc=data.ShowSubjectDesc,
+                Title=data.Title,
+                TitleUrl=data.TitleUrl,
+                Type=data.Type,
+                ViewsCount=data.ViewsCount,
+                ViewOnMainPage=data.ViewOnMainPage
             };
             return View(viewModel);
         }
@@ -106,9 +108,9 @@ namespace GE.WebUI.Areas.Admin.Controllers
                 else
                 {
                     if (isArchitect)
-                        newModel = _repo.Update(redactModel, true, "Title", "Description", "Rules", "Type", "TitleUrl", "Show", "ShowSubjectDesc");
+                        newModel = _repo.Update(redactModel, true, "Title", "Description", "Rules", "Type", "TitleUrl", "Show", "ShowSubjectDesc", "ViewOnMainPage");
                     else
-                        newModel = _repo.Update(redactModel, true, "Title", "Description", "Rules", "Show", "ShowSubjectDesc");
+                        newModel = _repo.Update(redactModel, true, "Title", "Description", "Rules", "Show", "ShowSubjectDesc", "ViewOnMainPage");
                 }
                 return RedirectToAction("Index");
             }

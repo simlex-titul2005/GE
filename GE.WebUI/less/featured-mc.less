@@ -1,5 +1,6 @@
 ﻿@import (reference) "colors.less";
 @import (reference) "sizes.less";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
 
 .featured-mc {
     color: @color-white;
@@ -11,7 +12,6 @@
     height: 100%;
     display: inline-block;
     width: 100%;
-    padding-top:@def-pad;
     padding-left:@def-pad*2;
 }
 
@@ -34,6 +34,19 @@
     padding:0;
     float:none;
     vertical-align:top;
+    @media (max-width: @screen-xs-max) {
+        display:block;
+        margin-bottom:@def-pad;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
 }
 
 @featured-mc__img-width:50px;
@@ -54,5 +67,4 @@
 
 .featured-mc__desc{
     line-height:1;
-    text-align:justify;
 }

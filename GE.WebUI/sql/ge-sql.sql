@@ -1175,6 +1175,7 @@ BEGIN
 	       dst.Rules
 	FROM   D_SITE_TEST AS dst
 	WHERE  dst.Show = 1
+	       AND dst.ViewOnMainPage = 1
 	ORDER BY
 	       NEWID()
 END

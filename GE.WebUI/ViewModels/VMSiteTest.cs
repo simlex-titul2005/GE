@@ -47,5 +47,8 @@ namespace GE.WebUI.ViewModels
         public bool ShowSubjectDesc { get; set; }
 
         public VMSiteTestSetting Settings { get; set; }
+
+        [Display(Name = "Показывать на главной")]
+        public bool ViewOnMainPage { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace GE.WebUI.Controllers
             var routeDataValues = Request.RequestContext.RouteData.Values;
             var gameTitle = (string)routeDataValues["gameTitle"];
             ViewBag.GameTitle = gameTitle;
-            filter.AddintionalInfo = new object[] { gameTitle };
+            filter.AddintionalInfo = new object[] { null, gameTitle };
             if (gameTitle != null)
             {
                 var existGame = GamesController.Repo.ExistGame(gameTitle);

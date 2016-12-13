@@ -16,7 +16,8 @@
 <div class="ap-list-page">
     <div class="row">
         <div class="col-md-9">
-            @Html.Partial("_List", Model, new ViewDataDictionary { { "Category", category }, { "Author", author} })
+            @Html.Partial("_List", Model, new ViewDataDictionary { { "Author", author }, { "Category", category } })
+
             <div class="text-center">
                 @Html.SxPager(pagerInfo, pageUrl: (x) => Url.Action("List", new { categoryId = category == null ? null : category.Id, page = x, author = author == null ? null : author.TitleUrl }), htmlAttributes: new { @class = "pagination" }, isAjax: false)
             </div>
@@ -28,6 +29,7 @@
 </div>
 
 @section scripts{
+    <script src="~/Scripts/sxshare.js"></script>
     <script>
         @if(category!=null)
         {

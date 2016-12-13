@@ -1,6 +1,7 @@
 ﻿using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace GE.WebUI.Controllers
@@ -15,9 +16,9 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details(string titleUrl)
+        public async Task<ActionResult> Details(string titleUrl)
         {
-            var data = _repo.GetByTitleUrl(titleUrl);
+            var data = await Repo.GetByTitleUrlAsync(titleUrl);
             if (data == null) return new HttpNotFoundResult();
 
             var viewModel = Mapper.Map<AuthorAphorism, VMAuthorAphorism>(data);

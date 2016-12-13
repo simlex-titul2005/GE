@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 08.12.2016 17:03:24
+ * Time: 13.12.2016 7:50:41
  ************************************************************/
 
 /*******************************************
@@ -1344,5 +1344,128 @@ BEGIN
 	       JOIN D_PICTURE       AS dp
 	            ON  dp.Id = dmc.FrontPictureId
 	WHERE  dmc.IsFeatured = 1
+END
+GO
+
+/*******************************************
+ * Получить автора авфоризма по TitleUrl
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_author_aphorisms_by_title_url', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_author_aphorisms_by_title_url;
+GO
+CREATE PROCEDURE dbo.get_author_aphorisms_by_title_url
+	@titleUrl NVARCHAR(255)
+AS
+BEGIN
+	SELECT TOP(2) * 
+	FROM   D_AUTHOR_APHORISM    AS daa
+	       LEFT JOIN D_PICTURE  AS dp
+	            ON  dp.Id = daa.PictureId
+	WHERE  daa.TitleUrl = @titleUrl
+END
+GO
+
+/*******************************************
+* Получить страницу афоризма
+*******************************************/
+IF OBJECT_ID(N'dbo.get_aphorism_page_model', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_aphorism_page_model;
+GO
+CREATE PROCEDURE dbo.get_aphorism_page_model
+(
+    @title_url         NVARCHAR(255),
+    @author_amount     INT,
+    @cat_amount        INT
+)
+AS
+BEGIN
+	DECLARE @authorId     INT,
+	        @catId        NVARCHAR(100)
+	
+	SELECT @authorId = da.AuthorId,
+	       @catId = dm.CategoryId
+	FROM   D_APHORISM        AS da
+	       JOIN DV_MATERIAL  AS dm
+	            ON  dm.Id = da.Id
+	            AND dm.ModelCoreType = da.ModelCoreType
+	WHERE  dm.TitleUrl = @title_url
+	
+	SELECT x.Id,
+	       x.DateOfPublication,
+	       x.ViewsCount,
+	       x.Flag,
+	       x.Title,
+	       x.TitleUrl,
+	       x.Html,
+	       x.Foreword,
+	       x.CategoryId,
+	       x.ModelCoreType,
+	       dmc.Id,
+	       dmc.Title,
+	       x.AuthorId                   AS Id,
+	       daa.Name,
+	       daa.PictureId,
+	       daa.TitleUrl,
+	       COUNT(dc.Id)                 AS CommentsCount
+	FROM   (
+	           SELECT dm.*,
+	                  da.AuthorId,
+	                  0                 AS Flag
+	           FROM   D_APHORISM        AS da
+	                  JOIN DV_MATERIAL  AS dm
+	                       ON  dm.Id = da.Id
+	                       AND dm.ModelCoreType = da.ModelCoreType
+	           WHERE  dm.TitleUrl = @title_url
+	                  AND dm.Show = 1
+	           UNION ALL
+	           SELECT TOP(@author_amount) dm.*,
+	                  da.AuthorId,
+	                  1                 AS Flag
+	           FROM   D_APHORISM        AS da
+	                  JOIN DV_MATERIAL  AS dm
+	                       ON  dm.Id = da.Id
+	                       AND dm.ModelCoreType = da.ModelCoreType
+	           WHERE  (
+	                      (@authorId IS NULL AND da.AuthorId IS NULL)
+	                      OR (@authorId IS NOT NULL AND da.AuthorId IN (@authorId))
+	                  )
+	                  AND (dm.TitleUrl NOT IN (@title_url))
+	                  AND dm.Show = 1
+	           UNION ALL
+	           SELECT TOP(@cat_amount) dm.*,
+	                  da.AuthorId,
+	                  2                 AS Flag
+	           FROM   D_APHORISM        AS da
+	                  JOIN DV_MATERIAL  AS dm
+	                       ON  dm.Id = da.Id
+	                       AND dm.ModelCoreType = da.ModelCoreType
+	           WHERE  dm.CategoryId IN (@catId)
+	                  AND (dm.TitleUrl NOT IN (@title_url))
+	                  AND dm.Show = 1
+	       ) x
+	       LEFT JOIN D_COMMENT          AS dc
+	            ON  dc.MaterialId = x.Id
+	            AND dc.ModelCoreType = x.ModelCoreType
+	       JOIN D_MATERIAL_CATEGORY     AS dmc
+	            ON  dmc.Id = x.CategoryId
+	       LEFT JOIN D_AUTHOR_APHORISM  AS daa
+	            ON  daa.Id = x.AuthorId
+	GROUP BY
+	       x.Id,
+	       x.DateOfPublication,
+	       x.ViewsCount,
+	       x.Title,
+	       x.TitleUrl,
+	       x.Html,
+	       x.Foreword,
+	       x.CategoryId,
+	       x.ModelCoreType,
+	       x.AuthorId,
+	       x.Flag,
+	       dmc.Title,
+	       daa.Name,
+	       daa.PictureId,
+	       daa.TitleUrl,
+	       dmc.Id
 END
 GO

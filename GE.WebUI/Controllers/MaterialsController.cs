@@ -111,7 +111,7 @@ namespace GE.WebUI.Controllers
                 //update views count
                 Task.Run(() =>
                 {
-                    Repo.AddUserView(model.Id, model.ModelCoreType);
+                    Repo.AddUserViewAsync(model.Id, model.ModelCoreType);
                 });
 
                 model.ViewsCount = model.ViewsCount + 1;

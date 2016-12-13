@@ -8,6 +8,7 @@ using SX.WebCore.SxRepositories.Abstract;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebUI.Infrastructure.Repositories
@@ -68,20 +69,16 @@ namespace GE.WebUI.Infrastructure.Repositories
             }
         }
 
-        public AuthorAphorism GetByTitleUrl(string titleUrl)
+        public async Task<AuthorAphorism> GetByTitleUrlAsync(string titleUrl)
         {
-            var query = @"SELECT TOP(1) * FROM D_AUTHOR_APHORISM AS daa
-LEFT JOIN D_PICTURE AS dp ON dp.Id = daa.PictureId
-WHERE daa.TitleUrl=@titleUrl";
-
-            using (var conn = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<AuthorAphorism, SxPicture, AuthorAphorism>(query, (a, p) => {
+                var data = await connection.QueryAsync<AuthorAphorism, SxPicture, AuthorAphorism>("dbo.get_author_aphorisms_by_title_url @titleUrl", (a, p) => {
                     a.Picture = p;
                     return a;
-                }, new { titleUrl = titleUrl }, splitOn: "Id").SingleOrDefault();
+                }, new { titleUrl = titleUrl }, splitOn: "Id");
 
-                return data;
+                return data.SingleOrDefault();
             }
         }
     }

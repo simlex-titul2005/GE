@@ -79,13 +79,15 @@ class SxShare {
         this.counters.each((index: number, elem: Element) => this.GetCount(index, elem));
     }
 
-    private Popup(element: JQueryEventObject): void {
-        var target: Element = element.target.parentElement;
+    private Popup(e: JQueryEventObject): void {
+        var target: Element = e.target.parentElement;
         var url: string = this.GetUrl(target);
         if (url === null) { return; }
         window.open(url, "", "left=" + (screen.width - 630) / 2
             + ",top=" + (screen.height - 440) / 2
             + ",toolbar=0,status=0,scrollbars=0,menubar=0,location=0,width=630,height=440");
+        e.preventDefault();
+        e.stopPropagation();
     }
 
     private GetUrl(target: Element): string {

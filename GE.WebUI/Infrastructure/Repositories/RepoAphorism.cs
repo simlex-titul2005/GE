@@ -7,6 +7,7 @@ using System;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace GE.WebUI.Infrastructure.Repositories
@@ -40,19 +41,19 @@ namespace GE.WebUI.Infrastructure.Repositories
             base.Delete(model);
         }
 
-        public VMDetailAphorism GetByTitleUrl(string categoryId, string titleUrl, int tfaAmount = 10, int tcAmount = 10)
+        public async Task<VMDetailAphorism> GetByTitleUrlAsync(string categoryId, string titleUrl, int tfaAmount = 10, int tcAmount = 10)
         {
             var viewModel = new VMDetailAphorism();
-            using (var conn = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<VMAphorism, VMMaterialCategory, VMAuthorAphorism, VMAphorism>("dbo.get_aphorism_page_model @title_url, @author_amount, @cat_amount", (a, c, au) => {
-                    a.CategoryId = c.Id.ToString();
+                var data = (await connection.QueryAsync<VMAphorism, VMMaterialCategory, VMAuthorAphorism, VMAphorism>("dbo.get_aphorism_page_model @title_url, @author_amount, @cat_amount", (a, c, au) =>
+                {
                     a.Category = c;
                     a.Author = au;
                     return a;
-                }, new { title_url = titleUrl, author_amount = tfaAmount, cat_amount = tcAmount }, splitOn: "Id").ToArray();
+                }, new { title_url = titleUrl, author_amount = tfaAmount, cat_amount = tcAmount }, splitOn: "Id")).ToArray();
 
-                if (data == null)
+                if (!data.Any())
                     viewModel = null;
                 else
                 {
@@ -65,8 +66,6 @@ namespace GE.WebUI.Infrastructure.Repositories
 
                 return viewModel;
             }
-
-
         }
 
         public VMAphorism GetExistsModel(string titleUrl)
@@ -103,9 +102,10 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             get
             {
-                return (connection, model) => {
+                return (connection, model) =>
+                {
                     var query = "SELECT TOP(1)  daa.* FROM D_AUTHOR_APHORISM AS daa JOIN D_APHORISM AS da ON da.AuthorId = daa.Id WHERE da.Id = @id";
-                    var data = connection.Query<AuthorAphorism>(query, new { id=model.Id }).SingleOrDefault();
+                    var data = connection.Query<AuthorAphorism>(query, new { id = model.Id }).SingleOrDefault();
                     model.Author = data;
                     model.AuthorId = data?.Id;
                 };
@@ -119,7 +119,7 @@ namespace GE.WebUI.Infrastructure.Repositories
                 return (filter, sb) =>
                 {
                     sb.Append(" JOIN D_APHORISM AS da ON da.Id=dm.Id AND da.ModelCoreType=dm.ModelCoreType ");
-                    sb.Append(" LEFT JOIN D_AUTHOR_APHORISM AS daa ON daa.Id=da.AuthorId ");
+                    sb.Append(" JOIN D_AUTHOR_APHORISM AS daa ON daa.Id=da.AuthorId ");
                 };
             }
         }
@@ -130,16 +130,11 @@ namespace GE.WebUI.Infrastructure.Repositories
             {
                 return (filter, sb, param) =>
                 {
-                    var currentContext = HttpContext.Current;
-                    if(currentContext!=null)
-                    {
-                        var author = currentContext.Request.QueryString.Get("author");
-                        if (author != null)
-                        {
-                            param.Add("author", author);
-                            sb.Append(" AND (daa.TitleUrl=@author) ");
-                        }
-                    }
+                    var data = (VMAphorism)(filter.WhereExpressionObject);
+                    if (string.IsNullOrEmpty(data?.Author?.TitleUrl)) return;
+
+                    param.Add("author", data.Author.TitleUrl);
+                    sb.Append(" AND (daa.TitleUrl=@author) ");
                 };
             }
         }
@@ -148,7 +143,8 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             get
             {
-                return (connection, data) => {
+                return (connection, data) =>
+                {
                     var sb = new StringBuilder();
                     VMAphorism item = null;
                     for (int i = 0; i < data.Length; i++)
@@ -158,11 +154,12 @@ namespace GE.WebUI.Infrastructure.Repositories
                     }
                     sb.Remove(0, 1);
 
-                    var materialAphorisms = connection.Query<VMAphorism, VMAuthorAphorism, VMAphorism>("dbo.get_aphorisms_authors @ids", (a, aa)=> {
+                    var materialAphorisms = connection.Query<VMAphorism, VMAuthorAphorism, VMAphorism>("dbo.get_aphorisms_authors @ids", (a, aa) =>
+                    {
                         a.Author = aa;
                         return a;
                     }, new { ids = sb.ToString() }).ToArray();
-                    if(materialAphorisms.Any())
+                    if (materialAphorisms.Any())
                     {
                         VMAphorism materialAphirism = null;
                         for (int i = 0; i < materialAphorisms.Length; i++)
@@ -174,7 +171,7 @@ namespace GE.WebUI.Infrastructure.Repositories
                                 item.Author = materialAphirism.Author;
                                 item.AuthorId = materialAphirism.Author.Id;
                             }
-                        }    
+                        }
                     }
                 };
             }

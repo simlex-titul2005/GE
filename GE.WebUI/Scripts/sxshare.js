@@ -63,8 +63,8 @@ var SxShare = (function () {
         var _this = this;
         this.counters.each(function (index, elem) { return _this.GetCount(index, elem); });
     };
-    SxShare.prototype.Popup = function (element) {
-        var target = element.target.parentElement;
+    SxShare.prototype.Popup = function (e) {
+        var target = e.target.parentElement;
         var url = this.GetUrl(target);
         if (url === null) {
             return;
@@ -72,6 +72,8 @@ var SxShare = (function () {
         window.open(url, "", "left=" + (screen.width - 630) / 2
             + ",top=" + (screen.height - 440) / 2
             + ",toolbar=0,status=0,scrollbars=0,menubar=0,location=0,width=630,height=440");
+        e.preventDefault();
+        e.stopPropagation();
     };
     SxShare.prototype.GetUrl = function (target) {
         var dataType = SxShareNetType[target.getAttribute("data-type")];

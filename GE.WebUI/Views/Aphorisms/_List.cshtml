@@ -4,7 +4,7 @@
     var author = (VMAuthorAphorism)ViewData["Author"];
     var category = (SxVMMaterialCategory)ViewData["Category"];
     string header = null;
-    if (category != null)
+    if (category != null && author == null)
     {
         header = string.Format("Другие высказывания в категории {0}", category.Title);
     }
@@ -12,9 +12,11 @@
     {
         header = string.Format("{0}. Другие высказывания", author.Name);
     }
+
+    var actionName = Request.RequestContext.RouteData.Values["action"].ToString().ToUpper();
 }
 <div class="ap-list">
-    @if (author != null && author.PictureId.HasValue)
+    @if (author != null && actionName!="DETAILS")
     {
         <div class="aph-autor-info">
             <figure class="aph-autor-info__img img-circle" style="background-image:url(@Url.Action("Picture","Pictures", new { id=author.PictureId})"></figure>
@@ -23,13 +25,13 @@
             </div>
             @if (!string.IsNullOrWhiteSpace(author.Foreword))
             {
-            <br />
-            <a href="@Url.Action("Details", "AuthorAphorisms", new { titleUrl = author.TitleUrl })" class="btn btn-sm btn-default test-item__btn">Подробнее об авторе <i class="fa fa-angle-double-right"></i></a>
+                <br />
+                <a href="@Url.Action("Details", "AuthorAphorisms", new { titleUrl = author.TitleUrl })" class="btn btn-sm btn-default test-item__btn">Подробнее об авторе <i class="fa fa-angle-double-right"></i></a>
             }
         </div>
     }
 
-    @if (header != null)
+    @if (header != null && actionName!="LIST")
     {
         <h2 class="header">@header</h2>
     }
@@ -38,8 +40,8 @@
         @for (int i = 0; i < Model.Length; i++)
             {
                 var a = Model[i];
-            <li onclick="changeLocation(this)">
-                @Html.DisplayFor(x=>a)
+            <li>
+                @Html.DisplayFor(x => a)
             </li>
         }
     </ul>

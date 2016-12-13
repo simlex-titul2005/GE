@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using SX.WebCore.ViewModels;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
-using System;
 using GE.WebUI.Infrastructure;
 
 namespace GE.WebUI.Controllers
@@ -25,25 +24,20 @@ namespace GE.WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details(string categoryId, string titleUrl)
+        public async Task<ActionResult> Details(string categoryId, string titleUrl)
         {
-            var viewModel = Repo.GetByTitleUrl(categoryId, titleUrl);
+            var viewModel = await Repo.GetByTitleUrlAsync(categoryId, titleUrl);
 
             if (viewModel == null || viewModel.Aphorism == null)
                 return new HttpNotFoundResult();
 
-            if (viewModel.Aphorism.Author!=null)
-                ViewBag.Author = viewModel.Aphorism.Author;
-            else
-                ViewBag.Category = getCurrentCategory(categoryId);
+            ViewBag.Author = viewModel.Aphorism.Author;
+            ViewBag.Category = viewModel.Aphorism.Category;
 
             //update views count
             if (!Request.IsLocal)
             {
-                Task.Run(() =>
-                {
-                    (_repo as RepoAphorism).AddUserView(viewModel.Aphorism.Id, MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)]);
-                });
+                await Repo.AddUserViewAsync(viewModel.Aphorism.Id, MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)]);
             }
             return View(viewModel);
         }
@@ -61,35 +55,33 @@ namespace GE.WebUI.Controllers
 
         private static int _pageSize = 20;
         [HttpGet]
-        public ActionResult List(string categoryId = null, int page = 1)
+        public async Task<ActionResult> List(string categoryId = null, int page = 1)
         {
-            //var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
-
             var author = Request.QueryString["author"];
             if (!string.IsNullOrEmpty(author))
             {
-                var a = AuthorAphorismsController.Repo.GetByTitleUrl(author);
+                var a = await AuthorAphorismsController.Repo.GetByTitleUrlAsync(author);
                 if (a == null) return new HttpNotFoundResult();
                 ViewBag.Author = Mapper.Map<AuthorAphorism, VMAuthorAphorism>(a);
             }
             if (!string.IsNullOrEmpty(categoryId))
             {
-                var c=getCurrentCategory(categoryId);
+                var c = await getCurrentCategory(categoryId);
                 if (c == null) return new HttpNotFoundResult();
                 ViewBag.Category = c;
             }
 
-            //ViewBag.Breadcrumbs = breadcrumbs;
-
-            var filter = new SxFilter(page, _pageSize) {
+            var filter = new SxFilter(page, _pageSize)
+            {
                 WhereExpressionObject = new VMAphorism { CategoryId = categoryId, Author = new VMAuthorAphorism { TitleUrl = author } },
-                OnlyShow = true
+                OnlyShow = true,
+                CategoryId=ViewBag.Category?.Id
             };
             filter.PagerInfo.PagerSize = 5;
-            var viewModel = _repo.Read(filter);
+            var viewModel = await Repo.ReadAsync(filter);
 
             ViewBag.PagerInfo = filter.PagerInfo;
-            
+
             return View(viewModel);
         }
 
@@ -99,11 +91,11 @@ namespace GE.WebUI.Controllers
             return RedirectToAction("List", new { author = author, html = html });
         }
 
-        private SxVMMaterialCategory getCurrentCategory(string categoryId=null)
+        private async Task<SxVMMaterialCategory> getCurrentCategory(string categoryId = null)
         {
             if (categoryId == null) return null;
 
-            var data = MaterialCategoriesController.Repo.GetByKey(categoryId);
+            var data = await MaterialCategoriesController.Repo.GetByKeyAsync(categoryId);
             return Mapper.Map<MaterialCategory, SxVMMaterialCategory>(data);
         }
     }

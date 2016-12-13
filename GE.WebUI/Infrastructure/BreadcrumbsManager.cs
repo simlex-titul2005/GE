@@ -19,15 +19,20 @@ namespace GE.WebUI.Infrastructure
             {
                 case "aphorisms":
                     breadcrumbs.Add(new SxVMBreadcrumb { Title = "Афоризмы", Url = controller.Url.Action("List", "Aphorisms") });
-                    if (controller.SxActionName == "list")
-                    {
-                        var author = (ViewModels.VMAuthorAphorism)controller.ViewBag.Author;
-                        if(author!=null)
-                            breadcrumbs.Add(new SxVMBreadcrumb { Title = author.Name, Url = controller.Url.Action("List", "Aphorisms", new { author=author.TitleUrl }) });
 
-                        var category = (SxVMMaterialCategory)controller.ViewBag.Category;
-                        if(category!=null)
-                            breadcrumbs.Add(new SxVMBreadcrumb { Title = category.Title, Url = controller.Url.Action("List", "Aphorisms", new { categoryId = category.Id }) });
+                    var category = (SxVMMaterialCategory)controller.ViewBag.Category;
+                    if (category != null)
+                        breadcrumbs.Add(new SxVMBreadcrumb { Title = category.Title, Url = controller.Url.Action("List", "Aphorisms", new { categoryId = category.Id }) });
+
+                    var author = (ViewModels.VMAuthorAphorism)controller.ViewBag.Author;
+                    if (author != null)
+                        breadcrumbs.Add(new SxVMBreadcrumb { Title = author.Name, Url = controller.Url.Action("List", "Aphorisms", new { author = author.TitleUrl }) });
+
+                    if(controller.SxActionName=="details")
+                    {
+                        var model = ((ViewModels.VMDetailAphorism)controller.SxModel)?.Aphorism;
+                        if(model!=null)
+                            breadcrumbs.Add(new SxVMBreadcrumb { Title = model.Title, Url = model.GetUrl(controller.Url) });
                     }
                     break;
                 case "articles":

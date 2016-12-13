@@ -49,13 +49,13 @@ namespace GE.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(VMAuthorAphorism model)
+        public async Task<ActionResult> Edit(VMAuthorAphorism model)
         {
             var isNew = model.Id == 0;
             if (isNew || string.IsNullOrWhiteSpace(model.TitleUrl))
                 model.TitleUrl = UrlHelperExtensions.SeoFriendlyUrl(model.Name);
 
-            var existByTitleModel = Repo.GetByTitleUrl(model.TitleUrl);
+            var existByTitleModel = await Repo.GetByTitleUrlAsync(model.TitleUrl);
             if (existByTitleModel != null)
             {
                 if(!Equals(existByTitleModel.Id, model.Id))

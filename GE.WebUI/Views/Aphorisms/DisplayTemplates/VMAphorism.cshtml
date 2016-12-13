@@ -1,6 +1,14 @@
-﻿@model VMAphorism
+﻿@using SX.WebCore;
+
+@model VMAphorism
+@{
+    var imageId = Model.FrontPictureId ?? Model.Author?.PictureId;
+    var desc = Html.Raw(Model.Foreword.Length >= 100 ? Model.Foreword.Substring(0, 100) + "..." : Model.Foreword);
+    var url = Model.GetUrl(Url);
+}
 
 <div class="content">
+    <a href="@Model.GetUrl(Url)" class="ap__link"></a>
     <div class="info">
         @Html.Partial("_MaterialInfo", Model)
     </div>
@@ -12,11 +20,15 @@
     }
 
     <div>
-        @(Model.Foreword.Length >= 100 ? Model.Foreword.Substring(0, 100)+"..." : Model.Foreword)
+        @desc
     </div>
-    <div class="author">@(Model.Author != null && Model.Author.Name != null ? Model.Author.Name : "Аноним")@(Model.Category != null ? ". " + Model.Category.Title : null)</div>
+    <div class="author">@(Model.Author?.Name ?? "Аноним")@(Model.Category != null ? ". " + Model.Category.Title : null)</div>
+    @*<div>
+        <a href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})" class="btn btn-sm"><i>Подробнее</i></a>
+    </div>*@
     <div>
-        <a href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})"><i>Подробнее</i></a>
+        <br />
+        @Html.SxShareButtons(new SxExtantions.SxShareButtonOption() { Title = Model.Author?.Name ?? Model.Title, Url = Url.ContentAbsUrl(Model.GetUrl(Url)), Image = Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = imageId })), Description = desc.ToString() })
     </div>
 
 </div>

@@ -24,9 +24,9 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [NonAction]
-        public override ActionResult Index(int page = 1)
+        public override async Task<ActionResult> Index(int page = 1)
         {
-            return base.Index(page);
+            return await base.Index(page);
         }
 
         private static int _pageSize = 10;
@@ -83,10 +83,10 @@ namespace GE.WebUI.Areas.Admin.Controllers
                 };
             }
         }
-        public override ActionResult Edit(int? id = default(int?))
+        public override async Task<ActionResult> Edit(int? id = default(int?))
         {
             ViewBag.Scripts = "var gridAuthors=new SxGridView('#AuthorId');";
-            return base.Edit(id);
+            return await base.Edit(id);
         }
 
         protected override string[] PropsForUpdate
@@ -100,10 +100,9 @@ namespace GE.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Edit(VMAphorism model)
+        public override async Task<ActionResult> Edit(VMAphorism model)
         {
-            base.Edit(model);
-
+            await base.Edit(model);
             return RedirectToAction("Index", new { curCat = model.CategoryId });
         }
 

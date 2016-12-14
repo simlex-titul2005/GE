@@ -4,12 +4,12 @@
     var bgImageId = SiteSettingsProvider["sitebgpath"]?.Value;
     var logoPath = Url.Action("Picture", "Pictures", new { id = SiteSettingsProvider["sitelogopath"]?.Value });
     var iconPath = Url.Action("Picture", "Pictures", new { id = SiteSettingsProvider["sitefaveiconpath"]?.Value });
-    var bg = string.IsNullOrEmpty(bgImageId) ? null : string.Format("style=background:url('{0}');", Url.Action("Picture", "Pictures", new { id= bgImageId }));
+    var bg = string.IsNullOrEmpty(bgImageId) ? null : string.Format("style=background:url('{0}');", Url.Action("Picture", "Pictures", new { id = bgImageId }));
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
     var bannerControllerBlackList = new string[] { "employees", "account", "error", "sitequestions", "forauthors" };
-    var pageBanners = ViewBag.PageBanners==null?new SxVMBanner[0]:(SxVMBanner[])ViewBag.PageBanners;
+    var pageBanners = ViewBag.PageBanners == null ? new SxVMBanner[0] : (SxVMBanner[])ViewBag.PageBanners;
     SxVMBanner banner = null;
 }
 <!DOCTYPE html>
@@ -40,7 +40,7 @@
     <title itemprop="name">@ViewBag.Title</title>
     <link rel="canonical" href="@(Url.ContentAbsUrl(Request.RawUrl))" itemprop="url" />
     <meta property="og:title" content="@ViewBag.Title" />
-    <meta property="og:image" content="@(ViewBag.PageImage!=null ? ViewBag.PageImage: Url.ContentAbsUrl(logoPath ?? "/content/dist/i/faveicon.png"))" />
+    <meta property="og:image" content="@(ViewBag.PageImage!=null ? ViewBag.PageImage : Url.ContentAbsUrl(logoPath ?? "/content/dist/i/faveicon.png"))" />
 
     @RenderSection("head", false)
 
@@ -113,8 +113,7 @@
             $banner = $(this);
             var bannerId = $banner.attr('data-id');
             var show = $banner.attr('data-show');
-            if (!show)
-            {
+            if (!show) {
                 $.ajax({
                     method: 'post',
                     url: '@Url.Action("AddShow","Banners")',
@@ -159,8 +158,7 @@
             });
         });
 
-        function fillRating(items, curIndex)
-        {
+        function fillRating(items, curIndex) {
             $items = $(items);
             $items.each(function () {
                 var index = $(this).attr('data-index');

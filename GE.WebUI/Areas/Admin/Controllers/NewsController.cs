@@ -4,6 +4,7 @@ using SX.WebCore.SxRepositories;
 using GE.WebUI.Infrastructure.Repositories;
 using System.Web.Mvc;
 using SX.WebCore;
+using System.Threading.Tasks;
 
 namespace GE.WebUI.Areas.Admin.Controllers
 {
@@ -21,17 +22,17 @@ namespace GE.WebUI.Areas.Admin.Controllers
 
         private static readonly string _title = "Новости";
 
-        public override ActionResult Index(int page = 1)
+        public override async Task<ActionResult> Index(int page = 1)
         {
             ViewBag.Title = _title;
-            return base.Index(page);
+            return await base.Index(page);
         }
 
-        public override ActionResult Edit(int? id = default(int?))
+        public override async Task<ActionResult> Edit(int? id = default(int?))
         {
             ViewBag.Scripts = "var gvlGames = new SxGridLookup('#GameId');";
             ViewBag.Title = _title;
-            return base.Edit(id);
+            return await base.Edit(id);
         }
     }
 }

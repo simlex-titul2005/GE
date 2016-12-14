@@ -1,10 +1,13 @@
 ﻿@using SX.WebCore;
+
 @model VMDetailAphorism
 @{
     var author = (VMAuthorAphorism)ViewBag.Author;
     var category = (VMMaterialCategory)ViewBag.Category;
     ViewBag.Title = ViewBag.Title ?? Model.Aphorism.Title;
-    ViewBag.PageImage = Url.ContentAbsUrl(Url.Action("Picture", "Piuctures", new { id = author?.PictureId ?? Model.Aphorism?.FrontPictureId }));
+    var pageImageId = (Guid?)ViewBag.PageImage ?? author?.PictureId ?? Model.Aphorism?.FrontPictureId;
+    if(pageImageId.HasValue)
+        ViewBag.PageImage = Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = pageImageId }));
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? (author != null ? author.Name + ". " : null) + "Афоризмы, короткие изречения великих людей, коротко о главном";
 
@@ -41,7 +44,7 @@
             @*author*@
             @if (Model.TopForAuthor.Any())
             {
-                @Html.Partial("_List", Model.TopForAuthor, new ViewDataDictionary { { "Author", Model.Aphorism.Author} })
+                @Html.Partial("_List", Model.TopForAuthor, new ViewDataDictionary { { "Author", Model.Aphorism.Author } })
                 <div class="text-center">
                     <a href="@Url.Action("List", new { author=author.TitleUrl})" class="btn btn-default btn-transparent white">Все афоризмы автора</a>
                 </div>

@@ -58,20 +58,20 @@ namespace GE.WebUI.Controllers
         [OutputCache(Duration =900, VaryByParam ="MaterialId;ModelCoreType")]
 #endif
         [HttpGet]
-        public virtual ActionResult Details(int year, string month, string day, string titleUrl)
+        public virtual async Task<ActionResult> Details(int year, string month, string day, string titleUrl)
         {
             VMMaterial model = null;
             switch (ModelCoreType)
             {
                 case 1://article
-                    model = Repo.GetByTitleUrl(year, month, day, titleUrl);
+                    model = await Repo.GetByTitleUrlAsync(year, month, day, titleUrl);
                     break;
                 case 2://news
-                    model = Repo.GetByTitleUrl(year, month, day, titleUrl);
+                    model = await Repo.GetByTitleUrlAsync(year, month, day, titleUrl);
                     break;
                 //TODO: убрать 7
                 case 7://humor
-                    model = Repo.GetByTitleUrl(year, month, day, titleUrl);
+                    model = await Repo.GetByTitleUrlAsync(year, month, day, titleUrl);
                     break;
             }
 
@@ -82,12 +82,14 @@ namespace GE.WebUI.Controllers
                 pictureUrl: x => Url.Action("Picture", "Pictures", new { id = x.Id })
             );
 
-            var matSeoInfo = Mapper.Map<SxSeoTags, SxVMSeoTags>(SxSeoTagsController.Repo.GetSeoTags(model.Id, model.ModelCoreType));
+            var seoTags = await SxSeoTagsController.Repo.GetSeoTagsAsync(model.Id, model.ModelCoreType);
+            var matSeoInfo = Mapper.Map<SxSeoTags, SxVMSeoTags>(seoTags);
 
             ViewBag.Title = ViewBag.Title ?? (matSeoInfo != null ? matSeoInfo.SeoTitle : null) ?? model.Title;
             ViewBag.Description = ViewBag.Description ?? (matSeoInfo != null ? matSeoInfo.SeoDescription : null) ?? model.Foreword;
             ViewBag.Keywords = ViewBag.Keywords ?? (matSeoInfo != null ? matSeoInfo.KeywordsString : null);
             ViewBag.H1 = ViewBag.H1 ?? (matSeoInfo != null ? matSeoInfo.H1 : null) ?? model.Title;
+            ViewBag.PageImage = ViewBag.PageImage ?? matSeoInfo?.PageImageId;
 
             CultureInfo ci = new CultureInfo("en-US");
             ViewBag.LastModified = model.DateUpdate.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'", ci);
@@ -109,12 +111,9 @@ namespace GE.WebUI.Controllers
             if (!Request.IsLocal)
             {
                 //update views count
-                Task.Run(() =>
-                {
-                    Repo.AddUserViewAsync(model.Id, model.ModelCoreType);
+                await Repo.AddUserViewAsync(model.Id, model.ModelCoreType, ()=> {
+                    model.ViewsCount++;
                 });
-
-                model.ViewsCount = model.ViewsCount + 1;
             }
 
             return View(model);

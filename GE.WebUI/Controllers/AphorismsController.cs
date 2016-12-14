@@ -37,7 +37,9 @@ namespace GE.WebUI.Controllers
             //update views count
             if (!Request.IsLocal)
             {
-                await Repo.AddUserViewAsync(viewModel.Aphorism.Id, MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)]);
+                await Repo.AddUserViewAsync(viewModel.Aphorism.Id, MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)], ()=> {
+                    viewModel.Aphorism.ViewsCount++;
+                });
             }
             return View(viewModel);
         }

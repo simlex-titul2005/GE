@@ -8,7 +8,7 @@
     ViewBag.Title = title ?? Model.Title;
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? Model.Foreword;
-    ViewBag.PageImage = Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage
+    ViewBag.PageImage = ViewBag.PageImage != null ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = ViewBag.PageImage })) : Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage
         ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = Model.FrontPictureId }))
         : Model.Videos.Length > 0
         ? SxVideoProvider.GetVideoImageUrl(Model.Videos[0].VideoId, SxVideoProvider.VideoQuality.Medium)
@@ -64,7 +64,7 @@
 
     @if (Model.MaterialTags.Any())
     {
-        @Html.Partial("_TagsCloud", Model.MaterialTags, new ViewDataDictionary { { "TagsShowHeader", true}, { "TagsMaxFs", 30 }, { "ControllerName", "News"}, { "ActionName", "List" } })
+        @Html.Partial("_TagsCloud", Model.MaterialTags, new ViewDataDictionary { { "TagsShowHeader", true }, { "TagsMaxFs", 30 }, { "ControllerName", "News" }, { "ActionName", "List" } })
     }
 
     <div id="by-date-mat">

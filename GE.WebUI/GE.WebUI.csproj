@@ -224,6 +224,7 @@
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CommentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ErrorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\GamesController.cs" />
     <Compile Include="Areas\Admin\Controllers\GoogleBannersController.cs" />
     <Compile Include="Areas\Admin\Controllers\GraphicsController.cs" />
@@ -388,8 +389,9 @@
     <Content Include="Areas\Admin\Views\Humor\EditorTemplates\VMHumor.cshtml" />
     <Content Include="Areas\Admin\Views\Aphorisms\EditorTemplates\_AuthorAphorismLookupGrid.cshtml" />
     <Content Include="Areas\Admin\Views\SiteTestSettings\_Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\MaterialCategories\EditorTemplates\VMMaterialCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Logs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Logs\_GridView.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />
@@ -535,7 +537,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Subscribers\" />
+    <Folder Include="Areas\Admin\Views\Errors\" />
     <Folder Include="less\" />
   </ItemGroup>
   <PropertyGroup>

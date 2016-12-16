@@ -1,0 +1,21 @@
+﻿@model SxVMLog[]
+
+@Html.SxGridView(Model, new SxExtantions.SxGridViewSettings<SxVMLog>() {
+    Columns=new SxExtantions.SxGridViewColumn<SxVMLog>[] {
+        new SxExtantions.SxGridViewColumn<SxVMLog>() { Caption="Наименование", FieldName="Name" },
+        new SxExtantions.SxGridViewColumn<SxVMLog>() { Caption="Размер, kB", FieldName="Size", Template=x=>string.Format("{0}", Math.Round((decimal)x.Size/1024, 2)) },
+        new SxExtantions.SxGridViewColumn<SxVMLog>() {
+            Caption ="Просмотр",
+            FieldName ="FileName",
+            Template =x=>string.Format("<a data-url=\"{0}\" class=\"show-btn\" href=\"#\" data-toggle=\"modal\" data-target=\"#modal-show-log\" title=\"Просмотреть\"><i class=\"fa fa-archive\" aria-hidden=\"true\"></i></a>", x.FileName),
+            ColumnCssClass =x=>"col-cm",
+            EnableFiltering =false,
+            EnableSorting=false
+        }
+    },
+    DataAjaxUrl=Url.Action("Index"),
+    EnableDeleting=true,
+    DeleteRowUrl=x=>Url.Action("Delete", new { name=x.FileName }),
+    DeleteConfirmCaption=x=>"Удаление логов",
+    DeleteConfirmMessage=x=>string.Format("Вы действительно хотите удалить лог за {0}?", x.Name)
+})

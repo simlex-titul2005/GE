@@ -1,4 +1,5 @@
-﻿/// <reference path="../jquery.d.ts" />
+﻿/// <reference path="../typings/jquery.d.ts" />
+
 window.onload = () => {
     var share: SxShare = new SxShare();
     // share.FillCount();

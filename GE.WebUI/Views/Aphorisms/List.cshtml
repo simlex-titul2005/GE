@@ -5,7 +5,7 @@
     var category = (SxVMMaterialCategory)ViewBag.Category;
     var emptyTitle = "Факты, афоризмы, короткие высказывания, шутки";
 
-    ViewBag.Title = ViewBag.Title ?? category!=null? category.Title+". "+ emptyTitle : author!=null?author.Name+". "+ emptyTitle : "Факты, афоризмы, короткие высказывания, шутки";
+    ViewBag.Title = ViewBag.Title ?? category != null ? category.Title + ". " + emptyTitle : author != null ? author.Name + ". " + emptyTitle : "Факты, афоризмы, короткие высказывания, шутки";
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? ViewBag.Title;
     ViewBag.Keywords = ViewBag.Keywords ?? ViewBag.Title;
@@ -30,19 +30,29 @@
 
 @section scripts{
     <script src="~/Scripts/sxshare.js"></script>
+    <script src="~/Scripts/ap-videos.js"></script>
     <script>
-        @if(category!=null)
+        $(function () {
+            loadScriptOnce('https://www.youtube.com/iframe_api');
+
+            var apVideos = new ApVideos('@Url.Action("GetJson", "YoutubeVideos")', 20, 12);
+            apVideos.initialize();
+            
+
+            @if(category!=null)
         {
             <text>
-        $('#cat-@category.Id').addClass('in');
-        </text>
+            $('#cat-@category.Id').addClass('in');
+            </text>
         }
-        @if(author!=null)
+            @if(author!=null)
         {
             <text>
-        $('#author-@author.TitleUrl').addClass('active');
-        $('#author-@author.TitleUrl').closest('.panel-collapse').addClass('in');
-        </text>
+            $('#author-@author.TitleUrl').addClass('active');
+            $('#author-@author.TitleUrl').closest('.panel-collapse').addClass('in');
+            </text>
         }
+        });
+
     </script>
 }

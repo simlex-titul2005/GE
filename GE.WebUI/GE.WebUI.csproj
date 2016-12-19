@@ -223,6 +223,7 @@
     <Compile Include="Areas\Admin\Controllers\BannersController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CommentsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DeliveryController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ErrorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\GamesController.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Areas\Admin\Controllers\SiteTestSubjectsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscribersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubscribeTemplatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRolesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\ValutesController.cs" />
@@ -390,10 +392,9 @@
     <Content Include="Areas\Admin\Views\Aphorisms\EditorTemplates\_AuthorAphorismLookupGrid.cshtml" />
     <Content Include="Areas\Admin\Views\SiteTestSettings\_Edit.cshtml" />
     <Content Include="Areas\Admin\Views\MaterialCategories\EditorTemplates\VMMaterialCategory.cshtml" />
-    <Content Include="Areas\Admin\Views\Logs\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Logs\_GridView.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\ap-videos.js" />
     <Content Include="Scripts\currency-provider.js" />
     <Content Include="Scripts\find-engine.js" />
     <Content Include="Scripts\ge-aphorisms.js" />
@@ -518,6 +519,8 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\MaterialCategories\_Featured.cshtml" />
+    <Content Include="Scripts\ts\sxshare\tsconfig.json" />
+    <Content Include="Scripts\ts\ap-videos\tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -537,8 +540,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Errors\" />
     <Folder Include="less\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\ts\ap-videos\ap-videos.ts" />
+    <TypeScriptCompile Include="Scripts\ts\typings\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts\sxshare\sxshare.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

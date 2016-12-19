@@ -6,8 +6,10 @@
     var category = (VMMaterialCategory)ViewBag.Category;
     ViewBag.Title = ViewBag.Title ?? Model.Aphorism.Title;
     var pageImageId = (Guid?)ViewBag.PageImage ?? author?.PictureId ?? Model.Aphorism?.FrontPictureId;
-    if(pageImageId.HasValue)
+    if (pageImageId.HasValue)
+    {
         ViewBag.PageImage = Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = pageImageId }));
+    }
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? (author != null ? author.Name + ". " : null) + "Афоризмы, короткие изречения великих людей, коротко о главном";
 

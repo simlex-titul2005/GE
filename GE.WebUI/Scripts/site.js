@@ -59,6 +59,8 @@ function playVideoById(id, videoId) {
             'onReady': onPlayerReady,
         }
     });
+
+    return false;
 }
 
 //resize footer

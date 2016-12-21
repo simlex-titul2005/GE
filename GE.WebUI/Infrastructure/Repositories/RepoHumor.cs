@@ -6,15 +6,16 @@ using System;
 using System.Linq;
 using SX.WebCore;
 using System.Text;
+using SX.WebCore.MvcApplication;
 using SX.WebCore.SxProviders;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
 using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
-    public sealed class RepoHumor: RepoMaterial<Humor, VMHumor>
+    public sealed class RepoHumor : RepoMaterial<Humor, VMHumor>
     {
-        public RepoHumor() : base(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]) { }
+        public RepoHumor() : base(SxMvcApplication.ModelCoreTypeProvider[nameof(Humor)]) { }
 
         public override VMHumor[] Read(SxFilter filter)
         {
@@ -34,7 +35,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             sb.Append(" LEFT JOIN D_SEO_TAGS AS dst ON (dst.ModelCoreType=dm.ModelCoreType AND dst.MaterialId=dm.Id AND dst.MaterialId IS NOT NULL) ");
 
             object param = null;
-            var gws = getMaterialsWhereString(filter, out param);
+            var gws = GetMaterialsWhereString(filter, out param);
             sb.Append(gws);
 
             var defaultOrder = new SxOrderItem { FieldName = "DateCreate", Direction = SortDirection.Desc };
@@ -53,7 +54,8 @@ namespace GE.WebUI.Infrastructure.Repositories
             using (var connection = new SqlConnection(ConnectionString))
             {
                 filter.PagerInfo.TotalItems = connection.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
-                var data = connection.Query<VMHumor, SxVMMaterialCategory, SxVMAppUser, SxVMPicture, SxVMSeoTags, VMHumor>(sb.ToString(), (m, c, u, p, st) => {
+                var data = connection.Query<VMHumor, SxVMMaterialCategory, SxVMAppUser, SxVMPicture, SxVMSeoTags, VMHumor>(sb.ToString(), (m, c, u, p, st) =>
+                {
                     m.Category = c;
                     m.User = u;
                     m.FrontPicture = p;
@@ -61,13 +63,13 @@ namespace GE.WebUI.Infrastructure.Repositories
                     return m;
                 }, param: param, splitOn: "Id").ToArray();
 
-                if (filter.WidthVideos==true && data.Any())
+                if (filter.WidthVideos == true && data.Any())
                     FillMaterialsVideo(connection, ref data);
-                
+
                 return data;
             }
         }
-        private static string getMaterialsWhereString(SxFilter filter, out object param)
+        private static string GetMaterialsWhereString(SxFilter filter, out object param)
         {
             param = null;
             var query = new StringBuilder();
@@ -80,14 +82,14 @@ namespace GE.WebUI.Infrastructure.Repositories
 
             string title = filter.WhereExpressionObject?.Title;
             string fwd = filter.WhereExpressionObject?.Foreword;
-            string cat = filter?.CategoryId;
+            var cat = filter?.CategoryId;
 
             param = new
             {
                 title = title,
                 fwd = fwd,
                 cat = cat,
-                mct = MvcApplication.ModelCoreTypeProvider[nameof(Humor)],
+                mct = SxMvcApplication.ModelCoreTypeProvider[nameof(Humor)],
                 show = filter.OnlyShow == true ? true : (bool?)null
             };
 
@@ -96,7 +98,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public override void Delete(Humor model)
         {
-            var query = "DELETE FROM D_HUMOR WHERE Id=@mid AND ModelCoreType=@mct";
+            const string query = "DELETE FROM D_HUMOR WHERE Id=@mid AND ModelCoreType=@mct";
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Execute(query, new { mid = model.Id, mct = model.ModelCoreType });
@@ -105,15 +107,10 @@ namespace GE.WebUI.Infrastructure.Repositories
             base.Delete(model);
         }
 
-        protected override Action<SqlConnection, Humor> ChangeMaterialBeforeSelect
+        protected override Action<SqlConnection, Humor> ChangeMaterialBeforeSelect => (connection, model) =>
         {
-            get
-            {
-                return (connection, model) => {
-                    var query = "SELECT TOP(1) dh.UserName FROM D_HUMOR AS dh WHERE dh.Id=@id";
-                    model.UserName = connection.Query<string>(query, new { id = model.Id }).SingleOrDefault();
-                };
-            }
-        }
+            const string query = "SELECT TOP(1) dh.UserName FROM D_HUMOR AS dh WHERE dh.Id=@id";
+            model.UserName = connection.Query<string>(query, new { id = model.Id }).SingleOrDefault();
+        };
     }
 }

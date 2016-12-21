@@ -13,7 +13,7 @@ namespace GE.WebUI.Controllers
 {
     public sealed class YoutubeVideosController : SxYoutubeVideosController
     {
-        private static RepoPopularYoutubeVideo _repoPopularYoutubeVideo = new RepoPopularYoutubeVideo();
+        private static readonly RepoPopularYoutubeVideo _repoPopularYoutubeVideo = new RepoPopularYoutubeVideo();
 
         public YoutubeVideosController()
         {

@@ -11,7 +11,7 @@ namespace GE.WebUI.Infrastructure
             if (controller.ControllerContext.IsChildAction) return;
 
             var routes = controller.ControllerContext.RequestContext.RouteData.Values;
-            var gameName = routes["game"] != null && !string.IsNullOrEmpty(routes["game"].ToString()) ? routes["game"].ToString() : null;
+            var gameName = !string.IsNullOrEmpty(routes["game"]?.ToString()) ? routes["game"].ToString() : null;
 
             breadcrumbs.Add(new SxVMBreadcrumb { Title = "Главная", Url = "/" });
 

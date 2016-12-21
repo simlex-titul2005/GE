@@ -11,39 +11,26 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoMaterialCategory : SxRepoMaterialCategory<MaterialCategory, VMMaterialCategory>
     {
-        protected sealed override Action<SqlConnection, MaterialCategory> BeforeGetByKeyAction
+        protected override Action<SqlConnection, MaterialCategory> BeforeGetByKeyAction => (connection, data) =>
         {
-            get
-            {
-                return (connection, data) =>
-                {
-                    if (!data.GameId.HasValue) return;
+            if (!data.GameId.HasValue) return;
 
-                    var query = "SELECT TOP(2) dg.* FROM D_GAME AS dg WHERE dg.Id=@gameId";
-                    var game = connection.Query<Game>(query, new { gameId = data.GameId }).SingleOrDefault();
-                    data.Game = game;
-                };
-            }
-        }
+            const string query = "SELECT TOP(2) dg.* FROM D_GAME AS dg WHERE dg.Id=@gameId";
+            var game = connection.Query<Game>(query, new { gameId = data.GameId }).SingleOrDefault();
+            data.Game = game;
+        };
 
-        protected sealed override Action<SqlConnection, MaterialCategory, MaterialCategory> AfterUpdateAction
+        protected override Action<SqlConnection, MaterialCategory, MaterialCategory> AfterUpdateAction => (connection, model, data) =>
         {
-            get
-            {
-                return (connection, model, data) =>
-                {
-                    var query = "UPDATE D_MATERIAL_CATEGORY SET IsFeatured=@feauture, Description=@desc WHERE Id=@id";
-                    connection.Execute(query, new { feauture = model.IsFeatured, id = model.Id, desc=model.Description });
+            var query = "UPDATE D_MATERIAL_CATEGORY SET IsFeatured=@feauture, Description=@desc WHERE Id=@id";
+            connection.Execute(query, new { feauture = model.IsFeatured, id = model.Id, desc=model.Description });
 
-                    if (model.GameId.HasValue)
-                    {
-                        query = "UPDATE D_MATERIAL_CATEGORY SET GameId=@gameId WHERE Id=@categoryId; SELECT * FROM D_GAME AS dg WHERE dg.Id=@gameId";
-                        var game = connection.Query<Game>(query, new { gameId = model.GameId, categoryId = model.Id }).SingleOrDefault();
-                        data.Game = game;
-                    }
-                };
-            }
-        }
+            if (!model.GameId.HasValue) return;
+
+            query = "UPDATE D_MATERIAL_CATEGORY SET GameId=@gameId WHERE Id=@categoryId; SELECT * FROM D_GAME AS dg WHERE dg.Id=@gameId";
+            var game = connection.Query<Game>(query, new { gameId = model.GameId, categoryId = model.Id }).SingleOrDefault();
+            data.Game = game;
+        };
 
         public VMMaterialCategory[] GetFeatured(int amount)
         {

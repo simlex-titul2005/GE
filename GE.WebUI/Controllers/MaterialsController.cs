@@ -13,15 +13,15 @@ using GE.WebUI.Infrastructure.Repositories;
 namespace GE.WebUI.Controllers
 {
     public abstract class MaterialsController<TModel, TViewModel> : SxMaterialsController<TModel, TViewModel>
-        where TModel : SxMaterial
+        where TModel : SxMaterial, new()
         where TViewModel : VMMaterial, new()
     {
         protected MaterialsController(byte mct) : base(mct)
         {
-            BeforeSelectListFunction = beforeSelectListAction;
+            BeforeSelectListFunction = BeforeSelectListAction;
         }
 
-        private bool beforeSelectListAction(SxFilter filter)
+        private bool BeforeSelectListAction(SxFilter filter)
         {
             var routeDataValues = Request.RequestContext.RouteData.Values;
             var gameTitle = (string)routeDataValues["gameTitle"];
@@ -85,10 +85,10 @@ namespace GE.WebUI.Controllers
             var seoTags = await SxSeoTagsController.Repo.GetSeoTagsAsync(model.Id, model.ModelCoreType);
             var matSeoInfo = Mapper.Map<SxSeoTags, SxVMSeoTags>(seoTags);
 
-            ViewBag.Title = ViewBag.Title ?? (matSeoInfo != null ? matSeoInfo.SeoTitle : null) ?? model.Title;
-            ViewBag.Description = ViewBag.Description ?? (matSeoInfo != null ? matSeoInfo.SeoDescription : null) ?? model.Foreword;
-            ViewBag.Keywords = ViewBag.Keywords ?? (matSeoInfo != null ? matSeoInfo.KeywordsString : null);
-            ViewBag.H1 = ViewBag.H1 ?? (matSeoInfo != null ? matSeoInfo.H1 : null) ?? model.Title;
+            ViewBag.Title = ViewBag.Title ?? matSeoInfo?.SeoTitle ?? model.Title;
+            ViewBag.Description = ViewBag.Description ?? matSeoInfo?.SeoDescription ?? model.Foreword;
+            ViewBag.Keywords = ViewBag.Keywords ?? matSeoInfo?.KeywordsString;
+            ViewBag.H1 = ViewBag.H1 ?? matSeoInfo?.H1 ?? model.Title;
             ViewBag.PageImage = ViewBag.PageImage ?? matSeoInfo?.PageImageId;
 
             CultureInfo ci = new CultureInfo("en-US");

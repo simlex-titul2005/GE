@@ -32,7 +32,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             sb.Append(joinString);
 
             object param = null;
-            var gws = getSiteTestSubjectsWhereString(filter, out param);
+            var gws = GetSiteTestSubjectsWhereString(filter, out param);
             sb.Append(gws);
 
             var defaultOrder = new SxOrderItem { FieldName = "dstq.DateCreate", Direction = SortDirection.Desc };
@@ -59,7 +59,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             }
         }
 
-        private static string getSiteTestSubjectsWhereString(SxFilter filter, out object param)
+        private static string GetSiteTestSubjectsWhereString(SxFilter filter, out object param)
         {
             param = null;
             var query = new StringBuilder();

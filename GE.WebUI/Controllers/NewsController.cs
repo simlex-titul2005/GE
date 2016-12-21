@@ -11,13 +11,7 @@ namespace GE.WebUI.Controllers
     {
         private static RepoNews _repo = new RepoNews();
         public NewsController() : base((byte)Enums.ModelCoreType.News) { }
-        public override SxRepoMaterial<News, VMNews> Repo
-        {
-            get
-            {
-                return _repo;
-            }
-        }
+        public override SxRepoMaterial<News, VMNews> Repo => _repo;
 
 #if !DEBUG
         [OutputCache(Duration = 900, VaryByParam = "lnc;gc;glnc;gtc;vc")]
@@ -40,9 +34,9 @@ namespace GE.WebUI.Controllers
             return PartialView("_NewsCategories", data);
         }
 
-        public sealed override PartialViewResult Popular(int? mct = default(int?), int? mid = default(int?), int amount = 4)
+        public override PartialViewResult Popular(int? mct = null, int? mid = null, int amount = 4)
         {
-            string title = "Популяные ";
+            var title = "Популяные ";
             switch(mct)
             {
                 case 1:

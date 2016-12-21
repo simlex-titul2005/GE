@@ -8,12 +8,7 @@ namespace GE.WebUI.Controllers
 {
     public sealed class AuthorAphorismsController : BaseController
     {
-        private static RepoAuthorAphorism _repo=new RepoAuthorAphorism();
-        public static RepoAuthorAphorism Repo
-        {
-            get { return _repo; }
-            set { _repo = value; }
-        }
+        public static RepoAuthorAphorism Repo { get; set; } = new RepoAuthorAphorism();
 
         [HttpGet]
         public async Task<ActionResult> Details(string titleUrl)

@@ -1,18 +1,18 @@
-﻿using GE.WebUI.Models;
-using GE.WebUI.ViewModels;
-using System.Data.SqlClient;
-using Dapper;
-using System.Linq;
-using GE.WebUI.ViewModels.Abstracts;
-using SX.WebCore.ViewModels;
-using SX.WebCore;
-using SX.WebCore.SxRepositories.Abstract;
-using System.Text;
-using SX.WebCore.SxProviders;
-using static SX.WebCore.HtmlHelpers.SxExtantions;
-using SX.WebCore.SxRepositories;
+﻿using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using Dapper;
+using GE.WebUI.Models;
+using GE.WebUI.ViewModels;
+using GE.WebUI.ViewModels.Abstracts;
+using SX.WebCore;
 using SX.WebCore.DbModels;
+using SX.WebCore.SxProviders;
+using SX.WebCore.SxRepositories.Abstract;
+using SX.WebCore.ViewModels;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -25,7 +25,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             sb.Append(" FROM D_GAME AS dg ");
 
             object param = null;
-            var gws = getGamesWhereString(filter, out param);
+            var gws = GetGamesWhereString(filter, out param);
             sb.Append(gws);
 
             var defaultOrder = new SxOrderItem { FieldName = "dg.Title", Direction = SortDirection.Asc };
@@ -46,7 +46,7 @@ namespace GE.WebUI.Infrastructure.Repositories
                 return data.ToArray();
             }
         }
-        private static string getGamesWhereString(SxFilter filter, out object param)
+        private static string GetGamesWhereString(SxFilter filter, out object param)
         {
             param = null;
             var query = new StringBuilder();
@@ -68,7 +68,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             return query.ToString();
         }
 
-        public sealed override Game GetByKey(params object[] id)
+        public override Game GetByKey(params object[] id)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -84,7 +84,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public bool ExistGame(string titleUrl)
         {
-            var query = @"SELECT COUNT(1) FROM D_GAME AS dg WHERE dg.TitleUrl=@title_url";
+            const string query = @"SELECT COUNT(1) FROM D_GAME AS dg WHERE dg.TitleUrl=@title_url";
             using (var connection = new SqlConnection(ConnectionString))
             {
                 var data = connection.Query<int>(query, new { title_url = titleUrl }).SingleOrDefault();
@@ -94,13 +94,13 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public VMGameMenu GetGameMenu(int iw, int ih, int gnc, string gturl = null)
         {
-            var queryForGames = @"SELECT *
+            const string queryForGames = @"SELECT *
 FROM   D_GAME AS dg
 WHERE  dg.Show = 1
        AND dg.FrontPictureId IS NOT NULL
 ORDER BY dg.Title";
 
-            var queryForNews = @"SELECT dm.ModelCoreType,
+            const string queryForNews = @"SELECT dm.ModelCoreType,
        dm.DateCreate,
        dm.DateOfPublication,
        dm.Title,
@@ -153,10 +153,9 @@ ORDER BY
 
         public VMDetailGame GetGameDetails(string titleUrl, int amount = 10)
         {
-            var viewModel = new VMDetailGame();
             using (var connection = new SqlConnection(ConnectionString))
             {
-                viewModel = connection.Query<VMDetailGame>("get_game_by_url @titleUrl", new { titleUrl = titleUrl }).SingleOrDefault();
+                var viewModel = connection.Query<VMDetailGame>("get_game_by_url @titleUrl", new { titleUrl = titleUrl }).SingleOrDefault();
                 if (viewModel == null) return null;
 
                 viewModel.Materials = connection.Query<VMMaterial>("get_game_materials @titleUrl, @amount", new { titleUrl = titleUrl, amount = amount }).ToArray();
@@ -169,13 +168,13 @@ ORDER BY
                 }
 
                 if (viewModel.Materials.Any())
-                    fillMaterialsVideo(connection, viewModel.Materials);
+                    FillMaterialsVideo(connection, viewModel.Materials);
 
                 return viewModel;
             }
         }
 
-        private static void fillMaterialsVideo(SqlConnection connection, VMMaterial[] materials)
+        private static void FillMaterialsVideo(IDbConnection connection, IReadOnlyList<VMMaterial> materials)
         {
             VMMaterial item = null;
 
@@ -183,7 +182,7 @@ ORDER BY
             table.Columns.Add("Materialid", typeof(int));
             table.Columns.Add("ModelCoreType", typeof(int));
 
-            for (int i = 0; i < materials.Length; i++)
+            for (var i = 0; i < materials.Count; i++)
             {
                 item = materials[i];
                 table.Rows.Add(item.Id, (int)item.ModelCoreType);
@@ -195,7 +194,7 @@ ORDER BY
                 return vl;
             }, new { materials = table.AsTableValuedParameter("dbo.ForSelectMaterials") }, commandType: CommandType.StoredProcedure, splitOn: "Id").ToArray();
 
-            for (int i = 0; i < materials.Length; i++)
+            for (var i = 0; i < materials.Count; i++)
             {
                 item = materials[i];
                 item.Videos = videoLinks.Where(x => Equals(x.MaterialId, item.Id) && x.ModelCoreType == item.ModelCoreType).Select(x => Mapper.Map<SxVideo, SxVMVideo>(x.Video)).ToArray();

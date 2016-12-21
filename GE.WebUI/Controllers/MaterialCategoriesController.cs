@@ -10,7 +10,7 @@ namespace GE.WebUI.Controllers
     {
         public MaterialCategoriesController()
         {
-            if (Repo == null || (Repo as RepoMaterialCategory) == null)
+            if (!(Repo is RepoMaterialCategory))
                 Repo = new RepoMaterialCategory();
         }
 

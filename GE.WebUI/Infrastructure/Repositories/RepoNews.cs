@@ -17,7 +17,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public override void Delete(News model)
         {
-            var query = "DELETE FROM D_NEWS WHERE Id=@mid AND ModelCoreType=@mct";
+            const string query = "DELETE FROM D_NEWS WHERE Id=@mid AND ModelCoreType=@mct";
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Execute(query, new { mid = model.Id, mct = model.ModelCoreType });
@@ -29,7 +29,6 @@ namespace GE.WebUI.Infrastructure.Repositories
         /// <summary>
         /// Последние новости игр
         /// </summary>
-        /// <param name="repo">Репозиотрий</param>
         /// <param name="lnc">Кол-во последних новостей в левом блоке</param>
         /// <param name="gc">Кол-во отображаемых игр в правом блоке</param>
         /// <param name="glnc">Кол-во последних новостей для игр в правом блоке</param>
@@ -40,7 +39,7 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             var model = new VMLGNB(lnc, gc, glnc);
 
-            var queryLastNews = @"SELECT TOP(@lnc) dm.DateOfPublication,
+            const string queryLastNews = @"SELECT TOP(@lnc) dm.DateOfPublication,
        dm.Title,
        dm.TitleUrl,
        dm.DateCreate,
@@ -58,7 +57,7 @@ WHERE  dm.Show = 1
 ORDER BY
        dm.DateCreate DESC";
 
-            var queryGames = @"SELECT TOP(@gc) x.TitleUrl,
+            const string queryGames = @"SELECT TOP(@gc) x.TitleUrl,
        x.Id,
        x.Title,
        x.FrontPictureId
@@ -88,7 +87,7 @@ FROM   (
 ORDER BY
        x.CommentsCount DESC";
 
-            var queryGameNews = @"SELECT TOP(@glnc) dm.DateOfPublication,
+            const string queryGameNews = @"SELECT TOP(@glnc) dm.DateOfPublication,
        dm.Title,
        dm.TitleUrl,
        dm.FrontPictureId,
@@ -106,7 +105,7 @@ WHERE  dm.Show = 1
 ORDER BY
        dm.DateOfPublication DESC";
 
-            var queryGameTags = @"SELECT TOP(@amount)
+            const string queryGameTags = @"SELECT TOP(@amount)
        dmt.Id,
        dmt.Title,
        COUNT(dmt.Id)     AS [Count],
@@ -126,7 +125,7 @@ FROM   D_MATERIAL_TAG    AS dmt
 GROUP BY
        dmt.Id, dmt.Title";
 
-            var queryGameVideos = @"SELECT TOP(@vc) dv.*,
+            const string queryGameVideos = @"SELECT TOP(@vc) dv.*,
        dm.DateCreate      AS MaterialDateCreate,
        dm.TitleUrl        AS MaterialTitleUrl
 FROM   D_VIDEO            AS dv
@@ -146,24 +145,23 @@ WHERE  dn.GameId = @gameId";
             {
                 model.News = connection.Query<VMLGNBNews>(queryLastNews, new { lnc = lnc }).ToArray();
                 model.Games = connection.Query<VMLGNBGame>(queryGames, new { gc = gc }).ToArray();
-                if (model.Games.Any())
+                if (!model.Games.Any()) return model;
+
+                for (var i = 0; i < model.Games.Length; i++)
                 {
-                    for (int i = 0; i < model.Games.Length; i++)
+                    var game = model.Games[i];
+                    game.News = connection.Query<VMLGNBNews>(queryGameNews, new { glnc = glnc, gturl = game.TitleUrl }).ToArray();
+                    game.Tags = connection.Query<SxVMMaterialTag>(queryGameTags, new { amount = gtc, gturl = game.TitleUrl }).ToArray();
+                    game.Videos = connection.Query(queryGameVideos, new { vc = vc, gameId = game.Id }).Select(x => new VMLGNBVideo
                     {
-                        var game = model.Games[i];
-                        game.News = connection.Query<VMLGNBNews>(queryGameNews, new { glnc = glnc, gturl = game.TitleUrl }).ToArray();
-                        game.Tags = connection.Query<SxVMMaterialTag>(queryGameTags, new { amount = gtc, gturl = game.TitleUrl }).ToArray();
-                        game.Videos = connection.Query(queryGameVideos, new { vc = vc, gameId = game.Id }).Select(x => new VMLGNBVideo
+                        MaterialDateCreate = x.MaterialDateCreate,
+                        MaterialTitleUrl = x.MaterialTitleUrl,
+                        Video = new SxVMVideo
                         {
-                            MaterialDateCreate = x.MaterialDateCreate,
-                            MaterialTitleUrl = x.MaterialTitleUrl,
-                            Video = new SxVMVideo
-                            {
-                                Id = x.Id,
-                                VideoId = x.VideoId
-                            }
-                        }).ToArray();
-                    }
+                            Id = x.Id,
+                            VideoId = x.VideoId
+                        }
+                    }).ToArray();
                 }
             }
 
@@ -174,14 +172,13 @@ WHERE  dn.GameId = @gameId";
         /// <summary>
         /// Последние новости категорий
         /// </summary>
-        /// <param name="repo">Репозиотрий</param>
         /// <param name="lnc">Кол-во последних новостей в левом блоке</param>
         /// <param name="clnc">Кол-во последних новостей подкатегорий</param>
         /// <param name="ctc">Кол-во тегов пордкатегории</param>
         /// <returns></returns>
         public VMLCNB LastCategoryBlock(int lnc, int clnc, int ctc)
         {
-            var queryForCategory = @"SELECT dmc.Title, dmc.Id
+            const string queryForCategory = @"SELECT dmc.Title, dmc.Id
 FROM   D_MATERIAL_CATEGORY  AS dmc
        JOIN D_NEWS          AS dn
             ON  dn.ModelCoreType = dmc.ModelCoreType
@@ -189,14 +186,14 @@ WHERE  dmc.ParentId IS NULL
 GROUP BY
        dmc.Title, dmc.Id";
 
-            var queryForSubCategories = @"SELECT dmc.Id,
+            const string queryForSubCategories = @"SELECT dmc.Id,
        dmc.Title,
        dmc.FrontPictureId
 FROM   D_MATERIAL_CATEGORY AS dmc
 WHERE  dmc.ParentId = @cat_id
 ORDER BY dmc.Title";
 
-            var queryForSubCategoryNews = @"SELECT TOP(@clnc)
+            const string queryForSubCategoryNews = @"SELECT TOP(@clnc)
        dm.DateOfPublication,
        dm.DateCreate,
        dm.Title,
@@ -210,7 +207,7 @@ WHERE  dm.CategoryId = @cat_id
 ORDER BY
        dm.DateOfPublication DESC";
 
-            var queryForLastNews = @"WITH tree(ModelCoreType, Id, ParentId, Title, [Level]) AS
+            const string queryForLastNews = @"WITH tree(ModelCoreType, Id, ParentId, Title, [Level]) AS
      (
          SELECT dmc1.ModelCoreType,
                 dmc1.Id,
@@ -258,7 +255,7 @@ WHERE  dm.Show = 1
 ORDER BY
        dm.DateOfPublication     DESC";
 
-            var queryForTags = @"SELECT TOP(@amount)
+            const string queryForTags = @"SELECT TOP(@amount)
        dmt.Id,
        dmt.Title,
        COUNT(dmt.Id)     AS [Count],
@@ -281,26 +278,25 @@ GROUP BY
             using (var connection = new SqlConnection(ConnectionString))
             {
                 data.Categories = connection.Query<VMLCNBCategory>(queryForCategory).ToArray();
-                if (data.Categories.Any())
+                if (!data.Categories.Any()) return data;
+
+                for (var i = 0; i < data.Categories.Length; i++)
                 {
-                    for (int i = 0; i < data.Categories.Length; i++)
+                    var category = data.Categories[i];
+
+                    category.SubCategories = connection.Query<VMLCNBCategory>(queryForSubCategories, new { cat_id = category.Id }).ToArray();
+
+                    if (category.SubCategories.Any())
                     {
-                        var category = data.Categories[i];
-
-                        category.SubCategories = connection.Query<VMLCNBCategory>(queryForSubCategories, new { cat_id = category.Id }).ToArray();
-
-                        if (category.SubCategories.Any())
+                        for (var y = 0; y < category.SubCategories.Length; y++)
                         {
-                            for (int y = 0; y < category.SubCategories.Length; y++)
-                            {
-                                var subCategory = category.SubCategories[y];
-                                subCategory.News = connection.Query<VMLCNBNews>(queryForSubCategoryNews, new { cat_id = subCategory.Id, clnc = clnc }).ToArray();
-                                subCategory.Tags = connection.Query<SxVMMaterialTag>(queryForTags, new { amount = ctc, cat_id = subCategory.Id }).ToArray();
-                            }
+                            var subCategory = category.SubCategories[y];
+                            subCategory.News = connection.Query<VMLCNBNews>(queryForSubCategoryNews, new { cat_id = subCategory.Id, clnc = clnc }).ToArray();
+                            subCategory.Tags = connection.Query<SxVMMaterialTag>(queryForTags, new { amount = ctc, cat_id = subCategory.Id }).ToArray();
                         }
-
-                        category.News = connection.Query<VMLCNBNews>(queryForLastNews, new { lnc = lnc, mct = (byte)Enums.ModelCoreType.News, cat_id = category.Id }).ToArray();
                     }
+
+                    category.News = connection.Query<VMLCNBNews>(queryForLastNews, new { lnc = lnc, mct = (byte)Enums.ModelCoreType.News, cat_id = category.Id }).ToArray();
                 }
             }
 
@@ -316,32 +312,20 @@ GROUP BY
             }
         }
 
-        protected override Action<SqlConnection, News> ChangeMaterialBeforeSelect
+        protected override Action<SqlConnection, News> ChangeMaterialBeforeSelect => (connection, model) =>
         {
-            get
-            {
-                return (connection, model) =>
-                {
-                    var data = connection.Query<dynamic>("dbo.get_material_game @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
-                    if (data != null)
-                    {
-                        model.Game = new Game { Id = data.Id, Title = data.Title };
-                        model.GameId = data.Id;
-                        model.GameVersion = GetGameVesion(model.ModelCoreType, data);
-                    }
-                };
-            }
-        }
+            var data = connection.Query<dynamic>("dbo.get_material_game @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
+            if (data == null) return;
 
-        protected override Action<SxFilter, StringBuilder> ChangeJoinBody
+            model.Game = new Game { Id = data.Id, Title = data.Title };
+            model.GameId = data.Id;
+            model.GameVersion = GetGameVesion(model.ModelCoreType, data);
+        };
+
+        protected override Action<SxFilter, StringBuilder> ChangeJoinBody => (filter, sb) =>
         {
-            get
-            {
-                return (filter, sb) => {
-                    sb.Append(" JOIN D_NEWS AS dn ON dn.Id=dm.Id AND dn.ModelCoreType=dm.ModelCoreType ");
-                    sb.Append(" LEFT JOIN D_GAME AS dg ON dg.Id=dn.GameId ");
-                };
-            }
-        }
+            sb.Append(" JOIN D_NEWS AS dn ON dn.Id=dm.Id AND dn.ModelCoreType=dm.ModelCoreType ");
+            sb.Append(" LEFT JOIN D_GAME AS dg ON dg.Id=dn.GameId ");
+        };
     }
 }

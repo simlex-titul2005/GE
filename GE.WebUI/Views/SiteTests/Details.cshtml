@@ -1,10 +1,10 @@
 ﻿@model VMSiteTestAnswer
 @{
-    ViewBag.Title = Model.Question != null && Model.Question.Test != null ? Model.Question.Test.Title : "Страница прохождения теста";
+    ViewBag.Title = Model.Question?.Test != null ? Model.Question.Test.Title : "Страница прохождения теста";
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
-    ViewBag.Description = ViewBag.Description ?? Model.Question != null && Model.Question.Test != null ? Model.Question.Test.Description : "Страница прохождения теста";
+    ViewBag.Description = ViewBag.Description ?? Model.Question?.Test != null ? Model.Question?.Test?.Description : "Страница прохождения теста";
     ViewBag.Keywords = ViewBag.Keywords ?? "Игровые тесты, тесты для игр";
-    var testType = Model.Question.Test.Type;
+    var testType = Model.Question?.Test?.Type;
 }
 
 @Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
@@ -40,13 +40,13 @@
             $(function () {
                 //guess
                 $('#st-page').on('click', '.sx-indicator > span', function () {
-                    $span = $(this);
+                    var $span = $(this);
                     $span.closest('.sx-indicator').prepend('<i class="fa fa-spinner fa-spin"></i>');
                     var id = $span.closest('li').find('.sx-indicator-txt').attr('data-id');
                     var isCorrect = $span.data('dir') == true;
 
-                    $form = $span.closest('form');
-                    $input = $form.find('input[data-q-id="' + id + '"]')
+                    var $form = $span.closest('form');
+                    var $input = $form.find('input[data-q-id="' + id + '"]');
                     $input.val(isCorrect);
 
                     $form.submit();
@@ -83,10 +83,10 @@
                     return;
                 }
 
-                $subject = $('.s-s').last();
-                $lettersCountInput = $subject.children('[name$="LettersCount"]');
-                $goodReadInput = $subject.children('[name$="BallsGoodRead"]');
-                $badReadInput = $subject.children('[name$="BallsBadRead"]');
+                var $subject = $('.s-s').last();
+                var $lettersCountInput = $subject.children('[name$="LettersCount"]');
+                var $goodReadInput = $subject.children('[name$="BallsGoodRead"]');
+                var $badReadInput = $subject.children('[name$="BallsBadRead"]');
 
                 var secondsCount = parseInt(parseInt($lettersCountInput.val()) / lettersInSecond) * @(Model.Question?.Test?.Settings?.BalsForOneSecond ?? 3);
 

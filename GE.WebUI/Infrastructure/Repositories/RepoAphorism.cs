@@ -1,20 +1,20 @@
-﻿using Dapper;
-using GE.WebUI.Models;
-using GE.WebUI.ViewModels;
-using SX.WebCore;
-using SX.WebCore.DbModels;
-using System;
+﻿using System;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
+using Dapper;
+using GE.WebUI.Models;
+using GE.WebUI.ViewModels;
+using SX.WebCore;
+using SX.WebCore.DbModels;
+using SX.WebCore.MvcApplication;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoAphorism : RepoMaterial<Aphorism, VMAphorism>
     {
-        public RepoAphorism() : base(MvcApplication.ModelCoreTypeProvider[nameof(Aphorism)]) { }
+        public RepoAphorism() : base(SxMvcApplication.ModelCoreTypeProvider[nameof(Aphorism)]) { }
 
         public Aphorism GetRandom(int? id = null)
         {
@@ -32,7 +32,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public override void Delete(Aphorism model)
         {
-            var query = "DELETE FROM D_APHORISM WHERE Id=@mid AND ModelCoreType=@mct";
+            const string query = "DELETE FROM D_APHORISM WHERE Id=@mid AND ModelCoreType=@mct";
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Execute(query, new { mid = model.Id, mct = model.ModelCoreType });
@@ -70,7 +70,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public VMAphorism GetExistsModel(string titleUrl)
         {
-            var query = "SELECT TOP(1) * FROM D_APHORISM AS da WHERE da.TitleUrl=@titleUrl";
+            const string query = "SELECT TOP(1) * FROM D_APHORISM AS da WHERE da.TitleUrl=@titleUrl";
             using (var connection = new SqlConnection(ConnectionString))
             {
                 var data = connection.Query<VMAphorism>(query, new { titleUrl = titleUrl });
@@ -89,7 +89,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             var result = data.Where(x => x.Ref == null).OrderBy(x => x.Title).Select(x => new VMAphorismCategory { Id = x.Id, Title = x.Title }).ToArray();
 
             VMAphorismCategory category;
-            for (int i = 0; i < result.Length; i++)
+            for (var i = 0; i < result.Length; i++)
             {
                 category = result[i];
                 category.Authors = data.Where(x => Equals(x.Ref, category.Id)).OrderBy(x => x.Title).Select(x => new VMAphorismCategory { Id = x.Id, Title = x.Title }).ToArray();
@@ -98,83 +98,57 @@ namespace GE.WebUI.Infrastructure.Repositories
             return result;
         }
 
-        protected override Action<SqlConnection, Aphorism> ChangeMaterialBeforeSelect
+        protected override Action<SqlConnection, Aphorism> ChangeMaterialBeforeSelect => (connection, model) =>
         {
-            get
-            {
-                return (connection, model) =>
-                {
-                    var query = "SELECT TOP(1)  daa.* FROM D_AUTHOR_APHORISM AS daa JOIN D_APHORISM AS da ON da.AuthorId = daa.Id WHERE da.Id = @id";
-                    var data = connection.Query<AuthorAphorism>(query, new { id = model.Id }).SingleOrDefault();
-                    model.Author = data;
-                    model.AuthorId = data?.Id;
-                };
-            }
-        }
+            const string query = "SELECT TOP(1)  daa.* FROM D_AUTHOR_APHORISM AS daa JOIN D_APHORISM AS da ON da.AuthorId = daa.Id WHERE da.Id = @id";
+            var data = connection.Query<AuthorAphorism>(query, new { id = model.Id }).SingleOrDefault();
+            model.Author = data;
+            model.AuthorId = data?.Id;
+        };
 
-        protected override Action<SxFilter, StringBuilder> ChangeJoinBody
+        protected override Action<SxFilter, StringBuilder> ChangeJoinBody => (filter, sb) =>
         {
-            get
-            {
-                return (filter, sb) =>
-                {
-                    sb.Append(" JOIN D_APHORISM AS da ON da.Id=dm.Id AND da.ModelCoreType=dm.ModelCoreType ");
-                    sb.Append(" JOIN D_AUTHOR_APHORISM AS daa ON daa.Id=da.AuthorId ");
-                };
-            }
-        }
+            sb.Append(" JOIN D_APHORISM AS da ON da.Id=dm.Id AND da.ModelCoreType=dm.ModelCoreType ");
+            sb.Append(" JOIN D_AUTHOR_APHORISM AS daa ON daa.Id=da.AuthorId ");
+        };
 
-        protected override Action<SxFilter, StringBuilder, DynamicParameters> ChangeWhereBody
+        protected override Action<SxFilter, StringBuilder, DynamicParameters> ChangeWhereBody => (filter, sb, param) =>
         {
-            get
-            {
-                return (filter, sb, param) =>
-                {
-                    var data = (VMAphorism)(filter.WhereExpressionObject);
-                    if (string.IsNullOrEmpty(data?.Author?.TitleUrl)) return;
+            var data = (VMAphorism)(filter.WhereExpressionObject);
+            if (string.IsNullOrEmpty(data?.Author?.TitleUrl)) return;
 
-                    param.Add("author", data.Author.TitleUrl);
-                    sb.Append(" AND (daa.TitleUrl=@author) ");
-                };
-            }
-        }
+            param.Add("author", data.Author.TitleUrl);
+            sb.Append(" AND (daa.TitleUrl=@author) ");
+        };
 
-        protected override Action<SqlConnection, VMAphorism[]> ChangeMaterialsAfterSelect
+        protected override Action<SqlConnection, VMAphorism[]> ChangeMaterialsAfterSelect => (connection, data) =>
         {
-            get
+            var sb = new StringBuilder();
+            VMAphorism item;
+            for (var i = 0; i < data.Length; i++)
             {
-                return (connection, data) =>
-                {
-                    var sb = new StringBuilder();
-                    VMAphorism item = null;
-                    for (int i = 0; i < data.Length; i++)
-                    {
-                        item = data[i];
-                        sb.AppendFormat(",{0}", item.Id);
-                    }
-                    sb.Remove(0, 1);
-
-                    var materialAphorisms = connection.Query<VMAphorism, VMAuthorAphorism, VMAphorism>("dbo.get_aphorisms_authors @ids", (a, aa) =>
-                    {
-                        a.Author = aa;
-                        return a;
-                    }, new { ids = sb.ToString() }).ToArray();
-                    if (materialAphorisms.Any())
-                    {
-                        VMAphorism materialAphirism = null;
-                        for (int i = 0; i < materialAphorisms.Length; i++)
-                        {
-                            materialAphirism = materialAphorisms[i];
-                            item = data.SingleOrDefault(x => x.Id == materialAphirism.Id);
-                            if (item != null)
-                            {
-                                item.Author = materialAphirism.Author;
-                                item.AuthorId = materialAphirism.Author.Id;
-                            }
-                        }
-                    }
-                };
+                item = data[i];
+                sb.AppendFormat(",{0}", item.Id);
             }
-        }
+            sb.Remove(0, 1);
+
+            var materialAphorisms = connection.Query<VMAphorism, VMAuthorAphorism, VMAphorism>("dbo.get_aphorisms_authors @ids", (a, aa) =>
+            {
+                a.Author = aa;
+                return a;
+            }, new { ids = sb.ToString() }).ToArray();
+            if (!materialAphorisms.Any()) return;
+
+            VMAphorism materialAphirism;
+            for (var i = 0; i < materialAphorisms.Length; i++)
+            {
+                materialAphirism = materialAphorisms[i];
+                item = data.SingleOrDefault(x => x.Id == materialAphirism.Id);
+                if (item == null) continue;
+
+                item.Author = materialAphirism.Author;
+                item.AuthorId = materialAphirism.Author.Id;
+            }
+        };
     }
 }

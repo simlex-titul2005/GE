@@ -17,7 +17,7 @@ namespace GE.WebUI.Infrastructure.Repositories
         where TModel : SxMaterial
         where TViewModel : VMMaterial
     {
-        public RepoMaterial(byte mct) : base(mct) { }
+        protected RepoMaterial(byte mct) : base(mct) { }
 
         protected static string GetGameVesion(byte mct, dynamic data)
         {
@@ -32,77 +32,53 @@ namespace GE.WebUI.Infrastructure.Repositories
             }
         }
 
-        protected override Action<SxFilter, StringBuilder, DynamicParameters> ChangeWhereBody
+        protected override Action<SxFilter, StringBuilder, DynamicParameters> ChangeWhereBody => (filter, sb, param) =>
         {
-            get
-            {
-                return (filter, sb, param) =>
-                {
-                    var currentContext = HttpContext.Current;
-                    if (currentContext != null)
-                    {
-                        var gameTitleUtl = currentContext.Request.RequestContext.RouteData.Values["gameTitle"];
-                        if (gameTitleUtl != null)
-                        {
-                            sb.Append(" AND (dg.TitleUrl=@gameTitleUrl OR @gameTitleUrl IS NULL) ");
-                            param.Add("gameTitleUrl", gameTitleUtl.ToString());
-                        }
-                    }
-                };
-            }
-        }
+            var currentContext = HttpContext.Current;
 
-        protected override Action<SqlConnection, TViewModel[]> ChangeMaterialsAfterSelect
+            var gameTitleUtl = currentContext?.Request.RequestContext.RouteData.Values["gameTitle"];
+            if (gameTitleUtl == null) return;
+
+            sb.Append(" AND (dg.TitleUrl=@gameTitleUrl OR @gameTitleUrl IS NULL) ");
+            param.Add("gameTitleUrl", gameTitleUtl.ToString());
+        };
+
+        protected override Action<SqlConnection, TViewModel[]> ChangeMaterialsAfterSelect => (connection, data) =>
         {
-            get
+            var materialGames = connection.Query<VMMaterial, VMGame, VMMaterial>("dbo.get_material_games @mct, @ids", (m, g) =>
             {
-                return (connection, data) =>
-                {
-                    var sb = new StringBuilder();
-                    for (int i = 0; i < data.Length; i++)
-                    {
-                        sb.AppendFormat(",{0}", data[i].Id);
-                    }
-                    sb.Remove(0, 1);
+                m.Game = g;
+                return m;
+            }, new { mct = ModelCoreType, ids = data.Select(x=>x.Id.ToString()).ToDelimeterString(',') }).ToArray();
 
-                    var materialGames = connection.Query<VMMaterial, VMGame, VMMaterial>("dbo.get_material_games @mct, @ids", (m, g) =>
-                    {
-                        m.Game = g;
-                        return m;
-                    }, new { mct = ModelCoreType, ids = sb.ToString() }).ToArray();
+            if (!materialGames.Any()) return;
 
-                    if (materialGames.Any())
-                    {
-                        VMMaterial materialGame = null;
-                        TViewModel item = null;
-                        for (int i = 0; i < materialGames.Length; i++)
-                        {
-                            materialGame = materialGames[i];
-                            item = data.SingleOrDefault(x => x.Id == materialGame.Id);
-                            if (item != null && materialGame.Game != null)
-                            {
-                                item.GameId = materialGame.Game.Id;
-                                item.Game = materialGame.Game;
-                            }
-                        }
-                    }
-                };
+            VMMaterial materialGame;
+            TViewModel item;
+            for (var i = 0; i < materialGames.Length; i++)
+            {
+                materialGame = materialGames[i];
+                item = data.SingleOrDefault(x => x.Id == materialGame.Id);
+                if (item == null || materialGame.Game == null) continue;
+
+                item.GameId = materialGame.Game.Id;
+                item.Game = materialGame.Game;
             }
-        }
+        };
 
-        public override SxVMMaterial[] GetPopular(int? mct = default(int?), int? mid = default(int?), int amount = 10, DateTime? dateBegin = default(DateTime?), DateTime? dateEnd = default(DateTime?))
+        public override SxVMMaterial[] GetPopular(int? mct = null, int? mid = null, int amount = 10, DateTime? dateBegin = null, DateTime? dateEnd = null)
         {
             var data = base.GetPopular(mct, mid, amount, dateBegin, dateEnd);
-            var viewData = new VMMaterial[data.Length];
-            for (int i = 0; i < data.Length; i++)
+            var viewData = new SxVMMaterial[data.Length];
+            for (var i = 0; i < data.Length; i++)
             {
-                viewData[i] = getFromMaterial(data[i]);
+                viewData[i] = GetFromMaterial(data[i]);
             }
 
             return viewData;
         }
 
-        private static VMMaterial getFromMaterial(SxVMMaterial model)
+        private static VMMaterial GetFromMaterial(SxVMMaterial model)
         {
             return new VMMaterial
             {
@@ -122,7 +98,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public VMLastMaterialsBlock GetLastMaterialBlock(int lmc = 5, int gc = 4, int lgmc = 3, int gtc = 20)
         {
-            var gamesSql = @"SELECT DISTINCT TOP(@amount) dg.*, dp.Id FROM DV_MATERIAL AS dm
+            const string gamesSql = @"SELECT DISTINCT TOP(@amount) dg.*, dp.Id FROM DV_MATERIAL AS dm
 LEFT JOIN D_ARTICLE AS da ON da.ModelCoreType = dm.ModelCoreType AND da.Id = dm.Id
 LEFT JOIN D_NEWS AS dn ON dn.ModelCoreType = dm.ModelCoreType AND dn.Id = dm.Id
 JOIN D_GAME AS dg ON dg.Id = da.GameId OR dg.Id=dn.GameId
@@ -130,7 +106,7 @@ LEFT JOIN D_PICTURE AS dp ON dp.Id=dg.FrontPictureId
 WHERE dg.Show=1 AND dm.Show=1 AND dm.DateOfPublication<=GETDATE()
 ORDER BY dg.Title";
 
-            var materialsSql = @"SELECT TOP(@amount) dm.Id, dm.ModelCoreType, dm.Title, dm.DateCreate, dm.FrontPictureId
+            const string materialsSql = @"SELECT TOP(@amount) dm.Id, dm.ModelCoreType, dm.Title, dm.DateCreate, dm.FrontPictureId
   FROM DV_MATERIAL AS dm
 LEFT JOIN D_ARTICLE AS da ON da.ModelCoreType = dm.ModelCoreType AND da.Id = dm.Id
 LEFT JOIN D_NEWS AS dn ON dn.ModelCoreType = dm.ModelCoreType AND dn.Id = dm.Id

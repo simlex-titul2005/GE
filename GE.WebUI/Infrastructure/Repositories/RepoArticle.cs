@@ -16,7 +16,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public override void Delete(Article model)
         {
-            var query = "DELETE FROM D_ARTICLE WHERE Id=@mid AND ModelCoreType=@mct";
+            const string query = "DELETE FROM D_ARTICLE WHERE Id=@mid AND ModelCoreType=@mct";
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Execute(query, new { mid = model.Id, mct = model.ModelCoreType });
@@ -25,12 +25,12 @@ namespace GE.WebUI.Infrastructure.Repositories
             base.Delete(model);
         }
 
-        private static readonly string _queryPreviewMaterials = @"get_preview_materials @lettersCount, @gameTitle, @categoryId";
+        private static readonly string _queryPreviewMaterials = @"dbo.get_preview_materials @lettersCount, @gameTitle, @categoryId";
 
         public VMFGBlock ForGamersBlock(string gameTitle = null)
         {
             var viewModel = new VMFGBlock() { SelectedGameTitle = gameTitle };
-            dynamic[] result = null;
+            dynamic[] result;
             var query = @"SELECT da.GameId,
        dg.FrontPictureId,
        dg.Title,
@@ -77,7 +77,7 @@ GROUP BY
                 }).Distinct().ToArray();
 
             viewModel.Games = new VMFGBGame[games.Length];
-            for (int i = 0; i < games.Length; i++)
+            for (var i = 0; i < games.Length; i++)
             {
                 var game = games[i];
                 var categories = result.Where(x => x.GameId == game.Id).Select(x => new { Id = x.CategoryId, Title = x.CategoryTitle }).Distinct().OrderBy(x => x.Title);
@@ -113,7 +113,7 @@ GROUP BY
 
         public VMMaterial[] Last(int amount)
         {
-            var query = @"SELECT TOP(@amount) *
+            const string query = @"SELECT TOP(@amount) *
 FROM   (
            SELECT TOP(@amount) dm.DateCreate,
                   dm.Title,
@@ -159,31 +159,20 @@ ORDER BY
             }
         }
 
-        protected override Action<SqlConnection, Article> ChangeMaterialBeforeSelect
+        protected override Action<SqlConnection, Article> ChangeMaterialBeforeSelect => (connection, model) =>
         {
-            get
-            {
-                return (connection, model) => {
-                    var data = connection.Query<dynamic>("dbo.get_material_game @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
-                    if (data != null)
-                    {
-                        model.Game = new Game { Id = data.Id, Title = data.Title };
-                        model.GameId = data.Id;
-                        model.GameVersion = GetGameVesion(model.ModelCoreType, data);
-                    }
-                };
-            }
-        }
+            var data = connection.Query<dynamic>("dbo.get_material_game @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
+            if (data == null) return;
 
-        protected override Action<SxFilter, StringBuilder> ChangeJoinBody
+            model.Game = new Game { Id = data.Id, Title = data.Title };
+            model.GameId = data.Id;
+            model.GameVersion = GetGameVesion(model.ModelCoreType, data);
+        };
+
+        protected override Action<SxFilter, StringBuilder> ChangeJoinBody => (filter, sb) =>
         {
-            get
-            {
-                return (filter, sb)=> {
-                    sb.Append(" JOIN D_ARTICLE AS da ON da.Id=dm.Id AND da.ModelCoreType=dm.ModelCoreType ");
-                    sb.Append(" LEFT JOIN D_GAME AS dg ON dg.Id=da.GameId ");
-                };
-            }
-        }
+            sb.Append(" JOIN D_ARTICLE AS da ON da.Id=dm.Id AND da.ModelCoreType=dm.ModelCoreType ");
+            sb.Append(" LEFT JOIN D_GAME AS dg ON dg.Id=da.GameId ");
+        };
     }
 }

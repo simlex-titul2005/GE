@@ -15,12 +15,7 @@ namespace GE.WebUI.Controllers
     [AllowAnonymous]
     public sealed class SiteTestsController : BaseController
     {
-        private static RepoSiteTest _repo = new RepoSiteTest();
-        public static RepoSiteTest Repo
-        {
-            get { return _repo; }
-            set { _repo = value; }
-        }
+        public static RepoSiteTest Repo { get; set; } = new RepoSiteTest();
 
         public SiteTestsController()
         {
@@ -71,15 +66,17 @@ namespace GE.WebUI.Controllers
             }
             else if (data.Question.Test.Type == SiteTest.SiteTestType.Normal || data.Question.Test.Type == SiteTest.SiteTestType.NormalImage)
             {
-                var step = new VMSiteTestStepNormal();
-                step.SubjectId = data.SubjectId;
-                step.QuestionId = 0;
-                step.LettersCount = getStepNormalLettersCount(data);
-                ViewBag.OldSteps = new VMSiteTestStepNormal[] { step };
+                var step = new VMSiteTestStepNormal
+                {
+                    SubjectId = data.SubjectId,
+                    QuestionId = 0,
+                    LettersCount = GetStepNormalLettersCount(data)
+                };
+                ViewBag.OldSteps = new[] { step };
             }
 
             var viewModel = Mapper.Map<SiteTestAnswer, VMSiteTestAnswer>(data);
-            if (viewModel.Question != null && viewModel.Question.Test != null)
+            if (viewModel.Question?.Test != null)
                 viewModel.Question.Test.ViewsCount = await Repo.AddShow(viewModel.Question.Test.Id);
 
             return View(model: viewModel);
@@ -114,7 +111,7 @@ namespace GE.WebUI.Controllers
                     {
                         SubjectId = data.SubjectId,
                         QuestionId = 0,
-                        LettersCount = getStepNormalLettersCount(data)
+                        LettersCount = GetStepNormalLettersCount(data)
                     });
                 ViewBag.OldSteps = steps.ToArray();
                 ViewBag.AllSubjectsCount = allSubjectsCount;
@@ -123,19 +120,15 @@ namespace GE.WebUI.Controllers
                 return PartialView("_StepNormal", viewModel);
             });
         }
-        private static int getStepNormalLettersCount(SiteTestAnswer answer)
+        private static int GetStepNormalLettersCount(SiteTestAnswer answer)
         {
             var test = answer.Question.Test;
             var questions = test.Questions;
             if (questions == null || !questions.Any()) return 0;
 
-            var result = 0;
-            foreach (var q in questions)
-            {
-                result += q.Text.Length;
-            }
+            var result = questions.Sum(q => q.Text.Length);
 
-            if (test.Type == SiteTest.SiteTestType.NormalImage && answer.Subject != null && answer.Subject.Description != null)
+            if (test.Type == SiteTest.SiteTestType.NormalImage && answer.Subject?.Description != null)
                 result += answer.Subject.Description.Length;
 
             return result;
@@ -147,10 +140,9 @@ namespace GE.WebUI.Controllers
             return await Task.Run(() =>
             {
                 var validSteps = steps.Where(x => x.QuestionId != 0).ToArray();
-                SiteTestAnswer answer;
                 VMSiteTestStepNormal userAnswer;
                 var result = new VMSiteTestResult<VMSiteTestResultNormal>();
-                var data = _repo.GetNormalResults(steps.First().SubjectId);
+                var data = Repo.GetNormalResults(steps.First().SubjectId);
                 var test = data.First().Question.Test;
                 result.SiteTestTitle = test.Title;
                 result.SiteTestUrl = Url.Action("Details", "SiteTests", new { titleUrl = test.TitleUrl });
@@ -159,7 +151,7 @@ namespace GE.WebUI.Controllers
                 for (int i = 0; i < validSteps.Length; i++)
                 {
                     userAnswer = validSteps[i];
-                    answer = data.First(x => x.SubjectId == userAnswer.SubjectId);
+                    var answer = data.First(x => x.SubjectId == userAnswer.SubjectId);
 
                     result.Results[i] = new VMSiteTestResultNormal
                     {
@@ -181,7 +173,7 @@ namespace GE.WebUI.Controllers
         [HttpPost, NotLogRequest, AllowAnonymous]
         public async Task<JsonResult> Rules(int testId)
         {
-            var data = await _repo.GetSiteTestRulesAsync(testId);
+            var data = await Repo.GetSiteTestRulesAsync(testId);
             return Json(new
             {
                 Title = data.Title,

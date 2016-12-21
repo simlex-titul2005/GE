@@ -23,8 +23,8 @@ namespace GE.WebUI.Infrastructure.Repositories
             sb.Append(SxQueryProvider.GetSelectString());
             sb.Append(" FROM D_SITE_TEST AS dst ");
 
-            object param = null;
-            var gws = getSiteTestWhereString(filter, out param);
+            object param;
+            var gws = GetSiteTestWhereString(filter, out param);
             sb.Append(gws);
 
             var defaultOrder = new SxOrderItem { FieldName = "dst.DateCreate", Direction = SortDirection.Desc };
@@ -45,9 +45,8 @@ namespace GE.WebUI.Infrastructure.Repositories
             }
         }
 
-        private static string getSiteTestWhereString(SxFilter filter, out object param)
+        private static string GetSiteTestWhereString(SxFilter filter, out object param)
         {
-            param = null;
             var query = new StringBuilder();
             query.Append(" WHERE (dst.Title LIKE '%'+@title+'%' OR @title IS NULL) ");
             query.Append(" AND (dst.Description LIKE '%'+@desc+'%' OR @desc IS NULL) ");
@@ -70,7 +69,6 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-
                 var data = conn.Query("dbo.get_random_site_tests @amount", new { amount = amount });
                 return data.ToArray();
             }
@@ -114,7 +112,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             var result = new DataTable();
             using (var conn = new SqlConnection(ConnectionString))
             {
-                using (SqlDataAdapter adp = new SqlDataAdapter("dbo.get_site_test_matrix @testId, @page, @pageSize, @count OUTPUT", conn))
+                using (var adp = new SqlDataAdapter("dbo.get_site_test_matrix @testId, @page, @pageSize, @count OUTPUT", conn))
                 {
                     adp.SelectCommand.Parameters.AddWithValue("testId", testId);
                     adp.SelectCommand.Parameters.AddWithValue("page", page);

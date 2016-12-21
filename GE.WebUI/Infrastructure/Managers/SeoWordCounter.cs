@@ -6,7 +6,7 @@ namespace GE.WebUI.Infrastructure.Managers
     {
         public int GetWordCount(VMSeoPhrase phrases)
         {
-            string[] res = phrases.Text.Trim().Split(' ');
+            var res = phrases.Text.Trim().Split(' ');
             return res.Length;
         }
     }

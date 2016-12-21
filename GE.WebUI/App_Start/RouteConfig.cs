@@ -5,7 +5,7 @@ namespace GE.WebUI
 {
     public class RouteConfig
     {
-        private static readonly string[] _defNamespace = new string[] { "GE.WebUI.Controllers" };
+        private static readonly string[] _defNamespace = { "GE.WebUI.Controllers" };
 
         public static void PreRouteAction(RouteCollection routes)
         {

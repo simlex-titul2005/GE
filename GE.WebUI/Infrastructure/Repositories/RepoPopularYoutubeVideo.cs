@@ -1,14 +1,14 @@
-﻿using GE.WebUI.Models;
-using SX.WebCore.SxRepositories.Abstract;
-using SX.WebCore.ViewModels;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using System.Data;
-using System.Linq;
-using SX.WebCore.ViewModels.Youtube;
+using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
+using SX.WebCore.SxRepositories.Abstract;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -18,7 +18,7 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             if (videos == null || !videos.Any()) return;
 
-            var table = getVideosTable(videos);
+            var table = GetVideosTable(videos);
             var @params = new DynamicParameters();
             @params.Add("videos", table.AsTableValuedParameter("dbo.PopularYoutubeVideos"));
 
@@ -27,7 +27,7 @@ namespace GE.WebUI.Infrastructure.Repositories
                 await connection.ExecuteAsync("dbo.save_popular_youtube_videos", @params, commandType: CommandType.StoredProcedure);
             }
         }
-        private static DataTable getVideosTable(SxVMVideo[] videos)
+        private static DataTable GetVideosTable(IReadOnlyList<SxVMVideo> videos)
         {
             var table = new DataTable();
             table.Columns.AddRange(new DataColumn[] {
@@ -38,7 +38,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             });
 
             SxVMVideo item = null;
-            for (int i = 0; i < videos.Length; i++)
+            for (var i = 0; i < videos.Count; i++)
             {
                 item = videos[i];
                 table.Rows.Add(item.VideoId, item.Title, item.ChannelId, item.ChannelTitle);

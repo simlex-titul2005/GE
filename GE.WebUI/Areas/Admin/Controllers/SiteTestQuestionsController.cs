@@ -67,21 +67,12 @@ namespace GE.WebUI.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Edit(VMSiteTestQuestion model)
         {
-            if (ModelState.IsValid)
-            {
-                var redactModel = Mapper.Map<VMSiteTestQuestion, SiteTestQuestion>(model);
-                SiteTestQuestion newModel = null;
-                if (model.Id == 0)
-                    newModel = _repo.Create(redactModel);
-                else
-                    newModel = _repo.Update(redactModel, true, "TestId", "Text");
+            if (!ModelState.IsValid) return View(model);
 
-                return getResult(newModel.TestId);
-            }
-            else
-            {
-                return View(model);
-            }
+            var redactModel = Mapper.Map<VMSiteTestQuestion, SiteTestQuestion>(model);
+            var isNew = model.Id == 0;
+            redactModel = isNew ? Repo.Create(redactModel) : Repo.Update(redactModel, true, "TestId", "Text");
+            return getResult(redactModel.TestId);
         }
 
         [HttpPost, ValidateAntiForgeryToken]

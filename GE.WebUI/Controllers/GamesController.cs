@@ -8,12 +8,7 @@ namespace GE.WebUI.Controllers
 {
     public sealed class GamesController : BaseController
     {
-        private static RepoGame _repo = new RepoGame();
-        public static RepoGame Repo
-        {
-            get { return _repo; }
-            set { _repo = value; }
-        }
+        public static RepoGame Repo { get; set; } = new RepoGame();
 
         private const string __emptyGameIconPath = "emptyGameIconPath";
         private const string __emptyGameGoodImagePath = "emptyGameGoodImagePath";
@@ -36,7 +31,7 @@ namespace GE.WebUI.Controllers
             if (ViewBag.ActionName == "details")
                 ViewBag.GameName = ControllerContext.ParentActionViewContext.ViewBag.GameName;
 
-            var viewModel = (_repo as RepoGame).GetGameMenu(imgWidth, iconHeight, gnc, gameName == null ? (string)null : (string)gameName);
+            var viewModel = (Repo as RepoGame).GetGameMenu(imgWidth, iconHeight, gnc, gameName == null ? (string)null : (string)gameName);
 
             var emptyGameIconPath = SxSiteSettingsController.Repo.GetByKey(__emptyGameIconPath)?.Value;
             var emptyGameGoodImagePath = SxSiteSettingsController.Repo.GetByKey(__emptyGameGoodImagePath)?.Value;
@@ -56,7 +51,7 @@ namespace GE.WebUI.Controllers
         {
             if (string.IsNullOrEmpty(titleUrl) || Equals(titleUrl.ToUpper(), "DETAILS")) return new HttpNotFoundResult();
 
-            var viewModel = (_repo as RepoGame).GetGameDetails(titleUrl);
+            var viewModel = (Repo as RepoGame).GetGameDetails(titleUrl);
 
             if (viewModel == null) return new HttpStatusCodeResult(404);
 

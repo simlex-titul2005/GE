@@ -8,13 +8,14 @@ using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
 using System;
 using SX.WebCore;
+using SX.WebCore.MvcApplication;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class ArticlesController : MaterialsController<Article, VMArticle>
     {
-        private static RepoArticle _repo = new RepoArticle();
-        public ArticlesController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Article)]) { }
+        private static readonly RepoArticle _repo = new RepoArticle();
+        public ArticlesController() : base(SxMvcApplication.ModelCoreTypeProvider[nameof(Article)]) { }
         public override SxRepoMaterial<Article, VMArticle> Repo
         {
             get
@@ -47,11 +48,11 @@ namespace GE.WebUI.Controllers
 #if !DEBUG
         [OutputCache(Duration = 900)]
 #endif
-        public override PartialViewResult Last(byte? mct = default(byte?), int amount = 5, int? mid = default(int?))
+        public override PartialViewResult Last(byte? mct = null, int amount = 5, int? mid = null)
         {
-            var data = (Repo as RepoArticle).GetLast(mct, amount, mid, new byte[] {
-                MvcApplication.ModelCoreTypeProvider[nameof(Article)],
-                MvcApplication.ModelCoreTypeProvider[nameof(News)]
+            var data = (Repo as RepoArticle).GetLast(mct, amount, mid, new[] {
+                SxMvcApplication.ModelCoreTypeProvider[nameof(Article)],
+                SxMvcApplication.ModelCoreTypeProvider[nameof(News)]
             });
 
             var viewModel = new VMMaterial[data.Length];
@@ -73,7 +74,7 @@ namespace GE.WebUI.Controllers
             return PartialView("_Last", viewModel);
         }
 
-        public sealed override PartialViewResult Popular(int? mct = default(int?), int? mid = default(int?), int amount = 4)
+        public override PartialViewResult Popular(int? mct = null, int? mid = null, int amount = 4)
         {
             throw new NotImplementedException("Популярные статьи реализованы в контроллере Новостей");
         }

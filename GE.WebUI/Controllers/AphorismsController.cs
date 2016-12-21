@@ -11,12 +11,7 @@ namespace GE.WebUI.Controllers
 {
     public sealed class AphorismsController : BaseController
     {
-        private static RepoAphorism _repo = new RepoAphorism();
-        public RepoAphorism Repo
-        {
-            get { return _repo; }
-            set { _repo = value; }
-        }
+        public static RepoAphorism Repo { get; set; } = new RepoAphorism();
 
         public AphorismsController()
         {
@@ -50,7 +45,7 @@ namespace GE.WebUI.Controllers
         [HttpGet, ChildActionOnly]
         public PartialViewResult Categories(string curCat = null)
         {
-            var viewModel = (_repo as RepoAphorism).GetAphorismCategories(curCat);
+            var viewModel = (Repo as RepoAphorism).GetAphorismCategories(curCat);
 
             return PartialView("_Categories", model: viewModel);
         }

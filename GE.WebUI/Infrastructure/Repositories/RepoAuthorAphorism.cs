@@ -22,7 +22,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             sb.Append(@" FROM D_AUTHOR_APHORISM AS daa ");
 
             object param = null;
-            var gws = getAuthorAphorismsWhereString(filter, out param);
+            var gws = GetAuthorAphorismsWhereString(filter, out param);
             sb.Append(gws);
 
             var defaultOrder = new SxOrderItem { FieldName = "daa.Name", Direction = SortDirection.Asc };
@@ -42,7 +42,7 @@ namespace GE.WebUI.Infrastructure.Repositories
                 return data.ToArray();
             }
         }
-        private static string getAuthorAphorismsWhereString(SxFilter filter, out object param)
+        private static string GetAuthorAphorismsWhereString(SxFilter filter, out object param)
         {
             param = null;
             var query = new StringBuilder();

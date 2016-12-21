@@ -6,15 +6,9 @@ namespace GE.WebUI.Controllers
 {
     public sealed class ValutesController : SxValutesController
     {
-        private static CacheItemPolicy _defaultPolicy
+        private static CacheItemPolicy _defaultPolicy => new CacheItemPolicy
         {
-            get
-            {
-                return new CacheItemPolicy
-                {
-                    AbsoluteExpiration = DateTimeOffset.Now.AddHours(2)
-                };
-            }
-        }
+            AbsoluteExpiration = DateTimeOffset.Now.AddHours(2)
+        };
     }
 }

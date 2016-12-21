@@ -7,28 +7,23 @@ using GE.WebUI.ViewModels;
 using GE.WebUI.Infrastructure.Repositories;
 using SX.WebCore.SxRepositories;
 using GE.WebUI.Infrastructure;
+using SX.WebCore.MvcApplication;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class HumorController : MaterialsController<Humor, VMHumor>
     {
-        private static RepoHumor _repo = new RepoHumor();
-        public HumorController() : base(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]) {
+        private static readonly RepoHumor _repo = new RepoHumor();
+        public HumorController() : base(SxMvcApplication.ModelCoreTypeProvider[nameof(Humor)]) {
             FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
 
-        public override SxRepoMaterial<Humor, VMHumor> Repo
-        {
-            get
-            {
-                return _repo;
-            }
-        }
+        public override SxRepoMaterial<Humor, VMHumor> Repo => _repo;
 
         public override ViewResult Add()
         {
             ViewBag.SiteSettingsGoogleRecaptchaSiteKey = ConfigurationManager.AppSettings["SiteSettingsGoogleRecaptchaSiteKey"];
-            ViewBag.Categories = MaterialCategoriesController.Repo.GetByModelCoreType(MvcApplication.ModelCoreTypeProvider[nameof(Humor)]).Select(x=>new SelectListItem {
+            ViewBag.Categories = MaterialCategoriesController.Repo.GetByModelCoreType(SxMvcApplication.ModelCoreTypeProvider[nameof(Humor)]).Select(x=>new SelectListItem {
                 Value=x.Id,
                 Text=x.Title
             }).ToArray();

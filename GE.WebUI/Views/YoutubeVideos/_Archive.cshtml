@@ -1,20 +1,20 @@
 ﻿@using System.Globalization
 @model VMPopularYoutubeVideoArchiveItem[]
 @{
-    var years = Model.Select(x => x.Year).OrderByDescending(x => x);
+    var years = Model.Select(x => x.Year).Distinct().OrderByDescending(x => x);
 }
 
 <ul>
     @foreach (var year in years)
     {
-        var monthes = Model.Where(x => Equals(x.Year, year)).Select(x => x.Month).OrderByDescending(x => x);
+        var monthes = Model.Where(x => Equals(x.Year, year)).Select(x => x.Month).Distinct().OrderByDescending(x => x);
         <li>
             <a href="#" data-url="@Url.Action("ArchiveList", "YoutubeVideos", new { year = year })">@year</a>
             <ul>
                 @foreach (var month in monthes)
                 {
                     var monthName = DateTimeFormatInfo.CurrentInfo.GetMonthName(month);
-                    var days = Model.Where(x => Equals(x.Year, year) && Equals(x.Month, month)).Select(x => x.Day).OrderByDescending(x => x);
+                    var days = Model.Where(x => Equals(x.Year, year) && Equals(x.Month, month)).Select(x => x.Day).Distinct().OrderByDescending(x => x);
                     <li>
                         <a href="#" data-url="@Url.Action("ArchiveList", "YoutubeVideos", new { year = year, month=month })">@monthName</a>
                         <ul>

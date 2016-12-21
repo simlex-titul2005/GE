@@ -519,8 +519,8 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\MaterialCategories\_Featured.cshtml" />
-    <Content Include="Scripts\ts\sxshare\tsconfig.json" />
     <Content Include="Scripts\ts\ap-videos\tsconfig.json" />
+    <Content Include="Scripts\ts\sxshare\tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -544,8 +544,8 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\ts\ap-videos\ap-videos.ts" />
-    <TypeScriptCompile Include="Scripts\ts\typings\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\ts\sxshare\sxshare.ts" />
+    <TypeScriptCompile Include="Scripts\ts\typings\jquery.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

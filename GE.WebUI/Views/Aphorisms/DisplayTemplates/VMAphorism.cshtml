@@ -28,7 +28,11 @@
     </div>*@
     <div>
         <br />
-        @Html.SxShareButtons(new SxExtantions.SxShareButtonOption() { Title = Model.Author?.Name ?? Model.Title, Url = Url.ContentAbsUrl(Model.GetUrl(Url)), Image = Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = imageId })), Description = desc.ToString() })
+        @Html.SxShareButtons(new SxExtantions.SxShareButtonOption() {
+       Title = Model.Author?.Name ?? Model.Title,
+       Url = Url.ContentAbsUrl(Model.GetUrl(Url)),
+       Image = Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = imageId })),
+       Description = desc.ToString() })
         <br />
         <a href="@Model.GetUrl(Url)">Подробнее</a>
     </div>

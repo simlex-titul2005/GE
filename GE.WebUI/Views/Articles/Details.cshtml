@@ -23,22 +23,21 @@
     @Html.Partial("_Foreword", Model)
 
     <div class="m-html">
-        @Html.Action("Popular", "News", new { mct = Model.ModelCoreType, mid = Model.Id, amount = 4, value = 1 })
+        @Html.Action("Popular", "News", new {mct = Model.ModelCoreType, mid = Model.Id, amount = 4, value = 1})
         @if (Model.FrontPictureId.HasValue && Model.ShowFrontPictureOnDetailPage)
         {
-            <img class="f-picture" alt="@Model.Title" src="@Url.Action("Picture", "Pictures", new { id= Model.FrontPictureId })" />
+            <img class="f-picture" alt="@Model.Title" src="@Url.Action("Picture", "Pictures", new {id = Model.FrontPictureId})"/>
         }
         @Html.Raw(Model.Html)
-
-
-        @Html.SxShareButtons(lbSettings: new SxExtantions.SxLikeButtonsSettings
-   {
-       LikeDownCount = () => Model.LikeDownCount,
-       LikeUpCount = () => Model.LikeUpCount,
-       UrlUp = () => Url.Action("AddLike", "Articles", new { mid = Model.Id, ld = "true" }),
-       UrlDown = () => Url.Action("AddLike", "Articles", new { mid = Model.Id, ld = "false" })
-   })
     </div>
+
+    @Html.SxShareButtons(lbSettings: new SxExtantions.SxLikeButtonsSettings
+{
+    LikeDownCount = () => Model.LikeDownCount,
+    LikeUpCount = () => Model.LikeUpCount,
+    UrlUp = () => Url.Action("AddLike", "Articles", new { mid = Model.Id, ld = "true" }),
+    UrlDown = () => Url.Action("AddLike", "Articles", new { mid = Model.Id, ld = "false" })
+})
 
     @Html.Partial("_MaterialInfo", Model)
 

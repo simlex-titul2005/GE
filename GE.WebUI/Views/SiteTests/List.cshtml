@@ -32,9 +32,9 @@
                             </div>
                             <div class="test-item__fwd">@Html.Raw(item.Description)</div>
                             <div class="test-item__btns">
-                                <a href="@Url.Action("Details","SiteTests", new { titleUrl = item.TitleUrl })" class="btn btn-sm btn-default test-item__btn">Пройти тест <i class="fa fa-angle-double-right"></i></a>
+                                <a href="@Url.Action("Details", "SiteTests", new {titleUrl = item.TitleUrl})" class="btn btn-sm btn-default test-item__btn">Пройти тест <i class="fa fa-angle-double-right"></i></a>
                                 @if (!string.IsNullOrEmpty(item.Rules))
-                    {
+                                {
                                     <a href="#" data-test-id="@item.Id" class="btn btn-sm btn-default test-item__btn test-rules__btn">Правила <i class="fa fa-eye"></i></a>
                                 }
                             </div>
@@ -42,7 +42,7 @@
                     }
 
                     <div class="text-center">
-                        @Html.SxPager(filter.PagerInfo, pageUrl: (x) => Url.Action("List", new { page = x}), htmlAttributes: new { @class = "pagination" }, isAjax: false)
+                        @Html.SxPager(filter.PagerInfo, pageUrl: (x) => Url.Action("List", new {page = x}), htmlAttributes: new {@class = "pagination"}, isAjax: false)
                     </div>
                 }
                 else
@@ -53,9 +53,9 @@
                 }
             </div>
         </div>
-    </div>
-    <div class="col-md-3">
-        @Html.Partial("_WeNeedHelp")
+        <div class="col-md-3">
+            @Html.Partial("_WeNeedHelp")
+        </div>
     </div>
 </div>
 

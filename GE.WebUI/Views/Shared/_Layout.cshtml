@@ -4,7 +4,7 @@
     var bgImageId = SiteSettingsProvider["sitebgpath"]?.Value;
     var logoPath = Url.Action("Picture", "Pictures", new { id = SiteSettingsProvider["sitelogopath"]?.Value });
     var iconPath = Url.Action("Picture", "Pictures", new { id = SiteSettingsProvider["sitefaveiconpath"]?.Value });
-    var bg = string.IsNullOrEmpty(bgImageId) ? null : string.Format("style=background:url('{0}');", Url.Action("Picture", "Pictures", new { id = bgImageId }));
+    var bg = string.IsNullOrEmpty(bgImageId) ? null : $"style=background:url('{Url.Action("Picture", "Pictures", new {id = bgImageId})}');";
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
@@ -69,9 +69,9 @@
                 banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top);
                 if (banner != null && !bannerControllerBlackList.Contains(controllerName))
                 {
-                    if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+                    if ((Equals(banner.Type, SxBanner.BannerType.Google)) || Equals(banner.Type, SxBanner.BannerType.Html))
                     {
-                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => Url.Action("Click", "Banners", new { bannerId = b.Id }))
                         <br>
                     }
                 }
@@ -84,10 +84,10 @@
                 banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom);
                 if (banner != null && !bannerControllerBlackList.Contains(controllerName))
                 {
-                    if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+                    if ((Equals(banner.Type, SxBanner.BannerType.Google)) || Equals(banner.Type, SxBanner.BannerType.Html))
                     {
                         <br />
-                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => Url.Action("Click", "Banners", new { bannerId = b.Id }))
                     }
                 }
             }
@@ -139,7 +139,7 @@
 
         $(function () {
             $('.sx-rating ').mouseleave(function () {
-                $items = $(this).find('a');
+                var $items = $(this).find('a');
                 var curIndex = parseInt($(this).attr('data-value')) - 1;
                 fillRating($items, curIndex);
             });
@@ -151,18 +151,18 @@
             });
 
             $('.sx-rating a').mouseenter(function () {
-                $a = $(this);
-                $items = $a.closest('ul').find('a');
+                var $a = $(this);
+                var $items = $a.closest('ul').find('a');
                 var curIndex = $a.attr('data-index');
                 fillRating($items, curIndex);
             });
         });
 
         function fillRating(items, curIndex) {
-            $items = $(items);
+            var $items = $(items);
             $items.each(function () {
                 var index = $(this).attr('data-index');
-                $i = $(this).find('i');
+                var $i = $(this).find('i');
                 if (index <= curIndex) {
                     $i.removeClass('fa-star-o');
                     $i.addClass('fa-star');

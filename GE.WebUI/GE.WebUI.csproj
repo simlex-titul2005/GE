@@ -523,8 +523,6 @@
     <Content Include="Views\MaterialCategories\_Featured.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Scripts\ts\videos\tsconfig.json" />
-    <Content Include="Scripts\ts\sxshare\tsconfig.json" />
     <Content Include="Views\Shared\_WeNeedHelp.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -547,11 +545,6 @@
   <ItemGroup>
     <Folder Include="content\dist\i\temp\" />
     <Folder Include="less\" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Scripts\ts\videos\videos.ts" />
-    <TypeScriptCompile Include="Scripts\ts\sxshare\sxshare.ts" />
-    <TypeScriptCompile Include="Scripts\ts\typings\jquery.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

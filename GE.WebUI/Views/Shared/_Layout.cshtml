@@ -56,6 +56,7 @@
     <div class="wrapper">
 
         @Html.Action("GameList", "Games")
+        @RenderSection("under_game_menu", false)
 
         <div class="container">
 
@@ -66,7 +67,7 @@
             }
 
             @{
-                banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top);
+                banner = Request.IsLocal ? null : pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Top);
                 if (banner != null && !bannerControllerBlackList.Contains(controllerName))
                 {
                     if ((Equals(banner.Type, SxBanner.BannerType.Google)) || Equals(banner.Type, SxBanner.BannerType.Html))
@@ -81,7 +82,7 @@
 
 
             @{
-                banner = pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom);
+                banner = Request.IsLocal ? null : pageBanners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Bottom);
                 if (banner != null && !bannerControllerBlackList.Contains(controllerName))
                 {
                     if ((Equals(banner.Type, SxBanner.BannerType.Google)) || Equals(banner.Type, SxBanner.BannerType.Html))

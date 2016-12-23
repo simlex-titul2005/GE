@@ -1328,7 +1328,7 @@ END
 GO
 
 /*******************************************
- * Получить избранный категории материалов
+ * Получить избранные категории материалов
  *******************************************/
 IF OBJECT_ID(N'dbo.get_feautured_material_categories', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_feautured_material_categories;
@@ -1344,6 +1344,35 @@ BEGIN
 	       JOIN D_PICTURE       AS dp
 	            ON  dp.Id = dmc.FrontPictureId
 	WHERE  dmc.IsFeatured = 1
+END
+GO
+
+/*******************************************
+ * Получить материалы избранной категории материалов
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_feautured_material_categories_materials', N'P') IS NOT 
+   NULL
+    DROP PROCEDURE dbo.get_feautured_material_categories_materials;
+GO
+CREATE PROCEDURE dbo.get_feautured_material_categories_materials
+	@categoryId NVARCHAR(255),
+	@amount INT
+AS
+BEGIN
+	DECLARE @date DATETIME = GETDATE();
+	
+	SELECT TOP(@amount)
+		dm.Title,
+		dm.TitleUrl,
+		dm.ModelCoreType,
+		dm.DateOfPublication,
+		dm.DateCreate
+	FROM   DV_MATERIAL AS dm
+	WHERE  dm.CategoryId = @categoryId
+	       AND dm.Show = 1
+	       AND dm.DateOfPublication <= @date
+	ORDER BY
+	       dm.DateOfPublication DESC
 END
 GO
 

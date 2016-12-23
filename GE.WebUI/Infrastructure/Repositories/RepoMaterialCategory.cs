@@ -5,6 +5,7 @@ using GE.WebUI.ViewModels;
 using SX.WebCore.SxRepositories;
 using System.Linq;
 using Dapper;
+using GE.WebUI.ViewModels.Abstracts;
 using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Infrastructure.Repositories
@@ -40,8 +41,18 @@ namespace GE.WebUI.Infrastructure.Repositories
                 {
                     c.FrontPicture = p;
                     return c;
-                }, new { amount = amount }, splitOn: "Id");
-                return data.ToArray();
+                }, new { amount = amount }, splitOn: "Id").ToArray();
+
+                if (!data.Any()) return data;
+
+                for (var i = 0; i < data.Length; i++)
+                {
+                    data[i].Materials= connection.Query<VMMaterial>(
+                        "dbo.get_feautured_material_categories_materials @categoryId, @amount",
+                        new { categoryId = data[i].Id, amount = 5 }).ToArray();
+                }
+
+                return data;
             }
         }
     }

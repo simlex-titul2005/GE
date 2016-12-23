@@ -19,24 +19,22 @@
             @Html.Partial("_List", Model, new ViewDataDictionary { { "Author", author }, { "Category", category } })
 
             <div class="text-center">
-                @Html.SxPager(pagerInfo, pageUrl: (x) => Url.Action("List", new { categoryId = category == null ? null : category.Id, page = x, author = author == null ? null : author.TitleUrl }), htmlAttributes: new { @class = "pagination" }, isAjax: false)
+                @Html.SxPager(pagerInfo, pageUrl: (x) => Url.Action("List", new { categoryId = category?.Id, page = x, author = author?.TitleUrl }), htmlAttributes: new { @class = "pagination" }, isAjax: false)
             </div>
         </div>
         <div class="col-md-3">
-            @Html.Action("Categories", "Aphorisms", new { curCat = category == null ? null : category.Id, onlyNotCurrent = false })
+            @Html.Action("Categories", "Aphorisms", new { curCat = category?.Id, onlyNotCurrent = false })
         </div>
     </div>
 </div>
 
 @section scripts{
     <script src="~/Scripts/sxshare.js"></script>
-    <script src="~/Scripts/ap-videos.js"></script>
+    <script src="~/Scripts/videos.js"></script>
     <script>
         $(function () {
-            loadScriptOnce('https://www.youtube.com/iframe_api');
-
-            var apVideos = new ApVideos('@Url.Action("GetJson", "YoutubeVideos")', 20, 12);
-            apVideos.initialize();
+            var videos = new Videos('@Url.Action("GetJson", "YoutubeVideos")', '.ap-list ul', '.ap-list__item', '<li></li>', 20, 12, 5);
+            videos.initialize();
             
 
             @if(category!=null)

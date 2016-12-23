@@ -1,9 +1,8 @@
-﻿using SX.WebCore.SxManagers;
-using SX.WebCore.ViewModels;
-using System.Configuration;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using SX.WebCore.SxManagers;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Controllers
 {
@@ -19,22 +18,29 @@ namespace GE.WebUI.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ViewResult> Edit(SxVMSiteQuestion model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(model);
+
+            var mm = new SxAppMailManager();
+
+            var sb = new StringBuilder();
+            sb.AppendLine(model.Email);
+            sb.AppendLine(model.UserName);
+            sb.AppendLine(model.Text);
+
+            var result= await mm.SendMail(sb.ToString(), new[] {
+                "admin@game-exe.com", 
+                "architect@game-exe.com"
+            }, "Обращение с формы обратной связи");
+
+            var mes=new SxVMResultMessage("Ваше письмо успешно отправлено", SxVMResultMessage.ResultMessageType.Ok);
+            if (!result)
             {
-                var smtpUserName = ConfigurationManager.AppSettings["NoReplyMail"];
-                var mm = new SxAppMailManager(smtpUserName, ConfigurationManager.AppSettings["NoReplyMailPassword"], "mail.game-exe.com");
-
-                var sb = new StringBuilder();
-                sb.AppendLine(model.Email);
-                sb.AppendLine(model.UserName);
-                sb.AppendLine(model.Text);
-
-                var result= await mm.SendMail(model.Email, sb.ToString(), new string[] { "admin@game-exe.com", "architect@game-exe.com" }, "Обращение с формы обратной связи");
-
-                TempData["Message"] = "Ваше письмо успешно отправлено";
-                return View(model: new SxVMSiteQuestion());
+                mes.Message = "Ошибка отправки сообщения. Попробуйте еще раз";
+                mes.MessageType = SxVMResultMessage.ResultMessageType.Error;
             }
-            return View(model);
+            ViewBag.Message = mes;
+;
+            return View(model: new SxVMSiteQuestion());
         }
     }
 }

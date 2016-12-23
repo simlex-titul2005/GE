@@ -1,20 +1,35 @@
 ﻿@import (reference) "colors.less";
 @import (reference) "sizes.less";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
 
-.test-list{
-    margin-top:@def-pad*2;
-    color:@color-white;
+.test-list {
+    margin-top: @def-pad*2;
+    color: @color-white;
 }
 
-.test-item{
-    margin-bottom:@def-pad*4;
+.test-item {
+    margin-bottom: @def-pad*4;
 }
 
-.test-item .test-item__btn{
-    background:none;
-    color:@color-white;
+.test-item .test-item__btn {
+    background: none;
+    color: @color-white;
 }
 
-.test-item .test-item__info{
-    font-size:12px;
+.test-item .test-item__info {
+    font-size: 12px;
+    margin-bottom: @def-pad;
+}
+
+.test-item .test-item__fwd {
+    font-size: 1.1em;
+}
+
+.test-item .test-item__btns {
+    margin-top: @def-pad;
+}
+
+.test-list .inter-videos {
+    margin-top: -@def-pad*2;
+    margin-bottom: @def-pad*2;
 }

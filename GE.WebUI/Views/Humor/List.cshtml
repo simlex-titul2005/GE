@@ -23,12 +23,12 @@
         <div class="col-md-9">
             @if (Model.Collection.Any())
             {
-                <ul class="list-unstyled">
+                <ul class="list-unstyled humor-list">
                     @for (int i = 0; i < Model.Collection.Length; i++)
                     {
                         item = Model.Collection[i];
-                        <li>
-                            <div class="humor-list">
+                        <li class="humor-list-item">
+                            <div>
                                 <h2 class="humor-list__header">@item.Title</h2>
                                 <div class="humor-list__info">
                                     <ul class="list-unstyled list-inline">
@@ -108,14 +108,7 @@
             }
         </div>
         <div class="col-md-3">
-            <h3>Популярное на Youtube</h3>
-            <div id="humor-yt-videos">
-                <div class="text-center">
-                    <br />
-                    <i class="fa fa-spinner fa-spin"></i>
-                    <br />
-                </div>
-            </div>
+            @Html.Partial("_WeNeedHelp")
         </div>
     </div>
 </div>
@@ -123,17 +116,11 @@
 
 @section scripts{
     <script src="~/Scripts/sxshare.js"></script>
+    <script src="~/Scripts/videos.js"></script>
     <script type="text/javascript">
-        loadScriptOnce('https://www.youtube.com/iframe_api');
-
-        $(function () {
-            getVideosFromYoutube();
+        $(function() {
+            var videos = new Videos('@Url.Action("GetJson", "YoutubeVideos")', '.humor-list', '.humor-list-item', '<li></li>', 23, 12, 3);
+            videos.initialize();
         });
-
-        function getVideosFromYoutube() {
-            $.get('@Url.Action("PopularForHumor", "YoutubeVideos", new { amount=12})', function (result) {
-                $('#humor-yt-videos').html(result);
-            });
-        }
     </script>
 }

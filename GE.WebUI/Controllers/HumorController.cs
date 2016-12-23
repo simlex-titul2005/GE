@@ -1,13 +1,13 @@
-﻿using System.Web.Mvc;
+﻿using System.Configuration;
 using System.Linq;
-using System.Configuration;
-using SX.WebCore.ViewModels;
+using System.Web.Mvc;
+using GE.WebUI.Infrastructure;
+using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
-using GE.WebUI.Infrastructure.Repositories;
-using SX.WebCore.SxRepositories;
-using GE.WebUI.Infrastructure;
 using SX.WebCore.MvcApplication;
+using SX.WebCore.SxRepositories;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Controllers
 {

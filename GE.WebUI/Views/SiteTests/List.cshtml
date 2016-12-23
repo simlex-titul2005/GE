@@ -1,11 +1,12 @@
-﻿@model SxExtantions.SxPagedCollection<VMSiteTest>
+﻿@using SX.WebCore
+@model SxExtantions.SxPagedCollection<VMSiteTest>
 @{
     ViewBag.Title = ViewBag.Title ?? "Тесты от game-exe.com";
     ViewBag.H1 = ViewBag.H1 ?? ViewBag.Title;
     ViewBag.Description = ViewBag.Description ?? "Здесь можно пройти тесты на знание игр. Оригинальные тесты. Проверьте свои знания!";
     ViewBag.Keywords = ViewBag.Keywords ?? "Тесты, проверить свои знания, оригинальные тесты";
 
-    VMSiteTest item;
+    var filter = (SxFilter)ViewBag.Filter;
 }
 
 @section styles{
@@ -14,34 +15,48 @@
 
 @Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
-<div class="test-list">
-    @if (Model.Collection.Any())
-    {
-        for (int i = 0; i < Model.Collection.Length; i++)
-        {
-            item = Model.Collection[i];
-            <div class="test-item">
-                <h2>@item.Title</h2>
-                <div class="test-item__info">
-                    Просмотров: <span>@item.ViewsCount</span>
-                </div>
-                <p class="text-muted">@Html.Raw(item.Description)</p>
-                <div>
-                    <a href="@Url.Action("Details","SiteTests", new { titleUrl = item.TitleUrl })" class="btn btn-sm btn-default test-item__btn">Пройти тест <i class="fa fa-angle-double-right"></i></a>
-                    @if (!string.IsNullOrEmpty(item.Rules))
+<div class="test-page">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="test-list">
+                @if (Model.Collection.Any())
+                {
+                    VMSiteTest item;
+                    for (int i = 0; i < Model.Collection.Length; i++)
                     {
-                        <a href="#" data-test-id="@item.Id" class="btn btn-sm btn-default test-item__btn test-rules__btn">Правила <i class="fa fa-eye"></i></a>
+                        item = Model.Collection[i];
+                        <div class="test-item">
+                            <h2>@item.Title</h2>
+                            <div class="test-item__info">
+                                <i class="fa fa-eye"></i> : <span>@item.ViewsCount</span>
+                            </div>
+                            <div class="test-item__fwd">@Html.Raw(item.Description)</div>
+                            <div class="test-item__btns">
+                                <a href="@Url.Action("Details","SiteTests", new { titleUrl = item.TitleUrl })" class="btn btn-sm btn-default test-item__btn">Пройти тест <i class="fa fa-angle-double-right"></i></a>
+                                @if (!string.IsNullOrEmpty(item.Rules))
+                    {
+                                    <a href="#" data-test-id="@item.Id" class="btn btn-sm btn-default test-item__btn test-rules__btn">Правила <i class="fa fa-eye"></i></a>
+                                }
+                            </div>
+                        </div>
                     }
-                </div>
+
+                    <div class="text-center">
+                        @Html.SxPager(filter.PagerInfo, pageUrl: (x) => Url.Action("List", new { page = x}), htmlAttributes: new { @class = "pagination" }, isAjax: false)
+                    </div>
+                }
+                else
+                {
+                    <p class="lead">
+                        Пока ни одного теста на сайте нет. Мы обязательно добавим лучшие и интересные тесты на знание онлайн игр. Мы постоянно пополняем существующую коллекцию тестов, так что Вам не придется скучать!
+                    </p>
+                }
             </div>
-        }
-    }
-    else
-    {
-        <p class="lead">
-            Пока ни одного теста на сайте нет. Мы обязательно добавим лучшие и интересные тесты на знание онлайн игр. Мы постоянно пополняем существующую коллекцию тестов, так что Вам не придется скучать!
-        </p>
-    }
+        </div>
+    </div>
+    <div class="col-md-3">
+        @Html.Partial("_WeNeedHelp")
+    </div>
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modal-rules">
@@ -62,21 +77,27 @@
 </div>
 
 @section scripts{
+    <script src="~/Scripts/videos.js"></script>
     <script>
-        $('.test-rules__btn').click(function () {
-            var testId = $(this).attr('data-test-id');
-            $modal = $('#modal-rules');
-            $.ajax({
-                method: 'post',
-                url: '@Url.Action("Rules", "SiteTests")',
-                data:{testId: testId},
-                success: function (result) {
-                    $modal.find('.modal-title').html(result.Title);
-                    $modal.find('.modal-body').html(result.Rules);
-                    $modal.modal('show');
-                }
+        $(function () {
+            var videos = new Videos('@Url.Action("GetJson", "YoutubeVideos")', '.test-list', '.test-item', '<div></div>', 23, 12, 3);
+            videos.initialize();
+
+            $('.test-rules__btn').click(function () {
+                var testId = $(this).attr('data-test-id');
+                var $modal = $('#modal-rules');
+                $.ajax({
+                    method: 'post',
+                    url: '@Url.Action("Rules", "SiteTests")',
+                    data: { testId: testId },
+                    success: function (result) {
+                        $modal.find('.modal-title').html(result.Title);
+                        $modal.find('.modal-body').html(result.Rules);
+                        $modal.modal('show');
+                    }
+                });
+                return false;
             });
-            return false;
         });
     </script>
-    }
+}

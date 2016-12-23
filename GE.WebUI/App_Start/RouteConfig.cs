@@ -82,6 +82,14 @@ namespace GE.WebUI
 
             routes.MapRoute(
                 name: null,
+                url: "sitetests/page{page}",
+                defaults: new { controller = "SiteTests", action = "List", page = 1, area = "" },
+                namespaces: _defNamespace,
+                constraints: new { httpMethod = new HttpMethodConstraint("get") }
+            );
+
+            routes.MapRoute(
+                name: null,
                 url: "sitetests/{titleUrl}",
                 defaults: new { controller = "SiteTests", action = "Details", area = "" },
                 namespaces: _defNamespace,

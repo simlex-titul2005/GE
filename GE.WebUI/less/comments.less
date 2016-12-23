@@ -64,6 +64,21 @@
     height:100%;
     vertical-align: top;
     padding:0;
+    @media (max-width: @screen-xs-max) {
+        display:initial;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .comment .author, .comment .text
@@ -95,9 +110,10 @@
     margin-bottom:@def-pad;
 }
 
+@comment-img-size:100px;
 .comment .author img{
-    width:50px;
-    height:50px;
+    width:@comment-img-size;
+    height:@comment-img-size;
     border:3px solid @color-img-border;
 }
 

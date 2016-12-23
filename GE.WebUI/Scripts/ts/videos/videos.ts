@@ -1,21 +1,26 @@
 ﻿/// <reference path="../typings/jquery.d.ts" />
 
-class ApVideos {
+class Videos {
     private _url: string;
     private _cat: number;
     private _amount: number;
     private _block: JQuery;
+    private _blockItem: string;
+    private _itemWrapper: string;
     private _data: Array<any>;
-    private _itemsCount: number = 5;
+    private _alterCount: number;
     private _colCount: number = 3;
     private _counter: number = 0;
 
-    constructor(url: string, cat: number, amount: number) {
+    constructor(url: string, block: any, blockItem: string, itemWrapper:string, cat: number, amount: number, alterCount:number) {
         this._cat = cat;
         this._amount = amount;
         this._url = url;
-        this._block = $(".ap-list ul");
+        this._block = $(block);
+        this._blockItem = blockItem;
+        this._itemWrapper = itemWrapper;
         this._data = [];
+        this._alterCount = alterCount;
     }
 
     public initialize(): void {
@@ -35,9 +40,9 @@ class ApVideos {
     }
 
     private fillVideos(): void {
-        this._block.find(".ap-list__item").each((i: number, e: Element) => {
+        this._block.find(this._blockItem).each((i: number, e: Element) => {
             this._counter++;
-            if (this._counter === this._itemsCount) {
+            if (this._counter === this._alterCount) {
                 this.generateVideoRow(e);
                 this._counter = 0;
             }
@@ -46,7 +51,8 @@ class ApVideos {
 
     private generateVideoRow(e: Element): void {
         var counter: number = this._colCount;
-        var li: JQuery = $("<li></li>");
+        var itemWrapper: JQuery = $(this._itemWrapper);
+        var interVideoBlock: JQuery = $("<div></div>").addClass("inter-videos");
         var row: JQuery = $("<div class=\"row\"></div>");
         for (var video of this._data) {
             if (counter <= 0) {
@@ -57,8 +63,9 @@ class ApVideos {
             this.generateVideoItem(video, row);
             counter--;
         }
-        li.append(row);
-        li.insertAfter(e);
+        interVideoBlock.append(row);
+        itemWrapper.append(interVideoBlock);
+        itemWrapper.insertAfter(e);
     }
 
     private removeVideosBlock(): void {
@@ -66,7 +73,7 @@ class ApVideos {
     }
 
     private generateVideoItem(video: any, row: JQuery): void {
-        var item: JQuery = $("<div class=\"col-md-4\"><div class=\"ap-list__video\"><figure class=\"video\"" +
+        var item: JQuery = $("<div class=\"col-md-4\"><div class=\"inter-videos-item\"><figure class=\"video\"" +
             "style=\"background-image:url('http://img.youtube.com/vi/"
             + video.VideoId + "/mqdefault.jpg');\" id=\"" + video.Id + "\"><div class=\"v-p-wr\">" +
             "<a href=\"" + video.VideoUrl + "\" target=\"_blank\">" +

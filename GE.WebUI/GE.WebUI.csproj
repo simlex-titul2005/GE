@@ -353,6 +353,7 @@
     <Content Include="content\dist\i\404.jpg" />
     <Content Include="content\dist\i\article-empty.png" />
     <Content Include="content\dist\i\faveicon.png" />
+    <Content Include="content\dist\i\incognito.png" />
     <Content Include="content\dist\i\logo.png" />
     <Content Include="content\dist\i\testsubject.png" />
     <Content Include="content\dist\js\currency-provider.min.js" />
@@ -394,7 +395,6 @@
     <Content Include="Areas\Admin\Views\MaterialCategories\EditorTemplates\VMMaterialCategory.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
-    <Content Include="Scripts\ap-videos.js" />
     <Content Include="Scripts\currency-provider.js" />
     <Content Include="Scripts\find-engine.js" />
     <Content Include="Scripts\ge-aphorisms.js" />
@@ -404,7 +404,9 @@
     <Content Include="Scripts\ge-last-news-block.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\sxshare.js" />
+    <Content Include="Scripts\test-videos.js" />
     <Content Include="Scripts\user-clicks-engine.js" />
+    <Content Include="Scripts\videos.js" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -521,6 +523,9 @@
     <Content Include="Views\MaterialCategories\_Featured.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Scripts\ts\videos\tsconfig.json" />
+    <Content Include="Scripts\ts\sxshare\tsconfig.json" />
+    <Content Include="Views\Shared\_WeNeedHelp.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -540,7 +545,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="content\dist\i\temp\" />
     <Folder Include="less\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\ts\videos\videos.ts" />
+    <TypeScriptCompile Include="Scripts\ts\sxshare\sxshare.ts" />
+    <TypeScriptCompile Include="Scripts\ts\typings\jquery.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

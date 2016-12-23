@@ -2,10 +2,10 @@
   "compilerOptions": {
     "removeComments": false,
     "target": "es5",
-    "outFile": "../../ap-videos.js"
+    "outFile": "../../videos.js"
   },
   "files": [
-    "ap-videos.ts"
+    "videos.ts"
   ],
   "compileOnSave": true
 }

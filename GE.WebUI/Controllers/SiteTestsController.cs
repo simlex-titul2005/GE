@@ -22,13 +22,14 @@ namespace GE.WebUI.Controllers
             FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
         }
 
+        private static readonly int _pageSize = 12;
         [HttpGet]
-        public ViewResult List(int page = 1)
+        public async Task<ViewResult> List(int page = 1)
         {
             var defaultOrder = new SxOrderItem { FieldName = "DateCreate", Direction = SortDirection.Desc };
-            var filter = new SxFilter { Order = defaultOrder, OnlyShow = true };
+            var filter = new SxFilter(page, _pageSize) { Order = defaultOrder, OnlyShow = true };
 
-            var data = Repo.Read(filter);
+            var data = await Repo.ReadAsync(filter);
 
             var viewModel = new SxPagedCollection<VMSiteTest>
             {

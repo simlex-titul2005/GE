@@ -1,54 +1,28 @@
-﻿@using Microsoft.AspNet.Identity
-@model SxVMComment
+﻿@model SxVMComment
 @{
     Layout = null;
-    var userId = User.Identity.GetUserId();
-    var isAuth = User.Identity.IsAuthenticated;
 }
 
 <div class="comment">
     <div class="row content">
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12">
             <div class="author">
-                @if (Model.User != null && Model.User.AvatarId.HasValue)
+                @if (Model.User?.AvatarId != null)
                 {
                     <img class="img-circle" alt="@Model.User.NikName" src="@Url.Action("Picture", "Pictures", new { id=Model.User.AvatarId })" />
                 }
-                <div class="nik">@Model.User.NikName</div>
+                else
+                {
+                    <img class="img-circle" alt="incognito" src="/content/dist/i/incognito.png" />
+                }
+                <div class="nik">@(Model.User?.NikName ?? Model.UserName)</div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 col-xs-12">
             <div class="text">
                 <div class="date">@Model.DateCreate.ToString("hh: mm") &nbsp;&nbsp;&nbsp; @Model.DateCreate.ToString("dd MM yyyy")</div>
                 @Model.Html
             </div>
         </div>
     </div>
-    @if (isAuth)
-    {
-        <div class="func">
-            <div class="text-right">
-                <ul class="list-unstyled list-inline">
-                    @if (Model.User.Id == userId)
-                    {
-                        <li>
-                            <a href="#">Редактировать</a>
-                        </li>
-                    }
-                    <li>
-                        <a href="#">Цитата</a>
-                    </li>
-                    <li>
-                        <a href="#">Ответить</a>
-                    </li>
-                    @if (Model.User.Id == userId)
-                    {
-                        <li>
-                            <a href="#">Удалить</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
-    }
 </div>

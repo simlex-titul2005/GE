@@ -47,7 +47,7 @@ namespace GE.WebUI.Controllers
                     break;
                 //TODO: убрать 7
                 case 7://humor
-                    filter.PagerInfo.PageSize = 10;
+                    filter.PagerInfo.PageSize = 12;
                     break;
             }
 

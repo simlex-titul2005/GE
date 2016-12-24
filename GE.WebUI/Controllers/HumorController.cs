@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using GE.WebUI.Infrastructure;
 using GE.WebUI.Infrastructure.Repositories;
@@ -27,15 +28,20 @@ namespace GE.WebUI.Controllers
                 Value=x.Id,
                 Text=x.Title
             }).ToArray();
-            var breadcrumbs = (SxVMBreadcrumb[])ViewBag.Breadcrumbs;
-            if (breadcrumbs != null)
-            {
-                var bc = breadcrumbs.ToList();
-                bc.Add(new SxVMBreadcrumb { Title = "Добавить юмор" });
-                ViewBag.Breadcrumbs = bc.ToArray();
-            }
 
             return base.Add();
+        }
+
+        protected override ActionResult AddErrorResult(VMHumor model)
+        {
+            ViewBag.SiteSettingsGoogleRecaptchaSiteKey = ConfigurationManager.AppSettings["SiteSettingsGoogleRecaptchaSiteKey"];
+            ViewBag.Categories = MaterialCategoriesController.Repo.GetByModelCoreType(SxMvcApplication.ModelCoreTypeProvider[nameof(Humor)]).Select(x => new SelectListItem
+            {
+                Value = x.Id,
+                Text = x.Title
+            }).ToArray();
+
+            return base.AddErrorResult(model);
         }
     }
 }

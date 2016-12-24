@@ -7,6 +7,9 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x=>x.UserId)
+    @Html.HiddenFor(x => x.ViewsCount)
+    @Html.HiddenFor(x => x.DateCreate)
+    @Html.HiddenFor(x => x.DateUpdate)
 
     <div class="form-group">
         <div class="row">

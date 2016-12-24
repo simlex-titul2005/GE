@@ -6,6 +6,9 @@
 <form method="post" action="@Url.Action("Edit")">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ViewsCount)
+    @Html.HiddenFor(x => x.DateCreate)
+    @Html.HiddenFor(x=>x.DateUpdate)
     <input type="hidden" name="CategoryId" value="@ViewBag.CategoryId" />
 
     @if (User.IsInRole("architect") && !isNew)

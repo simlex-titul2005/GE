@@ -21,10 +21,14 @@
 <div id="humor-page">
     <div class="row">
         <div class="col-md-9">
+            <div class="text-center">
+                <a href="@Url.Action("Add", "Humor")" class="btn btn-transparent white">Добавить юмор</a>
+            </div>
+            <br/>
             @if (Model.Collection.Any())
             {
                 <ul class="list-unstyled humor-list">
-                    @for (int i = 0; i < Model.Collection.Length; i++)
+                    @for (var i = 0; i < Model.Collection.Length; i++)
                     {
                         item = Model.Collection[i];
                         <li class="humor-list-item">
@@ -59,7 +63,7 @@
                                 <div>
                                     @if (item.Videos.Length > 0)
                                     {
-                                        <div style="position:relative; height:340px; width:100%; max-width:100%;">
+                                        <div style="position: relative; height: 340px; width: 100%; max-width: 100%;">
                                             @Html.SxVideo(item.Videos.First(), SX.WebCore.SxProviders.SxVideoProvider.VideoQuality.Medium)
                                         </div>
                                     }
@@ -76,21 +80,21 @@
                                 }
 
 
-                                <br />
+                                <br/>
                                 <div class="text-center">
                                     @Html.SxShareButtons(options: new SxExtantions.SxShareButtonOption
-                               {
-                                   Url = Url.ContentAbsUrl(item.GetUrl(Url)),
-                                   Title = item.Title,
-                                   Description = item.Foreword ?? item.GetForewordFromHtml(300),
-                                   Image = item.FrontPictureId.HasValue ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = item.FrontPictureId })) : null
-                               })
+                                    {
+                                        Url = Url.ContentAbsUrl(item.GetUrl(Url)),
+                                        Title = item.Title,
+                                        Description = item.Foreword ?? item.GetForewordFromHtml(300),
+                                        Image = item.FrontPictureId.HasValue ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new {id = item.FrontPictureId})) : null
+                                    })
                                 </div>
 
                                 @if (item.Html.Length > length)
                                 {
                                     <div class="text-center">
-                                        <br />
+                                        <br/>
                                         <a href="@item.GetUrl(Url)" class="btn btn-warning">Читать до конца</a>
                                     </div>
                                 }
@@ -99,11 +103,11 @@
                     }
                 </ul>
                 <div class="text-center">
-                    @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new { page = x }), isAjax: false, htmlAttributes: new { @class = "pagination" })
+                    @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new {page = x}), isAjax: false, htmlAttributes: new {@class = "pagination"})
                 </div>
-                <br />
+                <br/>
                 <div class="text-center">
-                    <a href="@Url.Action("Add","Humor")" class="btn btn-transparent white">Добавить юмор</a>
+                    <a href="@Url.Action("Add", "Humor")" class="btn btn-transparent white">Добавить юмор</a>
                 </div>
             }
         </div>

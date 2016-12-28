@@ -1,76 +1,66 @@
-﻿/// <reference path="../bower_components/jquery/dist/jquery.min.js" />
-(function ($) {
-    $.fn.geAphorisms = function () {
-        var mouseInBlock = false;
-        var period;
-        var periodCounter=0;
-
-        this.each(function () {
-            $this = $(this);
-            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-            $ap = $this.find('.aphorism');
-            var mid = $ap.data('mid');
-            var lc = $ap.data('lc');
-            period = getAphorismPeriod(lc);
-
-            $this.on('mouseover', function () {
-                mouseInBlock = true;
-                clearInterval(interval);
-            });
-
-            $this.on('mouseout', function () {
-                mouseInBlock = false;
-                interval = setInterval(function () { recountProgressBar() }, 1000);
-            });
-
-            var timeOut = setTimeout(function () { getRandom(mid) }, period);
-            var interval = setInterval(function () { recountProgressBar() }, 1000);
-
-            function getRandom(mid) {
-                if (!mouseInBlock) {
-                    $.ajax({
-                        method: 'get',
-                        url: '/aphorism/random?id=' + mid,
-                        success: function (data) {
-                            var html = $(data).find('.aph-html').html();
-                            $this.fadeOut('fast', function () {
-                                $this.html(data);
-                                $this.fadeIn('fast');
-                            });
-                            var lc = getLettersCount(html);
-                            period = getAphorismPeriod(lc);
-                            periodCounter = 0;
-                            clearTimeout(timeOut);
-                            timeOut = setTimeout(function () { getRandom(mid) }, period);
-                            clearInterval(interval);
-                            interval = setInterval(function () { recountProgressBar() }, 1000);
-                        }
-                    });
+/// <reference path="../typings/jquery.d.ts" />
+var GeRndAphorisms = (function () {
+    function GeRndAphorisms(block, btnNextId, dataUrl, callback) {
+        this._flag = true;
+        this._block = $(block);
+        this._progress = this._block.find(".rnd-aphorism__progress");
+        this._btnNextId = btnNextId;
+        this._dataUrl = dataUrl;
+        this._callback = callback;
+    }
+    GeRndAphorisms.prototype.initialize = function () {
+        var _this = this;
+        this._block.on("click", this._btnNextId, function (e) {
+            e.preventDefault();
+            var id = _this._block.find(".rnd-aphorism").attr("data-id");
+            $.ajax({
+                method: "get",
+                url: _this._dataUrl,
+                data: { id: id },
+                beforeSend: function () {
+                    $("<i></i>").addClass("fa fa-spinner fa-spin").attr("aria-hidden", "true").prependTo(_this._btnNextId);
+                },
+                success: function (data, status, xhr) {
+                    _this._block.html(data);
+                    if (_this._callback) {
+                        _this._callback();
+                    }
+                    _this._progress = _this._block.find(".rnd-aphorism__progress");
+                    var seconds = parseInt(_this._block.find("[data-seconds]").attr("data-seconds"));
+                    _this.initializeTimer(seconds);
                 }
-                else {
-                    var html = $ap.find('.aph-html').html();
-                    var lc = getLettersCount(html);
-                    clearTimeout(timeOut);
-                    timeOut = setTimeout(function () { getRandom(mid) }, getAphorismPeriod(lc));
-                    clearInterval(interval);
-                }
-            }
-
-            function getLettersCount(html) {
-                return html.length;
-            }
-
-            function getAphorismPeriod(lettersCount) {
-                return lettersCount * 200 / 3;
-            }
-
-            function recountProgressBar() {
-                periodCounter = periodCounter == 0 ? period - 1000 : periodCounter-1000;
-                $p = $this.find('.aph-progress > div')
-                    .animate({
-                        'width': periodCounter * 100 / period + '%'
-                    });
-            }
+            });
         });
+        this._block.on("mouseenter", function (e) {
+            _this._flag = false;
+        });
+        this._block.on("mouseleave", function (e) {
+            _this._flag = true;
+        });
+        var seconds = parseInt(this._block.find("[data-seconds]").attr("data-seconds"));
+        this.initializeTimer(seconds);
     };
-})(jQuery);
+    ;
+    GeRndAphorisms.prototype.initializeTimer = function (seconds) {
+        var _this = this;
+        clearInterval(this._timer);
+        this._seconds = seconds;
+        this._timerCounter = this._seconds;
+        this._timer = setInterval(function () { _this.reloadProgress(); }, 1000);
+    };
+    ;
+    GeRndAphorisms.prototype.reloadProgress = function () {
+        if (!this._flag)
+            return;
+        if (this._timerCounter > 0) {
+            this._timerCounter--;
+            var width = this._timerCounter * 100 / this._seconds;
+            this._progress.css("width", width + "%");
+        }
+        else {
+            $(this._btnNextId).trigger("click");
+        }
+    };
+    ;
+    return GeRndAphorisms;
+}());

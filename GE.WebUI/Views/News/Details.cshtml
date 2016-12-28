@@ -40,41 +40,43 @@
     UrlDown = () => Url.Action("AddLike", "News", new { mid = Model.Id, ld = "false" })
 })
 
-    @Html.Partial("_MaterialInfo", Model)
-
-    @*aphorisms*@
-    <div id="aphorisms">
-        @{Html.RenderAction("Random", "Aphorism"); }
+    <div class="mat-details-info">
+        @Html.Partial("_MaterialInfo", Model)
     </div>
 
-    @Html.Action("SimilarMaterials", "News", new { MaterialId = Model.Id, ModelCoreType = Model.ModelCoreType, amount = 9 })
+        @*aphorisms*@
+        <div id="rnd-aphorisms">
+            @{Html.RenderAction("Random", "Aphorism"); }
+        </div>
 
-    @{
-        banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
-        if (banner != null)
-        {
-            if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+        @Html.Action("SimilarMaterials", "News", new { MaterialId = Model.Id, ModelCoreType = Model.ModelCoreType, amount = 9 })
+
+        @{
+            banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
+            if (banner != null)
             {
-                <div style="margin-top:30px;">
-                    @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
-                </div>
+                if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
+                {
+                    <div style="margin-top:30px;">
+                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
+                    </div>
+                }
             }
         }
-    }
 
-    @if (Model.MaterialTags.Any())
-    {
-        @Html.Partial("_TagsCloud", Model.MaterialTags, new ViewDataDictionary { { "TagsShowHeader", true }, { "TagsMaxFs", 30 }, { "ControllerName", "News" }, { "ActionName", "List" } })
-    }
+        @if (Model.MaterialTags.Any())
+        {
+            @Html.Partial("_TagsCloud", Model.MaterialTags, new ViewDataDictionary { { "TagsShowHeader", true }, { "TagsMaxFs", 30 }, { "ControllerName", "News" }, { "ActionName", "List" } })
+        }
 
-    <div id="by-date-mat">
-        @Html.Action("ByDateMaterial", "News", new { mid = Model.Id, mct = Model.ModelCoreType })
+        <div id="by-date-mat">
+            @Html.Action("ByDateMaterial", "News", new { mid = Model.Id, mct = Model.ModelCoreType })
+        </div>
+
+        <br />
+        @Html.Action("Edit", "Comments", new { mid = Model.Id, mct = Model.ModelCoreType })
+
     </div>
-
-    <br />
-    @Html.Action("Edit", "Comments", new { mid = Model.Id, mct = Model.ModelCoreType })
-
-</div>
 
 
 @section scripts{
@@ -88,7 +90,11 @@
     <script type="text/javascript">
         loadScriptOnce('https://www.youtube.com/iframe_api');
         $(function () {
-            $('#aphorisms').geAphorisms();
+            var geRndAphorisms = new GeRndAphorisms('#rnd-aphorisms', '#rnd-aphorism-btn-next', '@Url.Action("Random", "Aphorism")', function () {
+                
+            });
+            geRndAphorisms.initialize();
+
             $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Id +'&mct=' + '@Model.ModelCoreType');
         });
     </script>

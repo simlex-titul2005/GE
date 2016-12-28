@@ -1,34 +1,63 @@
-﻿@model VMAphorism
+﻿@using SX.WebCore;
+@model VMAphorism
 @{
     Layout = null;
-    int lettersCount = ViewBag.AphorismLettersCount;
+    var seconds = (int)ViewBag.Seconds;
 }
 
-<div class="aphorism" data-mid="@Model.Id" data-lc="@lettersCount">
-    <div class="aph-progress">
-        <div></div>
-    </div>
-    <div><strong>@(Model.Author != null ? Model.Author.Name : "Аноним")</strong></div>
-    <div class="aph-html">
-        @if (Model.Author != null && Model.Author.PictureId.HasValue)
-        {
-            <figure class="img-circle" style="background-image:url(@Url.Action("Picture", "Pictures", new { id=Model.Author.PictureId}))">
-
-            </figure>
-        }
-        <div class="foreword">
+sdfsdfsdf
+<aside class="rnd-aphorism" data-seconds="@seconds" data-id="@Model.Id">
+    <div class="rnd-aphorism__progress"></div>
+    <div class="rnd-aphorism-author">@(Model.Author.Name)</div>
+    <div class="rnd-aphorism-content">
+        <div class="rnd-aphorism__img-wrapper">
+            <div class="rnd-aphorism__img" style="background-image:url(@Url.Action("Picture", "Pictures", new { id=Model.Author.PictureId })">
+            </div>
+        </div>
+        <div class="rnd-aphorism__text">
             @Html.Raw(Model.Html)
-            <br />
-            @Html.SxShareButtons(options: new SxExtantions.SxShareButtonOption
-       {
-           Url = Model.GetUrl(Url),
-           Title = Model.Author?.Name ?? Model.Title,
-           Description = Model.Author?.Name ?? Model.GetForewordFromHtml(200),
-           Image = Model.Author != null && Model.Author.PictureId.HasValue ? Url.Action("Picture", "Pictures", new { id = Model.Author.PictureId }) : string.Empty
-       })
-            <br />
-            <a class="btn btn-primary btn-sm" href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})">Комментировать, Шарить, Оценить <i class="fa fa fa-angle-double-right"></i></a>
-            <a class="btn btn-default btn-sm" href="#">Следуюший</a>
         </div>
     </div>
-</div>
+    <div class="rnd-aphorism-share-btns">
+        @Html.SxShareButtons(new SxExtantions.SxShareButtonOption()
+   {
+       Title = Model.Title,
+       Description = Model.GetForewordFromHtml(300),
+       Url = Url.ContentAbsUrl(Model.GetUrl(Url)),
+       Image = Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = Model.Author.PictureId }))
+   })
+    </div>
+    <div class="rnd-aphorism-btns">
+        <a href="@Model.GetUrl(Url)" class="btn btn-primary btn-sm">Комментировать, шарить, оценить</a>
+        <a href="#" class="btn btn-primary btn-sm" id="rnd-aphorism-btn-next">Следующий</a>
+    </div>
+</aside>
+
+@*<div class="aphorism" data-mid="@Model.Id" data-lc="@lettersCount">
+        <div class="aph-progress">
+            <div></div>
+        </div>
+        <div><strong>@(Model.Author != null ? Model.Author.Name : "Аноним")</strong></div>
+        <div class="aph-html">
+            @if (Model.Author != null && Model.Author.PictureId.HasValue)
+            {
+                <figure class="img-circle" style="background-image:url(@Url.Action("Picture", "Pictures", new { id=Model.Author.PictureId}))">
+
+                </figure>
+            }
+            <div class="foreword">
+                @Html.Raw(Model.Html)
+                <br />
+                @Html.SxShareButtons(options: new SxExtantions.SxShareButtonOption
+           {
+               Url = Model.GetUrl(Url),
+               Title = Model.Author?.Name ?? Model.Title,
+               Description = Model.Author?.Name ?? Model.GetForewordFromHtml(200),
+               Image = Model.Author != null && Model.Author.PictureId.HasValue ? Url.Action("Picture", "Pictures", new { id = Model.Author.PictureId }) : string.Empty
+           })
+                <br />
+                <a class="btn btn-primary btn-sm" href="@Url.Action("Details", new { controller="Aphorisms", categoryId= Model.CategoryId, titleUrl= Model.TitleUrl})">Комментировать, Шарить, Оценить <i class="fa fa fa-angle-double-right"></i></a>
+                <a class="btn btn-default btn-sm" href="#">Следуюший</a>
+            </div>
+        </div>
+    </div>*@

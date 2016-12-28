@@ -51,6 +51,9 @@
                         case "authoraphorisms":
                             url = Url.Action("Details", "Games", new { titleUrl = item.TitleUrl });
                             break;
+                        case "youtubevideos":
+                            url = Url.Action("Details", "Games", new { titleUrl = item.TitleUrl });
+                            break;
                         default:
                             url = "#";
                             break;

@@ -36,7 +36,7 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             var currentContext = HttpContext.Current;
 
-            var gameTitleUtl = currentContext?.Request.RequestContext.RouteData.Values["gameTitle"];
+            var gameTitleUtl = filter.AddintionalInfo?[1];
             if (gameTitleUtl == null) return;
 
             sb.Append(" AND (dg.TitleUrl=@gameTitleUrl OR @gameTitleUrl IS NULL) ");

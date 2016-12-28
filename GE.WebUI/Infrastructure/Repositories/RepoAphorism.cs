@@ -7,7 +7,6 @@ using Dapper;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
-using SX.WebCore.DbModels;
 using SX.WebCore.MvcApplication;
 
 namespace GE.WebUI.Infrastructure.Repositories
@@ -20,13 +19,13 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var data = conn.Query<Aphorism, SxMaterialCategory, AuthorAphorism, Aphorism>("dbo.get_random_aphorism @mid", (a, c, aa) =>
+                var data = conn.Query<Aphorism, AuthorAphorism, Aphorism>("dbo.get_random_aphorism @id", (a, aa) =>
                 {
                     a.Author = aa;
-                    a.Category = c;
                     return a;
-                }, new { mid = id }).SingleOrDefault();
-                return data;
+                }, new { id = id }, splitOn: "Id");
+
+                return data.SingleOrDefault();
             }
         }
 

@@ -3,42 +3,39 @@
 @import (reference) "positioned.less";
 @import (reference) "../bower_components/bootstrap/less/variables.less";
 
-.aphorisms {
-    color: @color-white;
-    margin-top: @def-pad*2;
-    min-height: 120px;
+//rnd-aphorism
+
+#rnd-aphorisms{
+    margin-top:@def-pad*2;
 }
 
-.aphorism {
-    position: relative;
-    padding: @def-pad;
-    border-radius: 3px;
+.rnd-aphorism {
+    box-shadow: 1px 1px 8px rgba(255,255,255,.5);
     background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
     border: 1px solid rgba(255,255,255,.1);
+    padding:@def-pad;
+    color:@color-white;
+    margin-top:20px;
 }
 
-.aphorism > .aph-progress {
-    height: 4px;
-    padding: @def-pad;
-    position: absolute;
-    width: 100%;
-    top: -@def-pad / 2;
-    left: 0;
+.rnd-aphorism__progress{
+    height:3px;
+    background: linear-gradient(to right, rgba(255,255,255,.1),@color-red);
+    margin-bottom:10px;
 }
 
-.aphorism > .aph-progress > div {
-    height: 2px;
-    background-color: @color-red;
+.rnd-aphorism-author{
+    font-weight:700;
+    margin-bottom:@def-pad;
 }
 
-@aph-html-img-size: 70px;
+.rnd-aphorism-content{
+    margin-bottom:@def-pad;
+}
 
-.aphorism .aph-html {
-    min-height: @aph-html-img-size;
-    margin-top: @def-pad;
-
+.rnd-aphorism__img-wrapper{
     @media (max-width: @screen-xs-max) {
-        text-align: center;
+        text-align:center;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -51,19 +48,21 @@
     }
 }
 
-.aphorism .aph-html > figure {
-    width: @aph-html-img-size;
-    height: @aph-html-img-size;
-    background-size: cover;
-    background-position: center center;
-    border: 3px solid @color-muted-blue;
-    display: inline-block;
-    float: left;
-    margin-right: @def-pad*3;
-
+@rnd-aphorism-img-size:70px;
+.rnd-aphorism__img{
+    width:@rnd-aphorism-img-size;
+    height:@rnd-aphorism-img-size;
+    background-position:center center;
+    background-size:cover;
+    border-radius:100%;
+    border:3px solid @color-muted-blue;
+    float:left;
+    margin-bottom:@def-pad;
     @media (max-width: @screen-xs-max) {
-        float: none;
-        margin-right: 0;
+        float:none;
+        display:inline-block;
+        width:@rnd-aphorism-img-size + @def-pad*2;
+        height:@rnd-aphorism-img-size + @def-pad*2;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -76,12 +75,13 @@
     }
 }
 
-.aphorism .aph-html > .foreword {
-    font-size: 18px;
-    margin-left: 115px;
-
+.rnd-aphorism__text{
+    margin-left:@rnd-aphorism-img-size + @def-pad*2;
+    min-height:@rnd-aphorism-img-size;
+    font-size:20px;
     @media (max-width: @screen-xs-max) {
-        margin-left: 0;
+        margin-left:0;
+        text-align:center;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -94,11 +94,10 @@
     }
 }
 
-.aphorism .aph-html > .foreword .share-buttons > li:first-child {
-    margin-left: 0;
-
+.rnd-aphorism-share-btns, .rnd-aphorism-btns{
+    margin-left:@rnd-aphorism-img-size + @def-pad*2;
     @media (max-width: @screen-xs-max) {
-        margin-left: @def-pad;
+        margin-left:0;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -111,11 +110,13 @@
     }
 }
 
-.aphorism .aph-html > .foreword .btn {
-    margin-top: @def-pad;
+.rnd-aphorism-share-btns .share-buttons button{
+    margin-bottom:@def-pad;
+}
 
+.rnd-aphorism-btns{
     @media (max-width: @screen-xs-max) {
-        width: 100%;
+        text-align:center;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -126,6 +127,10 @@
 
     @media (min-width: @screen-lg-min) {
     }
+}
+
+.rnd-aphorism .fa-spinner{
+    margin-right:5px;
 }
 
 //ap-author-list
@@ -211,7 +216,6 @@
     bottom: 0;
     left: 0;
 }
-
 
 .ap-list .content .m-info {
     margin-top: 0;

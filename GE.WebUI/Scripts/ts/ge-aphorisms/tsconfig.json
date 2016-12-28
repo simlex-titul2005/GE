@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "removeComments": false,
+    "target": "es5",
+    "outFile": "../../ge-aphorisms.js"
+  },
+  "files": [
+    "ge-aphorisms.ts"
+  ],
+  "compileOnSave": true
+}

@@ -878,21 +878,22 @@ IF OBJECT_ID(N'dbo.get_random_aphorism', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_random_aphorism;
 GO
 CREATE PROCEDURE dbo.get_random_aphorism
-	@mid INT
+	@id INT
 AS
 BEGIN
-	SELECT TOP(1) *
-	FROM   D_APHORISM                   AS da
-	       JOIN DV_MATERIAL             AS dm
+	SELECT TOP(1) dm.*,
+	       da.*,
+	       daa.*
+	FROM   D_APHORISM              AS da
+	       JOIN DV_MATERIAL        AS dm
 	            ON  dm.Id = da.Id
 	            AND dm.ModelCoreType = da.ModelCoreType
-	       JOIN D_MATERIAL_CATEGORY     AS dmc
-	            ON  dmc.Id = dm.CategoryId
-	       LEFT JOIN D_AUTHOR_APHORISM  AS daa
+	            AND dm.Show = 1
+	       JOIN D_AUTHOR_APHORISM  AS daa
 	            ON  daa.Id = da.AuthorId
-	WHERE  (@mid IS NULL)
-	       OR  (@mid IS NOT NULL AND da.Id NOT IN (@mid))
-	       AND dm.CategoryId IS NOT NULL
+	            AND daa.PictureId IS NOT NULL
+	WHERE  @id IS NULL
+	       OR  da.Id NOT IN (@id)
 	ORDER BY
 	       NEWID()
 END

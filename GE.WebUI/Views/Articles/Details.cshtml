@@ -39,10 +39,12 @@
     UrlDown = () => Url.Action("AddLike", "Articles", new { mid = Model.Id, ld = "false" })
 })
 
-    @Html.Partial("_MaterialInfo", Model)
+    <div class="mat-details-info">
+        @Html.Partial("_MaterialInfo", Model)
+    </div>
 
     @*aphorisms*@
-    <div id="aphorisms">
+    <div id="rnd-aphorisms">
         @{Html.RenderAction("Random", "Aphorism"); }
     </div>
 
@@ -85,7 +87,11 @@
     <script type="text/javascript">
         loadScriptOnce('https://www.youtube.com/iframe_api');
         $(function () {
-            $('#aphorisms').geAphorisms();
+            var geRndAphorisms = new GeRndAphorisms('#rnd-aphorisms', '#rnd-aphorism-btn-next', '@Url.Action("Random", "Aphorism")', function () {
+
+            });
+            geRndAphorisms.initialize();
+
             $('section[id^="comments-"]').load('/comments/list?mid=' +@Model.Id +'&mct=' + '@Model.ModelCoreType');
         });
     </script>

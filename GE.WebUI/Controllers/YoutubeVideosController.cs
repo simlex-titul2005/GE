@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using GE.WebUI.Infrastructure;
 using SX.WebCore.MvcControllers.Youtube;
 using SX.WebCore;
-using SX.WebCore.ViewModels.Youtube;
 using System;
 using GE.WebUI.Infrastructure.Repositories;
 using System.Linq;

@@ -20,7 +20,7 @@
                     <div class="col-md-4">
                         <div class="yt-videos-list__item">
                             <div style="position:relative; height:150px; margin-bottom:30px;">
-                                @Html.SxVideo(item, SX.WebCore.SxProviders.SxVideoProvider.VideoQuality.Medium)
+                                @Html.SxVideo(item, SX.WebCore.SxProviders.SxVideoProvider.VideoQuality.Medium, Url.Action("Details", "YoutubeVideos", new { videoId=item.VideoId }))
                             </div>
 
                             <div class="yt-videos-list__info">

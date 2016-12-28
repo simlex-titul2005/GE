@@ -99,6 +99,8 @@ namespace GE.WebUI
 
             #region youtube videos
             routes.MapRoute(name: null, url: "YoutubeVideos", defaults: new { controller = "YoutubeVideos", action = "List", amount = 9, cat=20, area = "" }, namespaces: _defNamespace);
+            routes.MapRoute(name: null, url: "YoutubeVideos/Archive", defaults: new { controller = "YoutubeVideos", action = "Archive", area = "" }, namespaces: _defNamespace);
+            routes.MapRoute(name: null, url: "YoutubeVideos/{videoId}", defaults: new { controller = "YoutubeVideos", action = "Details", area = "" }, namespaces: _defNamespace);
             #endregion
         }
 

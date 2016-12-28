@@ -14,6 +14,7 @@
         <img alt="@Model.Title" src="@(defPicturIdeSetting!=null?Url.Action("Picture", "Pictures", new { id=defPicturIdeSetting}) : "~/Content/dist/i/article-empty.png")" />
     }
     <i class="text-muted small hidden-sm">Инфорграфика по статистике для статьи в разработке</i><br />
+    <a href="@Model.GetUrl(Url)"></a>
 </figure>
 
 <div class="content">

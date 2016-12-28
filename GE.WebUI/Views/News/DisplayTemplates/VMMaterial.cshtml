@@ -8,7 +8,9 @@
     @if (Model.FrontPictureId.HasValue)
     {
     <div class="col-md-6 hidden-sm">
-        <figure class="mat-f-p" style="background-image:url(@(Model.FrontPictureId != null ? @Url.Action("Picture", "Pictures", new { id = picureId, height = 300 }) : "~/Content/dist/i/article-empty.png"))"></figure>
+        <figure class="mat-f-p" style="background-image:url(@(Model.FrontPictureId != null ? @Url.Action("Picture", "Pictures", new { id = picureId, height = 300 }) : "~/Content/dist/i/article-empty.png"))">
+            <a href="@Model.GetUrl(Url)"></a>
+        </figure>
     </div>
     }
     <div class="col-md-@(Model.FrontPictureId.HasValue?6:12)">

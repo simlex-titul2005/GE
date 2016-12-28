@@ -45,6 +45,7 @@
 
 .list-article figure{
     text-align:center;
+    position:relative;
     @media (max-width: @screen-xs-max) {
        
     }
@@ -58,6 +59,14 @@
 
     @media (min-width: @screen-lg-min) {
     }
+}
+
+.list-article figure > a{
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
 }
 
 .list-article figure > img {

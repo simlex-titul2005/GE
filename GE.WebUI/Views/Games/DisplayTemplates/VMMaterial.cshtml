@@ -41,9 +41,10 @@
         @*video*@
         @if (hasVideo)
         {
+            var video = Model.Videos[0];
             <div class="col-md-2">
                 <div class="video-container">
-                    @Html.SxVideo(Model.Videos[0], SX.WebCore.SxProviders.SxVideoProvider.VideoQuality.Medium)
+                    @Html.SxVideo(video, SX.WebCore.SxProviders.SxVideoProvider.VideoQuality.Medium, url: Url.Action("Details", "YoutubeVideos", new { videoId = video.VideoId }))
                 </div>
             </div>
         }

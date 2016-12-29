@@ -79,7 +79,8 @@ namespace GE.WebUI.Controllers
 
             SxBBCodeParser.Replace(
                 material: model,
-                pictureUrl: x => Url.Action("Picture", "Pictures", new { id = x.Id })
+                pictureUrl: x => Url.Action("Picture", "Pictures", new { id = x.Id }),
+                videoUrl: x=>Url.Action("Details", "YoutubeVideos", new { videoId=x.VideoId })
             );
 
             var seoTags = await SxSeoTagsController.Repo.GetSeoTagsAsync(model.Id, model.ModelCoreType);

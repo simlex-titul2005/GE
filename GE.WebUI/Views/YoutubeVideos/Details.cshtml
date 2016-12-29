@@ -1,0 +1,61 @@
+﻿@model SX.WebCore.ViewModels.Youtube.SxVMYoutubeVideo
+
+@{
+    var item = Model.ConvertedVideo;
+
+    ViewBag.H1 = ViewBag.H1 ?? Model.Snippet?.Title;
+    ViewBag.Title = ViewBag.Title ?? $"Видео - {Model.Snippet?.Title}";
+    ViewBag.Description = ViewBag.Description ?? (Model.Snippet?.Description ?? Model.Snippet?.Title);
+    ViewBag.Keywords = ViewBag.Keywords ?? $"Видео, {SX.WebCore.MvcApplication.SxMvcApplication.DefaultSiteName}";
+    ViewBag.PageImage = ViewBag.PageImage ?? item.PictureUrl;
+}
+
+@Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
+
+<div class="video-page">
+    <div class="video-page-video">
+        <div class="row">
+
+            <div class="col-md-8">
+                <iframe id="ytplayer" type="text/html"
+                        src=@($"http://www.youtube.com/embed/{Model.Id}")
+                        frameborder="0"></iframe>
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="video-page-info">
+                    <dl class="dl-horizontal">
+                        <dt>Дата публикации</dt>
+                        <dd>@(Model.Snippet?.PublishedAt)</dd>
+
+                        <dt>Канал</dt>
+                        <dd><a href="@(item?.VideoChannelUrl ?? "javascript:void(0)")">@(Model.Snippet?.ChannelTitle)</a></dd>
+
+                        <dt>Описание</dt>
+                        <dd>@(Model.Snippet?.Description)</dd>
+
+                        <dt>Просмотров</dt>
+                        <dd>@(Model.Statistics?.ViewCount)</dd>
+
+                        <dt>Лайков</dt>
+                        <dd>@(Model.Statistics?.LikeCount)</dd>
+
+                        <dt>Дизлайков</dt>
+                        <dd>@(Model.Statistics?.DislikeCount)</dd>
+
+                        <dt>Комментарев</dt>
+                        <dd>@(Model.Statistics?.CommentCount)</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="video-page_share">
+        @Html.SxShareButtons()
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/sxshare.js"></script>
+}

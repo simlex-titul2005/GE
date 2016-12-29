@@ -103,3 +103,38 @@
     @media (min-width: @screen-lg-min) {
     }
 }
+
+//video-page
+.video-page{
+    color:@color-white;
+    margin-top:@def-pad*2;
+}
+
+.video-page .video-page-video{
+    max-width:100%;
+}
+
+.video-page iframe{
+    width:640px;
+    height:360px;
+    max-width:100%;
+    margin-bottom:@def-pad*2;
+    @media (max-width: @screen-xs-max) {
+        width:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        width:100%;
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        height:340px;
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.video-page-info{
+    text-align:left;
+}

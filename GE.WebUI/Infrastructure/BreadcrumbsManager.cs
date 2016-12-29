@@ -84,7 +84,14 @@ namespace GE.WebUI.Infrastructure
                     }
                     break;
                 case "youtubevideos":
-                    breadcrumbs.Add(new SxVMBreadcrumb { Title = "Поулярное видео", Url = controller.Url.Action("List", "YoutubeVideos", new { amount = 9, cat = 20 }) });
+                    if (controller.SxActionName != "details")
+                        breadcrumbs.Add(new SxVMBreadcrumb { Title = "Поулярное видео", Url = controller.Url.Action("List", "YoutubeVideos", new { amount = 9, cat = 20 }) });
+                    else
+                    {
+                        breadcrumbs.Add(new SxVMBreadcrumb { Title = "Видео", Url = "javascript:void(0)" });
+                        var model = (SX.WebCore.ViewModels.Youtube.SxVMYoutubeVideo)controller.SxModel;
+                        breadcrumbs.Add(new SxVMBreadcrumb { Title = model.Snippet?.Title ?? model.Id, Url = controller.Url.Action(controller.SxActionName, controller.SxActionName, new { videoId=model.Id}) });
+                    }
                     break;
             }
         }

@@ -298,6 +298,7 @@
     <Compile Include="Models\AuthorAphorism.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Humor.cs" />
+    <Compile Include="Models\Infographic.cs" />
     <Compile Include="Models\MaterialCategory.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Infrastructure\Repositories\RepoSiteTestQuestion.cs" />

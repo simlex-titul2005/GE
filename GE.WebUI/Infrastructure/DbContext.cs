@@ -19,6 +19,8 @@ namespace GE.WebUI.Infrastructure
 
         public DbSet<Humor> Humors { get; set; }
 
+        public DbSet<Infographic> Infographics { get; set; }
+
         public new DbSet<News> News { get; set; }
 
         public DbSet<PopularYoutubeVideo> PopularYoutubeVideos { get; set; }

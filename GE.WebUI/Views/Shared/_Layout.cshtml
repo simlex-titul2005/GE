@@ -56,7 +56,9 @@
     <div class="wrapper">
 
         @Html.Action("GameList", "Games")
-        @RenderSection("under_game_menu", false)
+        <div class="container">
+            @Html.Action("Featured", "MaterialCategories", new { amount = 4 })
+        </div>
 
         <div class="container">
 

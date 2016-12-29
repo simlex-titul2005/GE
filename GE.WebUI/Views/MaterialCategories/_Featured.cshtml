@@ -18,21 +18,14 @@
                         @if (item != null)
                         {
                             <div class="featured-mc__item">
-                                <a class="featured-mc__link" role="button" data-toggle="collapse" href="#mc-@item.Id-materials" aria-expanded="false" aria-controls="mc-@item.Id-materials"></a>
                                 <img alt="@item.Title" src="@Url.Action("Picture", "Pictures", new {id = item.FrontPictureId})" class="featured-mc__img" />
                                 <div class="featured-mc__content">
-                                    <h4 class="featured-mc__title">@item.Title <i class="fa fa-caret-down pull-right hidden-xs hidden-md"></i></h4>
-                                    <div class="featured-mc__desc">
-                                        @item.Description
-                                        <div>
-                                            <i class="fa fa-caret-down hidden-lg"></i>
-                                        </div>
-                                    </div>
+                                    <h4 class="featured-mc__title"><a href="@Url.Action("List", "Articles", new { category=item.Id })">@item.Title</a></h4>
                                 </div>
                                 @if (item.Materials.Any())
                                 {
                                     VMMaterial material;
-                                    <div class="featured-mc__materials collapse" id="mc-@item.Id-materials">
+                                    <div class="featured-mc__materials" id="mc-@item.Id-materials">
                                         @for (var z = 0; z < item.Materials.Length; z++)
                                         {
                                             material = item.Materials[z];

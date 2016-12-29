@@ -270,6 +270,7 @@
     <Compile Include="Controllers\HumorController.cs" />
     <Compile Include="Controllers\MaterialCategoriesController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
+    <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\SiteQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />

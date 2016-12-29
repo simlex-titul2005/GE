@@ -16,6 +16,9 @@
                             <a href="@Url.Action("List", "News")">Новости</a>
                         </li>
                         <li>
+                            <a href="@Url.Action("List", "Rss", new { mcts=(byte)SX.WebCore.Enums.ModelCoreType.News })" target="_blank" title="Последние новости"><i class="fa fa-rss" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
                             <a href="@Url.Action("List", "Articles")">Статьи</a>
                         </li>
                         <li>

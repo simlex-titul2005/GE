@@ -71,6 +71,10 @@ namespace GE.WebUI
             );
             #endregion
 
+            #region rss
+            routes.MapRoute(name: null, url: "Rss", defaults: new { controller = "Rss", action = "List" }, namespaces: _defNamespace);
+            #endregion
+
             #region site test
             routes.MapRoute(
                 name: null,

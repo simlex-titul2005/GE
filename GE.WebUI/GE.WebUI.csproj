@@ -403,7 +403,6 @@
     <Content Include="Areas\Admin\Views\SiteTestSettings\_Edit.cshtml" />
     <Content Include="Areas\Admin\Views\MaterialCategories\EditorTemplates\VMMaterialCategory.cshtml" />
     <Content Include="Areas\Admin\Views\Infographics\_GridView.cshtml" />
-    <Content Include="Areas\Admin\Scripts\ts\editMaterialPage\tsconfig.json" />
     <Content Include="Areas\Admin\Views\Infographics\_ModalNotLinked.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Recommendations.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
@@ -560,12 +559,6 @@
   <ItemGroup>
     <Folder Include="content\dist\i\temp\" />
     <Folder Include="less\" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Areas\Admin\Scripts\ts\editMaterialPage\editMaterialPage.ts" />
-    <TypeScriptCompile Include="Areas\Admin\Scripts\ts\typings\bootstrap.d.ts" />
-    <TypeScriptCompile Include="Areas\Admin\Scripts\ts\typings\jquery.d.ts" />
-    <TypeScriptCompile Include="Areas\Admin\Scripts\ts\typings\sxgridview.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

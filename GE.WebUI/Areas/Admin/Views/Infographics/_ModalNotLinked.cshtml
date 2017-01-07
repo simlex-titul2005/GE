@@ -1,0 +1,26 @@
+﻿<div class="modal fade" tabindex="-1" role="dialog" id="modal-infographics-not-linked">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Призязать инфографики из существующих картинок</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    В процессе привязки учавствуют только картинки, еще не привязанные в качестве инфографиков ни к одному материалу
+                </div>
+
+                <div id="modal-infographics-not-linked-block">
+
+                </div>
+                <form method="post" action="@Url.Action("AddList", "Infographics")">
+                    @Html.AntiForgeryToken()
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="modal-infographics-not-linked-add-btn">Добавить</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>

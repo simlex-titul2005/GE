@@ -1,0 +1,11 @@
+﻿@model  VMInfographic
+
+@section styles{
+    <link href="~/content/dist/css/page-infographic.min.css" rel="stylesheet" />
+}
+
+@Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
+
+<div class="page-infographic">
+    @Html.DisplayForModel()
+</div>

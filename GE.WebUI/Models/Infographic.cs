@@ -10,7 +10,7 @@ namespace GE.WebUI.Models
     public class Infographic
     {
         [Key, Column(Order = 1)]
-        public Guid Id { get; set; }
+        public Guid PictureId { get; set; }
         public virtual SxPicture Picture { get; set; }
 
         [Key, Column(Order = 2)]

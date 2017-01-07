@@ -209,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutoMapperConfig.cs" />
+    <Compile Include="App_Start\BBCodeParserConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Areas\Admin\Controllers\GraphicsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HumorController.cs" />
+    <Compile Include="Areas\Admin\Controllers\InfographicsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LogsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MaterialCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\MaterialsController.cs" />
@@ -268,6 +270,7 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ForAuthorsController.cs" />
     <Compile Include="Controllers\HumorController.cs" />
+    <Compile Include="Controllers\InfographicsController.cs" />
     <Compile Include="Controllers\MaterialCategoriesController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\RssController.cs" />
@@ -284,6 +287,7 @@
     <Compile Include="Infrastructure\Repositories\RepoAuthorAphorism.cs" />
     <Compile Include="Infrastructure\Repositories\RepoGame.cs" />
     <Compile Include="Infrastructure\Repositories\RepoHumor.cs" />
+    <Compile Include="Infrastructure\Repositories\RepoInfographic.cs" />
     <Compile Include="Infrastructure\Repositories\RepoMaterial.cs" />
     <Compile Include="Infrastructure\Repositories\RepoMaterialCategory.cs" />
     <Compile Include="Infrastructure\Repositories\RepoNews.cs" />
@@ -310,6 +314,7 @@
     <Compile Include="Models\SiteTestStep.cs" />
     <Compile Include="Models\SiteTestSubject.cs" />
     <Compile Include="Infrastructure\ModelBinders\VMMaterialCategoryModelBinder.cs" />
+    <Compile Include="ViewModels\VMInfographic.cs" />
     <Compile Include="ViewModels\VMLastMaterialsBlock.cs" />
     <Compile Include="ViewModels\VMPopularYoutubeVideoArchiveItem.cs" />
     <Compile Include="ViewModels\VMAphorismCategory.cs" />
@@ -344,10 +349,12 @@
     <Compile Include="ViewModels\VMSiteTestStepGuess.cs" />
     <Compile Include="ViewModels\VMSiteTestStepNormal.cs" />
     <Compile Include="ViewModels\VMSiteTestSubject.cs" />
+    <Content Include="Areas\Admin\Scripts\editMaterialPage.js" />
     <Content Include="content\dist\css\ap-author-page.min.css" />
     <Content Include="content\dist\css\author-page.min.css" />
     <Content Include="content\dist\css\error-page.min.css" />
     <Content Include="content\dist\css\humor.min.css" />
+    <Content Include="content\dist\css\page-infographic.min.css" />
     <Content Include="content\dist\css\site.min.css" />
     <Content Include="content\dist\css\test-list.min.css" />
     <Content Include="content\dist\css\test-matrix.min.css" />
@@ -395,6 +402,10 @@
     <Content Include="Areas\Admin\Views\Aphorisms\EditorTemplates\_AuthorAphorismLookupGrid.cshtml" />
     <Content Include="Areas\Admin\Views\SiteTestSettings\_Edit.cshtml" />
     <Content Include="Areas\Admin\Views\MaterialCategories\EditorTemplates\VMMaterialCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Infographics\_GridView.cshtml" />
+    <Content Include="Areas\Admin\Scripts\ts\editMaterialPage\tsconfig.json" />
+    <Content Include="Areas\Admin\Views\Infographics\_ModalNotLinked.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Recommendations.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />
@@ -527,6 +538,7 @@
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Shared\_WeNeedHelp.cshtml" />
     <Content Include="Views\YoutubeVideos\Details.cshtml" />
+    <Content Include="Views\Infographics\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -548,6 +560,12 @@
   <ItemGroup>
     <Folder Include="content\dist\i\temp\" />
     <Folder Include="less\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Areas\Admin\Scripts\ts\editMaterialPage\editMaterialPage.ts" />
+    <TypeScriptCompile Include="Areas\Admin\Scripts\ts\typings\bootstrap.d.ts" />
+    <TypeScriptCompile Include="Areas\Admin\Scripts\ts\typings\jquery.d.ts" />
+    <TypeScriptCompile Include="Areas\Admin\Scripts\ts\typings\sxgridview.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

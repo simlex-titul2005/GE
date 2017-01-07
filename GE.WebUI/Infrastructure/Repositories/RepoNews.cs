@@ -13,7 +13,19 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoNews : RepoMaterial<News, VMNews>
     {
-        public RepoNews() : base((byte)Enums.ModelCoreType.News) { }
+        public RepoNews() : base((byte)Enums.ModelCoreType.News) {
+            FillOtherMaterialEntries = _fillOtherMaterialEntries;
+        }
+        private static void _fillOtherMaterialEntries(SqlConnection connection, VMNews data)
+        {
+            var igs = connection.Query<VMInfographic, SxVMPicture, VMInfographic>("dbo.get_material_infographics @mid, @mct", (i, p) => {
+                i.Picture = p;
+                return i;
+            }, new { mid = data.Id, mct = data.ModelCoreType });
+
+            data.Infographics = igs.ToArray();
+
+        }
 
         public override void Delete(News model)
         {

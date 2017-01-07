@@ -20,6 +20,10 @@ namespace GE.WebUI
             cfg.CreateMap<AuthorAphorism, VMAuthorAphorism>();
             cfg.CreateMap<VMAuthorAphorism, AuthorAphorism>();
 
+            //infographic
+            cfg.CreateMap<Infographic, VMInfographic>();
+            cfg.CreateMap<VMInfographic, Infographic>();
+
             //game
             cfg.CreateMap<Game, VMGame>();
             cfg.CreateMap<VMGame, Game>();

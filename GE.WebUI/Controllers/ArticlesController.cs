@@ -15,7 +15,8 @@ namespace GE.WebUI.Controllers
     public sealed class ArticlesController : MaterialsController<Article, VMArticle>
     {
         private static readonly RepoArticle _repo = new RepoArticle();
-        public ArticlesController() : base(SxMvcApplication.ModelCoreTypeProvider[nameof(Article)]) { }
+        public ArticlesController() : base(SxMvcApplication.ModelCoreTypeProvider[nameof(Article)]) {
+        }
         public override SxRepoMaterial<Article, VMArticle> Repo
         {
             get

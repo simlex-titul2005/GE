@@ -62,6 +62,10 @@ namespace GE.WebUI
             );
             #endregion
 
+            #region infographics
+            routes.MapRoute(name: null, url: "Infographics/{id}", defaults: new { controller = "Infographics", action = "Details" }, namespaces: _defNamespace);
+            #endregion
+
             #region games
             routes.MapRoute(
                 name: null,

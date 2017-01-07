@@ -35,6 +35,9 @@ namespace GE.WebUI.Infrastructure
 
             modelBuilder.Entity<Aphorism>().HasOptional(x => x.Author).WithMany(x => x.Aphorisms).HasForeignKey(x => new { x.AuthorId }).WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Infographic>().HasRequired(x => x.Picture).WithMany().HasForeignKey(x => x.PictureId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Infographic>().HasRequired(x => x.Material).WithMany().HasForeignKey(x => new { x.MaterialId, x.ModelCoreType }).WillCascadeOnDelete(true);
+
             modelBuilder.Entity<SiteTestAnswer>().HasKey(x => new { x.QuestionId, x.SubjectId });
             modelBuilder.Entity<SiteTestAnswer>().HasRequired(x => x.Question).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<SiteTestAnswer>().HasRequired(x => x.Subject).WithMany().WillCascadeOnDelete(false);

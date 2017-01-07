@@ -8,6 +8,11 @@ namespace GE.WebUI.ViewModels.Abstracts
     [MetadataType(typeof(VMMaterialMetadata))]
     public class VMMaterial : SxVMMaterial
     {
+        public VMMaterial()
+        {
+            Infographics = new VMInfographic[0];
+        }
+
         public int? GameId { get; set; }
         public VMGame Game { get; set; }
 
@@ -29,6 +34,8 @@ namespace GE.WebUI.ViewModels.Abstracts
                     return "#";
             }
         }
+
+        public VMInfographic[] Infographics { get; set; }
     }
 
     public class VMMaterialMetadata : SxVMMaterialMetadata

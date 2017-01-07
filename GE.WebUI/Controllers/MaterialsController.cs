@@ -69,7 +69,6 @@ namespace GE.WebUI.Controllers
                 case 2://news
                     model = await Repo.GetByTitleUrlAsync(year, month, day, titleUrl);
                     break;
-                //TODO: убрать 7
                 case 7://humor
                     model = await Repo.GetByTitleUrlAsync(year, month, day, titleUrl);
                     break;
@@ -80,7 +79,8 @@ namespace GE.WebUI.Controllers
             SxBBCodeParser.Replace(
                 material: model,
                 pictureUrl: x => Url.Action("Picture", "Pictures", new { id = x.Id }),
-                videoUrl: x=>Url.Action("Details", "YoutubeVideos", new { videoId=x.VideoId })
+                videoUrl: x=>Url.Action("Details", "YoutubeVideos", new { videoId=x.VideoId }),
+                replaceOtherAction: BBCodeParserConfig.ReplaceInfographics
             );
 
             var seoTags = await SxSeoTagsController.Repo.GetSeoTagsAsync(model.Id, model.ModelCoreType);

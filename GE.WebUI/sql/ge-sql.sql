@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 13.12.2016 7:50:41
+ * Time: 08.01.2017 1:28:10
  ************************************************************/
 
 /*******************************************
@@ -1363,11 +1363,11 @@ BEGIN
 	DECLARE @date DATETIME = GETDATE();
 	
 	SELECT TOP(@amount)
-		dm.Title,
-		dm.TitleUrl,
-		dm.ModelCoreType,
-		dm.DateOfPublication,
-		dm.DateCreate
+	       dm.Title,
+	       dm.TitleUrl,
+	       dm.ModelCoreType,
+	       dm.DateOfPublication,
+	       dm.DateCreate
 	FROM   DV_MATERIAL AS dm
 	WHERE  dm.CategoryId = @categoryId
 	       AND dm.Show = 1
@@ -1387,7 +1387,7 @@ CREATE PROCEDURE dbo.get_author_aphorisms_by_title_url
 	@titleUrl NVARCHAR(255)
 AS
 BEGIN
-	SELECT TOP(2) * 
+	SELECT TOP(2) *
 	FROM   D_AUTHOR_APHORISM    AS daa
 	       LEFT JOIN D_PICTURE  AS dp
 	            ON  dp.Id = daa.PictureId
@@ -1497,5 +1497,93 @@ BEGIN
 	       daa.PictureId,
 	       daa.TitleUrl,
 	       dmc.Id
+END
+GO
+
+/*******************************************
+ * Получить инфографик
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_infographic', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_infographic;
+GO
+CREATE PROCEDURE dbo.get_infographic
+	@pid UNIQUEIDENTIFIER
+AS
+BEGIN
+	SELECT TOP(2)
+	       di.*,
+	       dp.Id,
+	       dp.Caption
+	FROM   D_PICTURE           AS dp
+	       JOIN D_INFOGRAPHIC  AS di
+	            ON  di.PictureId = dp.Id
+	WHERE  di.PictureId = @pid
+END
+GO
+
+/*******************************************
+ * Добавить список инфографиков
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_infographics', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_infographics;
+GO
+CREATE PROCEDURE dbo.add_infographics
+	@mid INT,
+	@mct INT,
+	@ids NVARCHAR(MAX)
+AS
+BEGIN
+	INSERT INTO D_INFOGRAPHIC
+	  (
+	    PictureId,
+	    MaterialId,
+	    ModelCoreType
+	  )
+	SELECT CAST(fss.[Value] AS UNIQUEIDENTIFIER),
+	       @mid,
+	       @mct
+	FROM   dbo.func_split_string(@ids) AS fss
+END
+GO
+
+/*******************************************
+ * Удалить инфографик
+ *******************************************/
+IF OBJECT_ID(N'dbo.del_infographic', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.del_infographic;
+GO
+CREATE PROCEDURE dbo.del_infographic
+	@pid UNIQUEIDENTIFIER,
+	@mid INT,
+	@mct INT
+AS
+BEGIN
+	DELETE 
+	FROM   D_INFOGRAPHIC
+	WHERE  PictureId = @pid
+	       AND MaterialId = @mid
+	       AND ModelCoreType = @mct
+END
+GO
+
+/*******************************************
+ * Все инфографики материала
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_material_infographics', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_material_infographics;
+GO
+CREATE PROCEDURE dbo.get_material_infographics
+	@mid INT,
+	@mct INT
+AS
+BEGIN
+	SELECT di.*,
+	       dp.Id,
+	       dp.Caption
+	FROM   D_INFOGRAPHIC   AS di
+	       JOIN D_PICTURE  AS dp
+	            ON  dp.Id = di.PictureId
+	WHERE  di.MaterialId = @mid
+	       AND di.ModelCoreType = @mct
 END
 GO

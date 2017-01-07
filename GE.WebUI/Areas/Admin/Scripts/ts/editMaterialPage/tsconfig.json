@@ -1,0 +1,11 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "outFile": "../../editMaterialPage.js",
+    "removeComments": true
+  },
+  "files": [
+    "editMaterialPage.ts"
+  ]
+}

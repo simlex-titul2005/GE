@@ -30,8 +30,13 @@ namespace GE.WebUI.Areas.Admin.Controllers
 
         public override async Task<ActionResult> Edit(int? id = null)
         {
-            ViewBag.Scripts = "var gvlGames=new SxGridLookup('#GameId');";
+            ViewBag.ScriptsFiles = "<script src=\"/Areas/Admin/Scripts/editMaterialPage.js\"></script>";
+            ViewBag.Scripts = $"var gvlGames=new SxGridLookup('#GameId'); var editMaterialPage=new EditMaterialPage({id}, {ModelCoreType});";
             ViewBag.Title = _title;
+            ViewBag.Tabs = "<li role=\"presentation\"><a href=\"#mm-infographics\" aria-controls=\"mm-infographics\" role=\"tab\" data-toggle=\"tab\"><i class=\"fa fa-retweet\" aria-hidden=\"true\"></i> Инфографики</a></li>";
+            ViewBag.TabsContent = "<div role=\"tabpanel\" class=\"tab-pane\" id=\"mm-infographics\"><h4>Инфографики</h4><div id=\"infographics\"></div></div>";
+            ViewBag.RenderPartial = "~/Areas/Admin/Views/Infographics/_ModalNotLinked.cshtml";
+            ViewBag.RenderRecommendations = "_Recommendations";
             return await base.Edit(id);
         }
     }

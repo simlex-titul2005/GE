@@ -7,12 +7,25 @@ using System.Linq;
 using System;
 using SX.WebCore;
 using System.Text;
+using SX.WebCore.ViewModels;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoArticle : RepoMaterial<Article, VMArticle>
     {
-        public RepoArticle() : base((byte)Enums.ModelCoreType.Article) { }
+        public RepoArticle() : base((byte)Enums.ModelCoreType.Article) {
+            FillOtherMaterialEntries = _fillOtherMaterialEntries;
+        }
+        private static void _fillOtherMaterialEntries(SqlConnection connection, VMArticle data)
+        {
+            var igs = connection.Query<VMInfographic, SxVMPicture, VMInfographic>("dbo.get_material_infographics @mid, @mct", (i,p)=> {
+                i.Picture = p;
+                return i;
+            }, new { mid = data.Id, mct = data.ModelCoreType });
+
+            data.Infographics = igs.ToArray();
+
+        }
 
         public override void Delete(Article model)
         {

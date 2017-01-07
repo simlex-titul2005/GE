@@ -1,0 +1,41 @@
+﻿@model VMInfographic[]
+@{
+    var filter = (SxFilter)ViewBag.Filter;
+    var linked = (bool)filter.AddintionalInfo?[0];
+}
+
+@if (linked)
+{
+    <div class="alert alert-info">
+        В данном разделе Вы можете добавить инфографики материала
+    </div>
+
+    <div class="alert alert-warning">
+        <strong>Внимание!</strong> В теле материала можно использовать только инфографики, привязанные в данном разделе. В качестве инфографика может выступать любая картинка, занесённая в БД. Но, будучи привязанной в качестве инфографика к любому материалу, такая картинка уже не может быть использована в качестве инфографика. При удалении картинки удаляются все сформированные на основе неё инфографики. При удалении материала удаляются все привязанные к нему инфографики.
+    </div>
+}
+
+@Html.SxGridView(Model, new SxExtantions.SxGridViewSettings<VMInfographic>
+{
+    Columns = new SxExtantions.SxGridViewColumn<VMInfographic>[] {
+        new SxExtantions.SxGridViewColumn<VMInfographic>() { Caption="Идентификатор", FieldName="PictureId" },
+        new SxExtantions.SxGridViewColumn<VMInfographic>() { Caption="Наименование", FieldName="Caption" },
+        new SxExtantions.SxGridViewColumn<VMInfographic>() { Caption="Просмотр", FieldName="PictureId", Template=x=>$"<a data-lightbox=\"roadtrip\" data-title=\"{x.Caption}\" data-toggle=\"tooltip\" title=\"Помотреть картинку\" href=\"/pictures/picture/{x.PictureId}\"><i class=\"fa fa-picture-o\"></i></a>" , ColumnCssClass=x=>"col-cm", EnableSorting=false}
+    },
+    DataAjaxUrl = Url.Action("Index", "Infographics", new { mid = filter.MaterialId, mct = filter.ModelCoreType, linked = (bool)filter.AddintionalInfo?[0] }),
+    EnableCreating = linked,
+    CreateRowUrl = "#",
+    EnableDeleting = linked,
+    DeleteRowUrl = x => Url.Action("Delete", new { PictureId = x.PictureId, MaterialId = filter.MaterialId, ModelCoreType = filter.ModelCoreType }),
+    ShowSelectedCheckbox = !linked,
+    RowId = x => x.PictureId.ToString(),
+    ShowPagerInfo = true,
+    DeleteConfirmCaption = x => "Отвязка инфографика",
+    DeleteConfirmMessage = x => $"При удалении инфографика происходит отвязка инфографика от материала. Физического удаления картинки не происходит. Вы действительно хотите отвязать инфографик?</div>"
+})
+
+@if (linked)
+{
+    <br />
+    <a href="#info" aria-controls="info" class="btn btn-default" onclick="$('a[href=&quot;#info&quot;]').tab('show'); return false;"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>&nbsp;Параметры</a>
+}

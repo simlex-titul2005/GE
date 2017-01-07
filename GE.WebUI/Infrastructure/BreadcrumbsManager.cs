@@ -1,4 +1,5 @@
-﻿using SX.WebCore.MvcControllers.Abstract;
+﻿using GE.WebUI.ViewModels;
+using SX.WebCore.MvcControllers.Abstract;
 using SX.WebCore.ViewModels;
 using System.Collections.Generic;
 
@@ -51,6 +52,14 @@ namespace GE.WebUI.Infrastructure
                     if (controller.SxActionName == "details")
                     {
                         breadcrumbs.Add(new SxVMBreadcrumb { Title = "Афоризмы", Url = controller.Url.Action("List", "Aphorisms") });
+                    }
+                    break;
+                case "infographics":
+                    breadcrumbs.Add(new SxVMBreadcrumb { Title = "Инфографики", Url = "#" });
+                    if (controller.SxActionName == "details")
+                    {
+                        var model = (VMInfographic)controller.SxModel;
+                        breadcrumbs.Add(new SxVMBreadcrumb { Title = model.Caption, Url = controller.Url.Action("Details", "Infographics", new { id=model.PictureId }) });
                     }
                     break;
                 case "humor":

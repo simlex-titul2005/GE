@@ -84,10 +84,11 @@ namespace GE.WebUI.Controllers
         [OutputCache(Duration = 3600)]
 #endif
         [ChildActionOnly]
-        public override PartialViewResult SimilarMaterials(SxFilter filter, int amount = 10)
+        public override PartialViewResult RelatedMaterials(SxFilter filter)
         {
+            filter.PagerInfo.PageSize = 9;
             ViewBag.SimilarMaterialHeader = "Похожие статьи";
-            return base.SimilarMaterials(filter, amount);
+            return base.RelatedMaterials(filter);
         }
     }
 }

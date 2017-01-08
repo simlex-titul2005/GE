@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
-using SX.WebCore.Attrubutes;
+using SX.WebCore.Attributes;
 using System;
 
 namespace GE.WebUI.Controllers

@@ -485,7 +485,7 @@
     <Content Include="Views\Shared\_SocNetButtons.cshtml" />
     <Content Include="Views\Shared\_Foreword.cshtml" />
     <Content Include="Views\Shared\_TagsCloud.cshtml" />
-    <Content Include="Views\Shared\_SimilarMaterials.cshtml" />
+    <Content Include="Views\Shared\_RelatedMaterials.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Games\_LastMaterials.cshtml" />

@@ -49,7 +49,7 @@
             @{Html.RenderAction("Random", "Aphorism"); }
         </div>
 
-        @Html.Action("SimilarMaterials", "News", new { MaterialId = Model.Id, ModelCoreType = Model.ModelCoreType, amount = 9 })
+        @Html.Action("RelatedMaterials", "News", new { MaterialId = Model.Id, ModelCoreType = Model.ModelCoreType })
 
         @{
             banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;

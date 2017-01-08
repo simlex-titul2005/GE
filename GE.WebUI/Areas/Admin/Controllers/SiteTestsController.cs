@@ -4,7 +4,7 @@ using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using OfficeOpenXml;
 using SX.WebCore;
-using SX.WebCore.Attrubutes;
+using SX.WebCore.Attributes;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

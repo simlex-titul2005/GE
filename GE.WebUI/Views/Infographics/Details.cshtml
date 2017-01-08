@@ -1,4 +1,12 @@
-﻿@model  VMInfographic
+﻿@using SX.WebCore;
+@model  VMInfographic
+
+@{ 
+    ViewBag.Title = ViewBag.Title ?? Model.Caption;
+    ViewBag.Description = ViewBag.Description ?? $"{SX.WebCore.MvcApplication.SxMvcApplication.DefaultSiteName}, инфографики";
+    ViewBag.Keywords = ViewBag.Keywords ?? "инфографики";
+    ViewBag.PageImage = ViewBag.PageImage != null ? Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = ViewBag.PageImage })) : Url.ContentAbsUrl(Url.Action("Picture", "Pictures", new { id = Model.PictureId }));
+}
 
 @section styles{
     <link href="~/content/dist/css/page-infographic.min.css" rel="stylesheet" />
@@ -7,5 +15,15 @@
 @Html.SxBreadcrumbs((SxVMBreadcrumb[])ViewBag.Breadcrumbs)
 
 <div class="page-infographic">
-    @Html.DisplayForModel()
+    <div class="infographic-img">
+        <img alt="@HttpUtility.HtmlEncode(Model.Caption)" src="@Url.Action("Picture", "Pictures", new { id = Model.PictureId })" />
+    </div>
+    <div class="infographic-share">
+        @Html.SxShareButtons()
+    </div>
 </div>
+
+
+@section scripts{
+    <script src="~/Scripts/sxshare.js"></script>
+}

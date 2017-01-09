@@ -277,6 +277,7 @@
     <Compile Include="Controllers\SiteQuestionsController.cs" />
     <Compile Include="Controllers\SiteTestsController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
+    <Compile Include="Controllers\SubscribersController.cs" />
     <Compile Include="Controllers\ValutesController.cs" />
     <Compile Include="Controllers\YoutubeVideosController.cs" />
     <Compile Include="Infrastructure\BreadcrumbsManager.cs" />
@@ -538,6 +539,7 @@
     <Content Include="Views\Shared\_WeNeedHelp.cshtml" />
     <Content Include="Views\YoutubeVideos\Details.cshtml" />
     <Content Include="Views\Infographics\Details.cshtml" />
+    <Content Include="Views\Subscribers\_Subscribe.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

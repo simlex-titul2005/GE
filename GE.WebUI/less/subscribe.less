@@ -1,0 +1,53 @@
+﻿@import (reference) "colors.less";
+@import (reference) "sizes.less";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
+
+.subscribe {
+    margin-bottom: @def-pad*2;
+    margin-top: @def-pad*2;
+    color: @color-white;
+    padding:@def-pad;
+
+    box-shadow: 1px 1px 8px rgba(255,255,255,.5);
+    background: linear-gradient(to left,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1));
+    border: 1px solid rgba(255,255,255,.1);
+}
+
+.subscribe__header {
+    margin-bottom: @def-pad;
+}
+
+.subscribe__text {
+    font-size: 120%;
+    font-weight:700;
+    line-height:1;
+    margin-bottom:@def-pad*2;
+}
+
+.subscribe__email{
+    width:50%;
+    @media (max-width: @screen-xs-max) {
+        width:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.subscribe .validation-summary-errors ul{
+    list-style-type:none;
+    padding:0;
+    margin:0;
+    margin-bottom:@def-pad;
+    color:@color-red;
+}
+
+.subscribe__message-error{
+    color:@color-red;
+}

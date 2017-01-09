@@ -57,7 +57,8 @@ function createCss() {
         'less/st-page.less',
         'less/share-buttons.less',
         'less/sx-rating.less',
-        'less/featured-mc.less'
+        'less/featured-mc.less',
+        'less/subscribe.less'
     ])
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))

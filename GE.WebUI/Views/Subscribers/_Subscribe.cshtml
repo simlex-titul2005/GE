@@ -1,0 +1,36 @@
+﻿@model SxVMSubscriber
+@{
+    Layout = null;
+    var header = SiteSettingsProvider["subscribe-header"]?.Value ?? "Подписка на рассылку";
+    var text = SiteSettingsProvider["subscribe-text"]?.Value ?? "Подпишитесь на нашу рассылку, чтобы быть в курсе самых последних новостей игровой индустрии";
+
+    var message = (SxVMResultMessage)ViewBag.Message;
+}
+
+<div class="subscribe">
+    <h3 class="subscribe__header">@header</h3>
+    <p class="subscribe__text">@text</p>
+
+    @if (message != null)
+    {
+        <p class="subscribe__message subscribe__message-@(message.MessageType==SxVMResultMessage.ResultMessageType.Ok?"ok":"error")">@message.Message</p>
+    }
+
+    @if (message?.MessageType != SxVMResultMessage.ResultMessageType.Ok)
+    {
+        using (Ajax.BeginForm("Subscribe", new { controller = "Subscribers" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "subscribe-block" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary()
+
+            <div class="form-group">
+                @Html.EditorFor(x => x.Email, new { htmlAttributes = new { @class = "form-control subscribe__email", @placeholder = "Введите Ваш Email", @autocomplete = "off" } })
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-sm">Подписаться</button>
+            </div>
+        }
+    }
+</div>

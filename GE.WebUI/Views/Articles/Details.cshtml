@@ -43,6 +43,11 @@
         @Html.Partial("_MaterialInfo", Model)
     </div>
 
+    @*subscribe*@
+    <div id="subscribe-block">
+        @Html.Action("Subscribe", "Subscribers")
+    </div>
+
     @*aphorisms*@
     <div id="rnd-aphorisms">
         @{Html.RenderAction("Random", "Aphorism"); }

@@ -20,7 +20,12 @@
                 <iframe id="ytplayer" type="text/html"
                         src=@($"http://www.youtube.com/embed/{Model.Id}?autoplay=1")
                         frameborder="0"></iframe>
-
+                @if (!string.IsNullOrEmpty(Model.Snippet?.Description))
+                {
+                    <p class="video-page-video-desc">
+                        @(Model.Snippet?.Description)
+                    </p>
+                }
             </div>
 
             <div class="col-md-4">
@@ -31,9 +36,6 @@
 
                         <dt>Канал</dt>
                         <dd><a href="@(item?.VideoChannelUrl ?? "javascript:void(0)")">@(Model.Snippet?.ChannelTitle)</a></dd>
-
-                        <dt>Описание</dt>
-                        <dd>@(Model.Snippet?.Description)</dd>
 
                         <dt>Просмотров</dt>
                         <dd>@(Model.Statistics?.ViewCount)</dd>

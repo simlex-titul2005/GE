@@ -29,10 +29,10 @@ namespace GE.WebUI.Infrastructure
                     if (author != null)
                         breadcrumbs.Add(new SxVMBreadcrumb { Title = author.Name, Url = controller.Url.Action("List", "Aphorisms", new { author = author.TitleUrl }) });
 
-                    if(controller.SxActionName=="details")
+                    if (controller.SxActionName == "details")
                     {
                         var model = ((ViewModels.VMDetailAphorism)controller.SxModel)?.Aphorism;
-                        if(model!=null)
+                        if (model != null)
                             breadcrumbs.Add(new SxVMBreadcrumb { Title = model.Title, Url = model.GetUrl(controller.Url) });
                     }
                     break;
@@ -59,7 +59,7 @@ namespace GE.WebUI.Infrastructure
                     if (controller.SxActionName == "details")
                     {
                         var model = (VMInfographic)controller.SxModel;
-                        breadcrumbs.Add(new SxVMBreadcrumb { Title = model.Caption, Url = controller.Url.Action("Details", "Infographics", new { id=model.PictureId }) });
+                        breadcrumbs.Add(new SxVMBreadcrumb { Title = model.Caption, Url = controller.Url.Action("Details", "Infographics", new { id = model.PictureId }) });
                     }
                     break;
                 case "humor":
@@ -99,7 +99,7 @@ namespace GE.WebUI.Infrastructure
                     {
                         breadcrumbs.Add(new SxVMBreadcrumb { Title = "Видео", Url = "javascript:void(0)" });
                         var model = (SX.WebCore.ViewModels.Youtube.SxVMYoutubeVideo)controller.SxModel;
-                        breadcrumbs.Add(new SxVMBreadcrumb { Title = model.Snippet?.Title ?? model.Id, Url = controller.Url.Action(controller.SxActionName, controller.SxActionName, new { videoId=model.Id}) });
+                        breadcrumbs.Add(new SxVMBreadcrumb { Title = model.Snippet?.Title ?? model.Id, Url = controller.Url.Action(controller.SxActionName, controller.SxActionName, new { videoId = model.Id }) });
                     }
                     break;
             }

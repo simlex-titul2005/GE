@@ -2,44 +2,36 @@
 
 @if (Model.Any())
 {
-    const int colCount = 2;
-    var rowsCount = Math.Ceiling((double)Model.Length / colCount);
     VMMaterialCategory item = null;
 
     <div class="featured-mc">
-        @for (var i = 1; i <= rowsCount; i++)
-        {
-            var data = Model.Skip((i - 1) * colCount).Take(colCount).ToArray();
-            <div class="row">
-                @for (var y = 0; y < colCount; y++)
-                {
-                    item = data.Length > y ? data[y] : null;
-                    <div class="col-md-@(Math.Ceiling((double)12/colCount))">
-                        @if (item != null)
+        <div class="featured-mc__wrapper">
+            @for (var i = 0; i < Model.Length; i++)
+            {
+                item = Model[i];
+                <div class="featured-mc__item">
+                    <div class="featured-mc__item-wrapper">
+                        <img alt="@item.Title" src="@Url.Action("Picture", "Pictures", new { id = item.FrontPictureId })" class="featured-mc__img" />
+                        <div class="featured-mc__content">
+                            <h4 class="featured-mc__title"><a href="@Url.Action("List", "Articles", new { category = item.Id })">@item.Title</a></h4>
+                            @if (item.Materials.Any())
+                    {
+                        VMMaterial material;
+                                <div class="featured-mc__materials" id="mc-@item.Id-materials">
+                                    @for (var z = 0; z < item.Materials.Length; z++)
                         {
-                            <div class="featured-mc__item">
-                                <img alt="@item.Title" src="@Url.Action("Picture", "Pictures", new {id = item.FrontPictureId})" class="featured-mc__img" />
-                                <div class="featured-mc__content">
-                                    <h4 class="featured-mc__title"><a href="@Url.Action("List", "Articles", new { category=item.Id })">@item.Title</a></h4>
+                            material = item.Materials[z];
+                                        <div class="featured-mc__material">
+                                            <span class="featured-mc__material-date">@material.DateOfPublication.ToString("dd.MM.yyyy")</span><br />
+                                            <a class="featured-mc__material-title" href="@material.GetUrl(Url)">@material.Title</a>
+                                        </div>
+                                    }
                                 </div>
-                                @if (item.Materials.Any())
-                                {
-                                    VMMaterial material;
-                                    <div class="featured-mc__materials" id="mc-@item.Id-materials">
-                                        @for (var z = 0; z < item.Materials.Length; z++)
-                                        {
-                                            material = item.Materials[z];
-                                            <div>
-                                                <a href="@material.GetUrl(Url)">@material.Title</a>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                            </div>
-                        }
+                            }
+                        </div>
                     </div>
-                }
-            </div>
-        }
+                </div>
+            }
+        </div>
     </div>
 }

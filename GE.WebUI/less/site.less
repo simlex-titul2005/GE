@@ -5,27 +5,27 @@
 @import (reference) "../bower_components/bootstrap/less/variables.less";
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     font-family: 'Roboto Condensed', sans-serif;
     color: @color-black;
     background-color: @color-bg;
-    background-attachment:fixed !important;
-    
+    background-attachment: fixed !important;
+
     @media (max-width: @screen-xs-max) {
         position: unset;
-        background-position:center center !important;
+        background-position: center center !important;
     }
 
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-        background-position:center center !important;
+        background-position: center center !important;
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-        background-position:center center !important;
+        background-position: center center !important;
     }
 
     @media (min-width: @screen-lg-min) {
@@ -38,31 +38,31 @@ body {
 
 .btn-transparent, .btn-transparent:hover, .btn-transparent:focus, .btn-transparent:active {
     background: none !important;
-    box-shadow:none !important;
-    border:none;
-    outline:none !important;
+    box-shadow: none !important;
+    border: none;
+    outline: none !important;
 }
 
 .btn-transparent {
     padding: 19px 0;
     text-transform: uppercase;
     font-weight: 700;
-    min-width:200px;
+    min-width: 200px;
 }
 
-.btn-transparent.dark-blue{
-    border:1px solid @color-dark-blue;
-    color:@color-dark-blue;
+.btn-transparent.dark-blue {
+    border: 1px solid @color-dark-blue;
+    color: @color-dark-blue;
 }
 
-.btn-transparent.muted-blue{
-    border:1px solid @color-muted-blue;
-    color:@color-muted-blue;
+.btn-transparent.muted-blue {
+    border: 1px solid @color-muted-blue;
+    color: @color-muted-blue;
 }
 
-.btn-transparent.white{
-    border:1px solid @color-white;
-    color:@color-white;
+.btn-transparent.white {
+    border: 1px solid @color-white;
+    color: @color-white;
 }
 
 .btn-transparent.red {
@@ -78,13 +78,57 @@ body {
     background-color: rgba(0,0,0,.5);
 }
 
-.header{
-    font-size:25px;
-    color:@color-white;
+.header {
+    font-size: 25px;
+    color: @color-white;
 }
 
 .field-validation-error {
     color: #c23721;
     font-size: 0.9em;
     float: right;
+}
+
+//infographic-page-item
+.infographic-page-item .share-buttons{
+    margin-top:@def-pad;
+    @media (max-width: @screen-xs-max) {
+        left:0;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.infographic-page-item .share-buttons li{
+    @media (max-width: @screen-xs-max) {
+        display:inline-block;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+    }
+}
+
+.infographic-page-item .share-buttons i {
+    line-height:30px;
+    width:30px;
+    height:30px;
+    text-align:center;
+    border-radius:100%;
 }

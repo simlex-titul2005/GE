@@ -14,6 +14,9 @@
             m = rows[i];
             <div class="col-md-6">
                 <div class="pv-article">
+                    <div class="pv-article__image" style="background-image:url(@Url.Action("Picture", "Pictures", new { id=m.FrontPictureId}))">
+                        <a href="@m.GetUrl(Url)"></a>
+                    </div>
                     <h5 class="title">
                         <a href="@m.GetUrl(Url)" target="_blank">@m.Title</a>
                     </h5>

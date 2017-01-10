@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 08.01.2017 1:28:10
+ * Time: 10.01.2017 12:16:58
  ************************************************************/
 
 /*******************************************
@@ -785,6 +785,7 @@ BEGIN
 	       dm.ModelCoreType,
 	       dm.DateOfPublication,
 	       dm.ViewsCount,
+	       dm.FrontPictureId,
 	       dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount,
 	       CASE 
 	            WHEN dm.Foreword IS NOT NULL THEN dm.Foreword
@@ -1585,5 +1586,47 @@ BEGIN
 	            ON  dp.Id = di.PictureId
 	WHERE  di.MaterialId = @mid
 	       AND di.ModelCoreType = @mct
+END
+GO
+
+/*******************************************
+ * Блок "Геймеру почитать"
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_games_for_gamers_block', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_games_for_gamers_block;
+GO
+CREATE PROCEDURE dbo.get_games_for_gamers_block
+AS
+BEGIN
+	SELECT da.GameId,
+	       dg.FrontPictureId,
+	       dg.Title,
+	       dg.TitleUrl,
+	       dg.[Description],
+	       dm.CategoryId,
+	       dmc.Title                 AS CategoryTitle,
+	       dbo.get_comments_count(dm.Id, dm.ModelCoreType) AS CommentsCount
+	FROM   DV_MATERIAL               AS dm
+	       JOIN D_ARTICLE            AS da
+	            ON  da.Id = dm.Id
+	            AND da.ModelCoreType = dm.ModelCoreType
+	       JOIN D_GAME               AS dg
+	            ON  dg.Id = da.GameId
+	            AND dg.Show = 1
+	            AND dg.FrontPictureId IS NOT NULL
+	       JOIN D_MATERIAL_CATEGORY  AS dmc
+	            ON  dmc.Id = dm.CategoryId
+	WHERE  dm.Show = 1
+	       AND dm.DateOfPublication <= GETDATE()
+	GROUP BY
+	       dm.Id,
+	       dm.ModelCoreType,
+	       da.GameId,
+	       dg.FrontPictureId,
+	       dg.Title,
+	       dg.TitleUrl,
+	       dg.[Description],
+	       dm.CategoryId,
+	       dmc.Title
 END
 GO

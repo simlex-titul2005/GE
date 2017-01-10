@@ -80,7 +80,7 @@ namespace GE.WebUI.Controllers
                 material: model,
                 pictureUrl: x => Url.Action("Picture", "Pictures", new { id = x.Id }),
                 videoUrl: x=>Url.Action("Details", "YoutubeVideos", new { videoId=x.VideoId }),
-                replaceOtherAction: BBCodeParserConfig.ReplaceInfographics
+                replaceOtherAction: replaceInfographics
             );
 
             var seoTags = await SxSeoTagsController.Repo.GetSeoTagsAsync(model.Id, model.ModelCoreType);
@@ -118,6 +118,11 @@ namespace GE.WebUI.Controllers
             }
 
             return View(model);
+        }
+
+        private void replaceInfographics(SxVMMaterial model)
+        {
+            BBCodeParserConfig.ReplaceInfographics(Url, model);
         }
 
 #if !DEBUG

@@ -1,0 +1,12 @@
+﻿@model VMSteamApp[]
+
+@{ 
+    ViewBag.Title = "Игры Steam";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+<div id="grid-steam-apps">
+    @Html.Partial("_GridViewApp")
+</div>

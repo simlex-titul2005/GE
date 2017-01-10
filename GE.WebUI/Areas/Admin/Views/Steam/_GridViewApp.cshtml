@@ -1,0 +1,10 @@
+﻿@model VMSteamApp[]
+
+@Html.SxGridView(Model, new SxExtantions.SxGridViewSettings<VMSteamApp>()
+{
+    Columns = new SxExtantions.SxGridViewColumn<VMSteamApp>[] {
+        new SxExtantions.SxGridViewColumn<VMSteamApp>() { Caption="AppId", FieldName="AppId"},
+        new SxExtantions.SxGridViewColumn<VMSteamApp>() { Caption="Name", FieldName="Name"},
+    },
+    DataAjaxUrl=Url.Action("AppIndex", "Steam")
+})

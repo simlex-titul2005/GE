@@ -255,6 +255,7 @@
     <Compile Include="Areas\Admin\Controllers\SiteTestSettingsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteTestSubjectsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SteamController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscribersController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscribeTemplatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRolesController.cs" />
@@ -350,6 +351,7 @@
     <Compile Include="ViewModels\VMSiteTestStepGuess.cs" />
     <Compile Include="ViewModels\VMSiteTestStepNormal.cs" />
     <Compile Include="ViewModels\VMSiteTestSubject.cs" />
+    <Compile Include="ViewModels\VMSteamApp.cs" />
     <Content Include="Areas\Admin\Scripts\editMaterialPage.js" />
     <Content Include="content\dist\css\ap-author-page.min.css" />
     <Content Include="content\dist\css\author-page.min.css" />
@@ -406,6 +408,8 @@
     <Content Include="Areas\Admin\Views\Infographics\_GridView.cshtml" />
     <Content Include="Areas\Admin\Views\Infographics\_ModalNotLinked.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Recommendations.cshtml" />
+    <Content Include="Areas\Admin\Views\Steam\AppIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Steam\_GridViewApp.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />
@@ -540,6 +544,7 @@
     <Content Include="Views\YoutubeVideos\Details.cshtml" />
     <Content Include="Views\Infographics\Details.cshtml" />
     <Content Include="Views\Subscribers\_Subscribe.cshtml" />
+    <Content Include="temp\steam-games.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

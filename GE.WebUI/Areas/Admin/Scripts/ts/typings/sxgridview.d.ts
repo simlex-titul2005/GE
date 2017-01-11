@@ -6,4 +6,6 @@
     public selectCheckboxes(): any;
 
     public selectedRows(): any[];
+
+    public getData(query: any): any;
 }

@@ -1,0 +1,11 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "outFile": "../../steam.js",
+    "removeComments": true
+  },
+  "files": [
+    "steam.ts"
+  ]
+}

@@ -1,12 +1,77 @@
 ﻿@model VMSteamApp[]
 
-@{ 
+@{
     ViewBag.Title = "Игры Steam";
 }
 
 <h2>@ViewBag.Title</h2>
-<br />
+
+<div class="form-group">
+    <div class="text-right">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modal-steam-app">Опросить Steam</button>
+    </div>
+</div>
 
 <div id="grid-steam-apps">
     @Html.Partial("_GridViewApp")
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-steam-app">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Форма опроса Steam API</h4>
+            </div>
+            <div class="modal-body">
+                <span class="text-muted steam-app-list-status">Получение списка...</span>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="steam-app-list-cancel-btn" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Areas/Admin/Scripts/steam.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery-signalr", area="" })"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        $(function () {
+            var grid = new SxGridView('#grid-steam-apps');
+
+            var appListModal = $('#modal-steam-app');
+            var statusLabel = $('#modal-steam-app .steam-app-list-status');
+            var progressBar = $('#modal-steam-app .progress-bar');
+
+            var steamAppsHub = $.connection.hubSteamApps;
+            steamAppsHub.client.addStatusAppListMessage = function (message, progressBarValue) {
+                statusLabel.html(message);
+                if (progressBarValue >= 0)
+                    progressBar.attr('style', 'width:' + progressBarValue + '%');
+            };
+
+            steamAppsHub.client.endProcessingAppList = function () {
+                grid.getData({ page: 1 });
+                appListModal.modal('hide');
+                statusLabel.html('Получение списка...');
+                progressBar.attr('style', 'width:0');
+            };
+
+            $.connection.hub.start().done(function () {
+                var steam = new SteamApi('button[data-target="#modal-steam-app"]', function () {
+                    steamAppsHub.server.getAppList();
+                });
+
+                $('#steam-app-list-cancel-btn').click(function () {
+                    steamAppsHub.server.cancelProcessing();
+                });
+            });
+        });
+    </script>
+}

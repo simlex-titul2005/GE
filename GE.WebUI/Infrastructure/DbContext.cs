@@ -29,6 +29,8 @@ namespace GE.WebUI.Infrastructure
 
         public DbSet<SiteTestQuestion> SiteTestQuestions { get; set; }
 
+        public DbSet<SteamApp> SteamApps { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

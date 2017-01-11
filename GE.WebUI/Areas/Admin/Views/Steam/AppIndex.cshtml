@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="steam-app-list-cancel-btn" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-danger" id="steam-app-list-cancel-btn">Отмена</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
@@ -53,8 +53,9 @@
             var steamAppsHub = $.connection.hubSteamApps;
             steamAppsHub.client.addStatusAppListMessage = function (message, progressBarValue) {
                 statusLabel.html(message);
-                if (progressBarValue >= 0)
+                if (progressBarValue >= 0) {
                     progressBar.attr('style', 'width:' + progressBarValue + '%');
+                }
             };
 
             steamAppsHub.client.endProcessingAppList = function () {
@@ -64,13 +65,14 @@
                 progressBar.attr('style', 'width:0');
             };
 
-            $.connection.hub.start().done(function () {
-                var steam = new SteamApi('button[data-target="#modal-steam-app"]', function () {
-                    steamAppsHub.server.getAppList();
-                });
-
+            $.connection.hub.start(function () {
                 $('#steam-app-list-cancel-btn').click(function () {
                     steamAppsHub.server.cancelProcessing();
+                    appListModal.modal('hide');
+                });
+
+                var steam = new SteamApi('button[data-target="#modal-steam-app"]', function () {
+                    steamAppsHub.server.getAppList();
                 });
             });
         });

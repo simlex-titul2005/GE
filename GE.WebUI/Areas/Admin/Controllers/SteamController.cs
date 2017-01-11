@@ -35,5 +35,18 @@ namespace GE.WebUI.Areas.Admin.Controllers
             ViewBag.Filter = filter;
             return PartialView("_GridViewApp", viewModel);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> AppIndexFree(VMSteamApp filterModel, SxOrderItem order, int page = 1, int pageSize=10)
+        {
+            var filter = new SxFilter(page, pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel, AddintionalInfo = new object[] { true } };
+
+            var viewModel = await Repo.ReadAsync(filter);
+            if (page > filter.PagerInfo.TotalPages) page = 1;
+            if (page > 1 && !viewModel.Any()) return new HttpNotFoundResult();
+
+            ViewBag.Filter = filter;
+            return PartialView("_GridViewAppFree", viewModel);
+        }
     }
 }

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SX.WebCore.SxRepositories;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GE.WebUI.Hubs
@@ -35,11 +35,10 @@ namespace GE.WebUI.Hubs
             }
 
             var data = new SteamApp[0];
-            using (var webClient = new WebClient())
+            using (var httpClient = new HttpClient())
             {
-                var json = await webClient.DownloadStringTaskAsync(new System.Uri($"{_getAppListUrl}?key={apiKey}"));
-                data = ((JArray)JsonConvert.DeserializeObject<dynamic>(json).applist.apps).Select(x => new SteamApp() { AppId = (int)x["appid"], Name = (string)x["name"] }).ToArray();
-                Clients.All.addStatusAppListMessage("Завершено получение списка игр...");
+                var json = await httpClient.GetStringAsync($"{_getAppListUrl}?key={apiKey}");
+                data = ((JArray)JsonConvert.DeserializeObject<dynamic>(json).applist.apps).Select(x => new SteamApp() { Id = (int)x["appid"], Name = (string)x["name"] }).ToArray();
             }
 
             if (!data.Any())
@@ -48,6 +47,8 @@ namespace GE.WebUI.Hubs
                 _locker = false;
                 return;
             }
+
+            Clients.All.addStatusAppListMessage("Завершено получение списка игр...");
 
             var length = data.Length;
 
@@ -58,7 +59,7 @@ namespace GE.WebUI.Hubs
 
                 var progressBarValue = System.Math.Round((double)(i + 1) * 100 / length, 2);
                 item = data[i];
-                Clients.All.addStatusAppListMessage($"%[{progressBarValue}] appid: {item.AppId}, name: {item.Name}", progressBarValue);
+                Clients.All.addStatusAppListMessage($"%[{progressBarValue}] appid: {item.Id}, name: {item.Name}", progressBarValue);
                 _repoSteamApp.Create(item);
             }
 

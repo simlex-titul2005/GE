@@ -8,4 +8,6 @@
     public selectedRows(): any[];
 
     public getData(query: any): any;
+
+    public getCurrentPage(): number;
 }

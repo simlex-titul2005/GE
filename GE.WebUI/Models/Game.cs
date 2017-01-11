@@ -33,5 +33,8 @@ namespace GE.WebUI.Models
 
         public Guid? BadPictureId { get; set; }
         public virtual SxPicture BadPicture { get; set; }
+
+        public int? SteamAppId { get; set; }
+        public virtual SteamApp SteamApp { get; set; }
     }
 }

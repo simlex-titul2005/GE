@@ -5,7 +5,9 @@
     Columns = new SxExtantions.SxGridViewColumn<VMSteamApp>[] {
         new SxExtantions.SxGridViewColumn<VMSteamApp>() { Caption="Идентификатор", FieldName="Id"},
         new SxExtantions.SxGridViewColumn<VMSteamApp>() { Caption="Наименование", FieldName="Name"},
+        new SxExtantions.SxGridViewColumn<VMSteamApp>() { Caption="Инструменты", FieldName="Id", EnableFiltering=false, EnableSorting=false, Template=x=>$"<button class=\"btn btn-xs btn-primary free-steam-app-btn\">Указать</button>", ColumnCssClass=x=>"col-cm" }
     },
-    DataAjaxUrl=Url.Action("AppIndex", "Steam"),
-    ShowPagerInfo=true
+    DataAjaxUrl=Url.Action("AppIndexFree", "Steam"),
+    ShowPagerInfo=true,
+    RowId=x=>x.Id.ToString()
 })

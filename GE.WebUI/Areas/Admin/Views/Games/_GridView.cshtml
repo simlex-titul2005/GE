@@ -4,19 +4,19 @@
     new SxExtantions.SxGridViewSettings<VMGame>
     {
         Columns = new SxExtantions.SxGridViewColumn<VMGame>[]{
-            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Title", Caption="Наименование игры"},
-            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="TitleAbbr", Caption="Краткое наименование игры"},
-            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Description", Caption="Описание"},
-            new SxExtantions.SxGridViewColumn<VMGame>{FieldName="Show", Caption="Показывать", Template=(m)=> {
-                return m.Show? "Да":"Нет";
-            }}
+            new SxExtantions.SxGridViewColumn<VMGame>(){FieldName="Title", Caption="Наименование игры", Template=x=>$"<b>{x.Title}</b>{(x.SteamApp!=null ? $"</br>&nbsp;&nbsp;&nbsp;<small class=text-muted> {x.SteamApp.Name}</small>":null)}"},
+            new SxExtantions.SxGridViewColumn<VMGame>(){FieldName="TitleAbbr", Caption="Краткое наименование игры"},
+            new SxExtantions.SxGridViewColumn<VMGame>(){FieldName="Description", Caption="Описание"},
+            new SxExtantions.SxGridViewColumn<VMGame>(){FieldName="Show", Caption="Показывать", Template=m=> m.Show? "Да":"Нет"},
+            new SxExtantions.SxGridViewColumn<VMGame>() { FieldName="Id", Caption="Stem функционал", EnableFiltering=false, EnableSorting=false, Template=x=> $"<button class=\"btn btn-xs btn-{(x.SteamAppId.HasValue?"danger del-game-steam-app-btn" : "primary")}\" {(x.SteamAppId.HasValue?"":"data-toggle=modal data-target=#modal-steam-apps")}>Steam <i class=\"fa fa-{(x.SteamAppId.HasValue?"times":"steam-square")}\" area-hidden=\"true\"></i></button>", ColumnCssClass=x=>"col-cm" }
         },
-        DataAjaxUrl=Url.Action("Index", "Games"),
-        RowCssClass = x => { return !x.Show ? "warning" : null; },
-        EnableCreating=true,
-        CreateRowUrl= Url.Action("Edit", "Games"),
-        EnableEditing=true,
-        EditRowUrl = x =>{ return Url.Action("Edit", "Games", new { id=x.Id }); },
-        ShowPagerInfo=true
+        DataAjaxUrl = Url.Action("Index", "Games"),
+        RowCssClass = x => !x.Show ? "warning" : null,
+        EnableCreating = true,
+        CreateRowUrl = Url.Action("Edit", "Games"),
+        EnableEditing = true,
+        EditRowUrl = x => Url.Action("Edit", "Games", new { id = x.Id }),
+        ShowPagerInfo = true,
+        RowId=x=>x.Id.ToString()
     }
     )

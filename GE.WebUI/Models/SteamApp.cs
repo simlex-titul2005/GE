@@ -6,10 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace GE.WebUI.Models
 {
     [Table("D_STEAM_APP")]
-    public class SteamApp : SxDbUpdatedModel<Guid>
+    public class SteamApp : SxDbUpdatedModel<int>
     {
-        public int AppId { get; set; }
-
         [Required, MaxLength(400), Index]
         public string Name { get; set; }
     }

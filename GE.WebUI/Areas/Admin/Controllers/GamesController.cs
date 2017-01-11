@@ -11,14 +11,14 @@ namespace GE.WebUI.Areas.Admin.Controllers
 {
     public class GamesController : BaseController
     {
-        public static RepoGame Repo { get; set; }=new RepoGame();
+        public static RepoGame Repo { get; set; } = new RepoGame();
 
         private static int _pageSize = 20;
 
         [HttpGet]
         public ActionResult Index(int page = 1)
         {
-            var order = new SxOrderItem { FieldName = "Title", Direction = SortDirection.Desc };
+            var order = new SxOrderItem { FieldName = "Title", Direction = SortDirection.Asc };
             var filter = new SxFilter(page, _pageSize) { Order = order };
 
             var viewModel = Repo.Read(filter);
@@ -33,7 +33,9 @@ namespace GE.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(VMGame filterModel, SxOrderItem order, int page = 1)
         {
-            var filter = new SxFilter(page, _pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel };
+            var showParameter = Request.Form.Get("filterModel[Show]");
+            var show = string.IsNullOrEmpty(showParameter) ? null : showParameter;
+            var filter = new SxFilter(page, _pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel, AddintionalInfo = new object[] { show } };
 
             var viewModel = await Repo.ReadAsync(filter);
             if (page > 1 && !viewModel.Any())
@@ -61,7 +63,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var redactModel = Mapper.Map<VMGame, Game>(model);
-                redactModel=model.Id==0? await Repo.CreateAsync(redactModel): await Repo.UpdateAsync(redactModel);
+                redactModel = model.Id == 0 ? await Repo.CreateAsync(redactModel) : await Repo.UpdateAsync(redactModel);
                 return RedirectToAction("Index");
             }
             else
@@ -79,6 +81,20 @@ namespace GE.WebUI.Areas.Admin.Controllers
             ViewBag.Filter = filter;
 
             return PartialView("_FindGridView", viewModel);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> AddSteamApp(int gameId, int steamAppId)
+        {
+            var data = await Repo.AddSteamAppAsync(gameId, steamAppId);
+            return Json(data);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> DeleteSteamApp(int gameId)
+        {
+            var data = await Repo.DelSteamAppAsync(gameId);
+            return Json(data);
         }
     }
 }

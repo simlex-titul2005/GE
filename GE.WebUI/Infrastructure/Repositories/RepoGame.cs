@@ -13,6 +13,8 @@ using SX.WebCore.SxProviders;
 using SX.WebCore.SxRepositories.Abstract;
 using SX.WebCore.ViewModels;
 using static SX.WebCore.HtmlHelpers.SxExtantions;
+using System;
+using System.Threading.Tasks;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -23,26 +25,29 @@ namespace GE.WebUI.Infrastructure.Repositories
             var sb = new StringBuilder();
             sb.Append(SxQueryProvider.GetSelectString());
             sb.Append(" FROM D_GAME AS dg ");
+            sb.Append(" LEFT JOIN D_STEAM_APP AS dsa ON dsa.Id=dg.SteamAppId ");
 
             object param = null;
             var gws = GetGamesWhereString(filter, out param);
             sb.Append(gws);
 
-            var defaultOrder = new SxOrderItem { FieldName = "dg.Title", Direction = SortDirection.Asc };
+            var defaultOrder = new SxOrderItem { FieldName = "Title", Direction = SortDirection.Asc };
             sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
-
-            sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
 
             //count
             var sbCount = new StringBuilder();
             sbCount.Append("SELECT COUNT(1) FROM D_GAME AS dg ");
+            sbCount.Append(" LEFT JOIN D_STEAM_APP AS dsa ON dsa.Id=dg.SteamAppId ");
             sbCount.Append(gws);
 
             using (var connection = new SqlConnection(ConnectionString))
             {
-
                 filter.PagerInfo.TotalItems = connection.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
-                var data= connection.Query<VMGame>(sb.ToString(), param: param);
+                sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.TotalItems<=filter.PagerInfo.PageSize?0: filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
+                var data= connection.Query<VMGame, VMSteamApp, VMGame>(sb.ToString(), (game, steamApp)=> {
+                    game.SteamApp = steamApp;
+                    return game;
+                }, param: param, splitOn:"Id");
                 return data.ToArray();
             }
         }
@@ -50,19 +55,17 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             param = null;
             var query = new StringBuilder();
-            query.Append(" WHERE (dg.Title LIKE '%'+@title+'%' OR @title IS NULL) ");
-            query.Append(" AND (dg.TitleAbbr LIKE '%'+@titleAbbr+'%' OR @titleAbbr IS NULL) ");
-            query.Append(" AND (dg.Description LIKE '%'+@desc+'%' OR @desc IS NULL) ");
-
-            string title = filter.WhereExpressionObject?.Title;
-            string titleAbbr = filter.WhereExpressionObject?.TitleAbbr;
-            string desc = filter.WhereExpressionObject?.Description;
+            query.Append(" WHERE (dg.[Title] LIKE '%'+@title+'%' OR @title IS NULL) ");
+            query.Append(" AND (dg.[TitleAbbr] LIKE '%'+@titleAbbr+'%' OR @titleAbbr IS NULL) ");
+            query.Append(" AND (dg.[Description] LIKE '%'+@desc+'%' OR @desc IS NULL) ");
+            query.Append(" AND (@show IS NULL OR dg.[Show]=@show) ");
 
             param = new
             {
-                title = title,
-                titleAbbr = titleAbbr,
-                desc = desc
+                title = (string)filter.WhereExpressionObject?.Title,
+                titleAbbr = (string)filter.WhereExpressionObject?.TitleAbbr,
+                desc = (string)filter.WhereExpressionObject?.Description,
+                show = (bool?)(filter.AddintionalInfo?[0]==null? (bool?)null : Convert.ToBoolean(filter.AddintionalInfo?[0]))
             };
 
             return query.ToString();
@@ -199,6 +202,42 @@ ORDER BY
                 item = materials[i];
                 item.Videos = videoLinks.Where(x => Equals(x.MaterialId, item.Id) && x.ModelCoreType == item.ModelCoreType).Select(x => Mapper.Map<SxVideo, SxVMVideo>(x.Video)).ToArray();
             }
+        }
+
+        public async Task<SxVMResultMessage> AddSteamAppAsync(int gameId, int steamAppId)
+        {
+            var result = new SxVMResultMessage("success", SxVMResultMessage.ResultMessageType.Ok);
+            try
+            {
+                using (var connection = new SqlConnection(ConnectionString))
+                {
+                    await connection.ExecuteAsync("dbo.add_steam_app_to_game @gameId, @steamAppId", new { gameId, steamAppId });
+                }
+            }
+            catch(Exception ex)
+            {
+                result = new SxVMResultMessage(ex.Message, SxVMResultMessage.ResultMessageType.Error);
+            }
+
+            return result;
+        }
+
+        public async Task<SxVMResultMessage> DelSteamAppAsync(int gameId)
+        {
+            var result = new SxVMResultMessage("success", SxVMResultMessage.ResultMessageType.Ok);
+            try
+            {
+                using (var connection = new SqlConnection(ConnectionString))
+                {
+                    await connection.ExecuteAsync("dbo.del_steam_app_from_game @gameId", new { gameId });
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new SxVMResultMessage(ex.Message, SxVMResultMessage.ResultMessageType.Error);
+            }
+
+            return result;
         }
     }
 }

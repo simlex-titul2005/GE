@@ -44,5 +44,8 @@ namespace GE.WebUI.ViewModels
         [Display(Name = "Картинка для статей"), UIHint("_PicturesLookupGrid")]
         public Guid? BadPictureId { get; set; }
         public SxVMPicture BadPicture { get; set; }
+
+        public int? SteamAppId { get; set; }
+        public VMSteamApp SteamApp { get; set; }
     }
 }

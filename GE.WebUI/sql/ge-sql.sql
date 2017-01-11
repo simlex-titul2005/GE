@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 10.01.2017 12:16:58
+ * Time: 12.01.2017 1:49:42
  ************************************************************/
 
 /*******************************************
@@ -1644,12 +1644,14 @@ AS
 BEGIN
 	DECLARE @date DATETIME = GETDATE();
 	
-	MERGE D_STEAM_APP WITH (HOLDLOCK) AS t
-	USING (
-	    SELECT @appId    AS AppId,
-	           @appName  AS [Name]
-	) AS s ON t.AppId = s.AppId
-	WHEN MATCHED THEN 
+	MERGE D_STEAM_APP 
+	WITH (HOLDLOCK) AS t
+	     USING (
+	         SELECT @appId    AS Id,
+	                @appName  AS [Name]
+	     ) AS s ON t.Id = s.Id
+	     WHEN MATCHED THEN
+	
 	UPDATE 
 	SET    t.[Name] = @appName,
 	       t.DateUpdate = @date
@@ -1659,18 +1661,53 @@ BEGIN
 	INSERT 
 	  (
 	    Id,
-	    AppId,
 	    [Name],
 	    DateCreate,
 	    DateUpdate
 	  )
 	VALUES
 	  (
-	    NEWID(),
 	    @appId,
 	    @appName,
 	    @date,
 	    @date
 	  );
 END
+GO
+
+/*******************************************
+ * прикрепить steamApp к игре
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_steam_app_to_game', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_steam_app_to_game;
+GO
+CREATE PROCEDURE dbo.add_steam_app_to_game
+	@gameId INT,
+	@steamAppId INT
+AS
+	BEGIN TRANSACTION
+	
+	UPDATE D_GAME
+	SET    SteamAppId = NULL
+	WHERE  SteamAppId = @steamAppId
+	
+	UPDATE D_GAME
+	SET    SteamAppId = @steamAppId
+	WHERE  Id = @gameId
+	
+	COMMIT TRANSACTION
+GO
+
+/*******************************************
+ * открепить steamApp от игры
+ *******************************************/
+IF OBJECT_ID(N'dbo.del_steam_app_from_game', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.del_steam_app_from_game;
+GO
+CREATE PROCEDURE dbo.del_steam_app_from_game
+	@gameId INT
+AS
+	UPDATE D_GAME
+	SET    SteamAppId     = NULL
+	WHERE  Id             = @gameId
 GO

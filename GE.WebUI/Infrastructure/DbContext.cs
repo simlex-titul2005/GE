@@ -40,13 +40,15 @@ namespace GE.WebUI.Infrastructure
             modelBuilder.Entity<Infographic>().HasRequired(x => x.Picture).WithMany().HasForeignKey(x => x.PictureId).WillCascadeOnDelete(true);
             modelBuilder.Entity<Infographic>().HasRequired(x => x.Material).WithMany().HasForeignKey(x => new { x.MaterialId, x.ModelCoreType }).WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<PopularYoutubeVideo>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
             modelBuilder.Entity<SiteTestAnswer>().HasKey(x => new { x.QuestionId, x.SubjectId });
             modelBuilder.Entity<SiteTestAnswer>().HasRequired(x => x.Question).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<SiteTestAnswer>().HasRequired(x => x.Subject).WithMany().WillCascadeOnDelete(false);
 
             modelBuilder.Entity<SiteTestSetting>().HasKey(x=>x.TestId).HasRequired(x => x.Test).WithOptional(x=>x.Settings).WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<PopularYoutubeVideo>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<SteamApp>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

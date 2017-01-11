@@ -364,6 +364,7 @@
     <Compile Include="ViewModels\VMSiteTestSubject.cs" />
     <Compile Include="ViewModels\VMSteamApp.cs" />
     <Content Include="Areas\Admin\Scripts\editMaterialPage.js" />
+    <Content Include="Areas\Admin\Scripts\games.js" />
     <Content Include="Areas\Admin\Scripts\steam.js" />
     <Content Include="content\dist\css\ap-author-page.min.css" />
     <Content Include="content\dist\css\author-page.min.css" />
@@ -422,6 +423,8 @@
     <Content Include="Areas\Admin\Views\Shared\_Recommendations.cshtml" />
     <Content Include="Areas\Admin\Views\Steam\AppIndex.cshtml" />
     <Content Include="Areas\Admin\Views\Steam\_GridViewApp.cshtml" />
+    <Content Include="Areas\Admin\Views\Games\_ModalSteamApps.cshtml" />
+    <Content Include="Areas\Admin\Views\Steam\_GridViewAppFree.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />

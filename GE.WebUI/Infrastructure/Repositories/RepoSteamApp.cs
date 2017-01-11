@@ -26,8 +26,6 @@ namespace GE.WebUI.Infrastructure.Repositories
             var defaultOrder = new SxOrderItem { FieldName = "Name", Direction = SortDirection.Asc };
             sb.Append(SxQueryProvider.GetOrderString(defaultOrder, filter.Order));
 
-            sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
-
             //count
             var sbCount = new StringBuilder();
             sbCount.Append("SELECT COUNT(1) FROM D_STEAM_APP AS dsa ");
@@ -36,8 +34,9 @@ namespace GE.WebUI.Infrastructure.Repositories
             using (var connection = new SqlConnection(ConnectionString))
             {
                 filter.PagerInfo.TotalItems = connection.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
-                var data = connection.Query<VMSteamApp>(sb.ToString(), param: param);
-                return data.ToArray();
+                sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.TotalItems <= filter.PagerInfo.PageSize ? 0 : filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
+                var data = connection.Query<VMSteamApp>(sb.ToString(), param: param).ToArray();
+                return data;
             }
         }
         private static string GetSteamAppsWhereString(SxFilter filter, out object param)
@@ -45,12 +44,16 @@ namespace GE.WebUI.Infrastructure.Repositories
             param = null;
             var query = new StringBuilder();
             query.Append(" WHERE (dsa.[Name] LIKE '%'+@name+'%' OR @name IS NULL) ");
-            query.Append(" AND (dsa.[AppId] = @appId OR @appId IS NULL) ");
+            query.Append(" AND (dsa.[Id] = @appId OR @appId IS NULL) ");
+
+            var free = filter.AddintionalInfo?[0]==null ? (bool?)null : (bool)filter.AddintionalInfo?[0];
+            if(free==true)
+                query.Append(" AND (dsa.[Id] NOT IN (SELECT dg.SteamAppId FROM D_GAME AS dg WHERE dg.SteamAppId IS NOT NULL)) ");
 
             param = new
             {
                 name = (string)filter.WhereExpressionObject?.Name,
-                appId = (int?)(filter.WhereExpressionObject?.AppId == 0 ? null : filter.WhereExpressionObject?.AppId)
+                appId = (int?)(filter.WhereExpressionObject?.Id == 0 ? null : filter.WhereExpressionObject?.Id)
             };
 
             return query.ToString();
@@ -60,7 +63,7 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var data = connection.Query<SteamApp>("dbo.add_steam_app @appId, @appName", new { appId = model.AppId, appName = model.Name });
+                var data = connection.Query<SteamApp>("dbo.add_steam_app @appId, @appName", new { appId = model.Id, appName = model.Name });
                 return data.SingleOrDefault();
             }
         }

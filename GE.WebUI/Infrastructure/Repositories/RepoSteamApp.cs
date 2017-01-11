@@ -50,7 +50,7 @@ namespace GE.WebUI.Infrastructure.Repositories
             param = new
             {
                 name = (string)filter.WhereExpressionObject?.Name,
-                appId = filter.WhereExpressionObject?.AppId
+                appId = (int?)(filter.WhereExpressionObject?.AppId == 0 ? null : filter.WhereExpressionObject?.AppId)
             };
 
             return query.ToString();
@@ -60,7 +60,7 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var data = connection.Query<SteamApp>("dbo.add_steam_app @appId, @appName", new { appId=model.AppId, appName=model.Name });
+                var data = connection.Query<SteamApp>("dbo.add_steam_app @appId, @appName", new { appId = model.AppId, appName = model.Name });
                 return data.SingleOrDefault();
             }
         }

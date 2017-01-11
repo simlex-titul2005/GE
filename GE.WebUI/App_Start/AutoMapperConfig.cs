@@ -8,7 +8,7 @@ namespace GE.WebUI
     {
         public static void Register(IMapperConfigurationExpression cfg)
         {
-            //aphorism
+            // aphorism
             cfg.CreateMap<Aphorism, VMAphorism>();
             cfg.CreateMap<VMAphorism, Aphorism>();
 
@@ -16,50 +16,54 @@ namespace GE.WebUI
             cfg.CreateMap<Article, VMArticle>();
             cfg.CreateMap<VMArticle, Article>();
 
-            //author aphorism
+            // author aphorism
             cfg.CreateMap<AuthorAphorism, VMAuthorAphorism>();
             cfg.CreateMap<VMAuthorAphorism, AuthorAphorism>();
 
-            //infographic
+            // infographic
             cfg.CreateMap<Infographic, VMInfographic>();
             cfg.CreateMap<VMInfographic, Infographic>();
 
-            //game
+            // game
             cfg.CreateMap<Game, VMGame>();
             cfg.CreateMap<VMGame, Game>();
 
-            //humor
+            // humor
             cfg.CreateMap<Humor, VMHumor>();
             cfg.CreateMap<VMHumor, Humor>();
 
-            //material category
+            // material category
             cfg.CreateMap<MaterialCategory, VMMaterialCategory>();
             cfg.CreateMap<VMMaterialCategory, MaterialCategory>()
                 .ForMember(d => d.ParentId, d => d.MapFrom(s => (string)s.ParentId));
 
-            //news
+            // news
             cfg.CreateMap<News, VMNews>();
             cfg.CreateMap<VMNews, News>();
 
-            //site test
+            // site test
             cfg.CreateMap<SiteTest, VMSiteTest>();
             cfg.CreateMap<VMSiteTest, SiteTest>();
 
-            //site test answer
+            // site test answer
             cfg.CreateMap<SiteTestAnswer, VMSiteTestAnswer>();
             cfg.CreateMap<VMSiteTestAnswer, SiteTestAnswer>();
 
-            //site test question
+            // site test question
             cfg.CreateMap<SiteTestQuestion, VMSiteTestQuestion>();
             cfg.CreateMap<VMSiteTestQuestion, SiteTestQuestion>();
 
-            //site test setting
+            // site test setting
             cfg.CreateMap<SiteTestSetting, VMSiteTestSetting>();
             cfg.CreateMap<VMSiteTestSetting, SiteTestSetting>();
 
-            //site test subject
+            // site test subject
             cfg.CreateMap<SiteTestSubject, VMSiteTestSubject>();
             cfg.CreateMap<VMSiteTestSubject, SiteTestSubject>();
+
+            // steam app
+            cfg.CreateMap<SteamApp, VMSteamApp>();
+            cfg.CreateMap<VMSteamApp, SteamApp>();
         }
     }
 }

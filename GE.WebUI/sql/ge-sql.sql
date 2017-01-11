@@ -1630,3 +1630,47 @@ BEGIN
 	       dmc.Title
 END
 GO
+
+/*******************************************
+ * добавить игру со Steam API
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_steam_app', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_steam_app;
+GO
+CREATE PROCEDURE dbo.add_steam_app
+	@appId INT,
+	@appName NVARCHAR(400)
+AS
+BEGIN
+	DECLARE @date DATETIME = GETDATE();
+	
+	MERGE D_STEAM_APP WITH (HOLDLOCK) AS t
+	USING (
+	    SELECT @appId    AS AppId,
+	           @appName  AS [Name]
+	) AS s ON t.AppId = s.AppId
+	WHEN MATCHED THEN 
+	UPDATE 
+	SET    t.[Name] = @appName,
+	       t.DateUpdate = @date
+	       
+	       WHEN NOT MATCHED BY TARGET THEN
+	
+	INSERT 
+	  (
+	    Id,
+	    AppId,
+	    [Name],
+	    DateCreate,
+	    DateUpdate
+	  )
+	VALUES
+	  (
+	    NEWID(),
+	    @appId,
+	    @appName,
+	    @date,
+	    @date
+	  );
+END
+GO

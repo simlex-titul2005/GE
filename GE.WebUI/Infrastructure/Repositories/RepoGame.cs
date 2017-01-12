@@ -22,10 +22,12 @@ namespace GE.WebUI.Infrastructure.Repositories
     {
         public override VMGame[] Read(SxFilter filter)
         {
+            //0 - Show, 1 - ShowSteamAppsCount
+            var showSteamAppsCount = filter.AddintionalInfo?[1]==null ? (bool?)filter.AddintionalInfo?[1]: Convert.ToBoolean(filter.AddintionalInfo[1]);
+
             var sb = new StringBuilder();
-            sb.Append(SxQueryProvider.GetSelectString());
+            sb.Append(SxQueryProvider.GetSelectString(new string[] { "dg.*", showSteamAppsCount==true? "(SELECT COUNT(1) FROM D_GAME_STEAM_APP AS dgsa WHERE dgsa.GameId=dg.Id) AS SteamAppsCount" : null }));
             sb.Append(" FROM D_GAME AS dg ");
-            sb.Append(" LEFT JOIN D_STEAM_APP AS dsa ON dsa.Id=dg.SteamAppId ");
 
             object param = null;
             var gws = GetGamesWhereString(filter, out param);
@@ -37,17 +39,13 @@ namespace GE.WebUI.Infrastructure.Repositories
             //count
             var sbCount = new StringBuilder();
             sbCount.Append("SELECT COUNT(1) FROM D_GAME AS dg ");
-            sbCount.Append(" LEFT JOIN D_STEAM_APP AS dsa ON dsa.Id=dg.SteamAppId ");
             sbCount.Append(gws);
 
             using (var connection = new SqlConnection(ConnectionString))
             {
                 filter.PagerInfo.TotalItems = connection.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
                 sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.TotalItems<=filter.PagerInfo.PageSize?0: filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
-                var data= connection.Query<VMGame, VMSteamApp, VMGame>(sb.ToString(), (game, steamApp)=> {
-                    game.SteamApp = steamApp;
-                    return game;
-                }, param: param, splitOn:"Id");
+                var data= connection.Query<VMGame>(sb.ToString(), param: param);
                 return data.ToArray();
             }
         }
@@ -202,42 +200,6 @@ ORDER BY
                 item = materials[i];
                 item.Videos = videoLinks.Where(x => Equals(x.MaterialId, item.Id) && x.ModelCoreType == item.ModelCoreType).Select(x => Mapper.Map<SxVideo, SxVMVideo>(x.Video)).ToArray();
             }
-        }
-
-        public async Task<SxVMResultMessage> AddSteamAppAsync(int gameId, int steamAppId)
-        {
-            var result = new SxVMResultMessage("success", SxVMResultMessage.ResultMessageType.Ok);
-            try
-            {
-                using (var connection = new SqlConnection(ConnectionString))
-                {
-                    await connection.ExecuteAsync("dbo.add_steam_app_to_game @gameId, @steamAppId", new { gameId, steamAppId });
-                }
-            }
-            catch(Exception ex)
-            {
-                result = new SxVMResultMessage(ex.Message, SxVMResultMessage.ResultMessageType.Error);
-            }
-
-            return result;
-        }
-
-        public async Task<SxVMResultMessage> DelSteamAppAsync(int gameId)
-        {
-            var result = new SxVMResultMessage("success", SxVMResultMessage.ResultMessageType.Ok);
-            try
-            {
-                using (var connection = new SqlConnection(ConnectionString))
-                {
-                    await connection.ExecuteAsync("dbo.del_steam_app_from_game @gameId", new { gameId });
-                }
-            }
-            catch (Exception ex)
-            {
-                result = new SxVMResultMessage(ex.Message, SxVMResultMessage.ResultMessageType.Error);
-            }
-
-            return result;
         }
     }
 }

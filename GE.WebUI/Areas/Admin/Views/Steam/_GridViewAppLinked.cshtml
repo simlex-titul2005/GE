@@ -1,12 +1,16 @@
 ﻿@model VMSteamApp[]
 
+@{ 
+    var gameId = ViewBag.GameId;
+}
+
 @Html.SxGridView(Model, new SxExtantions.SxGridViewSettings<VMSteamApp>()
 {
     Columns = new SxExtantions.SxGridViewColumn<VMSteamApp>[] {
         new SxExtantions.SxGridViewColumn<VMSteamApp>() { Caption="Идентификатор", FieldName="Id"},
         new SxExtantions.SxGridViewColumn<VMSteamApp>() { Caption="Наименование", FieldName="Name"}
     },
-    DataAjaxUrl=Url.Action("AppIndexFree", "Steam"),
+    DataAjaxUrl=Url.Action("AppIndexLinked", "Steam", new { gameId = gameId }),
     ShowPagerInfo=true,
     RowId=x=>x.Id.ToString(),
     ShowSelectedCheckbox=true

@@ -313,6 +313,7 @@
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\AuthorAphorism.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\GameSteamApp.cs" />
     <Compile Include="Models\Humor.cs" />
     <Compile Include="Models\Infographic.cs" />
     <Compile Include="Models\MaterialCategory.cs" />
@@ -425,6 +426,8 @@
     <Content Include="Areas\Admin\Views\Steam\_GridViewApp.cshtml" />
     <Content Include="Areas\Admin\Views\Games\_ModalSteamApps.cshtml" />
     <Content Include="Areas\Admin\Views\Steam\_GridViewAppFree.cshtml" />
+    <Content Include="Areas\Admin\Views\Games\_ModalLinkedSteamApps.cshtml" />
+    <Content Include="Areas\Admin\Views\Steam\_GridViewAppLinked.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />

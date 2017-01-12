@@ -10,6 +10,7 @@
 </div>
 
 @Html.Partial("_ModalSteamApps")
+@Html.Partial("_ModalLinkedSteamApps")
 
 @section scripts{
     <script src="~/Areas/Admin/Scripts/games.js"></script>
@@ -17,7 +18,7 @@
         $(function () {
             var grid = new SxGridView('#grid-games');
 
-            var games = new Games('@Url.Action("AppIndexFree", "Steam")', '@Url.Action("AddSteamApp", "Games")', '@Url.Action("DeleteSteamApp", "Games")', grid);
+            var games = new Games('@Url.Action("AppIndexFree", "Steam")', '@Url.Action("AppIndexLinked", "Steam")', '@Url.Action("LinkSteamApps", "Steam")', '@Url.Action("UnlinkSteamApps", "Steam")', grid);
         });
     </script>
 }

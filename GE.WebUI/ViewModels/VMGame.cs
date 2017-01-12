@@ -45,7 +45,6 @@ namespace GE.WebUI.ViewModels
         public Guid? BadPictureId { get; set; }
         public SxVMPicture BadPicture { get; set; }
 
-        public int? SteamAppId { get; set; }
-        public VMSteamApp SteamApp { get; set; }
+        public int SteamAppsCount { get; set; }
     }
 }

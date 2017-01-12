@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 12.01.2017 1:49:42
+ * Time: 12.01.2017 16:08:55
  ************************************************************/
 
 /*******************************************
@@ -1678,36 +1678,40 @@ GO
 /*******************************************
  * прикрепить steamApp к игре
  *******************************************/
-IF OBJECT_ID(N'dbo.add_steam_app_to_game', N'P') IS NOT NULL
-    DROP PROCEDURE dbo.add_steam_app_to_game;
+IF OBJECT_ID(N'dbo.link_steam_apps', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.link_steam_apps;
 GO
-CREATE PROCEDURE dbo.add_steam_app_to_game
+CREATE PROCEDURE dbo.link_steam_apps
 	@gameId INT,
-	@steamAppId INT
+	@steamAppIds NVARCHAR(MAX)
 AS
-	BEGIN TRANSACTION
-	
-	UPDATE D_GAME
-	SET    SteamAppId = NULL
-	WHERE  SteamAppId = @steamAppId
-	
-	UPDATE D_GAME
-	SET    SteamAppId = @steamAppId
-	WHERE  Id = @gameId
-	
-	COMMIT TRANSACTION
+	INSERT INTO D_GAME_STEAM_APP
+	  (
+	    GameId,
+	    SteamAppId
+	  )
+	SELECT @gameId,
+	       fsi.[Value]
+	FROM   dbo.func_split_int(@steamAppIds) AS fsi
 GO
 
 /*******************************************
  * открепить steamApp от игры
  *******************************************/
-IF OBJECT_ID(N'dbo.del_steam_app_from_game', N'P') IS NOT NULL
-    DROP PROCEDURE dbo.del_steam_app_from_game;
+IF OBJECT_ID(N'dbo.unlink_steam_apps', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.unlink_steam_apps;
 GO
-CREATE PROCEDURE dbo.del_steam_app_from_game
-	@gameId INT
+CREATE PROCEDURE dbo.unlink_steam_apps
+	@gameId INT,
+	@steamAppIds NVARCHAR(MAX)
 AS
-	UPDATE D_GAME
-	SET    SteamAppId     = NULL
-	WHERE  Id             = @gameId
+	DELETE 
+	FROM   D_GAME_STEAM_APP
+	WHERE  GameId = @gameId
+	       AND (
+	               @steamAppIds IS NULL
+	               OR SteamAppId IN (SELECT fsi.[Value]
+	                                 FROM   dbo.func_split_int(@steamAppIds) AS 
+	                                        fsi)
+	           )
 GO

@@ -1,5 +1,5 @@
 ﻿using SX.WebCore.DbModels.Abstract;
-using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,5 +10,7 @@ namespace GE.WebUI.Models
     {
         [Required, MaxLength(400), Index]
         public string Name { get; set; }
+
+        public virtual ICollection<GameSteamApp> GameSteamApps { get; set; }
     }
 }

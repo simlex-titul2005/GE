@@ -1,20 +1,22 @@
-﻿<div class="modal fade" tabindex="-1" role="dialog" id="modal-steam-apps">
+﻿<div class="modal fade" tabindex="-1" role="dialog" id="modal-linked-steam-apps">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Приложения Steam для привязки к игре</h4>
+                <h4 class="modal-title">Удаление привязок Steam от игры</h4>
             </div>
             <div class="modal-body">
                 <input type="hidden" name="GameId" />
                 @Html.AntiForgeryToken()
-                <div id="modal-steam-apps-body">
+                <div id="modal-linked-steam-apps-body">
 
                 </div>
             </div>
             <div class="modal-footer">
+
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary" disabled="disabled" id="game-steam-app-add-btn">Применить</button>
+                <button type="button" class="btn btn-danger" id="game-del-all-steam-app-add-btn">Отвязать все</button>
+                <button type="button" class="btn btn-warning" id="game-del-steam-app-add-btn">Отвязать</button>
             </div>
         </div>
     </div>

@@ -19,7 +19,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         public ActionResult Index(int page = 1)
         {
             var order = new SxOrderItem { FieldName = "Title", Direction = SortDirection.Asc };
-            var filter = new SxFilter(page, _pageSize) { Order = order };
+            var filter = new SxFilter(page, _pageSize) { Order = order, AddintionalInfo=new object[] { null, true } };
 
             var viewModel = Repo.Read(filter);
             if (page > 1 && !viewModel.Any())
@@ -35,7 +35,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         {
             var showParameter = Request.Form.Get("filterModel[Show]");
             var show = string.IsNullOrEmpty(showParameter) ? null : showParameter;
-            var filter = new SxFilter(page, _pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel, AddintionalInfo = new object[] { show } };
+            var filter = new SxFilter(page, _pageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel, AddintionalInfo = new object[] { show, true } };
 
             var viewModel = await Repo.ReadAsync(filter);
             if (page > 1 && !viewModel.Any())
@@ -81,20 +81,6 @@ namespace GE.WebUI.Areas.Admin.Controllers
             ViewBag.Filter = filter;
 
             return PartialView("_FindGridView", viewModel);
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<JsonResult> AddSteamApp(int gameId, int steamAppId)
-        {
-            var data = await Repo.AddSteamAppAsync(gameId, steamAppId);
-            return Json(data);
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<JsonResult> DeleteSteamApp(int gameId)
-        {
-            var data = await Repo.DelSteamAppAsync(gameId);
-            return Json(data);
         }
     }
 }

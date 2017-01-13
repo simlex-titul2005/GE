@@ -21,7 +21,7 @@ var Games = (function () {
                 url: dataUrl,
                 beforeSend: function () {
                     $("#game-steam-app-add-btn").attr("disabled", "disabled");
-                    $("<div class=\"text-center\"><i></i></div>").addClass("fa fa-spinner fa-spin").appendTo(_this._modalSteamAppsBody);
+                    $("<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\"></i></div>").appendTo(_this._modalSteamAppsBody);
                     _this._modalSteamAppsGrid.clearSelectedRows();
                 },
                 success: function (data, status, xhr) {
@@ -39,7 +39,7 @@ var Games = (function () {
                 data: { gameId: gameId },
                 beforeSend: function () {
                     $("#game-del-steam-app-add-btn").attr("disabled", "disabled");
-                    $("<div class=\"text-center\"><i></i></div>").addClass("fa fa-spinner fa-spin").appendTo(_this._modalSteamAppsLinkedBody);
+                    $("<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\"></i></div>").appendTo(_this._modalSteamAppsLinkedBody);
                     _this._modalSteamAppsGridLinked.clearSelectedRows();
                 },
                 success: function (data, status, xhr) {
@@ -48,7 +48,10 @@ var Games = (function () {
             });
         });
         this._modalSteamAppNews.on("show.bs.modal", function (e) {
-            _this._modalSteamAppNewsBody.html("<div class=\"text-center\"><i class\"fa fa-spinner fa-spin\"></i></div>");
+            _this._modalSteamAppNewsBody.html("<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\"></i></div>");
+        });
+        this._modalSteamAppNews.on("shown.bs.modal", function (e) {
+            _this._modalSteamAppNewsBody.html("");
         });
         this._modalSteamAppNews.on("hide.bs.modal", function (e) {
             $("#game-steam-app-news-add-btn").attr("disabled", "disabled");

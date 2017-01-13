@@ -46,7 +46,7 @@ class Games {
                 url: dataUrl,
                 beforeSend: (): void => {
                     $("#game-steam-app-add-btn").attr("disabled", "disabled");
-                    $("<div class=\"text-center\"><i></i></div>").addClass("fa fa-spinner fa-spin").appendTo(this._modalSteamAppsBody);
+                    $("<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\"></i></div>").appendTo(this._modalSteamAppsBody);
                     this._modalSteamAppsGrid.clearSelectedRows();
                 },
                 success: (data: any, status: string, xhr: JQueryXHR): void => {
@@ -66,7 +66,7 @@ class Games {
                 data: { gameId: gameId },
                 beforeSend: (): void => {
                     $("#game-del-steam-app-add-btn").attr("disabled", "disabled");
-                    $("<div class=\"text-center\"><i></i></div>").addClass("fa fa-spinner fa-spin").appendTo(this._modalSteamAppsLinkedBody);
+                    $("<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\"></i></div>").appendTo(this._modalSteamAppsLinkedBody);
                     this._modalSteamAppsGridLinked.clearSelectedRows();
                 },
                 success: (data: any, status: string, xhr: JQueryXHR): void => {
@@ -76,7 +76,10 @@ class Games {
         });
 
         this._modalSteamAppNews.on("show.bs.modal", (e: JQueryEventObject): void => {
-            this._modalSteamAppNewsBody.html("<div class=\"text-center\"><i class\"fa fa-spinner fa-spin\"></i></div>");
+            this._modalSteamAppNewsBody.html("<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\"></i></div>");
+        });
+        this._modalSteamAppNews.on("shown.bs.modal", (e: JQueryEventObject): void => {
+            this._modalSteamAppNewsBody.html("");
         });
         this._modalSteamAppNews.on("hide.bs.modal", (e: JQueryEventObject): void => {
             $("#game-steam-app-news-add-btn").attr("disabled", "disabled");

@@ -4,7 +4,6 @@ using SX.WebCore;
 using SX.WebCore.SxRepositories;
 using System;
 using System.Text;
-using System.Web;
 using System.Data.SqlClient;
 using GE.WebUI.ViewModels;
 using System.Linq;
@@ -34,9 +33,7 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         protected override Action<SxFilter, StringBuilder, DynamicParameters> ChangeWhereBody => (filter, sb, param) =>
         {
-            var currentContext = HttpContext.Current;
-
-            var gameTitleUtl = filter.AddintionalInfo?[1];
+            var gameTitleUtl = filter.AddintionalInfo!=null && filter.AddintionalInfo.Length>1 ? filter.AddintionalInfo[1]:null;
             if (gameTitleUtl == null) return;
 
             sb.Append(" AND (dg.TitleUrl=@gameTitleUrl OR @gameTitleUrl IS NULL) ");

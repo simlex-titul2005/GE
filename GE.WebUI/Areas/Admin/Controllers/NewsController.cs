@@ -5,6 +5,9 @@ using GE.WebUI.Infrastructure.Repositories;
 using System.Web.Mvc;
 using SX.WebCore;
 using System.Threading.Tasks;
+using static SX.WebCore.HtmlHelpers.SxExtantions;
+using SX.WebCore.ViewModels;
+using System;
 
 namespace GE.WebUI.Areas.Admin.Controllers
 {
@@ -22,10 +25,27 @@ namespace GE.WebUI.Areas.Admin.Controllers
 
         private static readonly string _title = "Новости";
 
+        private static string getSteamColumnTemplate(SxVMMaterial model)
+        {
+            var template=((VMNews)model).SteamNewsGid == null ? null : "<button class=\"btn btn-xs btn-primary\"><i class=\"fa fa-steam-square\" area-hidden=\"true\"></i></button>";
+            return template;
+        }
+        private static SxGridViewColumn<SxVMMaterial>[] addColums = new SxGridViewColumn<SxVMMaterial>[] {
+                new SxGridViewColumn<SxVMMaterial>() { Caption="Steam", FieldName="Id", ColumnCssClass=x=>"col-steam col-cm", EnableFiltering=false, EnableSorting=false, Template=getSteamColumnTemplate }
+                };
+
         public override async Task<ActionResult> Index(int page = 1)
         {
             ViewBag.Title = _title;
+            ViewBag.Columns = addColums;
+            ViewBag.ScriptFiles = new string[] { "<script src=\"/Areas/Admin/Scripts/news.js\"></script>" };
             return await base.Index(page);
+        }
+
+        public override async Task<ActionResult> Index(VMNews filterModel, SxOrderItem order, int page = 1)
+        {
+            ViewBag.Columns = addColums;
+            return await base.Index(filterModel, order, page);
         }
 
         public override async Task<ActionResult> Edit(int? id = default(int?))

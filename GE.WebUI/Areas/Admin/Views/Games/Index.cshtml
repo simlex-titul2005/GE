@@ -48,9 +48,25 @@
                 }
             }
 
-            steamAppsHub.client.showAddNewsButton = function () {
-                $('#game-steam-app-news-add-btn').removeAttr('disabled');
+            steamAppsHub.client.showAddNewsButton = function (gameId) {
+                var btn = $('#game-steam-app-news-add-btn');
+                btn.removeAttr('disabled');
+                btn.attr('data-game-id', gameId);
             }
+
+            var progress = $('<div class="progress" style="margin-bottom:0; height:10px;"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0"></div>');
+            steamAppsHub.client.fillNewsProgress = function (steamAppId, percent) {
+                var input = $('#modal-steam-app-news-body input[value="' + steamAppId + '"]');
+                var p = input.closest("tr").find(".game-modal-steam-apps-table__progress");
+                if (p.find('.progress').length == 0)
+                    p.html(progress.clone());
+                else
+                    p.find('.progress-bar').css("width", percent + '%');
+            }
+
+            steamAppsHub.client.showAddNewsSuccess = function () {
+                $('#modal-steam-app-news-body').html('<div class="alert alert-success">Новости успешно добавлены в БД для модерации</br>Пройдите на <a href="@Url.Action("Index", "News")" style="text-decoration:underline">страницу новостей</a> по этой ссылке для редактирования</div>');
+            };
 
             $.connection.hub.start(function () {
                 var games = new Games('@Url.Action("AppIndexFree", "Steam")', '@Url.Action("AppIndexLinked", "Steam")', '@Url.Action("LinkSteamApps", "Steam")', '@Url.Action("UnlinkSteamApps", "Steam")', grid);
@@ -62,6 +78,21 @@
 
                 $('#game-steam-app-news-close-btn').click(function () {
                     steamAppsHub.server.clearNewsList();
+                });
+
+                $('#game-steam-app-news-add-btn').click(function (e) {
+                    var btn = $(e.currentTarget);
+                    btn.attr('disabled', 'disabled');
+                    var steamAppArray = new Array();
+                    $('#modal-steam-app-news-body input[type="checkbox"]').each(function () {
+                        var input = $(this);
+                        if (input.is(":checked"))
+                            steamAppArray.push(input.attr('value'));
+                    });
+                    console.log(steamAppArray);
+
+                    var gameId = btn.attr('data-game-id');
+                    steamAppsHub.server.addNews(gameId, steamAppArray);
                 });
             });
         });

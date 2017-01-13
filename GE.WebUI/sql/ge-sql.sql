@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 13.01.2017 14:33:06
+ * Time: 13.01.2017 21:56:13
  ************************************************************/
 
 /*******************************************
@@ -1748,7 +1748,12 @@ CREATE PROCEDURE dbo.add_steam_news
 	@contents NVARCHAR(MAX),
 	@feedlabel NVARCHAR(MAX),
 	@date INT,
-	@feedname NVARCHAR(MAX)
+	@feedname NVARCHAR(MAX),
+	@titleUrl NVARCHAR(255),
+	@mct INT,
+	@discriminator NVARCHAR(128),
+	@gameId INT,
+	@dateCreate DATETIME
 AS
 	IF NOT EXISTS (
 	       SELECT TOP(1) dsn.Gid
@@ -1756,6 +1761,77 @@ AS
 	       WHERE  dsn.Gid = @gid
 	   )
 	BEGIN
+	    BEGIN TRANSACTION
+	    
+	    DECLARE @dateNow DATETIME = GETDATE();
+	    
+	    INSERT INTO DV_MATERIAL
+	      (
+	        ModelCoreType,
+	        DateOfPublication,
+	        Title,
+	        TitleUrl,
+	        Html,
+	        Foreword,
+	        Show,
+	        FrontPictureId,
+	        ShowFrontPictureOnDetailPage,
+	        ViewsCount,
+	        UserId,
+	        SeoTagsId,
+	        CategoryId,
+	        IsTop,
+	        SourceUrl,
+	        LikeUpCount,
+	        LikeDownCount,
+	        DateUpdate,
+	        DateCreate
+	      )
+	    VALUES
+	      (
+	        @mct,
+	        @dateNow,
+	        @title,
+	        @titleUrl,
+	        @contents,
+	        NULL,
+	        0,
+	        NULL,
+	        0,
+	        0,
+	        NULL,
+	        NULL,
+	        NULL,
+	        0,
+	        @url,
+	        0,
+	        0,
+	        @dateNow,
+	        @dateCreate
+	      )
+	    
+	    DECLARE @id INT;
+	    SET @id = @@identity;
+	    
+	    INSERT INTO D_NEWS
+	      (
+	        Id,
+	        ModelCoreType,
+	        Discriminator,
+	        GameId,
+	        GameVersion,
+	        SteamNewsGid
+	      )
+	    VALUES
+	      (
+	        @id,
+	        @mct,
+	        @discriminator,
+	        @gameId,
+	        NULL,
+	        NULL
+	      )
+	    
 	    INSERT INTO D_STEAM_NEWS
 	      (
 	        Gid,
@@ -1767,7 +1843,9 @@ AS
 	        Contents,
 	        FeedLabel,
 	        [Date],
-	        FeedName
+	        FeedName,
+	        TheNewsId,
+	        ModelCoreType
 	      )
 	    VALUES
 	      (
@@ -1780,9 +1858,17 @@ AS
 	        @contents,
 	        @feedlabel,
 	        @date,
-	        @feedname
+	        @feedname,
+	        @id,
+	        @mct
 	      )
 	    
+	    UPDATE D_NEWS
+	    SET    SteamNewsGid = @gid
+	    WHERE  Id = @id
+	    
 	    EXEC dbo.get_steam_news @gid
+	    
+	    COMMIT TRANSACTION
 	END
 GO

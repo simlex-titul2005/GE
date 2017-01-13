@@ -12,5 +12,8 @@ namespace GE.WebUI.Models
 
         [MaxLength(100)]
         public string GameVersion { get; set; }
+
+        public string SteamNewsGid { get; set; }
+        public virtual SteamNews SteamNews { get; set; }
     }
 }

@@ -370,6 +370,7 @@
     <Compile Include="ViewModels\VMSteamNews.cs" />
     <Content Include="Areas\Admin\Scripts\editMaterialPage.js" />
     <Content Include="Areas\Admin\Scripts\games.js" />
+    <Content Include="Areas\Admin\Scripts\news.js" />
     <Content Include="Areas\Admin\Scripts\steam.js" />
     <Content Include="content\dist\css\ap-author-page.min.css" />
     <Content Include="content\dist\css\author-page.min.css" />

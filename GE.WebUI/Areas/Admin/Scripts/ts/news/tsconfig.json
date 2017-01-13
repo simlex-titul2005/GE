@@ -1,0 +1,11 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "outFile": "../../news.js",
+    "removeComments": true
+  },
+  "files": [
+    "news.ts"
+  ]
+}

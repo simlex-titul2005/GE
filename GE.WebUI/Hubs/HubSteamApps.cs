@@ -21,6 +21,7 @@ namespace GE.WebUI.Hubs
         private static SxRepoApiParameter _repoApiParameter { get; set; } = new SxRepoApiParameter();
         private static RepoSteamApp _repoSteamApp { get; set; } = new RepoSteamApp();
         private static RepoGame _repoGame { get; set; } = new RepoGame();
+        private static RepoSteamNews _repoSteamNews { get; set; } = new RepoSteamNews();
 
         private static IMapper _mapper { get; set; }
         static HubSteamApps()
@@ -140,9 +141,9 @@ namespace GE.WebUI.Hubs
             {
                 item = gameSteamApps[i];
                 sb.Append("<tr>");
-                sb.AppendFormat("<td><input type=\"checkbox\" name=\"steamAppId[]\" checked=\"checked\" value=\"{0}\"/></td>", item.Id);
+                sb.AppendFormat("<td><input type=\"checkbox\" name=\"steamAppArray[]\" checked=\"checked\" value=\"{0}\"/></td>", item.Id);
                 sb.AppendFormat("<td style=\"width:50%;\">{0}</td>", item.Name);
-                sb.Append("<td style=\"width:50%;\"><div class=\"text-right\"><div class=\"game-modal-steam-apps-table__progress\"><div class=\"progress hide\"><div class=\"progress-bar progress-bar-striped active\" role=\"progressbar\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 0\"></div></div></div></div></td>");
+                sb.Append("<td style=\"width:50%;\"><div class=\"text-right\"><div class=\"game-modal-steam-apps-table__progress\"></div></td>");
                 sb.Append("</tr>");
             }
             sb.Append("</table>");
@@ -177,7 +178,7 @@ namespace GE.WebUI.Hubs
                     }
                     catch (Exception ex)
                     {
-                        Clients.All.addModalAppNewsProcessedCount(item.Id, new { Status = "error", Count = 0, Message= ex.Message });
+                        Clients.All.addModalAppNewsProcessedCount(item.Id, new { Status = "error", Count = 0, Message = ex.Message });
                         continue;
                     }
                 }
@@ -187,7 +188,6 @@ namespace GE.WebUI.Hubs
                     for (int y = 0; y < news.Length; y++)
                     {
                         _gamesNews.Add(news[y]);
-
                     }
                     Clients.All.addModalAppNewsProcessedCount(item.Id, new { Status = "ok", Count = news.Length });
                 }
@@ -197,13 +197,49 @@ namespace GE.WebUI.Hubs
                 }
             }
 
-            Clients.All.showAddNewsButton();
+            Clients.All.showAddNewsButton(gameId);
         }
         public async Task ClearNewsList()
         {
             await Task.Run(() => {
                 _gamesNews.Clear();
             });
+        }
+        public async Task AddNews(int gameId, int[] steamAppArray)
+        {
+            if(steamAppArray==null || !steamAppArray.Any())
+            {
+                return;
+            }
+
+            var errorsCount=0;
+            var steamApps = _gamesNews.Where(x=> steamAppArray.Contains(x.SteamAppId)).GroupBy(x => x.SteamAppId);
+            foreach (var steamApp in steamApps)
+            {
+                var newsList = steamApp.Select(x => x);
+                var length = newsList.Count();
+                var counter = 0;
+                foreach (var item in newsList)
+                {
+                    try
+                    {
+                        await _repoSteamNews.CreateAsync(item, gameId);
+                        counter++;
+                        var percent = Math.Round((double)counter * 100 / length, 2);
+                        Clients.All.fillNewsProgress(steamApp.Key, percent);
+                    }
+                    catch(Exception ex)
+                    {
+                        errorsCount++;
+                        Clients.All.addModalAppNewsProcessedCount(steamApp.Key, new { Status = "error", Count = 0, Message = ex.Message });
+                        continue;
+                    }
+                }
+            }
+
+            _gamesNews.Clear();
+            if(errorsCount==0)
+                Clients.All.showAddNewsSuccess();
         }
 
         public async Task CancelProcessing()

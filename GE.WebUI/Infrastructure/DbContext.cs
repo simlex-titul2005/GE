@@ -51,7 +51,9 @@ namespace GE.WebUI.Infrastructure
             modelBuilder.Entity<SiteTestSetting>().HasKey(x=>x.TestId).HasRequired(x => x.Test).WithOptional(x=>x.Settings).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<SteamApp>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
             modelBuilder.Entity<SteamNews>().Property(x => x.Gid).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<SteamNews>().HasRequired(x => x.TheNews).WithMany().HasForeignKey(x => new { x.TheNewsId, x.ModelCoreType }).WillCascadeOnDelete(true);
         }
     }
 }

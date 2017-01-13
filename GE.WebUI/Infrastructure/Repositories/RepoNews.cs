@@ -13,12 +13,14 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoNews : RepoMaterial<News, VMNews>
     {
-        public RepoNews() : base((byte)Enums.ModelCoreType.News) {
+        public RepoNews() : base((byte)Enums.ModelCoreType.News)
+        {
             FillOtherMaterialEntries = _fillOtherMaterialEntries;
         }
         private static void _fillOtherMaterialEntries(SqlConnection connection, VMNews data)
         {
-            var igs = connection.Query<VMInfographic, SxVMPicture, VMInfographic>("dbo.get_material_infographics @mid, @mct", (i, p) => {
+            var igs = connection.Query<VMInfographic, SxVMPicture, VMInfographic>("dbo.get_material_infographics @mid, @mct", (i, p) =>
+            {
                 i.Picture = p;
                 return i;
             }, new { mid = data.Id, mct = data.ModelCoreType });
@@ -29,10 +31,18 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         public override void Delete(News model)
         {
-            const string query = "DELETE FROM D_NEWS WHERE Id=@mid AND ModelCoreType=@mct";
+            var sb = new StringBuilder();
+            sb.AppendLine("BEGIN TRANSACTION");
+            sb.AppendLine("DECLARE @steamNewsGid NVARCHAR(100);");
+            sb.AppendLine("SELECT @steamNewsGid = dn.SteamNewsGid FROM D_NEWS AS dn WHERE dn.Id=@mid");
+            sb.AppendLine("UPDATE D_NEWS SET SteamNewsGid=NULL WHERE Id=@mid");
+            sb.AppendLine("DELETE FROM D_STEAM_NEWS WHERE Gid=@steamNewsGid");
+            sb.AppendLine("DELETE FROM D_NEWS WHERE Id=@mid AND ModelCoreType=@mct");
+            sb.AppendLine("COMMIT TRANSACTION");
+
             using (var connection = new SqlConnection(ConnectionString))
             {
-                connection.Execute(query, new { mid = model.Id, mct = model.ModelCoreType });
+                connection.Execute(sb.ToString(), new { mid = model.Id, mct = model.ModelCoreType });
             }
 
             base.Delete(model);
@@ -334,10 +344,19 @@ GROUP BY
             model.GameVersion = GetGameVesion(model.ModelCoreType, data);
         };
 
+        protected override string[] AddColumns
+        {
+            get
+            {
+                return new string[] { "dn.SteamNewsGid" };
+            }
+        }
+
         protected override Action<SxFilter, StringBuilder> ChangeJoinBody => (filter, sb) =>
         {
             sb.Append(" JOIN D_NEWS AS dn ON dn.Id=dm.Id AND dn.ModelCoreType=dm.ModelCoreType ");
             sb.Append(" LEFT JOIN D_GAME AS dg ON dg.Id=dn.GameId ");
+            //sb.Append(" LEFT JOIN D_STEAM_NEWS AS dsn ON dsn.TheNewsId=dn.Id ");
         };
     }
 }

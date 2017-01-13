@@ -12,6 +12,10 @@ namespace GE.WebUI.Models
         public int SteamAppId { get; set; }
         public virtual SteamApp SteamApp { get; set; }
 
+        public int TheNewsId { get; set; }
+        public byte ModelCoreType { get; set; }
+        public virtual News TheNews { get; set; }
+
         /// <summary>
         /// The unique identifier of the news item
         /// </summary>
@@ -51,7 +55,7 @@ namespace GE.WebUI.Models
         /// <summary>
         /// A unix timestamp of the date the item was posted
         /// </summary>
-        public int Date { get; set; }
+        public long Date { get; set; }
 
         /// <summary>
         /// An internal tag that describes the source of the news item

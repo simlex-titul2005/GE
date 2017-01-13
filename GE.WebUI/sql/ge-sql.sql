@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 12.01.2017 16:08:55
+ * Time: 13.01.2017 14:33:06
  ************************************************************/
 
 /*******************************************
@@ -1714,4 +1714,75 @@ AS
 	                                 FROM   dbo.func_split_int(@steamAppIds) AS 
 	                                        fsi)
 	           )
+GO
+
+/*******************************************
+ * получить новость steam
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_steam_news', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_steam_news;
+GO
+CREATE PROCEDURE dbo.get_steam_news
+	@gid NVARCHAR(100)
+AS
+BEGIN
+	SELECT TOP(2) *
+	FROM   D_STEAM_NEWS AS dsn
+	WHERE  dsn.Gid = @gid
+END
+GO
+
+/*******************************************
+ * добавить новость со steam
+ *******************************************/
+IF OBJECT_ID(N'dbo.add_steam_news', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.add_steam_news;
+GO
+CREATE PROCEDURE dbo.add_steam_news
+	@steamAppId INT,
+	@gid NVARCHAR(100),
+	@title NVARCHAR(MAX),
+	@url NVARCHAR(MAX),
+	@is_external_url BIT,
+	@author NVARCHAR(MAX),
+	@contents NVARCHAR(MAX),
+	@feedlabel NVARCHAR(MAX),
+	@date INT,
+	@feedname NVARCHAR(MAX)
+AS
+	IF NOT EXISTS (
+	       SELECT TOP(1) dsn.Gid
+	       FROM   D_STEAM_NEWS AS dsn
+	       WHERE  dsn.Gid = @gid
+	   )
+	BEGIN
+	    INSERT INTO D_STEAM_NEWS
+	      (
+	        Gid,
+	        SteamAppId,
+	        Title,
+	        [Url],
+	        IsExternalUrl,
+	        Author,
+	        Contents,
+	        FeedLabel,
+	        [Date],
+	        FeedName
+	      )
+	    VALUES
+	      (
+	        @gid,
+	        @steamAppId,
+	        @title,
+	        @url,
+	        @is_external_url,
+	        @author,
+	        @contents,
+	        @feedlabel,
+	        @date,
+	        @feedname
+	      )
+	    
+	    EXEC dbo.get_steam_news @gid
+	END
 GO

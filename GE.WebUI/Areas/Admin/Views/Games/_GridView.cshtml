@@ -4,7 +4,7 @@
     new SxExtantions.SxGridViewSettings<VMGame>
     {
         Columns = new SxExtantions.SxGridViewColumn<VMGame>[]{
-            new SxExtantions.SxGridViewColumn<VMGame>() { FieldName="Id", Caption="#", Template=x=>$"<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default btn-sm dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> Действия <span class=\"caret\"></span></button><ul class=\"dropdown-menu\"><li class=\"dropdown-header\">Привязки Steam</li><li><li><a href=\"#\" data-toggle=\"modal\" data-target=\"#modal-steam-apps\">Привязать SteamApp</a></li><li><a href=\"#\" data-toggle=\"modal\" data-target=\"#modal-linked-steam-apps\">Править SteamApp <button class=\"btn btn-xs btn-primary\">{(x.SteamAppsCount)}</button></a></li><li class=\"dropdown-header\">Новости Steam</li><li role = \"separator\" class=\"divider\"></li><li><a href = \"#\" > Separated link</a></li>  </ul></div>", ColumnCssClass=x=>"col-cm", EnableFiltering=false, EnableSorting=false },
+            new SxExtantions.SxGridViewColumn<VMGame>() { FieldName="Id", Caption="#", Template=x=>Html.GameItemMenu(x).ToString(), ColumnCssClass=x=>"col-cm", EnableFiltering=false, EnableSorting=false },
             new SxExtantions.SxGridViewColumn<VMGame>(){FieldName="Title", Caption="Наименование игры"},
             new SxExtantions.SxGridViewColumn<VMGame>(){FieldName="TitleAbbr", Caption="Краткое наименование игры"},
             new SxExtantions.SxGridViewColumn<VMGame>(){FieldName="Description", Caption="Описание"},

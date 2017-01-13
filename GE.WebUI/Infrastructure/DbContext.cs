@@ -31,6 +31,8 @@ namespace GE.WebUI.Infrastructure
 
         public DbSet<SteamApp> SteamApps { get; set; }
 
+        public DbSet<SteamNews> SteamNews { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -49,6 +51,7 @@ namespace GE.WebUI.Infrastructure
             modelBuilder.Entity<SiteTestSetting>().HasKey(x=>x.TestId).HasRequired(x => x.Test).WithOptional(x=>x.Settings).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<SteamApp>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<SteamNews>().Property(x => x.Gid).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

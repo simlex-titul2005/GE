@@ -16,6 +16,16 @@ namespace GE.WebUI.Infrastructure.Repositories
 {
     public sealed class RepoSteamApp : SxDbRepository<int, SteamApp, VMSteamApp>
     {
+        public override async Task<VMSteamApp[]> AllAsync()
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var query = "SELECT dsa.Id, dsa.Name FROM D_STEAM_APP AS dsa";
+                var data = await connection.QueryAsync<VMSteamApp>(query);
+                return data.ToArray();
+            }
+        }
+
         public override VMSteamApp[] Read(SxFilter filter)
         {
             var sb = new StringBuilder();
@@ -37,7 +47,8 @@ namespace GE.WebUI.Infrastructure.Repositories
             using (var connection = new SqlConnection(ConnectionString))
             {
                 filter.PagerInfo.TotalItems = connection.Query<int>(sbCount.ToString(), param: param).SingleOrDefault();
-                sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.TotalItems <= filter.PagerInfo.PageSize ? 0 : filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
+                if(filter.PagerInfo.PageSize<int.MaxValue)
+                    sb.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", filter.PagerInfo.TotalItems <= filter.PagerInfo.PageSize ? 0 : filter.PagerInfo.SkipCount, filter.PagerInfo.PageSize);
                 var data = connection.Query<VMSteamApp>(sb.ToString(), param: param).ToArray();
                 return data;
             }

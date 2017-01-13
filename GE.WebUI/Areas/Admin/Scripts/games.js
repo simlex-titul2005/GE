@@ -3,10 +3,12 @@ var Games = (function () {
         var _this = this;
         this._modalSteamApps = $("#modal-steam-apps");
         this._modalSteamAppsLinked = $("#modal-linked-steam-apps");
+        this._modalSteamAppNews = $("#modal-steam-app-news");
         this._modalSteamAppsInputGame = this._modalSteamApps.find("input[name=\"GameId\"]");
         this._modalSteamLinkedAppsInputGame = this._modalSteamAppsLinked.find("input[name=\"GameId\"]");
         this._modalSteamAppsBody = $("#modal-steam-apps-body");
         this._modalSteamAppsLinkedBody = $("#modal-linked-steam-apps-body");
+        this._modalSteamAppNewsBody = $("#modal-steam-app-news-body");
         this._modalSteamAppsGrid = new SxGridView(this._modalSteamAppsBody, null, this.steamAppsGridCheckboxCallback);
         this._modalSteamAppsGridLinked = new SxGridView(this._modalSteamAppsLinkedBody, null, this.steamAppsGridLinkedCheckboxCallback);
         this._grid = grid;
@@ -19,6 +21,7 @@ var Games = (function () {
                 url: dataUrl,
                 beforeSend: function () {
                     $("#game-steam-app-add-btn").attr("disabled", "disabled");
+                    $("<div class=\"text-center\"><i></i></div>").addClass("fa fa-spinner fa-spin").appendTo(_this._modalSteamAppsBody);
                     _this._modalSteamAppsGrid.clearSelectedRows();
                 },
                 success: function (data, status, xhr) {
@@ -36,12 +39,19 @@ var Games = (function () {
                 data: { gameId: gameId },
                 beforeSend: function () {
                     $("#game-del-steam-app-add-btn").attr("disabled", "disabled");
+                    $("<div class=\"text-center\"><i></i></div>").addClass("fa fa-spinner fa-spin").appendTo(_this._modalSteamAppsLinkedBody);
                     _this._modalSteamAppsGridLinked.clearSelectedRows();
                 },
                 success: function (data, status, xhr) {
                     _this._modalSteamAppsLinkedBody.html(data);
                 }
             });
+        });
+        this._modalSteamAppNews.on("show.bs.modal", function (e) {
+            _this._modalSteamAppNewsBody.html("<div class=\"text-center\"><i class\"fa fa-spinner fa-spin\"></i></div>");
+        });
+        this._modalSteamAppNews.on("hide.bs.modal", function (e) {
+            $("#game-steam-app-news-add-btn").attr("disabled", "disabled");
         });
         $("#game-steam-app-add-btn").on("click", function (e) {
             var gameId = _this._modalSteamApps.find("input[name=\"GameId\"]").val();

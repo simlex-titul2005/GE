@@ -81,5 +81,15 @@ namespace GE.WebUI.Infrastructure.Repositories
                 return data.SingleOrDefault();
             }
         }
+
+        public async Task<AuthorAphorism> GetByNameAsync(string name)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var query = "SELECT TOP(2) * FROM D_AUTHOR_APHORISM AS daa WHERE daa.Name=@name";
+                var data = await connection.QueryAsync<AuthorAphorism>(query, new { name });
+                return data.SingleOrDefault();
+            }
+        }
     }
 }

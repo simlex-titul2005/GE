@@ -1,5 +1,4 @@
-﻿using GE.WebUI.Infrastructure;
-using GE.WebUI.Infrastructure.Repositories;
+﻿using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
@@ -66,7 +65,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
 
             if (isNew)
             {
-                var exist = Repo.All.FirstOrDefault(x => x.Name == model.Name);
+                var exist = await Repo.GetByNameAsync(model.Name);
                 if (exist != null)
                 {
                     ModelState.AddModelError("Name", "Автор с таким именем уже существует в БД");

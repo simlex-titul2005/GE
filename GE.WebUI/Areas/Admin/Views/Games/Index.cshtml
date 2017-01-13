@@ -11,14 +11,59 @@
 
 @Html.Partial("_ModalSteamApps")
 @Html.Partial("_ModalLinkedSteamApps")
+@Html.Partial("_ModalSteamAppNews")
 
 @section scripts{
     <script src="~/Areas/Admin/Scripts/games.js"></script>
+    <script src="@Url.Action("Js", "StaticContent", new { name="jquery-signalr", area="" })"></script>
+    <script src="~/signalr/hubs"></script>
     <script>
         $(function () {
             var grid = new SxGridView('#grid-games');
 
-            var games = new Games('@Url.Action("AppIndexFree", "Steam")', '@Url.Action("AppIndexLinked", "Steam")', '@Url.Action("LinkSteamApps", "Steam")', '@Url.Action("UnlinkSteamApps", "Steam")', grid);
+            var steamAppsHub = $.connection.hubSteamApps;
+            steamAppsHub.client.insertModalAppNewsHtml = function (html) {
+                $('#modal-steam-app-news-body').append(html);
+            }
+
+            steamAppsHub.client.addModalAppNewsProcessedCount = function (appId, result) {
+                var input=$('#modal-steam-app-news-body input[value="' + appId + '"]');
+                var progress = input.closest("tr").find(".game-modal-steam-apps-table__progress");
+                if (result.Status == 'ok') {
+                    if (result.Count == 0) {
+                        input.removeAttr('checked');
+                        input.closest("tr").addClass('text-muted');
+                        input.attr('disabled', 'disabled');
+                    }
+                    else {
+                        progress.append('<span class="badge">' + result.Count + '</span>');
+                    }
+
+                }
+                else if (result.Status == 'error') {
+                    progress.html('<span class="text-danger">' + result.Message + '</span>');
+                    input.removeAttr('checked');
+                    input.closest("tr").addClass('text-muted');
+                    input.attr('disabled', 'disabled');
+                }
+            }
+
+            steamAppsHub.client.showAddNewsButton = function () {
+                $('#game-steam-app-news-add-btn').removeAttr('disabled');
+            }
+
+            $.connection.hub.start(function () {
+                var games = new Games('@Url.Action("AppIndexFree", "Steam")', '@Url.Action("AppIndexLinked", "Steam")', '@Url.Action("LinkSteamApps", "Steam")', '@Url.Action("UnlinkSteamApps", "Steam")', grid);
+
+                $('#modal-steam-app-news').on('shown.bs.modal', function (e) {
+                    var gameId = $(e.relatedTarget).closest('tr').attr('data-row-id');
+                    steamAppsHub.server.getNewsForApp(gameId);
+                });
+
+                $('#game-steam-app-news-close-btn').click(function () {
+                    steamAppsHub.server.clearNewsList();
+                });
+            });
         });
     </script>
 }

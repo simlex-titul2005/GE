@@ -5,12 +5,14 @@
 class Games {
     private _modalSteamApps: JQuery;
     private _modalSteamAppsLinked: JQuery;
+    private _modalSteamAppNews: JQuery;
 
     private _modalSteamAppsInputGame: JQuery;
     private _modalSteamLinkedAppsInputGame: JQuery;
 
     private _modalSteamAppsBody: JQuery;
     private _modalSteamAppsLinkedBody: JQuery;
+    private _modalSteamAppNewsBody: JQuery;
 
     private _modalSteamAppsGrid: SxGridView;
     private _modalSteamAppsGridLinked: SxGridView;
@@ -20,18 +22,19 @@ class Games {
     constructor(dataUrl: string, linkedUrl: string, addSteamUrl: string, delSteamApps: string, grid: SxGridView) {
         this._modalSteamApps = $("#modal-steam-apps");
         this._modalSteamAppsLinked = $("#modal-linked-steam-apps");
+        this._modalSteamAppNews = $("#modal-steam-app-news");
 
         this._modalSteamAppsInputGame = this._modalSteamApps.find("input[name=\"GameId\"]");
         this._modalSteamLinkedAppsInputGame = this._modalSteamAppsLinked.find("input[name=\"GameId\"]");
 
         this._modalSteamAppsBody = $("#modal-steam-apps-body");
         this._modalSteamAppsLinkedBody = $("#modal-linked-steam-apps-body");
+        this._modalSteamAppNewsBody = $("#modal-steam-app-news-body");
         
         this._modalSteamAppsGrid = new SxGridView(this._modalSteamAppsBody, null, this.steamAppsGridCheckboxCallback);
         this._modalSteamAppsGridLinked = new SxGridView(this._modalSteamAppsLinkedBody, null, this.steamAppsGridLinkedCheckboxCallback);
 
         this._grid = grid;
-        
 
         this._modalSteamApps.on("show.bs.modal", (e: JQueryEventObject): void => {
             var btn: JQuery = $(e.relatedTarget);
@@ -43,6 +46,7 @@ class Games {
                 url: dataUrl,
                 beforeSend: (): void => {
                     $("#game-steam-app-add-btn").attr("disabled", "disabled");
+                    $("<div class=\"text-center\"><i></i></div>").addClass("fa fa-spinner fa-spin").appendTo(this._modalSteamAppsBody);
                     this._modalSteamAppsGrid.clearSelectedRows();
                 },
                 success: (data: any, status: string, xhr: JQueryXHR): void => {
@@ -62,12 +66,20 @@ class Games {
                 data: { gameId: gameId },
                 beforeSend: (): void => {
                     $("#game-del-steam-app-add-btn").attr("disabled", "disabled");
+                    $("<div class=\"text-center\"><i></i></div>").addClass("fa fa-spinner fa-spin").appendTo(this._modalSteamAppsLinkedBody);
                     this._modalSteamAppsGridLinked.clearSelectedRows();
                 },
                 success: (data: any, status: string, xhr: JQueryXHR): void => {
                     this._modalSteamAppsLinkedBody.html(data);
                 }
             });
+        });
+
+        this._modalSteamAppNews.on("show.bs.modal", (e: JQueryEventObject): void => {
+            this._modalSteamAppNewsBody.html("<div class=\"text-center\"><i class\"fa fa-spinner fa-spin\"></i></div>");
+        });
+        this._modalSteamAppNews.on("hide.bs.modal", (e: JQueryEventObject): void => {
+            $("#game-steam-app-news-add-btn").attr("disabled", "disabled");
         });
 
         $("#game-steam-app-add-btn").on("click", (e: JQueryEventObject): void => {

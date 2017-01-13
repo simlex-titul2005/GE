@@ -1,20 +1,20 @@
-﻿<div class="modal fade" tabindex="-1" role="dialog" id="modal-steam-apps">
+﻿<div class="modal fade" tabindex="-1" role="dialog" id="modal-steam-app-news">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Приложения Steam для привязки к игре</h4>
+                <h4 class="modal-title">Парсер новостей Steam для игры</h4>
             </div>
             <div class="modal-body">
                 <input type="hidden" name="GameId" />
                 @Html.AntiForgeryToken()
-                <div id="modal-steam-apps-body">
+                <div id="modal-steam-app-news-body">
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary" disabled="disabled" id="game-steam-app-add-btn">Привязать</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="game-steam-app-news-close-btn">Закрыть</button>
+                <button type="button" class="btn btn-primary" id="game-steam-app-news-add-btn" disabled="disabled">Обработать</button>
             </div>
         </div>
     </div>

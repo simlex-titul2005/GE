@@ -1,6 +1,6 @@
 ﻿/************************************************************
  * Code formatted by SoftTree SQL Assistant © v6.5.278
- * Time: 13.01.2017 21:56:13
+ * Time: 15.01.2017 20:44:11
  ************************************************************/
 
 /*******************************************
@@ -1871,4 +1871,20 @@ AS
 	    
 	    EXEC dbo.get_steam_news @gid
 	END
+GO
+
+/*******************************************
+ * получить новости для приложения steam
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_steam_app_news', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_steam_app_news;
+GO
+CREATE PROCEDURE dbo.get_steam_app_news
+	@steamAppId INT
+AS
+BEGIN
+	SELECT *
+	FROM   D_STEAM_NEWS AS dsn
+	WHERE  dsn.SteamAppId = @steamAppId
+END
 GO

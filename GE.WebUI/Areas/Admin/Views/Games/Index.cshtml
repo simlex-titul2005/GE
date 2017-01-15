@@ -89,7 +89,6 @@
                         if (input.is(":checked"))
                             steamAppArray.push(input.attr('value'));
                     });
-                    console.log(steamAppArray);
 
                     var gameId = btn.attr('data-game-id');
                     steamAppsHub.server.addNews(gameId, steamAppArray);

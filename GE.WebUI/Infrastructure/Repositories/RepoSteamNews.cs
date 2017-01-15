@@ -37,5 +37,14 @@ namespace GE.WebUI.Infrastructure.Repositories
                 return data.SingleOrDefault();
             }
         }
+
+        public async Task<SteamNews[]> GetSteamAppNews(int steamAppId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var data = await connection.QueryAsync<SteamNews>("dbo.get_steam_app_news @steamAppId", new { steamAppId });
+                return data.ToArray();
+            }
+        }
     }
 }

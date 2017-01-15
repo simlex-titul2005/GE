@@ -185,11 +185,15 @@ namespace GE.WebUI.Hubs
 
                 if (news.Any())
                 {
-                    for (int y = 0; y < news.Length; y++)
+                    var existNews = await _repoSteamNews.GetSteamAppNews(item.Id);
+                    var comparer = new SteamNewsComparer();
+                    var data = news.Except(existNews, comparer).ToArray();
+
+                    for (int y = 0; y < data.Length; y++)
                     {
                         _gamesNews.Add(news[y]);
                     }
-                    Clients.All.addModalAppNewsProcessedCount(item.Id, new { Status = "ok", Count = news.Length });
+                    Clients.All.addModalAppNewsProcessedCount(item.Id, new { Status = "ok", Count = data.Length });
                 }
                 else
                 {
@@ -240,6 +244,18 @@ namespace GE.WebUI.Hubs
             _gamesNews.Clear();
             if(errorsCount==0)
                 Clients.All.showAddNewsSuccess();
+        }
+        private class SteamNewsComparer : IEqualityComparer<SteamNews>
+        {
+            public bool Equals(SteamNews obj1, SteamNews obj2)
+            {
+                return obj1.Gid == obj2.Gid;
+            }
+
+            public int GetHashCode(SteamNews model)
+            {
+                return base.GetHashCode();
+            }
         }
 
         public async Task CancelProcessing()

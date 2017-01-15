@@ -1867,8 +1867,8 @@ AS
 	    SET    SteamNewsGid = @gid
 	    WHERE  Id = @id
 	    
-	    EXEC dbo.get_steam_news @gid
-	    
 	    COMMIT TRANSACTION
+	    
+	    EXEC dbo.get_steam_news @gid
 	END
 GO

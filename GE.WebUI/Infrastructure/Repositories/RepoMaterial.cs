@@ -42,11 +42,12 @@ namespace GE.WebUI.Infrastructure.Repositories
 
         protected override Action<SqlConnection, TViewModel[]> ChangeMaterialsAfterSelect => (connection, data) =>
         {
+            var ids = data.Select(x => x.Id.ToString()).ToDelimeterString(',');
             var materialGames = connection.Query<VMMaterial, VMGame, VMMaterial>("dbo.get_material_games @mct, @ids", (m, g) =>
             {
                 m.Game = g;
                 return m;
-            }, new { mct = ModelCoreType, ids = data.Select(x=>x.Id.ToString()).ToDelimeterString(',') }).ToArray();
+            }, new { mct = ModelCoreType, ids }).ToArray();
 
             if (!materialGames.Any()) return;
 

@@ -1755,6 +1755,7 @@ CREATE PROCEDURE dbo.add_steam_news
 	@gameId INT,
 	@dateCreate DATETIME
 AS
+BEGIN
 	IF NOT EXISTS (
 	       SELECT TOP(1) dsn.Gid
 	       FROM   D_STEAM_NEWS AS dsn
@@ -1868,9 +1869,10 @@ AS
 	    WHERE  Id = @id
 	    
 	    COMMIT TRANSACTION
-	    
-	    EXEC dbo.get_steam_news @gid
 	END
+	
+	EXEC dbo.get_steam_news @gid
+END
 GO
 
 /*******************************************
@@ -1880,11 +1882,13 @@ IF OBJECT_ID(N'dbo.get_steam_app_news', N'P') IS NOT NULL
     DROP PROCEDURE dbo.get_steam_app_news;
 GO
 CREATE PROCEDURE dbo.get_steam_app_news
-	@steamAppId INT
+	@steamAppId INT,
+	@newsIds NVARCHAR(MAX)
 AS
 BEGIN
 	SELECT *
 	FROM   D_STEAM_NEWS AS dsn
-	WHERE  dsn.SteamAppId = @steamAppId
+	WHERE dsn.SteamAppId=@steamAppId OR  dsn.Gid IN (SELECT fss.[Value]
+	                       FROM   dbo.func_split_string(@newsIds) AS fss)
 END
 GO

@@ -155,11 +155,12 @@ namespace GE.WebUI.Hubs
             for (int i = 0; i < gameSteamApps.Length; i++)
             {
                 item = gameSteamApps[i];
+                var appId = item.Id;
                 using (var httpClient = new HttpClient())
                 {
                     try
                     {
-                        var url = $"{_getAppNewsUrl}?appid={item.Id}&key={apiKey}";
+                        var url = $"{_getAppNewsUrl}?appid={appId}&key={apiKey}";
                         var json = await httpClient.GetStringAsync(url);
 
                         news = ((JArray)JsonConvert.DeserializeObject<dynamic>(json).appnews.newsitems).Select(x => new SteamNews()
@@ -173,31 +174,34 @@ namespace GE.WebUI.Hubs
                             IsExternalUrl = Convert.ToBoolean(x["is_external_url"]),
                             Title = (string)x["title"],
                             Url = (string)x["url"],
-                            SteamAppId = item.Id
+                            SteamAppId = appId
                         }).ToArray();
                     }
                     catch (Exception ex)
                     {
-                        Clients.All.addModalAppNewsProcessedCount(item.Id, new { Status = "error", Count = 0, Message = ex.Message });
+                        Clients.All.addModalAppNewsProcessedCount(appId, new { Status = "error", Count = 0, Message = ex.Message });
                         continue;
                     }
                 }
 
                 if (news.Any())
                 {
-                    var existNews = await _repoSteamNews.GetSteamAppNews(item.Id);
+                    var existNews = await _repoSteamNews.GetSteamAppNewsAsync(appId, news.Select(x=>x.Gid).ToArray());
                     var comparer = new SteamNewsComparer();
                     var data = news.Except(existNews, comparer).ToArray();
 
-                    for (int y = 0; y < data.Length; y++)
+                    if (data.Any())
                     {
-                        _gamesNews.Add(news[y]);
+                        for (int y = 0; y < data.Length; y++)
+                        {
+                            _gamesNews.Add(news[y]);
+                        }
                     }
-                    Clients.All.addModalAppNewsProcessedCount(item.Id, new { Status = "ok", Count = data.Length });
+                    Clients.All.addModalAppNewsProcessedCount(appId, new { Status = "ok", Count = data.Length });
                 }
                 else
                 {
-                    Clients.All.addModalAppNewsProcessedCount(item.Id, new { Status = "ok", Count = 0 });
+                    Clients.All.addModalAppNewsProcessedCount(appId, new { Status = "ok", Count = 0 });
                 }
             }
 
@@ -211,10 +215,8 @@ namespace GE.WebUI.Hubs
         }
         public async Task AddNews(int gameId, int[] steamAppArray)
         {
-            if(steamAppArray==null || !steamAppArray.Any())
-            {
+            if(steamAppArray==null || !steamAppArray.Any() || (_gamesNews==null || !_gamesNews.Any()))
                 return;
-            }
 
             var errorsCount=0;
             var steamApps = _gamesNews.Where(x=> steamAppArray.Contains(x.SteamAppId)).GroupBy(x => x.SteamAppId);

@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using Dapper;
 using System.Linq;
 using System;
+using SX.WebCore;
 
 namespace GE.WebUI.Infrastructure.Repositories
 {
@@ -15,7 +16,7 @@ namespace GE.WebUI.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var data = await connection.QueryAsync<SteamNews>("dbo.add_steam_news @steamAppId, @gid, @title, @url, @is_external_url, @author, @contents, @feedlabel, @date, @feedname, @titleUrl, @mct, @discriminator, @gameId, @dateCreate", new
+                var @params = new
                 {
                     steamAppId = model.SteamAppId,
                     gid = model.Gid,
@@ -31,18 +32,22 @@ namespace GE.WebUI.Infrastructure.Repositories
                     mct = SX.WebCore.Enums.ModelCoreType.News,
                     discriminator = nameof(News),
                     gameId = gameId,
-                    dateCreate=DateTimeOffset.FromUnixTimeSeconds(model.Date).DateTime
-                });
+                    dateCreate = DateTimeOffset.FromUnixTimeSeconds(model.Date).DateTime
+                };
+
+                var data = await connection.QueryAsync<SteamNews>("dbo.add_steam_news @steamAppId, @gid, @title, @url, @is_external_url, @author, @contents, @feedlabel, @date, @feedname, @titleUrl, @mct, @discriminator, @gameId, @dateCreate", @params);
 
                 return data.SingleOrDefault();
             }
         }
 
-        public async Task<SteamNews[]> GetSteamAppNews(int steamAppId)
+        public async Task<SteamNews[]> GetSteamAppNewsAsync(int steamAppId, string[] newsIds)
         {
+            if (newsIds == null || !newsIds.Any()) return new SteamNews[0];
+
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var data = await connection.QueryAsync<SteamNews>("dbo.get_steam_app_news @steamAppId", new { steamAppId });
+                var data = await connection.QueryAsync<SteamNews>("dbo.get_steam_app_news @steamAppId, @newsIds", new { steamAppId, newsIds =newsIds.ToDelimeterString(',') });
                 return data.ToArray();
             }
         }

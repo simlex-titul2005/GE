@@ -10,8 +10,8 @@
     <div class="rnd-aphorism-author">@(Model.Author.Name)</div>
     <div class="rnd-aphorism-content">
         <div class="rnd-aphorism__img-wrapper">
-            <div class="rnd-aphorism__img" style="background-image:url(@Url.Action("Picture", "Pictures", new { id=Model.Author.PictureId })">
-            </div>
+            <a href="@Url.Action("List", "Aphorisms", new { author=Model.Author.TitleUrl})" class="rnd-aphorism__img" style="background-image:url(@Url.Action("Picture", "Pictures", new { id=Model.Author.PictureId })">
+            </a>
         </div>
         <div class="rnd-aphorism__text">
             @Html.Raw(Model.Html)

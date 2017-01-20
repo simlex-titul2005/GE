@@ -1,9 +1,19 @@
 ﻿@import (reference) "colors.less";
 @import (reference) "sizes.less";
+@import (reference) "../bower_components/bootstrap/less/variables.less";
 
 .yandex-news{
     margin-bottom:@def-pad*2;
     color:@color-white;
+}
+
+.yandex-news__list{
+    padding:0;
+    margin:0;
+    list-style:none;
+    font-size:0;
+    margin-right:-@def-pad;
+    margin-left:-@def-pad;
 }
 
 .yandex-news a{
@@ -12,6 +22,27 @@
 
 .yandex-news__item{
     margin-bottom:@def-pad*2;
+    font-size:14px;
+    width:50%;
+    display:inline-block;
+    vertical-align:top;
+    padding-right:@def-pad;
+    padding-left:@def-pad;
+    @media (max-width: @screen-xs-max) {
+        width:100%;
+    }
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        
+    }
+
+    @media (min-width: @screen-lg-min) {
+        
+    }
 }
 
 .yandex-news > .ya-news__title{
@@ -23,6 +54,10 @@
 .yandex-news__item .ya-news__title{
     font-weight:700;
     font-size:17px;
+}
+
+.ya-news__date{
+    color:@color-gray;
 }
 
 .ya-news__date{

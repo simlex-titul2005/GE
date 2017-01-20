@@ -18,15 +18,15 @@ class YandexNews {
         if (!this._data || !this._data.length) { return; }
         $("<div class=\"ya-news__title\"><a href=\"//news.yandex.ru/\" target=\"_blank\">Яндекс.Новости</a></div>").appendTo(this._block);
 
-        var row: JQuery = $("<div></div>").addClass("row");
+        var ul: JQuery = $("<div></div>").addClass("yandex-news__list");
         for (var i = 0; i < this._data.length; i++) {
             var item = this._data[i];
-            $("<div class=\"yandex-news__item col-md-6\"><span class=\"ya-news__date\">"
+            $("<li class=\"yandex-news__item\"><span class=\"ya-news__date\">"
                 + item.date + "&nbsp;" + item.time + "</span><span class=\"ya-news__title\"><i class=\"fa fa-link\" aria-hiddent=\"true\" style=\"margin-right:15px; font-size:11px; top:-2px; position:relative\"></i><a href=\""
                 + item.url + "\" target=\"_blank\">" + item.title + "</a></span><div class=\"ya-news__description\">"
-                + item.descr + "</div></div>").appendTo(row);
+                + item.descr + "</div></li>").appendTo(ul);
         }
-        row.appendTo(this._block);
+        ul.appendTo(this._block);
 
         $("<div class=\"ya-news__all\"><a href=\"//news.yandex.ru/\" target=\"_blank\">Все новости на "
             + this.formatDate(this._update_time_t) + "</a></div>").appendTo(this._block);

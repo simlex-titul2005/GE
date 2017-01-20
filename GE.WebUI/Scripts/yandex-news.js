@@ -7,15 +7,15 @@ var YandexNews = (function () {
                 return;
             }
             $("<div class=\"ya-news__title\"><a href=\"//news.yandex.ru/\" target=\"_blank\">Яндекс.Новости</a></div>").appendTo(_this._block);
-            var row = $("<div></div>").addClass("row");
+            var ul = $("<div></div>").addClass("yandex-news__list");
             for (var i = 0; i < _this._data.length; i++) {
                 var item = _this._data[i];
-                $("<div class=\"yandex-news__item col-md-6\"><span class=\"ya-news__date\">"
+                $("<li class=\"yandex-news__item\"><span class=\"ya-news__date\">"
                     + item.date + "&nbsp;" + item.time + "</span><span class=\"ya-news__title\"><i class=\"fa fa-link\" aria-hiddent=\"true\" style=\"margin-right:15px; font-size:11px; top:-2px; position:relative\"></i><a href=\""
                     + item.url + "\" target=\"_blank\">" + item.title + "</a></span><div class=\"ya-news__description\">"
-                    + item.descr + "</div></div>").appendTo(row);
+                    + item.descr + "</div></li>").appendTo(ul);
             }
-            row.appendTo(_this._block);
+            ul.appendTo(_this._block);
             $("<div class=\"ya-news__all\"><a href=\"//news.yandex.ru/\" target=\"_blank\">Все новости на "
                 + _this.formatDate(_this._update_time_t) + "</a></div>").appendTo(_this._block);
         };

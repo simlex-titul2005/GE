@@ -7,17 +7,15 @@ using System;
 using GE.WebUI.Infrastructure.Repositories;
 using System.Linq;
 using SX.WebCore.ViewModels;
+using SX.WebCore.MvcControllers.Abstract;
+using System.Collections.Generic;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class YoutubeVideosController : SxYoutubeVideosController
     {
         private static readonly RepoPopularYoutubeVideo _repoPopularYoutubeVideo = new RepoPopularYoutubeVideo();
-
-        public YoutubeVideosController()
-        {
-            FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
-        }
+        protected override Action<SxBaseController, HashSet<SxVMBreadcrumb>> FillBreadcrumbs => BreadcrumbsManager.WriteBreadcrumbs;
 
 #if !DEBUG
         [OutputCache(Duration =7200)]

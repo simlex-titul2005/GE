@@ -65,7 +65,6 @@
         }
 
         <div class="container">
-
             @if (ViewBag.H1 != null)
             {
                 <h1 @(ViewBag.H1CssClass != null ? "class=" + ViewBag.H1CssClass : "class=header")>@ViewBag.H1</h1>
@@ -100,6 +99,12 @@
             }
         </div>
     </div>
+
+    <div class="container">
+        <div class="yandex-news">
+        </div>
+    </div>
+
     @Html.Partial("_Footer")
 
     @Html.Partial("_Analytics")
@@ -163,6 +168,8 @@
                 var curIndex = $a.attr('data-index');
                 fillRating($items, curIndex);
             });
+
+            var yaNews = new YandexNews('m_games', '.yandex-news');
         });
 
         function fillRating(items, curIndex) {

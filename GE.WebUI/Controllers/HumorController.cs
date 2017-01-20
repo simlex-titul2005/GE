@@ -1,12 +1,14 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using GE.WebUI.Infrastructure;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore.MvcApplication;
+using SX.WebCore.MvcControllers.Abstract;
 using SX.WebCore.SxRepositories;
 using SX.WebCore.ViewModels;
 
@@ -15,9 +17,8 @@ namespace GE.WebUI.Controllers
     public sealed class HumorController : MaterialsController<Humor, VMHumor>
     {
         private static readonly RepoHumor _repo = new RepoHumor();
-        public HumorController() : base(SxMvcApplication.ModelCoreTypeProvider[nameof(Humor)]) {
-            FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
-        }
+        public HumorController() : base(SxMvcApplication.ModelCoreTypeProvider[nameof(Humor)]) { }
+        protected override Action<SxBaseController, HashSet<SxVMBreadcrumb>> FillBreadcrumbs => BreadcrumbsManager.WriteBreadcrumbs;
 
         public override SxRepoMaterial<Humor, VMHumor> Repo => _repo;
 

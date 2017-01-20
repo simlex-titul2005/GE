@@ -6,17 +6,16 @@ using SX.WebCore.ViewModels;
 using GE.WebUI.Infrastructure.Repositories;
 using GE.WebUI.ViewModels;
 using GE.WebUI.Infrastructure;
+using System;
+using SX.WebCore.MvcControllers.Abstract;
+using System.Collections.Generic;
 
 namespace GE.WebUI.Controllers
 {
     public sealed class AphorismsController : BaseController
     {
         public static RepoAphorism Repo { get; set; } = new RepoAphorism();
-
-        public AphorismsController()
-        {
-            FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
-        }
+        protected override Action<SxBaseController, HashSet<SxVMBreadcrumb>> FillBreadcrumbs => BreadcrumbsManager.WriteBreadcrumbs;
 
         [HttpGet]
         public async Task<ActionResult> Details(string categoryId, string titleUrl)

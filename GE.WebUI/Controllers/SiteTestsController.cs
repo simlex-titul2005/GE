@@ -4,6 +4,9 @@ using GE.WebUI.Models;
 using GE.WebUI.ViewModels;
 using SX.WebCore;
 using SX.WebCore.Attributes;
+using SX.WebCore.MvcControllers.Abstract;
+using SX.WebCore.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,11 +19,7 @@ namespace GE.WebUI.Controllers
     public sealed class SiteTestsController : BaseController
     {
         public static RepoSiteTest Repo { get; set; } = new RepoSiteTest();
-
-        public SiteTestsController()
-        {
-            FillBreadcrumbs = BreadcrumbsManager.WriteBreadcrumbs;
-        }
+        protected override Action<SxBaseController, HashSet<SxVMBreadcrumb>> FillBreadcrumbs => BreadcrumbsManager.WriteBreadcrumbs;
 
         private static readonly int _pageSize = 12;
         [HttpGet]

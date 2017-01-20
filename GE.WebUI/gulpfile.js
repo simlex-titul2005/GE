@@ -58,7 +58,8 @@ function createCss() {
         'less/share-buttons.less',
         'less/sx-rating.less',
         'less/featured-mc.less',
-        'less/subscribe.less'
+        'less/subscribe.less',
+        'less/yandex-news.less'
     ])
         .pipe(less())
         .pipe(cleanCSS({ compatibility: 'ie8' }))
@@ -91,7 +92,8 @@ function createJs() {
         'scripts/ge-game-menu.js',
         'scripts/find-engine.js',
         'scripts/user-clicks-engine.js',
-        'scripts/site.js'
+        'scripts/site.js',
+        'scripts/yandex-news.js'
     ])
         .pipe(uglify())
         .pipe(concat('site.min.js'))

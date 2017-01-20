@@ -448,6 +448,7 @@
     <Content Include="Scripts\test-videos.js" />
     <Content Include="Scripts\user-clicks-engine.js" />
     <Content Include="Scripts\videos.js" />
+    <Content Include="Scripts\yandex-news.js" />
     <Content Include="Views\Articles\List.cshtml">
       <SubType>Code</SubType>
     </Content>

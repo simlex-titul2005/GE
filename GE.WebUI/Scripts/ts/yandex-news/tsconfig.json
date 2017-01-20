@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "removeComments": false,
+    "target": "es5",
+    "outFile": "../../yandex-news.js"
+  },
+  "files": [
+    "yandex-news.ts"
+  ],
+  "compileOnSave": true
+}

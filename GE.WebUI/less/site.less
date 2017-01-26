@@ -132,3 +132,38 @@ body {
     text-align:center;
     border-radius:100%;
 }
+
+//up-btn
+@up-btn-size: 50px;
+.up-btn{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    color:@color-white;
+    display:none;
+}
+
+.up-btn--visible{
+    display:block;
+}
+
+.up-btn > div{
+    position:relative;
+}
+
+.up-btn__link{
+    width:@up-btn-size;
+    height:@up-btn-size;
+    line-height:@up-btn-size;
+    text-align:center;
+    border:1px solid @color-light-gray;
+    border-radius:100%;
+    display:block;
+    color:@color-black !important;
+    position:absolute;
+    right:@def-pad*2;
+    bottom:@def-pad;
+    background-color:@color-light-gray;
+    box-shadow:0 0 6px #eee;
+    opacity:.3;
+}

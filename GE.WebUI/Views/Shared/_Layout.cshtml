@@ -4,7 +4,7 @@
     var bgImageId = SiteSettingsProvider["sitebgpath"]?.Value;
     var logoPath = Url.Action("Picture", "Pictures", new { id = SiteSettingsProvider["sitelogopath"]?.Value });
     var iconPath = Url.Action("Picture", "Pictures", new { id = SiteSettingsProvider["sitefaveiconpath"]?.Value });
-    var bg = string.IsNullOrEmpty(bgImageId) ? null : $"style=background:url('{Url.Action("Picture", "Pictures", new {id = bgImageId})}');";
+    var bg = string.IsNullOrEmpty(bgImageId) ? null : $"style=background:url('{Url.Action("Picture", "Pictures", new { id = bgImageId })}');";
     var values = Request.RequestContext.RouteData.Values;
     var controllerName = (string)values["controller"];
     var actionName = (string)values["action"];
@@ -67,7 +67,7 @@
         <div class="container">
             @if (ViewBag.H1 != null)
             {
-                <h1 @(ViewBag.H1CssClass != null ? "class=" + ViewBag.H1CssClass : "class=header")>@ViewBag.H1</h1>
+            <h1 @(ViewBag.H1CssClass != null ? "class=" + ViewBag.H1CssClass : "class=header")>@ViewBag.H1</h1>
             }
 
             @{
@@ -76,9 +76,9 @@
                 {
                     if ((Equals(banner.Type, SxBanner.BannerType.Google)) || Equals(banner.Type, SxBanner.BannerType.Html))
                     {
-                        <br>
-                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => Url.Action("Click", "Banners", new { bannerId = b.Id }))
-                        <br>
+            <br>
+            @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => Url.Action("Click", "Banners", new { bannerId = b.Id }))
+            <br>
                     }
                 }
             }
@@ -92,20 +92,31 @@
                 {
                     if ((Equals(banner.Type, SxBanner.BannerType.Google)) || Equals(banner.Type, SxBanner.BannerType.Html))
                     {
-                        <br />
-                        @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => Url.Action("Click", "Banners", new { bannerId = b.Id }))
+            <br />
+            @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => Url.Action("Click", "Banners", new { bannerId = b.Id }))
                     }
                 }
             }
         </div>
     </div>
 
-    <div class="container">
-        <div class="yandex-news">
+    @if (controllerName != "account")
+    {
+        <div class="container">
+            <div class="yandex-news">
+            </div>
         </div>
-    </div>
+    }
 
     @Html.Partial("_Footer")
+
+    <div class="up-btn" id="site-up-btn">
+        <div class="container">
+            <a href="#" class="up-btn__link">
+                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
 
     @Html.Partial("_Analytics")
     <script src="@Url.Action("Js", "StaticContent", new { name="jquery"})"></script>
@@ -141,12 +152,19 @@
 
         $(window).scroll(function () {
             if ($(window).width() < $WIDTH_SX) return;
+            var upBtn = $('#site-up-btn');
 
             var sticky = $('.game-menu'),
                 scroll = $(window).scrollTop();
 
-            if (scroll >= 400) sticky.addClass('fixed');
-            else sticky.removeClass('fixed');
+            if (scroll >= 800) {
+                sticky.addClass('fixed');
+                upBtn.addClass('up-btn--visible');
+            }
+            else {
+                sticky.removeClass('fixed');
+                upBtn.removeClass('up-btn--visible');
+            }
         });
 
         $(function () {

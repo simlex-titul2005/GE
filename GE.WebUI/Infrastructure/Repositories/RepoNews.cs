@@ -336,12 +336,15 @@ GROUP BY
 
         protected override Action<SqlConnection, News> ChangeMaterialBeforeSelect => (connection, model) =>
         {
-            var data = connection.Query<dynamic>("dbo.get_material_game @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
-            if (data == null) return;
+            var game = connection.Query<dynamic>("dbo.get_material_game @id, @mct", new { id = model.Id, mct = model.ModelCoreType }).SingleOrDefault();
+            if (game != null)
+            {
+                model.Game = new Game { Id = game.Id, Title = game.Title };
+                model.GameId = game.Id;
+                model.GameVersion = GetGameVesion(model.ModelCoreType, game);
+            }
 
-            model.Game = new Game { Id = data.Id, Title = data.Title };
-            model.GameId = data.Id;
-            model.GameVersion = GetGameVesion(model.ModelCoreType, data);
+            model.SteamNewsGid=connection.Query<string>("dbo.get_news_steam_news_gid @mid", new { mid = model.Id }).SingleOrDefault();
         };
 
         protected override string[] AddColumns

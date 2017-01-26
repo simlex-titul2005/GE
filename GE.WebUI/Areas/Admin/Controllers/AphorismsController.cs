@@ -72,7 +72,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
             return PartialView("_GridView", viewModel);
         }
 
-        protected override Action<VMAphorism> BeforeEditModel
+        protected override Action<VMAphorism> BeforeEditAction
         {
             get
             {

@@ -17,7 +17,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
             "GameVersion"
         }).ToArray();
 
-        protected override Action<TViewModel> BeforeEditModel => (model) =>
+        protected override Action<TViewModel> BeforeEditAction => (model) =>
         {
             ViewBag.GameTitle = model.Game?.Title;
         };

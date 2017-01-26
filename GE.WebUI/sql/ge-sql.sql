@@ -1892,3 +1892,19 @@ BEGIN
 	                       FROM   dbo.func_split_string(@newsIds) AS fss)
 END
 GO
+
+/*******************************************
+ * получить идентификатор новости steam для новости сайта
+ *******************************************/
+IF OBJECT_ID(N'dbo.get_news_steam_news_gid', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.get_news_steam_news_gid;
+GO
+CREATE PROCEDURE dbo.get_news_steam_news_gid
+	@mid INT
+AS
+BEGIN
+	SELECT TOP(2) dn.SteamNewsGid
+	FROM   D_NEWS AS dn
+	WHERE  dn.Id = @mid
+END
+GO

@@ -1,15 +1,57 @@
 ﻿@model SxExtantions.SxPagedCollection<VMNews>
 @{
     Layout = null;
-    var gameTitle=(string)ViewBag.GameTitle;
+    var gameTitle = (string)ViewBag.GameTitle;
 }
 
-@if (Model.Length != 0)
+@if (Model.Collection.Any())
 {
-    <div class="list-news-container">
-        @Html.SxList(Model, new SxExtantions.SxListSettings { ColCount = 2, CellCssStyle = "list-news" })
-        <div class="text-center">
-            @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new { gameTitle = gameTitle , page=x}), isAjax: false, htmlAttributes: new { @class = "pagination" })
-        </div>
+    VMNews item;
+    <ul class="list-news">
+        @for (int i = 0; i < Model.Collection.Length; i++)
+        {
+            item = Model.Collection[i];
+            <li class="list-news__item-container">
+                <div class="list-news-item">
+                    <div class="list-news-item-part list-news-item__image">
+                        <a href="@item.GetUrl(Url)">
+                            <img alt="@item.Title" src="@(item.FrontPictureId.HasValue ? Url.Action("Picture", "Pictures", new { id=item.FrontPictureId }) : "/content/dist/i/no-photo.jpg")" />
+                        </a>
+                    </div>
+                    <div class="list-news-item-part list-news-item__content">
+                        <div class="list-news__date">@item.DateOfPublication.ToString("dd.MM.yyyy")</div>
+                        <div class="list-news__title">
+                            <h3>
+                                <a href="@item.GetUrl(Url)">@(item.SeoTags?.H1 ?? item.Title)</a>
+                            </h3>
+                        </div>
+                        <div class="list-news__fwd">
+                            @item.GetForewordFromHtml(300)
+                        </div>
+                        <div class="list-news__info">
+                            @if(item.User!=null)
+                            {
+                                <span>Автор: </span> <a href="@Url.Action("List", "News", new { author=item.User.NikName })">@item.User.NikName</a>
+                            }
+                            @if(item.Game!=null)
+                            {
+                                <span>; Игра</span> <a href="@Url.Action("List", "News", new { gameTitle=item.Game.TitleUrl })">@item.Game.Title</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+    <br />
+    <div class="text-center">
+        @Html.SxPager(Model.PagerInfo, pageUrl: (x) => Url.Action("List", new { gameTitle = gameTitle, page = x }), isAjax: false, htmlAttributes: new { @class = "pagination" })
+    </div>
+}
+else
+{
+    <br />
+    <div class="alert alert-warning">
+        Новостей по данному запросу пока нет на сайте
     </div>
 }

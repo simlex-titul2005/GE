@@ -386,6 +386,7 @@
     <Content Include="content\dist\i\faveicon.png" />
     <Content Include="content\dist\i\incognito.png" />
     <Content Include="content\dist\i\logo.png" />
+    <Content Include="content\dist\i\no-photo.jpg" />
     <Content Include="content\dist\i\testsubject.png" />
     <Content Include="content\dist\js\currency-provider.min.js" />
     <Content Include="content\dist\js\ge-aphorisms.min.js" />

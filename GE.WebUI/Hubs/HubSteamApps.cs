@@ -194,7 +194,7 @@ namespace GE.WebUI.Hubs
                     {
                         for (int y = 0; y < data.Length; y++)
                         {
-                            _gamesNews.Add(news[y]);
+                            _gamesNews.Add(data[y]);
                         }
                     }
                     Clients.All.addModalAppNewsProcessedCount(appId, new { Status = "ok", Count = data.Length });

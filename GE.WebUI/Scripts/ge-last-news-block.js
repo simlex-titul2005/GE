@@ -35,14 +35,14 @@
             $(e).mouseenter(function () {
                 if (width < 768) return;
 
-                $wrapper = $(this).closest('.games-wrapper');
-                $videos = $(this).children('.videos').html();
-                $tags = $(this).children('.tags').html();
+                var wrapper = $(this).closest('.games-wrapper');
+                var videos = $(this).children('.videos').html();
+                var tags = $(this).children('.tags').html();
 
-                $t = $wrapper.find('.lgnb-dropdown');
-                $t.html($videos + $tags);
-                $t.show();
-                $t.find('.tags-block').show();
+                var t = wrapper.find('.lgnb-dropdown');
+                t.html((videos || '')  + (tags || ''));
+                t.show();
+                t.find('.tags-block').show();
             });
         }
     };

@@ -28,7 +28,7 @@
                     }
                 </ul>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 hidden-xs hidden-sm">
                 <div class="games-wrapper">
                     <ul class="games">
                         @if (Model.Games.Any())
@@ -41,9 +41,9 @@
                                 {
                                     
                                     <li @("style=width:" + width + "%")>
+                                        <h4 class="game-title">@game.Title</h4>
                                         <a href="@Url.Action("List", "News", new { gameTitle = game.TitleUrl })">
                                             <figure data-game-id="@game.Id" style="background:url('@Url.Action("Picture", new { controller="Pictures", id=game.FrontPictureId, height= 220})') center / cover">
-
                                             </figure>
                                         </a>
                                         @if (game.News.Any())
@@ -58,7 +58,7 @@
                                                 }
                                             </ul>
                                         }
-                                        @if (game.Tags.Any())
+                                        @if (game.Videos.Any())
                                         {
                                             <div class="videos">
                                                 <div class="videos-block">

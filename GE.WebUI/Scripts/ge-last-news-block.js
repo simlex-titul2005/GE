@@ -2,6 +2,13 @@
     $.fn.geLastNewsBlock = function () {
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 
+        $(document).mouseup(function (e) {
+            var container = $('.l-n-b');
+            if (container.has(e.target).length === 0) {
+                $('.lgnb-dropdown').hide();
+            }
+        });
+
         this.each(function () {
             var $this = $(this);
             var $menu = $this.find('.menu');

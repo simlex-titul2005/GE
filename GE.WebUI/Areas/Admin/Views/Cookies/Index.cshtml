@@ -1,0 +1,19 @@
+﻿@model  SxVMCookie[]
+@{ 
+    ViewBag.Title = "Cookies";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+<div class="grid-cookies">
+    @Html.Partial("_GridView", Model)
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            var grid = new SxGridView('#grid-cookies');
+        });
+    </script>
+    }

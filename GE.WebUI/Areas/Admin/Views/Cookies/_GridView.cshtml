@@ -1,9 +1,15 @@
 ﻿@model  SxVMCookie[]
 
-@Html.SxGridView(Model, new SxExtantions.SxGridViewSettings<SxVMCookie>() {
-    Columns=new SxExtantions.SxGridViewColumn<SxVMCookie>[] {
+@Html.SxGridView(Model, new SxExtantions.SxGridViewSettings<SxVMCookie>()
+{
+    Columns = new SxExtantions.SxGridViewColumn<SxVMCookie>[] {
         new SxExtantions.SxGridViewColumn<SxVMCookie>() { Caption="Наименование", FieldName=nameof(SxVMCookie.Name) },
         new SxExtantions.SxGridViewColumn<SxVMCookie>() { Caption="Значение", FieldName=nameof(SxVMCookie.Value) }
     },
-    DataAjaxUrl=Url.Action("Index")
+    DataAjaxUrl = Url.Action("Index"),
+    EnableEditing = true,
+    EditRowUrl = x => Url.Action("Edit", new { id = x.Name }),
+    EnableCreating = true,
+    CreateRowUrl = Url.Action("Edit"),
+    ShowPagerInfo=true
 })

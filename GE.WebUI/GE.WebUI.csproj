@@ -438,6 +438,7 @@
     <Content Include="Areas\Admin\Views\Games\_ModalSteamAppNews.cshtml" />
     <Content Include="Areas\Admin\Views\Cookies\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Cookies\_GridView.cshtml" />
+    <Content Include="Areas\Admin\Views\Cookies\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\PROD.pubxml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\currency-provider.js" />

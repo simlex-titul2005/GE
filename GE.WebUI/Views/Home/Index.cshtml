@@ -30,8 +30,12 @@
     <a href="@Url.Action("List", "News")" class="btn btn-default btn-transparent white">Все новости</a>
 </div>
 
+<section>
+    @Html.Action("RandomList", "SiteTests")
+</section>
+
 @{
-    @*banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
+    banner = banners != null ? banners.SingleOrDefault(x => x.Place == SxBanner.BannerPlace.Intermediate) : null;
         if (banner != null)
         {
             if (!(Equals(banner.Type, SxBanner.BannerType.Google) && Request.IsLocal) || Equals(banner.Type, SxBanner.BannerType.Html))
@@ -40,12 +44,8 @@
                     @Html.SxBanner(banner, (b) => Url.Action("Picture", "Pictures", new { id = b.PictureId }), b => { return Url.Action("Click", "Banners", new { bannerId = b.Id }); })
                 </div>
             }
-        }*@
+        }
 }
-
-<section>
-    @Html.Action("RandomList", "SiteTests")
-</section>
 
 @Html.Action("ForGamersBlock", "Articles")
 

@@ -249,6 +249,7 @@
     <Compile Include="Areas\Admin\Controllers\MenuItemsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NetsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PageSizesController.cs" />
     <Compile Include="Areas\Admin\Controllers\PictureLinksController.cs" />
     <Compile Include="Areas\Admin\Controllers\PicturesController.cs" />
     <Compile Include="Areas\Admin\Controllers\RedirectsController.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Infrastructure\BreadcrumbsManager.cs" />
     <Compile Include="Infrastructure\DbContext.cs" />
     <Compile Include="Infrastructure\Managers\SeoWordCounter.cs" />
+    <Compile Include="Infrastructure\RepoProvider.cs" />
     <Compile Include="Infrastructure\Repositories\RepoAphorism.cs" />
     <Compile Include="Infrastructure\Repositories\RepoArticle.cs" />
     <Compile Include="Infrastructure\Repositories\RepoAuthorAphorism.cs" />

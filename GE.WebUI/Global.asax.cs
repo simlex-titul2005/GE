@@ -20,7 +20,8 @@ namespace GE.WebUI
                     {
                         [nameof(Aphorism)] = 6,
                         [nameof(Humor)] = 7
-                    }
+                    },
+                    repoProvider: repoProvider
                 )
             {
                 WebApiConfigRegister = WebApiConfig.Register,
@@ -51,5 +52,7 @@ namespace GE.WebUI
                     return "Юмор";
             }
         }
+
+        private readonly RepoProvider repoProvider = new RepoProvider();
     }
 }

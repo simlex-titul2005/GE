@@ -13,11 +13,10 @@ namespace GE.WebUI.Areas.Admin.Controllers
     {
         private static RepoSteamApp Repo { get; set; } = new RepoSteamApp();
 
-        private static readonly int _appPageSize = 20;
         [HttpGet]
         public async Task<ActionResult> AppIndex(int page = 1)
         {
-            var filter = new SxFilter(page, _appPageSize);
+            var filter = new SxFilter(page, PageSize);
             var viewModel = await Repo.ReadAsync(filter);
             ViewBag.Filter = filter;
             return View(model: viewModel);
@@ -26,7 +25,7 @@ namespace GE.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> AppIndex(VMSteamApp filterModel, SxOrderItem order, int page = 1)
         {
-            var filter = new SxFilter(page, _appPageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel };
+            var filter = new SxFilter(page, PageSize) { Order = order != null && order.Direction != SortDirection.Unknown ? order : null, WhereExpressionObject = filterModel };
 
             var viewModel = await Repo.ReadAsync(filter);
             if (page > filter.PagerInfo.TotalPages) page = 1;

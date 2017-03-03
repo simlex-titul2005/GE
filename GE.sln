@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SX.WebCore", "..\SX.WebCore
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SX.WebCore.Tests", "..\SX.WebCore\SX.WebCore.Tests\SX.WebCore.Tests.csproj", "{9F672305-9DC1-494C-B486-CAF4E01EAEF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SX.VkApi", "..\SX.WebCore\SX.VkApi\SX.VkApi.csproj", "{85A97487-3CB5-4BFD-BA53-755DB0BD7A57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9F672305-9DC1-494C-B486-CAF4E01EAEF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F672305-9DC1-494C-B486-CAF4E01EAEF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F672305-9DC1-494C-B486-CAF4E01EAEF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85A97487-3CB5-4BFD-BA53-755DB0BD7A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85A97487-3CB5-4BFD-BA53-755DB0BD7A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85A97487-3CB5-4BFD-BA53-755DB0BD7A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85A97487-3CB5-4BFD-BA53-755DB0BD7A57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
